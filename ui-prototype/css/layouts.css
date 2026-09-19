@@ -1,0 +1,29 @@
+.page-container {
+  width: min(100% - (2 * var(--space-4)), var(--container-max-width));
+  margin-inline: auto;
+}
+
+.page-section {
+  padding-block: var(--space-8);
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+}
+
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+}
