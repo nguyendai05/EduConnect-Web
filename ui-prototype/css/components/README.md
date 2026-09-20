@@ -1,3 +1,3 @@
-# Component Styles
+# CSS cho component
 
-Place one reusable component stylesheet per component here, using kebab-case filenames. Create a file only when the matching shared component is implemented.
+Đặt tại đây một tệp CSS riêng cho mỗi component có thể tái sử dụng, với tên tệp theo kebab-case. Chỉ tạo tệp khi component dùng chung tương ứng được triển khai.

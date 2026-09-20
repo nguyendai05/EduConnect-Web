@@ -1,12 +1,12 @@
-# Git Workflow
+# Quy trình làm việc với Git
 
-The shared branch flow is:
+Luồng làm việc giữa các nhánh được thống nhất như sau:
 
 ```text
 feature/* -> develop -> main
 ```
 
-Example branches:
+Ví dụ về tên nhánh:
 
 - `feature/ui-foundation`
 - `feature/ui-dai-auth-account`
@@ -14,11 +14,11 @@ Example branches:
 - `feature/ui-dat-job-market`
 - `feature/ui-phuong-contract-payment`
 
-## Rules
+## Quy tắc
 
-- Do not code directly on `main`.
-- Open pull requests into `develop`.
-- Require at least one reviewer before merging.
-- Merge `develop` into `main` only after the integrated application runs successfully.
-- Do not force-push shared branches.
-- Pull the latest `develop` before starting a new feature branch.
+- Không viết mã trực tiếp trên nhánh `main`.
+- Tạo yêu cầu hợp nhất mã (pull request) vào nhánh `develop`.
+- Cần có ít nhất một người rà soát mã (reviewer) trước khi hợp nhất.
+- Chỉ hợp nhất `develop` vào `main` sau khi ứng dụng đã tích hợp chạy thành công.
+- Không đẩy mã cưỡng bức (force-push) lên các nhánh dùng chung.
+- Cập nhật nhánh `develop` mới nhất trước khi tạo nhánh tính năng mới.

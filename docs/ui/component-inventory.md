@@ -1,62 +1,64 @@
-# Shared UI Component Inventory
+# Danh sách component giao diện dùng chung
 
-This inventory identifies likely shared UI for Sprint 0 and the following UI sprint. It is a planning aid, not a requirement to build every component immediately. Components should be introduced only when a real page needs them.
+Danh sách này xác định các component giao diện có thể dùng chung trong Sprint 0 và sprint giao diện tiếp theo. Đây là tài liệu hỗ trợ lập kế hoạch, không yêu cầu xây dựng ngay tất cả component. Chỉ tạo component khi có trang thực tế cần sử dụng.
 
-## Layout
+Tên component được giữ bằng tiếng Anh để thuận tiện đối chiếu với mã nguồn; phần mô tả tiếng Việt giải thích vai trò của từng component.
 
-- UserHeader
-- UserFooter
-- AdminHeader
-- AdminSidebar
-- Container
+## Bố cục
 
-## Navigation
+- UserHeader: phần đầu trang dành cho người dùng
+- UserFooter: phần chân trang dành cho người dùng
+- AdminHeader: phần đầu trang quản trị
+- AdminSidebar: thanh bên của trang quản trị
+- Container: khung chứa nội dung
 
-- Breadcrumb
-- Tabs
-- Pagination
-- Dropdown
+## Điều hướng
 
-## Action
+- Breadcrumb: đường dẫn phân cấp
+- Tabs: các thẻ chuyển đổi nội dung
+- Pagination: phân trang
+- Dropdown: trình đơn thả xuống
 
-- Button
-- IconButton
+## Thao tác
 
-## Form
+- Button: nút bấm
+- IconButton: nút bấm dạng biểu tượng
 
-- FormField
-- Input
-- PasswordInput
-- Textarea
-- Select
-- Checkbox
-- Radio
-- Switch
-- FileUpload
-- SearchInput
+## Biểu mẫu
 
-## Feedback
+- FormField: trường biểu mẫu
+- Input: ô nhập liệu
+- PasswordInput: ô nhập mật khẩu
+- Textarea: vùng nhập văn bản nhiều dòng
+- Select: danh sách lựa chọn
+- Checkbox: ô đánh dấu
+- Radio: nút chọn một phương án trong nhóm
+- Switch: công tắc bật/tắt
+- FileUpload: thành phần tải tệp lên
+- SearchInput: ô tìm kiếm
 
-- Badge
-- Alert
-- Toast
-- Modal
-- Loading
-- EmptyState
+## Phản hồi trạng thái
 
-## Data Display
+- Badge: nhãn trạng thái hoặc số lượng
+- Alert: thông báo hoặc cảnh báo
+- Toast: thông báo ngắn xuất hiện tạm thời
+- Modal: hộp thoại phủ lên nội dung trang
+- Loading: chỉ báo đang tải
+- EmptyState: giao diện khi chưa có dữ liệu
 
-- Card
-- InfoRow
-- Avatar
-- Table
+## Hiển thị dữ liệu
 
-## Domain
+- Card: thẻ nội dung
+- InfoRow: dòng thông tin
+- Avatar: ảnh đại diện
+- Table: bảng dữ liệu
 
-- TutorCard
-- JobCard
-- ApplicantCard
-- LessonCard
-- WalletBalanceCard
+## Thành phần nghiệp vụ
 
-Not every item should be created now. The inventory exists so the team can recognize which elements belong to shared UI instead of duplicating them inside pages.
+- TutorCard: thẻ thông tin gia sư
+- JobCard: thẻ tin tuyển gia sư
+- ApplicantCard: thẻ thông tin ứng viên
+- LessonCard: thẻ thông tin buổi học
+- WalletBalanceCard: thẻ số dư ví
+
+Không cần tạo ngay mọi component trong danh sách. Mục đích là giúp nhóm nhận biết thành phần nào nên thuộc giao diện dùng chung, tránh sao chép lặp lại trong từng trang.

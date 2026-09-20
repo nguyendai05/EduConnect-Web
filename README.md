@@ -1,37 +1,37 @@
 # EduConnect Web
 
-EduConnect is a modular monolith that connects learners and parents with tutors. This repository currently contains the Sprint 0 project foundation only.
+EduConnect là ứng dụng kết nối học viên và phụ huynh với gia sư, được tổ chức theo kiến trúc nguyên khối có mô-đun (modular monolith). Kho mã nguồn hiện chỉ chứa bộ khung nền tảng của dự án trong Sprint 0.
 
-## Technology Stack
+## Công nghệ sử dụng
 
-- UI foundation: HTML5, CSS3, and Vanilla JavaScript
-- Backend direction: Java 17, Spring Boot 3.x, Spring MVC, JSP/JSTL
-- Persistence direction: Spring Data JPA, MySQL 8, and Flyway
-- Build tool: Maven
+- Nền tảng giao diện: HTML5, CSS3 và JavaScript thuần (Vanilla JavaScript)
+- Định hướng backend: Java 17, Spring Boot 3.x, Spring MVC, JSP/JSTL
+- Định hướng lưu trữ dữ liệu: Spring Data JPA, MySQL 8 và Flyway
+- Công cụ biên dịch và đóng gói: Maven
 
-## Project Architecture
+## Kiến trúc dự án
 
-The backend follows a modular monolith and package-by-feature structure. Shared UI primitives are developed separately from page-specific assets so prototype HTML can later move to JSP with minimal restructuring.
+Backend sử dụng kiến trúc nguyên khối có mô-đun và tổ chức package theo tính năng (package-by-feature). Các thành phần giao diện cơ bản dùng chung được phát triển tách biệt với tài nguyên riêng của từng trang, giúp chuyển bản mẫu HTML sang JSP sau này mà ít phải thay đổi cấu trúc.
 
-## Repository Structure
+## Cấu trúc kho mã nguồn
 
-- `docs/`: architecture, UI planning, database notes, and team conventions
-- `ui-prototype/`: framework-free design tokens, shared components, and page prototypes
-- `src/main/java/`: Spring Boot entry point and feature packages
-- `src/main/resources/static/`: future production CSS, JavaScript, and images
-- `src/main/webapp/WEB-INF/views/`: future JSP pages and fragments
-- `scripts/`: project helper scripts added only when needed
+- `docs/`: tài liệu kiến trúc, kế hoạch giao diện, ghi chú cơ sở dữ liệu và quy ước của nhóm
+- `ui-prototype/`: các giá trị thiết kế dùng chung (design token), component dùng chung và bản mẫu trang, không phụ thuộc framework
+- `src/main/java/`: điểm khởi chạy Spring Boot và các package theo tính năng
+- `src/main/resources/static/`: nơi lưu CSS, JavaScript và hình ảnh cho ứng dụng chính thức sau này
+- `src/main/webapp/WEB-INF/views/`: nơi lưu các trang JSP và mảnh giao diện JSP (fragment) sau này
+- `scripts/`: các tập lệnh hỗ trợ dự án, chỉ bổ sung khi cần
 
-## Development Stages
+## Các giai đoạn phát triển
 
-1. HTML/CSS/JS and a shared component system
-2. JSP integration
-3. Spring MVC and persistence
-4. Business feature integration
+1. Xây dựng HTML/CSS/JS và hệ thống component dùng chung
+2. Tích hợp JSP
+3. Tích hợp Spring MVC và tầng lưu trữ dữ liệu
+4. Tích hợp các tính năng nghiệp vụ
 
-## Getting Started
+## Bắt đầu
 
-Requirements: JDK 17+ and Maven 3.6.3+.
+Yêu cầu: JDK 17 trở lên và Maven 3.6.3 trở lên.
 
 ```bash
 mvn clean compile
@@ -39,8 +39,8 @@ mvn clean test
 mvn clean package
 ```
 
-The application is only a scaffold at this stage; database and security configuration are intentionally not implemented.
+Ở giai đoạn này, ứng dụng mới chỉ có bộ khung; cấu hình cơ sở dữ liệu và bảo mật chưa được triển khai theo phạm vi đã xác định.
 
-## Git Workflow
+## Quy trình làm việc với Git
 
-See [docs/conventions/git-workflow.md](docs/conventions/git-workflow.md).
+Xem [quy trình làm việc với Git](docs/conventions/git-workflow.md) và [mục lục tài liệu dự án](docs/README.md).

@@ -1,10 +1,10 @@
-# Component Rules
+# Quy tắc xây dựng component
 
-1. Consider moving a component into shared UI when it is used on two or more pages.
-2. Always extract behavior that is shared between pages.
-3. Do not copy components between pages.
-4. Keep a page-specific element in its page when reuse is unlikely.
-5. Do not hardcode brand colors in page styles; use design tokens.
-6. Do not invent page-local button, input, or badge styles.
-7. If an existing component is close, add a justified variant instead of duplicating it.
-8. Do not over-componentize a block that appears only once.
+1. Cân nhắc chuyển component vào nhóm giao diện dùng chung khi được sử dụng trên từ hai trang trở lên.
+2. Luôn tách riêng các xử lý dùng chung giữa nhiều trang.
+3. Không sao chép component từ trang này sang trang khác.
+4. Giữ thành phần riêng trong trang của nó nếu ít có khả năng tái sử dụng.
+5. Không ghi cố định màu thương hiệu trong CSS của trang; hãy dùng các giá trị thiết kế dùng chung (design token).
+6. Không tự tạo kiểu nút bấm, ô nhập liệu hoặc nhãn trạng thái riêng cho từng trang.
+7. Nếu component hiện có gần đáp ứng nhu cầu, hãy bổ sung biến thể với lý do rõ ràng thay vì sao chép component.
+8. Không chia một khối chỉ xuất hiện một lần thành quá nhiều component.

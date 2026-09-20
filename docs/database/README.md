@@ -1,5 +1,5 @@
-# Database Foundation
+# Nền tảng cơ sở dữ liệu
 
-MySQL 8 and Flyway are the planned database tools. Versioned migration files will live in `src/main/resources/db/migration/` when the domain model is agreed.
+MySQL 8 và Flyway là các công cụ dự kiến dùng cho cơ sở dữ liệu. Sau khi thống nhất mô hình nghiệp vụ, các tệp migration có phiên bản để quản lý thay đổi cơ sở dữ liệu sẽ được đặt trong `src/main/resources/db/migration/`.
 
-No schema, table, entity, connection credential, or seed data is defined during project scaffolding.
+Trong giai đoạn tạo bộ khung dự án, chưa định nghĩa lược đồ cơ sở dữ liệu (schema), bảng, entity, thông tin xác thực kết nối hay dữ liệu khởi tạo (seed data).
