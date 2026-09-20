@@ -1,8 +1,8 @@
-# Project Documentation
+# Tài liệu dự án
 
-This directory keeps the lightweight documentation needed to align the team during Sprint 0.
+Thư mục này lưu các tài liệu ngắn gọn giúp nhóm thống nhất cách làm việc trong Sprint 0.
 
-- `architecture/`: structural decisions and the prototype-to-JSP path
-- `ui/`: shared component inventory and production page mapping
-- `database/`: migration and database planning boundaries
-- `conventions/`: coding and Git collaboration rules
+- [Kiến trúc](architecture/README.md): các quyết định về cấu trúc và cách chuyển bản mẫu giao diện sang JSP
+- [Giao diện](ui/README.md): danh sách component dùng chung và cách ánh xạ các trang sang ứng dụng chính thức
+- [Cơ sở dữ liệu](database/README.md): phạm vi lập kế hoạch cơ sở dữ liệu và quản lý thay đổi bằng migration
+- Quy ước của nhóm: [quy ước viết mã](conventions/coding-convention.md) và [quy trình làm việc với Git](conventions/git-workflow.md)

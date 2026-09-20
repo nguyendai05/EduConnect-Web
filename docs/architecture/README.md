@@ -1,10 +1,10 @@
-# Architecture
+# Kiến trúc
 
-EduConnect is planned as a modular monolith. Backend code is grouped by business feature rather than by technical layer at the application root. A feature may introduce its own controller, service, repository, DTO, or entity packages later, only when its implementation needs them.
+EduConnect được định hướng theo kiến trúc nguyên khối có mô-đun (modular monolith). Mã backend được nhóm theo tính năng nghiệp vụ thay vì chia theo tầng kỹ thuật ở cấp gốc của ứng dụng. Mỗi tính năng có thể bổ sung các package controller, service, repository, DTO hoặc entity riêng khi việc triển khai thực sự cần đến chúng.
 
-## Prototype-to-JSP Mapping
+## Ánh xạ bản mẫu giao diện sang JSP
 
-The prototype mirrors the future JSP organization so migration remains mechanical:
+Bản mẫu giao diện được tổ chức tương ứng với cấu trúc JSP dự kiến để việc chuyển đổi chủ yếu là chuyển tệp theo ánh xạ sau:
 
 ```text
 ui-prototype/components/layout/user-header.html
@@ -17,6 +17,6 @@ ui-prototype/css/ and ui-prototype/js/
   -> src/main/resources/static/css/ and src/main/resources/static/js/
 ```
 
-Reusable layout, navigation, form, feedback, and common UI should become JSP fragments. Page-specific markup should become a JSP page within the matching feature folder. Shared CSS and JavaScript behavior remain independent of the page so they can be moved to `static/` without redesigning the UI.
+Các thành phần bố cục, điều hướng, biểu mẫu, phản hồi trạng thái và giao diện dùng chung có thể tái sử dụng nên được chuyển thành mảnh giao diện JSP (fragment). Mã HTML riêng của từng trang nên được chuyển thành trang JSP trong thư mục tính năng tương ứng. CSS và các xử lý JavaScript dùng chung cần độc lập với từng trang để có thể chuyển vào `static/` mà không phải thiết kế lại giao diện.
 
-This scaffold defines boundaries only. It does not introduce controllers, services, repositories, entities, authentication, or database behavior.
+Bộ khung hiện tại chỉ xác định ranh giới giữa các phần của ứng dụng. Chưa có controller, service, repository, entity, chức năng xác thực hay xử lý cơ sở dữ liệu.

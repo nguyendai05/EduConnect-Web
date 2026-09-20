@@ -1,20 +1,22 @@
-# UI Page Map
+# Bản đồ các trang giao diện
 
-Production pages use descriptive feature paths. The UI reference numbers 01-53 in Google Drive are design reference IDs only; they are not required production filenames.
+Các trang trong ứng dụng chính thức sử dụng đường dẫn mô tả rõ tính năng. Các số 01–53 của giao diện trên Google Drive chỉ là mã tham chiếu thiết kế, không bắt buộc dùng làm tên tệp trong ứng dụng chính thức.
 
-| Category | Folder | Example mapping |
+| Nhóm chức năng | Thư mục | Ví dụ ánh xạ |
 | --- | --- | --- |
-| Authentication | `auth/` | 42 Đăng nhập -> `auth/login`; 43 Đăng ký -> `auth/register` |
-| Account | `account/` | Account pages -> `account/<descriptive-name>` |
-| Tutor Discovery | `tutor/` | 01 Tìm gia sư -> `tutor/search` |
-| Invitation | `invitation/` | Invitation pages -> `invitation/<descriptive-name>` |
-| Job Posts | `job/` | Job pages -> `job/<descriptive-name>` |
-| Contracts | `contract/` | Contract pages -> `contract/<descriptive-name>` |
-| Lessons | `lesson/` | Lesson pages -> `lesson/<descriptive-name>` |
-| Payments | `payment/` | Payment pages -> `payment/<descriptive-name>` |
-| Wallet | `wallet/` | 11 Ví -> `wallet/index` |
-| Chat | `chat/` | Chat pages -> `chat/<descriptive-name>` |
-| Notifications | `notification/` | Notification pages -> `notification/<descriptive-name>` |
-| Admin | `admin/` | 33 Chi tiết duyệt gia sư -> `admin/tutor-review-detail` |
+| Xác thực | `auth/` | 42 Đăng nhập -> `auth/login`; 43 Đăng ký -> `auth/register` |
+| Tài khoản | `account/` | Các trang tài khoản -> `account/<descriptive-name>` |
+| Tìm gia sư | `tutor/` | 01 Tìm gia sư -> `tutor/search` |
+| Lời mời | `invitation/` | Các trang lời mời -> `invitation/<descriptive-name>` |
+| Tin tuyển gia sư | `job/` | Các trang tin tuyển gia sư -> `job/<descriptive-name>` |
+| Hợp đồng | `contract/` | Các trang hợp đồng -> `contract/<descriptive-name>` |
+| Buổi học | `lesson/` | Các trang buổi học -> `lesson/<descriptive-name>` |
+| Thanh toán | `payment/` | Các trang thanh toán -> `payment/<descriptive-name>` |
+| Ví | `wallet/` | 11 Ví -> `wallet/index` |
+| Trò chuyện | `chat/` | Các trang trò chuyện -> `chat/<descriptive-name>` |
+| Thông báo | `notification/` | Các trang thông báo -> `notification/<descriptive-name>` |
+| Quản trị | `admin/` | 33 Chi tiết duyệt gia sư -> `admin/tutor-review-detail` |
 
-Files such as `01.html`, `02.html`, or `03.html` should not be used as production page names.
+Trong các ví dụ trên, `<descriptive-name>` là phần giữ chỗ cho tên mô tả chức năng của trang.
+
+Không nên dùng các tên như `01.html`, `02.html` hoặc `03.html` cho tệp trang trong ứng dụng chính thức.

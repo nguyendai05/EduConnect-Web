@@ -1,3 +1,3 @@
-# Scripts
+# Tập lệnh hỗ trợ
 
-Project automation scripts belong here when a repeated team workflow justifies them. No helper script is required for the initial scaffold.
+Đặt các tập lệnh tự động hóa dự án tại đây khi nhóm có quy trình lặp lại cần được tự động hóa. Giai đoạn tạo bộ khung ban đầu chưa cần tập lệnh hỗ trợ.
