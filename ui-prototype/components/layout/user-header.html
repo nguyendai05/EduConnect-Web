@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User header</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-header.css">
+</head>
+<body>
+<header class="user-header" data-component="user-header">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
+            <span class="user-header__brand-mark" aria-hidden="true">
+                <img src="../../assets/icons/logo.svg" alt="">
+            </span>
+            <span class="user-header__brand-name">Edu Connect</span>
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link is-active" href="#trang-chu" aria-current="page">Trang chủ</a>
+            <a class="user-header__nav-link" href="#tim-gia-su">Tìm gia sư</a>
+            <a class="user-header__nav-link" href="#tin-tim-gia-su">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" href="#lop-nhom">Lớp nhóm</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" title="Tin nhắn">
+                <img src="../../assets/icons/message.svg" alt="">
+            </button>
+            <button class="user-header__icon-button" type="button" aria-label="Thông báo" title="Thông báo">
+                <img src="../../assets/icons/notification.svg" alt="">
+            </button>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản của Chị Mai Lan" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true">ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong>Chị Mai Lan</strong>
+                        <span>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-identity">
+                        <span class="user-header__menu-avatar" aria-hidden="true">ML</span>
+                        <span class="user-header__menu-identity-copy">
+                            <strong>Chị Mai Lan</strong>
+                            <span>Học viên / Phụ huynh</span>
+                        </span>
+                    </div>
+
+                    <div class="user-header__menu-section">
+                        <a class="user-header__menu-item" href="#ho-so" role="menuitem">Hồ sơ cá nhân</a>
+                        <a class="user-header__menu-item" href="#hop-dong" role="menuitem">Hợp đồng của tôi</a>
+                        <a class="user-header__menu-item" href="#vi-tri-thuc" role="menuitem">Ví TriThức</a>
+                    </div>
+
+                    <div class="user-header__menu-section">
+                        <a class="user-header__menu-item" href="#bao-mat" role="menuitem">Bảo mật tài khoản</a>
+                        <a class="user-header__menu-item" href="#lich-su-giao-dich" role="menuitem">Lịch sử giao dịch &amp; Hóa đơn</a>
+                    </div>
+
+                    <div class="user-header__menu-section">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt="">
+                            <span>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<script src="../../js/core/user-header.js" defer></script>
+</body>
+</html>
