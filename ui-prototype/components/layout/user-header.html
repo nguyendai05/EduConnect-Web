@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../../css/components/layout/user-header.css">
 </head>
 <body>
-<header class="user-header" data-component="user-header">
+<header class="user-header" data-component="user-header" data-user-variant="A">
     <div class="user-header__inner">
         <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
             <span class="user-header__brand-mark" aria-hidden="true">
@@ -20,17 +20,17 @@
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link is-active" href="#trang-chu" aria-current="page">Trang chủ</a>
-            <a class="user-header__nav-link" href="#tim-gia-su">Tìm gia sư</a>
-            <a class="user-header__nav-link" href="#tin-tim-gia-su">Tin tìm gia sư</a>
-            <a class="user-header__nav-link" href="#lop-nhom">Lớp nhóm</a>
+            <a class="user-header__nav-link is-active" data-nav-key="home" data-route="/app/dashboard" href="#trang-chu" aria-current="page">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="#tim-gia-su">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="#tin-tim-gia-su">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="groups" data-route="/app/group-classes" href="#lop-nhom">Lớp nhóm</a>
         </nav>
 
         <div class="user-header__actions">
-            <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" title="Tin nhắn">
+            <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" title="Tin nhắn" data-user-action="messages">
                 <img src="../../assets/icons/message.svg" alt="">
             </button>
-            <button class="user-header__icon-button" type="button" aria-label="Thông báo" title="Thông báo">
+            <button class="user-header__icon-button" type="button" aria-label="Thông báo" title="Thông báo" data-user-action="notifications">
                 <img src="../../assets/icons/notification.svg" alt="">
             </button>
 
@@ -41,20 +41,12 @@
                     <span class="user-header__avatar" aria-hidden="true">ML</span>
                     <span class="user-header__profile-copy">
                         <strong>Chị Mai Lan</strong>
-                        <span>Phụ huynh</span>
+                        <span data-profile-role>Phụ huynh</span>
                     </span>
                     <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
                 </button>
 
                 <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
-                    <div class="user-header__menu-identity">
-                        <span class="user-header__menu-avatar" aria-hidden="true">ML</span>
-                        <span class="user-header__menu-identity-copy">
-                            <strong>Chị Mai Lan</strong>
-                            <span>Học viên / Phụ huynh</span>
-                        </span>
-                    </div>
-
                     <div class="user-header__menu-section">
                         <a class="user-header__menu-item" href="#ho-so" role="menuitem">Hồ sơ cá nhân</a>
                         <a class="user-header__menu-item" href="#hop-dong" role="menuitem">Hợp đồng của tôi</a>
