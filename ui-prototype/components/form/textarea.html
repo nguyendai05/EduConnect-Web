@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Textarea</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/form/textarea.css">
+</head>
+<body class="textarea-preview">
+<main class="textarea-demo" aria-labelledby="textarea-demo-title">
+    <header class="textarea-demo__header">
+        <div>
+            <h1 id="textarea-demo-title">4. Textarea</h1>
+            <p>Tối thiểu 120px · Padding 14px · Bộ đếm ký tự.</p>
+        </div>
+        <code>textarea</code>
+    </header>
+
+    <section class="textarea-field">
+        <div class="textarea-field__label-row">
+            <label class="textarea-field__label" for="learning-description">
+                Mô tả nhu cầu học tập
+                <span class="textarea-field__required" aria-hidden="true">*</span>
+                <span class="sr-only">(bắt buộc)</span>
+            </label>
+            <span class="textarea-field__counter" id="learning-description-counter">184 / 500 ký tự</span>
+        </div>
+        <textarea
+            class="textarea-control"
+            id="learning-description"
+            name="learningDescription"
+            rows="6"
+            maxlength="500"
+            required
+            aria-describedby="learning-description-counter learning-description-help"
+        >Học sinh đang học lớp 11 ban Tự nhiên, bị hổng phần Lượng giác và Hình học không gian Oxyz. Cần gia sư có phương pháp truyền cảm hứng, ôn 2 buổi/tuần vào tối thứ 2 và thứ 6, tại nhà...</textarea>
+        <p class="textarea-field__help" id="learning-description-help">
+            Bộ đếm ký tự chỉ hiển thị khi trang có giới hạn cụ thể.
+        </p>
+    </section>
+</main>
+</body>
+</html>

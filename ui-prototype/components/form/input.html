@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Input</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+</head>
+<body class="input-preview">
+<main class="input-demo" aria-labelledby="input-demo-title">
+    <header class="input-demo__header">
+        <div>
+            <h1 id="input-demo-title">2. Input — Ô nhập văn bản &amp; Ô nhập số tiền (Numeric/Money)</h1>
+            <p class="input-demo__description">
+                Desktop: 48px · Mobile concept: 52px · Text: 16px/24px · Placeholder: #94A3B8 ·
+                Padding: 0 14px · Focus: 2px solid #1A6FD4.
+            </p>
+        </div>
+        <code class="input-demo__path">components/form/input</code>
+    </header>
+
+    <section class="input-demo__grid" aria-label="Các biến thể Input">
+        <article class="input-demo__item">
+            <label class="input-demo__label" for="input-default">Trạng thái default</label>
+            <div class="input-control">
+                <input
+                    class="input-control__input"
+                    id="input-default"
+                    name="keyword"
+                    type="text"
+                    placeholder="Ví dụ: Tìm gia sư Toán 11..."
+                >
+            </div>
+            <p class="input-demo__note">border: 1px solid #E2E8F0</p>
+        </article>
+
+        <article class="input-demo__item">
+            <label class="input-demo__label input-demo__label--primary" for="input-focus">
+                Trạng thái focus
+            </label>
+            <div class="input-control is-focused">
+                <input
+                    class="input-control__input"
+                    id="input-focus"
+                    name="examGoal"
+                    type="text"
+                    value="Ôn thi THPT Quốc gia"
+                >
+            </div>
+            <p class="input-demo__note input-demo__note--primary">
+                border: 2px solid #1A6FD4 (no huge shadow)
+            </p>
+        </article>
+
+        <article class="input-demo__item">
+            <label class="input-demo__label" for="input-location">Có leading icon</label>
+            <div class="input-control">
+                <img class="input-control__icon" src="../../assets/icons/dinh-vi.svg" alt="">
+                <input
+                    class="input-control__input input-control__input--with-leading"
+                    id="input-location"
+                    name="location"
+                    type="text"
+                    value="Quận Bình Thạnh, TP.HCM"
+                >
+            </div>
+            <p class="input-demo__note">Icon Lucide 16–20px</p>
+        </article>
+
+        <article class="input-demo__item">
+            <label class="input-demo__label input-demo__label--strong" for="input-tuition">
+                Money input (Học phí)
+            </label>
+            <div class="input-control">
+                <input
+                    class="input-control__input input-control__input--money"
+                    id="input-tuition"
+                    name="tuition"
+                    type="text"
+                    inputmode="numeric"
+                    value="250.000"
+                    aria-describedby="input-tuition-note"
+                >
+                <span class="input-control__suffix" aria-hidden="true">₫ / buổi</span>
+            </div>
+            <p class="input-demo__note" id="input-tuition-note">
+                Đơn vị tách biệt, định dạng 250.000 ₫
+            </p>
+        </article>
+    </section>
+</main>
+</body>
+</html>

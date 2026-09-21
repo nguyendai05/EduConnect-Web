@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FormField</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/form/form-field.css">
+</head>
+<body class="component-preview">
+<main class="form-field-demo" aria-labelledby="form-field-demo-title">
+    <header class="form-field-demo__header">
+        <div>
+            <p class="form-field-demo__eyebrow">Component biểu mẫu dùng chung</p>
+            <h1 id="form-field-demo-title">FormField — Cấu trúc bao gói nhập liệu</h1>
+            <p>
+                Label 14px/600 + dấu bắt buộc + control slot + helper hoặc error text.
+                Khoảng cách giữa các thành phần là 8px.
+            </p>
+        </div>
+        <code class="form-field-demo__path">components/form/form-field</code>
+    </header>
+
+    <section class="form-field-demo__grid" aria-label="Các biến thể FormField">
+        <article class="form-field-specimen">
+            <div class="form-field-specimen__meta">
+                <strong>Biến thể B: Bắt buộc (Required)</strong>
+                <span>gap: 8px</span>
+            </div>
+
+            <div class="form-field">
+                <div class="form-field__label">
+                    Môn học
+                    <span class="form-field__required" aria-hidden="true">*</span>
+                    <span class="sr-only">(bắt buộc)</span>
+                </div>
+                <div class="form-field__control-slot">
+                    <span>Toán học</span>
+                    <svg
+                        class="form-field__slot-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="m6 9 6 6 6-6"></path>
+                    </svg>
+                </div>
+                <p class="form-field__message">
+                    Chọn môn bạn muốn tìm gia sư kèm cặp.
+                </p>
+            </div>
+        </article>
+
+        <article class="form-field-specimen form-field-specimen--error">
+            <div class="form-field-specimen__meta">
+                <strong>Biến thể D: Báo lỗi (Error State)</strong>
+                <span>border: #B91C1C</span>
+            </div>
+
+            <div class="form-field is-error" data-state="error">
+                <div class="form-field__label">
+                    Học phí mong muốn
+                    <span class="form-field__required" aria-hidden="true">*</span>
+                    <span class="sr-only">(bắt buộc)</span>
+                </div>
+                <div class="form-field__control-slot">
+                    <span>50.000</span>
+                    <span class="form-field__slot-suffix">₫ / buổi</span>
+                </div>
+                <p class="form-field__message form-field__message--error" role="alert">
+                    Mức học phí tối thiểu theo quy định là 100.000 ₫/buổi.
+                </p>
+            </div>
+        </article>
+
+        <article class="form-field-specimen form-field-specimen--disabled">
+            <div class="form-field-specimen__meta">
+                <strong>Biến thể E &amp; F: Vô hiệu &amp; Chỉ đọc</strong>
+                <span>bg: #F1F5F9</span>
+            </div>
+
+            <div class="form-field is-disabled" data-state="disabled">
+                <div class="form-field__label">Mã tin tìm gia sư (Chỉ đọc)</div>
+                <div class="form-field__control-slot">
+                    <span>TT-20260918-024</span>
+                </div>
+                <p class="form-field__message">
+                    Mã định danh hệ thống tự sinh, không thể sửa đổi.
+                </p>
+            </div>
+        </article>
+    </section>
+</main>
+</body>
+</html>
