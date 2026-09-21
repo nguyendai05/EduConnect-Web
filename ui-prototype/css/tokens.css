@@ -22,9 +22,14 @@
   --color-border: #e2e8f0;
 
   --color-success: #15803d;
+  --color-success-container: #dcfce7;
   --color-warning: #b45309;
+  --color-warning-container: #fef3c7;
   --color-danger: #b91c1c;
+  --color-danger-container: #fee2e2;
   --color-info: #0369a1;
+  --color-info-container: #dbeafe;
+  --color-on-primary: #ffffff;
 
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
