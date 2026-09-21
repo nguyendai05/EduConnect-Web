@@ -17,9 +17,9 @@
   let selected = null
   const money = value => new Intl.NumberFormat('vi-VN').format(value) + ' ₫'
   const report = document.createElement('div')
-  report.className = 'contract-report textarea-field'
+  report.className = 'contract-report form-field'
   report.hidden = true
-  report.innerHTML = '<label class="textarea-field__label" for="report-detail">Nội dung cần hỗ trợ</label><textarea class="textarea-control" id="report-detail" maxlength="2000" aria-describedby="report-error" placeholder="Mô tả vấn đề xảy ra trong buổi học..."></textarea><p class="contract-report__error" id="report-error" role="alert"></p>'
+  report.innerHTML = '<label class="form-field__label" for="report-detail">Nội dung cần hỗ trợ</label><textarea class="textarea-control" id="report-detail" maxlength="2000" aria-describedby="report-error" placeholder="Mô tả vấn đề xảy ra trong buổi học..."></textarea><p class="form-field__message form-field__message--error" hidden id="report-error" role="alert"></p>'
   modal.querySelector('.modal__body').after(report)
   const render = () => {
     list.replaceChildren()
@@ -46,6 +46,7 @@
       const title = { all: 'Tất cả', completed: 'Hoàn thành', pending: 'Chờ xác nhận', upcoming: 'Sắp tới' }[value]
       button.textContent = `${title} (${value === 'all' ? lessons.length : lessons.filter(l => l.status === value).length})`
       button.setAttribute('aria-pressed', String(value === filter))
+      button.classList.toggle('filter-chip--selected', value === filter)
     })
   }
   const info = (title, message) => {
@@ -66,6 +67,7 @@
       report.hidden = false
       report.querySelector('textarea').value = ''
       document.getElementById('report-error').textContent = ''
+      document.getElementById('report-error').hidden = true
       report.querySelector('textarea').removeAttribute('aria-invalid')
       window.EduModal.open(modal, { title: `Báo vấn đề · Buổi ${selected.id}`, message: 'Mô tả vấn đề để bộ phận hỗ trợ xem xét. Buổi học sẽ chuyển sang trạng thái chờ xử lý.', confirmText: 'Gửi báo cáo' })
     } else if (action === 'detail' && selected) info(`Buổi ${selected.id} · ${selected.date}`, `Toán lớp 11 · 19:00–20:30 · Gia sư Nguyễn Minh Anh. Trạng thái: ${labels[selected.status]}. Học phí: 220.000 ₫.`)
@@ -78,6 +80,7 @@
     if (action === 'report' && report.querySelector('textarea').value.trim().length < 10) {
       event.preventDefault()
       document.getElementById('report-error').textContent = 'Vui lòng mô tả vấn đề ít nhất 10 ký tự.'
+      document.getElementById('report-error').hidden = false
       report.querySelector('textarea').setAttribute('aria-invalid', 'true')
       report.querySelector('textarea').focus()
       return

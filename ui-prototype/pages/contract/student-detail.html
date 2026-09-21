@@ -16,6 +16,9 @@
 <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
 <link rel="stylesheet" href="../../css/components/domain/lesson/lesson-card.css">
 <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+<link rel="stylesheet" href="../../css/components/layout/page-header.css">
+<link rel="stylesheet" href="../../css/components/navigation/filter-chip.css">
+<link rel="stylesheet" href="../../css/components/form/form-field.css">
 <link rel="stylesheet" href="../../css/pages/contract/student-detail.css">
 <script src="../../js/core/user-header.js" defer></script>
 <script src="../../js/core/modal.js" defer></script>
@@ -118,10 +121,17 @@
                 <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" title="Chi tiết hợp đồng học HD-20260919-024">Chi tiết hợp đồng học HD-20260919-024</span></li>
             </ol>
         </nav></div>
-  <section class="contract-hero">
-    <div><p class="contract-eyebrow">HỢP ĐỒNG HỌC</p><h1>Học Toán cùng Nguyễn Minh Anh</h1><p class="contract-muted">HD-20260919-024 <span aria-hidden="true">·</span> Toán lớp 11 <span aria-hidden="true">·</span> Học trực tiếp</p></div>
-    <span class="contract-state">Đang thực hiện</span>
-  </section>
+  <header class="page-header">
+    <div class="page-header__content">
+      <div class="page-header__title-block">
+        <div class="page-header__title-row">
+          <h1 class="page-header__title">Học Toán cùng Nguyễn Minh Anh</h1>
+          <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Đang thực hiện</span>
+        </div>
+        <p class="page-header__description">HD-20260919-024 · Toán lớp 11 · Học trực tiếp</p>
+      </div>
+    </div>
+  </header>
   <section class="contract-progress" aria-label="Tiến độ hợp đồng">
     <div><strong>Tiến độ học tập: 3 / 8 buổi</strong><p class="contract-muted" id="completion-summary">2 buổi hoàn thành · 1 buổi chờ xác nhận</p></div>
     <div class="contract-progress__bar"><label for="learning-progress">Đã học 3 buổi <span>Còn 5 buổi</span></label><progress id="learning-progress" max="8" value="3">3/8</progress></div>
@@ -136,7 +146,7 @@
         <div class="contract-total"><span>Tổng giá trị hợp đồng</span><strong>1.760.000 ₫</strong></div>
       </section>
       <section class="contract-panel" aria-labelledby="lessons-title"><div class="contract-section-heading"><div><h2 id="lessons-title">Danh sách buổi học</h2><p class="contract-muted">Theo dõi điểm danh và xác nhận từng buổi học.</p></div></div>
-        <div class="contract-filters" role="group" aria-label="Lọc buổi học"><button type="button" data-filter="all" aria-pressed="true">Tất cả (8)</button><button type="button" data-filter="completed" aria-pressed="false">Hoàn thành (2)</button><button type="button" data-filter="pending" aria-pressed="false">Chờ xác nhận (1)</button><button type="button" data-filter="upcoming" aria-pressed="false">Sắp tới (5)</button></div>
+        <div class="contract-filters filter-chip-list" role="group" aria-label="Lọc buổi học"><button class="filter-chip filter-chip--selected" type="button" data-filter="all" aria-pressed="true">Tất cả (8)</button><button class="filter-chip" type="button" data-filter="completed" aria-pressed="false">Hoàn thành (2)</button><button class="filter-chip" type="button" data-filter="pending" aria-pressed="false">Chờ xác nhận (1)</button><button class="filter-chip" type="button" data-filter="upcoming" aria-pressed="false">Sắp tới (5)</button></div>
         <p class="contract-sr-only" id="filter-status" role="status"></p>
         <div class="contract-lessons" id="lesson-list"></div>
         <section class="empty-state" id="lessons-empty" hidden><span class="empty-state__icon" aria-hidden="true"></span><h3 class="empty-state__title">Không có buổi học phù hợp</h3><p class="empty-state__description">Chọn bộ lọc khác để xem các buổi học.</p></section>
