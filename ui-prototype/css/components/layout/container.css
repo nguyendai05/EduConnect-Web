@@ -1,0 +1,23 @@
+.container-demo {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+.container-demo__label {
+  margin: 0 0 var(--space-3);
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.3333;
+  text-transform: uppercase;
+}
+
+.container-demo__surface {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text-secondary);
+}

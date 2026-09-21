@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User shell</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+</head>
+<body>
+    <div class="user-shell" data-component="user-shell">
+        <!-- Gắn UserHeader dùng chung tại slot này. -->
+        <header class="user-shell__header" data-shell-slot="user-header"></header>
+        <main class="user-shell__main">
+            <div class="user-shell__content">
+                <!-- Gắn Breadcrumb và PageHeader theo ngữ cảnh trang. -->
+                <section class="user-shell__grid" data-shell-slot="content">
+                    <article>Vùng nội dung chính · 8 cột</article>
+                    <aside>Vùng hỗ trợ · 4 cột</aside>
+                </section>
+            </div>
+        </main>
+        <!-- Gắn UserFooter dùng chung tại slot này. -->
+        <footer class="user-shell__footer" data-shell-slot="user-footer"></footer>
+    </div>
+</body>
+</html>
