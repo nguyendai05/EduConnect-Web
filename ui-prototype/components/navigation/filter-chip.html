@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FilterChip</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components/navigation/filter-chip.css">
+</head>
+<body class="filter-chip-preview">
+<main class="filter-chip-demo" aria-labelledby="filter-chip-demo-title">
+    <header class="filter-chip-demo__header">
+        <div>
+            <h1 id="filter-chip-demo-title">12. FilterChip (Thẻ lọc nhanh)</h1>
+            <p>Chiều cao 32–36px · Bo tròn radius-full (999px) · Trạng thái chọn: #EAF2FC.</p>
+        </div>
+        <code>filter-chip</code>
+    </header>
+
+    <section class="filter-chip-demo__content" aria-label="Các FilterChip thực tế">
+        <p>Hàng thẻ lọc thực tế TriThức:</p>
+        <div class="filter-chip-list">
+            <button class="filter-chip filter-chip--selected" type="button" data-filter-chip data-removable="true" aria-pressed="true">
+                <span>Toán học</span>
+                <span class="filter-chip__remove" aria-hidden="true">×</span>
+            </button>
+            <button class="filter-chip filter-chip--selected" type="button" data-filter-chip aria-pressed="true">Lớp 11 (THPT)</button>
+            <button class="filter-chip" type="button" data-filter-chip aria-pressed="false">Bình Thạnh</button>
+            <button class="filter-chip" type="button" data-filter-chip aria-pressed="false">Dạy tại nhà</button>
+            <button class="filter-chip" type="button" data-filter-chip aria-pressed="false">≤ 250.000 ₫/buổi</button>
+        </div>
+        <p class="filter-chip-demo__note">Không dùng chip quảng cáo tiếp thị; chỉ phục vụ truy vấn thuộc tính dữ liệu.</p>
+    </section>
+</main>
+<script src="../../js/core/filter-chip.js" defer></script>
+</body>
+</html>
