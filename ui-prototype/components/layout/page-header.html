@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page header</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/layout/page-header.css">
+</head>
+<body>
+    <main class="page-header-demo">
+        <section class="page-header-demo__example" aria-labelledby="title-only-heading">
+            <p class="page-header-demo__label">Biến thể A · Title only</p>
+            <header class="page-header">
+                <div class="page-header__title-block">
+                    <h1 class="page-header__title" id="title-only-heading">Khám phá lớp nhóm chất lượng cao</h1>
+                </div>
+            </header>
+        </section>
+
+        <section class="page-header-demo__example" aria-labelledby="description-heading">
+            <p class="page-header-demo__label">Biến thể B · Title + description</p>
+            <header class="page-header">
+                <div class="page-header__title-block">
+                    <h1 class="page-header__title" id="description-heading">Bảo mật tài khoản</h1>
+                    <p class="page-header__description">Quản lý mật khẩu đăng nhập, xác thực hai lớp và các phiên làm việc đang hoạt động trên hệ thống.</p>
+                </div>
+            </header>
+        </section>
+
+        <section class="page-header-demo__example" aria-labelledby="actions-heading">
+            <p class="page-header-demo__label">Biến thể C · Title + description + actions</p>
+            <header class="page-header">
+                <div class="page-header__content">
+                    <div class="page-header__title-block">
+                        <h1 class="page-header__title" id="actions-heading">Hồ sơ cá nhân</h1>
+                        <p class="page-header__description">Cập nhật thông tin học thuật, bằng cấp, chứng chỉ và thông tin liên hệ của gia sư.</p>
+                    </div>
+                    <div class="page-header__actions" aria-label="Thao tác hồ sơ">
+                        <button class="page-header__action page-header__action--secondary" type="button">Chỉnh sửa</button>
+                        <button class="page-header__action page-header__action--primary" type="button">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </header>
+        </section>
+
+        <section class="page-header-demo__example" aria-labelledby="status-heading">
+            <p class="page-header-demo__label">Biến thể D · Title + status</p>
+            <header class="page-header">
+                <div class="page-header__content page-header__content--centered">
+                    <div class="page-header__title-row">
+                        <h1 class="page-header__title" id="status-heading">Hợp đồng giảng dạy: HD-20260919-024</h1>
+                        <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Đang thực hiện</span>
+                    </div>
+                    <p class="page-header__meta">Cập nhật lần cuối: 15:45 · 24/10/2026</p>
+                </div>
+            </header>
+        </section>
+
+        <section class="page-header-demo__example" aria-labelledby="full-heading">
+            <p class="page-header-demo__label">Biến thể E · Full composition</p>
+            <header class="page-header page-header--full">
+                <nav class="page-header__breadcrumb" aria-label="Breadcrumb">
+                    <ol class="page-header__breadcrumb-list">
+                        <li><a href="#trang-chu">Trang chủ</a></li>
+                        <li><a href="#hop-dong">Giao kết học tập</a></li>
+                        <li aria-current="page"><span>Hợp đồng HD-20260919-024</span></li>
+                    </ol>
+                </nav>
+                <div class="page-header__content">
+                    <div class="page-header__title-block">
+                        <div class="page-header__title-row">
+                            <h1 class="page-header__title" id="full-heading">Hợp đồng giảng dạy: HD-20260919-024</h1>
+                            <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Đang thực hiện</span>
+                        </div>
+                        <p class="page-header__description">Gia sư Vũ Hải Đăng phụ trách giảng dạy môn Toán 12 Nâng cao cho học sinh Trần Hoàng Nam trong 24 buổi.</p>
+                    </div>
+                    <div class="page-header__actions" aria-label="Thao tác hợp đồng">
+                        <button class="page-header__action page-header__action--secondary" type="button">Lịch sử điều khoản</button>
+                        <button class="page-header__action page-header__action--primary" type="button">Nhắn tin với gia sư</button>
+                    </div>
+                </div>
+            </header>
+        </section>
+    </main>
+</body>
+</html>
