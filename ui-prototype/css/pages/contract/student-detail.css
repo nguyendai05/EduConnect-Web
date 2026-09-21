@@ -1,5 +1,5 @@
 .contract-page { max-width: 1200px; margin: auto; padding: var(--space-6) var(--space-6) var(--space-10); }
-.contract-breadcrumb { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6); font-size: var(--font-size-xs); color: var(--color-text-muted); }
+.contract-breadcrumb-slot { margin-bottom: var(--space-6); }
 .contract-hero { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); margin-bottom: var(--space-6); }
 .contract-hero h1 { margin-block: var(--space-2); font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.03em; }
 .contract-eyebrow { color: var(--color-primary); font-size: var(--font-size-xs); font-weight: 700; letter-spacing: 0.08em; }

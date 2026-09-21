@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../../css/components/feedback/toast.css">
 <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
 <link rel="stylesheet" href="../../css/components/domain/lesson/lesson-card.css">
+<link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
 <link rel="stylesheet" href="../../css/pages/contract/student-detail.css">
 <script src="../../js/core/user-header.js" defer></script>
 <script src="../../js/core/modal.js" defer></script>
@@ -110,7 +111,13 @@
     </div>
 </header>
 <main class="contract-page" id="contract">
-  <nav class="contract-breadcrumb" aria-label="Đường dẫn"><span>Học tập của tôi</span><span aria-hidden="true">/</span><span aria-current="page">HD-20260919-024</span></nav>
+  <div class="contract-breadcrumb-slot"><nav class="breadcrumb" aria-label="Đường dẫn">
+            <ol class="breadcrumb__list">
+                <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
+                <li class="breadcrumb__item"><a class="breadcrumb__link" href="#hop-dong">Hợp đồng của tôi</a></li>
+                <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" title="Chi tiết hợp đồng học HD-20260919-024">Chi tiết hợp đồng học HD-20260919-024</span></li>
+            </ol>
+        </nav></div>
   <section class="contract-hero">
     <div><p class="contract-eyebrow">HỢP ĐỒNG HỌC</p><h1>Học Toán cùng Nguyễn Minh Anh</h1><p class="contract-muted">HD-20260919-024 <span aria-hidden="true">·</span> Toán lớp 11 <span aria-hidden="true">·</span> Học trực tiếp</p></div>
     <span class="contract-state">Đang thực hiện</span>
