@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkbox</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components/form/checkbox.css">
+</head>
+<body class="checkbox-preview">
+<main class="checkbox-demo" aria-labelledby="checkbox-demo-title">
+    <header class="checkbox-demo__header">
+        <div>
+            <h1 id="checkbox-demo-title">6. Checkbox</h1>
+            <p>20×20px · Bo góc 4–6px · Checked: #1A6FD4.</p>
+        </div>
+        <code>checkbox</code>
+    </header>
+
+    <section class="checkbox-demo__content" aria-label="Các trạng thái Checkbox">
+        <label class="checkbox-option">
+            <span class="checkbox-hit-area">
+                <input type="checkbox" name="show-profile" checked>
+                <span class="checkbox-box" aria-hidden="true"></span>
+            </span>
+            <span class="checkbox-option__copy">
+                <span class="checkbox-option__title checkbox-option__title--checked">Chỉ hiển thị tin phù hợp lịch rảnh</span>
+                <small>Tự động lọc các lớp trùng khung giờ trống của gia sư</small>
+            </span>
+        </label>
+
+        <label class="checkbox-option">
+            <span class="checkbox-hit-area">
+                <input type="checkbox" name="verified-tutor">
+                <span class="checkbox-box" aria-hidden="true"></span>
+            </span>
+            <span class="checkbox-option__copy">
+                <span class="checkbox-option__title">Yêu cầu gia sư đã có chứng chỉ xác minh</span>
+            </span>
+        </label>
+
+        <div class="checkbox-demo__states" aria-label="Trạng thái phụ">
+            <label class="checkbox-state">
+                <span class="checkbox-hit-area checkbox-hit-area--small">
+                    <input id="checkbox-indeterminate" type="checkbox" name="indeterminate">
+                    <span class="checkbox-box" aria-hidden="true"></span>
+                </span>
+                <span>Indeterminate</span>
+            </label>
+            <label class="checkbox-state checkbox-state--disabled">
+                <span class="checkbox-hit-area checkbox-hit-area--small">
+                    <input type="checkbox" name="disabled" disabled>
+                    <span class="checkbox-box" aria-hidden="true"></span>
+                </span>
+                <span>Disabled</span>
+            </label>
+        </div>
+    </section>
+</main>
+<script>
+    const indeterminate = document.querySelector('#checkbox-indeterminate');
+    if (indeterminate) indeterminate.indeterminate = true;
+</script>
+</body>
+</html>

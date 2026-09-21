@@ -1,0 +1,233 @@
+.user-footer {
+  background: var(--color-surface);
+  color: #10213c;
+}
+
+.user-footer__inner {
+  width: min(100% - 5rem, 79rem);
+  margin: 0 auto;
+  padding: 3.75rem 0 2.25rem;
+}
+
+.user-footer__main {
+  display: grid;
+  grid-template-columns: minmax(19rem, 1.55fr) repeat(3, minmax(10.5rem, 1fr));
+  gap: 3.5rem;
+}
+
+.user-footer__brand {
+  max-width: 21rem;
+}
+
+.user-footer__brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #075eb9;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.user-footer__brand-link:hover,
+.user-footer__brand-link:focus-visible {
+  color: #075eb9;
+}
+
+.user-footer__brand-mark {
+  width: 2.625rem;
+  height: 2.625rem;
+}
+
+.user-footer__brand p {
+  margin: 1.25rem 0 1.5rem;
+  color: #243149;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.user-footer__certificate {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.875rem;
+  color: #075eb9;
+  background: #edf3ff;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.user-footer__certificate img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.user-footer__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.user-footer__links h2 {
+  margin: 0 0 0.15rem;
+  color: #10213c;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.user-footer__links a {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  color: #334155;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.user-footer__links a:hover,
+.user-footer__links a:focus-visible {
+  color: #146bd7;
+}
+
+.user-footer__links img {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 1rem;
+  margin-top: 0.2rem;
+}
+
+.user-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 4.25rem;
+  padding: 1.5rem 1.9rem;
+  background: #edf3ff;
+  border-radius: 1rem;
+}
+
+.user-footer__bottom p {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  color: #334155;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.user-footer__bottom p > img {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-right: 0.75rem;
+}
+
+.user-footer__regions {
+  gap: 0.8rem;
+}
+
+.user-footer__regions span {
+  color: #b5c0d4;
+  font-weight: 600;
+}
+
+.user-footer__regions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #10213c;
+  white-space: nowrap;
+}
+
+.user-footer__regions a::before {
+  width: 0.35rem;
+  height: 0.35rem;
+  content: "";
+  background: #9a4b06;
+  border-radius: 50%;
+}
+
+.user-footer__regions a + a::after {
+  width: 0.2rem;
+  height: 0.2rem;
+  margin-left: 0.45rem;
+  content: "";
+  background: #b5c0d4;
+  border-radius: 50%;
+  order: -1;
+}
+
+.user-footer :focus-visible {
+  outline: 0.1875rem solid rgb(20 107 215 / 30%);
+  outline-offset: 0.25rem;
+}
+
+@media (max-width: 1100px) {
+  .user-footer__inner {
+    width: min(100% - 3rem, 67rem);
+  }
+
+  .user-footer__main {
+    grid-template-columns: minmax(17rem, 1.4fr) repeat(3, minmax(9rem, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .user-footer__inner {
+    width: min(100% - 2rem, 42rem);
+    padding-top: 2.5rem;
+  }
+
+  .user-footer__main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem 2rem;
+  }
+
+  .user-footer__brand {
+    grid-column: 1 / -1;
+    max-width: 34rem;
+  }
+
+  .user-footer__bottom {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .user-footer__inner {
+    width: min(100% - 1.5rem, 30rem);
+    padding: 2rem 0 1.5rem;
+  }
+
+  .user-footer__main {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .user-footer__brand {
+    grid-column: auto;
+  }
+
+  .user-footer__bottom {
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding: 1.25rem;
+  }
+
+  .user-footer__regions {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    row-gap: 0.45rem;
+  }
+
+  .user-footer__regions span {
+    width: 100%;
+  }
+}
