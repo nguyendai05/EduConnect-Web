@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Select</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+</head>
+<body class="select-preview">
+<main class="select-demo" aria-labelledby="select-demo-title">
+    <header class="select-demo__header">
+        <div>
+            <h1 id="select-demo-title">5. Select (Tùy chọn thả xuống)</h1>
+            <p>Chiều cao 48px · ChevronDown 16px · Bảng mở shadow-md.</p>
+        </div>
+        <code>select</code>
+    </header>
+
+    <section class="select-field" data-component="select" data-initial-open="true">
+        <span class="select-field__label" id="grade-select-label">Cấp lớp học</span>
+        <button
+            class="select-control"
+            type="button"
+            aria-labelledby="grade-select-label grade-select-value"
+            aria-haspopup="listbox"
+            aria-expanded="true"
+            aria-controls="grade-select-options"
+            data-select-trigger
+        >
+            <span id="grade-select-value" data-select-value>Trung học phổ thông (THPT)</span>
+            <img
+                class="select-control__chevron"
+                src="../../assets/icons/mui-ten-len.svg"
+                data-icon-open="../../assets/icons/mui-ten-len.svg"
+                data-icon-closed="../../assets/icons/mui-ten-xuong.svg"
+                alt=""
+            >
+        </button>
+
+        <div class="select-options" id="grade-select-options" role="listbox" aria-labelledby="grade-select-label" data-select-options>
+            <button class="select-option" type="button" role="option" aria-selected="false" data-value="Tiểu học (Lớp 1 - 5)">
+                <span>Tiểu học (Lớp 1 - 5)</span>
+            </button>
+            <button class="select-option" type="button" role="option" aria-selected="false" data-value="Trung học cơ sở (THCS)">
+                <span>Trung học cơ sở (THCS)</span>
+            </button>
+            <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Trung học phổ thông (THPT)">
+                <span>Trung học phổ thông (THPT)</span>
+                <img src="../../assets/icons/dau-tich.svg" alt="">
+            </button>
+            <button class="select-option" type="button" role="option" aria-selected="false" data-value="Luyện thi ĐGNL & Đại học">
+                <span>Luyện thi ĐGNL &amp; Đại học</span>
+            </button>
+        </div>
+    </section>
+</main>
+<script src="../../js/core/select.js" defer></script>
+</body>
+</html>

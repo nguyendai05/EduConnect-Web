@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Switch</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components/form/switch.css">
+</head>
+<body class="switch-preview">
+<main class="switch-demo" aria-labelledby="switch-demo-title">
+    <header class="switch-demo__header">
+        <div>
+            <h1 id="switch-demo-title">8. Switch (Cần gạt bật/tắt)</h1>
+            <p>44×24px · Núm tròn 20px trắng · On: #1A6FD4.</p>
+        </div>
+        <code>switch</code>
+    </header>
+
+    <section class="switch-demo__content" aria-label="Các trạng thái Switch">
+        <label class="switch-row switch-row--on">
+            <span class="switch-row__copy">
+                <span class="switch-row__title">Nhận thông báo ứng viên</span>
+                <span class="switch-row__help">Gửi email tức thì khi có gia sư mới ứng tuyển</span>
+            </span>
+            <span class="switch-control">
+                <input type="checkbox" name="applicant-notifications" checked>
+                <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            </span>
+        </label>
+
+        <label class="switch-row">
+            <span class="switch-row__copy">
+                <span class="switch-row__title">Tự động duyệt gia sư tiêu biểu</span>
+                <span class="switch-row__help">Áp dụng cho tin đã ký quỹ trước</span>
+            </span>
+            <span class="switch-control">
+                <input type="checkbox" name="featured-tutor-auto-approve">
+                <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            </span>
+        </label>
+
+        <p class="switch-demo__rule">Quy tắc: Switch luôn đi kèm nhãn giải thích rõ ràng trạng thái nhị phân.</p>
+    </section>
+</main>
+<script src="../../js/core/switch.js" defer></script>
+</body>
+</html>

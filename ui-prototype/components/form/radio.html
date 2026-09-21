@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Radio</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components/form/radio.css">
+</head>
+<body class="radio-preview">
+<main class="radio-demo" aria-labelledby="radio-demo-title">
+    <header class="radio-demo__header">
+        <div>
+            <h1 id="radio-demo-title">7. Radio (Nút chọn 1)</h1>
+            <p>20×20px · Viền tròn · Vòng chọn #1A6FD4.</p>
+        </div>
+        <code>radio</code>
+    </header>
+
+    <fieldset class="radio-field">
+        <legend>Ví dụ: Hình thức học ưu tiên</legend>
+        <label class="radio-option radio-option--selected">
+            <span class="radio-hit-area">
+                <input type="radio" name="learning-mode" value="home" checked>
+                <span class="radio-circle" aria-hidden="true"></span>
+            </span>
+            <span>Học kèm tại nhà (1 kèm 1)</span>
+        </label>
+        <label class="radio-option">
+            <span class="radio-hit-area">
+                <input type="radio" name="learning-mode" value="online">
+                <span class="radio-circle" aria-hidden="true"></span>
+            </span>
+            <span>Học trực tuyến qua Zoom/Meet</span>
+        </label>
+        <label class="radio-option">
+            <span class="radio-hit-area">
+                <input type="radio" name="learning-mode" value="hybrid">
+                <span class="radio-circle" aria-hidden="true"></span>
+            </span>
+            <span>Linh hoạt kết hợp cả hai hình thức</span>
+        </label>
+    </fieldset>
+</main>
+<script src="../../js/core/radio.js" defer></script>
+</body>
+</html>
