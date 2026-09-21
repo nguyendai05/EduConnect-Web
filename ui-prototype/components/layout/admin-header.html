@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin header</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/layout/admin-header.css">
+</head>
+<body>
+    <header class="admin-header" data-component="admin-header" data-has-unread="false">
+        <form class="admin-header__search" role="search" data-admin-search>
+            <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
+            <span class="admin-header__icon admin-header__search-icon" aria-hidden="true" style="--icon: url('../../assets/icons/search.svg')"></span>
+            <input class="admin-header__search-input" id="admin-global-search" name="query" type="search" autocomplete="off" placeholder="Tìm kiếm theo mã hợp đồng, mã tin, người dùng..." data-search-input>
+            <button class="admin-header__clear-search" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><span class="admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/cancel.svg')"></span></button>
+            <section class="admin-header__search-results" aria-label="Kết quả tìm kiếm nhanh" data-search-results hidden>
+                <div class="admin-header__popover-heading">
+                    <span>Kết quả khớp mã</span>
+                    <span>ESC để đóng</span>
+                </div>
+                <a class="admin-header__result" href="#hop-dong-9921">
+                    <span class="admin-header__result-type">HỢP ĐỒNG</span>
+                    <span class="admin-header__result-copy"><strong>HĐ-2024-9921 · Lớp Toán 12 Nâng cao</strong><span>Phụ huynh: Lê Hoàng Nam · Gia sư: Vũ Thùy Linh</span></span>
+                    <span class="admin-header__result-status is-success">Đã thanh toán</span>
+                </a>
+                <a class="admin-header__result" href="#hop-dong-8840">
+                    <span class="admin-header__result-type admin-header__result-type--accent">HỢP ĐỒNG</span>
+                    <span class="admin-header__result-copy"><strong>HĐ-2024-8840 · Lớp Hóa 10 Chuyên</strong><span>Phụ huynh: Đặng Thanh Tú · Đang điều phối</span></span>
+                    <span class="admin-header__result-status is-warning">Chờ cọc</span>
+                </a>
+                <a class="admin-header__result" href="#tin-001">
+                    <span class="admin-header__result-type admin-header__result-type--neutral">TIN DẠY</span>
+                    <span class="admin-header__result-copy"><strong>TIN-HĐ-2024-001 · Cần gia sư IELTS 7.0 Quận 1</strong><span>Tạo hôm nay, 14:20 · 3 gia sư ứng tuyển</span></span>
+                    <span class="admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/chevron-right.svg')"></span>
+                </a>
+                <div class="admin-header__search-footer">Nhấn Enter để xem tất cả kết quả <a href="#bo-loc-nang-cao">Bộ lọc nâng cao</a></div>
+            </section>
+        </form>
+
+        <div class="admin-header__utilities">
+            <span class="admin-header__system-status"><span aria-hidden="true"></span>Hệ thống bình thường</span>
+            <div class="admin-header__popover-wrap" data-notification-wrap>
+                <button class="admin-header__icon-button" type="button" aria-label="Thông báo hệ thống" aria-expanded="false" aria-controls="admin-notification-popover" data-notification-trigger><span class="admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/notification.svg')"></span><span class="admin-header__notification-dot" aria-hidden="true"></span></button>
+                <section class="admin-header__notification-popover" id="admin-notification-popover" aria-label="Thông báo vận hành" data-notification-popover hidden>
+                    <div class="admin-header__notification-title"><strong>Thông báo vận hành</strong><span>3 mới</span></div>
+                    <a class="admin-header__notification" href="#duyet-ho-so"><span class="admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/tutor-verification.svg')"></span><span><strong>Duyệt hồ sơ gia sư mới</strong><small>Trần Thị Mai Hương vừa tải chứng chỉ Sư phạm Toán.</small><time>4 phút trước</time></span></a>
+                    <a class="admin-header__notification" href="#rut-tien"><span class="admin-header__icon admin-header__notification-icon--accent" aria-hidden="true" style="--icon: url('../../assets/icons/wallet.svg')"></span><span><strong>Yêu cầu rút tiền: #HĐ-8910</strong><small>Số tiền 3.500.000đ từ gia sư Nguyễn Hữu Nam.</small><time>18 phút trước</time></span></a>
+                    <a class="admin-header__popover-link" href="#nhat-ky-thong-bao">Xem tất cả nhật ký thông báo</a>
+                </section>
+            </div>
+            <span class="admin-header__divider" aria-hidden="true"></span>
+            <div class="admin-header__popover-wrap" data-profile-wrap>
+                <button class="admin-header__profile-trigger" type="button" aria-expanded="false" aria-controls="admin-profile-popover" data-profile-trigger>
+                    <span class="admin-header__avatar" aria-hidden="true">QT</span>
+                    <span class="admin-header__profile-copy"><strong>Quản trị viên</strong><small>Admin</small></span>
+                    <span class="admin-header__chevron admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/mui-ten-xuong.svg')"></span>
+                </button>
+                <section class="admin-header__profile-popover" id="admin-profile-popover" aria-label="Tài khoản quản trị" data-profile-popover hidden>
+                    <div class="admin-header__profile-summary"><strong>Nguyễn Xuân Đại</strong><span>dai.nguyen@trithuc.edu.vn</span><span class="admin-header__permission"><span class="admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/shield-user.svg')"></span>Quyền hạn: Root Superadmin</span></div>
+                    <nav class="admin-header__profile-menu" aria-label="Tác vụ tài khoản quản trị">
+                        <a href="#nhat-ky-ca-nhan"><span class="admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/audit-log.svg')"></span>Nhật ký thao tác cá nhân</a>
+                        <a href="#bao-mat"><span class="admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/password.svg')"></span>Đổi mật khẩu &amp; 2FA</a>
+                        <a href="#tuy-chinh"><span class="admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/settings.svg')"></span>Tùy chỉnh giao diện quản trị</a>
+                        <a class="is-danger" href="#dang-xuat"><span class="admin-header__icon" aria-hidden="true" style="--icon: url('../../assets/icons/dang-xuat.svg')"></span>Đăng xuất phiên quản trị</a>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </header>
+    <main class="admin-header-demo" aria-label="Nội dung minh họa">Nội dung trang quản trị</main>
+    <script src="../../js/core/admin-header.js" defer></script>
+</body>
+</html>
