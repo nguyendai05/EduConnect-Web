@@ -1,5 +1,12 @@
 /* Page-only interaction state; connect to server data when integrating JSP. */
 (() => {
+  // Configure the shared header without changing the teammate's component source.
+  const header = document.querySelector('[data-component="user-header"]')
+  const walletLink = header.querySelector('[data-menu-item="2"]')
+  walletLink.querySelector('[data-menu-label]').textContent = 'Ví Edu Connect'
+  walletLink.href = '#finance'
+  header.querySelector('[data-menu-item="1"]').href = '#contract'
+  header.querySelector('[data-menu-item="4"]').href = '#history-title'
   const dates = ['28/09/2026', '02/10/2026', '05/10/2026', '09/10/2026', '12/10/2026', '16/10/2026', '19/10/2026', '23/10/2026']
   const lessons = dates.map((date, index) => ({ id: index + 1, date, status: index < 2 ? 'completed' : index === 2 ? 'pending' : 'upcoming' }))
   const labels = { completed: 'Đã hoàn thành', pending: 'Chờ xác nhận', upcoming: 'Sắp tới', reported: 'Chờ xử lý' }
@@ -10,9 +17,9 @@
   let selected = null
   const money = value => new Intl.NumberFormat('vi-VN').format(value) + ' ₫'
   const report = document.createElement('div')
-  report.className = 'contract-report'
+  report.className = 'contract-report textarea-field'
   report.hidden = true
-  report.innerHTML = '<label for="report-detail">Nội dung cần hỗ trợ</label><textarea id="report-detail" maxlength="2000" aria-describedby="report-error" placeholder="Mô tả vấn đề xảy ra trong buổi học..."></textarea><p class="contract-report__error" id="report-error" role="alert"></p>'
+  report.innerHTML = '<label class="textarea-field__label" for="report-detail">Nội dung cần hỗ trợ</label><textarea class="textarea-control" id="report-detail" maxlength="2000" aria-describedby="report-error" placeholder="Mô tả vấn đề xảy ra trong buổi học..."></textarea><p class="contract-report__error" id="report-error" role="alert"></p>'
   modal.querySelector('.modal__body').after(report)
   const render = () => {
     list.replaceChildren()
