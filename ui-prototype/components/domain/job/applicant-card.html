@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ApplicantCard</title>
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/reset.css">
+    <link rel="stylesheet" href="../../../css/base.css">
+    <link rel="stylesheet" href="../../../css/components/domain/job/applicant-card.css">
+</head>
+<body class="applicant-card-preview">
+<main class="applicant-card-demo" aria-label="Các biến thể ApplicantCard">
+    <article class="applicant-card">
+        <header class="applicant-card__header">
+            <div class="applicant-card__identity">
+                <div class="applicant-card__avatar applicant-card__avatar--pending">MA</div>
+                <div>
+                    <div class="applicant-card__name-row">
+                        <h1>Nguyễn Minh Anh</h1>
+                        <svg class="applicant-card__verified" viewBox="0 0 24 24" fill="none" aria-label="Đã xác minh"><path d="M12 3.5 14 5l2.5-.1.9 2.3 2.1 1.4-.7 2.4.7 2.4-2.1 1.4-.9 2.3L14 17l-2 1.5L10 17l-2.5.1-.9-2.3-2.1-1.4.7-2.4-.7-2.4 2.1-1.4.9-2.3L10 5l2-1.5Z"/><path d="m8.5 12 2.2 2.2 4.8-4.8"/></svg>
+                    </div>
+                    <p class="applicant-card__details"><span class="applicant-card__rating"><span aria-hidden="true">★</span> 4.9</span><span>·</span><span>ĐH Sư phạm TP.HCM</span></p>
+                </div>
+            </div>
+            <span class="applicant-card__status applicant-card__status--pending">Đang chờ</span>
+        </header>
+
+        <div class="applicant-card__proposal">
+            <div><span>Học phí đề xuất:</span><strong>220.000 ₫ / buổi</strong></div>
+            <p>"Chào phụ huynh, tôi có 3 năm kinh nghiệm kèm môn Toán 11 và luyện thi ĐGNL. Có thể dạy tối T2 - T6."</p>
+        </div>
+
+        <footer class="applicant-card__actions">
+            <button type="button" class="applicant-card__button applicant-card__button--outline">[Xem hồ sơ]</button>
+            <button type="button" class="applicant-card__button applicant-card__button--primary">[Chọn gia sư]</button>
+        </footer>
+    </article>
+
+    <article class="applicant-card applicant-card--selected">
+        <header class="applicant-card__header">
+            <div class="applicant-card__identity">
+                <div class="applicant-card__avatar applicant-card__avatar--selected">LK</div>
+                <div>
+                    <div class="applicant-card__name-row">
+                        <h1>Lê Hoàng Khoa</h1>
+                        <svg class="applicant-card__verified" viewBox="0 0 24 24" fill="none" aria-label="Đã xác minh"><path d="M12 3.5 14 5l2.5-.1.9 2.3 2.1 1.4-.7 2.4.7 2.4-2.1 1.4-.9 2.3L14 17l-2 1.5L10 17l-2.5.1-.9-2.3-2.1-1.4.7-2.4-.7-2.4 2.1-1.4.9-2.3L10 5l2-1.5Z"/><path d="m8.5 12 2.2 2.2 4.8-4.8"/></svg>
+                    </div>
+                    <p class="applicant-card__details"><span class="applicant-card__rating"><span aria-hidden="true">★</span> 5.0</span><span>·</span><span>ĐH Bách Khoa</span></p>
+                </div>
+            </div>
+            <span class="applicant-card__status applicant-card__status--selected">Đã chọn</span>
+        </header>
+
+        <div class="applicant-card__proposal applicant-card__proposal--selected">
+            <div><span>Học phí thống nhất:</span><strong>250.000 ₫ / buổi</strong></div>
+            <p>"Đã chấp thuận đề xuất dạy thử buổi 1 và tiến hành ký quỹ hợp đồng."</p>
+        </div>
+
+        <footer class="applicant-card__actions applicant-card__actions--selected">
+            <span class="applicant-card__contract"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>Đã tạo liên kết hợp đồng</span>
+            <button type="button" class="applicant-card__button applicant-card__button--neutral">[Chi tiết hợp đồng]</button>
+        </footer>
+    </article>
+</main>
+</body>
+</html>

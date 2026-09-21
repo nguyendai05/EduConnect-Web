@@ -1,0 +1,384 @@
+:root {
+  --file-upload-primary: #1a6fd4;
+  --file-upload-primary-soft: #eaf2fc;
+  --file-upload-border: #e2e8f0;
+  --file-upload-muted: #94a3b8;
+}
+
+.file-upload-preview {
+  padding: var(--space-8) var(--space-4);
+}
+
+.file-upload-demo {
+  width: min(100%, 86rem);
+  margin-inline: auto;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+.file-upload-demo__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.file-upload-demo__header h1 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+
+.file-upload-demo__header h1 span {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--file-upload-primary);
+  border-radius: 50%;
+}
+
+.file-upload-demo__header p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.file-upload-demo__header code {
+  flex: 0 0 auto;
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-low);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+}
+
+.file-upload-demo__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.file-upload-card {
+  min-width: 0;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--file-upload-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 6%);
+}
+
+.file-upload-card__heading {
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.file-upload-card__heading h2 {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.file-upload-card__heading--primary h2 {
+  color: var(--file-upload-primary);
+}
+
+.file-upload__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.file-dropzone {
+  display: grid;
+  min-height: 13.5rem;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  color: var(--color-text-secondary);
+  border: 2px dashed #cbd5e1;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.file-dropzone:hover,
+.file-dropzone.is-dragging {
+  background: var(--file-upload-primary-soft);
+  border-color: var(--file-upload-primary);
+}
+
+.file-dropzone:focus-within {
+  outline: 2px solid var(--file-upload-primary);
+  outline-offset: 2px;
+}
+
+.file-upload__cloud {
+  display: grid;
+  width: 3.75rem;
+  height: 3.75rem;
+  margin-bottom: var(--space-2);
+  place-items: center;
+  color: var(--file-upload-primary);
+  background: var(--file-upload-primary-soft);
+  border-radius: 50%;
+}
+
+.file-upload__cloud svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.file-dropzone strong {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+}
+
+.file-dropzone > span:not(.file-upload__cloud) {
+  font-size: var(--font-size-sm);
+}
+
+.file-dropzone u {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.file-dropzone small {
+  margin-top: var(--space-2);
+  color: var(--file-upload-muted);
+  font-size: var(--font-size-sm);
+}
+
+.file-upload__status {
+  min-height: 1.25rem;
+  margin-top: var(--space-2);
+  color: var(--file-upload-primary);
+  font-size: var(--font-size-xs);
+}
+
+.file-uploading {
+  padding: var(--space-4);
+  border: 1px solid var(--file-upload-border);
+  border-radius: 0.75rem;
+}
+
+.file-uploading__topline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.file-uploading__file-icon,
+.file-uploading__file-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+  color: var(--file-upload-primary);
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.file-uploading__name {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-upload__remove {
+  display: grid;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding: 0;
+  color: var(--file-upload-muted);
+  background: transparent;
+  border: 0;
+  place-items: center;
+  cursor: pointer;
+}
+
+.file-upload__remove:hover {
+  color: var(--color-text-secondary);
+}
+
+.file-upload__remove svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.8;
+}
+
+.file-uploading__meta {
+  margin: var(--space-1) 0 var(--space-3) 2rem;
+  color: var(--file-upload-muted);
+  font-size: var(--font-size-xs);
+}
+
+.file-uploading__progress {
+  height: 0.375rem;
+  margin: 0 var(--space-2);
+  overflow: hidden;
+  background: var(--color-surface-low);
+  border-radius: var(--radius-pill);
+}
+
+.file-uploading__progress span {
+  display: block;
+  width: 65%;
+  height: 100%;
+  background: var(--file-upload-primary);
+  border-radius: inherit;
+  transition: width 180ms ease;
+}
+
+.file-uploading__message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.file-uploading__spinner {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  margin-top: 0.125rem;
+  border: 2px solid var(--file-upload-primary);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: file-upload-spin 0.8s linear infinite;
+}
+
+.file-upload-compact {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-low);
+  border: 1px solid var(--file-upload-border);
+  border-radius: 0.75rem;
+}
+
+.file-upload-compact__button {
+  display: inline-flex;
+  min-width: 10.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 6%);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-align: center;
+}
+
+.file-upload-compact__button:hover {
+  border-color: var(--file-upload-primary);
+}
+
+.file-upload-compact__button svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.file-upload-compact__name {
+  overflow: hidden;
+  color: var(--file-upload-muted);
+  font-size: var(--font-size-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-upload-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+  color: var(--color-danger);
+  background: #fff1f2;
+  border: 1px solid #fca5a5;
+  border-radius: 1rem;
+  font-size: var(--font-size-sm);
+  line-height: 1.45;
+}
+
+.file-upload-error svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+  margin-top: 0.125rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.file-upload-error strong {
+  font-weight: 600;
+}
+
+@keyframes file-upload-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 64rem) {
+  .file-upload-demo__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 30rem) {
+  .file-upload-preview {
+    padding: var(--space-4);
+  }
+
+  .file-upload-demo {
+    padding: var(--space-4);
+  }
+
+  .file-upload-demo__header {
+    display: grid;
+  }
+
+  .file-upload-compact {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

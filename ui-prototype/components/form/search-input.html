@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SearchInput</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components/form/search-input.css">
+</head>
+<body class="search-input-preview">
+<main class="search-input-demo" aria-labelledby="search-input-demo-title">
+    <header class="search-input-demo__header">
+        <div>
+            <h1 id="search-input-demo-title">10. SearchInput (Ô tìm kiếm)</h1>
+            <p>Chiều cao: 48px chuẩn / 40px compact · Nút xóa (X) chỉ hiện khi có dữ liệu.</p>
+        </div>
+        <code>search-input</code>
+    </header>
+
+    <section class="search-input-demo__content" aria-label="Các biến thể SearchInput">
+        <div class="search-input-example">
+            <label for="search-standard">Chuẩn 48px (Focused + Clear Button)</label>
+            <div class="search-input search-input--standard" data-search-input>
+                <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+                <input id="search-standard" type="search" value="Gia sư Toán 11 Bình Thạnh" aria-label="Tìm kiếm chuẩn">
+                <button class="search-input__clear" type="button" data-clear-search aria-label="Xóa nội dung tìm kiếm">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="search-input-example">
+            <label for="search-compact">Thu gọn 40px (Dùng cho bảng quản trị Admin/List toolbar)</label>
+            <div class="search-input search-input--compact" data-search-input>
+                <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+                <input id="search-compact" type="search" placeholder="Tìm theo mã tin hoặc tên phụ huynh..." aria-label="Tìm kiếm thu gọn">
+                <button class="search-input__clear" type="button" data-clear-search aria-label="Xóa nội dung tìm kiếm" hidden>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+</main>
+<script src="../../js/core/search-input.js" defer></script>
+</body>
+</html>

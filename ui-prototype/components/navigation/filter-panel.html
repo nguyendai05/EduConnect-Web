@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FilterPanel</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components/navigation/filter-panel.css">
+</head>
+<body class="filter-panel-preview">
+<main class="filter-panel-demo">
+    <div class="filter-panel-demo__grid">
+        <form class="filter-panel" data-filter-panel>
+            <div class="filter-panel__header">
+                <h2><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M8 4v4M16 10v4M10 16v4"/></svg>Bộ lọc tìm kiếm</h2>
+                <button class="filter-panel__reset" type="reset" data-reset-filter hidden>Đặt lại (2)</button>
+            </div>
+
+            <div class="filter-panel__group">
+                <label for="filter-subject">Môn học</label>
+                <div class="filter-panel__select-wrap">
+                    <select id="filter-subject" name="subject">
+                        <option>Toán học</option>
+                        <option>Ngữ văn</option>
+                        <option>Tiếng Anh</option>
+                    </select>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+            </div>
+
+            <fieldset class="filter-panel__group">
+                <legend>Cấp lớp</legend>
+                <div class="filter-panel__grade-grid">
+                    <label><input type="radio" name="grade" value="10"><span>Lớp 10</span></label>
+                    <label class="is-selected"><input type="radio" name="grade" value="11" checked><span>Lớp 11</span></label>
+                    <label><input type="radio" name="grade" value="12"><span>Lớp 12</span></label>
+                    <label><input type="radio" name="grade" value="exam"><span>Luyện thi</span></label>
+                </div>
+            </fieldset>
+
+            <div class="filter-panel__group">
+                <div class="filter-panel__range-heading">
+                    <label for="fee-range">Học phí / buổi</label>
+                    <output for="fee-range" data-fee-output>≤ 300.000 ₫</output>
+                </div>
+                <input id="fee-range" name="fee-range" class="filter-panel__range" type="range" min="100000" max="500000" step="10000" value="300000">
+                <div class="filter-panel__range-values"><span>100.000 ₫</span><span>500.000 ₫</span></div>
+            </div>
+
+            <label class="filter-panel__check">
+                <input type="checkbox" name="hiring-only" checked>
+                <span class="filter-panel__check-box" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6"/></svg></span>
+                <span>Chỉ hiện tin đang tuyển</span>
+            </label>
+        </form>
+
+    </div>
+</main>
+<script src="../../js/core/filter-panel.js" defer></script>
+</body>
+</html>
