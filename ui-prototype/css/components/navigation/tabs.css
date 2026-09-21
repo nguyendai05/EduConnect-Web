@@ -1,0 +1,11 @@
+.tabs { border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); overflow: hidden; }
+.tabs__list { display: flex; overflow-x: auto; border-bottom: 1px solid var(--color-border); padding-inline: var(--space-3); }
+.tabs__tab { flex: 0 0 auto; min-height: 3rem; padding: var(--space-3) var(--space-4); border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--color-text-secondary); font: inherit; font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; }
+.tabs__tab:hover { background: var(--color-surface-low); }
+.tabs__tab[aria-selected="true"] { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+.tabs__tab:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -4px; }
+.tabs__panel { padding: var(--space-6); color: var(--color-text-secondary); }
+.tabs__panel[hidden] { display: none; }
+.tabs__panel:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -4px; }
+
+.tabs-example { width: min(100% - 2rem, 52rem); margin: var(--space-8) auto; }
