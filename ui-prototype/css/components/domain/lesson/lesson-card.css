@@ -1,0 +1,15 @@
+.lesson-card { --lesson-status: var(--color-primary); display: flex; align-items: flex-start; gap: var(--space-4); padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-xl); background: var(--color-surface); }
+.lesson-card--pending { --lesson-status: var(--color-warning); }
+.lesson-card--completed { --lesson-status: var(--color-success); }
+.lesson-card--cancelled { --lesson-status: var(--color-danger); }
+.lesson-card__icon { flex: 0 0 2rem; height: 2rem; background: var(--color-primary); mask: url("../../../../assets/icons/calendar.svg") center / contain no-repeat; }
+.lesson-card__content { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.lesson-card__header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.lesson-card__title { font-size: var(--font-size-lg); }
+.lesson-card__status { padding: var(--space-1) var(--space-2); color: var(--lesson-status); border: 1px solid currentColor; border-radius: var(--radius-pill); font-size: var(--font-size-xs); font-weight: 600; }
+.lesson-card__schedule { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin-top: var(--space-3); font-size: var(--font-size-sm); font-weight: 600; }
+.lesson-card__description { margin-top: var(--space-2); color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.lesson-card__detail { margin-top: var(--space-3); color: var(--color-text-muted); font-size: var(--font-size-xs); }
+@media (max-width: 480px) { .lesson-card { padding: var(--space-4); gap: var(--space-3); } }
+
+.lesson-card-example { width: min(100% - 2rem, 52rem); margin: var(--space-8) auto; }

@@ -1,0 +1,17 @@
+/* Page JS listens to this button and loads data-conversation-id in the message pane. */
+.message-thread-item { display: flex; align-items: center; gap: var(--space-3); width: 100%; max-width: 28rem; min-height: 5.5rem; padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); color: var(--color-text); text-align: left; font: inherit; cursor: pointer; }
+.message-thread-item:hover { background: var(--color-surface-low); }
+.message-thread-item--active { border-color: var(--color-primary); background: var(--color-primary-container); }
+.message-thread-item:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+.message-thread-item__avatar { display: grid; flex: 0 0 3rem; height: 3rem; place-items: center; border-radius: 50%; background: var(--color-primary-container); color: var(--color-primary); font-weight: 700; }
+.message-thread-item__content { flex: 1; min-width: 0; }
+.message-thread-item__heading, .message-thread-item__bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.message-thread-item__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--font-size-sm); font-weight: 600; }
+.message-thread-item__time { flex: 0 0 auto; font-size: var(--font-size-xs); color: var(--color-text-muted); }
+.message-thread-item__bottom { margin-top: var(--space-1); }
+.message-thread-item__message { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.message-thread-item--unread .message-thread-item__message { color: var(--color-text); font-weight: 600; }
+.message-thread-item__unread { display: none; flex: 0 0 auto; min-width: 1.375rem; height: 1.375rem; padding-inline: var(--space-1); border-radius: var(--radius-pill); background: var(--color-primary); color: var(--color-surface); text-align: center; font-size: var(--font-size-xs); line-height: 1.375rem; }
+.message-thread-item--unread .message-thread-item__unread { display: block; }
+
+.message-thread-item-example { width: min(100% - 2rem, 52rem); margin: var(--space-8) auto; }
