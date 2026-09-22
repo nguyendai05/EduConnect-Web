@@ -1,0 +1,699 @@
+/* Tutor profile composition. Reuses UserHeader, Breadcrumb, Input, and Alert components. */
+.tutor-profile-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background: var(--color-background);
+}
+
+.tutor-profile-page > .user-header {
+  width: 100%;
+  flex: 0 0 auto;
+  align-self: stretch;
+  margin: 0;
+}
+
+.tutor-profile-page__main {
+  flex: 1 0 auto;
+}
+
+.tutor-profile-breadcrumb {
+  margin-bottom: var(--space-6);
+}
+
+/* Temporary Badge fallback until the shared Badge component is implemented. */
+.tutor-profile-status {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-medium);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4286;
+  white-space: nowrap;
+}
+
+.tutor-profile-status > span:first-child {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+}
+
+.tutor-profile-page[data-tutor-state="verified"] .tutor-profile-status {
+  background: var(--color-success-container);
+  color: var(--color-success);
+}
+
+.tutor-profile-page[data-tutor-state="pending"] .tutor-profile-status {
+  background: var(--color-warning-container);
+  color: var(--color-warning);
+}
+
+.tutor-profile-page[data-tutor-state="rejected"] .tutor-profile-status {
+  background: var(--color-danger-container);
+  color: var(--color-danger);
+}
+
+.tutor-profile-state-message,
+.tutor-profile-rejection {
+  margin: 0 0 var(--space-4);
+}
+
+.tutor-profile-rejection[hidden] {
+  display: none;
+}
+
+/* Temporary Card, Avatar, Tag, ScheduleSelector and Button styles until shared components are implemented. */
+.tutor-profile-card {
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.tutor-profile-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.tutor-profile-card__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.tutor-profile-avatar {
+  display: grid;
+  width: 4.5rem;
+  height: 4.5rem;
+  place-items: center;
+  border: 2px solid var(--color-surface);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-container);
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.tutor-profile-card__identity h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  line-height: 1.3333;
+}
+
+.tutor-profile-card__identity p {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.4286;
+}
+
+.tutor-profile-card__actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tutor-profile-action {
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.tutor-profile-action--primary {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.tutor-profile-action--primary:hover:not(:disabled) {
+  border-color: var(--color-primary-hover);
+  background: var(--color-primary-hover);
+}
+
+.tutor-profile-action--secondary {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.tutor-profile-action--secondary:hover {
+  background: var(--color-primary-container);
+}
+
+.tutor-profile-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.tutor-profile-form {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.tutor-profile-section {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.tutor-profile-section h3 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  line-height: 1.3333;
+}
+
+.tutor-profile-section > p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.4286;
+}
+
+.tutor-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.tutor-profile-section__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.tutor-profile-section__heading > div {
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* Temporary inline action until the shared Button supports compact secondary actions. */
+.tutor-profile-inline-action {
+  min-height: 2.5rem;
+  flex: 0 0 auto;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-container);
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4286;
+  white-space: nowrap;
+}
+
+.tutor-profile-inline-action:hover {
+  background: var(--color-primary-focus);
+}
+
+.tutor-profile-field {
+  display: grid;
+  min-width: 0;
+  gap: var(--space-2);
+}
+
+.tutor-profile-field label {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.tutor-profile-form .input-control {
+  min-height: 3rem;
+  border-radius: var(--radius-md);
+}
+
+.tutor-profile-system-stats {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-container);
+}
+
+.tutor-profile-system-stats__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  line-height: 1.3333;
+  text-transform: uppercase;
+}
+
+.tutor-profile-system-stats__heading span {
+  color: var(--color-text-muted);
+  font-weight: 400;
+  text-transform: none;
+}
+
+.tutor-profile-system-stats > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.tutor-profile-system-stats > div > span {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+}
+
+.tutor-profile-system-stats strong {
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  line-height: 1.3333;
+}
+
+.tutor-profile-system-stats small {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+}
+
+.tutor-profile-section textarea {
+  width: 100%;
+  min-height: 8rem;
+  resize: vertical;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+}
+
+.tutor-profile-section textarea:focus {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 0;
+}
+
+.tutor-profile-error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+}
+
+.tutor-profile-error[hidden] {
+  display: none;
+}
+
+.tutor-profile-counter {
+  color: var(--color-text-muted) !important;
+  font-size: var(--font-size-xs) !important;
+  line-height: 1.3333 !important;
+  text-align: right;
+}
+
+/* Temporary SubjectRow list until the domain component is implemented. */
+.tutor-profile-subject-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tutor-profile-subject-list article {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-secondary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.tutor-profile-subject-list__icon {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-container);
+  color: var(--color-primary);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.tutor-profile-subject-list article > div {
+  display: grid;
+  min-width: 0;
+  gap: var(--space-1);
+}
+
+.tutor-profile-subject-list strong {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  line-height: 1.4286;
+}
+
+.tutor-profile-subject-list strong small {
+  margin-left: var(--space-1);
+  padding: 0.125rem var(--space-1);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-container);
+  color: var(--color-primary-hover);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.tutor-profile-subject-list p,
+.tutor-profile-subject-list article > div:last-child span {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+}
+
+.tutor-profile-subject-list article > div:last-child {
+  text-align: right;
+}
+
+/* Temporary TeachingModeSelector until the shared component is implemented. */
+.tutor-profile-mode {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.tutor-profile-mode legend {
+  grid-column: 1 / -1;
+  margin-bottom: var(--space-2);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.tutor-profile-mode label {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.tutor-profile-mode label:has(input:checked) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-container);
+  color: var(--color-primary-hover);
+}
+
+.tutor-profile-mode input {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  accent-color: var(--color-primary);
+}
+
+.tutor-profile-mode span {
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.tutor-profile-mode strong {
+  font-size: var(--font-size-sm);
+  line-height: 1.3333;
+}
+
+.tutor-profile-mode small {
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+}
+
+.tutor-profile-accepting {
+  margin: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-container);
+}
+
+.tutor-profile-accepting .switch-control input:disabled {
+  cursor: not-allowed;
+}
+
+.tutor-profile-schedule {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.tutor-profile-schedule button {
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.tutor-profile-schedule button {
+  display: grid;
+  min-height: 3.5rem;
+  justify-content: start;
+  gap: 0.125rem;
+  text-align: left;
+}
+
+.tutor-profile-schedule button span {
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  line-height: 1.3333;
+}
+
+.tutor-profile-schedule button[aria-pressed="true"] {
+  border-color: var(--color-primary);
+  background: var(--color-primary-container);
+  color: var(--color-primary-hover);
+}
+
+.tutor-profile-schedule button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Temporary CertificateRow status list until the certificate domain component is implemented. */
+.tutor-profile-certificates {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tutor-profile-certificates article {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-container);
+}
+
+.tutor-profile-certificate__icon {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+}
+
+.tutor-profile-certificate__icon--pending {
+  color: var(--color-warning);
+}
+
+.tutor-profile-certificates article > div {
+  display: grid;
+  min-width: 0;
+  gap: var(--space-1);
+}
+
+.tutor-profile-certificates strong {
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  line-height: 1.3333;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tutor-profile-certificates p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+}
+
+.tutor-profile-certificate__status {
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-success-container);
+  color: var(--color-success);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  line-height: 1.3333;
+  white-space: nowrap;
+}
+
+.tutor-profile-certificate__status--pending {
+  background: var(--color-warning-container);
+  color: var(--color-warning);
+}
+
+.tutor-profile-certificates button {
+  padding: var(--space-1);
+  border: 0;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.tutor-profile-upload .file-dropzone {
+  min-height: 10rem;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-container);
+}
+
+.tutor-profile-upload .file-upload__status {
+  margin: var(--space-2) 0 0;
+}
+
+.tutor-profile-footer {
+  padding: var(--space-4) 0 var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+}
+
+.tutor-profile-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.tutor-profile-footer span:last-child {
+  display: inline-flex;
+  gap: var(--space-4);
+}
+
+.tutor-profile-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tutor-profile-footer a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+.tutor-profile-page :focus-visible {
+  outline: 2px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 48rem) {
+  .tutor-profile-page__content {
+    padding-block: var(--space-6);
+  }
+
+  .tutor-profile-card__top {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 36rem) {
+  .tutor-profile-card {
+    padding: var(--space-4);
+  }
+
+  .tutor-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tutor-profile-mode,
+  .tutor-profile-schedule {
+    grid-template-columns: 1fr;
+  }
+
+  .tutor-profile-section__heading {
+    flex-direction: column;
+  }
+
+  .tutor-profile-inline-action {
+    width: 100%;
+  }
+
+  .tutor-profile-certificates article {
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  }
+
+  .tutor-profile-certificates article > button {
+    grid-column: span 1;
+  }
+
+  .tutor-profile-card__actions {
+    width: 100%;
+  }
+
+  .tutor-profile-action {
+    flex: 1 1 auto;
+  }
+
+  .tutor-profile-footer .container,
+  .tutor-profile-footer span:last-child {
+    align-items: center;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hồ sơ gia sư của tôi · Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+    <link rel="stylesheet" href="../../css/components/form/file-upload.css">
+    <link rel="stylesheet" href="../../css/components/form/switch.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-header.css">
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <link rel="stylesheet" href="../../css/pages/tutor/my-profile.css">
+</head>
+<!-- States available: draft, pending, rejected, verified. -->
+<body class="tutor-profile-page" data-tutor-state="verified">
+    <!-- UserHeader component instance · tutor variant. -->
+    <header
+        class="user-header"
+        data-component="user-header"
+        data-user-variant="TUTOR"
+        data-active-nav="none"
+    >
+        <div class="user-header__inner">
+            <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
+                <span class="user-header__brand-mark" aria-hidden="true">
+                    <img src="../../assets/icons/logo.svg" alt="">
+                </span>
+                <span class="user-header__brand-name">Edu Connect</span>
+            </a>
+
+            <nav class="user-header__nav" aria-label="Điều hướng chính">
+                <a class="user-header__nav-link" data-nav-key="home" href="#trang-chu">Trang chủ</a>
+                <a class="user-header__nav-link" data-nav-key="tutors" href="#tim-gia-su">Tìm gia sư</a>
+                <a class="user-header__nav-link" data-nav-key="requests" href="#tin-tim-gia-su">Tin tìm gia sư</a>
+                <a class="user-header__nav-link" data-nav-key="groups" href="#lop-nhom">Lớp nhóm</a>
+            </nav>
+
+            <div class="user-header__actions">
+                <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" data-user-action="messages">
+                    <img src="../../assets/icons/message.svg" alt="">
+                </button>
+                <button class="user-header__icon-button" type="button" aria-label="Thông báo" data-user-action="notifications">
+                    <img src="../../assets/icons/notification.svg" alt="">
+                </button>
+                <span class="user-header__divider" aria-hidden="true"></span>
+
+                <div class="user-header__account">
+                    <button
+                        class="user-header__profile"
+                        type="button"
+                        aria-label="Mở menu tài khoản"
+                        aria-haspopup="menu"
+                        aria-expanded="false"
+                        aria-controls="tutor-account-menu"
+                    >
+                        <span class="user-header__avatar" aria-hidden="true" data-profile-initials>LY</span>
+                        <span class="user-header__profile-copy">
+                            <strong>
+                                <span data-profile-name>Lê Hoàng Yến</span>
+                                <img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden>
+                            </strong>
+                            <span data-profile-role>Gia sư Chuyên Toán</span>
+                        </span>
+                        <img
+                            class="user-header__chevron"
+                            src="../../assets/icons/mui-ten-xuong.svg"
+                            data-icon-closed="../../assets/icons/mui-ten-xuong.svg"
+                            data-icon-open="../../assets/icons/mui-ten-len.svg"
+                            alt=""
+                        >
+                    </button>
+
+                    <div class="user-header__menu" id="tutor-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                        <div class="user-header__menu-summary" data-menu-summary hidden>
+                            <div class="user-header__menu-summary-heading">
+                                <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                                <span class="user-header__menu-badge" data-menu-summary-badge>Gia sư TOP 1%</span>
+                            </div>
+                            <div class="user-header__menu-balance">
+                                <span>Ví thù lao:</span>
+                                <strong data-menu-balance>4.850.000đ</strong>
+                            </div>
+                        </div>
+
+                        <div class="user-header__menu-section" data-menu-links>
+                            <a class="user-header__menu-item" href="#ho-so-gia-su" role="menuitem" data-menu-item="0">
+                                <img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile">
+                                <span data-menu-label>Hồ sơ giảng dạy công khai</span>
+                                <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                            </a>
+                            <a class="user-header__menu-item" href="#lich-day" role="menuitem" data-menu-item="1">
+                                <img class="user-header__menu-item-leading" src="../../assets/icons/calendar.svg" alt="" data-menu-icon="calendar">
+                                <span data-menu-label>Lịch dạy &amp; Khung rảnh</span>
+                                <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                            </a>
+                            <a class="user-header__menu-item" href="#vi-tri-thuc" role="menuitem" data-menu-item="2">
+                                <img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet">
+                                <span data-menu-label>Ví TriThức &amp; Rút tiền</span>
+                                <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                            </a>
+                            <a class="user-header__menu-item" href="#bao-mat" role="menuitem" data-menu-item="3">
+                                <img class="user-header__menu-item-leading" src="../../assets/icons/shield.svg" alt="" data-menu-icon="shield">
+                                <span data-menu-label>Bảo mật &amp; Xác thực CCCD</span>
+                                <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                            </a>
+                        </div>
+
+                        <div class="user-header__menu-section user-header__menu-section--logout">
+                            <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                                <img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt="">
+                                <span data-menu-logout-label>Đăng xuất tài khoản</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="user-shell__main tutor-profile-page__main">
+        <div class="user-shell__content tutor-profile-page__content">
+            <nav class="breadcrumb tutor-profile-breadcrumb" aria-label="Breadcrumb">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="#tai-khoan">Tài khoản</a></li>
+                    <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Hồ sơ gia sư của tôi</span></li>
+                </ol>
+            </nav>
+
+            <section class="alert alert--warning tutor-profile-state-message" role="status" aria-live="polite">
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content">
+                    <p class="alert__message" data-tutor-state-message>Hồ sơ đang là bản nháp và chưa đủ điều kiện nhận lớp. Hoàn thiện thông tin rồi gửi duyệt.</p>
+                </div>
+            </section>
+
+            <section class="alert alert--error tutor-profile-rejection" role="alert" hidden>
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content">
+                    <p class="alert__title">Hồ sơ cần bổ sung</p>
+                    <p class="alert__message" data-tutor-rejection-reason>Lý do từ chối sẽ được hiển thị tại đây.</p>
+                </div>
+            </section>
+
+            <!-- Tạm thời: Card, Avatar, Tag, ScheduleSelector và Button chưa có implementation; phần tutor profile dùng style page. -->
+            <section class="tutor-profile-card" aria-labelledby="tutor-profile-card-title">
+                <div class="tutor-profile-card__top">
+                    <div class="tutor-profile-card__identity">
+                        <span class="tutor-profile-avatar" aria-hidden="true">LY</span>
+                        <div>
+                            <h2 id="tutor-profile-card-title">Lê Hoàng Yến</h2>
+                            <p>Gia sư Chuyên Toán · Hà Nội</p>
+                        </div>
+                    </div>
+
+                    <!-- Tạm thời: Badge component chưa có implementation; status badge dùng style page. -->
+                    <div class="tutor-profile-card__actions">
+                        <span class="tutor-profile-status" data-tutor-status>
+                            <span aria-hidden="true"></span>
+                            <span data-tutor-status-label>Bản nháp</span>
+                        </span>
+                        <button class="tutor-profile-action tutor-profile-action--secondary" type="button" data-tutor-edit hidden>Chỉnh sửa hồ sơ</button>
+                        <button class="tutor-profile-action tutor-profile-action--secondary" type="button" data-tutor-cancel hidden>Hủy</button>
+                        <button class="tutor-profile-action tutor-profile-action--primary" type="button" data-tutor-submit>Gửi duyệt hồ sơ</button>
+                    </div>
+                </div>
+
+                <form class="tutor-profile-form" novalidate data-tutor-form>
+                    <section class="tutor-profile-section">
+                        <h3>Giới thiệu</h3>
+                        <p>Giới thiệu ngắn gọn giúp học viên hiểu phương pháp giảng dạy của bạn.</p>
+                        <textarea
+                            id="tutor-bio"
+                            name="bio"
+                            maxlength="600"
+                            data-tutor-field
+                            aria-describedby="tutor-bio-error"
+                        >Gia sư Toán với 5 năm kinh nghiệm luyện thi THPT Quốc gia.
+                        Tôi xây dựng lộ trình cá nhân hóa, giúp học viên nắm chắc nền tảng
+                        và tự tin đạt mục tiêu.</textarea>
+                        <p class="tutor-profile-error" id="tutor-bio-error" hidden></p>
+                        <p class="tutor-profile-counter" data-tutor-bio-count>0/600</p>
+                    </section>
+
+                    <section class="tutor-profile-section">
+                        <h3>Học vấn &amp; chứng chỉ</h3>
+                        <p>Thông tin học thuật được hiển thị để phụ huynh và học viên đánh giá mức độ phù hợp.</p>
+
+                        <div class="tutor-profile-grid tutor-profile-grid--education">
+                            <div class="tutor-profile-field">
+                                <label for="tutor-education">Trình độ cao nhất</label>
+                                <div class="input-control">
+                                    <input
+                                        class="input-control__input"
+                                        id="tutor-education"
+                                        name="education"
+                                        data-tutor-field
+                                        type="text"
+                                        value="Đại học Sư phạm chính quy"
+                                        aria-describedby="tutor-education-error"
+                                    >
+                                </div>
+                                <p class="tutor-profile-error" id="tutor-education-error" hidden></p>
+                            </div>
+                            <div class="tutor-profile-field">
+                                <label for="tutor-school">Trường đào tạo</label>
+                                <div class="input-control">
+                                    <input class="input-control__input" id="tutor-school" name="school" data-tutor-field type="text" value="Đại học Sư phạm Hà Nội">
+                                </div>
+                            </div>
+                            <div class="tutor-profile-field">
+                                <label for="tutor-major">Chuyên ngành</label>
+                                <div class="input-control">
+                                    <input class="input-control__input" id="tutor-major" name="major" data-tutor-field type="text" value="Sư phạm Toán học">
+                                </div>
+                            </div>
+                            <div class="tutor-profile-field">
+                                <label for="tutor-experience">Số năm kinh nghiệm</label>
+                                <div class="input-control">
+                                    <input
+                                        class="input-control__input input-control__input--money"
+                                        id="tutor-experience"
+                                        name="experience"
+                                        data-tutor-field
+                                        type="text"
+                                        inputmode="numeric"
+                                        value="5"
+                                    >
+                                    <span class="input-control__suffix" aria-hidden="true">năm</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tutor-profile-system-stats" aria-label="Dữ liệu hệ thống">
+                            <div class="tutor-profile-system-stats__heading">
+                                Dữ liệu hệ thống · không thể chỉnh sửa thủ công
+                                <span>Tự động đồng bộ</span>
+                            </div>
+                            <div>
+                                <span>Đánh giá trung bình<strong>4,9 ★ <small>(126 lượt đánh giá)</small></strong></span>
+                                <span>Hợp đồng đã hoàn thành<strong>84 <small>lớp học</small></strong></span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="tutor-profile-section">
+                        <div class="tutor-profile-section__heading">
+                            <div>
+                                <h3>Môn dạy &amp; học phí</h3>
+                                <p>Mỗi môn có một mức học phí riêng cho một buổi 90 phút.</p>
+                            </div>
+                            <button class="tutor-profile-inline-action" type="button" data-tutor-add-subject>+ Thêm môn dạy</button>
+                        </div>
+
+                        <div class="tutor-profile-grid">
+                            <div class="tutor-profile-field">
+                                <label for="tutor-subjects">Môn dạy chính</label>
+                                <div class="input-control">
+                                    <input
+                                        class="input-control__input"
+                                        id="tutor-subjects"
+                                        name="subjects"
+                                        data-tutor-field
+                                        type="text"
+                                        value="Toán 10, Toán 11, Toán 12"
+                                        placeholder="Ví dụ: Toán 10, Toán 11"
+                                        aria-describedby="tutor-subjects-error"
+                                    >
+                                </div>
+                                <p class="tutor-profile-error" id="tutor-subjects-error" hidden></p>
+                            </div>
+                            <div class="tutor-profile-field">
+                                <label for="tutor-rate">Học phí tham khảo</label>
+                                <div class="input-control">
+                                    <input
+                                        class="input-control__input input-control__input--money"
+                                        id="tutor-rate"
+                                        name="rate"
+                                        data-tutor-field
+                                        type="text"
+                                        inputmode="numeric"
+                                        value="250.000"
+                                        placeholder="Ví dụ: 250.000"
+                                        aria-describedby="tutor-rate-error"
+                                    >
+                                    <span class="input-control__suffix" aria-hidden="true">đ / buổi</span>
+                                </div>
+                                <p class="tutor-profile-error" id="tutor-rate-error" hidden></p>
+                            </div>
+                        </div>
+
+                        <!-- Tạm thời: SubjectRow chưa có component chung; các dòng môn dạy dùng style page. -->
+                        <div class="tutor-profile-subject-list">
+                            <article>
+                                <span class="tutor-profile-subject-list__icon">Σ</span>
+                                <div><strong>Môn Toán <small>THPT</small></strong><p>Toán 10, 11, 12 &amp; luyện thi THPT Quốc gia</p></div>
+                                <div><strong>200.000 đ</strong><span>/ buổi 90 phút</span></div>
+                            </article>
+                            <article>
+                                <span class="tutor-profile-subject-list__icon">Σ</span>
+                                <div><strong>Môn Toán <small>THCS</small></strong><p>Toán 6, 7, 8, 9 &amp; ôn thi vào lớp 10</p></div>
+                                <div><strong>180.000 đ</strong><span>/ buổi 90 phút</span></div>
+                            </article>
+                            <article>
+                                <span class="tutor-profile-subject-list__icon">ϟ</span>
+                                <div><strong>Môn Vật lý <small>THPT</small></strong><p>Vật lý 10, 11, 12 chuyên đề nâng cao</p></div>
+                                <div><strong>220.000 đ</strong><span>/ buổi 90 phút</span></div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="tutor-profile-section">
+                        <h3>Khu vực &amp; hình thức dạy</h3>
+                        <p>Thiết lập phạm vi địa lý và cách tổ chức buổi học với học viên.</p>
+                        <div class="tutor-profile-field">
+                            <label for="tutor-location">Khu vực nhận dạy</label>
+                            <div class="input-control">
+                                <input
+                                    class="input-control__input"
+                                    id="tutor-location"
+                                    name="location"
+                                    data-tutor-field
+                                    type="text"
+                                    value="TP. Thủ Đức, TP.HCM"
+                                    placeholder="Ví dụ: Quận 1, TP.HCM"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Tạm thời: TeachingModeSelector chưa có component chung; dùng radio card cấp trang. -->
+                        <fieldset class="tutor-profile-mode">
+                            <legend>Hình thức dạy</legend>
+                            <label>
+                                <input type="radio" name="teaching-mode" value="home" data-tutor-editable>
+                                <span><strong>Tại nhà</strong><small>Học trực tiếp</small></span>
+                            </label>
+                            <label>
+                                <input type="radio" name="teaching-mode" value="online" data-tutor-editable>
+                                <span><strong>Trực tuyến</strong><small>Google Meet / Zoom</small></span>
+                            </label>
+                            <label>
+                                <input type="radio" name="teaching-mode" value="both" checked data-tutor-editable>
+                                <span><strong>Cả hai</strong><small>Linh hoạt hình thức</small></span>
+                            </label>
+                        </fieldset>
+
+                        <label class="switch-row tutor-profile-accepting">
+                            <span class="switch-row__copy">
+                                <span class="switch-row__title" data-tutor-accepting-title>Chưa đủ điều kiện nhận lớp</span>
+                                <span class="switch-row__help" data-tutor-accepting-help>Hồ sơ cần được xác minh trước khi xuất hiện trong kết quả tìm kiếm.</span>
+                            </span>
+                            <span class="switch-control">
+                                <input type="checkbox" data-tutor-accepting data-tutor-editable>
+                                <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+                            </span>
+                        </label>
+                    </section>
+
+                    <section class="tutor-profile-section">
+                        <div class="tutor-profile-section__heading">
+                            <div>
+                                <h3>Lịch rảnh</h3>
+                                <p>Lịch rảnh hỗ trợ học viên tìm kiếm và giúp hệ thống cảnh báo khi lịch đề xuất nằm ngoài thời gian bạn thường nhận dạy.</p>
+                            </div>
+                            <button class="tutor-profile-inline-action" type="button" data-tutor-add-slot>+ Thêm khung giờ</button>
+                        </div>
+
+                        <!-- Tạm thời: ScheduleSelector chưa có component chung; dùng các schedule slot cấp trang. -->
+                        <div class="tutor-profile-schedule" data-tutor-schedule>
+                            <button type="button" data-tutor-slot aria-pressed="true"><strong>T2 · Thứ Hai hằng tuần</strong><span>18:00 – 21:00 (3 tiếng)</span></button>
+                            <button type="button" data-tutor-slot aria-pressed="true"><strong>T4 · Thứ Tư hằng tuần</strong><span>18:00 – 21:00 (3 tiếng)</span></button>
+                            <button type="button" data-tutor-slot aria-pressed="true"><strong>T6 · Thứ Sáu hằng tuần</strong><span>18:00 – 21:00 (3 tiếng)</span></button>
+                            <button type="button" data-tutor-slot aria-pressed="false"><strong>T7 · Thứ Bảy hằng tuần</strong><span>08:30 – 11:30 (3 tiếng)</span></button>
+                        </div>
+                        <p class="tutor-profile-error" data-tutor-schedule-error hidden></p>
+                    </section>
+
+                    <section class="tutor-profile-section">
+                        <h3>Chứng chỉ &amp; bằng cấp</h3>
+                        <p>Các tệp được dùng trong quá trình xác minh hồ sơ. Hỗ trợ PDF, PNG, JPG tối đa 5 MB mỗi tệp.</p>
+
+                        <!-- Tạm thời: CertificateRow và file status chip chưa có component chung; file list dùng style page. -->
+                        <div class="tutor-profile-certificates">
+                            <article>
+                                <span class="tutor-profile-certificate__icon">PDF</span>
+                                <div><strong>Bang_DaiHoc_SuPham.pdf</strong><p>1.8 MB · Bằng Cử nhân Sư phạm Toán</p></div>
+                                <span class="tutor-profile-certificate__status">Đã duyệt</span>
+                                <button type="button">Xem</button>
+                                <button type="button">Xóa</button>
+                            </article>
+                            <article>
+                                <span class="tutor-profile-certificate__icon">IMG</span>
+                                <div><strong>ChungChi_NghiepVuSuPham.jpg</strong><p>2.3 MB · Chứng chỉ nghiệp vụ giảng dạy tích cực</p></div>
+                                <span class="tutor-profile-certificate__status">Đã duyệt</span>
+                                <button type="button">Xem</button>
+                                <button type="button">Xóa</button>
+                            </article>
+                            <article>
+                                <span class="tutor-profile-certificate__icon tutor-profile-certificate__icon--pending">PDF</span>
+                                <div><strong>ChungChi_BoiDuong_2026.pdf</strong><p>1.1 MB · Chứng nhận bồi dưỡng phương pháp mới 2026</p></div>
+                                <span class="tutor-profile-certificate__status tutor-profile-certificate__status--pending">Chờ duyệt</span>
+                                <button type="button">Xem</button>
+                                <button type="button">Xóa</button>
+                            </article>
+                        </div>
+
+                        <section class="tutor-profile-upload" data-file-upload data-variant="dropzone">
+                            <label class="file-dropzone" data-dropzone>
+                                <input class="file-upload__input" type="file" accept=".pdf,.png,.jpg,.jpeg" data-tutor-editable>
+                                <span class="file-upload__cloud" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <path d="M7.5 18.5h9a4 4 0 0 0 .8-7.92A5.5 5.5 0 0 0 6.8 9.2 4.7 4.7 0 0 0 7.5 18.5Z"/>
+                                        <path d="M12 9.5v7M9.5 12l2.5-2.5 2.5 2.5"/>
+                                    </svg>
+                                </span>
+                                <strong>Kéo thả hoặc bấm để tải chứng chỉ lên</strong>
+                                <span>Đã tải 3/5 tệp cho phép</span>
+                                <small data-dropzone-help>Hỗ trợ PDF, PNG, JPG dưới 5 MB</small>
+                            </label>
+                            <p class="file-upload__status" data-status aria-live="polite"></p>
+                        </section>
+                    </section>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer class="tutor-profile-footer">
+        <div class="container">
+            <span>© 2026 Edu Connect</span>
+            <span><a href="#dieu-khoan">Điều khoản sử dụng</a><a href="#bao-mat">Chính sách bảo mật</a></span>
+        </div>
+    </footer>
+
+    <script src="../../js/core/user-header.js" defer></script>
+    <script src="../../js/core/switch.js" defer></script>
+    <script src="../../js/core/file-upload.js" defer></script>
+    <script src="../../js/pages/tutor/my-profile.js" defer></script>
+</body>
+</html>
