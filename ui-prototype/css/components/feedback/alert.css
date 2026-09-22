@@ -1,0 +1,47 @@
+<<<<<<< Updated upstream
+=======
+
+.alert-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    max-width: 600px;
+}
+.alert-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-base);
+}
+.alert-card--info {
+    background: var(--color-info-container);
+    border-color: var(--color-primary-border);
+    color: var(--color-info);
+}
+.alert-card--success {
+    background: var(--color-success-container);
+    border-color: #86EFAC;
+    color: var(--color-success);
+}
+.alert-card--warning {
+    background: var(--color-warning-container);
+    border-color: #FCD34D;
+    color: var(--color-warning);
+}
+.alert-card--danger {
+    background: var(--color-danger-container);
+    border-color: #FCA5A5;
+    color: var(--color-danger);
+}
+.alert-title {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    display: block;
+    margin-bottom: var(--space-1);
+}
+.alert-icon { flex-shrink: 0; margin-top: 2px; }
+>>>>>>> Stashed changes
