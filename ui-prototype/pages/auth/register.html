@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng ký · Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+    <link rel="stylesheet" href="../../css/components/form/password-input.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/pages/auth/register.css">
+</head>
+<body class="auth-register-page">
+    <header class="auth-register-header">
+        <div class="container auth-register-header__content">
+            <a class="auth-register-header__back" href="#trang-chu">← Về trang chủ</a>
+            <a class="auth-register-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+            <span class="auth-register-header__spacer" aria-hidden="true"></span>
+        </div>
+    </header>
+
+    <main class="auth-register-main">
+        <div class="auth-register-main__intro"><p>Học đúng người · Dạy đúng nhu cầu</p><span>Gia nhập hệ sinh thái kết nối và quản lý gia sư bảo đảm chất lượng</span></div>
+        <section class="auth-register-card" aria-labelledby="register-title">
+            <header class="auth-register-card__heading"><h1 id="register-title">Đăng ký tài khoản</h1><p>Tạo tài khoản để bắt đầu sử dụng Edu Connect.</p></header>
+            <section class="alert alert--success auth-register-status" role="status" aria-live="polite" hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><p class="alert__message" data-register-status></p></div></section>
+
+            <form class="auth-register-form" novalidate data-register-form>
+                <!-- Tạm thời: RoleSelector chưa có component dùng chung; dùng radio card cấp trang. -->
+                <fieldset class="auth-register-role"><legend>Bạn muốn sử dụng Edu Connect để làm gì?</legend>
+                    <label class="auth-register-role__option"><input type="radio" name="role" value="learner" checked><span><strong>Học / tìm gia sư</strong><small>Dành cho học viên hoặc phụ huynh.</small></span></label>
+                    <label class="auth-register-role__option"><input type="radio" name="role" value="tutor"><span><strong>Gia sư / Giảng viên</strong><small>Nhận lớp và quản lý lịch dạy.</small></span></label>
+                </fieldset>
+
+                <div class="auth-register-form__field"><label for="register-name">Họ và tên</label><div class="input-control" data-register-control="name"><input class="input-control__input" id="register-name" name="name" type="text" autocomplete="name" placeholder="Nhập họ và tên" aria-describedby="register-name-error" required></div><p class="auth-register-form__error" id="register-name-error" hidden></p></div>
+                <div class="auth-register-form__field"><label for="register-email">Email</label><div class="input-control" data-register-control="email"><img class="input-control__icon" src="../../assets/icons/email.svg" alt=""><input class="input-control__input input-control__input--with-leading" id="register-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" aria-describedby="register-email-error" required></div><p class="auth-register-form__error" id="register-email-error" hidden></p></div>
+                <div class="auth-register-form__field"><label for="register-phone">Số điện thoại</label><div class="input-control" data-register-control="phone"><img class="input-control__icon" src="../../assets/icons/phone.svg" alt=""><input class="input-control__input input-control__input--with-leading" id="register-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Ví dụ: 0912 345 678" aria-describedby="register-phone-error" required></div><p class="auth-register-form__error" id="register-phone-error" hidden></p></div>
+
+                <div class="auth-register-form__field" data-component="password-input"><label for="register-password">Mật khẩu</label><div class="password-control" data-register-control="password"><img class="auth-register-form__leading-icon" src="../../assets/icons/lock.svg" alt=""><input class="password-control__input" id="register-password" name="password" type="password" autocomplete="new-password" placeholder="Tối thiểu 8 ký tự" aria-describedby="register-password-error" required><button class="password-control__toggle" type="button" aria-label="Hiện mật khẩu" aria-controls="register-password" aria-pressed="false" data-password-toggle><img src="../../assets/icons/mat.svg" data-icon-show="../../assets/icons/mat.svg" data-icon-hide="../../assets/icons/mat-tat.svg" alt=""></button></div><p class="auth-register-form__error" id="register-password-error" hidden></p></div>
+                <div class="auth-register-form__field" data-component="password-input"><label for="register-confirm-password">Xác nhận mật khẩu</label><div class="password-control" data-register-control="confirm-password"><img class="auth-register-form__leading-icon" src="../../assets/icons/lock.svg" alt=""><input class="password-control__input" id="register-confirm-password" name="confirm-password" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu" aria-describedby="register-confirm-password-error" required><button class="password-control__toggle" type="button" aria-label="Hiện mật khẩu" aria-controls="register-confirm-password" aria-pressed="false" data-password-toggle><img src="../../assets/icons/mat.svg" data-icon-show="../../assets/icons/mat.svg" data-icon-hide="../../assets/icons/mat-tat.svg" alt=""></button></div><p class="auth-register-form__error" id="register-confirm-password-error" hidden></p></div>
+
+                <!-- Tạm thời: Button component chưa có implementation, nên dùng nút cấp trang. Thay bằng Button chuẩn khi hỗ trợ loading state. -->
+                <button class="auth-register-form__submit" type="button" data-register-submit><span data-register-submit-label>Tạo tài khoản</span><span class="auth-register-form__spinner" aria-hidden="true" hidden></span></button>
+            </form>
+            <p class="auth-register-card__login">Đã có tài khoản? <a href="login.html">Đăng nhập</a></p>
+        </section>
+    </main>
+
+    <footer class="auth-register-footer"><div class="container"><span>© 2026 Edu Connect</span><span><a href="#dieu-khoan">Điều khoản sử dụng</a><a href="#bao-mat">Chính sách bảo mật</a></span></div></footer>
+    <script src="../../js/core/password-input.js" defer></script>
+    <script src="../../js/pages/auth/register.js" defer></script>
+</body>
+</html>

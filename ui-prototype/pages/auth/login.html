@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng nhập · Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+    <link rel="stylesheet" href="../../css/components/form/password-input.css">
+    <link rel="stylesheet" href="../../css/components/form/checkbox.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/pages/auth/login.css">
+</head>
+<body class="auth-login-page" data-login-state="">
+    <header class="auth-login-header">
+        <div class="container auth-login-header__content">
+            <a class="auth-login-header__back" href="#trang-chu">← Về trang chủ</a>
+            <a class="auth-login-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
+                <img src="../../assets/icons/logo.svg" alt="">
+                <span>Edu Connect</span>
+            </a>
+            <span class="auth-login-header__spacer" aria-hidden="true"></span>
+        </div>
+    </header>
+
+    <main class="auth-login-main">
+        <div class="auth-login-main__intro">
+            <p>Học đúng người · Dạy đúng nhu cầu</p>
+            <span>Hệ sinh thái kết nối và quản lý gia sư bảo đảm chất lượng</span>
+        </div>
+
+        <section class="auth-login-card" aria-labelledby="login-title">
+            <header class="auth-login-card__heading">
+                <h1 id="login-title">Đăng nhập</h1>
+                <p>Chào mừng bạn quay lại Edu Connect.</p>
+            </header>
+
+            <section class="alert alert--error auth-login-status" role="alert" aria-live="polite" hidden>
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content"><p class="alert__message" data-login-status></p></div>
+            </section>
+
+            <form class="auth-login-form" novalidate data-login-form>
+                <div class="auth-login-form__field">
+                    <label for="login-email">Email</label>
+                    <div class="input-control" data-email-control>
+                        <img class="input-control__icon" src="../../assets/icons/email.svg" alt="">
+                        <input class="input-control__input input-control__input--with-leading" id="login-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" aria-describedby="login-email-error" required>
+                    </div>
+                    <p class="auth-login-form__error" id="login-email-error" hidden></p>
+                </div>
+
+                <div class="auth-login-form__field" data-component="password-input">
+                    <div class="auth-login-form__field-label"><label for="login-password">Mật khẩu</label><a href="#quen-mat-khau">Quên mật khẩu?</a></div>
+                    <div class="password-control" data-password-control>
+                        <img class="auth-login-form__leading-icon" src="../../assets/icons/lock.svg" alt="">
+                        <input class="password-control__input" id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" aria-describedby="login-password-error" required>
+                        <button class="password-control__toggle" type="button" aria-label="Hiện mật khẩu" aria-controls="login-password" aria-pressed="false" data-password-toggle>
+                            <img src="../../assets/icons/mat.svg" data-icon-show="../../assets/icons/mat.svg" data-icon-hide="../../assets/icons/mat-tat.svg" alt="">
+                        </button>
+                    </div>
+                    <p class="auth-login-form__error" id="login-password-error" hidden></p>
+                </div>
+
+                <label class="checkbox-option auth-login-form__remember">
+                    <span class="checkbox-hit-area"><input type="checkbox" name="remember"><span class="checkbox-box" aria-hidden="true"></span></span>
+                    <span class="checkbox-option__copy"><span class="checkbox-option__title">Ghi nhớ đăng nhập</span></span>
+                </label>
+                <!-- Tạm thời: Button component chưa có implementation, nên dùng nút cấp trang. Thay bằng Button chuẩn khi hỗ trợ loading state. -->
+                <button class="auth-login-form__submit" type="button" data-login-submit><span data-login-submit-label>Đăng nhập</span><span class="auth-login-form__spinner" aria-hidden="true" hidden></span></button>
+            </form>
+
+            <p class="auth-login-card__register">Chưa có tài khoản? <a href="#dang-ky">Đăng ký ngay</a></p>
+        </section>
+    </main>
+
+    <footer class="auth-login-footer">
+        <div class="container"><span>© 2026 Edu Connect</span><span><a href="#dieu-khoan">Điều khoản sử dụng</a><a href="#bao-mat">Chính sách bảo mật</a></span></div>
+    </footer>
+    <script src="../../js/core/password-input.js" defer></script>
+    <script src="../../js/pages/auth/login.js" defer></script>
+</body>
+</html>
