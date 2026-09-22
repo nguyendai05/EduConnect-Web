@@ -3,31 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hợp đồng học — Edu Connect</title>
+<title>Tin nhắn — Edu Connect</title>
 <link rel="stylesheet" href="../../css/tokens.css">
 <link rel="stylesheet" href="../../css/reset.css">
 <link rel="stylesheet" href="../../css/base.css">
 <link rel="stylesheet" href="../../css/components/layout/user-header.css">
 <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
+<link rel="stylesheet" href="../../css/components/form/search-input.css">
 <link rel="stylesheet" href="../../css/components/form/textarea.css">
-<link rel="stylesheet" href="../../css/components/feedback/alert.css">
-<link rel="stylesheet" href="../../css/components/feedback/modal.css">
-<link rel="stylesheet" href="../../css/components/feedback/toast.css">
-<link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
-<link rel="stylesheet" href="../../css/components/domain/lesson/lesson-card.css">
-<link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
-<link rel="stylesheet" href="../../css/components/layout/page-header.css">
 <link rel="stylesheet" href="../../css/components/navigation/filter-chip.css">
-<link rel="stylesheet" href="../../css/components/form/form-field.css">
-<link rel="stylesheet" href="../../css/pages/contract/contract-detail.css">
-<link rel="stylesheet" href="../../css/pages/contract/student-detail.css">
+<link rel="stylesheet" href="../../css/components/domain/chat/message-thread-item.css">
+<link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
+<link rel="stylesheet" href="../../css/components/feedback/toast.css">
+<link rel="stylesheet" href="../../css/pages/chat/messages.css">
 <script src="../../js/core/user-header.js" defer></script>
-<script src="../../js/core/modal.js" defer></script>
+<script src="../../js/core/search-input.js" defer></script>
 <script src="../../js/core/toast.js" defer></script>
-<script src="../../js/pages/contract/student-detail.js" defer></script>
+<script src="../../js/pages/chat/messages.js" defer></script>
 </head>
 <body>
-<header class="user-header" data-component="user-header" data-user-variant="A" data-active-nav="none">
+<header class="user-header" data-component="user-header" data-user-variant="TUTOR" data-active-nav="none" data-profile-name="Nguyễn Minh Anh" data-profile-initials="MA" data-profile-role="Gia sư Toán">
     <div class="user-header__inner">
         <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
             <span class="user-header__brand-mark" aria-hidden="true">
@@ -114,55 +109,59 @@
         </div>
     </div>
 </header>
-<main class="contract-page contract-page--student" id="contract">
-  <div class="contract-breadcrumb-slot"><nav class="breadcrumb" aria-label="Đường dẫn">
-            <ol class="breadcrumb__list">
-                <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
-                <li class="breadcrumb__item"><a class="breadcrumb__link" href="#hop-dong">Hợp đồng của tôi</a></li>
-                <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" title="Chi tiết hợp đồng học HD-20260919-024">Chi tiết hợp đồng học HD-20260919-024</span></li>
-            </ol>
-        </nav></div>
-  <header class="page-header">
-    <div class="page-header__content">
-      <div class="page-header__title-block">
-        <div class="page-header__title-row">
-          <h1 class="page-header__title">Học Toán cùng Nguyễn Minh Anh</h1>
-          <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Đang thực hiện</span>
-        </div>
-        <p class="page-header__description">HD-20260919-024 · Toán lớp 11 · Học trực tiếp</p>
-      </div>
-      <div class="page-header__actions"><button class="contract-button contract-button--secondary" type="button" data-action="contract-detail">Xem nội dung hợp đồng</button></div>
-    </div>
-  </header>
-  <section class="contract-progress" aria-label="Tiến độ hợp đồng">
-    <div><strong>Tiến độ học tập: 3 / 8 buổi</strong><p class="contract-muted" id="completion-summary">2 buổi hoàn thành · 1 buổi chờ xác nhận</p></div>
-    <div class="contract-progress__bar"><label for="learning-progress">Đã học 3 buổi <span>Còn 5 buổi</span></label><progress id="learning-progress" max="8" value="3">3/8</progress></div>
-  </section>
-  <section class="alert alert--warning alert--soft" id="pending-alert" aria-labelledby="pending-title">
-    <span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title" id="pending-title">Buổi 3 đang chờ bạn xác nhận</h2><p class="alert__message" id="pending-description">Gia sư đã điểm danh ngày 05/10/2026 lúc 20:34. Hạn phản hồi: 08/10/2026 · 20:34. Hãy xác nhận hoàn thành hoặc báo vấn đề trước thời hạn.</p><div class="contract-actions" id="pending-actions"><button class="contract-button" type="button" data-action="confirm" data-lesson="3">Xác nhận buổi 3</button><button class="contract-button contract-button--plain" type="button" data-action="report" data-lesson="3">Báo vấn đề</button></div></div>
-  </section>
-  <div class="contract-columns">
-    <div class="contract-main">
-      <section class="contract-panel" aria-labelledby="overview-title"><h2 id="overview-title"><img src="../../assets/icons/calendar.svg" alt="">Thông tin hợp đồng</h2>
-        <dl class="contract-facts"><div><dt>Gia sư phụ trách</dt><dd>Nguyễn Minh Anh</dd></div><div><dt>Môn học & trình độ</dt><dd>Toán · Lớp 11 (THPT)</dd></div><div><dt>Lịch học cố định</dt><dd>Thứ Hai & Thứ Sáu<br>19:00–20:30 · 90 phút/buổi</dd></div><div><dt>Thời gian hợp đồng</dt><dd>28/09/2026 – 23/10/2026</dd></div><div><dt>Hình thức học</dt><dd>Trực tiếp tại nhà học viên</dd></div><div><dt>Quy mô & học phí</dt><dd>8 buổi · 220.000 ₫/buổi</dd></div></dl>
-        <div class="contract-total"><span>Tổng giá trị hợp đồng</span><strong>1.760.000 ₫</strong></div>
-      </section>
-      <section class="contract-panel" aria-labelledby="lessons-title"><div class="contract-section-heading"><div><h2 id="lessons-title">Danh sách buổi học</h2><p class="contract-muted">Theo dõi điểm danh và xác nhận từng buổi học.</p></div></div>
-        <div class="contract-filters filter-chip-list" role="group" aria-label="Lọc buổi học"><button class="filter-chip filter-chip--selected" type="button" data-filter="all" aria-pressed="true">Tất cả (8)</button><button class="filter-chip" type="button" data-filter="completed" aria-pressed="false">Hoàn thành (2)</button><button class="filter-chip" type="button" data-filter="pending" aria-pressed="false">Chờ xác nhận (1)</button><button class="filter-chip" type="button" data-filter="upcoming" aria-pressed="false">Sắp tới (5)</button><button class="filter-chip" type="button" data-filter="reported" aria-pressed="false">Chờ xử lý (0)</button></div>
-        <p class="contract-sr-only" id="filter-status" role="status"></p>
-        <div class="contract-lessons" id="lesson-list"></div>
-        <section class="empty-state" id="lessons-empty" hidden><span class="empty-state__icon" aria-hidden="true"></span><h3 class="empty-state__title">Không có buổi học phù hợp</h3><p class="empty-state__description">Chọn bộ lọc khác để xem các buổi học.</p></section>
-        <noscript>Vui lòng bật JavaScript để xem và thao tác với danh sách buổi học.</noscript>
-      </section>
-      <section class="contract-panel" aria-labelledby="history-title"><h2 id="history-title">Hoạt động gần đây</h2><ol class="contract-timeline" id="activity-list"><li><time datetime="2026-10-05T20:34">05/10/2026 · 20:34</time><p>Gia sư đã điểm danh buổi 3. Đang chờ học viên xác nhận.</p></li><li><time datetime="2026-10-05T20:30">05/10/2026 · 20:30</time><p>Buổi 2 đã hoàn thành. Khoản ký quỹ 220.000 ₫ đã được giải ngân.</p></li><li><time datetime="2026-09-28T21:02">28/09/2026 · 21:02</time><p>Bạn đã xác nhận hoàn thành buổi 1.</p></li></ol></section>
-      <section class="contract-panel"><h2>Quản lý hợp đồng & điều khoản</h2><p class="contract-muted">Trao đổi với gia sư trước khi thay đổi lịch học. Nếu có vấn đề về buổi học, hãy gửi báo cáo để được hỗ trợ.</p><div class="contract-management"><button class="contract-button contract-button--secondary" type="button" data-action="policy">Xem quy định đổi lịch</button><button class="contract-button contract-button--secondary" type="button" data-action="support">Liên hệ hỗ trợ</button></div></section>
-    </div>
-    <aside class="contract-sidebar" aria-label="Thông tin bổ sung">
-      <section class="contract-panel" id="finance"><h2><img src="../../assets/icons/lock.svg" alt="">Ký quỹ hợp đồng</h2><p class="contract-muted">Đã ký quỹ đầy đủ</p><p class="contract-money">1.760.000 ₫</p><progress id="finance-progress" value="440000" max="1760000" aria-label="Số tiền đã giải ngân">440.000 / 1.760.000</progress><dl class="contract-finance"><div><dt>Đã giải ngân</dt><dd id="released-money">440.000 ₫</dd></div><div><dt>Đang ký quỹ</dt><dd id="held-money">1.320.000 ₫</dd></div><div><dt>Mỗi buổi học</dt><dd>220.000 ₫</dd></div></dl><p class="contract-note">Khoản ký quỹ được theo dõi theo từng buổi học. Buổi học có báo cáo sẽ chờ xử lý trước khi giải ngân.</p></section>
-      <section class="contract-panel"><p class="contract-eyebrow">BUỔI HỌC KẾ TIẾP</p><h2>Buổi 4 · Thứ Sáu</h2><p class="contract-next-date">09/10/2026</p><p class="contract-muted">19:00–20:30 · 90 phút</p><p>Phương trình lượng giác nâng cao</p><button class="contract-button contract-button--secondary" type="button" data-action="detail" data-lesson="4">Xem buổi học</button></section>
-      <section class="contract-panel"><div class="contract-tutor"><span class="contract-avatar" aria-hidden="true">MA</span><div><h2>Nguyễn Minh Anh</h2><p class="contract-muted">Gia sư Toán · Đã xác minh</p></div></div><p class="contract-muted">Đồng hành cùng bạn trong suốt 8 buổi học.</p><button class="contract-button" type="button" data-action="message">Nhắn tin cho gia sư</button></section>
-    </aside>
-  </div>
+
+<main class="chat-page">
+<h1 class="chat-sr-only">Tin nhắn</h1>
+<div class="chat-layout" id="chat-layout">
+<aside class="chat-contacts" aria-label="Danh sách cuộc trò chuyện">
+<div class="chat-contacts__tools">
+<h2>Cuộc trò chuyện <span id="unread-total" class="chat-counter">2</span></h2>
+<div class="search-input search-input--compact" data-search-input>
+<img class="search-input__icon" src="../../assets/icons/chat-search.svg" alt="">
+<input id="conversation-search" type="search" placeholder="Tìm cuộc trò chuyện..." aria-label="Tìm cuộc trò chuyện">
+<button class="search-input__clear" type="button" data-clear-search aria-label="Xóa tìm kiếm" hidden><img src="../../assets/icons/close.svg" alt=""></button>
+</div>
+<div class="filter-chip-list" role="group" aria-label="Lọc cuộc trò chuyện">
+<button class="filter-chip filter-chip--selected" type="button" data-chat-filter="all" aria-pressed="true">Tất cả</button>
+<button class="filter-chip" type="button" data-chat-filter="unread" aria-pressed="false">Chưa đọc</button>
+</div>
+</div>
+<div class="chat-threads" id="thread-list"></div>
+<section class="empty-state" id="thread-empty" hidden><span class="empty-state__icon" aria-hidden="true"></span><h3 class="empty-state__title">Không tìm thấy cuộc trò chuyện</h3><p class="empty-state__description">Thử tên khác hoặc chọn bộ lọc Tất cả.</p></section>
+<p class="chat-contact-count" id="contact-count"></p>
+</aside>
+<section class="chat-conversation" aria-label="Nội dung cuộc trò chuyện">
+<header class="chat-conversation__header">
+<button class="chat-icon-button chat-back" id="back-to-contacts" aria-label="Về danh sách cuộc trò chuyện" type="button"><img src="../../assets/icons/chevron-right.svg" alt=""></button>
+<span class="chat-avatar" id="contact-avatar">ML</span>
+<div class="chat-person"><h2 id="contact-name">Chị Mai Lan</h2><p id="contact-description">Phụ huynh · Gia Huy</p></div>
+<button class="chat-icon-button" id="toggle-context" type="button" aria-label="Thông tin liên quan" aria-controls="chat-context" aria-expanded="false"><img src="../../assets/icons/info-circle.svg" alt=""></button>
+</header>
+<a class="chat-contract-link" id="contract-link" href="../contract/tutor-detail.html">Toán lớp 11 · HD-20260919-024 <span>Xem hợp đồng</span></a>
+<div class="chat-history" id="message-history" role="log" aria-label="Lịch sử tin nhắn" aria-live="polite" aria-relevant="additions"></div>
+<form class="chat-composer" id="message-form">
+<div id="attachment-preview" class="chat-attachment-preview" hidden></div>
+<label class="chat-sr-only" for="message-input">Nội dung tin nhắn</label>
+<textarea class="textarea-control chat-composer__input" id="message-input" rows="1" maxlength="4000" placeholder="Nhập tin nhắn trao đổi việc học..."></textarea>
+<div class="chat-composer__actions">
+<button class="chat-icon-button" id="attach-button" type="button" aria-label="Đính kèm tệp"><img src="../../assets/icons/chat-attachment.svg" alt=""></button>
+<input id="attachment-input" type="file" accept="image/png,image/jpeg,image/webp,application/pdf,.txt" hidden>
+<span class="chat-composer__hint">Enter để gửi · Shift + Enter xuống dòng</span>
+<button class="chat-send" id="send-button" type="submit" disabled>Gửi <img src="../../assets/icons/chat-send.svg" alt=""></button>
+</div>
+<p class="chat-error" id="composer-error" role="alert" hidden></p>
+</form>
+</section>
+<aside class="chat-context" id="chat-context" aria-label="Thông tin liên quan">
+<div class="chat-context__heading"><h2>Hồ sơ liên kết</h2><button class="chat-icon-button chat-context-close" id="close-context" type="button" aria-label="Đóng thông tin"><img src="../../assets/icons/close.svg" alt=""></button></div>
+<section class="chat-context-card"><p class="chat-eyebrow">HỌC VIÊN</p><h3 id="student-name">Trần Gia Huy</h3><p id="student-course">Toán · Lớp 11</p><dl><div><dt>Người liên hệ</dt><dd id="guardian-name">Chị Mai Lan</dd></div><div><dt>Hình thức</dt><dd>Học trực tiếp</dd></div></dl></section>
+<section class="chat-context-card" id="linked-contract"><p class="chat-eyebrow">HỢP ĐỒNG ĐANG THỰC HIỆN</p><h3>HD-20260919-024</h3><label for="chat-progress">Tiến độ: 3 / 8 buổi</label><progress id="chat-progress" value="3" max="8">3/8</progress><dl><div><dt>Học phí mỗi buổi</dt><dd>220.000 ₫</dd></div><div><dt>Gia sư thực nhận</dt><dd>198.000 ₫</dd></div></dl><a href="../contract/tutor-detail.html">Xem chi tiết hợp đồng</a></section>
+<section class="chat-context-card" id="linked-lesson"><p class="chat-eyebrow">BUỔI DẠY KẾ TIẾP</p><h3>Buổi 4 · Thứ Sáu</h3><p>09/10/2026 · 19:00–20:30</p><p>Phương trình lượng giác nâng cao</p><a href="../contract/tutor-detail.html#next-lesson">Xem kế hoạch buổi dạy</a></section>
+<p class="chat-context-note">Theo dõi trao đổi và thông tin buổi học tại một nơi để thuận tiện đối chiếu.</p>
+</aside>
+</div>
+<p class="chat-sr-only" id="chat-status" role="status"></p>
+<noscript>Vui lòng bật JavaScript để xem danh sách cuộc trò chuyện.</noscript>
 </main>
 <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
@@ -210,23 +209,6 @@
         </div>
     </div>
 </footer>
-<dialog class="modal" id="shared-modal" aria-labelledby="shared-modal-title" aria-describedby="shared-modal-description">
-  <div class="modal__surface">
-    <header class="modal__header">
-      <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
-      <div class="modal__heading">
-        <h2 id="shared-modal-title">Xác nhận thao tác</h2>
-      </div>
-      <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
-    </header>
-    <div class="modal__body">
-      <p id="shared-modal-description">Bạn có chắc muốn thực hiện thao tác này?</p>
-    </div>
-    <footer class="modal__footer">
-      <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
-      <button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận</button>
-    </footer>
-  </div>
-</dialog>
+
 </body>
 </html>

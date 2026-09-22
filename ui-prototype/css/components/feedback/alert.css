@@ -2,6 +2,7 @@
 .alert--success { --alert-color: var(--color-success); --alert-icon: url("../../../assets/icons/check-circle.svg"); }
 .alert--warning { --alert-color: var(--color-warning); --alert-icon: url("../../../assets/icons/warning-triangle.svg"); }
 .alert--error { --alert-color: var(--color-danger); --alert-icon: url("../../../assets/icons/error-circle.svg"); }
+.alert--soft { background: color-mix(in srgb, var(--alert-color) 7%, var(--color-surface)); }
 .alert__icon { flex: 0 0 1.5rem; height: 1.5rem; margin-top: 2px; background: var(--alert-color); mask: var(--alert-icon) center / contain no-repeat; }
 .alert__content { min-width: 0; overflow-wrap: anywhere; }
 .alert__title { font-size: var(--font-size-base); color: var(--alert-color); }

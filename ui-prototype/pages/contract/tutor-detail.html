@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hợp đồng học — Edu Connect</title>
+<title>Hợp đồng dạy — Edu Connect</title>
 <link rel="stylesheet" href="../../css/tokens.css">
 <link rel="stylesheet" href="../../css/reset.css">
 <link rel="stylesheet" href="../../css/base.css">
@@ -19,15 +19,16 @@
 <link rel="stylesheet" href="../../css/components/layout/page-header.css">
 <link rel="stylesheet" href="../../css/components/navigation/filter-chip.css">
 <link rel="stylesheet" href="../../css/components/form/form-field.css">
+<link rel="stylesheet" href="../../css/components/form/radio.css">
 <link rel="stylesheet" href="../../css/pages/contract/contract-detail.css">
-<link rel="stylesheet" href="../../css/pages/contract/student-detail.css">
+<link rel="stylesheet" href="../../css/pages/contract/tutor-detail.css">
 <script src="../../js/core/user-header.js" defer></script>
 <script src="../../js/core/modal.js" defer></script>
 <script src="../../js/core/toast.js" defer></script>
-<script src="../../js/pages/contract/student-detail.js" defer></script>
+<script src="../../js/pages/contract/tutor-detail.js" defer></script>
 </head>
 <body>
-<header class="user-header" data-component="user-header" data-user-variant="A" data-active-nav="none">
+<header class="user-header" data-component="user-header" data-user-variant="TUTOR" data-active-nav="none" data-profile-name="Nguyễn Minh Anh" data-profile-initials="MA" data-profile-role="Gia sư Toán">
     <div class="user-header__inner">
         <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
             <span class="user-header__brand-mark" aria-hidden="true">
@@ -114,19 +115,22 @@
         </div>
     </div>
 </header>
-<main class="contract-page contract-page--student" id="contract">
-  <div class="contract-breadcrumb-slot"><nav class="breadcrumb" aria-label="Đường dẫn">
-            <ol class="breadcrumb__list">
-                <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
-                <li class="breadcrumb__item"><a class="breadcrumb__link" href="#hop-dong">Hợp đồng của tôi</a></li>
-                <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" title="Chi tiết hợp đồng học HD-20260919-024">Chi tiết hợp đồng học HD-20260919-024</span></li>
-            </ol>
-        </nav></div>
+<main class="contract-page contract-page--tutor" id="contract" data-snapshot-at="2026-10-05T20:40:00+07:00">
+  <div class="contract-breadcrumb-slot">
+    <nav class="breadcrumb" aria-label="Đường dẫn">
+      <ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="#hop-dong">Hợp đồng giảng dạy</a></li>
+        <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" title="Chi tiết hợp đồng dạy HD-20260919-024">Chi tiết hợp đồng dạy HD-20260919-024</span></li>
+      </ol>
+    </nav>
+  </div>
+
   <header class="page-header">
     <div class="page-header__content">
       <div class="page-header__title-block">
         <div class="page-header__title-row">
-          <h1 class="page-header__title">Học Toán cùng Nguyễn Minh Anh</h1>
+          <h1 class="page-header__title">Hợp đồng dạy Toán cho Gia Huy</h1>
           <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Đang thực hiện</span>
         </div>
         <p class="page-header__description">HD-20260919-024 · Toán lớp 11 · Học trực tiếp</p>
@@ -134,33 +138,90 @@
       <div class="page-header__actions"><button class="contract-button contract-button--secondary" type="button" data-action="contract-detail">Xem nội dung hợp đồng</button></div>
     </div>
   </header>
+
   <section class="contract-progress" aria-label="Tiến độ hợp đồng">
-    <div><strong>Tiến độ học tập: 3 / 8 buổi</strong><p class="contract-muted" id="completion-summary">2 buổi hoàn thành · 1 buổi chờ xác nhận</p></div>
-    <div class="contract-progress__bar"><label for="learning-progress">Đã học 3 buổi <span>Còn 5 buổi</span></label><progress id="learning-progress" max="8" value="3">3/8</progress></div>
+    <div><strong id="teaching-summary">Tiến độ giảng dạy: 3 / 8 buổi</strong><p class="contract-muted" id="completion-summary">2 buổi đã giải ngân · 1 buổi chờ xác nhận</p></div>
+    <div class="contract-progress__bar"><label for="teaching-progress">Đã dạy 3 buổi <span>Còn 5 buổi</span></label><progress id="teaching-progress" max="8" value="3">3/8</progress></div>
   </section>
+
+  <div class="contract-spotlight">
   <section class="alert alert--warning alert--soft" id="pending-alert" aria-labelledby="pending-title">
-    <span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title" id="pending-title">Buổi 3 đang chờ bạn xác nhận</h2><p class="alert__message" id="pending-description">Gia sư đã điểm danh ngày 05/10/2026 lúc 20:34. Hạn phản hồi: 08/10/2026 · 20:34. Hãy xác nhận hoàn thành hoặc báo vấn đề trước thời hạn.</p><div class="contract-actions" id="pending-actions"><button class="contract-button" type="button" data-action="confirm" data-lesson="3">Xác nhận buổi 3</button><button class="contract-button contract-button--plain" type="button" data-action="report" data-lesson="3">Báo vấn đề</button></div></div>
+    <span class="alert__icon" aria-hidden="true"></span>
+    <div class="alert__content">
+      <h2 class="alert__title" id="pending-title">Buổi 3 đang chờ học viên hoặc phụ huynh xác nhận</h2>
+      <p class="alert__message" id="pending-description">Đã điểm danh: Có mặt · 05/10/2026, 20:34. Hạn phản hồi: 08/10/2026, 20:34. Khoản thu nhập 198.000 ₫ đang chờ xác nhận.</p>
+      <div class="contract-actions"><button class="contract-button contract-button--secondary" type="button" data-action="detail" data-lesson="3">Xem chi tiết buổi 3</button></div>
+    </div>
   </section>
+      <section class="contract-panel" id="next-lesson">
+        <p class="contract-eyebrow">BUỔI DẠY KẾ TIẾP</p><h2>Buổi 4 · Thứ Sáu</h2><p class="contract-next-date">09/10/2026</p><p class="contract-muted">19:00–20:30 · 90 phút</p><p>Phương trình lượng giác nâng cao</p>
+        <button class="contract-button" id="next-attendance-button" type="button" data-action="attendance" data-lesson="4">Điểm danh buổi 4</button>
+        <p class="tutor-attendance-note" id="next-attendance-note">Điểm danh khả dụng từ 19:00 ngày 09/10/2026.</p>
+      </section>
+  </div>
+
   <div class="contract-columns">
     <div class="contract-main">
-      <section class="contract-panel" aria-labelledby="overview-title"><h2 id="overview-title"><img src="../../assets/icons/calendar.svg" alt="">Thông tin hợp đồng</h2>
-        <dl class="contract-facts"><div><dt>Gia sư phụ trách</dt><dd>Nguyễn Minh Anh</dd></div><div><dt>Môn học & trình độ</dt><dd>Toán · Lớp 11 (THPT)</dd></div><div><dt>Lịch học cố định</dt><dd>Thứ Hai & Thứ Sáu<br>19:00–20:30 · 90 phút/buổi</dd></div><div><dt>Thời gian hợp đồng</dt><dd>28/09/2026 – 23/10/2026</dd></div><div><dt>Hình thức học</dt><dd>Trực tiếp tại nhà học viên</dd></div><div><dt>Quy mô & học phí</dt><dd>8 buổi · 220.000 ₫/buổi</dd></div></dl>
-        <div class="contract-total"><span>Tổng giá trị hợp đồng</span><strong>1.760.000 ₫</strong></div>
+      <section class="contract-panel" aria-labelledby="overview-title">
+        <h2 id="overview-title"><img src="../../assets/icons/calendar.svg" alt="">Thông tin lớp đang dạy</h2>
+        <dl class="contract-facts">
+          <div><dt>Học viên</dt><dd>Trần Gia Huy · Lớp 11</dd></div>
+          <div><dt>Phụ huynh</dt><dd>Chị Mai Lan</dd></div>
+          <div><dt>Môn học</dt><dd>Toán · Chương trình THPT</dd></div>
+          <div><dt>Lịch dạy cố định</dt><dd>Thứ Hai &amp; Thứ Sáu<br>19:00–20:30</dd></div>
+          <div><dt>Hình thức</dt><dd>Trực tiếp tại nhà học viên</dd></div>
+          <div><dt>Thời gian hợp đồng</dt><dd>28/09/2026 – 23/10/2026</dd></div>
+        </dl>
+        <div class="contract-total"><span>Thu nhập thực nhận dự kiến</span><strong>1.584.000 ₫ · 198.000 ₫/buổi</strong></div>
       </section>
-      <section class="contract-panel" aria-labelledby="lessons-title"><div class="contract-section-heading"><div><h2 id="lessons-title">Danh sách buổi học</h2><p class="contract-muted">Theo dõi điểm danh và xác nhận từng buổi học.</p></div></div>
-        <div class="contract-filters filter-chip-list" role="group" aria-label="Lọc buổi học"><button class="filter-chip filter-chip--selected" type="button" data-filter="all" aria-pressed="true">Tất cả (8)</button><button class="filter-chip" type="button" data-filter="completed" aria-pressed="false">Hoàn thành (2)</button><button class="filter-chip" type="button" data-filter="pending" aria-pressed="false">Chờ xác nhận (1)</button><button class="filter-chip" type="button" data-filter="upcoming" aria-pressed="false">Sắp tới (5)</button><button class="filter-chip" type="button" data-filter="reported" aria-pressed="false">Chờ xử lý (0)</button></div>
+
+      <section class="contract-panel" aria-labelledby="lessons-title">
+        <div class="contract-section-heading"><div><h2 id="lessons-title">Danh sách buổi giảng dạy</h2><p class="contract-muted">Điểm danh và theo dõi trạng thái xác nhận, giải ngân của từng buổi.</p></div></div>
+        <div class="contract-filters filter-chip-list" role="group" aria-label="Lọc buổi dạy">
+          <button class="filter-chip filter-chip--selected" type="button" data-filter="all" aria-pressed="true">Tất cả (8)</button>
+          <button class="filter-chip" type="button" data-filter="completed" aria-pressed="false">Đã giải ngân (2)</button>
+          <button class="filter-chip" type="button" data-filter="pending" aria-pressed="false">Chờ xác nhận (1)</button>
+          <button class="filter-chip" type="button" data-filter="upcoming" aria-pressed="false">Sắp dạy (5)</button>
+        </div>
         <p class="contract-sr-only" id="filter-status" role="status"></p>
         <div class="contract-lessons" id="lesson-list"></div>
-        <section class="empty-state" id="lessons-empty" hidden><span class="empty-state__icon" aria-hidden="true"></span><h3 class="empty-state__title">Không có buổi học phù hợp</h3><p class="empty-state__description">Chọn bộ lọc khác để xem các buổi học.</p></section>
-        <noscript>Vui lòng bật JavaScript để xem và thao tác với danh sách buổi học.</noscript>
+        <section class="empty-state" id="lessons-empty" hidden><span class="empty-state__icon" aria-hidden="true"></span><h3 class="empty-state__title">Không có buổi dạy phù hợp</h3><p class="empty-state__description">Chọn bộ lọc khác để xem lịch giảng dạy.</p></section>
+        <noscript>Vui lòng bật JavaScript để xem và thao tác với danh sách buổi dạy.</noscript>
       </section>
-      <section class="contract-panel" aria-labelledby="history-title"><h2 id="history-title">Hoạt động gần đây</h2><ol class="contract-timeline" id="activity-list"><li><time datetime="2026-10-05T20:34">05/10/2026 · 20:34</time><p>Gia sư đã điểm danh buổi 3. Đang chờ học viên xác nhận.</p></li><li><time datetime="2026-10-05T20:30">05/10/2026 · 20:30</time><p>Buổi 2 đã hoàn thành. Khoản ký quỹ 220.000 ₫ đã được giải ngân.</p></li><li><time datetime="2026-09-28T21:02">28/09/2026 · 21:02</time><p>Bạn đã xác nhận hoàn thành buổi 1.</p></li></ol></section>
-      <section class="contract-panel"><h2>Quản lý hợp đồng & điều khoản</h2><p class="contract-muted">Trao đổi với gia sư trước khi thay đổi lịch học. Nếu có vấn đề về buổi học, hãy gửi báo cáo để được hỗ trợ.</p><div class="contract-management"><button class="contract-button contract-button--secondary" type="button" data-action="policy">Xem quy định đổi lịch</button><button class="contract-button contract-button--secondary" type="button" data-action="support">Liên hệ hỗ trợ</button></div></section>
+
+      <section class="contract-panel" aria-labelledby="history-title">
+        <h2 id="history-title">Hoạt động &amp; nhật ký đối soát</h2>
+        <ol class="contract-timeline" id="activity-list">
+          <li><time datetime="2026-10-05T20:34">05/10/2026 · 20:34</time><p>Bạn đã điểm danh buổi 3: học viên có mặt.</p></li>
+          <li><time datetime="2026-10-05T20:30">05/10/2026 · 20:30</time><p>Buổi 2 được tự động xác nhận. 198.000 ₫ đã chuyển vào số dư khả dụng.</p></li>
+          <li><time datetime="2026-09-28T21:02">28/09/2026 · 21:02</time><p>Phụ huynh đã xác nhận buổi 1 và đánh giá 5 sao.</p></li>
+        </ol>
+      </section>
+
+      <section class="contract-panel">
+        <h2>Nghiệp vụ quản lý hợp đồng</h2>
+        <p class="contract-muted">Trao đổi với phụ huynh trước khi đề xuất đổi lịch. Nếu không thể dạy, hãy liên hệ hỗ trợ để xử lý theo điều khoản hợp đồng.</p>
+        <div class="contract-management"><button class="contract-button contract-button--secondary" type="button" data-action="policy">Xem quy định điểm danh</button><button class="contract-button contract-button--secondary" type="button" data-action="support">Liên hệ hỗ trợ</button></div>
+      </section>
     </div>
+
     <aside class="contract-sidebar" aria-label="Thông tin bổ sung">
-      <section class="contract-panel" id="finance"><h2><img src="../../assets/icons/lock.svg" alt="">Ký quỹ hợp đồng</h2><p class="contract-muted">Đã ký quỹ đầy đủ</p><p class="contract-money">1.760.000 ₫</p><progress id="finance-progress" value="440000" max="1760000" aria-label="Số tiền đã giải ngân">440.000 / 1.760.000</progress><dl class="contract-finance"><div><dt>Đã giải ngân</dt><dd id="released-money">440.000 ₫</dd></div><div><dt>Đang ký quỹ</dt><dd id="held-money">1.320.000 ₫</dd></div><div><dt>Mỗi buổi học</dt><dd>220.000 ₫</dd></div></dl><p class="contract-note">Khoản ký quỹ được theo dõi theo từng buổi học. Buổi học có báo cáo sẽ chờ xử lý trước khi giải ngân.</p></section>
-      <section class="contract-panel"><p class="contract-eyebrow">BUỔI HỌC KẾ TIẾP</p><h2>Buổi 4 · Thứ Sáu</h2><p class="contract-next-date">09/10/2026</p><p class="contract-muted">19:00–20:30 · 90 phút</p><p>Phương trình lượng giác nâng cao</p><button class="contract-button contract-button--secondary" type="button" data-action="detail" data-lesson="4">Xem buổi học</button></section>
-      <section class="contract-panel"><div class="contract-tutor"><span class="contract-avatar" aria-hidden="true">MA</span><div><h2>Nguyễn Minh Anh</h2><p class="contract-muted">Gia sư Toán · Đã xác minh</p></div></div><p class="contract-muted">Đồng hành cùng bạn trong suốt 8 buổi học.</p><button class="contract-button" type="button" data-action="message">Nhắn tin cho gia sư</button></section>
+      <section class="contract-panel" id="finance">
+        <h2><img src="../../assets/icons/wallet.svg" alt="">Thu nhập hợp đồng</h2>
+        <p class="contract-muted">Thực nhận sau phí dịch vụ 10%</p>
+        <p class="contract-money" id="income-total">1.584.000 ₫</p>
+        <progress id="income-progress" value="396000" max="1584000" aria-label="Thu nhập đã giải ngân">396.000 / 1.584.000</progress>
+        <dl class="contract-finance"><div><dt>Đã giải ngân</dt><dd class="tutor-income" id="released-income">396.000 ₫</dd></div><div><dt>Chờ xác nhận</dt><dd class="tutor-income tutor-income--pending" id="pending-income">198.000 ₫</dd></div><div><dt>Sắp dạy</dt><dd id="upcoming-income">990.000 ₫</dd></div></dl>
+        <p class="contract-note">Học phí 220.000 ₫/buổi. Thu nhập thực nhận là 198.000 ₫ sau phí dịch vụ 10%.</p>
+      </section>
+
+
+
+      <section class="contract-panel">
+        <div class="contract-tutor"><span class="contract-avatar" aria-hidden="true">GH</span><div><h2>Trần Gia Huy</h2><p class="contract-muted">Học viên lớp 11</p></div></div>
+        <p class="contract-muted">Phụ huynh: Chị Mai Lan · Học trực tiếp tại nhà.</p>
+        <button class="contract-button" type="button" data-action="message">Nhắn tin cho phụ huynh</button>
+      </section>
     </aside>
   </div>
 </main>

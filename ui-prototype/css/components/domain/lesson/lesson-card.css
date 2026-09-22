@@ -13,3 +13,18 @@
 @media (max-width: 480px) { .lesson-card { padding: var(--space-4); gap: var(--space-3); } }
 
 .lesson-card-example { width: min(100% - 2rem, 52rem); margin: var(--space-8) auto; }
+
+/* Compact variant for lists on contract pages. */
+.lesson-card--compact { padding: var(--space-4); gap: var(--space-3); border-radius: var(--radius-md); }
+.lesson-card--compact .lesson-card__title { font-size: var(--font-size-sm); }
+.lesson-card--compact .lesson-card__schedule { margin-top: var(--space-1); font-size: var(--font-size-xs); font-weight: 400; color: var(--color-text-secondary); }
+.lesson-card--compact .lesson-card__detail { margin-top: var(--space-2); }
+.lesson-card--compact.lesson-card--pending { background: var(--color-surface-low); border-left: 3px solid var(--color-warning); }
+.lesson-card__number { display: grid; place-items: center; flex: 0 0 2rem; height: 2rem; border-radius: var(--radius-md); color: var(--lesson-status); background: var(--color-surface-medium); font-size: var(--font-size-xs); font-weight: 700; }
+.lesson-card__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
+@media (min-width: 701px) {
+  .lesson-card--compact .lesson-card__content { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-3); }
+  .lesson-card--compact .lesson-card__header { grid-column: 1 / -1; }
+  .lesson-card--compact .lesson-card__schedule, .lesson-card--compact .lesson-card__detail { grid-column: 1; }
+  .lesson-card--compact .lesson-card__actions { grid-column: 2; grid-row: 2 / 4; align-self: center; }
+}
