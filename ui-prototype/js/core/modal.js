@@ -10,6 +10,7 @@
   let activeModal = null
   let opener = null
   let previousOverflow = ''
+  let previousPaddingRight = ''
   let backdropPointer = false
 
   const resolve = target => typeof target === 'string' ? document.getElementById(target) : target
@@ -42,8 +43,15 @@
     modal.returnValue = ''
     modal.showModal()
     activeModal = modal
-    previousOverflow = document.documentElement.style.overflow
-    document.documentElement.style.overflow = 'hidden'
+    const root = document.documentElement
+    const scrollbarWidth = window.innerWidth - root.clientWidth
+    previousOverflow = root.style.overflow
+    previousPaddingRight = root.style.paddingRight
+    if (scrollbarWidth > 0) {
+      const currentPaddingRight = Number.parseFloat(getComputedStyle(root).paddingRight) || 0
+      root.style.paddingRight = `${currentPaddingRight + scrollbarWidth}px`
+    }
+    root.style.overflow = 'hidden'
 
     const onPointerDown = event => { backdropPointer = event.target === modal && outside(event, modal) }
     const onClick = event => {
@@ -61,7 +69,8 @@
       modal.removeEventListener('pointerdown', onPointerDown)
       modal.removeEventListener('click', onClick)
       modal.removeEventListener('cancel', onCancel)
-      document.documentElement.style.overflow = previousOverflow
+      root.style.overflow = previousOverflow
+      root.style.paddingRight = previousPaddingRight
       activeModal = null
       backdropPointer = false
       if (opener?.isConnected) opener.focus()
