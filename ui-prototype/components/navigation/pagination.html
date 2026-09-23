@@ -9,25 +9,16 @@
     <link rel="stylesheet" href="../../css/base.css">
     <link rel="stylesheet" href="../../css/components/navigation/pagination.css">
 </head>
-<body class="pagination-preview">
-<main class="pagination-demo">
-    <nav class="pagination" aria-label="Phân trang danh sách tin tìm gia sư" data-pagination data-total="148" data-page-size="10" data-current="2" data-last-page="15">
-        <p class="pagination__summary">Hiển thị <strong data-range-start>11</strong> - <strong data-range-end>20</strong> trong tổng số <strong data-total-count>148</strong> tin tìm gia sư</p>
-        <div class="pagination__controls">
-            <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span>
-            </button>
-            <button class="pagination__button" type="button" data-page="1">1</button>
-            <button class="pagination__button is-current" type="button" data-page="2" aria-current="page">2</button>
-            <button class="pagination__button" type="button" data-page="3">3</button>
-            <span class="pagination__ellipsis" aria-hidden="true">...</span>
-            <button class="pagination__button" type="button" data-page="15">15</button>
-            <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau">
-                <span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
-        </div>
-    </nav>
-</main>
-<script src="../../js/core/pagination.js" defer></script>
+<body style="padding: var(--space-6);">
+<div class="pagination-bar">
+    <span>Hiển thị <strong>1 - 10</strong> trong <strong>14</strong> bản ghi</span>
+
+    <div class="pagination-controls">
+        <button class="page-btn" disabled style="opacity: 0.5;"><i data-lucide="chevron-left" style="width:14px; height:14px;"></i></button>
+        <button class="page-btn page-btn--active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn"><i data-lucide="chevron-right" style="width:14px; height:14px;"></i></button>
+    </div>
+</div>
 </body>
 </html>
