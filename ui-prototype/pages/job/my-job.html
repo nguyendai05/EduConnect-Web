@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tin tìm gia sư của tôi | Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/page-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <link rel="stylesheet" href="../../css/components/form/search-input.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+    <link rel="stylesheet" href="../../css/components/domain/job/job-card.css">
+    <link rel="stylesheet" href="../../css/components/domain/job/applicant-card.css">
+    <script src="../../js/core/user-header.js" defer></script>
+    <script src="../../js/core/search-input.js" defer></script>
+    <script src="../../js/core/select.js" defer></script>
+</head>
+<body>
+<header class="user-header" data-component="user-header" data-user-variant="STUDENT">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
+            <span class="user-header__brand-mark" aria-hidden="true">
+                <img src="../../assets/icons/logo.svg" alt="">
+            </span>
+            <span class="user-header__brand-name">Edu Connect</span>
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link is-active" data-nav-key="home" data-route="/app/dashboard" href="#trang-chu" aria-current="page">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="#tim-gia-su">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="#tin-tim-gia-su">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="groups" data-route="/app/group-classes" href="#lop-nhom">Lớp nhóm</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" title="Tin nhắn" data-user-action="messages">
+                <img src="../../assets/icons/message.svg" alt="">
+            </button>
+            <button class="user-header__icon-button" type="button" aria-label="Thông báo" title="Thông báo" data-user-action="notifications">
+                <img src="../../assets/icons/notification.svg" alt="">
+            </button>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>LY</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Lê Hoàng Yến</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong>
+                        <span data-profile-role>Gia sư Chuyên Toán</span>
+                    </span>
+                    <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                            <span class="user-header__menu-badge" data-menu-summary-badge>Gia sư TOP 1%</span>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="#ho-so" role="menuitem" data-menu-item="0">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="#hop-dong" role="menuitem" data-menu-item="1">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/calendar.svg" alt="" data-menu-icon="calendar">
+                            <span data-menu-label>Hợp đồng của tôi</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="#vi-tri-thuc" role="menuitem" data-menu-item="2">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet">
+                            <span data-menu-label>Ví TriThức</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="#bao-mat" role="menuitem" data-menu-item="3">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/shield.svg" alt="" data-menu-icon="shield">
+                            <span data-menu-label>Bảo mật tài khoản</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="#lich-su-giao-dich" role="menuitem" data-menu-item="4">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt="">
+                            <span data-menu-logout-label>Đăng xuất tài khoản</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="page-container page-section">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol class="breadcrumb__list">
+            <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
+            <li class="breadcrumb__item"><a class="breadcrumb__link" href="#tin-tim-gia-su">Tin tìm gia sư</a></li>
+            <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Tin của tôi</span></li>
+        </ol>
+    </nav>
+
+    <header class="page-header">
+        <div class="page-header__content">
+            <div class="page-header__title-block">
+                <div class="page-header__title-row">
+                    <h1 class="page-header__title">Tin tìm gia sư của tôi</h1>
+                    <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Tin đang tuyển: 2 / 5</span>
+                </div>
+                <p class="page-header__description">Đăng nhu cầu học và quản lý các gia sư đã ứng tuyển. Bạn có thể có tối đa 5 tin đang tuyển cùng lúc.</p>
+            </div>
+            <div class="page-header__actions">
+                <button class="page-header__action page-header__action--primary" type="button">+ Đăng tin tìm gia sư</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="grid" aria-label="Tìm kiếm và sắp xếp tin">
+        <div class="search-input search-input--standard" data-search-input>
+            <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+            <input type="search" placeholder="Tìm trong tin của tôi (môn, lớp, khu vực)..." aria-label="Tìm trong tin của tôi">
+            <button class="search-input__clear" type="button" data-clear-search aria-label="Xóa nội dung tìm kiếm" hidden>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg>
+            </button>
+        </div>
+        <section class="select-field" data-component="select" data-initial-open="false">
+            <span class="select-field__label" id="sort-label">Sắp xếp</span>
+            <button class="select-control" type="button" aria-labelledby="sort-label sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-options" data-select-trigger>
+                <span id="sort-value" data-select-value>Mới nhất</span>
+                <img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="">
+            </button>
+            <div class="select-options" id="sort-options" role="listbox" aria-labelledby="sort-label" data-select-options hidden>
+                <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Mới nhất"><span>Mới nhất</span><img src="../../assets/icons/dau-tich.svg" alt=""></button>
+                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Nhiều ứng viên nhất"><span>Nhiều ứng viên nhất</span></button>
+                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí cao đến thấp"><span>Học phí cao đến thấp</span></button>
+            </div>
+        </section>
+    </section>
+
+    <section class="page-section" aria-label="Danh sách tin tìm gia sư">
+<main class="job-card-demo" aria-label="Các biến thể JobCard">
+    <article class="job-card">
+        <div class="job-card__top">
+            <div class="job-card__heading">
+                <div class="job-card__meta">
+                    <span class="job-card__badge job-card__badge--info">Đang mở</span>
+                    <span class="job-card__code">Mã tin: TT-8841</span>
+                </div>
+                <h1>Cần gia sư Tiếng Anh luyện thi IELTS lớp 11</h1>
+            </div>
+            <p class="job-card__price">250.000 ₫<span>/buổi</span></p>
+        </div>
+
+        <div class="job-card__tags" aria-label="Thông tin tin đăng">
+            <span>Tiếng Anh · THPT</span>
+            <span>Tại nhà (2 buổi/tuần)</span>
+            <span>Bình Thạnh, TP.HCM</span>
+        </div>
+
+        <footer class="job-card__footer">
+            <div class="job-card__stats">
+                <span class="job-card__applicants"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 11a3 3 0 0 1 2.5 5.5M16 16a4.5 4.5 0 0 1 4.5 3"/></svg>3 ứng viên</span>
+                <span>Đăng 2 giờ trước</span>
+            </div>
+            <button type="button" class="job-card__action">[Quản lý ứng viên]</button>
+        </footer>
+    </article>
+
+    <article class="job-card">
+        <div class="job-card__top">
+            <div class="job-card__heading">
+                <div class="job-card__meta">
+                    <span class="job-card__badge job-card__badge--warning">Chờ duyệt</span>
+                    <span class="job-card__flag"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m10.3 4.5-7 12a1.5 1.5 0 0 0 1.3 2.25h14.8a1.5 1.5 0 0 0 1.3-2.25l-7-12a1.5 1.5 0 0 0-2.6 0Z"/><path d="M12 9v4M12 16.5h.01"/></svg>Cần kiểm tra SĐT</span>
+                </div>
+                <h1>Tìm gia sư Toán 10 củng cố hình không gian</h1>
+            </div>
+            <p class="job-card__price job-card__price--neutral">220.000 ₫<span>/buổi</span></p>
+        </div>
+
+        <div class="job-card__tags" aria-label="Thông tin tin đăng">
+            <span>Toán học · Lớp 10</span>
+            <span>Trực tuyến</span>
+            <span>Hà Nội</span>
+        </div>
+
+        <footer class="job-card__footer">
+            <div class="job-card__stats job-card__stats--muted">
+                <span>0 ứng viên</span>
+                <span>Đăng 15 phút trước</span>
+            </div>
+            <button type="button" class="job-card__action job-card__action--primary">[Xem chi tiết tin]</button>
+        </footer>
+    </article>
+</main>
+    </section>
+
+    <section aria-label="Ứng viên cần xem">
+<main class="applicant-card-demo" aria-label="Các biến thể ApplicantCard">
+    <article class="applicant-card">
+        <header class="applicant-card__header">
+            <div class="applicant-card__identity">
+                <div class="applicant-card__avatar applicant-card__avatar--pending">MA</div>
+                <div>
+                    <div class="applicant-card__name-row">
+                        <h1>Nguyễn Minh Anh</h1>
+                        <svg class="applicant-card__verified" viewBox="0 0 24 24" fill="none" aria-label="Đã xác minh"><path d="M12 3.5 14 5l2.5-.1.9 2.3 2.1 1.4-.7 2.4.7 2.4-2.1 1.4-.9 2.3L14 17l-2 1.5L10 17l-2.5.1-.9-2.3-2.1-1.4.7-2.4-.7-2.4 2.1-1.4.9-2.3L10 5l2-1.5Z"/><path d="m8.5 12 2.2 2.2 4.8-4.8"/></svg>
+                    </div>
+                    <p class="applicant-card__details"><span class="applicant-card__rating"><span aria-hidden="true">★</span> 4.9</span><span>·</span><span>ĐH Sư phạm TP.HCM</span></p>
+                </div>
+            </div>
+            <span class="applicant-card__status applicant-card__status--pending">Đang chờ</span>
+        </header>
+
+        <div class="applicant-card__proposal">
+            <div><span>Học phí đề xuất:</span><strong>220.000 ₫ / buổi</strong></div>
+            <p>"Chào phụ huynh, tôi có 3 năm kinh nghiệm kèm môn Toán 11 và luyện thi ĐGNL. Có thể dạy tối T2 - T6."</p>
+        </div>
+
+        <footer class="applicant-card__actions">
+            <button type="button" class="applicant-card__button applicant-card__button--outline">[Xem hồ sơ]</button>
+            <button type="button" class="applicant-card__button applicant-card__button--primary">[Chọn gia sư]</button>
+        </footer>
+    </article>
+
+    <article class="applicant-card applicant-card--selected">
+        <header class="applicant-card__header">
+            <div class="applicant-card__identity">
+                <div class="applicant-card__avatar applicant-card__avatar--selected">LK</div>
+                <div>
+                    <div class="applicant-card__name-row">
+                        <h1>Lê Hoàng Khoa</h1>
+                        <svg class="applicant-card__verified" viewBox="0 0 24 24" fill="none" aria-label="Đã xác minh"><path d="M12 3.5 14 5l2.5-.1.9 2.3 2.1 1.4-.7 2.4.7 2.4-2.1 1.4-.9 2.3L14 17l-2 1.5L10 17l-2.5.1-.9-2.3-2.1-1.4.7-2.4-.7-2.4 2.1-1.4.9-2.3L10 5l2-1.5Z"/><path d="m8.5 12 2.2 2.2 4.8-4.8"/></svg>
+                    </div>
+                    <p class="applicant-card__details"><span class="applicant-card__rating"><span aria-hidden="true">★</span> 5.0</span><span>·</span><span>ĐH Bách Khoa</span></p>
+                </div>
+            </div>
+            <span class="applicant-card__status applicant-card__status--selected">Đã chọn</span>
+        </header>
+
+        <div class="applicant-card__proposal applicant-card__proposal--selected">
+            <div><span>Học phí thống nhất:</span><strong>250.000 ₫ / buổi</strong></div>
+            <p>"Đã chấp thuận đề xuất dạy thử buổi 1 và tiến hành ký quỹ hợp đồng."</p>
+        </div>
+
+        <footer class="applicant-card__actions applicant-card__actions--selected">
+            <span class="applicant-card__contract"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>Đã tạo liên kết hợp đồng</span>
+            <button type="button" class="applicant-card__button applicant-card__button--neutral">[Chi tiết hợp đồng]</button>
+        </footer>
+    </article>
+</main>
+    </section>
+</main>
+<footer class="user-footer" data-component="user-footer">
+    <div class="user-footer__inner">
+        <div class="user-footer__main">
+            <section class="user-footer__brand" aria-label="Về TriThức">
+                <a class="user-footer__brand-link" href="#trang-chu" aria-label="TriThức - Trang chủ">
+                    <img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt="">
+                    <span>Edu Connect</span>
+                </a>
+                <p>Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch. Đem lại sự an tâm tuyệt đối cho phụ huynh thông qua quy trình bảo chứng năng lực và hợp đồng ký quỹ an toàn.</p>
+                <span class="user-footer__certificate">
+                    <img src="../../assets/icons/certificate.svg" alt="">
+                    Chứng nhận đào tạo sư phạm
+                </span>
+            </section>
+
+            <nav class="user-footer__links" aria-labelledby="footer-parents-title">
+                <h2 id="footer-parents-title">Dành cho phụ huynh</h2>
+                <a href="#yeu-cau-tim-gia-su"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Đăng yêu cầu tìm gia sư</a>
+                <a href="#gia-su-tieu-bieu"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Danh sách gia sư tiêu biểu</a>
+                <a href="#quy-trinh-escrow"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy trình bảo đảm Escrow</a>
+                <a href="#bang-hoc-phi"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Bảng học phí tham khảo</a>
+            </nav>
+
+            <nav class="user-footer__links" aria-labelledby="footer-tutors-title">
+                <h2 id="footer-tutors-title">Dành cho gia sư</h2>
+                <a href="#tim-lop"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tìm lớp gia sư mới</a>
+                <a href="#tieu-chuan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tiêu chuẩn xác minh lý lịch</a>
+                <a href="#lop-nhom"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Mở lớp nhóm nhỏ</a>
+                <a href="#thu-lao"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo vệ thù lao</a>
+            </nav>
+
+            <nav class="user-footer__links" aria-labelledby="footer-support-title">
+                <h2 id="footer-support-title">Hỗ trợ &amp; pháp lý</h2>
+                <a href="#tro-giup"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Trung tâm trợ giúp học viên</a>
+                <a href="#dieu-khoan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Điều khoản sử dụng dịch vụ</a>
+                <a href="#bao-mat"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo mật dữ liệu</a>
+                <a href="#tranh-chap"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy chế giải quyết tranh chấp</a>
+            </nav>
+        </div>
+
+        <div class="user-footer__bottom">
+            <p><img src="../../assets/icons/copyright.svg" alt="">© 2026 TriThức Platform. Bảo lưu mọi quyền.</p>
+            <p class="user-footer__regions"><span>Trung tâm khu vực hỗ trợ:</span><a href="#ha-noi">Hà Nội</a><a href="#ho-chi-minh">TP. Hồ Chí Minh</a><a href="#da-nang">Đà Nẵng</a></p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
