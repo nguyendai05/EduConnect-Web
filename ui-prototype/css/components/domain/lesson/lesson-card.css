@@ -1,0 +1,189 @@
+.lesson-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: var(--space-5, 20px);
+    width: 100%;
+    max-width: 960px;
+}
+
+.lesson-card {
+    background: var(--color-surface, #ffffff);
+    border: 1px solid var(--color-border, #e2e8f0);
+    border-radius: var(--radius-xl, 16px);
+    padding: var(--space-5, 20px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 16px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Header Section */
+.lesson-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3, 12px);
+}
+
+.lesson-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 8px);
+    margin-bottom: var(--space-2, 8px);
+}
+
+.badge-num {
+    font-size: var(--font-size-xs, 12px);
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm, 6px);
+    letter-spacing: 0.02em;
+}
+.badge-num--indigo {
+    background: var(--color-primary-container, #e0e7ff);
+    color: var(--color-primary, #3730a3);
+}
+.badge-num--green {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.lesson-contract-id {
+    font-size: var(--font-size-xs, 12px);
+    color: var(--color-text-muted, #64748b);
+    font-weight: 500;
+}
+
+.lesson-title {
+    font-size: var(--font-size-base, 16px);
+    font-weight: 700;
+    color: var(--color-text, #0f172a);
+    line-height: 1.35;
+    margin: 0;
+}
+
+.badge-status {
+    font-size: var(--font-size-xs, 12px);
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill, 9999px);
+    white-space: nowrap;
+}
+.badge-status--pending {
+    background: var(--color-warning-container, #fef3c7);
+    color: var(--color-warning, #d97706);
+}
+.badge-status--released {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+/* Info Box */
+.lesson-info-box {
+    background: var(--color-background, #f8fafc);
+    border: 1px solid var(--color-border, #f1f5f9);
+    border-radius: var(--radius-lg, 12px);
+    padding: var(--space-3, 12px) var(--space-4, 16px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2, 10px) var(--space-4, 16px);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-size-xs, 12px);
+    color: var(--color-text-secondary, #475569);
+    font-weight: 500;
+}
+
+.info-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    color: #64748b;
+}
+.info-icon--success {
+    color: #16a34a;
+}
+
+/* Footer Section */
+.lesson-card-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-top: var(--space-3, 12px);
+    border-top: 1px solid var(--color-surface-low, #f1f5f9);
+    margin-top: auto;
+}
+
+.escrow-status-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.escrow-label {
+    font-size: var(--font-size-xs, 12px);
+    color: var(--color-text-muted, #64748b);
+}
+
+.escrow-value {
+    font-size: var(--font-size-sm, 14px);
+    font-weight: 700;
+    color: var(--color-text, #0f172a);
+}
+
+.escrow-value--green {
+    color: #16a34a;
+}
+
+.action-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2, 8px);
+}
+
+.btn-action-outline {
+    background: transparent;
+    border: 1px solid var(--color-primary, #2563eb);
+    color: var(--color-primary, #2563eb);
+    font-size: var(--font-size-xs, 12px);
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: var(--radius-md, 8px);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.btn-action-outline:hover {
+    background: var(--color-primary-container, #eff6ff);
+}
+
+.btn-action-solid {
+    background: var(--color-primary, #2563eb);
+    border: none;
+    color: #ffffff;
+    font-size: var(--font-size-xs, 12px);
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: var(--radius-md, 8px);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.btn-action-solid:hover {
+    background: #1d4ed8;
+}
+
+.btn-link {
+    font-size: var(--font-size-xs, 12px);
+    font-weight: 600;
+    color: #475569;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 6px 0;
+}
+.btn-link:hover {
+    color: #0f172a;
+    text-decoration: underline;
+}

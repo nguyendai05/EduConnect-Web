@@ -1,0 +1,38 @@
+.thread-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    max-width: 480px;
+    background: var(--color-surface);
+}
+.thread-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-surface-low);
+    cursor: pointer;
+}
+.thread-item--active {
+    background: var(--color-primary-container);
+    border-left: 4px solid var(--color-primary);
+}
+.avatar-circle {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    flex-shrink: 0;
+}
+.thread-title { font-size: var(--font-size-sm); font-weight: 700; color: var(--color-text); }
+.thread-time { font-size: 11px; color: var(--color-primary-hover); font-weight: 600; }
+.thread-preview { font-size: var(--font-size-xs); color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mask-badge { background: var(--color-warning); color: var(--color-warning); padding: 1px 4px; border-radius: var(--radius-sm); font-family: monospace; font-size: 11px; }

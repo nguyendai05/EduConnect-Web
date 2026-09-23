@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component 9 — WalletBalanceCard</title>
+    <link rel="stylesheet" href="../../../css/reset.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/base.css">
+    <link rel="stylesheet" href="../../../css/layouts.css">
+    <link rel="stylesheet" href="../../../css/utilities.css">
+    <link rel="stylesheet" href="../../../css/components/domain/wallet/wallet-balance-card.css">
+
+</head>
+<body style="padding: var(--space-6);">
+<div class="finance-grid">
+    <div class="balance-card balance-card--highlight">
+        <div class="flex items-center justify-between">
+            <span class="balance-label">Số dư khả dụng</span>
+            <span class="pill-tag pill-tag--success">Sẵn sàng dùng</span>
+        </div>
+        <div class="balance-amount">1.584.000 ₫</div>
+        <p class="balance-desc">Tiền lương dạy học đã hoàn tất chu kỳ giải ngân hoặc tiền hoàn lớp. Sẵn sàng rút về tài khoản ngân hàng hoặc tự động cấn trừ lần ký quỹ tới.</p>
+    </div>
+
+    <div class="balance-card">
+        <div class="flex items-center justify-between">
+            <span class="balance-label" style="color: var(--color-text-muted);">Đang ký quỹ (Escrow)</span>
+            <span class="pill-tag pill-tag--warning">Bảo chứng 5 buổi</span>
+        </div>
+        <div class="balance-amount">1.100.000 ₫</div>
+        <p class="balance-desc">Bảo chứng an toàn trong tài khoản trung gian ký quỹ TriThức Escrow. Mỗi buổi học hoàn tất và xác nhận sẽ được giải ngân 220.000 ₫.</p>
+    </div>
+</div>
+
+<div class="rule-banner">
+    <div>
+        <strong style="color: var(--color-text); display: block; margin-bottom: 2px;">Nguyên tắc luân chuyển 2 nguồn tiền (Screen 06):</strong>
+        <span style="color: var(--color-text-muted);">Cần ký quỹ: 1.760.000 ₫ = Tự động dùng từ Ví: -600.000 ₫ + PayOS VietQR: 1.160.000 ₫.</span>
+    </div>
+    <span style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-weight: 600;">
+      <i data-lucide="lock" style="width:14px; height:14px; color: var(--color-primary);"></i> Tự động tính toán
+    </span>
+</div>
+</body>
+</html>
