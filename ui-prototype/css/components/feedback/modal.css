@@ -1,0 +1,80 @@
+/* Modal owns its internal controls until the team's shared Button is available. */
+.modal {
+  width: min(36rem, calc(100% - 2rem));
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 24px 64px rgb(15 23 42 / 24%);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.modal::backdrop { background: rgb(15 23 42 / 52%); }
+.modal__surface { min-width: 0; }
+.modal__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+.modal__icon {
+  display: grid;
+  flex: 0 0 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-container);
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+.modal__heading { flex: 1; min-width: 0; }
+.modal__heading h2 { margin: 0; font-size: var(--font-size-lg); line-height: 1.4; }
+.modal__heading p { margin: var(--space-1) 0 0; color: var(--color-text-muted); font-size: var(--font-size-sm); }
+.modal__close {
+  display: grid;
+  flex: 0 0 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-2xl);
+  cursor: pointer;
+}
+.modal__close:hover { background: var(--color-surface-low); }
+.modal__body { display: grid; gap: var(--space-4); padding: var(--space-6); overflow-wrap: anywhere; }
+.modal__body p { margin: 0; }
+.modal__note { padding: var(--space-4); border-left: 3px solid var(--color-primary); border-radius: var(--radius-sm); background: var(--color-primary-container); color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.modal__footer { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); padding: var(--space-4) var(--space-6); border-top: 1px solid var(--color-border); }
+.modal__button { min-height: 2.75rem; padding: var(--space-2) var(--space-4); border: 1px solid transparent; border-radius: var(--radius-md); font: inherit; font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; }
+.modal__button--primary { background: var(--color-primary); color: var(--color-surface); }
+.modal__button--primary:hover { background: var(--color-primary-hover); }
+.modal__button--secondary { border-color: var(--color-border); background: var(--color-surface); color: var(--color-text-secondary); }
+.modal__button--secondary:hover { background: var(--color-surface-low); }
+.modal__button:disabled { opacity: 0.55; cursor: not-allowed; }
+.modal :focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
+@media (max-width: 600px) {
+  .modal__header, .modal__body { padding: var(--space-4); }
+  .modal__footer { padding: var(--space-4); flex-direction: column-reverse; }
+  .modal__footer .modal__button { width: 100%; }
+}
+/* External SVG masks inherit the component's token-based color. */
+.modal__icon::before, .modal__close-icon {
+  content: "";
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: currentColor;
+  -webkit-mask: var(--modal-icon) center / contain no-repeat;
+  mask: var(--modal-icon) center / contain no-repeat;
+}
+.modal__icon--info { --modal-icon: url("../../../assets/icons/info-circle.svg"); }
+.modal__icon--confirm { --modal-icon: url("../../../assets/icons/check-circle.svg"); }
+.modal__close-icon { --modal-icon: url("../../../assets/icons/close.svg"); }

@@ -26,3 +26,6 @@ replay_pid*
 
 # Local CodeGraph index
 .codegraph/
+
+# Tài li?u thi?t k? tham kh?o
+**/tai-lieu.html

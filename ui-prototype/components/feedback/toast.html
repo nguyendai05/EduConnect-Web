@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thông báo — Edu Connect</title>
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components/feedback/toast.css">
+  <script src="../../js/core/toast.js" defer></script>
+</head>
+<body>
+  <main class="toast-example">
+    <button class="toast-example__button" type="button" data-toast="success" data-toast-title="Lưu thành công" data-toast-message="Các thay đổi của bạn đã được lưu.">Xem thông báo</button>
+  </main>
+<!-- Include once per page with toast.css and toast.js. EduToast.show(options) creates each notification. -->
+<section class="toast-region" aria-label="Thông báo"></section>
+<div class="toast-announcer" data-toast-announcer="polite" role="status" aria-atomic="false" aria-relevant="additions"></div>
+<div class="toast-announcer" data-toast-announcer="urgent" role="alert" aria-atomic="false" aria-relevant="additions"></div>
+</body>
+</html>

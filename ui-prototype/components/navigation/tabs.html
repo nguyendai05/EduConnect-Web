@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buổi học — Edu Connect</title>
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/reset.css">
+<link rel="stylesheet" href="../../css/base.css">
+<link rel="stylesheet" href="../../css/components/navigation/tabs.css">
+<script src="../../js/core/tabs.js" defer></script>
+</head>
+<body>
+<main class="tabs-example">
+<section class="tabs" data-tabs>
+  <div class="tabs__list" role="tablist" aria-label="Trạng thái buổi học">
+    <button class="tabs__tab" type="button" role="tab" id="tab-all" aria-controls="panel-all" aria-selected="true" tabindex="0">Tất cả</button>
+    <button class="tabs__tab" type="button" role="tab" id="tab-pending" aria-controls="panel-pending" aria-selected="false" tabindex="-1">Chờ xác nhận</button>
+    <button class="tabs__tab" type="button" role="tab" id="tab-done" aria-controls="panel-done" aria-selected="false" tabindex="-1">Hoàn thành</button>
+  </div>
+  <div class="tabs__panel" role="tabpanel" id="panel-all" aria-labelledby="tab-all" tabindex="0">Bạn có 5 buổi học trong hợp đồng.</div>
+  <div class="tabs__panel" role="tabpanel" id="panel-pending" aria-labelledby="tab-pending" tabindex="0" hidden>Buổi 3 đang chờ bạn xác nhận.</div>
+  <div class="tabs__panel" role="tabpanel" id="panel-done" aria-labelledby="tab-done" tabindex="0" hidden>Bạn đã hoàn thành 2 buổi học.</div>
+</section>
+</main>
+</body>
+</html>

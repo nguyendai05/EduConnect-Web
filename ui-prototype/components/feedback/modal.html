@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xác nhận thao tác — Edu Connect</title>
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components/feedback/modal.css">
+  <script src="../../js/core/modal.js" defer></script>
+</head>
+<body>
+<!-- Include once per page with modal.css and modal.js. Open via EduModal.open('shared-modal', options). -->
+<dialog class="modal" data-modal-auto-open id="shared-modal" aria-labelledby="shared-modal-title" aria-describedby="shared-modal-description">
+  <div class="modal__surface">
+    <header class="modal__header">
+      <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
+      <div class="modal__heading">
+        <h2 id="shared-modal-title">Xác nhận thao tác</h2>
+      </div>
+      <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+    </header>
+    <div class="modal__body">
+      <p id="shared-modal-description">Bạn có chắc muốn thực hiện thao tác này?</p>
+    </div>
+    <footer class="modal__footer">
+      <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
+      <button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận</button>
+    </footer>
+  </div>
+</dialog>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin shell</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+</head>
+<body>
+    <div class="admin-shell" data-component="admin-shell">
+        <!-- Gắn AdminSidebar dùng chung tại slot này. -->
+        <aside class="admin-shell__sidebar" data-shell-slot="admin-sidebar"></aside>
+        <!-- Gắn AdminHeader dùng chung tại slot này. -->
+        <header data-shell-slot="admin-header"></header>
+        <main class="admin-shell__workspace">
+            <div class="admin-shell__content">
+                <section class="admin-shell__page-header" data-shell-slot="page-header"></section>
+                <section data-shell-slot="admin-content">Vùng nội dung quản trị linh hoạt.</section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
