@@ -8,20 +8,57 @@
 <link rel="stylesheet" href="../../css/reset.css">
 <link rel="stylesheet" href="../../css/base.css">
 <link rel="stylesheet" href="../../css/components/data-display/table.css">
-
 </head>
-<body>
-<main class="table-example">
-<div class="table-wrapper" role="region" aria-label="Lịch sử giao dịch" tabindex="0">
-  <table class="table">
-    <caption class="table__caption">Lịch sử giao dịch</caption>
-    <thead><tr><th scope="col">Giao dịch</th><th scope="col">Thời gian</th><th scope="col" class="table__amount">Số tiền</th><th scope="col">Trạng thái</th></tr></thead>
+<body style="padding: var(--space-6);">
+<div class="table-container">
+  <table class="custom-table">
+    <thead>
+    <tr>
+      <th>Thời gian</th>
+      <th>Mã tham chiếu</th>
+      <th>Nội dung đối soát</th>
+      <th style="text-align: right;">Số tiền</th>
+      <th style="text-align: center;">Trạng thái</th>
+      <th style="text-align: center;">Thao tác</th>
+    </tr>
+    </thead>
     <tbody>
-      <tr><th scope="row">Ký quỹ hợp đồng<small>HD-20260919-024</small></th><td><time datetime="2026-09-19T09:30">19/09/2026 · 09:30</time></td><td class="table__amount">1.100.000 ₫</td><td><span class="table__status table__status--success">Thành công</span></td></tr>
-      <tr><th scope="row">Thanh toán buổi học<small>Buổi 1 · Toán</small></th><td><time datetime="2026-09-28T21:02">28/09/2026 · 21:02</time></td><td class="table__amount">220.000 ₫</td><td><span class="table__status table__status--pending">Đang xử lý</span></td></tr>
+    <tr>
+      <td style="font-size: var(--font-size-xs);">19/09/2026 · 14:32</td>
+      <td style="font-family: monospace; font-weight: 600; color: var(--color-text);">TT-ESCROW-024</td>
+      <td>
+        <strong style="display: block; color: var(--color-text);">Thanh toán ký quỹ qua PayOS</strong>
+        <span style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Ký quỹ 8 buổi kèm Toán 11 (HD-20260919-024)</span>
+      </td>
+      <td style="text-align: right; font-weight: 600; color: var(--color-primary);">+1.160.000 ₫</td>
+      <td style="text-align: center;">
+        <span class="status-badge status-badge--success">Đã ký quỹ</span>
+      </td>
+      <td style="text-align: center;">
+        <a href="#" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-primary);">Chi tiết</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="font-size: var(--font-size-xs);">19/09/2026 · 14:32</td>
+      <td style="font-family: monospace; font-weight: 600; color: var(--color-text);">TR-ESC-260919</td>
+      <td>
+        <strong style="display: block; color: var(--color-text);">Tự động dùng số dư Ví để ký quỹ</strong>
+        <span style="font-size: var(--font-size-xs); color: var(--color-text-muted);">Cấn trừ số dư khả dụng sẵn có vào Escrow</span>
+      </td>
+      <td style="text-align: right; font-weight: 600; color: var(--color-warning);">-600.000 ₫</td>
+      <td style="text-align: center;">
+        <span class="status-badge status-badge--info">Tự động cấn trừ</span>
+      </td>
+      <td style="text-align: center;">
+        <a href="#" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-primary);">Chi tiết</a>
+      </td>
+    </tr>
     </tbody>
   </table>
+  <div class="table-footer">
+    <span>Hiển thị 1 - 2 trong tổng số 14 bản ghi đối soát</span>
+    <span>[Kế thừa component Pagination]</span>
+  </div>
 </div>
-</main>
 </body>
 </html>
