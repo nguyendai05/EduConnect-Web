@@ -3,11 +3,14 @@
 }
 
 .my-job-page .user-header {
+  position: sticky;
+  z-index: 100;
+  top: 0;
   width: 100%;
 }
 
 .my-job-page .user-shell__content {
-  width: calc(100% - (2 * var(--space-8)));
+  width: min(100% - (2 * var(--space-8)), var(--container-max-width));
 }
 
 .my-job-page .user-header__nav {
@@ -121,6 +124,12 @@
   display: grid;
   gap: var(--space-4);
   min-width: 0;
+}
+
+.my-job-page__sidebar {
+  position: sticky;
+  top: calc(var(--user-header-height) + var(--space-4));
+  align-self: start;
 }
 
 .my-job-page__toolbar {
@@ -357,6 +366,10 @@
 @media (max-width: 80rem) {
   .my-job-page .user-shell__grid {
     grid-template-columns: 1fr;
+  }
+
+  .my-job-page__sidebar {
+    position: static;
   }
 
   .my-job-page__summary,

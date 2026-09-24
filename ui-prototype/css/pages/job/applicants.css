@@ -3,6 +3,9 @@
 }
 
 .applicants-page .user-header {
+  position: sticky;
+  z-index: 100;
+  top: 0;
   width: 100%;
 }
 
@@ -157,8 +160,8 @@
 
 .applicants-toolbar {
   display: grid;
-  grid-template-columns: minmax(12rem, 1fr) auto minmax(11rem, 13rem);
-  align-items: end;
+  grid-template-columns: minmax(14rem, 17.25rem) minmax(17rem, 1fr) auto;
+  align-items: center;
   gap: var(--space-3);
   padding: var(--space-4);
   border: 1px solid var(--color-border);
@@ -172,15 +175,31 @@
 }
 
 .applicants-toolbar__filters {
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(4.25rem, 1fr));
+  gap: var(--space-1);
   min-width: 0;
-  padding-block: var(--space-1);
-  overflow-x: auto;
+  padding: 0;
+  overflow: visible;
 }
 
 .applicants-toolbar__filters .filter-chip {
-  min-height: 2.5rem;
+  min-width: 0;
+  min-height: 3.75rem;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  border-color: transparent;
   border-radius: var(--radius-md);
+  background: var(--color-primary-container);
+  color: var(--color-text-secondary);
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
+}
+
+.applicants-toolbar__filters .filter-chip:hover,
+.applicants-toolbar__filters .filter-chip:focus-visible {
+  background: var(--color-primary-focus);
 }
 
 .applicants-toolbar__filters .filter-chip--selected {
@@ -189,16 +208,39 @@
   color: var(--color-on-primary);
 }
 
+.applicants-toolbar__filters .filter-chip--selected:hover,
+.applicants-toolbar__filters .filter-chip--selected:focus-visible {
+  background: var(--color-primary-hover);
+}
+
+.applicants-toolbar__sort {
+  display: grid;
+  grid-template-columns: auto minmax(12rem, 13.75rem);
+  align-items: center;
+  gap: var(--space-2);
+}
+
 .applicants-toolbar__sort .select-field__label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
 }
 
 .applicants-toolbar__sort .select-control {
-  min-height: 2.5rem;
+  min-height: 3rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-container);
+}
+
+.applicants-toolbar__sort .select-control:focus-visible {
+  border-color: var(--color-primary);
+}
+
+.applicants-toolbar__sort .select-options {
+  right: 0;
+  left: auto;
+  width: min(13.75rem, 100%);
 }
 
 .applicants-page__result {
@@ -684,7 +726,7 @@
 
 @media (max-width: 68.75rem) {
   .applicants-toolbar {
-    grid-template-columns: 1fr minmax(11rem, 13rem);
+    grid-template-columns: minmax(14rem, 1fr) auto;
   }
 
   .applicants-toolbar__filters {
