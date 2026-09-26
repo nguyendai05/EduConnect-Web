@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Auth shell</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/layout/auth-shell.css">
+</head>
+<body>
+    <main class="auth-shell" data-component="auth-shell">
+        <div class="auth-shell__viewer">
+            <div class="auth-shell__variant-tabs" role="tablist" aria-label="Biến thể AuthShell">
+                <button class="auth-shell__variant-tab is-active" id="auth-login-tab" type="button" role="tab" aria-selected="true" aria-controls="auth-login-panel" data-auth-variant="login">Đăng nhập</button>
+                <button class="auth-shell__variant-tab" id="auth-register-tab" type="button" role="tab" aria-selected="false" aria-controls="auth-register-panel" data-auth-variant="register">Đăng ký</button>
+                <button class="auth-shell__variant-tab" id="auth-forgot-tab" type="button" role="tab" aria-selected="false" aria-controls="auth-forgot-panel" data-auth-variant="forgot">Khôi phục</button>
+                <button class="auth-shell__variant-tab" id="auth-reset-tab" type="button" role="tab" aria-selected="false" aria-controls="auth-reset-panel" data-auth-variant="reset">Đặt lại</button>
+            </div>
+
+            <section class="auth-shell__variant-panel" id="auth-login-panel" role="tabpanel" aria-labelledby="auth-login-tab" data-auth-variant-panel="login">
+                <section class="auth-shell__content auth-shell__card" aria-labelledby="auth-login-title">
+                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#trang-chu">← Quay lại</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a></div>
+                    <header class="auth-shell__heading"><h1 id="auth-login-title">Đăng nhập</h1><p>Chào mừng bạn quay trở lại với Edu Connect.</p></header>
+                    <div class="auth-shell__feedback" role="alert" hidden data-auth-feedback></div>
+                    <form class="auth-shell__form" data-shell-slot="auth-form">
+                        <div class="auth-shell__field"><label for="login-identifier">Email hoặc số điện thoại</label><input id="login-identifier" name="identifier" type="text" inputmode="email" autocomplete="username" placeholder="Nhập email hoặc số điện thoại" required></div>
+                        <div class="auth-shell__field"><div class="auth-shell__field-label"><label for="login-password">Mật khẩu</label><a href="#quen-mat-khau">Quên mật khẩu?</a></div><input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" required></div>
+                        <label class="auth-shell__remember"><input type="checkbox" name="remember"> Ghi nhớ đăng nhập</label>
+                        <button class="auth-shell__primary-action" type="button" data-shell-slot="primary-action">Đăng nhập</button>
+                    </form>
+                    <p class="auth-shell__secondary-nav" data-shell-slot="secondary-navigation">Chưa có tài khoản? <a href="#dang-ky">Đăng ký ngay</a></p>
+                </section>
+            </section>
+
+            <section class="auth-shell__variant-panel" id="auth-register-panel" role="tabpanel" aria-labelledby="auth-register-tab" data-auth-variant-panel="register" hidden>
+                <section class="auth-shell__content auth-shell__card" aria-labelledby="auth-register-title">
+                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#trang-chu">← Quay lại</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a></div>
+                    <header class="auth-shell__heading"><h1 id="auth-register-title">Tạo tài khoản mới</h1><p>Gia nhập cộng đồng học tập uy tín.</p></header>
+                    <form class="auth-shell__form" data-shell-slot="auth-form">
+                        <div class="auth-shell__field"><label for="register-name">Họ và tên</label><input id="register-name" name="name" type="text" autocomplete="name" placeholder="Nhập họ và tên" required></div>
+                        <div class="auth-shell__field"><label for="register-email">Email</label><input id="register-email" name="email" type="email" autocomplete="email" placeholder="Nhập địa chỉ email" required></div>
+                        <fieldset class="auth-shell__role-options"><legend>Vai trò tham gia</legend><label><input type="radio" name="role" value="student" checked> Học viên / Phụ huynh</label><label><input type="radio" name="role" value="tutor"> Gia sư / Giảng viên</label></fieldset>
+                        <button class="auth-shell__primary-action" type="button" data-shell-slot="primary-action">Tạo tài khoản</button>
+                    </form>
+                    <p class="auth-shell__secondary-nav" data-shell-slot="secondary-navigation">Đã có tài khoản? <a href="#dang-nhap">Đăng nhập</a></p>
+                </section>
+            </section>
+
+            <section class="auth-shell__variant-panel" id="auth-forgot-panel" role="tabpanel" aria-labelledby="auth-forgot-tab" data-auth-variant-panel="forgot" hidden>
+                <section class="auth-shell__content auth-shell__card" aria-labelledby="auth-forgot-title">
+                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#dang-nhap">← Quay lại đăng nhập</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a></div>
+                    <header class="auth-shell__heading"><h1 id="auth-forgot-title">Khôi phục mật khẩu</h1><p>Nhập email hoặc SĐT đã đăng ký để nhận mã OTP xác nhận.</p></header>
+                    <div class="auth-shell__feedback auth-shell__feedback--info" role="status">Mã xác thực có hiệu lực trong 15 phút.</div>
+                    <form class="auth-shell__form" data-shell-slot="auth-form"><div class="auth-shell__field"><label for="forgot-identifier">Email hoặc số điện thoại</label><input id="forgot-identifier" name="identifier" type="text" inputmode="email" autocomplete="username" placeholder="Nhập email hoặc số điện thoại" required></div><button class="auth-shell__primary-action" type="button" data-shell-slot="primary-action">Gửi mã xác nhận</button></form>
+                    <p class="auth-shell__secondary-nav" data-shell-slot="secondary-navigation"><a href="#dang-nhap">Trở về trang đăng nhập</a></p>
+                </section>
+            </section>
+
+            <section class="auth-shell__variant-panel" id="auth-reset-panel" role="tabpanel" aria-labelledby="auth-reset-tab" data-auth-variant-panel="reset" hidden>
+                <section class="auth-shell__content auth-shell__card" aria-labelledby="auth-reset-title">
+                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#dang-nhap">← Quay lại đăng nhập</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a></div>
+                    <header class="auth-shell__heading"><h1 id="auth-reset-title">Đặt lại mật khẩu</h1><p>Vui lòng thiết lập mật khẩu mới an toàn.</p></header>
+                    <form class="auth-shell__form" data-shell-slot="auth-form">
+                        <div class="auth-shell__field"><label for="reset-password">Mật khẩu mới</label><input id="reset-password" name="password" type="password" autocomplete="new-password" placeholder="Nhập mật khẩu mới" required><span class="auth-shell__helper">Độ mạnh mật khẩu: <strong>Tốt (8/10)</strong></span></div>
+                        <div class="auth-shell__field"><label for="reset-confirm-password">Xác nhận mật khẩu mới</label><input id="reset-confirm-password" name="confirm-password" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu mới" required></div>
+                        <button class="auth-shell__primary-action" type="button" data-shell-slot="primary-action">Đặt lại mật khẩu</button>
+                    </form>
+                    <p class="auth-shell__secondary-nav" data-shell-slot="secondary-navigation"><a href="#dang-nhap">Trở về trang đăng nhập</a></p>
+                </section>
+            </section>
+        </div>
+    </main>
+    <script src="../../js/core/auth-shell.js" defer></script>
+</body>
+</html>

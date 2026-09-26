@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin sidebar</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components/layout/admin-sidebar.css">
+</head>
+<body>
+    <aside class="admin-sidebar" aria-label="Thanh điều hướng quản trị" data-component="admin-sidebar">
+        <div class="admin-sidebar__main">
+            <header class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="#tong-quan" aria-label="TriThức quản trị">
+                    <span class="admin-sidebar__brand-mark" aria-hidden="true"><img class="admin-sidebar__brand-logo" src="../../assets/icons/logo.svg" alt="Logo"></span>
+                    <span class="admin-sidebar__brand-name">Edu Connect</span>
+                </a>
+                <span class="admin-sidebar__role">Quản trị</span>
+            </header>
+
+            <p class="admin-sidebar__group-label">Điều hành</p>
+            <nav class="admin-sidebar__nav" aria-label="Các mục quản trị">
+                <a class="admin-sidebar__item is-active" href="#tong-quan" aria-current="page">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="#ho-so-gia-su">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
+                    <span class="admin-sidebar__badge" aria-label="3 hồ sơ chờ xử lý">3</span>
+                </a>
+                <a class="admin-sidebar__item" href="#tin-tim-gia-su">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
+                    <span class="admin-sidebar__badge" aria-label="5 tin chờ xử lý">5</span>
+                </a>
+                <a class="admin-sidebar__item" href="#bao-cao-tranh-chap">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
+                    <span class="admin-sidebar__badge" aria-label="2 báo cáo cần xử lý">2</span>
+                </a>
+                <a class="admin-sidebar__item" href="#yeu-cau-rut-tien">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
+                    <span class="admin-sidebar__badge" aria-label="1 yêu cầu rút tiền chờ xử lý">1</span>
+                </a>
+                <a class="admin-sidebar__item" href="#nhat-ky-he-thong">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
+                </a>
+            </nav>
+        </div>
+        <footer class="admin-sidebar__footer">Edu Connect · Quản trị hệ thống</footer>
+    </aside>
+    <main class="admin-sidebar-demo" aria-label="Nội dung minh họa">Nội dung trang quản trị</main>
+</body>
+</html>
