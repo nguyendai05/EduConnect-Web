@@ -11,49 +11,24 @@
   <script src="../../js/core/modal.js" defer></script>
 </head>
 <body>
-<div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); padding: var(--space-6); background: var(--color-surface-low); gap: var(--space-6);">
-  <div class="modal-dialog">
-    <div class="modal-header">
-      <div class="flex items-center" style="gap: var(--space-3);">
-        <div class="modal-icon-badge modal-icon-badge--success">
-          <i data-lucide="check-circle" style="width:20px; height:20px;"></i>
-        </div>
-        <div>
-          <h3 class="modal-title">Xác nhận giải ngân buổi học?</h3>
-          <p class="modal-subtitle">Biến thể: Confirmation (md: 440px)</p>
-        </div>
+<!-- Include once per page with modal.css and modal.js. Open via EduModal.open('shared-modal', options). -->
+<dialog class="modal" data-modal-auto-open id="shared-modal" aria-labelledby="shared-modal-title" aria-describedby="shared-modal-description">
+  <div class="modal__surface">
+    <header class="modal__header">
+      <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
+      <div class="modal__heading">
+        <h2 id="shared-modal-title">Xác nhận thao tác</h2>
       </div>
-      <button class="modal-close-btn"><i data-lucide="x" style="width:16px; height:16px;"></i></button>
+      <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+    </header>
+    <div class="modal__body">
+      <p id="shared-modal-description">Bạn có chắc muốn thực hiện thao tác này?</p>
     </div>
-    <div class="modal-body">
-      Khoản tiền học phí <strong style="color: var(--color-text);">220.000 ₫</strong> đang giữ trong Escrow cho <strong style="color: var(--color-text);">Buổi 3 (Môn Toán 11)</strong> sẽ được giải ngân vào số dư khả dụng của gia sư.
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost">Hủy</button>
-      <button class="btn btn-primary">Xác nhận giải ngân</button>
-    </div>
+    <footer class="modal__footer">
+      <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
+      <button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận</button>
+    </footer>
   </div>
-  <div class="modal-dialog">
-    <div class="modal-header">
-      <div class="flex items-center" style="gap: var(--space-3);">
-        <div class="modal-icon-badge modal-icon-badge--danger">
-          <i data-lucide="alert-triangle" style="width:20px; height:20px;"></i>
-        </div>
-        <div>
-          <h3 class="modal-title">Chấm dứt hợp đồng dạy kèm?</h3>
-          <p class="modal-subtitle">Biến thể: Destructive Confirmation</p>
-        </div>
-      </div>
-      <button class="modal-close-btn"><i data-lucide="x" style="width:16px; height:16px;"></i></button>
-    </div>
-    <div class="modal-body modal-body--danger">
-      Hành động này sẽ gửi thông báo đến đối tác và chuyển hợp đồng sang trạng thái đối soát hoàn tiền các buổi chưa học. <strong style="color: var(--color-danger);">Không thể hoàn tác.</strong>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost">Xem xét lại</button>
-      <button class="btn btn-danger">Chấm dứt hợp đồng</button>
-    </div>
-  </div>
-</div>
+</dialog>
 </body>
 </html>

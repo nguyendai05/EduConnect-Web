@@ -8,24 +8,14 @@
 <link rel="stylesheet" href="../../css/reset.css">
 <link rel="stylesheet" href="../../css/base.css">
 <link rel="stylesheet" href="../../css/components/feedback/loading.css">
+
 </head>
-<body style="padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4);">
-
-<div class="loading-card">
-  <div class="flex items-center" style="gap: var(--space-3);">
-    <div class="skeleton-box" style="width: 40px; height: 40px; border-radius: var(--radius-pill);"></div>
-    <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-1);">
-      <div class="skeleton-box" style="height: 14px; width: 75%;"></div>
-      <div class="skeleton-box" style="height: 10px; width: 50%;"></div>
-    </div>
-  </div>
-  <div class="skeleton-box" style="height: 40px; width: 100%; border-radius: var(--radius-md);"></div>
+<body>
+<main class="loading-example">
+<div class="loading" role="status" aria-live="polite">
+  <span class="loading__spinner" aria-hidden="true"></span>
+  <span class="loading__text">Đang tải dữ liệu…</span>
 </div>
-
-<div class="inline-spinner-card">
-  <i data-lucide="loader-2" class="spin-icon" style="width:16px; height:16px;"></i>
-  <span style="font-weight: 500;">Đang xử lý đối soát giao dịch ký quỹ...</span>
-</div>
-
+</main>
 </body>
 </html>

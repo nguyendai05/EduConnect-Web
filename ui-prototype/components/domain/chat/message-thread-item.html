@@ -8,31 +8,17 @@
 <link rel="stylesheet" href="../../../css/reset.css">
 <link rel="stylesheet" href="../../../css/base.css">
 <link rel="stylesheet" href="../../../css/components/domain/chat/message-thread-item.css">
-</head>
-<body style="padding: var(--space-6);">
-<div class="thread-list">
-  <div class="thread-item thread-item--active">
-    <div class="avatar-circle">ML</div>
-    <div style="flex: 1; min-width: 0;">
-      <div class="flex items-center justify-between">
-        <span class="thread-title">Chị Mai Lan (Phụ huynh Gia Huy)</span>
-        <span class="thread-time">10:24</span>
-      </div>
-      <p class="thread-preview">Thầy ơi, tối nay em xin phép vào muộn 10 phút vì có bài kiểm tra...</p>
-    </div>
-  </div>
 
-  <div class="thread-item">
-    <div class="avatar-circle" style="background: var(--color-surface-medium); color: var(--color-text-secondary);">TH</div>
-    <div style="flex: 1; min-width: 0;">
-      <div class="flex items-center justify-between">
-        <span class="thread-title">Anh Trần Hoàng (Gia sư Lý 10)</span>
-        <span class="thread-time" style="color: var(--color-text-muted);">Hôm qua</span>
-      </div>
-      <p class="thread-preview">Số Zalo của tôi là <span class="mask-badge">[đã ẩn thông tin liên hệ]</span>, thầy kết bạn nhé.</p>
-    </div>
-    <span style="width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--color-primary);"></span>
-  </div>
-</div>
+</head>
+<body>
+<main class="message-thread-item-example">
+<button class="message-thread-item message-thread-item--unread" type="button" data-conversation-id="conversation-01" aria-label="Chị Mai Lan, 2 tin nhắn chưa đọc. Tin nhắn mới nhất: Cảm ơn thầy, hẹn gặp thầy vào buổi học tới.">
+  <span class="message-thread-item__avatar" aria-hidden="true">ML</span>
+  <span class="message-thread-item__content">
+    <span class="message-thread-item__heading"><span class="message-thread-item__name">Chị Mai Lan</span><time class="message-thread-item__time" datetime="2026-10-05T20:45">20:45</time></span>
+    <span class="message-thread-item__bottom"><span class="message-thread-item__message">Cảm ơn thầy, hẹn gặp thầy vào buổi học tới.</span><span class="message-thread-item__unread" aria-hidden="true">2</span></span>
+  </span>
+</button>
+</main>
 </body>
 </html>

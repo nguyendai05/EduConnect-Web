@@ -1,35 +1,6 @@
-.empty-card {
-    padding: var(--space-6);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: var(--color-background);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-3);
-    max-width: 360px;
-}
-.empty-icon-badge {
-    width: 3rem;
-    height: 3rem;
-    border-radius: var(--radius-pill);
-    background: var(--color-primary-container);
-    color: var(--color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.empty-title { font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text); }
-.empty-desc { font-size: var(--font-size-xs); color: var(--color-text-muted); line-height: var(--line-height-base); }
-.btn-secondary {
-    background: var(--color-surface);
-    color: var(--color-primary);
-    border: 1px solid var(--color-primary);
-    font-size: var(--font-size-xs);
-    font-weight: 600;
-    height: 2rem;
-    padding: 0 var(--space-3);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-}
+.empty-state { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); padding: var(--space-10) var(--space-6); border: 1px dashed var(--color-border); border-radius: var(--radius-xl); background: var(--color-surface); text-align: center; }
+.empty-state__icon { width: 3rem; height: 3rem; margin-bottom: var(--space-2); background: var(--color-text-muted); mask: url("../../../assets/icons/empty-inbox.svg") center / contain no-repeat; }
+.empty-state__title { font-size: var(--font-size-lg); }
+.empty-state__description { max-width: 28rem; color: var(--color-text-secondary); font-size: var(--font-size-sm); overflow-wrap: anywhere; }
+
+.empty-state-example { width: min(100% - 2rem, 52rem); margin: var(--space-8) auto; }

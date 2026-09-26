@@ -9,43 +9,14 @@
 <link rel="stylesheet" href="../../css/base.css">
 <link rel="stylesheet" href="../../css/components/feedback/alert.css">
 
-  </head>
-  <body style="padding: var(--space-6);">
-  <div class="alert-container">
-
-    <div class="alert-card alert-card--info">
-      <i data-lucide="info" class="alert-icon" style="width:20px; height:20px;"></i>
-      <div>
-        <strong class="alert-title">Cơ chế xác thực giao dịch PayOS:</strong>
-        Giao dịch thanh toán ký quỹ chỉ được hệ thống ghi nhận chính thức sau khi nhận webhook bảo mật từ cổng thanh toán.
-      </div>
-    </div>
-
-    <div class="alert-card alert-card--success">
-      <i data-lucide="check-check" class="alert-icon" style="width:20px; height:20px;"></i>
-      <div>
-        <strong class="alert-title">Thanh toán ký quỹ thành công:</strong>
-        Khoản ký quỹ <span style="font-weight: 600;">1.760.000 ₫</span> đã được ghi nhận vào tài khoản trung gian ký quỹ Escrow bảo chứng cho 8 buổi học.
-      </div>
-    </div>
-
-    <div class="alert-card alert-card--warning">
-      <i data-lucide="alert-triangle" class="alert-icon" style="width:20px; height:20px;"></i>
-      <div>
-        <strong class="alert-title">Tiền đang tạm giữ trong ký quỹ:</strong>
-        Số tiền này được bảo hộ theo quy chế Escrow và chỉ giải ngân từng buổi sau khi học viên xác nhận buổi học thành công.
-      </div>
-    </div>
-
-    <div class="alert-card alert-card--danger">
-      <i data-lucide="shield-alert" class="alert-icon" style="width:20px; height:20px;"></i>
-      <div>
-        <strong class="alert-title">Giao dịch chưa thể hoàn tất:</strong>
-        Mã giao dịch đã hết hạn thanh toán (15 phút). Vui lòng tạo mã QR VietQR mới để thực hiện ký quỹ.
-      </div>
-    </div>
-
-  </div>
-
-  </body>
-  </html>
+</head>
+<body>
+<main class="alert-example">
+<section class="alert alert--warning" role="status" aria-labelledby="alert-title">
+  <span class="alert__icon" aria-hidden="true"></span>
+  <div class="alert__content"><h2 id="alert-title" class="alert__title">Buổi học đang chờ xác nhận</h2>
+  <p class="alert__message">Vui lòng kiểm tra thông tin và xác nhận khi buổi học đã hoàn thành.</p></div>
+</section>
+</main>
+</body>
+</html>
