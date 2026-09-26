@@ -1,2 +1,4 @@
 /* Student-specific details; both contract pages share contract-detail.css. */
-.contract-page--student .contract-progress { background: var(--color-primary-container); }
+.contract-page--student .contract-progress {
+    background: var(--color-primary-container);
+}

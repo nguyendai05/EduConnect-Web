@@ -1,11 +1,44 @@
 /* Tutor-specific styles. Shared layout is in contract-detail.css. */
-.tutor-attendance-note { margin-top: var(--space-3); color: var(--color-text-muted); font-size: var(--font-size-xs); }
-.tutor-income { color: var(--color-success); font-weight: 700; }
-.tutor-income--pending { color: var(--color-warning); }
-.attendance-options { display: grid; gap: var(--space-3); padding: 0 var(--space-6) var(--space-6); }
-.attendance-options[hidden] { display: none; }
-.attendance-options .radio-option { padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
-.attendance-options .radio-option--selected { border-color: var(--color-primary); background: var(--color-primary-container); }
-.attendance-options .radio-option strong, .attendance-options .radio-option span > span { display: block; }
-.attendance-options .radio-option span > span { margin-top: var(--space-1); font-size: var(--font-size-xs); color: var(--color-text-secondary); }
-@media (max-width: 600px) { .attendance-options { padding: 0 var(--space-4) var(--space-4); } }
+.tutor-attendance-note {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+}
+.tutor-income {
+    color: var(--color-success);
+    font-weight: 700;
+}
+.tutor-income--pending {
+    color: var(--color-warning);
+}
+.attendance-options {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0 var(--space-6) var(--space-6);
+}
+.attendance-options[hidden] {
+    display: none;
+}
+.attendance-options .radio-option {
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+.attendance-options .radio-option--selected {
+    border-color: var(--color-primary);
+    background: var(--color-primary-container);
+}
+.attendance-options .radio-option strong,
+.attendance-options .radio-option span > span {
+    display: block;
+}
+.attendance-options .radio-option span > span {
+    margin-top: var(--space-1);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+}
+@media (max-width: 600px) {
+    .attendance-options {
+        padding: 0 var(--space-4) var(--space-4);
+    }
+}

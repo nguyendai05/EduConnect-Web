@@ -1,214 +1,573 @@
 <!doctype html>
 <html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tin nhắn — Edu Connect</title>
-<link rel="stylesheet" href="../../css/tokens.css">
-<link rel="stylesheet" href="../../css/reset.css">
-<link rel="stylesheet" href="../../css/base.css">
-<link rel="stylesheet" href="../../css/components/layout/user-header.css">
-<link rel="stylesheet" href="../../css/components/layout/user-footer.css">
-<link rel="stylesheet" href="../../css/components/form/search-input.css">
-<link rel="stylesheet" href="../../css/components/form/textarea.css">
-<link rel="stylesheet" href="../../css/components/navigation/filter-chip.css">
-<link rel="stylesheet" href="../../css/components/domain/chat/message-thread-item.css">
-<link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
-<link rel="stylesheet" href="../../css/components/feedback/toast.css">
-<link rel="stylesheet" href="../../css/pages/chat/messages.css">
-<script src="../../js/core/user-header.js" defer></script>
-<script src="../../js/core/search-input.js" defer></script>
-<script src="../../js/core/toast.js" defer></script>
-<script src="../../js/pages/chat/messages.js" defer></script>
-</head>
-<body>
-<header class="user-header" data-component="user-header" data-user-variant="TUTOR" data-active-nav="none" data-profile-name="Nguyễn Minh Anh" data-profile-initials="MA" data-profile-role="Gia sư Toán">
-    <div class="user-header__inner">
-        <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
-            <span class="user-header__brand-mark" aria-hidden="true">
-                <img src="../../assets/icons/logo.svg" alt="">
-            </span>
-            <span class="user-header__brand-name">Edu Connect</span>
-        </a>
-
-        <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link is-active" data-nav-key="home" data-route="/app/dashboard" href="#trang-chu" aria-current="page">Trang chủ</a>
-            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="#tim-gia-su">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="#tin-tim-gia-su">Tin tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="groups" data-route="/app/group-classes" href="#lop-nhom">Lớp nhóm</a>
-        </nav>
-
-        <div class="user-header__actions">
-            <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" title="Tin nhắn" data-user-action="messages">
-                <img src="../../assets/icons/message.svg" alt="">
-            </button>
-            <button class="user-header__icon-button" type="button" aria-label="Thông báo" title="Thông báo" data-user-action="notifications">
-                <img src="../../assets/icons/notification.svg" alt="">
-            </button>
-
-            <span class="user-header__divider" aria-hidden="true"></span>
-
-            <div class="user-header__account">
-                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
-                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>LY</span>
-                    <span class="user-header__profile-copy">
-                        <strong><span data-profile-name>Lê Hoàng Yến</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong>
-                        <span data-profile-role>Gia sư Chuyên Toán</span>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Tin nhắn — Edu Connect</title>
+        <link rel="stylesheet" href="../../css/tokens.css" />
+        <link rel="stylesheet" href="../../css/reset.css" />
+        <link rel="stylesheet" href="../../css/base.css" />
+        <link rel="stylesheet" href="../../css/components/layout/user-header.css" />
+        <link rel="stylesheet" href="../../css/components/layout/user-footer.css" />
+        <link rel="stylesheet" href="../../css/components/form/search-input.css" />
+        <link rel="stylesheet" href="../../css/components/form/textarea.css" />
+        <link rel="stylesheet" href="../../css/components/navigation/filter-chip.css" />
+        <link rel="stylesheet" href="../../css/components/domain/chat/message-thread-item.css" />
+        <link rel="stylesheet" href="../../css/components/feedback/empty-state.css" />
+        <link rel="stylesheet" href="../../css/components/feedback/toast.css" />
+        <link rel="stylesheet" href="../../css/pages/chat/messages.css" />
+        <script src="../../js/core/user-header.js" defer></script>
+        <script src="../../js/core/search-input.js" defer></script>
+        <script src="../../js/core/toast.js" defer></script>
+        <script src="../../js/pages/chat/messages.js" defer></script>
+    </head>
+    <body>
+        <header
+            class="user-header"
+            data-component="user-header"
+            data-user-variant="TUTOR"
+            data-active-nav="none"
+            data-profile-name="Nguyễn Minh Anh"
+            data-profile-initials="MA"
+            data-profile-role="Gia sư Toán"
+        >
+            <div class="user-header__inner">
+                <a
+                    class="user-header__brand"
+                    href="#trang-chu"
+                    aria-label="Edu Connect - Trang chủ"
+                >
+                    <span class="user-header__brand-mark" aria-hidden="true">
+                        <img src="../../assets/icons/logo.svg" alt="" />
                     </span>
-                    <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
-                </button>
+                    <span class="user-header__brand-name">Edu Connect</span>
+                </a>
 
-                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
-                    <div class="user-header__menu-summary" data-menu-summary hidden>
-                        <div class="user-header__menu-summary-heading">
-                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
-                            <span class="user-header__menu-badge" data-menu-summary-badge>Gia sư TOP 1%</span>
-                        </div>
-                        <div class="user-header__menu-balance">
-                            <span>Ví thù lao:</span>
-                            <strong data-menu-balance>4.850.000đ</strong>
-                        </div>
-                    </div>
+                <nav class="user-header__nav" aria-label="Điều hướng chính">
+                    <a
+                        class="user-header__nav-link is-active"
+                        data-nav-key="home"
+                        data-route="/app/dashboard"
+                        href="#trang-chu"
+                        aria-current="page"
+                        >Trang chủ</a
+                    >
+                    <a
+                        class="user-header__nav-link"
+                        data-nav-key="tutors"
+                        data-route="/app/tutors"
+                        href="#tim-gia-su"
+                        >Tìm gia sư</a
+                    >
+                    <a
+                        class="user-header__nav-link"
+                        data-nav-key="requests"
+                        data-route="/app/tutor-requests"
+                        href="#tin-tim-gia-su"
+                        >Tin tìm gia sư</a
+                    >
+                    <a
+                        class="user-header__nav-link"
+                        data-nav-key="groups"
+                        data-route="/app/group-classes"
+                        href="#lop-nhom"
+                        >Lớp nhóm</a
+                    >
+                </nav>
 
-                    <div class="user-header__menu-section" data-menu-links>
-                        <a class="user-header__menu-item" href="#ho-so" role="menuitem" data-menu-item="0">
-                            <img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile">
-                            <span data-menu-label>Hồ sơ cá nhân</span>
-                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
-                        </a>
-                        <a class="user-header__menu-item" href="#hop-dong" role="menuitem" data-menu-item="1">
-                            <img class="user-header__menu-item-leading" src="../../assets/icons/calendar.svg" alt="" data-menu-icon="calendar">
-                            <span data-menu-label>Hợp đồng của tôi</span>
-                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
-                        </a>
-                        <a class="user-header__menu-item" href="#vi-tri-thuc" role="menuitem" data-menu-item="2">
-                            <img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet">
-                            <span data-menu-label>Ví Edu Connect</span>
-                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
-                        </a>
-                        <a class="user-header__menu-item" href="#bao-mat" role="menuitem" data-menu-item="3">
-                            <img class="user-header__menu-item-leading" src="../../assets/icons/shield.svg" alt="" data-menu-icon="shield">
-                            <span data-menu-label>Bảo mật tài khoản</span>
-                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
-                        </a>
-                        <a class="user-header__menu-item" href="#lich-su-giao-dich" role="menuitem" data-menu-item="4">
-                            <img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt">
-                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
-                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
-                        </a>
-                    </div>
+                <div class="user-header__actions">
+                    <button
+                        class="user-header__icon-button"
+                        type="button"
+                        aria-label="Tin nhắn"
+                        title="Tin nhắn"
+                        data-user-action="messages"
+                    >
+                        <img src="../../assets/icons/message.svg" alt="" />
+                    </button>
+                    <button
+                        class="user-header__icon-button"
+                        type="button"
+                        aria-label="Thông báo"
+                        title="Thông báo"
+                        data-user-action="notifications"
+                    >
+                        <img src="../../assets/icons/notification.svg" alt="" />
+                    </button>
 
-                    <div class="user-header__menu-section user-header__menu-section--logout">
-                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
-                            <img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt="">
-                            <span data-menu-logout-label>Đăng xuất tài khoản</span>
+                    <span class="user-header__divider" aria-hidden="true"></span>
+
+                    <div class="user-header__account">
+                        <button
+                            class="user-header__profile"
+                            type="button"
+                            aria-label="Mở menu tài khoản"
+                            aria-haspopup="menu"
+                            aria-expanded="false"
+                            aria-controls="user-account-menu"
+                        >
+                            <span
+                                class="user-header__avatar"
+                                aria-hidden="true"
+                                data-profile-initials
+                                >LY</span
+                            >
+                            <span class="user-header__profile-copy">
+                                <strong
+                                    ><span data-profile-name>Lê Hoàng Yến</span
+                                    ><img
+                                        class="user-header__verified"
+                                        data-profile-verified
+                                        src="../../assets/icons/verified.svg"
+                                        alt="Đã xác thực"
+                                        hidden
+                                /></strong>
+                                <span data-profile-role>Gia sư Chuyên Toán</span>
+                            </span>
+                            <img
+                                class="user-header__chevron"
+                                src="../../assets/icons/mui-ten-xuong.svg"
+                                data-icon-closed="../../assets/icons/mui-ten-xuong.svg"
+                                data-icon-open="../../assets/icons/mui-ten-len.svg"
+                                alt=""
+                            />
                         </button>
+
+                        <div
+                            class="user-header__menu"
+                            id="user-account-menu"
+                            role="menu"
+                            aria-label="Menu tài khoản"
+                            hidden
+                        >
+                            <div class="user-header__menu-summary" data-menu-summary hidden>
+                                <div class="user-header__menu-summary-heading">
+                                    <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                                    <span class="user-header__menu-badge" data-menu-summary-badge
+                                        >Gia sư TOP 1%</span
+                                    >
+                                </div>
+                                <div class="user-header__menu-balance">
+                                    <span>Ví thù lao:</span>
+                                    <strong data-menu-balance>4.850.000đ</strong>
+                                </div>
+                            </div>
+
+                            <div class="user-header__menu-section" data-menu-links>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#ho-so"
+                                    role="menuitem"
+                                    data-menu-item="0"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/profile.svg"
+                                        alt=""
+                                        data-menu-icon="profile"
+                                    />
+                                    <span data-menu-label>Hồ sơ cá nhân</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#hop-dong"
+                                    role="menuitem"
+                                    data-menu-item="1"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/calendar.svg"
+                                        alt=""
+                                        data-menu-icon="calendar"
+                                    />
+                                    <span data-menu-label>Hợp đồng của tôi</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#vi-tri-thuc"
+                                    role="menuitem"
+                                    data-menu-item="2"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/wallet.svg"
+                                        alt=""
+                                        data-menu-icon="wallet"
+                                    />
+                                    <span data-menu-label>Ví Edu Connect</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#bao-mat"
+                                    role="menuitem"
+                                    data-menu-item="3"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/shield.svg"
+                                        alt=""
+                                        data-menu-icon="shield"
+                                    />
+                                    <span data-menu-label>Bảo mật tài khoản</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#lich-su-giao-dich"
+                                    role="menuitem"
+                                    data-menu-item="4"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/receipt.svg"
+                                        alt=""
+                                        data-menu-icon="receipt"
+                                    />
+                                    <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                            </div>
+
+                            <div
+                                class="user-header__menu-section user-header__menu-section--logout"
+                            >
+                                <button
+                                    class="user-header__menu-item user-header__menu-item--danger"
+                                    type="button"
+                                    role="menuitem"
+                                    data-user-action="logout"
+                                >
+                                    <img
+                                        class="user-header__menu-item-icon"
+                                        src="../../assets/icons/dang-xuat.svg"
+                                        alt=""
+                                    />
+                                    <span data-menu-logout-label>Đăng xuất tài khoản</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</header>
+        </header>
 
-<main class="chat-page">
-<h1 class="chat-sr-only">Tin nhắn</h1>
-<div class="chat-layout" id="chat-layout">
-<aside class="chat-contacts" aria-label="Danh sách cuộc trò chuyện">
-<div class="chat-contacts__tools">
-<h2>Cuộc trò chuyện <span id="unread-total" class="chat-counter">2</span></h2>
-<div class="search-input search-input--compact" data-search-input>
-<img class="search-input__icon" src="../../assets/icons/chat-search.svg" alt="">
-<input id="conversation-search" type="search" placeholder="Tìm cuộc trò chuyện..." aria-label="Tìm cuộc trò chuyện">
-<button class="search-input__clear" type="button" data-clear-search aria-label="Xóa tìm kiếm" hidden><img src="../../assets/icons/close.svg" alt=""></button>
-</div>
-<div class="filter-chip-list" role="group" aria-label="Lọc cuộc trò chuyện">
-<button class="filter-chip filter-chip--selected" type="button" data-chat-filter="all" aria-pressed="true">Tất cả</button>
-<button class="filter-chip" type="button" data-chat-filter="unread" aria-pressed="false">Chưa đọc</button>
-</div>
-</div>
-<div class="chat-threads" id="thread-list"></div>
-<section class="empty-state" id="thread-empty" hidden><span class="empty-state__icon" aria-hidden="true"></span><h3 class="empty-state__title">Không tìm thấy cuộc trò chuyện</h3><p class="empty-state__description">Thử tên khác hoặc chọn bộ lọc Tất cả.</p></section>
-<p class="chat-contact-count" id="contact-count"></p>
-</aside>
-<section class="chat-conversation" aria-label="Nội dung cuộc trò chuyện">
-<header class="chat-conversation__header">
-<button class="chat-icon-button chat-back" id="back-to-contacts" aria-label="Về danh sách cuộc trò chuyện" type="button"><img src="../../assets/icons/chevron-right.svg" alt=""></button>
-<span class="chat-avatar" id="contact-avatar">ML</span>
-<div class="chat-person"><h2 id="contact-name">Chị Mai Lan</h2><p id="contact-description">Phụ huynh · Gia Huy</p></div>
-<button class="chat-icon-button" id="toggle-context" type="button" aria-label="Thông tin liên quan" aria-controls="chat-context" aria-expanded="false"><img src="../../assets/icons/info-circle.svg" alt=""></button>
-</header>
-<a class="chat-contract-link" id="contract-link" href="../contract/tutor-detail.html">Toán lớp 11 · HD-20260919-024 <span>Xem hợp đồng</span></a>
-<div class="chat-history" id="message-history" role="log" aria-label="Lịch sử tin nhắn" aria-live="polite" aria-relevant="additions"></div>
-<form class="chat-composer" id="message-form">
-<div id="attachment-preview" class="chat-attachment-preview" hidden></div>
-<label class="chat-sr-only" for="message-input">Nội dung tin nhắn</label>
-<textarea class="textarea-control chat-composer__input" id="message-input" rows="1" maxlength="4000" placeholder="Nhập tin nhắn trao đổi việc học..."></textarea>
-<div class="chat-composer__actions">
-<button class="chat-icon-button" id="attach-button" type="button" aria-label="Đính kèm tệp"><img src="../../assets/icons/chat-attachment.svg" alt=""></button>
-<input id="attachment-input" type="file" accept="image/png,image/jpeg,image/webp,application/pdf,.txt" hidden>
-<span class="chat-composer__hint">Enter để gửi · Shift + Enter xuống dòng</span>
-<button class="chat-send" id="send-button" type="submit" disabled>Gửi <img src="../../assets/icons/chat-send.svg" alt=""></button>
-</div>
-<p class="chat-error" id="composer-error" role="alert" hidden></p>
-</form>
-</section>
-<aside class="chat-context" id="chat-context" aria-label="Thông tin liên quan">
-<div class="chat-context__heading"><h2>Hồ sơ liên kết</h2><button class="chat-icon-button chat-context-close" id="close-context" type="button" aria-label="Đóng thông tin"><img src="../../assets/icons/close.svg" alt=""></button></div>
-<section class="chat-context-card"><p class="chat-eyebrow">HỌC VIÊN</p><h3 id="student-name">Trần Gia Huy</h3><p id="student-course">Toán · Lớp 11</p><dl><div><dt>Người liên hệ</dt><dd id="guardian-name">Chị Mai Lan</dd></div><div><dt>Hình thức</dt><dd>Học trực tiếp</dd></div></dl></section>
-<section class="chat-context-card" id="linked-contract"><p class="chat-eyebrow">HỢP ĐỒNG ĐANG THỰC HIỆN</p><h3>HD-20260919-024</h3><label for="chat-progress">Tiến độ: 3 / 8 buổi</label><progress id="chat-progress" value="3" max="8">3/8</progress><dl><div><dt>Học phí mỗi buổi</dt><dd>220.000 ₫</dd></div><div><dt>Gia sư thực nhận</dt><dd>198.000 ₫</dd></div></dl><a href="../contract/tutor-detail.html">Xem chi tiết hợp đồng</a></section>
-<section class="chat-context-card" id="linked-lesson"><p class="chat-eyebrow">BUỔI DẠY KẾ TIẾP</p><h3>Buổi 4 · Thứ Sáu</h3><p>09/10/2026 · 19:00–20:30</p><p>Phương trình lượng giác nâng cao</p><a href="../contract/tutor-detail.html#next-lesson">Xem kế hoạch buổi dạy</a></section>
-<p class="chat-context-note">Theo dõi trao đổi và thông tin buổi học tại một nơi để thuận tiện đối chiếu.</p>
-</aside>
-</div>
-<p class="chat-sr-only" id="chat-status" role="status"></p>
-<noscript>Vui lòng bật JavaScript để xem danh sách cuộc trò chuyện.</noscript>
-</main>
-<footer class="user-footer" data-component="user-footer">
-    <div class="user-footer__inner">
-        <div class="user-footer__main">
-            <section class="user-footer__brand" aria-label="Về Edu Connect">
-                <a class="user-footer__brand-link" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
-                    <img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt="">
-                    <span>Edu Connect</span>
-                </a>
-                <p>Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch. Đem lại sự an tâm tuyệt đối cho phụ huynh thông qua quy trình bảo chứng năng lực và hợp đồng ký quỹ an toàn.</p>
-                <span class="user-footer__certificate">
-                    <img src="../../assets/icons/certificate.svg" alt="">
-                    Chứng nhận đào tạo sư phạm
-                </span>
-            </section>
+        <main class="chat-page">
+            <h1 class="chat-sr-only">Tin nhắn</h1>
+            <div class="chat-layout" id="chat-layout">
+                <aside class="chat-contacts" aria-label="Danh sách cuộc trò chuyện">
+                    <div class="chat-contacts__tools">
+                        <h2>
+                            Cuộc trò chuyện <span id="unread-total" class="chat-counter">2</span>
+                        </h2>
+                        <div class="search-input search-input--compact" data-search-input>
+                            <img
+                                class="search-input__icon"
+                                src="../../assets/icons/chat-search.svg"
+                                alt=""
+                            />
+                            <input
+                                id="conversation-search"
+                                type="search"
+                                placeholder="Tìm cuộc trò chuyện..."
+                                aria-label="Tìm cuộc trò chuyện"
+                            />
+                            <button
+                                class="search-input__clear"
+                                type="button"
+                                data-clear-search
+                                aria-label="Xóa tìm kiếm"
+                                hidden
+                            >
+                                <img src="../../assets/icons/close.svg" alt="" />
+                            </button>
+                        </div>
+                        <div class="filter-chip-list" role="group" aria-label="Lọc cuộc trò chuyện">
+                            <button
+                                class="filter-chip filter-chip--selected"
+                                type="button"
+                                data-chat-filter="all"
+                                aria-pressed="true"
+                            >
+                                Tất cả
+                            </button>
+                            <button
+                                class="filter-chip"
+                                type="button"
+                                data-chat-filter="unread"
+                                aria-pressed="false"
+                            >
+                                Chưa đọc
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chat-threads" id="thread-list"></div>
+                    <section class="empty-state" id="thread-empty" hidden>
+                        <span class="empty-state__icon" aria-hidden="true"></span>
+                        <h3 class="empty-state__title">Không tìm thấy cuộc trò chuyện</h3>
+                        <p class="empty-state__description">
+                            Thử tên khác hoặc chọn bộ lọc Tất cả.
+                        </p>
+                    </section>
+                    <p class="chat-contact-count" id="contact-count"></p>
+                </aside>
+                <section class="chat-conversation" aria-label="Nội dung cuộc trò chuyện">
+                    <header class="chat-conversation__header">
+                        <button
+                            class="chat-icon-button chat-back"
+                            id="back-to-contacts"
+                            aria-label="Về danh sách cuộc trò chuyện"
+                            type="button"
+                        >
+                            <img src="../../assets/icons/chevron-right.svg" alt="" />
+                        </button>
+                        <span class="chat-avatar" id="contact-avatar">ML</span>
+                        <div class="chat-person">
+                            <h2 id="contact-name">Chị Mai Lan</h2>
+                            <p id="contact-description">Phụ huynh · Gia Huy</p>
+                        </div>
+                        <button
+                            class="chat-icon-button"
+                            id="toggle-context"
+                            type="button"
+                            aria-label="Thông tin liên quan"
+                            aria-controls="chat-context"
+                            aria-expanded="false"
+                        >
+                            <img src="../../assets/icons/info-circle.svg" alt="" />
+                        </button>
+                    </header>
+                    <a
+                        class="chat-contract-link"
+                        id="contract-link"
+                        href="../contract/tutor-detail.html"
+                        >Toán lớp 11 · HD-20260919-024 <span>Xem hợp đồng</span></a
+                    >
+                    <div
+                        class="chat-history"
+                        id="message-history"
+                        role="log"
+                        aria-label="Lịch sử tin nhắn"
+                        aria-live="polite"
+                        aria-relevant="additions"
+                    ></div>
+                    <form class="chat-composer" id="message-form">
+                        <div id="attachment-preview" class="chat-attachment-preview" hidden></div>
+                        <label class="chat-sr-only" for="message-input">Nội dung tin nhắn</label>
+                        <textarea
+                            class="textarea-control chat-composer__input"
+                            id="message-input"
+                            rows="1"
+                            maxlength="4000"
+                            placeholder="Nhập tin nhắn trao đổi việc học..."
+                        ></textarea>
+                        <div class="chat-composer__actions">
+                            <button
+                                class="chat-icon-button"
+                                id="attach-button"
+                                type="button"
+                                aria-label="Đính kèm tệp"
+                            >
+                                <img src="../../assets/icons/chat-attachment.svg" alt="" />
+                            </button>
+                            <input
+                                id="attachment-input"
+                                type="file"
+                                accept="image/png,image/jpeg,image/webp,application/pdf,.txt"
+                                hidden
+                            />
+                            <span class="chat-composer__hint"
+                                >Enter để gửi · Shift + Enter xuống dòng</span
+                            >
+                            <button class="chat-send" id="send-button" type="submit" disabled>
+                                Gửi <img src="../../assets/icons/chat-send.svg" alt="" />
+                            </button>
+                        </div>
+                        <p class="chat-error" id="composer-error" role="alert" hidden></p>
+                    </form>
+                </section>
+                <aside class="chat-context" id="chat-context" aria-label="Thông tin liên quan">
+                    <div class="chat-context__heading">
+                        <h2>Hồ sơ liên kết</h2>
+                        <button
+                            class="chat-icon-button chat-context-close"
+                            id="close-context"
+                            type="button"
+                            aria-label="Đóng thông tin"
+                        >
+                            <img src="../../assets/icons/close.svg" alt="" />
+                        </button>
+                    </div>
+                    <section class="chat-context-card">
+                        <p class="chat-eyebrow">HỌC VIÊN</p>
+                        <h3 id="student-name">Trần Gia Huy</h3>
+                        <p id="student-course">Toán · Lớp 11</p>
+                        <dl>
+                            <div>
+                                <dt>Người liên hệ</dt>
+                                <dd id="guardian-name">Chị Mai Lan</dd>
+                            </div>
+                            <div>
+                                <dt>Hình thức</dt>
+                                <dd>Học trực tiếp</dd>
+                            </div>
+                        </dl>
+                    </section>
+                    <section class="chat-context-card" id="linked-contract">
+                        <p class="chat-eyebrow">HỢP ĐỒNG ĐANG THỰC HIỆN</p>
+                        <h3>HD-20260919-024</h3>
+                        <label for="chat-progress">Tiến độ: 3 / 8 buổi</label
+                        ><progress id="chat-progress" value="3" max="8">3/8</progress>
+                        <dl>
+                            <div>
+                                <dt>Học phí mỗi buổi</dt>
+                                <dd>220.000 ₫</dd>
+                            </div>
+                            <div>
+                                <dt>Gia sư thực nhận</dt>
+                                <dd>198.000 ₫</dd>
+                            </div>
+                        </dl>
+                        <a href="../contract/tutor-detail.html">Xem chi tiết hợp đồng</a>
+                    </section>
+                    <section class="chat-context-card" id="linked-lesson">
+                        <p class="chat-eyebrow">BUỔI DẠY KẾ TIẾP</p>
+                        <h3>Buổi 4 · Thứ Sáu</h3>
+                        <p>09/10/2026 · 19:00–20:30</p>
+                        <p>Phương trình lượng giác nâng cao</p>
+                        <a href="../contract/tutor-detail.html#next-lesson"
+                            >Xem kế hoạch buổi dạy</a
+                        >
+                    </section>
+                    <p class="chat-context-note">
+                        Theo dõi trao đổi và thông tin buổi học tại một nơi để thuận tiện đối chiếu.
+                    </p>
+                </aside>
+            </div>
+            <p class="chat-sr-only" id="chat-status" role="status"></p>
+            <noscript>Vui lòng bật JavaScript để xem danh sách cuộc trò chuyện.</noscript>
+        </main>
+        <footer class="user-footer" data-component="user-footer">
+            <div class="user-footer__inner">
+                <div class="user-footer__main">
+                    <section class="user-footer__brand" aria-label="Về Edu Connect">
+                        <a
+                            class="user-footer__brand-link"
+                            href="#trang-chu"
+                            aria-label="Edu Connect - Trang chủ"
+                        >
+                            <img
+                                class="user-footer__brand-mark"
+                                src="../../assets/icons/logo.svg"
+                                alt=""
+                            />
+                            <span>Edu Connect</span>
+                        </a>
+                        <p>
+                            Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch. Đem
+                            lại sự an tâm tuyệt đối cho phụ huynh thông qua quy trình bảo chứng năng
+                            lực và hợp đồng ký quỹ an toàn.
+                        </p>
+                        <span class="user-footer__certificate">
+                            <img src="../../assets/icons/certificate.svg" alt="" />
+                            Chứng nhận đào tạo sư phạm
+                        </span>
+                    </section>
 
-            <nav class="user-footer__links" aria-labelledby="footer-parents-title">
-                <h2 id="footer-parents-title">Dành cho phụ huynh</h2>
-                <a href="#yeu-cau-tim-gia-su"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Đăng yêu cầu tìm gia sư</a>
-                <a href="#gia-su-tieu-bieu"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Danh sách gia sư tiêu biểu</a>
-                <a href="#quy-trinh-escrow"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy trình bảo đảm Escrow</a>
-                <a href="#bang-hoc-phi"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Bảng học phí tham khảo</a>
-            </nav>
+                    <nav class="user-footer__links" aria-labelledby="footer-parents-title">
+                        <h2 id="footer-parents-title">Dành cho phụ huynh</h2>
+                        <a href="#yeu-cau-tim-gia-su"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Đăng yêu
+                            cầu tìm gia sư</a
+                        >
+                        <a href="#gia-su-tieu-bieu"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Danh sách
+                            gia sư tiêu biểu</a
+                        >
+                        <a href="#quy-trinh-escrow"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Quy trình
+                            bảo đảm Escrow</a
+                        >
+                        <a href="#bang-hoc-phi"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Bảng học
+                            phí tham khảo</a
+                        >
+                    </nav>
 
-            <nav class="user-footer__links" aria-labelledby="footer-tutors-title">
-                <h2 id="footer-tutors-title">Dành cho gia sư</h2>
-                <a href="#tim-lop"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tìm lớp gia sư mới</a>
-                <a href="#tieu-chuan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tiêu chuẩn xác minh lý lịch</a>
-                <a href="#lop-nhom"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Mở lớp nhóm nhỏ</a>
-                <a href="#thu-lao"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo vệ thù lao</a>
-            </nav>
+                    <nav class="user-footer__links" aria-labelledby="footer-tutors-title">
+                        <h2 id="footer-tutors-title">Dành cho gia sư</h2>
+                        <a href="#tim-lop"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Tìm lớp
+                            gia sư mới</a
+                        >
+                        <a href="#tieu-chuan"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Tiêu chuẩn
+                            xác minh lý lịch</a
+                        >
+                        <a href="#lop-nhom"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Mở lớp
+                            nhóm nhỏ</a
+                        >
+                        <a href="#thu-lao"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Chính sách
+                            bảo vệ thù lao</a
+                        >
+                    </nav>
 
-            <nav class="user-footer__links" aria-labelledby="footer-support-title">
-                <h2 id="footer-support-title">Hỗ trợ &amp; pháp lý</h2>
-                <a href="#tro-giup"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Trung tâm trợ giúp học viên</a>
-                <a href="#dieu-khoan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Điều khoản sử dụng dịch vụ</a>
-                <a href="#bao-mat"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo mật dữ liệu</a>
-                <a href="#tranh-chap"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy chế giải quyết tranh chấp</a>
-            </nav>
-        </div>
+                    <nav class="user-footer__links" aria-labelledby="footer-support-title">
+                        <h2 id="footer-support-title">Hỗ trợ &amp; pháp lý</h2>
+                        <a href="#tro-giup"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Trung tâm
+                            trợ giúp học viên</a
+                        >
+                        <a href="#dieu-khoan"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Điều khoản
+                            sử dụng dịch vụ</a
+                        >
+                        <a href="#bao-mat"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Chính sách
+                            bảo mật dữ liệu</a
+                        >
+                        <a href="#tranh-chap"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Quy chế
+                            giải quyết tranh chấp</a
+                        >
+                    </nav>
+                </div>
 
-        <div class="user-footer__bottom">
-            <p><img src="../../assets/icons/copyright.svg" alt="">© 2026 Edu Connect Platform. Bảo lưu mọi quyền.</p>
-            <p class="user-footer__regions"><span>Trung tâm khu vực hỗ trợ:</span><a href="#ha-noi">Hà Nội</a><a href="#ho-chi-minh">TP. Hồ Chí Minh</a><a href="#da-nang">Đà Nẵng</a></p>
-        </div>
-    </div>
-</footer>
-
-</body>
+                <div class="user-footer__bottom">
+                    <p>
+                        <img src="../../assets/icons/copyright.svg" alt="" />© 2026 Edu Connect
+                        Platform. Bảo lưu mọi quyền.
+                    </p>
+                    <p class="user-footer__regions">
+                        <span>Trung tâm khu vực hỗ trợ:</span><a href="#ha-noi">Hà Nội</a
+                        ><a href="#ho-chi-minh">TP. Hồ Chí Minh</a><a href="#da-nang">Đà Nẵng</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </body>
 </html>

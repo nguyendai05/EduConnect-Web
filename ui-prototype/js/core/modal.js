@@ -9,7 +9,7 @@
   if (window.EduModal) return
   let activeModal = null
   let opener = null
-  let previousOverflow = ''
+  let hadScrollLock = false
   let backdropPointer = false
 
   const resolve = target => typeof target === 'string' ? document.getElementById(target) : target
@@ -42,8 +42,8 @@
     modal.returnValue = ''
     modal.showModal()
     activeModal = modal
-    previousOverflow = document.documentElement.style.overflow
-    document.documentElement.style.overflow = 'hidden'
+    hadScrollLock = document.documentElement.classList.contains('modal-scroll-locked')
+    document.documentElement.classList.add('modal-scroll-locked')
 
     const onPointerDown = event => { backdropPointer = event.target === modal && outside(event, modal) }
     const onClick = event => {
@@ -61,7 +61,7 @@
       modal.removeEventListener('pointerdown', onPointerDown)
       modal.removeEventListener('click', onClick)
       modal.removeEventListener('cancel', onCancel)
-      document.documentElement.style.overflow = previousOverflow
+      if (!hadScrollLock) document.documentElement.classList.remove('modal-scroll-locked')
       activeModal = null
       backdropPointer = false
       if (opener?.isConnected) opener.focus()
