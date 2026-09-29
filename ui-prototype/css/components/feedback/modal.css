@@ -77,4 +77,167 @@
 }
 .modal__icon--info { --modal-icon: url("../../../assets/icons/info-circle.svg"); }
 .modal__icon--confirm { --modal-icon: url("../../../assets/icons/check-circle.svg"); }
+.modal__icon--success { --modal-icon: url("../../../assets/icons/check-circle.svg"); }
+.modal__icon--danger { --modal-icon: url("../../../assets/icons/warning-triangle.svg"); }
 .modal__close-icon { --modal-icon: url("../../../assets/icons/close.svg"); }
+
+.modal__icon--success {
+  color: var(--color-success);
+  background: var(--color-success-container);
+}
+
+.modal__icon--danger {
+  color: var(--color-danger);
+  background: var(--color-danger-container);
+}
+
+.modal__button--ghost {
+  color: var(--color-text-secondary);
+  background: transparent;
+}
+
+.modal__button--ghost:hover {
+  background: var(--color-surface-low);
+}
+
+.modal__button--danger {
+  color: var(--color-on-primary);
+  background: var(--color-danger);
+}
+
+.modal__button--danger:hover {
+  background: color-mix(in srgb, var(--color-danger), var(--color-text) 18%);
+}
+
+/* Trang minh họa chỉ hiển thị phần component trong ảnh tham chiếu. */
+.modal-component-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: var(--space-6);
+}
+
+.modal-preview {
+  display: grid;
+  width: min(100%, 79rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(var(--space-6), 5vw, 4rem);
+  padding: var(--space-8) clamp(var(--space-6), 4vw, 3rem);
+  background: var(--color-surface-low);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.modal-specimen {
+  width: min(100%, 34.375rem);
+  margin-inline: auto;
+  overflow: hidden;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-specimen .modal__header {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  border-bottom: 0;
+}
+
+.modal-specimen .modal__icon {
+  flex-basis: 2.5rem;
+}
+
+.modal-specimen .modal__heading h2 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.modal-specimen .modal__heading p {
+  margin-top: 0;
+  font-size: var(--font-size-xs);
+}
+
+.modal-specimen .modal__close {
+  width: 2rem;
+  height: 2rem;
+  flex-basis: 2rem;
+  color: var(--color-text-muted);
+}
+
+.modal-specimen .modal__close-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.modal-specimen .modal__body {
+  padding: 0 var(--space-6);
+}
+
+.modal-specimen .modal__message {
+  padding: var(--space-4);
+  color: var(--color-text-secondary);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  line-height: 1.75;
+}
+
+.modal-specimen .modal__message strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.modal-specimen--danger .modal__message {
+  background: color-mix(in srgb, var(--color-danger-container), var(--color-surface) 64%);
+  border-color: var(--color-danger-container);
+}
+
+.modal-specimen--danger .modal__message strong {
+  color: var(--color-danger);
+}
+
+.modal-specimen .modal__footer {
+  padding: var(--space-6);
+  border-top: 0;
+}
+
+.modal-specimen .modal__button {
+  min-height: 2.5rem;
+  font-size: var(--font-size-xs);
+}
+
+@media (max-width: 56rem) {
+  .modal-preview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 37.5rem) {
+  .modal-component-page {
+    padding: var(--space-4);
+  }
+
+  .modal-preview {
+    padding: var(--space-4);
+  }
+
+  .modal-specimen .modal__header,
+  .modal-specimen .modal__footer {
+    padding: var(--space-4);
+  }
+
+  .modal-specimen .modal__body {
+    padding-inline: var(--space-4);
+  }
+
+  .modal-specimen .modal__footer {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .modal-specimen .modal__button {
+    width: 100%;
+  }
+}

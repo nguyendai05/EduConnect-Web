@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng tin tìm gia sư | Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/page-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <link rel="stylesheet" href="../../css/components/form/form-field.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+    <link rel="stylesheet" href="../../css/components/form/radio.css">
+    <link rel="stylesheet" href="../../css/components/form/textarea.css">
+    <link rel="stylesheet" href="../../css/components/domain/job/job-card.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/feedback/modal.css">
+    <link rel="stylesheet" href="../../css/components/feedback/toast.css">
+    <link rel="stylesheet" href="../../css/pages/job/create.css">
+    <script src="../../js/core/user-header.js" defer></script>
+    <script src="../../js/core/select.js" defer></script>
+    <script src="../../js/core/radio.js" defer></script>
+    <script src="../../js/core/modal.js" defer></script>
+    <script src="../../js/core/toast.js" defer></script>
+    <script src="../../js/pages/job/create.js" defer></script>
+</head>
+<body class="create-page">
+<div class="user-shell" data-create-job-page>
+    <header class="user-header" data-component="user-header" data-user-variant="B">
+        <div class="user-header__inner">
+            <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
+                <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
+                <span class="user-header__brand-name">Edu Connect</span>
+            </a>
+
+            <nav class="user-header__nav" aria-label="Điều hướng chính">
+                <a class="user-header__nav-link" data-nav-key="home" data-route="/app/dashboard" href="#trang-chu">Trang chủ</a>
+                <a class="user-header__nav-link is-active" data-nav-key="tutors" data-route="/app/tutors" href="#tim-gia-su" aria-current="page">Tìm gia sư</a>
+                <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="my-job.html">Tin tìm gia sư</a>
+                <a class="user-header__nav-link" data-nav-key="groups" data-route="/app/group-classes" href="#lop-nhom">Lớp nhóm</a>
+            </nav>
+
+            <div class="user-header__actions">
+                <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" title="Tin nhắn" data-user-action="messages"><img src="../../assets/icons/message.svg" alt=""></button>
+                <button class="user-header__icon-button" type="button" aria-label="Thông báo" title="Thông báo" data-user-action="notifications"><img src="../../assets/icons/notification.svg" alt=""></button>
+                <span class="user-header__divider" aria-hidden="true"></span>
+
+                <div class="user-header__account">
+                    <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="create-user-account-menu">
+                        <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                        <span class="user-header__profile-copy"><strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong><span data-profile-role>Phụ huynh</span></span>
+                        <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
+                    </button>
+
+                    <div class="user-header__menu" id="create-user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                        <div class="user-header__menu-summary" data-menu-summary hidden><div class="user-header__menu-summary-heading"><strong data-menu-summary-title>Tài khoản xác thực</strong><span class="user-header__menu-badge" data-menu-summary-badge>Gia sư TOP 1%</span></div><div class="user-header__menu-balance"><span>Ví thù lao:</span><strong data-menu-balance>4.850.000đ</strong></div></div>
+                        <div class="user-header__menu-section" data-menu-links>
+                            <a class="user-header__menu-item" href="#ho-so" role="menuitem" data-menu-item="0"><img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile"><span data-menu-label>Hồ sơ cá nhân</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#hop-dong" role="menuitem" data-menu-item="1"><img class="user-header__menu-item-leading" src="../../assets/icons/calendar.svg" alt="" data-menu-icon="calendar"><span data-menu-label>Hợp đồng của tôi</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#vi-tri-thuc" role="menuitem" data-menu-item="2"><img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet"><span data-menu-label>Ví TriThức</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#bao-mat" role="menuitem" data-menu-item="3"><img class="user-header__menu-item-leading" src="../../assets/icons/shield.svg" alt="" data-menu-icon="shield"><span data-menu-label>Bảo mật tài khoản</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#lich-su-giao-dich" role="menuitem" data-menu-item="4"><img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt"><span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                        </div>
+                        <div class="user-header__menu-section user-header__menu-section--logout"><button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout"><img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt=""><span data-menu-logout-label>Đăng xuất tài khoản</span></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="user-shell__main">
+        <div class="user-shell__content">
+            <nav class="breadcrumb create-page__breadcrumb" aria-label="Breadcrumb">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="#tin-tim-gia-su">Tin tìm gia sư</a></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="my-job.html">Tin của tôi</a></li>
+                    <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Đăng tin</span></li>
+                </ol>
+            </nav>
+
+            <header class="page-header create-page__header">
+                <div class="page-header__content">
+                    <div class="page-header__title-block">
+                        <div class="page-header__title-row">
+                            <h1 class="page-header__title">Đăng tin tìm gia sư</h1>
+                            <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Dành cho phụ huynh &amp; học sinh</span>
+                        </div>
+                        <p class="page-header__description">Mô tả nhu cầu học để các gia sư phù hợp có thể chủ động tìm hiểu và nộp hồ sơ ứng tuyển.</p>
+                    </div>
+
+                    <section class="create-quota" aria-label="Hạn mức tin đang tuyển">
+                        <span class="create-quota__progress" aria-hidden="true"><span>2/5</span></span>
+                        <div><strong>Tin đang tuyển: <span>2 / 5</span></strong><p>Tối đa 5 tin mở cùng thời điểm</p></div>
+                    </section>
+                </div>
+            </header>
+
+            <section class="alert create-page__moderation" role="status">
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content">
+                    <h2 class="alert__title">Tin sẽ được kiểm duyệt trước khi đăng công khai <span class="create-page__safe-badge">Quy trình an toàn</span></h2>
+                    <p class="alert__message">Sau khi gửi, tin sẽ ở trạng thái <strong>Chờ duyệt</strong>. Gia sư chỉ có thể xem chi tiết và ứng tuyển sau khi đội ngũ Edu Connect hoàn tất xác thực nội dung. Vui lòng không cung cấp số điện thoại, email hoặc Zalo trong phần mô tả.</p>
+                </div>
+            </section>
+
+            <div class="create-page__workflow">
+                <form class="create-form" id="create-job-form">
+                    <section class="create-card" aria-labelledby="study-needs-title">
+                        <header class="create-card__header"><span>1</span><h2 id="study-needs-title">Nhu cầu học của học sinh</h2></header>
+                        <div class="create-card__body">
+                            <div class="form-field">
+                                <div class="create-field__label-row">
+                                    <label class="form-field__label" for="post-title">Tiêu đề tin đăng <span class="form-field__required" aria-hidden="true">*</span></label>
+                                    <span class="create-field__counter" id="title-counter">0 / 200 ký tự</span>
+                                </div>
+                                <div class="input-control"><input class="input-control__input" id="post-title" name="title" type="text" maxlength="200" required value="Tìm gia sư Toán lớp 11 tại Thủ Đức" placeholder="Ví dụ: Tìm gia sư Toán lớp 11 bồi dưỡng kiến thức thi HK1..."></div>
+                                <p class="form-field__message">Tiêu đề nên ngắn gọn, nêu rõ môn học, lớp và khu vực để gia sư dễ lọc tin.</p>
+                            </div>
+
+                            <div class="create-fields-grid">
+                                <section class="select-field" data-component="select" data-initial-open="false" data-create-select="subject">
+                                    <span class="select-field__label" id="subject-label">Môn học <span class="form-field__required" aria-hidden="true">*</span></span>
+                                    <button class="select-control" type="button" aria-labelledby="subject-label subject-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="subject-options" data-select-trigger>
+                                        <span id="subject-value" data-select-value>Toán</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="">
+                                    </button>
+                                    <div class="select-options" id="subject-options" role="listbox" aria-labelledby="subject-label" data-select-options hidden>
+                                        <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Toán"><span>Toán</span><img src="../../assets/icons/dau-tich.svg" alt=""></button>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Vật lý"><span>Vật lý</span></button>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Hóa học"><span>Hóa học</span></button>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Tiếng Anh"><span>Tiếng Anh</span></button>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Ngữ văn"><span>Ngữ văn</span></button>
+                                    </div>
+                                </section>
+
+                                <section class="select-field" data-component="select" data-initial-open="false" data-create-select="grade">
+                                    <span class="select-field__label" id="grade-label">Cấp lớp <span class="form-field__required" aria-hidden="true">*</span></span>
+                                    <button class="select-control" type="button" aria-labelledby="grade-label grade-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="grade-options" data-select-trigger>
+                                        <span id="grade-value" data-select-value>Lớp 11 · THPT</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="">
+                                    </button>
+                                    <div class="select-options" id="grade-options" role="listbox" aria-labelledby="grade-label" data-select-options hidden>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Lớp 10 · THPT"><span>Lớp 10 · THPT</span></button>
+                                        <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Lớp 11 · THPT"><span>Lớp 11 · THPT</span><img src="../../assets/icons/dau-tich.svg" alt=""></button>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Lớp 12 · Luyện thi THPTQG"><span>Lớp 12 · Luyện thi THPTQG</span></button>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Lớp 9 · Luyện thi vào 10"><span>Lớp 9 · Luyện thi vào 10</span></button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="create-card" aria-labelledby="fee-title">
+                        <header class="create-card__header"><span>2</span><h2 id="fee-title">Tần suất học &amp; Mức học phí</h2></header>
+                        <div class="create-card__body create-fields-grid">
+                            <section class="select-field" data-component="select" data-initial-open="false" data-create-select="frequency">
+                                <span class="select-field__label" id="frequency-label">Số buổi mỗi tuần <span class="form-field__required" aria-hidden="true">*</span></span>
+                                <button class="select-control" type="button" aria-labelledby="frequency-label frequency-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="frequency-options" data-select-trigger>
+                                    <span id="frequency-value" data-select-value>2 buổi / tuần</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="">
+                                </button>
+                                <div class="select-options" id="frequency-options" role="listbox" aria-labelledby="frequency-label" data-select-options hidden>
+                                    <button class="select-option" type="button" role="option" aria-selected="false" data-value="1 buổi / tuần"><span>1 buổi / tuần</span></button>
+                                    <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="2 buổi / tuần"><span>2 buổi / tuần</span><img src="../../assets/icons/dau-tich.svg" alt=""></button>
+                                    <button class="select-option" type="button" role="option" aria-selected="false" data-value="3 buổi / tuần"><span>3 buổi / tuần</span></button>
+                                    <button class="select-option" type="button" role="option" aria-selected="false" data-value="Linh hoạt theo thỏa thuận"><span>Linh hoạt theo thỏa thuận</span></button>
+                                </div>
+                                <p class="form-field__message">Số buổi dự kiến học trong một tuần.</p>
+                            </section>
+
+                            <div class="form-field">
+                                <label class="form-field__label" for="fee-input">Học phí mong muốn mỗi buổi <span class="form-field__required" aria-hidden="true">*</span></label>
+                                <div class="input-control"><input class="input-control__input input-control__input--money" id="fee-input" name="fee" type="text" inputmode="numeric" required value="220.000"><span class="input-control__suffix">₫ / buổi</span></div>
+                                <p class="form-field__message">Mức đề xuất cho một buổi 90 phút.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="create-card" aria-labelledby="location-title">
+                        <header class="create-card__header"><span>3</span><h2 id="location-title">Hình thức &amp; Khu vực học tập</h2></header>
+                        <div class="create-card__body">
+                            <fieldset class="radio-field create-mode-field">
+                                <legend>Hình thức học mong muốn <span class="form-field__required" aria-hidden="true">*</span></legend>
+                                <div class="create-mode-grid">
+                                    <label class="radio-option radio-option--selected"><span class="radio-hit-area"><input type="radio" name="learning-mode" value="Tại nhà" checked><span class="radio-circle" aria-hidden="true"></span></span><span><strong>Tại nhà</strong><small>Gia sư đến kèm trực tiếp tại gia đình</small></span></label>
+                                    <label class="radio-option"><span class="radio-hit-area"><input type="radio" name="learning-mode" value="Trực tuyến"><span class="radio-circle" aria-hidden="true"></span></span><span><strong>Trực tuyến</strong><small>Học qua Google Meet hoặc Zoom</small></span></label>
+                                    <label class="radio-option"><span class="radio-hit-area"><input type="radio" name="learning-mode" value="Linh hoạt"><span class="radio-circle" aria-hidden="true"></span></span><span><strong>Linh hoạt</strong><small>Kết hợp tại nhà và trực tuyến khi cần</small></span></label>
+                                </div>
+                            </fieldset>
+
+                            <div class="create-fields-grid">
+                                <section class="select-field" data-component="select" data-initial-open="false" data-create-select="district">
+                                    <span class="select-field__label" id="district-label">Tỉnh / Thành phố &amp; Quận huyện <span class="form-field__required" aria-hidden="true">*</span></span>
+                                    <button class="select-control" type="button" aria-labelledby="district-label district-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="district-options" data-select-trigger>
+                                        <span id="district-value" data-select-value>TP. Thủ Đức, TP. Hồ Chí Minh</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="">
+                                    </button>
+                                    <div class="select-options" id="district-options" role="listbox" aria-labelledby="district-label" data-select-options hidden>
+                                        <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="TP. Thủ Đức, TP. Hồ Chí Minh"><span>TP. Thủ Đức, TP. Hồ Chí Minh</span><img src="../../assets/icons/dau-tich.svg" alt=""></button>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Quận 1, TP. Hồ Chí Minh"><span>Quận 1, TP. Hồ Chí Minh</span></button>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Quận Bình Thạnh, TP. Hồ Chí Minh"><span>Quận Bình Thạnh, TP. Hồ Chí Minh</span></button>
+                                        <button class="select-option" type="button" role="option" aria-selected="false" data-value="Quận Cầu Giấy, Hà Nội"><span>Quận Cầu Giấy, Hà Nội</span></button>
+                                    </div>
+                                </section>
+
+                                <div class="form-field">
+                                    <label class="form-field__label" for="address-input">Khu vực cụ thể (Phường / Xã) <span class="form-field__required" aria-hidden="true">*</span></label>
+                                    <div class="input-control"><img class="input-control__icon" src="../../assets/icons/dinh-vi.svg" alt=""><input class="input-control__input input-control__input--with-leading" id="address-input" name="address" type="text" required value="P. Linh Trung, TP. Thủ Đức"></div>
+                                    <p class="form-field__message">Không cần nhập số nhà cụ thể trong tin công khai.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="create-card" aria-labelledby="requirements-title">
+                        <header class="create-card__header"><span>4</span><h2 id="requirements-title">Yêu cầu tiêu chuẩn đối với gia sư</h2></header>
+                        <div class="create-card__body create-fields-grid">
+                            <section class="select-field" data-component="select" data-initial-open="false" data-create-select="experience">
+                                <span class="select-field__label" id="experience-label">Kinh nghiệm tối thiểu</span>
+                                <button class="select-control" type="button" aria-labelledby="experience-label experience-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="experience-options" data-select-trigger>
+                                    <span id="experience-value" data-select-value>Từ 3 năm kinh nghiệm</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="">
+                                </button>
+                                <div class="select-options" id="experience-options" role="listbox" aria-labelledby="experience-label" data-select-options hidden>
+                                    <button class="select-option" type="button" role="option" aria-selected="false" data-value="Không yêu cầu"><span>Không yêu cầu (Sinh viên xuất sắc)</span></button>
+                                    <button class="select-option" type="button" role="option" aria-selected="false" data-value="Từ 1 năm kinh nghiệm"><span>Từ 1 năm kinh nghiệm</span></button>
+                                    <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Từ 3 năm kinh nghiệm"><span>Từ 3 năm kinh nghiệm (Ưu tiên)</span><img src="../../assets/icons/dau-tich.svg" alt=""></button>
+                                    <button class="select-option" type="button" role="option" aria-selected="false" data-value="Từ 5 năm kinh nghiệm / Giáo viên"><span>Từ 5 năm kinh nghiệm / Giáo viên</span></button>
+                                </div>
+                            </section>
+
+                            <section class="select-field" data-component="select" data-initial-open="false" data-create-select="gender">
+                                <span class="select-field__label" id="gender-label">Yêu cầu giới tính</span>
+                                <button class="select-control" type="button" aria-labelledby="gender-label gender-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="gender-options" data-select-trigger>
+                                    <span id="gender-value" data-select-value>Không yêu cầu (Nam hoặc Nữ)</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="">
+                                </button>
+                                <div class="select-options" id="gender-options" role="listbox" aria-labelledby="gender-label" data-select-options hidden>
+                                    <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Không yêu cầu (Nam hoặc Nữ)"><span>Không yêu cầu (Nam hoặc Nữ)</span><img src="../../assets/icons/dau-tich.svg" alt=""></button>
+                                    <button class="select-option" type="button" role="option" aria-selected="false" data-value="Gia sư Nữ"><span>Gia sư Nữ</span></button>
+                                    <button class="select-option" type="button" role="option" aria-selected="false" data-value="Gia sư Nam"><span>Gia sư Nam</span></button>
+                                </div>
+                                <p class="form-field__message">Chỉ chọn khi gia đình thực sự có yêu cầu riêng biệt.</p>
+                            </section>
+                        </div>
+                    </section>
+
+                    <section class="create-card" aria-labelledby="description-title">
+                        <header class="create-card__header"><span>5</span><h2 id="description-title">Mô tả chi tiết &amp; Tình hình học tập</h2></header>
+                        <div class="create-card__body">
+                            <section class="textarea-field">
+                                <div class="textarea-field__label-row"><label class="textarea-field__label" for="description-textarea">Nội dung mô tả <span class="textarea-field__required" aria-hidden="true">*</span></label><span class="textarea-field__counter" id="description-counter">0 / 500 ký tự</span></div>
+                                <textarea class="textarea-control" id="description-textarea" name="description" rows="6" maxlength="500" required>Gia Huy hiện đang học lớp 11 và cần củng cố lại phần Hàm số và Hình học không gian. Gia đình mong muốn tìm gia sư nhiệt tình, có kinh nghiệm dạy THPT từ 3 năm trở lên, phương pháp giảng dạy dễ hiểu và có thể hỗ trợ xây dựng lộ trình ôn thi giữa kỳ và học kỳ 1 vững chắc.</textarea>
+                                <div class="create-page__tips" aria-label="Gợi ý nội dung"><span>Gợi ý: Mục tiêu học</span><span>Kiến thức cần bồi dưỡng</span><span>Khung giờ học dự kiến</span></div>
+                            </section>
+
+                            <section class="alert create-contact-notice" id="contact-notice" role="status">
+                                <span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Hệ thống bảo vệ quyền riêng tư phụ huynh</h3><p class="alert__message">Tin đăng không chứa số điện thoại, email, link mạng xã hội hay số tài khoản. Hồ sơ gia sư sẽ được gửi qua hệ thống tin nhắn nội bộ.</p></div>
+                            </section>
+                        </div>
+                    </section>
+
+                    <section class="create-actions" aria-label="Hành động biểu mẫu">
+                        <p><img src="../../assets/icons/info-circle.svg" alt="">Tin chưa gửi sẽ được tự động lưu nháp cục bộ</p>
+                        <div><button class="create-button create-button--ghost" type="reset">Hủy bỏ</button><button class="create-button create-button--secondary" type="button" data-scroll-preview>Xem trước</button><button class="create-button create-button--primary" type="submit">Gửi tin để duyệt</button></div>
+                    </section>
+                </form>
+
+                <aside class="create-page__sidebar" aria-label="Xem trước và quy trình kiểm duyệt">
+                    <section class="create-sidebar-card" id="live-preview-container">
+                        <header class="create-sidebar-card__header"><h2>Bản xem trước tin đăng</h2><span>Live Preview</span></header>
+                        <article class="job-card create-preview-card">
+                            <div class="job-card__top">
+                                <div class="job-card__heading">
+                                    <div class="job-card__meta"><span class="job-card__badge">Bản xem trước</span><span class="job-card__code">Vừa soạn</span></div>
+                                    <h3 id="preview-title">Tìm gia sư Toán lớp 11 tại Thủ Đức</h3>
+                                </div>
+                                <p class="job-card__price"><span id="preview-fee">220.000 ₫</span><small>/ buổi</small></p>
+                            </div>
+                            <div class="job-card__tags"><span id="preview-subject">Toán</span><span id="preview-grade">Lớp 11 · THPT</span><span id="preview-mode">Tại nhà</span></div>
+                            <div class="create-preview-card__details"><p><strong>Tần suất:</strong> <span id="preview-frequency">2 buổi / tuần</span></p><p><strong>Khu vực:</strong> <span id="preview-location">P. Linh Trung, TP. Thủ Đức</span></p><p><strong>Yêu cầu:</strong> <span id="preview-experience">Ưu tiên từ 3 năm kinh nghiệm</span></p></div>
+                            <p class="create-preview-card__description" id="preview-description">Gia Huy hiện đang học lớp 11 và cần củng cố lại phần Hàm số và Hình học không gian...</p>
+                            <footer class="job-card__footer"><span class="job-card__code">0 gia sư ứng tuyển (Tin chưa mở)</span><span class="create-preview-card__link">Chi tiết →</span></footer>
+                        </article>
+                    </section>
+
+                    <section class="create-sidebar-card">
+                        <header class="create-sidebar-card__header"><h2>Quy trình sau khi gửi tin</h2></header>
+                        <ol class="create-timeline">
+                            <li class="is-current"><span>1</span><div><strong>Chuyển trạng thái “Chờ duyệt”</strong><p>Tin được lưu an toàn vào danh sách quản lý của bạn.</p></div></li>
+                            <li><span>2</span><div><strong>Kiểm duyệt nội dung (30–60 phút)</strong><p>Đội ngũ Edu Connect thẩm định tính xác thực và an toàn.</p></div></li>
+                            <li><span>3</span><div><strong>Mở trạng thái “Đang tuyển”</strong><p>Tin xuất hiện công khai để gia sư ứng tuyển.</p></div></li>
+                            <li><span>4</span><div><strong>Nhận hồ sơ ứng tuyển</strong><p>Phụ huynh xem hồ sơ, trao đổi và xếp lịch học thử.</p></div></li>
+                        </ol>
+                    </section>
+
+                    <section class="create-trust"><strong>✓ Miễn phí 100% cho gia đình</strong><p>Edu Connect không thu phí đăng tin hay phí hoa hồng từ phụ huynh và học sinh.</p></section>
+                </aside>
+            </div>
+
+            <section class="create-simulation" aria-labelledby="simulation-title">
+                <header><div><h2 id="simulation-title">Mô phỏng các trạng thái kiểm duyệt &amp; hệ thống</h2><p>Xem thử các kịch bản phản hồi giao diện thực tế của Edu Connect.</p></div><div><button class="create-button create-button--secondary" type="button" data-open-confirm>Mở modal xác nhận</button><button class="create-button create-button--secondary" type="button" data-open-success>Mở modal gửi thành công</button><button class="create-button create-button--ghost" type="button" data-toggle-limit>Mô phỏng hạn mức 5/5</button></div></header>
+                <section class="alert alert--error create-limit-alert" id="limit-alert" role="alert" hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Bạn đã đạt giới hạn 5/5 tin đang tuyển cùng lúc</h3><p class="alert__message">Vui lòng đóng bớt tin đã tìm được gia sư trước khi tạo tin mới.</p><a href="my-job.html">Quản lý tin của tôi</a></div></section>
+            </section>
+        </div>
+    </main>
+
+    <footer class="user-footer" data-component="user-footer">
+        <div class="user-footer__inner">
+            <div class="user-footer__main">
+                <section class="user-footer__brand" aria-label="Về Edu Connect"><a class="user-footer__brand-link" href="#trang-chu"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a><p>Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch, an toàn cho phụ huynh.</p><span class="user-footer__certificate"><img src="../../assets/icons/certificate.svg" alt="">Chứng nhận đào tạo sư phạm</span></section>
+                <nav class="user-footer__links" aria-labelledby="footer-parents-title"><h2 id="footer-parents-title">Dành cho phụ huynh</h2><a href="create.html"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Đăng yêu cầu tìm gia sư</a><a href="#gia-su-tieu-bieu"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Danh sách gia sư tiêu biểu</a><a href="#quy-trinh"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy trình bảo đảm Escrow</a><a href="#hoc-phi"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Bảng học phí tham khảo</a></nav>
+                <nav class="user-footer__links" aria-labelledby="footer-tutors-title"><h2 id="footer-tutors-title">Dành cho gia sư</h2><a href="#tim-lop"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tìm lớp gia sư mới</a><a href="#tieu-chuan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tiêu chuẩn xác minh lý lịch</a><a href="#lop-nhom"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Mở lớp nhóm nhỏ</a><a href="#thu-lao"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo vệ thù lao</a></nav>
+                <nav class="user-footer__links" aria-labelledby="footer-support-title"><h2 id="footer-support-title">Hỗ trợ &amp; pháp lý</h2><a href="#tro-giup"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Trung tâm trợ giúp học viên</a><a href="#dieu-khoan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Điều khoản sử dụng dịch vụ</a><a href="#bao-mat"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo mật dữ liệu</a><a href="#tranh-chap"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy chế giải quyết tranh chấp</a></nav>
+            </div>
+            <div class="user-footer__bottom"><p><img src="../../assets/icons/copyright.svg" alt="">© 2026 Edu Connect. Bảo lưu mọi quyền.</p><p class="user-footer__regions"><span>Trung tâm khu vực hỗ trợ:</span><a href="#ha-noi">Hà Nội</a><a href="#ho-chi-minh">TP. Hồ Chí Minh</a><a href="#da-nang">Đà Nẵng</a></p></div>
+        </div>
+    </footer>
+</div>
+
+<dialog class="modal" id="create-confirm-modal" aria-labelledby="create-confirm-title" aria-describedby="create-confirm-description">
+    <div class="modal__surface">
+        <header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="create-confirm-title">Xác nhận gửi tin để duyệt</h2></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header>
+        <div class="modal__body"><p id="create-confirm-description">Vui lòng kiểm tra nhanh thông tin trước khi gửi.</p><dl class="create-modal-summary"><div><dt>Tiêu đề</dt><dd data-summary-title></dd></div><div><dt>Môn học &amp; Cấp lớp</dt><dd data-summary-subject></dd></div><div><dt>Mức học phí</dt><dd data-summary-fee></dd></div><div><dt>Hình thức</dt><dd data-summary-mode></dd></div></dl><p class="modal__note">Tin chưa công khai ngay. Hệ thống sẽ bắt đầu nhận hồ sơ sau khi nội dung được duyệt.</p></div>
+        <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại nội dung</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận gửi duyệt</button></footer>
+    </div>
+</dialog>
+
+<dialog class="modal" id="create-success-modal" aria-labelledby="create-success-title" aria-describedby="create-success-description">
+    <div class="modal__surface">
+        <header class="modal__header"><span class="modal__icon modal__icon--info" aria-hidden="true"></span><div class="modal__heading"><h2 id="create-success-title">Đã gửi tin thành công!</h2></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header>
+        <div class="modal__body"><p id="create-success-description">Tin tìm gia sư đã được tiếp nhận và chuyển sang trạng thái Chờ duyệt. Thời gian duyệt dự kiến từ 30 đến 60 phút.</p></div>
+        <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Về trang chủ</button><a class="modal__button modal__button--primary create-modal-link" href="my-job.html">Xem tin của tôi</a></footer>
+    </div>
+</dialog>
+</body>
+</html>
