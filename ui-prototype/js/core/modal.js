@@ -28,16 +28,22 @@
     const cancel = modal.querySelector('.modal__footer [data-modal-close]')
     const icon = modal.querySelector('.modal__icon')
     const information = options.variant === 'info'
-    if (title) title.textContent = options.title || (information ? 'Thông tin' : 'Xác nhận thao tác')
-    if (description) description.textContent = options.message || (information ? 'Vui lòng kiểm tra thông tin trước khi tiếp tục.' : 'Bạn có chắc muốn thực hiện thao tác này?')
+    const destructive = options.variant === 'danger' || options.variant === 'destructive'
+    const successful = options.variant === 'success'
+    if (title) title.textContent = options.title || (information ? 'Thông tin' : destructive ? 'Xác nhận thao tác quan trọng' : 'Xác nhận thao tác')
+    if (description) description.textContent = options.message || (information ? 'Vui lòng kiểm tra thông tin trước khi tiếp tục.' : destructive ? 'Hành động này không thể hoàn tác.' : 'Bạn có chắc muốn thực hiện thao tác này?')
     if (confirm) {
       confirm.hidden = information
       confirm.textContent = options.confirmText || 'Xác nhận'
+      confirm.classList.toggle('modal__button--danger', destructive)
+      confirm.classList.toggle('modal__button--primary', !destructive)
     }
     if (cancel) cancel.textContent = options.cancelText || (information ? 'Đã hiểu' : 'Quay lại')
     if (icon) {
       icon.classList.toggle('modal__icon--info', information)
-      icon.classList.toggle('modal__icon--confirm', !information)
+      icon.classList.toggle('modal__icon--confirm', !information && !destructive && !successful)
+      icon.classList.toggle('modal__icon--success', successful)
+      icon.classList.toggle('modal__icon--danger', destructive)
     }
     opener = document.activeElement
     modal.returnValue = ''

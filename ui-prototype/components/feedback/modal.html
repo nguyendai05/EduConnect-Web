@@ -3,32 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Xác nhận thao tác — Edu Connect</title>
+  <title>Modal — Edu Connect</title>
   <link rel="stylesheet" href="../../css/tokens.css">
   <link rel="stylesheet" href="../../css/reset.css">
   <link rel="stylesheet" href="../../css/base.css">
   <link rel="stylesheet" href="../../css/components/feedback/modal.css">
   <script src="../../js/core/modal.js" defer></script>
 </head>
-<body>
-<!-- Include once per page with modal.css and modal.js. Open via EduModal.open('shared-modal', options). -->
-<dialog class="modal" data-modal-auto-open id="shared-modal" aria-labelledby="shared-modal-title" aria-describedby="shared-modal-description">
-  <div class="modal__surface">
-    <header class="modal__header">
-      <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
-      <div class="modal__heading">
-        <h2 id="shared-modal-title">Xác nhận thao tác</h2>
+<body class="modal-component-page">
+<main class="modal-preview" aria-label="Các biến thể Modal">
+  <article class="modal-specimen modal-specimen--success" aria-labelledby="release-modal-title" aria-describedby="release-modal-description">
+    <div class="modal__surface">
+      <header class="modal__header">
+        <span class="modal__icon modal__icon--success" aria-hidden="true"></span>
+        <div class="modal__heading">
+          <h2 id="release-modal-title">Xác nhận giải ngân buổi học?</h2>
+          <p>Biến thể: Confirmation (md: 440px)</p>
+        </div>
+        <button class="modal__close" type="button" aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+      </header>
+      <div class="modal__body">
+        <p class="modal__message" id="release-modal-description">Khoản tiền học phí <strong>220.000 ₫</strong> đang giữ trong Escrow cho <strong>Buổi 3 (Môn Toán 11)</strong> sẽ được giải ngân vào số dư khả dụng của gia sư.</p>
       </div>
-      <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
-    </header>
-    <div class="modal__body">
-      <p id="shared-modal-description">Bạn có chắc muốn thực hiện thao tác này?</p>
+      <footer class="modal__footer">
+        <button class="modal__button modal__button--ghost" type="button">Hủy</button>
+        <button class="modal__button modal__button--primary" type="button">Xác nhận giải ngân</button>
+      </footer>
     </div>
-    <footer class="modal__footer">
-      <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
-      <button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận</button>
-    </footer>
-  </div>
-</dialog>
+  </article>
+
+  <article class="modal-specimen modal-specimen--danger" aria-labelledby="terminate-modal-title" aria-describedby="terminate-modal-description">
+    <div class="modal__surface">
+      <header class="modal__header">
+        <span class="modal__icon modal__icon--danger" aria-hidden="true"></span>
+        <div class="modal__heading">
+          <h2 id="terminate-modal-title">Chấm dứt hợp đồng dạy kèm?</h2>
+          <p>Biến thể: Destructive Confirmation</p>
+        </div>
+        <button class="modal__close" type="button" aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+      </header>
+      <div class="modal__body">
+        <p class="modal__message" id="terminate-modal-description">Hành động này sẽ gửi thông báo đến đối tác và chuyển hợp đồng sang trạng thái đối soát hoàn tiền các buổi chưa học. <strong>Không thể hoàn tác.</strong></p>
+      </div>
+      <footer class="modal__footer">
+        <button class="modal__button modal__button--ghost" type="button">Xem xét lại</button>
+        <button class="modal__button modal__button--danger" type="button">Chấm dứt hợp đồng</button>
+      </footer>
+    </div>
+  </article>
+</main>
 </body>
 </html>
