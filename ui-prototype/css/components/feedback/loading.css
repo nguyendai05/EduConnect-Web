@@ -1,42 +1,145 @@
-.loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-3);
-    padding: var(--space-8);
-    color: var(--color-primary);
-}
-.loading__spinner {
-    width: 2rem;
-    height: 2rem;
-    flex: 0 0 auto;
-    background: currentColor;
-    mask: url("../../../assets/icons/loading.svg") center / contain no-repeat;
-    animation: loading-spin 900ms linear infinite;
-}
-.loading__text {
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
-}
-.loading--compact {
-    padding: var(--space-2);
-}
-.loading--compact .loading__spinner {
-    width: 1rem;
-    height: 1rem;
-}
-@keyframes loading-spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-@media (prefers-reduced-motion: reduce) {
-    .loading__spinner {
-        animation: none;
-    }
+.loading { display: flex; align-items: center; justify-content: center; gap: var(--space-3); padding: var(--space-8); color: var(--color-primary); }
+.loading__spinner { width: 2rem; height: 2rem; flex: 0 0 auto; background: currentColor; -webkit-mask: url("../../../assets/icons/loading.svg") center / contain no-repeat; mask: url("../../../assets/icons/loading.svg") center / contain no-repeat; animation: loading-spin 900ms linear infinite; }
+.loading__text { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.loading--compact { padding: var(--space-2); }
+.loading--compact .loading__spinner { width: 1rem; height: 1rem; }
+@keyframes loading-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .loading__spinner { animation: none; } }
+
+.loading--status {
+  min-height: 3.25rem;
+  justify-content: flex-start;
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
 }
 
-.loading-example {
-    width: min(100% - 2rem, 52rem);
-    margin: var(--space-8) auto;
+.loading--status .loading__spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.loading--status .loading__text {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.skeleton {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.skeleton__item {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--color-surface-medium);
+}
+
+.skeleton__item::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 58%) 50%, transparent 100%);
+  transform: translateX(-100%);
+  animation: skeleton-shimmer 1.45s ease-in-out infinite;
+}
+
+.skeleton__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.skeleton__avatar {
+  width: 3.125rem;
+  height: 3.125rem;
+  flex: 0 0 auto;
+  border-radius: var(--radius-pill);
+}
+
+.skeleton__heading {
+  display: grid;
+  width: 100%;
+  gap: var(--space-2);
+}
+
+.skeleton__line {
+  height: 0.875rem;
+  border-radius: var(--radius-pill);
+}
+
+.skeleton__line--long {
+  width: 75%;
+}
+
+.skeleton__line--medium {
+  width: 50%;
+  background: var(--color-surface-high);
+}
+
+.skeleton__block {
+  width: 100%;
+  height: 3.125rem;
+  border-radius: var(--radius-md);
+}
+
+.skeleton__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-1);
+}
+
+.skeleton__line--short {
+  width: 31%;
+}
+
+.skeleton__line--shorter {
+  width: 24%;
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Trang minh họa chỉ hiển thị hai trạng thái trong ảnh tham chiếu. */
+.loading-component-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: start center;
+  padding: var(--space-8) var(--space-6);
+  background: var(--color-surface);
+}
+
+.loading-preview {
+  display: grid;
+  width: min(100%, 23rem);
+  gap: var(--space-5);
+}
+
+@media (max-width: 30rem) {
+  .loading-component-page {
+    padding: var(--space-4);
+  }
+
+  .skeleton {
+    padding: var(--space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton__item::after {
+    display: none;
+    animation: none;
+  }
 }

@@ -1,20 +1,35 @@
 <!doctype html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Đang tải — Edu Connect</title>
-        <link rel="stylesheet" href="../../css/tokens.css" />
-        <link rel="stylesheet" href="../../css/reset.css" />
-        <link rel="stylesheet" href="../../css/base.css" />
-        <link rel="stylesheet" href="../../css/components/feedback/loading.css" />
-    </head>
-    <body>
-        <main class="loading-example">
-            <div class="loading" role="status" aria-live="polite">
-                <span class="loading__spinner" aria-hidden="true"></span>
-                <span class="loading__text">Đang tải dữ liệu…</span>
-            </div>
-        </main>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loading — Edu Connect</title>
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components/feedback/loading.css">
+</head>
+<body class="loading-component-page">
+<main class="loading-preview" aria-label="Các trạng thái Loading">
+  <section class="skeleton" aria-label="Đang tải nội dung" aria-busy="true">
+    <div class="skeleton__header">
+      <span class="skeleton__avatar skeleton__item" aria-hidden="true"></span>
+      <div class="skeleton__heading" aria-hidden="true">
+        <span class="skeleton__line skeleton__line--long skeleton__item"></span>
+        <span class="skeleton__line skeleton__line--medium skeleton__item"></span>
+      </div>
+    </div>
+    <span class="skeleton__block skeleton__item" aria-hidden="true"></span>
+    <div class="skeleton__footer" aria-hidden="true">
+      <span class="skeleton__line skeleton__line--short skeleton__item"></span>
+      <span class="skeleton__line skeleton__line--shorter skeleton__item"></span>
+    </div>
+  </section>
+
+  <div class="loading loading--status" role="status" aria-live="polite">
+    <span class="loading__spinner" aria-hidden="true"></span>
+    <span class="loading__text">Đang xử lý đối soát giao dịch ký quỹ...</span>
+  </div>
+</main>
+</body>
 </html>

@@ -1,74 +1,191 @@
-.table-wrapper {
-    max-width: 100%;
-    overflow-x: auto;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
-}
-.table-wrapper:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-}
-.table {
-    width: 100%;
-    min-width: 40rem;
-    border-collapse: collapse;
-    font-size: var(--font-size-sm);
-}
-.table__caption {
-    padding: var(--space-4);
-    text-align: left;
-    color: var(--color-text);
-    font-size: var(--font-size-lg);
-    font-weight: 700;
-}
-.table th,
-.table td {
-    padding: var(--space-4);
-    text-align: left;
-    border-top: 1px solid var(--color-border);
-    vertical-align: middle;
-}
-.table thead {
-    background: var(--color-surface-low);
-    color: var(--color-text-secondary);
-}
-.table tbody th {
-    font-weight: 600;
-}
-.table small {
-    display: block;
-    margin-top: var(--space-1);
-    color: var(--color-text-muted);
-    font-weight: 400;
-}
-.table .table__amount {
-    text-align: right;
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-}
-.table tbody tr:hover {
-    background: var(--color-surface-low);
-}
-.table__status {
-    display: inline-block;
-    white-space: nowrap;
-    padding: var(--space-1) var(--space-2);
-    border: 1px solid currentColor;
-    border-radius: var(--radius-pill);
-    font-size: var(--font-size-xs);
-}
-.table__status--success {
-    color: var(--color-success);
-}
-.table__status--pending {
-    color: var(--color-warning);
-}
-.table__status--error {
-    color: var(--color-danger);
+.table-wrapper { max-width: 100%; overflow-x: auto; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); }
+.table-wrapper:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.table { width: 100%; min-width: 40rem; border-collapse: collapse; font-size: var(--font-size-sm); }
+.table__caption { padding: var(--space-4); text-align: left; color: var(--color-text); font-size: var(--font-size-lg); font-weight: 700; }
+.table th, .table td { padding: var(--space-4); text-align: left; border-top: 1px solid var(--color-border); vertical-align: middle; }
+.table thead { background: var(--color-surface-low); color: var(--color-text-secondary); }
+.table tbody th { font-weight: 600; }
+.table small { display: block; margin-top: var(--space-1); color: var(--color-text-muted); font-weight: 400; }
+.table .table__amount { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.table tbody tr:hover { background: var(--color-surface-low); }
+.table__status { display: inline-block; white-space: nowrap; padding: var(--space-1) var(--space-2); border: 1px solid currentColor; border-radius: var(--radius-pill); font-size: var(--font-size-xs); }
+.table__status--success { color: var(--color-success); }
+.table__status--pending { color: var(--color-warning); }
+.table__status--error { color: var(--color-danger); }
+
+.table__caption--sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.table-example {
-    width: min(100% - 2rem, 52rem);
-    margin: var(--space-8) auto;
+.table-frame {
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.table-wrapper--flat {
+  border: 0;
+  border-radius: 0;
+}
+
+.table--records {
+  min-width: 67rem;
+  font-size: var(--font-size-sm);
+}
+
+.table--records th,
+.table--records td {
+  padding: var(--space-4) var(--space-5);
+  text-align: center;
+}
+
+.table--records thead th {
+  height: 3.5rem;
+  border-top: 0;
+  font-weight: 600;
+}
+
+.table--records tbody tr {
+  height: 5.75rem;
+}
+
+.table--records .table__time {
+  color: var(--color-text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table__reference {
+  color: var(--color-text);
+  font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.table--records .table__description {
+  min-width: 23rem;
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.table--records .table__description small {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.table--records .table__amount {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  text-align: center;
+}
+
+.table__amount--primary {
+  color: var(--color-primary);
+}
+
+.table__amount--debit {
+  color: var(--color-warning);
+}
+
+.table__amount--credit {
+  color: var(--color-success);
+}
+
+.table--records .table__status {
+  padding: var(--space-1) var(--space-3);
+  border: 0;
+  font-weight: 600;
+}
+
+.table--records .table__status--success {
+  background: var(--color-success-container);
+}
+
+.table__status--automatic {
+  color: var(--color-primary-hover);
+  background: var(--color-primary-container);
+}
+
+.table__action-heading,
+.table__action {
+  text-align: center !important;
+}
+
+.table__action button {
+  min-height: 2.5rem;
+  padding: var(--space-2);
+  color: var(--color-primary);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.table__action button:hover {
+  color: var(--color-primary-hover);
+  background: var(--color-primary-container);
+}
+
+.table__action button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.table__footer {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  color: var(--color-text-muted);
+  background: var(--color-surface-low);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+}
+
+.table__footer p:last-child {
+  color: color-mix(in srgb, var(--color-text-muted), var(--color-surface) 35%);
+  text-align: right;
+}
+
+/* Trang minh họa chỉ hiển thị bảng trong ảnh tham chiếu. */
+.table-component-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: start center;
+  padding: var(--space-6);
+  background: var(--color-surface);
+}
+
+.table-preview {
+  width: min(100%, 80.5rem);
+}
+
+@media (max-width: 48rem) {
+  .table-component-page {
+    padding: var(--space-4);
+  }
+
+  .table__footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .table__footer p:last-child {
+    text-align: left;
+  }
 }

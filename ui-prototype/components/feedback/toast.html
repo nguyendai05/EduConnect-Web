@@ -1,42 +1,44 @@
 <!doctype html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Thông báo — Edu Connect</title>
-        <link rel="stylesheet" href="../../css/tokens.css" />
-        <link rel="stylesheet" href="../../css/reset.css" />
-        <link rel="stylesheet" href="../../css/base.css" />
-        <link rel="stylesheet" href="../../css/components/feedback/toast.css" />
-        <script src="../../js/core/toast.js" defer></script>
-    </head>
-    <body>
-        <main class="toast-example">
-            <button
-                class="toast-example__button"
-                type="button"
-                data-toast="success"
-                data-toast-title="Lưu thành công"
-                data-toast-message="Các thay đổi của bạn đã được lưu."
-            >
-                Xem thông báo
-            </button>
-        </main>
-        <!-- Include once per page with toast.css and toast.js. EduToast.show(options) creates each notification. -->
-        <section class="toast-region" aria-label="Thông báo"></section>
-        <div
-            class="toast-announcer"
-            data-toast-announcer="polite"
-            role="status"
-            aria-atomic="false"
-            aria-relevant="additions"
-        ></div>
-        <div
-            class="toast-announcer"
-            data-toast-announcer="urgent"
-            role="alert"
-            aria-atomic="false"
-            aria-relevant="additions"
-        ></div>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Toast — Edu Connect</title>
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components/feedback/toast.css">
+  <script src="../../js/core/toast.js" defer></script>
+</head>
+<body class="toast-component-page">
+<main class="toast-preview" aria-label="Các trạng thái Toast">
+  <article class="toast toast--inline toast--success" role="status">
+    <span class="toast__icon" aria-hidden="true"></span>
+    <div class="toast__content"><p class="toast__title">Đã lưu thiết lập bảo mật thành công.</p></div>
+    <button class="toast__close" type="button" data-toast-dismiss aria-label="Đóng thông báo"><span class="toast__close-icon" aria-hidden="true"></span></button>
+  </article>
+
+  <article class="toast toast--inline toast--copy" role="status">
+    <span class="toast__icon" aria-hidden="true"></span>
+    <div class="toast__content"><p class="toast__title">Đã sao chép mã hợp đồng <code>HD-20260919-024</code></p></div>
+    <button class="toast__close" type="button" data-toast-dismiss aria-label="Đóng thông báo"><span class="toast__close-icon" aria-hidden="true"></span></button>
+  </article>
+
+  <article class="toast toast--inline toast--warning" role="status">
+    <span class="toast__icon" aria-hidden="true"></span>
+    <div class="toast__content"><p class="toast__title">Gia sư vừa cập nhật lịch học Buổi 5.</p></div>
+    <button class="toast__action" type="button">Chi tiết</button>
+  </article>
+
+  <article class="toast toast--inline toast--error" role="alert">
+    <span class="toast__icon" aria-hidden="true"></span>
+    <div class="toast__content"><p class="toast__title">Chưa thể cập nhật thông tin. Vui lòng thử lại.</p></div>
+    <button class="toast__close" type="button" data-toast-dismiss aria-label="Đóng thông báo"><span class="toast__close-icon" aria-hidden="true"></span></button>
+  </article>
+</main>
+
+<section class="toast-region" aria-label="Thông báo động"></section>
+<div class="toast-announcer" data-toast-announcer="polite" role="status" aria-atomic="false" aria-relevant="additions"></div>
+<div class="toast-announcer" data-toast-announcer="urgent" role="alert" aria-atomic="false" aria-relevant="additions"></div>
+</body>
 </html>

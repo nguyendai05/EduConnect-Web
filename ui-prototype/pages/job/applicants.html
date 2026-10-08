@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ứng viên gia sư | Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/page-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <link rel="stylesheet" href="../../css/components/navigation/filter-chip.css">
+    <link rel="stylesheet" href="../../css/components/form/search-input.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+    <link rel="stylesheet" href="../../css/components/form/checkbox.css">
+    <link rel="stylesheet" href="../../css/components/domain/job/applicant-card.css">
+    <link rel="stylesheet" href="../../css/components/feedback/modal.css">
+    <link rel="stylesheet" href="../../css/components/feedback/toast.css">
+    <link rel="stylesheet" href="../../css/pages/job/applicants.css">
+    <script src="../../js/core/user-header.js" defer></script>
+    <script src="../../js/core/search-input.js" defer></script>
+    <script src="../../js/core/filter-chip.js" defer></script>
+    <script src="../../js/core/select.js" defer></script>
+    <script src="../../js/core/modal.js" defer></script>
+    <script src="../../js/core/toast.js" defer></script>
+    <script src="../../js/pages/job/applicants.js" defer></script>
+</head>
+<body class="applicants-page">
+<div class="user-shell" data-component="user-shell" data-applicants-page>
+    <header class="user-header" data-component="user-header" data-user-variant="C">
+        <div class="user-header__inner">
+            <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
+                <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
+                <span class="user-header__brand-name">Edu Connect</span>
+            </a>
+            <nav class="user-header__nav" aria-label="Điều hướng chính">
+                <a class="user-header__nav-link" data-nav-key="home" data-route="/app/dashboard" href="#trang-chu">Trang chủ</a>
+                <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="#tim-gia-su">Tìm gia sư</a>
+                <a class="user-header__nav-link is-active" data-nav-key="requests" data-route="/app/tutor-requests" href="#tin-tim-gia-su" aria-current="page">Tin tìm gia sư</a>
+                <a class="user-header__nav-link" data-nav-key="groups" data-route="/app/group-classes" href="#lop-nhom">Lớp nhóm</a>
+            </nav>
+            <div class="user-header__actions">
+                <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" data-user-action="messages"><img src="../../assets/icons/message.svg" alt=""></button>
+                <button class="user-header__icon-button" type="button" aria-label="Thông báo" data-user-action="notifications"><img src="../../assets/icons/notification.svg" alt=""></button>
+                <span class="user-header__divider" aria-hidden="true"></span>
+                <div class="user-header__account">
+                    <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                        <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                        <span class="user-header__profile-copy"><strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong><span data-profile-role>Phụ huynh</span></span>
+                        <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
+                    </button>
+                    <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                        <div class="user-header__menu-section" data-menu-links>
+                            <a class="user-header__menu-item" href="#ho-so" role="menuitem" data-menu-item="0"><img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile"><span data-menu-label>Hồ sơ cá nhân</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#hop-dong" role="menuitem" data-menu-item="1"><img class="user-header__menu-item-leading" src="../../assets/icons/calendar.svg" alt="" data-menu-icon="calendar"><span data-menu-label>Hợp đồng của tôi</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#vi-tri-thuc" role="menuitem" data-menu-item="2"><img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet"><span data-menu-label>Ví TriThức</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#bao-mat" role="menuitem" data-menu-item="3"><img class="user-header__menu-item-leading" src="../../assets/icons/shield.svg" alt="" data-menu-icon="shield"><span data-menu-label>Bảo mật tài khoản</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#lich-su-giao-dich" role="menuitem" data-menu-item="4"><img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt"><span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                        </div>
+                        <div class="user-header__menu-section user-header__menu-section--logout"><button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout"><img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt=""><span data-menu-logout-label>Đăng xuất tài khoản</span></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="user-shell__main">
+        <div class="user-shell__content applicants-page__content">
+            <nav class="breadcrumb applicants-page__breadcrumb" aria-label="Breadcrumb">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="#tin-tim-gia-su">Tin tìm gia sư</a></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="my-job.html">Tin của tôi</a></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="#tin-toan-11">Tìm gia sư Toán lớp 11 tại Thủ Đức</a></li>
+                    <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Ứng viên</span></li>
+                </ol>
+            </nav>
+
+            <header class="page-header applicants-page__header">
+                <div class="page-header__content">
+                    <div class="page-header__title-block">
+                        <div class="page-header__title-row"><h1 class="page-header__title">6 gia sư đã ứng tuyển</h1><span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Đang tuyển</span></div>
+                        <p class="page-header__description">Xem đề xuất của từng gia sư và chọn người phù hợp để tiếp tục xác nhận điều khoản hợp đồng.</p>
+                    </div>
+                    <div class="page-header__actions"><button class="page-header__action" type="button" data-view-job><img src="../../assets/icons/mat.svg" alt="">Xem tin đăng</button></div>
+                </div>
+            </header>
+
+            <section class="applicants-job" aria-labelledby="applicants-job-title">
+                <div class="applicants-job__main">
+                    <div class="applicants-job__heading"><h2 id="applicants-job-title">Tìm gia sư Toán lớp 11 tại Thủ Đức</h2><div class="applicants-job__tags"><span>Toán</span><span>Lớp 11 · THPT</span><span>Tại nhà</span></div></div>
+                    <div class="applicants-job__facts">
+                        <span><strong>Học phí:</strong> 220.000 ₫ / buổi</span><span><strong>Tần suất:</strong> 2 buổi / tuần</span><span><strong>Địa điểm:</strong> P. Linh Trung, TP. Thủ Đức</span><span><strong>Yêu cầu:</strong> Tối thiểu 3 năm kinh nghiệm</span>
+                    </div>
+                    <p class="applicants-job__note"><img src="../../assets/icons/info-circle.svg" alt="">Học phí bên dưới là mức từng gia sư chủ động đề xuất. Thỏa thuận chính thức sẽ được xác nhận ở bước lập hợp đồng điện tử.</p>
+                </div>
+                <div class="applicants-job__goal"><strong>Mục tiêu học tập</strong><span>Củng cố Hình học không gian &amp; Hàm số 11</span></div>
+            </section>
+
+            <div class="applicants-page__workspace">
+                <section class="applicants-page__primary" aria-label="Danh sách gia sư ứng tuyển">
+                    <div class="applicants-toolbar">
+                        <div class="search-input search-input--compact applicants-toolbar__search" data-search-input>
+                            <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+                            <input type="search" placeholder="Tìm gia sư theo tên..." aria-label="Tìm gia sư theo tên" data-applicant-search>
+                            <button class="search-input__clear" type="button" data-clear-search aria-label="Xóa nội dung tìm kiếm" hidden><svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+                        </div>
+                        <div class="filter-chip-list applicants-toolbar__filters" aria-label="Lọc trạng thái">
+                            <button class="filter-chip filter-chip--selected" type="button" data-applicant-filter="all" aria-pressed="true">Tất cả (6)</button>
+                            <button class="filter-chip" type="button" data-applicant-filter="pending" aria-pressed="false">Đang chờ (6)</button>
+                            <button class="filter-chip" type="button" data-applicant-filter="selected" aria-pressed="false">Đã chọn (0)</button>
+                            <button class="filter-chip" type="button" data-applicant-filter="withdrawn" aria-pressed="false">Đã rút (0)</button>
+                        </div>
+                        <section class="select-field applicants-toolbar__sort" data-component="select" data-initial-open="false" data-applicant-sort>
+                            <span class="select-field__label" id="applicant-sort-label">Sắp xếp</span>
+                            <button class="select-control" type="button" aria-labelledby="applicant-sort-label applicant-sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="applicant-sort-options" data-select-trigger><span id="applicant-sort-value" data-select-value>Mặc định</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt=""></button>
+                            <div class="select-options" id="applicant-sort-options" role="listbox" aria-labelledby="applicant-sort-label" data-select-options hidden>
+                                <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Mặc định" data-sort="default"><span>Mặc định</span><img src="../../assets/icons/dau-tich.svg" alt=""></button>
+                                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí thấp → cao" data-sort="fee-asc"><span>Học phí thấp → cao</span></button>
+                                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí cao → thấp" data-sort="fee-desc"><span>Học phí cao → thấp</span></button>
+                                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Kinh nghiệm nhiều hơn" data-sort="experience"><span>Kinh nghiệm nhiều hơn</span></button>
+                                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Đánh giá cao hơn" data-sort="rating"><span>Đánh giá cao hơn</span></button>
+                            </div>
+                        </section>
+                    </div>
+
+                    <p class="applicants-page__result" aria-live="polite" data-result-count>Đang hiển thị 6 ứng viên</p>
+                    <div class="applicants-list" data-applicants-list>
+                        <article class="applicant-card applicant-entry" data-applicant-card data-name="Nguyễn Minh Anh" data-status="pending" data-fee="220000" data-rating="4.9" data-reviews="126" data-experience="5" data-degree="ĐH Sư phạm TP.HCM" data-distance="TP. Thủ Đức · 2,5 km" data-schedule="Thứ 2 (19:00), Thứ 6 (19:00)" data-order="1">
+                            <div class="applicant-card__header"><div class="applicant-card__identity"><span class="applicant-card__avatar applicant-card__avatar--pending">MA</span><div><div class="applicant-card__name-row"><h2>Nguyễn Minh Anh</h2><img class="applicant-card__verified" src="../../assets/icons/verified.svg" alt="Đã xác minh"></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 4.9</span><span>126 đánh giá</span><span>·</span><span>5 năm kinh nghiệm</span></p><p class="applicant-entry__meta">ĐH Sư phạm TP.HCM · TP. Thủ Đức (2,5 km)</p></div></div><span class="applicant-card__status applicant-card__status--pending" data-card-status>Đang chờ</span></div>
+                            <div class="applicant-entry__proposal"><div><span>Học phí đề xuất</span><strong>220.000 ₫ / buổi</strong><em>Khớp ngân sách</em></div><div><span>Lịch có thể dạy</span><strong>Thứ 2, Thứ 6 · 19:00–20:30</strong></div><blockquote>“Em có 5 năm kinh nghiệm luyện chương trình Toán 11 và có thể xây dựng lộ trình theo năng lực hiện tại của Gia Huy.”</blockquote></div>
+                            <div class="applicant-entry__footer"><label class="checkbox-option applicant-entry__compare"><span class="checkbox-hit-area"><input type="checkbox" data-compare-checkbox checked><span class="checkbox-box"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title checkbox-option__title--checked">So sánh ứng viên này</span></span></label><div class="applicant-card__actions"><button class="applicant-card__button applicant-card__button--outline" type="button" data-view-profile>Xem hồ sơ</button><button class="applicant-card__button applicant-card__button--neutral" type="button" data-message>Nhắn tin</button><button class="applicant-card__button applicant-card__button--primary" type="button" data-select-tutor>Chọn gia sư</button></div></div>
+                        </article>
+
+                        <article class="applicant-card applicant-entry" data-applicant-card data-name="Trần Quốc Huy" data-status="pending" data-fee="240000" data-rating="4.8" data-reviews="89" data-experience="4" data-degree="Chuyên Toán KHTN" data-distance="Quận 7 · 11 km" data-schedule="Thứ 3 (18:30), Thứ 7 (09:00)" data-order="2">
+                            <div class="applicant-card__header"><div class="applicant-card__identity"><span class="applicant-card__avatar applicant-card__avatar--pending">QH</span><div><div class="applicant-card__name-row"><h2>Trần Quốc Huy</h2><img class="applicant-card__verified" src="../../assets/icons/verified.svg" alt="Đã xác minh"></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 4.8</span><span>89 đánh giá</span><span>·</span><span>4 năm kinh nghiệm</span></p><p class="applicant-entry__meta">Chuyên Toán KHTN · Quận 7 (11 km)</p></div></div><span class="applicant-card__status applicant-card__status--pending" data-card-status>Đang chờ</span></div>
+                            <div class="applicant-entry__proposal"><div><span>Học phí đề xuất</span><strong>240.000 ₫ / buổi</strong><em>+20.000 ₫</em></div><div><span>Lịch có thể dạy</span><strong>Thứ 3 · 18:30, Thứ 7 · 09:00</strong></div><blockquote>“Mình ưu tiên giúp học sinh hiểu bản chất hình học trước khi tăng tốc giải đề và luyện kỹ năng trình bày.”</blockquote></div>
+                            <div class="applicant-entry__footer"><label class="checkbox-option applicant-entry__compare"><span class="checkbox-hit-area"><input type="checkbox" data-compare-checkbox checked><span class="checkbox-box"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title checkbox-option__title--checked">So sánh ứng viên này</span></span></label><div class="applicant-card__actions"><button class="applicant-card__button applicant-card__button--outline" type="button" data-view-profile>Xem hồ sơ</button><button class="applicant-card__button applicant-card__button--neutral" type="button" data-message>Nhắn tin</button><button class="applicant-card__button applicant-card__button--primary" type="button" data-select-tutor>Chọn gia sư</button></div></div>
+                        </article>
+
+                        <article class="applicant-card applicant-entry" data-applicant-card data-name="Phạm Hoàng Long" data-status="pending" data-fee="250000" data-rating="5.0" data-reviews="42" data-experience="6" data-degree="Thạc sĩ Toán ứng dụng" data-distance="Bình Thạnh · 8 km" data-schedule="Linh hoạt theo lịch học sinh" data-order="3">
+                            <div class="applicant-card__header"><div class="applicant-card__identity"><span class="applicant-card__avatar applicant-card__avatar--pending">PL</span><div><div class="applicant-card__name-row"><h2>Phạm Hoàng Long</h2><img class="applicant-card__verified" src="../../assets/icons/verified.svg" alt="Đã xác minh"></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 5.0</span><span>42 đánh giá</span><span>·</span><span>6 năm kinh nghiệm</span></p><p class="applicant-entry__meta">Thạc sĩ Toán ứng dụng · Bình Thạnh (8 km)</p></div></div><span class="applicant-card__status applicant-card__status--pending" data-card-status>Đang chờ</span></div>
+                            <div class="applicant-entry__proposal"><div><span>Học phí đề xuất</span><strong>250.000 ₫ / buổi</strong><em>+30.000 ₫</em></div><div><span>Lịch có thể dạy</span><strong>Linh hoạt theo lịch học sinh</strong></div><blockquote>“Tôi có thể đánh giá đầu vào và điều chỉnh giáo án sau mỗi hai tuần để bảo đảm tiến độ của học sinh.”</blockquote></div>
+                            <div class="applicant-entry__footer"><label class="checkbox-option applicant-entry__compare"><span class="checkbox-hit-area"><input type="checkbox" data-compare-checkbox><span class="checkbox-box"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">So sánh ứng viên này</span></span></label><div class="applicant-card__actions"><button class="applicant-card__button applicant-card__button--outline" type="button" data-view-profile>Xem hồ sơ</button><button class="applicant-card__button applicant-card__button--neutral" type="button" data-message>Nhắn tin</button><button class="applicant-card__button applicant-card__button--primary" type="button" data-select-tutor>Chọn gia sư</button></div></div>
+                        </article>
+
+                        <article class="applicant-card applicant-entry" data-applicant-card data-name="Võ Minh Khôi" data-status="pending" data-fee="200000" data-rating="4.7" data-reviews="64" data-experience="3" data-degree="ĐH Khoa học Tự nhiên" data-distance="TP. Thủ Đức · 4 km" data-schedule="Thứ 4 (19:00), Chủ nhật (09:00)" data-order="4">
+                            <div class="applicant-card__header"><div class="applicant-card__identity"><span class="applicant-card__avatar applicant-card__avatar--pending">MK</span><div><div class="applicant-card__name-row"><h2>Võ Minh Khôi</h2><img class="applicant-card__verified" src="../../assets/icons/verified.svg" alt="Đã xác minh"></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 4.7</span><span>64 đánh giá</span><span>·</span><span>3 năm kinh nghiệm</span></p><p class="applicant-entry__meta">ĐH Khoa học Tự nhiên · TP. Thủ Đức (4 km)</p></div></div><span class="applicant-card__status applicant-card__status--pending" data-card-status>Đang chờ</span></div>
+                            <div class="applicant-entry__proposal"><div><span>Học phí đề xuất</span><strong>200.000 ₫ / buổi</strong><em>−20.000 ₫</em></div><div><span>Lịch có thể dạy</span><strong>Thứ 4 · 19:00, Chủ nhật · 09:00</strong></div><blockquote>“Em có bộ bài tập phân tầng riêng cho phần hàm số và hình học không gian, phù hợp để lấy lại nền tảng.”</blockquote></div>
+                            <div class="applicant-entry__footer"><label class="checkbox-option applicant-entry__compare"><span class="checkbox-hit-area"><input type="checkbox" data-compare-checkbox><span class="checkbox-box"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">So sánh ứng viên này</span></span></label><div class="applicant-card__actions"><button class="applicant-card__button applicant-card__button--outline" type="button" data-view-profile>Xem hồ sơ</button><button class="applicant-card__button applicant-card__button--neutral" type="button" data-message>Nhắn tin</button><button class="applicant-card__button applicant-card__button--primary" type="button" data-select-tutor>Chọn gia sư</button></div></div>
+                        </article>
+
+                        <article class="applicant-card applicant-entry" data-applicant-card data-name="Đặng Thu Trang" data-status="pending" data-fee="220000" data-rating="4.9" data-reviews="73" data-experience="5" data-degree="ĐH Sư phạm TP.HCM" data-distance="Quận 9 · 5 km" data-schedule="Thứ 2 (18:30), Thứ 5 (19:00)" data-order="5">
+                            <div class="applicant-card__header"><div class="applicant-card__identity"><span class="applicant-card__avatar applicant-card__avatar--pending">TT</span><div><div class="applicant-card__name-row"><h2>Đặng Thu Trang</h2><img class="applicant-card__verified" src="../../assets/icons/verified.svg" alt="Đã xác minh"></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 4.9</span><span>73 đánh giá</span><span>·</span><span>5 năm kinh nghiệm</span></p><p class="applicant-entry__meta">ĐH Sư phạm TP.HCM · Quận 9 (5 km)</p></div></div><span class="applicant-card__status applicant-card__status--pending" data-card-status>Đang chờ</span></div>
+                            <div class="applicant-entry__proposal"><div><span>Học phí đề xuất</span><strong>220.000 ₫ / buổi</strong><em>Khớp ngân sách</em></div><div><span>Lịch có thể dạy</span><strong>Thứ 2 · 18:30, Thứ 5 · 19:00</strong></div><blockquote>“Cô ưu tiên phương pháp gợi mở, giúp học sinh tự phát hiện lỗi sai và hình thành thói quen trình bày rõ ràng.”</blockquote></div>
+                            <div class="applicant-entry__footer"><label class="checkbox-option applicant-entry__compare"><span class="checkbox-hit-area"><input type="checkbox" data-compare-checkbox><span class="checkbox-box"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">So sánh ứng viên này</span></span></label><div class="applicant-card__actions"><button class="applicant-card__button applicant-card__button--outline" type="button" data-view-profile>Xem hồ sơ</button><button class="applicant-card__button applicant-card__button--neutral" type="button" data-message>Nhắn tin</button><button class="applicant-card__button applicant-card__button--primary" type="button" data-select-tutor>Chọn gia sư</button></div></div>
+                        </article>
+
+                        <article class="applicant-card applicant-entry" data-applicant-card data-name="Lê Quốc Bảo" data-status="pending" data-fee="210000" data-rating="4.8" data-reviews="38" data-experience="3" data-degree="Thủ khoa ĐH Bách Khoa" data-distance="Làng Đại học · 3 km" data-schedule="Thứ 2 (19:30), Thứ 7 (14:00)" data-order="6">
+                            <div class="applicant-card__header"><div class="applicant-card__identity"><span class="applicant-card__avatar applicant-card__avatar--pending">LB</span><div><div class="applicant-card__name-row"><h2>Lê Quốc Bảo</h2><img class="applicant-card__verified" src="../../assets/icons/verified.svg" alt="Đã xác minh"></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 4.8</span><span>38 đánh giá</span><span>·</span><span>3 năm kinh nghiệm</span></p><p class="applicant-entry__meta">Thủ khoa ĐH Bách Khoa · Làng Đại học (3 km)</p></div></div><span class="applicant-card__status applicant-card__status--pending" data-card-status>Đang chờ</span></div>
+                            <div class="applicant-entry__proposal"><div><span>Học phí đề xuất</span><strong>210.000 ₫ / buổi</strong><em>−10.000 ₫</em></div><div><span>Lịch có thể dạy</span><strong>Thứ 2 · 19:30, Thứ 7 · 14:00</strong></div><blockquote>“Em mạnh về trực quan hóa hình học và có thể kèm sát theo từng chủ đề học sinh đang mất gốc.”</blockquote></div>
+                            <div class="applicant-entry__footer"><label class="checkbox-option applicant-entry__compare"><span class="checkbox-hit-area"><input type="checkbox" data-compare-checkbox><span class="checkbox-box"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">So sánh ứng viên này</span></span></label><div class="applicant-card__actions"><button class="applicant-card__button applicant-card__button--outline" type="button" data-view-profile>Xem hồ sơ</button><button class="applicant-card__button applicant-card__button--neutral" type="button" data-message>Nhắn tin</button><button class="applicant-card__button applicant-card__button--primary" type="button" data-select-tutor>Chọn gia sư</button></div></div>
+                        </article>
+                    </div>
+                    <div class="applicants-empty" data-applicants-empty hidden><strong>Không tìm thấy ứng viên phù hợp</strong><span>Hãy thử từ khóa hoặc bộ lọc khác.</span></div>
+                </section>
+
+                <aside class="applicants-sidebar" aria-label="Thông tin hỗ trợ lựa chọn">
+                    <section class="applicants-side-card"><h2>Nhu cầu của bạn</h2><dl><div><dt>Học sinh</dt><dd>Gia Huy · Lớp 11</dd></div><div><dt>Hình thức</dt><dd>Tại nhà · 90 phút</dd></div><div><dt>Mục tiêu</dt><dd>Lấy lại căn bản &amp; Nâng cao</dd></div></dl></section>
+                    <section class="applicants-side-card"><h2>Trước khi chọn gia sư</h2><ul class="applicants-checklist"><li>Kiểm tra học phí đề xuất và mức chênh lệch.</li><li>Xem lịch có thể dạy có trùng lịch rảnh.</li><li>Đọc hồ sơ và đánh giá của phụ huynh khác.</li></ul><p class="applicants-side-card__notice"><strong>Nhắc nhở:</strong> Bạn chỉ có thể chọn 1 gia sư duy nhất cho một tin đăng.</p></section>
+                    <section class="applicants-side-card"><h2>Quy trình sau khi chọn</h2><ol class="applicants-process"><li><span>1</span><p><strong>Tin tìm gia sư được đóng</strong><small>Không nhận thêm hồ sơ mới.</small></p></li><li><span>2</span><p><strong>Ghi nhận ứng viên đã chọn</strong><small>Gia sư nhận thông báo ngay.</small></p></li><li><span>3</span><p><strong>Cập nhật ứng viên khác</strong><small>Chuyển trạng thái minh bạch.</small></p></li><li><span>4</span><p><strong>Xác nhận điều khoản</strong><small>Hai bên thống nhất buổi học thử.</small></p></li></ol><p class="applicants-side-card__safe"><img src="../../assets/icons/lock.svg" alt="">Chưa phát sinh thanh toán ở bước này.</p></section>
+                </aside>
+            </div>
+
+            <section class="applicants-compare-bar" data-compare-bar aria-live="polite">
+                <div class="applicants-compare-bar__copy"><span class="applicants-compare-bar__icon" aria-hidden="true">⇄</span><div><strong data-compare-title>Đang chọn 2 gia sư để so sánh</strong><span data-compare-summary>Nguyễn Minh Anh (220.000 ₫) và Trần Quốc Huy (240.000 ₫)</span></div></div>
+                <div class="applicants-compare-bar__actions"><button type="button" data-clear-compare>Xóa lựa chọn</button><button class="applicants-compare-bar__primary" type="button" data-open-compare>So sánh ngay</button></div>
+            </section>
+
+            <section class="applicants-showcase" aria-labelledby="applicants-showcase-title">
+                <div><span>Quy trình tương tác</span><h2 id="applicants-showcase-title">Minh họa các bước &amp; trạng thái hệ thống</h2></div>
+                <div class="applicants-showcase__actions"><button type="button" data-open-compare>Mở bảng so sánh gia sư</button><button type="button" data-open-confirm-demo>Mở hộp thoại xác nhận chọn</button></div>
+                <div class="applicants-state-preview"><header><strong>Minh họa trạng thái sau khi chọn Nguyễn Minh Anh</strong><span>Tin đã đóng · Đang lập hợp đồng</span></header><div><article><strong>Nguyễn Minh Anh <span>Đã chọn</span></strong><p>Đang mở hợp đồng thỏa thuận điều khoản học thử 2 buổi.</p></article><article><strong>Trần Quốc Huy <span>Không được chọn</span></strong><p>Đã gửi thông báo cảm ơn tự động từ hệ thống.</p></article><article><strong>Phạm Hoàng Long <span>Không được chọn</span></strong><p>Hồ sơ được lưu vào kho kết nối dự phòng.</p></article></div></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="user-footer" data-component="user-footer">
+        <div class="user-footer__inner">
+            <div class="user-footer__main">
+                <section class="user-footer__brand" aria-label="Về TriThức">
+                    <a class="user-footer__brand-link" href="#trang-chu"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+                    <p>Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch. Đem lại sự an tâm cho phụ huynh thông qua quy trình bảo chứng năng lực và hợp đồng an toàn.</p>
+                    <span class="user-footer__certificate"><img src="../../assets/icons/certificate.svg" alt="">Chứng nhận đào tạo sư phạm</span>
+                </section>
+                <nav class="user-footer__links" aria-labelledby="footer-parents-title"><h2 id="footer-parents-title">Dành cho phụ huynh</h2><a href="#yeu-cau"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Đăng yêu cầu tìm gia sư</a><a href="#gia-su"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Danh sách gia sư tiêu biểu</a><a href="#escrow"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy trình bảo đảm Escrow</a><a href="#hoc-phi"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Bảng học phí tham khảo</a></nav>
+                <nav class="user-footer__links" aria-labelledby="footer-tutors-title"><h2 id="footer-tutors-title">Dành cho gia sư</h2><a href="#tim-lop"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tìm lớp gia sư mới</a><a href="#tieu-chuan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tiêu chuẩn xác minh lý lịch</a><a href="#lop-nhom"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Mở lớp nhóm nhỏ</a><a href="#thu-lao"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo vệ thù lao</a></nav>
+                <nav class="user-footer__links" aria-labelledby="footer-support-title"><h2 id="footer-support-title">Hỗ trợ &amp; pháp lý</h2><a href="#tro-giup"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Trung tâm trợ giúp học viên</a><a href="#dieu-khoan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Điều khoản sử dụng dịch vụ</a><a href="#bao-mat"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo mật dữ liệu</a><a href="#tranh-chap"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy chế giải quyết tranh chấp</a></nav>
+            </div>
+            <div class="user-footer__bottom"><p><img src="../../assets/icons/copyright.svg" alt="">© 2026 TriThức Platform. Bảo lưu mọi quyền.</p><p class="user-footer__regions"><span>Trung tâm khu vực hỗ trợ:</span><a href="#ha-noi">Hà Nội</a><a href="#ho-chi-minh">TP. Hồ Chí Minh</a><a href="#da-nang">Đà Nẵng</a></p></div>
+        </div>
+    </footer>
+</div>
+
+<dialog class="modal applicants-modal applicants-modal--wide" id="applicants-compare-modal" aria-labelledby="compare-modal-title">
+    <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--info" aria-hidden="true"></span><div class="modal__heading"><h2 id="compare-modal-title">So sánh đối chiếu gia sư</h2><p>So sánh thông số và đề xuất giảng dạy chi tiết.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon"></span></button></header><div class="modal__body"><p>Thông tin các ứng viên đang được chọn để so sánh.</p><div class="applicants-comparison" data-comparison-content></div></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng</button></footer></div>
+</dialog>
+
+<dialog class="modal applicants-modal" id="applicants-confirm-modal" aria-labelledby="confirm-modal-title">
+    <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="confirm-modal-title">Xác nhận chọn gia sư?</h2><p>Bạn sắp chọn gia sư cho yêu cầu học Toán lớp 11 của em Gia Huy.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon"></span></button></header><div class="modal__body"><p data-confirm-copy>Vui lòng kiểm tra thông tin trước khi tiếp tục.</p><div class="applicants-confirm-summary" data-confirm-summary></div><div class="modal__note">Tin đăng sẽ tự động đóng, các ứng viên khác được cập nhật trạng thái. Chưa phát sinh thanh toán hay phí giữ chỗ tại bước này.</div></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Đồng ý &amp; tiếp tục</button></footer></div>
+</dialog>
+</body>
+</html>
