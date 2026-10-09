@@ -63,7 +63,12 @@
 
   const buildComparison = selected => {
     comparisonContent.replaceChildren()
+    // Component: Table | Nguồn: components/data-display/table.html
     const table = document.createElement('table')
+    table.className = 'table'
+    const caption = document.createElement('caption')
+    caption.className = 'table__caption table__caption--sr-only'
+    caption.textContent = 'So sánh các gia sư đã chọn'
     const thead = document.createElement('thead')
     const heading = document.createElement('tr')
     heading.append(makeCell('th', 'Tiêu chí so sánh', 'col'))
@@ -99,7 +104,7 @@
       actionRow.append(cell)
     })
     tbody.append(actionRow)
-    table.append(thead, tbody)
+    table.append(caption, thead, tbody)
     comparisonContent.append(table)
   }
 
