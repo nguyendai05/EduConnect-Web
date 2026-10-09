@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/base.css">
     <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
     <link rel="stylesheet" href="../../css/components/layout/user-header.css">
     <link rel="stylesheet" href="../../css/components/layout/page-header.css">
     <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
@@ -18,6 +19,7 @@
     <link rel="stylesheet" href="../../css/components/form/radio.css">
     <link rel="stylesheet" href="../../css/components/form/textarea.css">
     <link rel="stylesheet" href="../../css/components/domain/job/job-card.css">
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
     <link rel="stylesheet" href="../../css/components/feedback/alert.css">
     <link rel="stylesheet" href="../../css/components/feedback/modal.css">
     <link rel="stylesheet" href="../../css/components/feedback/toast.css">
@@ -26,11 +28,14 @@
     <script src="../../js/core/select.js" defer></script>
     <script src="../../js/core/radio.js" defer></script>
     <script src="../../js/core/modal.js" defer></script>
+    <!-- Component: Toast | Nguồn: components/feedback/toast.html; JS: js/core/toast.js -->
     <script src="../../js/core/toast.js" defer></script>
     <script src="../../js/pages/job/create.js" defer></script>
 </head>
 <body class="create-page">
-<div class="user-shell" data-create-job-page>
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
+<div class="user-shell" data-component="user-shell" data-create-job-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
     <header class="user-header" data-component="user-header" data-user-variant="B">
         <div class="user-header__inner">
             <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
@@ -75,6 +80,7 @@
 
     <main class="user-shell__main">
         <div class="user-shell__content">
+            <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
             <nav class="breadcrumb create-page__breadcrumb" aria-label="Breadcrumb">
                 <ol class="breadcrumb__list">
                     <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
@@ -84,6 +90,7 @@
                 </ol>
             </nav>
 
+            <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
             <header class="page-header create-page__header">
                 <div class="page-header__content">
                     <div class="page-header__title-block">
@@ -101,15 +108,17 @@
                 </div>
             </header>
 
+            <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
             <section class="alert create-page__moderation" role="status">
                 <span class="alert__icon" aria-hidden="true"></span>
                 <div class="alert__content">
-                    <h2 class="alert__title">Tin sẽ được kiểm duyệt trước khi đăng công khai <span class="create-page__safe-badge">Quy trình an toàn</span></h2>
+                    <h2 class="alert__title">Tin sẽ được kiểm duyệt trước khi đăng công khai <!-- Component: Badge | Nguồn: components/feedback/badge.html --><span class="badge badge--info create-page__safe-badge">Quy trình an toàn</span></h2>
                     <p class="alert__message">Sau khi gửi, tin sẽ ở trạng thái <strong>Chờ duyệt</strong>. Gia sư chỉ có thể xem chi tiết và ứng tuyển sau khi đội ngũ Edu Connect hoàn tất xác thực nội dung. Vui lòng không cung cấp số điện thoại, email hoặc Zalo trong phần mô tả.</p>
                 </div>
             </section>
 
             <div class="create-page__workflow">
+                <!-- Components biểu mẫu: FormField (components/form/form-field.html), Input (components/form/input.html), Select (components/form/select.html), Radio (components/form/radio.html), Textarea (components/form/textarea.html) -->
                 <form class="create-form" id="create-job-form">
                     <section class="create-card" aria-labelledby="study-needs-title">
                         <header class="create-card__header"><span>1</span><h2 id="study-needs-title">Nhu cầu học của học sinh</h2></header>
@@ -262,13 +271,15 @@
 
                     <section class="create-actions" aria-label="Hành động biểu mẫu">
                         <p><img src="../../assets/icons/info-circle.svg" alt="">Tin chưa gửi sẽ được tự động lưu nháp cục bộ</p>
-                        <div><button class="create-button create-button--ghost" type="reset">Hủy bỏ</button><button class="create-button create-button--secondary" type="button" data-scroll-preview>Xem trước</button><button class="create-button create-button--primary" type="submit">Gửi tin để duyệt</button></div>
+                        <!-- Component: Button | Nguồn: components/action/button.html -->
+                        <div><button class="button button--ghost button--medium create-button create-button--ghost" type="reset">Hủy bỏ</button><button class="button button--secondary button--medium create-button create-button--secondary" type="button" data-scroll-preview>Xem trước</button><button class="button button--primary button--medium create-button create-button--primary" type="submit">Gửi tin để duyệt</button></div>
                     </section>
                 </form>
 
                 <aside class="create-page__sidebar" aria-label="Xem trước và quy trình kiểm duyệt">
                     <section class="create-sidebar-card" id="live-preview-container">
                         <header class="create-sidebar-card__header"><h2>Bản xem trước tin đăng</h2><span>Live Preview</span></header>
+                        <!-- Component: JobCard | Nguồn: components/domain/job/job-card.html -->
                         <article class="job-card create-preview-card">
                             <div class="job-card__top">
                                 <div class="job-card__heading">
@@ -299,12 +310,13 @@
             </div>
 
             <section class="create-simulation" aria-labelledby="simulation-title">
-                <header><div><h2 id="simulation-title">Mô phỏng các trạng thái kiểm duyệt &amp; hệ thống</h2><p>Xem thử các kịch bản phản hồi giao diện thực tế của Edu Connect.</p></div><div><button class="create-button create-button--secondary" type="button" data-open-confirm>Mở modal xác nhận</button><button class="create-button create-button--secondary" type="button" data-open-success>Mở modal gửi thành công</button><button class="create-button create-button--ghost" type="button" data-toggle-limit>Mô phỏng hạn mức 5/5</button></div></header>
+                <header><div><h2 id="simulation-title">Mô phỏng các trạng thái kiểm duyệt &amp; hệ thống</h2><p>Xem thử các kịch bản phản hồi giao diện thực tế của Edu Connect.</p></div><div><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--secondary button--medium create-button create-button--secondary" type="button" data-open-confirm>Mở modal xác nhận</button><button class="button button--secondary button--medium create-button create-button--secondary" type="button" data-open-success>Mở modal gửi thành công</button><button class="button button--ghost button--medium create-button create-button--ghost" type="button" data-toggle-limit>Mô phỏng hạn mức 5/5</button></div></header>
                 <section class="alert alert--error create-limit-alert" id="limit-alert" role="alert" hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Bạn đã đạt giới hạn 5/5 tin đang tuyển cùng lúc</h3><p class="alert__message">Vui lòng đóng bớt tin đã tìm được gia sư trước khi tạo tin mới.</p><a href="my-job.html">Quản lý tin của tôi</a></div></section>
             </section>
         </div>
     </main>
 
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
     <footer class="user-footer" data-component="user-footer">
         <div class="user-footer__inner">
             <div class="user-footer__main">
@@ -318,6 +330,7 @@
     </footer>
 </div>
 
+<!-- Component: Modal | Nguồn: components/feedback/modal.html -->
 <dialog class="modal" id="create-confirm-modal" aria-labelledby="create-confirm-title" aria-describedby="create-confirm-description">
     <div class="modal__surface">
         <header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="create-confirm-title">Xác nhận gửi tin để duyệt</h2></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header>
@@ -326,6 +339,7 @@
     </div>
 </dialog>
 
+<!-- Component: Modal | Nguồn: components/feedback/modal.html -->
 <dialog class="modal" id="create-success-modal" aria-labelledby="create-success-title" aria-describedby="create-success-description">
     <div class="modal__surface">
         <header class="modal__header"><span class="modal__icon modal__icon--info" aria-hidden="true"></span><div class="modal__heading"><h2 id="create-success-title">Đã gửi tin thành công!</h2></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header>
