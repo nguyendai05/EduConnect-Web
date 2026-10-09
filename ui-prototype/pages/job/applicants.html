@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/base.css">
     <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
     <link rel="stylesheet" href="../../css/components/layout/user-header.css">
     <link rel="stylesheet" href="../../css/components/layout/page-header.css">
     <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
@@ -17,6 +18,9 @@
     <link rel="stylesheet" href="../../css/components/form/select.css">
     <link rel="stylesheet" href="../../css/components/form/checkbox.css">
     <link rel="stylesheet" href="../../css/components/domain/job/applicant-card.css">
+    <link rel="stylesheet" href="../../css/components/data-display/table.css">
+    <link rel="stylesheet" href="../../css/components/data-display/tag.css">
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
     <link rel="stylesheet" href="../../css/components/feedback/modal.css">
     <link rel="stylesheet" href="../../css/components/feedback/toast.css">
     <link rel="stylesheet" href="../../css/pages/job/applicants.css">
@@ -25,11 +29,14 @@
     <script src="../../js/core/filter-chip.js" defer></script>
     <script src="../../js/core/select.js" defer></script>
     <script src="../../js/core/modal.js" defer></script>
+    <!-- Component: Toast | Nguồn: components/feedback/toast.html; JS: js/core/toast.js -->
     <script src="../../js/core/toast.js" defer></script>
     <script src="../../js/pages/job/applicants.js" defer></script>
 </head>
 <body class="applicants-page">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
 <div class="user-shell" data-component="user-shell" data-applicants-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
     <header class="user-header" data-component="user-header" data-user-variant="C">
         <div class="user-header__inner">
             <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
@@ -69,6 +76,7 @@
 
     <main class="user-shell__main">
         <div class="user-shell__content applicants-page__content">
+            <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
             <nav class="breadcrumb applicants-page__breadcrumb" aria-label="Breadcrumb">
                 <ol class="breadcrumb__list">
                     <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
@@ -79,19 +87,20 @@
                 </ol>
             </nav>
 
+            <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
             <header class="page-header applicants-page__header">
                 <div class="page-header__content">
                     <div class="page-header__title-block">
                         <div class="page-header__title-row"><h1 class="page-header__title">6 gia sư đã ứng tuyển</h1><span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Đang tuyển</span></div>
                         <p class="page-header__description">Xem đề xuất của từng gia sư và chọn người phù hợp để tiếp tục xác nhận điều khoản hợp đồng.</p>
                     </div>
-                    <div class="page-header__actions"><button class="page-header__action" type="button" data-view-job><img src="../../assets/icons/mat.svg" alt="">Xem tin đăng</button></div>
+                    <div class="page-header__actions"><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--outline button--medium page-header__action" type="button" data-view-job><img src="../../assets/icons/mat.svg" alt="">Xem tin đăng</button></div>
                 </div>
             </header>
 
             <section class="applicants-job" aria-labelledby="applicants-job-title">
                 <div class="applicants-job__main">
-                    <div class="applicants-job__heading"><h2 id="applicants-job-title">Tìm gia sư Toán lớp 11 tại Thủ Đức</h2><div class="applicants-job__tags"><span>Toán</span><span>Lớp 11 · THPT</span><span>Tại nhà</span></div></div>
+                    <div class="applicants-job__heading"><h2 id="applicants-job-title">Tìm gia sư Toán lớp 11 tại Thủ Đức</h2><!-- Component: Tag | Nguồn: components/data-display/tag.html --><div class="applicants-job__tags"><span class="tag">Toán</span><span class="tag tag--neutral">Lớp 11 · THPT</span><span class="tag tag--format">Tại nhà</span></div></div>
                     <div class="applicants-job__facts">
                         <span><strong>Học phí:</strong> 220.000 ₫ / buổi</span><span><strong>Tần suất:</strong> 2 buổi / tuần</span><span><strong>Địa điểm:</strong> P. Linh Trung, TP. Thủ Đức</span><span><strong>Yêu cầu:</strong> Tối thiểu 3 năm kinh nghiệm</span>
                     </div>
@@ -103,17 +112,20 @@
             <div class="applicants-page__workspace">
                 <section class="applicants-page__primary" aria-label="Danh sách gia sư ứng tuyển">
                     <div class="applicants-toolbar">
+                        <!-- Component: SearchInput | Nguồn: components/form/search-input.html -->
                         <div class="search-input search-input--compact applicants-toolbar__search" data-search-input>
                             <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
                             <input type="search" placeholder="Tìm gia sư theo tên..." aria-label="Tìm gia sư theo tên" data-applicant-search>
                             <button class="search-input__clear" type="button" data-clear-search aria-label="Xóa nội dung tìm kiếm" hidden><svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
                         </div>
+                        <!-- Component: FilterChip | Nguồn: components/navigation/filter-chip.html -->
                         <div class="filter-chip-list applicants-toolbar__filters" aria-label="Lọc trạng thái">
                             <button class="filter-chip filter-chip--selected" type="button" data-applicant-filter="all" aria-pressed="true">Tất cả (6)</button>
                             <button class="filter-chip" type="button" data-applicant-filter="pending" aria-pressed="false">Đang chờ (6)</button>
                             <button class="filter-chip" type="button" data-applicant-filter="selected" aria-pressed="false">Đã chọn (0)</button>
                             <button class="filter-chip" type="button" data-applicant-filter="withdrawn" aria-pressed="false">Đã rút (0)</button>
                         </div>
+                        <!-- Component: Select | Nguồn: components/form/select.html -->
                         <section class="select-field applicants-toolbar__sort" data-component="select" data-initial-open="false" data-applicant-sort>
                             <span class="select-field__label" id="applicant-sort-label">Sắp xếp</span>
                             <button class="select-control" type="button" aria-labelledby="applicant-sort-label applicant-sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="applicant-sort-options" data-select-trigger><span id="applicant-sort-value" data-select-value>Mặc định</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt=""></button>
@@ -128,6 +140,8 @@
                     </div>
 
                     <p class="applicants-page__result" aria-live="polite" data-result-count>Đang hiển thị 6 ứng viên</p>
+                    <!-- Component: ApplicantCard | Nguồn: components/domain/job/applicant-card.html -->
+                    <!-- Component con: Checkbox | Nguồn: components/form/checkbox.html -->
                     <div class="applicants-list" data-applicants-list>
                         <article class="applicant-card applicant-entry" data-applicant-card data-name="Nguyễn Minh Anh" data-status="pending" data-fee="220000" data-rating="4.9" data-reviews="126" data-experience="5" data-degree="ĐH Sư phạm TP.HCM" data-distance="TP. Thủ Đức · 2,5 km" data-schedule="Thứ 2 (19:00), Thứ 6 (19:00)" data-order="1">
                             <div class="applicant-card__header"><div class="applicant-card__identity"><span class="applicant-card__avatar applicant-card__avatar--pending">MA</span><div><div class="applicant-card__name-row"><h2>Nguyễn Minh Anh</h2><img class="applicant-card__verified" src="../../assets/icons/verified.svg" alt="Đã xác minh"></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 4.9</span><span>126 đánh giá</span><span>·</span><span>5 năm kinh nghiệm</span></p><p class="applicant-entry__meta">ĐH Sư phạm TP.HCM · TP. Thủ Đức (2,5 km)</p></div></div><span class="applicant-card__status applicant-card__status--pending" data-card-status>Đang chờ</span></div>
@@ -165,7 +179,12 @@
                             <div class="applicant-entry__footer"><label class="checkbox-option applicant-entry__compare"><span class="checkbox-hit-area"><input type="checkbox" data-compare-checkbox><span class="checkbox-box"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">So sánh ứng viên này</span></span></label><div class="applicant-card__actions"><button class="applicant-card__button applicant-card__button--outline" type="button" data-view-profile>Xem hồ sơ</button><button class="applicant-card__button applicant-card__button--neutral" type="button" data-message>Nhắn tin</button><button class="applicant-card__button applicant-card__button--primary" type="button" data-select-tutor>Chọn gia sư</button></div></div>
                         </article>
                     </div>
-                    <div class="applicants-empty" data-applicants-empty hidden><strong>Không tìm thấy ứng viên phù hợp</strong><span>Hãy thử từ khóa hoặc bộ lọc khác.</span></div>
+                    <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                    <section class="empty-state applicants-empty" data-applicants-empty hidden aria-labelledby="applicants-empty-title">
+                        <span class="empty-state__icon" aria-hidden="true"></span>
+                        <h2 class="empty-state__title" id="applicants-empty-title">Không tìm thấy ứng viên phù hợp</h2>
+                        <p class="empty-state__description">Hãy thử từ khóa hoặc bộ lọc khác.</p>
+                    </section>
                 </section>
 
                 <aside class="applicants-sidebar" aria-label="Thông tin hỗ trợ lựa chọn">
@@ -177,17 +196,18 @@
 
             <section class="applicants-compare-bar" data-compare-bar aria-live="polite">
                 <div class="applicants-compare-bar__copy"><span class="applicants-compare-bar__icon" aria-hidden="true">⇄</span><div><strong data-compare-title>Đang chọn 2 gia sư để so sánh</strong><span data-compare-summary>Nguyễn Minh Anh (220.000 ₫) và Trần Quốc Huy (240.000 ₫)</span></div></div>
-                <div class="applicants-compare-bar__actions"><button type="button" data-clear-compare>Xóa lựa chọn</button><button class="applicants-compare-bar__primary" type="button" data-open-compare>So sánh ngay</button></div>
+                <div class="applicants-compare-bar__actions"><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--secondary button--medium" type="button" data-clear-compare>Xóa lựa chọn</button><button class="button button--primary button--medium applicants-compare-bar__primary" type="button" data-open-compare>So sánh ngay</button></div>
             </section>
 
             <section class="applicants-showcase" aria-labelledby="applicants-showcase-title">
                 <div><span>Quy trình tương tác</span><h2 id="applicants-showcase-title">Minh họa các bước &amp; trạng thái hệ thống</h2></div>
-                <div class="applicants-showcase__actions"><button type="button" data-open-compare>Mở bảng so sánh gia sư</button><button type="button" data-open-confirm-demo>Mở hộp thoại xác nhận chọn</button></div>
+                <div class="applicants-showcase__actions"><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--secondary button--medium" type="button" data-open-compare>Mở bảng so sánh gia sư</button><button class="button button--secondary button--medium" type="button" data-open-confirm-demo>Mở hộp thoại xác nhận chọn</button></div>
                 <div class="applicants-state-preview"><header><strong>Minh họa trạng thái sau khi chọn Nguyễn Minh Anh</strong><span>Tin đã đóng · Đang lập hợp đồng</span></header><div><article><strong>Nguyễn Minh Anh <span>Đã chọn</span></strong><p>Đang mở hợp đồng thỏa thuận điều khoản học thử 2 buổi.</p></article><article><strong>Trần Quốc Huy <span>Không được chọn</span></strong><p>Đã gửi thông báo cảm ơn tự động từ hệ thống.</p></article><article><strong>Phạm Hoàng Long <span>Không được chọn</span></strong><p>Hồ sơ được lưu vào kho kết nối dự phòng.</p></article></div></div>
             </section>
         </div>
     </main>
 
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
     <footer class="user-footer" data-component="user-footer">
         <div class="user-footer__inner">
             <div class="user-footer__main">
@@ -205,10 +225,13 @@
     </footer>
 </div>
 
+<!-- Component: Modal | Nguồn: components/feedback/modal.html -->
+<!-- Component con được tạo trong JS: Table | Nguồn: components/data-display/table.html -->
 <dialog class="modal applicants-modal applicants-modal--wide" id="applicants-compare-modal" aria-labelledby="compare-modal-title">
-    <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--info" aria-hidden="true"></span><div class="modal__heading"><h2 id="compare-modal-title">So sánh đối chiếu gia sư</h2><p>So sánh thông số và đề xuất giảng dạy chi tiết.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon"></span></button></header><div class="modal__body"><p>Thông tin các ứng viên đang được chọn để so sánh.</p><div class="applicants-comparison" data-comparison-content></div></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng</button></footer></div>
+    <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--info" aria-hidden="true"></span><div class="modal__heading"><h2 id="compare-modal-title">So sánh đối chiếu gia sư</h2><p>So sánh thông số và đề xuất giảng dạy chi tiết.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon"></span></button></header><div class="modal__body"><p>Thông tin các ứng viên đang được chọn để so sánh.</p><div class="applicants-comparison table-wrapper" data-comparison-content tabindex="0" aria-label="Bảng so sánh gia sư"></div></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng</button></footer></div>
 </dialog>
 
+<!-- Component: Modal | Nguồn: components/feedback/modal.html -->
 <dialog class="modal applicants-modal" id="applicants-confirm-modal" aria-labelledby="confirm-modal-title">
     <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="confirm-modal-title">Xác nhận chọn gia sư?</h2><p>Bạn sắp chọn gia sư cho yêu cầu học Toán lớp 11 của em Gia Huy.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon"></span></button></header><div class="modal__body"><p data-confirm-copy>Vui lòng kiểm tra thông tin trước khi tiếp tục.</p><div class="applicants-confirm-summary" data-confirm-summary></div><div class="modal__note">Tin đăng sẽ tự động đóng, các ứng viên khác được cập nhật trạng thái. Chưa phát sinh thanh toán hay phí giữ chỗ tại bước này.</div></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Đồng ý &amp; tiếp tục</button></footer></div>
 </dialog>

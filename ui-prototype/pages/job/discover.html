@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/base.css">
     <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
     <link rel="stylesheet" href="../../css/components/layout/user-header.css">
     <link rel="stylesheet" href="../../css/components/layout/page-header.css">
     <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
@@ -19,6 +20,9 @@
     <link rel="stylesheet" href="../../css/components/form/select.css">
     <link rel="stylesheet" href="../../css/components/form/radio.css">
     <link rel="stylesheet" href="../../css/components/domain/job/job-card.css">
+    <link rel="stylesheet" href="../../css/components/data-display/avatar.css">
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
     <link rel="stylesheet" href="../../css/components/feedback/toast.css">
     <link rel="stylesheet" href="../../css/pages/job/discover.css">
     <script src="../../js/core/user-header.js" defer></script>
@@ -27,11 +31,14 @@
     <script src="../../js/core/filter-chip.js" defer></script>
     <script src="../../js/core/select.js" defer></script>
     <script src="../../js/core/pagination.js" defer></script>
+    <!-- Component: Toast | Nguồn: components/feedback/toast.html; JS: js/core/toast.js -->
     <script src="../../js/core/toast.js" defer></script>
     <script src="../../js/pages/job/discover.js" defer></script>
 </head>
 <body class="discover-page">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
 <div class="user-shell" data-component="user-shell" data-discover-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
     <header class="user-header" data-component="user-header" data-user-variant="TUTOR" data-active-nav="requests">
         <div class="user-header__inner">
             <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span><span class="user-header__brand-name">Edu Connect</span></a>
@@ -65,24 +72,31 @@
 
     <main class="user-shell__main">
         <div class="user-shell__content discover-page__content">
+            <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
             <nav class="breadcrumb" aria-label="Breadcrumb"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li><li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Tin tìm gia sư</span></li></ol></nav>
 
+            <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
             <header class="page-header discover-page__header">
-                <div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Tin tìm gia sư</h1><p class="page-header__description">Khám phá nhu cầu học đang tuyển và chọn tin phù hợp để gửi ứng tuyển.</p></div><div class="page-header__actions"><button class="page-header__action page-header__action--secondary discover-page__applications-link" type="button" data-show-applied><img src="../../assets/icons/receipt.svg" alt="">Ứng tuyển của tôi <span>3</span></button></div></div>
+                <div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Tin tìm gia sư</h1><p class="page-header__description">Khám phá nhu cầu học đang tuyển và chọn tin phù hợp để gửi ứng tuyển.</p></div><div class="page-header__actions"><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--outline button--medium page-header__action page-header__action--secondary discover-page__applications-link" type="button" data-show-applied><img src="../../assets/icons/receipt.svg" alt="">Ứng tuyển của tôi <span>3</span></button></div></div>
             </header>
 
             <section class="discover-profile" aria-label="Hồ sơ gia sư đang sử dụng">
-                <div class="discover-profile__identity"><span class="discover-profile__avatar">MA</span><div><div class="discover-profile__name"><strong>Nguyễn Minh Anh</strong><span><img src="../../assets/icons/verified.svg" alt="">Đã xác minh</span></div><p>Hồ sơ giảng dạy: <strong>Toán, Vật lý</strong> · <strong>THCS, THPT</strong> · <strong>TP. Thủ Đức</strong> · 5 năm kinh nghiệm</p></div></div>
-                <button type="button" data-profile-action>Xem hồ sơ gia sư <span aria-hidden="true">→</span></button>
+                <!-- Components: Avatar, Badge | Nguồn: components/data-display/avatar.html, components/feedback/badge.html -->
+                <div class="discover-profile__identity"><span class="avatar avatar--tutor discover-profile__avatar" role="img" aria-label="Ảnh đại diện Nguyễn Minh Anh">MA</span><div><div class="discover-profile__name"><strong>Nguyễn Minh Anh</strong><span class="badge badge--verified"><img src="../../assets/icons/verified.svg" alt="">Đã xác minh</span></div><p>Hồ sơ giảng dạy: <strong>Toán, Vật lý</strong> · <strong>THCS, THPT</strong> · <strong>TP. Thủ Đức</strong> · 5 năm kinh nghiệm</p></div></div>
+                <!-- Component: Button | Nguồn: components/action/button.html -->
+                <button class="button button--ghost button--medium" type="button" data-profile-action>Xem hồ sơ gia sư <span aria-hidden="true">→</span></button>
             </section>
 
+            <!-- Component: SearchInput | Nguồn: components/form/search-input.html -->
             <form class="discover-search" data-discover-search-form>
                 <div class="search-input search-input--compact" data-search-input><svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" value="Toán lớp 11" placeholder="Tìm theo môn học, lớp, khu vực..." aria-label="Tìm tin gia sư" data-discover-search><button class="search-input__clear" type="button" data-clear-search aria-label="Xóa tìm kiếm"><svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17"/></svg></button></div>
-                <button class="discover-search__button" type="submit">Tìm kiếm</button>
+                <!-- Component: Button | Nguồn: components/action/button.html -->
+                <button class="button button--primary button--medium discover-search__button" type="submit">Tìm kiếm</button>
             </form>
 
             <div class="discover-layout">
                 <aside class="discover-sidebar">
+                    <!-- Component: FilterPanel | Nguồn: components/navigation/filter-panel.html -->
                     <form class="filter-panel discover-filter" data-filter-panel data-discover-filter>
                         <div class="filter-panel__header"><h2><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16M8 4v4M16 10v4M10 16v4"/></svg>Bộ lọc tìm kiếm</h2><button class="filter-panel__reset" type="reset" data-reset-filter>Xóa bộ lọc</button></div>
                         <div class="filter-panel__group"><label for="discover-subject">Môn học</label><div class="filter-panel__select-wrap"><select id="discover-subject" name="subject" data-filter-subject><option>Toán học</option><option>Vật lý</option><option>Hóa học</option><option>Tiếng Anh</option><option>Ngữ văn</option></select><svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6"/></svg></div></div>
@@ -99,10 +113,13 @@
                 </aside>
 
                 <section class="discover-results" aria-label="Kết quả tin tìm gia sư">
+                    <!-- Component: Select | Nguồn: components/form/select.html -->
                     <div class="discover-results__toolbar"><div><strong data-result-title>24 tin phù hợp</strong><span>Cập nhật mới nhất cho hồ sơ của bạn</span></div><section class="select-field discover-results__sort" data-component="select" data-initial-open="false" data-discover-sort><span class="select-field__label" id="discover-sort-label">Sắp xếp</span><button class="select-control" type="button" aria-labelledby="discover-sort-label discover-sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="discover-sort-options" data-select-trigger><span id="discover-sort-value" data-select-value>Phù hợp nhất</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt=""></button><div class="select-options" id="discover-sort-options" role="listbox" data-select-options hidden><button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Phù hợp nhất" data-sort="default"><span>Phù hợp nhất</span><img src="../../assets/icons/dau-tich.svg" alt=""></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Mới nhất" data-sort="newest"><span>Mới nhất</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí cao nhất" data-sort="fee-desc"><span>Học phí cao nhất</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Ít ứng viên nhất" data-sort="applicants"><span>Ít ứng viên nhất</span></button></div></section></div>
 
+                    <!-- Component: FilterChip | Nguồn: components/navigation/filter-chip.html -->
                     <div class="discover-results__chips"><button class="filter-chip filter-chip--selected" type="button" data-filter-chip aria-pressed="true">Toán học</button><button class="filter-chip filter-chip--selected" type="button" data-filter-chip aria-pressed="true">THPT</button><button class="filter-chip filter-chip--selected" type="button" data-filter-chip aria-pressed="true">TP. Thủ Đức</button><button class="filter-chip" type="button" data-filter-chip aria-pressed="false">Tại nhà</button></div>
 
+                    <!-- Component: JobCard | Nguồn: components/domain/job/job-card.html -->
                     <div class="discover-job-list" data-discover-list>
                         <article class="job-card discover-job discover-job--recommended" data-discover-job data-order="1" data-title="Tìm gia sư Toán lớp 11 tại Thủ Đức" data-subject="toan hoc" data-grade="thpt" data-region="thu-duc" data-format="home" data-fee="220000" data-sessions="2" data-experience="3" data-gender="all" data-status="hiring" data-applicants="3">
                             <div class="discover-job__label">Phù hợp nhất với hồ sơ của bạn</div><div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Đang tuyển</span><span class="job-card__code">· 2 giờ trước · Mã tin #TT-8841</span></div><h2>Tìm gia sư Toán lớp 11 tại Thủ Đức</h2></div><p class="job-card__price">220.000 ₫<span>/ buổi</span></p></div><div class="job-card__tags"><span>Toán học</span><span>Lớp 11 · THPT</span><span>Tại nhà học sinh</span></div><div class="discover-job__parameters"><p><small>Tần suất</small><strong>2 buổi / tuần · 90 phút</strong></p><p><small>Địa điểm</small><strong>P. Linh Trung, TP. Thủ Đức</strong></p><p><small>Yêu cầu</small><strong>Kinh nghiệm từ 3 năm</strong></p></div><p class="discover-job__description">Củng cố Hình học không gian và Hàm số 11. Học sinh cần gia sư kiên nhẫn, có lộ trình rõ ràng và theo sát bài tập trên lớp.</p><footer class="job-card__footer"><div class="job-card__stats"><span><strong>3 gia sư</strong> đã ứng tuyển</span><span>Hạn nhận hồ sơ: 28/10</span></div><div class="discover-job__actions"><button class="job-card__action" type="button" data-save-job>Lưu tin</button><button class="job-card__action job-card__action--primary" type="button" data-view-job>Xem chi tiết để ứng tuyển</button></div></footer>
@@ -125,7 +142,9 @@
                         </article>
                     </div>
 
-                    <div class="discover-empty" data-discover-empty hidden><strong>Không tìm thấy tin phù hợp</strong><span>Hãy thử thay đổi từ khóa hoặc bộ lọc tìm kiếm.</span></div>
+                    <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                    <section class="empty-state discover-empty" data-discover-empty hidden aria-labelledby="discover-empty-title"><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title" id="discover-empty-title">Không tìm thấy tin phù hợp</h2><p class="empty-state__description">Hãy thử thay đổi từ khóa hoặc bộ lọc tìm kiếm.</p></section>
+                    <!-- Component: Pagination | Nguồn: components/navigation/pagination.html -->
                     <nav class="pagination" aria-label="Phân trang tin tìm gia sư" data-pagination data-total="24" data-page-size="5" data-current="1" data-last-page="5"><p class="pagination__summary">Hiển thị <strong data-range-start>1</strong> - <strong data-range-end>5</strong> trên tổng số <strong data-total-count>24</strong> tin tìm gia sư</p><div class="pagination__controls"><button class="pagination__button pagination__button--wide" type="button" data-page-action="previous"><svg viewBox="0 0 24 24" fill="none"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button><button class="pagination__button is-current" type="button" data-page="1">1</button><button class="pagination__button" type="button" data-page="2">2</button><button class="pagination__button" type="button" data-page="3">3</button><button class="pagination__button" type="button" data-page="4">4</button><button class="pagination__button" type="button" data-page="5">5</button><button class="pagination__button pagination__button--wide" type="button" data-page-action="next"><span>Sau</span><svg viewBox="0 0 24 24" fill="none"><path d="m9 18 6-6-6-6"/></svg></button></div></nav>
                 </section>
             </div>
@@ -134,6 +153,7 @@
         </div>
     </main>
 
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
     <footer class="user-footer" data-component="user-footer"><div class="user-footer__inner"><div class="user-footer__main"><section class="user-footer__brand" aria-label="Về TriThức"><a class="user-footer__brand-link" href="#trang-chu"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a><p>Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch. Đem lại sự an tâm thông qua quy trình bảo chứng năng lực và hợp đồng an toàn.</p><span class="user-footer__certificate"><img src="../../assets/icons/certificate.svg" alt="">Chứng nhận đào tạo sư phạm</span></section><nav class="user-footer__links" aria-labelledby="discover-footer-parent"><h2 id="discover-footer-parent">Dành cho phụ huynh</h2><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Đăng yêu cầu tìm gia sư</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Danh sách gia sư tiêu biểu</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy trình bảo đảm Escrow</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Bảng học phí tham khảo</a></nav><nav class="user-footer__links" aria-labelledby="discover-footer-tutor"><h2 id="discover-footer-tutor">Dành cho gia sư</h2><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tìm lớp gia sư mới</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tiêu chuẩn xác minh lý lịch</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Mở lớp nhóm nhỏ</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo vệ thù lao</a></nav><nav class="user-footer__links" aria-labelledby="discover-footer-support"><h2 id="discover-footer-support">Hỗ trợ &amp; pháp lý</h2><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Trung tâm trợ giúp học viên</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Điều khoản sử dụng dịch vụ</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo mật dữ liệu</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy chế giải quyết tranh chấp</a></nav></div><div class="user-footer__bottom"><p><img src="../../assets/icons/copyright.svg" alt="">© 2026 TriThức Platform. Bảo lưu mọi quyền.</p><p class="user-footer__regions"><span>Trung tâm khu vực hỗ trợ:</span><a href="#">Hà Nội</a><a href="#">TP. Hồ Chí Minh</a><a href="#">Đà Nẵng</a></p></div></div></footer>
 </div>
 </body>
