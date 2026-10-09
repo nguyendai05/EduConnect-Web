@@ -134,6 +134,7 @@
                 : message;
         byId("response-actions").hidden = state !== "pending";
         byId("agreed-button").hidden = state !== "accepted";
+        byId("contract-next").hidden = state !== "accepted";
         byId("deadline-label").textContent = ["accepted", "rejected"].includes(state)
             ? "Đã kết thúc phản hồi"
             : "Hạn phản hồi";
@@ -207,6 +208,28 @@
         if (expired() || state !== "pending" || !["accept", "reject"].includes(decision)) {
             event.preventDefault();
             return;
+        }
+        if (decision === "accept") {
+            try {
+                sessionStorage.setItem(
+                    "edu-agreed-proposal",
+                    JSON.stringify({
+                        invitation: "INV-20261009-024",
+                        version: current().number,
+                        fee: current().fee,
+                        sessions: current().sessions,
+                        schedule: current().schedule,
+                        message: current().message,
+                        start: startDate.toLocaleDateString("vi-VN"),
+                        acceptedAt: Date.now(),
+                        tutorConfirmedAt: current().date,
+                    }),
+                );
+            } catch {
+                event.preventDefault();
+                notify("Không lưu được điều khoản. Vui lòng thử lại trước khi tiếp tục.", "error");
+                return;
+            }
         }
         state = decision === "accept" ? "accepted" : "rejected";
         terminalNote = byId("reject-reason").value.trim();
