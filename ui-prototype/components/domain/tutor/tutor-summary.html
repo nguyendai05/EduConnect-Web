@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>TutorSummary — Edu Connect</title>
+        <link rel="stylesheet" href="../../../css/tokens.css" />
+        <link rel="stylesheet" href="../../../css/reset.css" />
+        <link rel="stylesheet" href="../../../css/base.css" />
+        <link rel="stylesheet" href="../../../css/components/action/component-icon.css" />
+        <link rel="stylesheet" href="../../../css/components/action/button.css" />
+
+        <link rel="stylesheet" href="../../../css/components/action/button-group.css" />
+        <link rel="stylesheet" href="../../../css/components/feedback/badge.css" />
+        <link rel="stylesheet" href="../../../css/components/data-display/avatar.css" />
+        <link rel="stylesheet" href="../../../css/components/data-display/card.css" />
+
+        <link rel="stylesheet" href="../../../css/components/data-display/rating.css" />
+
+        <link rel="stylesheet" href="../../../css/components/domain/tutor/tutor-card.css" />
+    </head>
+    <body>
+        <main class="tutor-card-preview" aria-label="TutorSummary">
+            <article class="card tutor-card tutor-card--compact">
+                <div class="tutor-card__identity">
+                    <span class="avatar avatar--tutor" role="img" aria-label="Ảnh đại diện MA"
+                        >MA</span
+                    >
+                    <div class="tutor-card__heading">
+                        <h3 class="tutor-card__name">Nguyễn Minh Anh</h3>
+                        <span class="badge badge--verified"
+                            ><span
+                                class="component-icon component-icon--verified"
+                                aria-hidden="true"
+                            ></span
+                            >Đã xác minh</span
+                        >
+                        <p class="tutor-card__education">
+                            Cử nhân Sư phạm Toán · 5 năm kinh nghiệm
+                        </p>
+                    </div>
+                </div>
+                <span
+                    class="rating rating--compact"
+                    role="img"
+                    aria-label="Đánh giá 4,5 trên 5 sao, 26 lượt đánh giá"
+                    ><span class="rating__stars" aria-hidden="true"
+                        ><span class="rating__star"></span></span
+                    ><span class="rating__score" aria-hidden="true">4,5</span></span
+                >
+                <footer class="tutor-card__footer">
+                    <p class="tutor-card__price">
+                        220.000 ₫<span class="tutor-card__unit">/ buổi 90 phút</span>
+                    </p>
+                    <div class="button-group">
+                        <button
+                            class="button button--outline button--medium"
+                            type="button"
+                            data-action="view-profile"
+                        >
+                            Xem hồ sơ</button
+                        ><button
+                            class="button button--primary button--medium"
+                            type="button"
+                            data-action="invite"
+                        >
+                            Mời dạy
+                        </button>
+                    </div>
+                </footer>
+            </article>
+        </main>
+    </body>
+</html>

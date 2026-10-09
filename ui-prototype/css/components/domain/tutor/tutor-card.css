@@ -1,0 +1,108 @@
+/* Place this reusable card in the page's own grid or list. */
+.tutor-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-width: 0;
+    height: 100%;
+    padding: var(--space-5);
+}
+.tutor-card__identity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+.tutor-card__heading {
+    min-width: 0;
+}
+.tutor-card__name {
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-lg);
+    overflow-wrap: anywhere;
+}
+.tutor-card__bio {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+.tutor-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+.tutor-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+}
+.tutor-card__price {
+    color: var(--color-primary);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+}
+.tutor-card__unit {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: 400;
+}
+.tutor-card__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+.tutor-card-preview {
+    max-width: 460px;
+    margin: var(--space-6) auto;
+    padding: 0 var(--space-4);
+}
+
+.tutor-card--selected {
+    border-color: var(--color-primary);
+    background: var(--color-primary-container);
+}
+.tutor-card--compact {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    height: auto;
+}
+.tutor-card--compact .tutor-card__identity {
+    flex: 1 1 220px;
+}
+.tutor-card--unavailable {
+    background: var(--color-surface-low);
+}
+.tutor-card__education {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+.tutor-card__identity .icon-button {
+    margin-left: auto;
+}
+.tutor-card__heading {
+    flex: 1;
+}
+@media (max-width: 420px) {
+    .tutor-card__identity {
+        flex-wrap: wrap;
+    }
+    .tutor-card__footer .button-group {
+        width: 100%;
+    }
+    .tutor-card__footer .button {
+        flex: 1;
+    }
+}
+
+.tutor-card-preview__grid {
+    display: grid;
+    gap: var(--space-4);
+}

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>TutorCard — Edu Connect</title>
+        <link rel="stylesheet" href="../../../css/tokens.css" />
+        <link rel="stylesheet" href="../../../css/reset.css" />
+        <link rel="stylesheet" href="../../../css/base.css" />
+        <link rel="stylesheet" href="../../../css/components/action/component-icon.css" />
+        <link rel="stylesheet" href="../../../css/components/action/button.css" />
+        <link rel="stylesheet" href="../../../css/components/action/icon-button.css" />
+        <link rel="stylesheet" href="../../../css/components/action/button-group.css" />
+        <link rel="stylesheet" href="../../../css/components/feedback/badge.css" />
+        <link rel="stylesheet" href="../../../css/components/data-display/avatar.css" />
+        <link rel="stylesheet" href="../../../css/components/data-display/card.css" />
+        <link rel="stylesheet" href="../../../css/components/data-display/info-row.css" />
+        <link rel="stylesheet" href="../../../css/components/data-display/rating.css" />
+        <link rel="stylesheet" href="../../../css/components/data-display/tag.css" />
+
+        <link rel="stylesheet" href="../../../css/components/domain/tutor/tutor-card.css" />
+    </head>
+    <body>
+        <main class="tutor-card-preview" aria-label="TutorCard">
+            <div class="tutor-card-preview__grid">
+                <article class="card tutor-card tutor-card--default">
+                    <div class="tutor-card__identity">
+                        <span class="avatar avatar--tutor" role="img" aria-label="Ảnh đại diện MA"
+                            >MA</span
+                        >
+                        <div class="tutor-card__heading">
+                            <h3 class="tutor-card__name">Nguyễn Minh Anh</h3>
+                            <span class="badge badge--verified"
+                                ><span
+                                    class="component-icon component-icon--verified"
+                                    aria-hidden="true"
+                                ></span
+                                >Đã xác minh</span
+                            >
+                            <p class="tutor-card__education">
+                                Cử nhân Sư phạm Toán · 5 năm kinh nghiệm
+                            </p>
+                        </div>
+                        <button
+                            class="icon-button icon-button--ghost icon-button--medium"
+                            type="button"
+                            aria-label="Lưu hồ sơ Nguyễn Minh Anh"
+                            title="Lưu hồ sơ Nguyễn Minh Anh"
+                            aria-pressed="false"
+                        >
+                            <span
+                                class="component-icon component-icon--bookmark"
+                                aria-hidden="true"
+                            ></span>
+                        </button>
+                    </div>
+                    <span
+                        class="rating"
+                        role="img"
+                        aria-label="Đánh giá 4,5 trên 5 sao, 26 lượt đánh giá"
+                        ><span class="rating__stars" aria-hidden="true"
+                            ><span class="rating__star"></span><span class="rating__star"></span
+                            ><span class="rating__star"></span><span class="rating__star"></span
+                            ><span class="rating__star rating__star--half"></span></span
+                        ><span class="rating__score" aria-hidden="true">4,5</span
+                        ><span class="rating__count" aria-hidden="true">(26 đánh giá)</span></span
+                    >
+                    <div class="tutor-card__tags">
+                        <span class="tag">Toán</span><span class="tag tag--neutral">THPT</span
+                        ><span class="tag tag--format">Trực tuyến</span>
+                    </div>
+                    <dl class="info-row">
+                        <dt class="info-row__label">Khu vực</dt>
+                        <dd class="info-row__value">TP. Thủ Đức, TP.HCM</dd>
+                    </dl>
+                    <dl class="info-row">
+                        <dt class="info-row__label">Hình thức</dt>
+                        <dd class="info-row__value">Trực tuyến hoặc tại nhà</dd>
+                    </dl>
+                    <footer class="tutor-card__footer">
+                        <p class="tutor-card__price">
+                            220.000 ₫<span class="tutor-card__unit">/ buổi 90 phút</span>
+                        </p>
+                        <div class="button-group">
+                            <button
+                                class="button button--outline button--medium"
+                                type="button"
+                                data-action="view-profile"
+                            >
+                                Xem hồ sơ</button
+                            ><button
+                                class="button button--primary button--medium"
+                                type="button"
+                                data-action="invite"
+                            >
+                                Mời dạy
+                            </button>
+                        </div>
+                    </footer>
+                </article>
+                <article class="card tutor-card tutor-card--selected">
+                    <div class="tutor-card__identity">
+                        <span class="avatar avatar--tutor" role="img" aria-label="Ảnh đại diện ĐK"
+                            >ĐK</span
+                        >
+                        <div class="tutor-card__heading">
+                            <h3 class="tutor-card__name">Trần Đăng Khoa</h3>
+                            <span class="badge badge--verified"
+                                ><span
+                                    class="component-icon component-icon--verified"
+                                    aria-hidden="true"
+                                ></span
+                                >Đang chọn ghép lớp</span
+                            >
+                            <p class="tutor-card__education">
+                                Cử nhân Sư phạm Toán · 5 năm kinh nghiệm
+                            </p>
+                        </div>
+                        <button
+                            class="icon-button icon-button--ghost icon-button--medium"
+                            type="button"
+                            aria-label="Lưu hồ sơ Trần Đăng Khoa"
+                            title="Lưu hồ sơ Trần Đăng Khoa"
+                            aria-pressed="false"
+                        >
+                            <span
+                                class="component-icon component-icon--bookmark"
+                                aria-hidden="true"
+                            ></span>
+                        </button>
+                    </div>
+                    <span
+                        class="rating"
+                        role="img"
+                        aria-label="Đánh giá 4,5 trên 5 sao, 26 lượt đánh giá"
+                        ><span class="rating__stars" aria-hidden="true"
+                            ><span class="rating__star"></span><span class="rating__star"></span
+                            ><span class="rating__star"></span><span class="rating__star"></span
+                            ><span class="rating__star rating__star--half"></span></span
+                        ><span class="rating__score" aria-hidden="true">4,5</span
+                        ><span class="rating__count" aria-hidden="true">(26 đánh giá)</span></span
+                    >
+                    <div class="tutor-card__tags">
+                        <span class="tag">Toán</span><span class="tag tag--neutral">THPT</span
+                        ><span class="tag tag--format">Trực tuyến</span>
+                    </div>
+                    <dl class="info-row">
+                        <dt class="info-row__label">Khu vực</dt>
+                        <dd class="info-row__value">TP. Thủ Đức, TP.HCM</dd>
+                    </dl>
+                    <dl class="info-row">
+                        <dt class="info-row__label">Hình thức</dt>
+                        <dd class="info-row__value">Trực tuyến hoặc tại nhà</dd>
+                    </dl>
+                    <footer class="tutor-card__footer">
+                        <p class="tutor-card__price">
+                            220.000 ₫<span class="tutor-card__unit">/ buổi 90 phút</span>
+                        </p>
+                        <div class="button-group">
+                            <button
+                                class="button button--primary button--medium"
+                                type="button"
+                                data-action="invite"
+                            >
+                                Tiếp tục đặt lịch
+                            </button>
+                        </div>
+                    </footer>
+                </article>
+            </div>
+            <article class="card tutor-card tutor-card--compact">
+                <div class="tutor-card__identity">
+                    <span class="avatar avatar--tutor" role="img" aria-label="Ảnh đại diện TT"
+                        >TT</span
+                    >
+                    <div class="tutor-card__heading">
+                        <h3 class="tutor-card__name">Lê Thanh Thảo</h3>
+                        <span class="badge badge--verified"
+                            ><span
+                                class="component-icon component-icon--verified"
+                                aria-hidden="true"
+                            ></span
+                            >Đã xác minh</span
+                        >
+                        <p class="tutor-card__education">
+                            Cử nhân Sư phạm Toán · 5 năm kinh nghiệm
+                        </p>
+                    </div>
+                </div>
+                <span
+                    class="rating rating--compact"
+                    role="img"
+                    aria-label="Đánh giá 4,5 trên 5 sao, 26 lượt đánh giá"
+                    ><span class="rating__stars" aria-hidden="true"
+                        ><span class="rating__star"></span></span
+                    ><span class="rating__score" aria-hidden="true">4,5</span></span
+                >
+                <footer class="tutor-card__footer">
+                    <p class="tutor-card__price">
+                        220.000 ₫<span class="tutor-card__unit">/ buổi 90 phút</span>
+                    </p>
+                    <div class="button-group">
+                        <button
+                            class="button button--outline button--medium"
+                            type="button"
+                            data-action="view-profile"
+                        >
+                            Xem hồ sơ</button
+                        ><button
+                            class="button button--primary button--medium"
+                            type="button"
+                            data-action="invite"
+                        >
+                            Mời dạy
+                        </button>
+                    </div>
+                </footer>
+            </article>
+            <article class="card tutor-card tutor-card--unavailable">
+                <div class="tutor-card__identity">
+                    <span class="avatar avatar--tutor" role="img" aria-label="Ảnh đại diện VP"
+                        >VP</span
+                    >
+                    <div class="tutor-card__heading">
+                        <h3 class="tutor-card__name">Vũ Phong</h3>
+                        <span class="badge badge--neutral">Kín lịch tuần</span>
+                        <p class="tutor-card__education">
+                            Cử nhân Sư phạm Toán · 5 năm kinh nghiệm
+                        </p>
+                    </div>
+                    <button
+                        class="icon-button icon-button--ghost icon-button--medium"
+                        type="button"
+                        aria-label="Lưu hồ sơ Vũ Phong"
+                        title="Lưu hồ sơ Vũ Phong"
+                        aria-pressed="false"
+                    >
+                        <span
+                            class="component-icon component-icon--bookmark"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
+                </div>
+                <span
+                    class="rating"
+                    role="img"
+                    aria-label="Đánh giá 4,5 trên 5 sao, 26 lượt đánh giá"
+                    ><span class="rating__stars" aria-hidden="true"
+                        ><span class="rating__star"></span><span class="rating__star"></span
+                        ><span class="rating__star"></span><span class="rating__star"></span
+                        ><span class="rating__star rating__star--half"></span></span
+                    ><span class="rating__score" aria-hidden="true">4,5</span
+                    ><span class="rating__count" aria-hidden="true">(26 đánh giá)</span></span
+                >
+                <div class="tutor-card__tags">
+                    <span class="tag">Toán</span><span class="tag tag--neutral">THPT</span
+                    ><span class="tag tag--format">Trực tuyến</span>
+                </div>
+                <dl class="info-row">
+                    <dt class="info-row__label">Khu vực</dt>
+                    <dd class="info-row__value">TP. Thủ Đức, TP.HCM</dd>
+                </dl>
+                <dl class="info-row">
+                    <dt class="info-row__label">Hình thức</dt>
+                    <dd class="info-row__value">Trực tuyến hoặc tại nhà</dd>
+                </dl>
+                <footer class="tutor-card__footer">
+                    <p class="tutor-card__price">
+                        220.000 ₫<span class="tutor-card__unit">/ buổi 90 phút</span>
+                    </p>
+                    <div class="button-group">
+                        <button
+                            class="button button--primary button--medium"
+                            type="button"
+                            disabled
+                        >
+                            Tạm ngừng nhận
+                        </button>
+                    </div>
+                </footer>
+            </article>
+        </main>
+    </body>
+</html>
