@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tìm gia sư phù hợp | Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/action/component-icon.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
+    <link rel="stylesheet" href="../../css/components/action/button-group.css">
+    <link rel="stylesheet" href="../../css/components/action/icon-button.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/page-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <link rel="stylesheet" href="../../css/components/navigation/filter-panel.css">
+    <link rel="stylesheet" href="../../css/components/navigation/pagination.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+    <link rel="stylesheet" href="../../css/components/form/search-input.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+    <link rel="stylesheet" href="../../css/components/data-display/avatar.css">
+    <link rel="stylesheet" href="../../css/components/data-display/card.css">
+    <link rel="stylesheet" href="../../css/components/data-display/info-row.css">
+    <link rel="stylesheet" href="../../css/components/data-display/rating.css">
+    <link rel="stylesheet" href="../../css/components/data-display/tag.css">
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
+    <link rel="stylesheet" href="../../css/components/feedback/toast.css">
+    <link rel="stylesheet" href="../../css/components/domain/tutor/tutor-card.css">
+    <link rel="stylesheet" href="../../css/pages/tutor/search.css">
+    <script src="../../js/core/user-header.js" defer></script>
+    <script src="../../js/core/search-input.js" defer></script>
+    <script src="../../js/core/filter-panel.js" defer></script>
+    <script src="../../js/core/select.js" defer></script>
+    <script src="../../js/core/pagination.js" defer></script>
+    <script src="../../js/core/toast.js" defer></script>
+    <script src="../../js/pages/tutor/search.js" defer></script>
+</head>
+<body class="tutor-search-page">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
+<div class="user-shell" data-component="user-shell" data-tutor-search-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
+    <header class="user-header" data-component="user-header" data-user-variant="B" data-active-nav="tutors">
+        <div class="user-header__inner">
+            <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
+                <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
+                <span class="user-header__brand-name">Edu Connect</span>
+            </a>
+            <nav class="user-header__nav" aria-label="Điều hướng chính">
+                <a class="user-header__nav-link" data-nav-key="home" data-route="/app/dashboard" href="#trang-chu">Trang chủ</a>
+                <a class="user-header__nav-link is-active" data-nav-key="tutors" data-route="/app/tutors" href="#tim-gia-su" aria-current="page">Tìm gia sư</a>
+                <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="#tin-tim-gia-su">Tin tìm gia sư</a>
+                <a class="user-header__nav-link" data-nav-key="groups" data-route="/app/group-classes" href="#lop-nhom">Lớp nhóm</a>
+            </nav>
+            <div class="user-header__actions">
+                <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" data-user-action="messages"><img src="../../assets/icons/message.svg" alt=""></button>
+                <button class="user-header__icon-button" type="button" aria-label="Thông báo" data-user-action="notifications"><img src="../../assets/icons/notification.svg" alt=""></button>
+                <span class="user-header__divider" aria-hidden="true"></span>
+                <div class="user-header__account">
+                    <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="tutor-search-account-menu">
+                        <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                        <span class="user-header__profile-copy"><strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực"></strong><span data-profile-role>Phụ huynh</span></span>
+                        <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
+                    </button>
+                    <div class="user-header__menu" id="tutor-search-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                        <div class="user-header__menu-summary" data-menu-summary hidden><div class="user-header__menu-summary-heading"><strong data-menu-summary-title></strong><span class="user-header__menu-badge" data-menu-summary-badge></span></div><div class="user-header__menu-balance"><span>Ví:</span><strong data-menu-balance></strong></div></div>
+                        <div class="user-header__menu-section" data-menu-links>
+                            <a class="user-header__menu-item" href="#ho-so" role="menuitem" data-menu-item="0"><img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile"><span data-menu-label>Hồ sơ cá nhân</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#hop-dong" role="menuitem" data-menu-item="1"><img class="user-header__menu-item-leading" src="../../assets/icons/calendar.svg" alt="" data-menu-icon="calendar"><span data-menu-label>Hợp đồng của tôi</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#vi" role="menuitem" data-menu-item="2"><img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet"><span data-menu-label>Ví TriThức</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#bao-mat" role="menuitem" data-menu-item="3"><img class="user-header__menu-item-leading" src="../../assets/icons/shield.svg" alt="" data-menu-icon="shield"><span data-menu-label>Bảo mật tài khoản</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                            <a class="user-header__menu-item" href="#lich-su" role="menuitem" data-menu-item="4"><img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt"><span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                        </div>
+                        <div class="user-header__menu-section user-header__menu-section--logout"><button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout"><img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt=""><span data-menu-logout-label>Đăng xuất</span></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="user-shell__main">
+        <div class="user-shell__content tutor-search-page__content">
+            <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
+            <nav class="breadcrumb" aria-label="Breadcrumb"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li><li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Tìm gia sư</span></li></ol></nav>
+
+            <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
+            <header class="page-header tutor-search-page__header">
+                <div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Tìm gia sư phù hợp</h1><p class="page-header__description">Khám phá các gia sư đã được xác minh và lựa chọn người phù hợp với nhu cầu học tập của bạn.</p></div></div>
+            </header>
+
+            <!-- Component: SearchInput | Nguồn: components/form/search-input.html; JS: js/core/search-input.js -->
+            <form class="tutor-search-form" data-tutor-search-form role="search">
+                <div class="search-input search-input--compact" data-search-input>
+                    <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+                    <input id="tutor-search-query" name="query" type="search" placeholder="Tìm theo tên gia sư, môn học..." autocomplete="off" data-search-query>
+                    <button class="search-input__clear" type="button" data-clear-search aria-label="Xóa nội dung tìm kiếm"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"></path></svg></button>
+                </div>
+                <!-- Component: Button | Nguồn: components/action/button.html -->
+                <button class="button button--primary button--medium tutor-search-form__submit" type="submit">Tìm kiếm</button>
+            </form>
+
+            <div class="tutor-search-layout">
+                <aside class="tutor-search-sidebar" aria-label="Bộ lọc tìm gia sư">
+                    <!-- Component: FilterPanel | Nguồn: components/navigation/filter-panel.html; JS: js/core/filter-panel.js -->
+                    <form class="filter-panel tutor-search-filter" data-filter-panel data-tutor-filter>
+                        <div class="filter-panel__header"><h2><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M8 4v4M16 10v4M10 16v4"></path></svg>Bộ lọc</h2><span class="tutor-search-filter__selected-count">Đang chọn: <strong data-filter-count>3</strong></span></div>
+                        <div class="filter-panel__group"><label for="tutor-subject">Môn học</label><div class="filter-panel__select-wrap"><select id="tutor-subject" name="subject" data-filter-subject><option value="all">Tất cả môn học</option><option value="toan" selected>Toán học</option><option value="tieng-anh">Tiếng Anh</option><option value="ngu-van">Ngữ văn</option><option value="vat-ly">Vật lý</option><option value="hoa-hoc">Hóa học</option></select><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div></div>
+                        <fieldset class="filter-panel__group"><legend>Cấp lớp</legend><div class="filter-panel__grade-grid tutor-search-filter__grade-grid"><label><input type="checkbox" name="grade" value="tieu-hoc"><span>Tiểu học</span></label><label><input type="checkbox" name="grade" value="thcs"><span>THCS</span></label><label class="is-selected"><input type="checkbox" name="grade" value="10" checked><span>THPT</span></label><label><input type="checkbox" name="grade" value="luyen-thi"><span>Luyện thi</span></label></div></fieldset>
+                        <div class="filter-panel__group"><label for="tutor-region">Khu vực</label><div class="filter-panel__select-wrap"><select id="tutor-region" name="region" data-filter-region><option value="all">Tất cả khu vực</option><option value="ho-chi-minh" selected>TP. Hồ Chí Minh</option><option value="ha-noi">Hà Nội</option><option value="da-nang">Đà Nẵng</option><option value="can-tho">Cần Thơ</option></select><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></div>
+                            <!-- Component: Input | Nguồn: components/form/input.html -->
+                            <div class="input-control tutor-search-filter__district"><img class="input-control__icon" src="../../assets/icons/dinh-vi.svg" alt=""><input class="input-control__input input-control__input--with-leading" id="tutor-district" name="district" type="text" value="Thủ Đức, TP.HCM" placeholder="Chọn Quận / Huyện" data-filter-district></div>
+                        </div>
+                        <fieldset class="filter-panel__group tutor-search-filter__radios"><legend>Hình thức học</legend><label><input type="radio" name="delivery" value="home"><span class="tutor-search-filter__radio" aria-hidden="true"></span>Tại nhà học viên</label><label><input type="radio" name="delivery" value="online"><span class="tutor-search-filter__radio" aria-hidden="true"></span>Trực tuyến (Online)</label><label class="is-selected"><input type="radio" name="delivery" value="both" checked><span class="tutor-search-filter__radio" aria-hidden="true"></span>Cả hai hình thức</label></fieldset>
+                        <div class="filter-panel__group"><div class="filter-panel__range-heading"><label for="tutor-fee">Học phí mỗi buổi</label><output for="tutor-fee" data-fee-output>150k - 500k</output></div><input id="tutor-fee" name="fee-range" class="filter-panel__range" type="range" min="150000" max="1000000" step="50000" value="500000" data-filter-fee><div class="filter-panel__range-values"><span>150.000 ₫</span><span data-fee-max-label>500.000 ₫/buổi</span></div></div>
+                        <fieldset class="filter-panel__group"><legend>Thứ trong tuần</legend><div class="tutor-search-filter__days" data-filter-days><button type="button" data-day="2" aria-pressed="false">T2</button><button class="is-selected" type="button" data-day="3" aria-pressed="true">T3</button><button type="button" data-day="4" aria-pressed="false">T4</button><button class="is-selected" type="button" data-day="5" aria-pressed="true">T5</button><button type="button" data-day="6" aria-pressed="false">T6</button><button class="is-selected" type="button" data-day="7" aria-pressed="true">T7</button><button type="button" data-day="cn" aria-pressed="false">CN</button></div><div class="tutor-search-filter__periods" data-filter-periods><button class="is-selected" type="button" data-period="morning" aria-pressed="true">Sáng</button><button type="button" data-period="afternoon" aria-pressed="false">Chiều</button><button class="is-selected" type="button" data-period="evening" aria-pressed="true">Tối</button></div></fieldset>
+                        <label class="filter-panel__check"><input type="checkbox" name="verified-only" checked data-filter-verified><span class="filter-panel__check-box" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6"></path></svg></span><span>Chỉ hiển thị gia sư đã xác minh hồ sơ sư phạm</span></label>
+                        <!-- Component: Button | Nguồn: components/action/button.html -->
+                        <button class="button button--secondary button--medium tutor-search-filter__reset" type="reset" data-reset-filter>Xóa bộ lọc</button>
+                    </form>
+                </aside>
+
+                <section class="tutor-search-results" aria-labelledby="tutor-results-title">
+                    <header class="tutor-search-results__toolbar">
+                        <div class="tutor-search-results__heading"><h2 id="tutor-results-title"><span data-result-count>128</span> gia sư phù hợp</h2><p data-result-location>tại khu vực TP. Hồ Chí Minh</p></div>
+                        <!-- Component: Select | Nguồn: components/form/select.html; JS: js/core/select.js -->
+                        <section class="select-field tutor-search-results__sort" data-component="select" data-initial-open="false" data-sort-select><span class="select-field__label" id="tutor-sort-label">Sắp xếp:</span><button class="select-control" type="button" aria-labelledby="tutor-sort-label tutor-sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="tutor-sort-options" data-select-trigger><span id="tutor-sort-value" data-select-value>Phù hợp nhất</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt=""></button><div class="select-options" id="tutor-sort-options" role="listbox" data-select-options hidden><button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Phù hợp nhất" data-sort="match"><span>Phù hợp nhất</span><img src="../../assets/icons/dau-tich.svg" alt=""></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Đánh giá cao nhất" data-sort="rating"><span>Đánh giá cao nhất</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Giá tăng dần" data-sort="price-asc"><span>Giá tăng dần</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Giá giảm dần" data-sort="price-desc"><span>Giá giảm dần</span></button></div></section>
+                    </header>
+
+                    <!-- Component: TutorCard, Card; thành phần con Avatar, Badge, Tag, Rating, Button | Nguồn: components/domain/tutor/tutor-card.html; components/data-display/{card,avatar,rating,tag}.html; components/feedback/badge.html; components/action/button.html -->
+                    <div class="tutor-search-results__list" data-tutor-list>
+                        <article class="card tutor-card tutor-search-card" data-tutor-card data-name="nguyen minh anh" data-subject="toan" data-grade="10" data-region="ho-chi-minh" data-district="thu duc" data-delivery="both" data-price="200000" data-rating="4.9" data-verified="true" data-days="3,5,7" data-periods="morning,evening">
+                            <div class="tutor-search-card__main"><div class="tutor-card__identity"><span class="avatar avatar--large" role="img" aria-label="Ảnh đại diện Nguyễn Minh Anh">MA</span><div class="tutor-card__heading"><div class="tutor-search-card__name-row"><h3 class="tutor-card__name">Nguyễn Minh Anh</h3><span class="badge badge--success"><span class="component-icon component-icon--verified" aria-hidden="true"></span>Đã xác minh</span></div><div class="tutor-card__tags"><span class="tag">Toán</span><span class="tag">THPT</span></div><p class="tutor-card__bio">Thạc sĩ Toán học, chuyên gia sư nền tảng và luyện thi.</p><div class="tutor-search-card__meta"><span>5 năm kinh nghiệm</span><span>Thủ Đức, TP.HCM</span><span>Dạy tại nhà &amp; trực tuyến</span><span class="rating rating--compact" role="img" aria-label="Đánh giá 4,9 trên 5 sao từ 126 đánh giá"><span class="rating__stars" aria-hidden="true"><span class="rating__star"></span></span><span class="rating__score">4,9</span><span class="rating__count">(126 đánh giá)</span></span></div></div></div></div>
+                            <footer class="tutor-search-card__aside"><p class="tutor-card__price">200.000 ₫<span class="tutor-card__unit">mỗi buổi 90 phút</span></p><span class="tutor-search-card__classes">Đã dạy 84 lớp</span><button class="button button--outline button--medium" type="button" data-view-profile data-tutor-name="Nguyễn Minh Anh">Xem hồ sơ</button></footer>
+                        </article>
+                        <article class="card tutor-card tutor-search-card" data-tutor-card data-name="tran quoc huy" data-subject="tieng-anh" data-grade="luyen-thi" data-region="ho-chi-minh" data-district="quan 7" data-delivery="both" data-price="250000" data-rating="4.8" data-verified="true" data-days="2,4,6" data-periods="afternoon,evening">
+                            <div class="tutor-search-card__main"><div class="tutor-card__identity"><span class="avatar avatar--large" role="img" aria-label="Ảnh đại diện Trần Quốc Huy">QH</span><div class="tutor-card__heading"><div class="tutor-search-card__name-row"><h3 class="tutor-card__name">Trần Quốc Huy</h3><span class="badge badge--success"><span class="component-icon component-icon--verified" aria-hidden="true"></span>Đã xác minh</span></div><div class="tutor-card__tags"><span class="tag">Tiếng Anh</span><span class="tag">IELTS</span></div><p class="tutor-card__bio">Cử nhân ĐH Sư phạm, IELTS 8.0. Chuyên luyện thi chứng chỉ và phát triển kỹ năng nghe nói.</p><div class="tutor-search-card__meta"><span>4 năm kinh nghiệm</span><span>Quận 7, TP.HCM</span><span>Dạy trực tuyến &amp; tại nhà</span><span class="rating rating--compact" role="img" aria-label="Đánh giá 4,8 trên 5 sao từ 89 đánh giá"><span class="rating__stars" aria-hidden="true"><span class="rating__star"></span></span><span class="rating__score">4,8</span><span class="rating__count">(89 đánh giá)</span></span></div></div></div></div>
+                            <footer class="tutor-search-card__aside"><p class="tutor-card__price">250.000 ₫<span class="tutor-card__unit">mỗi buổi 90 phút</span></p><span class="tutor-search-card__classes">Đã dạy 62 lớp</span><button class="button button--outline button--medium" type="button" data-view-profile data-tutor-name="Trần Quốc Huy">Xem hồ sơ</button></footer>
+                        </article>
+                        <article class="card tutor-card tutor-search-card" data-tutor-card data-name="le thao vy" data-subject="ngu-van" data-grade="thcs" data-region="ho-chi-minh" data-district="binh thanh" data-delivery="home" data-price="180000" data-rating="4.9" data-verified="true" data-days="3,5,7" data-periods="morning,evening">
+                            <div class="tutor-search-card__main"><div class="tutor-card__identity"><span class="avatar avatar--large" role="img" aria-label="Ảnh đại diện Lê Thảo Vy">TV</span><div class="tutor-card__heading"><div class="tutor-search-card__name-row"><h3 class="tutor-card__name">Lê Thảo Vy</h3><span class="badge badge--success"><span class="component-icon component-icon--verified" aria-hidden="true"></span>Đã xác minh</span></div><div class="tutor-card__tags"><span class="tag">Ngữ văn</span><span class="tag">THCS</span></div><p class="tutor-card__bio">Tốt nghiệp xuất sắc ĐH Khoa học Xã hội &amp; Nhân văn, giúp học sinh nắm vững phương pháp làm bài.</p><div class="tutor-search-card__meta"><span>3 năm kinh nghiệm</span><span>Bình Thạnh, TP.HCM</span><span>Dạy tại nhà</span><span class="rating rating--compact" role="img" aria-label="Đánh giá 4,9 trên 5 sao từ 61 đánh giá"><span class="rating__stars" aria-hidden="true"><span class="rating__star"></span></span><span class="rating__score">4,9</span><span class="rating__count">(61 đánh giá)</span></span></div></div></div></div>
+                            <footer class="tutor-search-card__aside"><p class="tutor-card__price">180.000 ₫<span class="tutor-card__unit">mỗi buổi 90 phút</span></p><span class="tutor-search-card__classes">Đã dạy 45 lớp</span><button class="button button--outline button--medium" type="button" data-view-profile data-tutor-name="Lê Thảo Vy">Xem hồ sơ</button></footer>
+                        </article>
+                        <article class="card tutor-card tutor-search-card" data-tutor-card data-name="pham hoang long" data-subject="toan" data-grade="10,luyen-thi" data-region="ho-chi-minh" data-district="quan 3" data-delivery="both" data-price="300000" data-rating="5" data-verified="true" data-days="3,5" data-periods="afternoon,evening">
+                            <div class="tutor-search-card__main"><div class="tutor-card__identity"><span class="avatar avatar--large" role="img" aria-label="Ảnh đại diện Phạm Hoàng Long">PL</span><div class="tutor-card__heading"><div class="tutor-search-card__name-row"><h3 class="tutor-card__name">Phạm Hoàng Long</h3><span class="badge badge--success"><span class="component-icon component-icon--verified" aria-hidden="true"></span>Đã xác minh</span></div><div class="tutor-card__tags"><span class="tag">Toán</span><span class="tag">Luyện thi</span></div><p class="tutor-card__bio">Thạc sĩ Toán ứng dụng ĐH Bách Khoa. Chuyên bồi dưỡng học sinh giỏi và luyện thi THPT Quốc gia.</p><div class="tutor-search-card__meta"><span>6 năm kinh nghiệm</span><span>Quận 3, TP.HCM</span><span>Dạy tại nhà &amp; trực tuyến</span><span class="rating rating--compact" role="img" aria-label="Đánh giá 5 trên 5 sao từ 42 đánh giá"><span class="rating__stars" aria-hidden="true"><span class="rating__star"></span></span><span class="rating__score">5,0</span><span class="rating__count">(42 đánh giá)</span></span></div></div></div></div>
+                            <footer class="tutor-search-card__aside"><p class="tutor-card__price">300.000 ₫<span class="tutor-card__unit">mỗi buổi 90 phút</span></p><span class="tutor-search-card__classes">Đã dạy 110 lớp</span><button class="button button--outline button--medium" type="button" data-view-profile data-tutor-name="Phạm Hoàng Long">Xem hồ sơ</button></footer>
+                        </article>
+                    </div>
+
+                    <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                    <section class="empty-state tutor-search-empty" data-tutor-empty hidden aria-labelledby="tutor-empty-title"><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title" id="tutor-empty-title">Không tìm thấy gia sư phù hợp</h2><p class="empty-state__description">Hãy thử thay đổi từ khóa hoặc nới lỏng bộ lọc tìm kiếm.</p></section>
+
+                    <!-- Component: Pagination | Nguồn: components/navigation/pagination.html; JS: js/core/pagination.js -->
+                    <nav class="pagination tutor-search-pagination" aria-label="Phân trang gia sư" data-pagination data-total="128" data-page-size="12" data-current="1" data-last-page="12"><p class="pagination__summary">Hiển thị <strong data-range-start>1</strong> - <strong data-range-end>12</strong> trong tổng số <strong data-total-count>128</strong> gia sư</p><div class="pagination__controls"><button class="pagination__button" type="button" data-page-action="previous" aria-label="Trang trước"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button><button class="pagination__button is-current" type="button" data-page="1">1</button><button class="pagination__button" type="button" data-page="2">2</button><button class="pagination__button" type="button" data-page="3">3</button><button class="pagination__button" type="button" data-page="4">4</button><span class="pagination__ellipsis" aria-hidden="true">…</span><button class="pagination__button" type="button" data-page="12">12</button><button class="pagination__button" type="button" data-page-action="next" aria-label="Trang sau"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></div></nav>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
+    <footer class="user-footer" data-component="user-footer"><div class="user-footer__inner"><div class="user-footer__main"><section class="user-footer__brand" aria-label="Về TriThức"><a class="user-footer__brand-link" href="#trang-chu"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a><p>Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch. Đem lại sự an tâm thông qua quy trình bảo chứng năng lực và hợp đồng an toàn.</p><span class="user-footer__certificate"><img src="../../assets/icons/certificate.svg" alt="">Chứng nhận đào tạo sư phạm</span></section><nav class="user-footer__links" aria-labelledby="search-footer-parent"><h2 id="search-footer-parent">Dành cho phụ huynh</h2><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tìm gia sư theo môn</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Đăng tin tìm gia sư</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy trình kiểm định</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Bảng học phí tham khảo</a></nav><nav class="user-footer__links" aria-labelledby="search-footer-tutor"><h2 id="search-footer-tutor">Dành cho gia sư</h2><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Đăng ký làm gia sư</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Lớp dạy mới nhận</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tiêu chuẩn xác minh</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách hợp tác</a></nav><nav class="user-footer__links" aria-labelledby="search-footer-support"><h2 id="search-footer-support">Hỗ trợ &amp; pháp lý</h2><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Trung tâm trợ giúp</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Điều khoản dịch vụ</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Bảo mật thông tin</a><a href="#"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy chế giải quyết tranh chấp</a></nav></div><div class="user-footer__bottom"><p><img src="../../assets/icons/copyright.svg" alt="">© 2026 TriThức Platform. Bảo lưu mọi quyền.</p><p class="user-footer__regions"><span>Hotline hỗ trợ:</span><a href="tel:19006868">1900 6868</a></p></div></div></footer>
+</div>
+</body>
+</html>
