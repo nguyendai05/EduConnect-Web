@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tin tìm gia sư của tôi | Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/page-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <link rel="stylesheet" href="../../css/components/navigation/tabs.css">
+    <link rel="stylesheet" href="../../css/components/form/search-input.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+    <link rel="stylesheet" href="../../css/components/domain/job/job-card.css">
+    <link rel="stylesheet" href="../../css/components/domain/job/applicant-card.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/feedback/modal.css">
+    <link rel="stylesheet" href="../../css/pages/job/my-job.css">
+    <script src="../../js/core/user-header.js" defer></script>
+    <script src="../../js/core/tabs.js" defer></script>
+    <script src="../../js/core/search-input.js" defer></script>
+    <script src="../../js/core/select.js" defer></script>
+    <script src="../../js/core/modal.js" defer></script>
+    <script src="../../js/pages/job/my-job.js" defer></script>
+</head>
+<body class="my-job-page">
+<div class="user-shell" data-component="user-shell" data-my-job-page>
+<header class="user-header" data-component="user-header" data-user-variant="C">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
+            <span class="user-header__brand-mark" aria-hidden="true">
+                <img src="../../assets/icons/logo.svg" alt="">
+            </span>
+            <span class="user-header__brand-name">Edu Connect</span>
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link is-active" data-nav-key="home" data-route="/app/dashboard" href="#trang-chu" aria-current="page">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="#tim-gia-su">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="#tin-tim-gia-su">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="groups" data-route="/app/group-classes" href="#lop-nhom">Lớp nhóm</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" title="Tin nhắn" data-user-action="messages">
+                <img src="../../assets/icons/message.svg" alt="">
+            </button>
+            <button class="user-header__icon-button" type="button" aria-label="Thông báo" title="Thông báo" data-user-action="notifications">
+                <img src="../../assets/icons/notification.svg" alt="">
+            </button>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>LY</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Lê Hoàng Yến</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong>
+                        <span data-profile-role>Gia sư Chuyên Toán</span>
+                    </span>
+                    <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                            <span class="user-header__menu-badge" data-menu-summary-badge>Gia sư TOP 1%</span>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="#ho-so" role="menuitem" data-menu-item="0">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="#hop-dong" role="menuitem" data-menu-item="1">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/calendar.svg" alt="" data-menu-icon="calendar">
+                            <span data-menu-label>Hợp đồng của tôi</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="#vi-tri-thuc" role="menuitem" data-menu-item="2">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet">
+                            <span data-menu-label>Ví TriThức</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="#bao-mat" role="menuitem" data-menu-item="3">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/shield.svg" alt="" data-menu-icon="shield">
+                            <span data-menu-label>Bảo mật tài khoản</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="#lich-su-giao-dich" role="menuitem" data-menu-item="4">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt="">
+                            <span data-menu-logout-label>Đăng xuất tài khoản</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="user-shell__main">
+<div class="user-shell__content">
+    <nav class="breadcrumb my-job-page__breadcrumb" aria-label="Breadcrumb">
+        <ol class="breadcrumb__list">
+            <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
+            <li class="breadcrumb__item"><a class="breadcrumb__link" href="#tin-tim-gia-su">Tin tìm gia sư</a></li>
+            <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Tin của tôi</span></li>
+        </ol>
+    </nav>
+
+    <header class="page-header">
+        <div class="page-header__content">
+            <div class="page-header__title-block">
+                <div class="page-header__title-row">
+                    <h1 class="page-header__title">Tin tìm gia sư của tôi</h1>
+                    <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Tin đang tuyển: 2 / 5</span>
+                </div>
+                <p class="page-header__description">Đăng nhu cầu học và quản lý các gia sư đã ứng tuyển. Bạn có thể có tối đa 5 tin đang tuyển cùng lúc.</p>
+            </div>
+            <div class="page-header__actions">
+                <button class="page-header__action page-header__action--primary" type="button">+ Đăng tin tìm gia sư</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="my-job-page__summary" aria-label="Tổng quan tin đăng">
+        <article class="my-job-metric"><div class="my-job-metric__content"><span class="my-job-metric__icon">4</span><div><p class="my-job-metric__label">Tất cả</p><p class="my-job-metric__value">4 <small>tin</small></p></div></div></article>
+        <article class="my-job-metric my-job-metric--warning"><div class="my-job-metric__content"><span class="my-job-metric__icon">1</span><div><p class="my-job-metric__label">Chờ duyệt</p><p class="my-job-metric__value">1 <small>tin</small></p></div></div></article>
+        <article class="my-job-metric my-job-metric--success"><div class="my-job-metric__content"><span class="my-job-metric__icon">2</span><div><p class="my-job-metric__label">Đang tuyển</p><p class="my-job-metric__value">2 <small>tin</small></p></div></div><span class="my-job-metric__marker" aria-label="Đang hoạt động"></span></article>
+        <article class="my-job-metric"><div class="my-job-metric__content"><span class="my-job-metric__icon">1</span><div><p class="my-job-metric__label">Đã đóng</p><p class="my-job-metric__value">1 <small>tin</small></p></div></div></article>
+    </section>
+
+    <div class="user-shell__grid my-job-page__grid">
+        <section class="my-job-page__primary" aria-label="Danh sách tin tìm gia sư">
+            <section class="tabs my-job-page__tabs" data-tabs data-job-tabs>
+                <div class="tabs__list" role="tablist" aria-label="Trạng thái tin đăng">
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-all" aria-controls="job-panel-all" aria-selected="true" tabindex="0" data-status="all">Tất cả (4)</button>
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-recruiting" aria-controls="job-panel-recruiting" aria-selected="false" tabindex="-1" data-status="recruiting">Đang tuyển (2)</button>
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-pending" aria-controls="job-panel-pending" aria-selected="false" tabindex="-1" data-status="pending">Chờ duyệt (1)</button>
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-closed" aria-controls="job-panel-closed" aria-selected="false" tabindex="-1" data-status="closed">Đã đóng (1)</button>
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-rejected" aria-controls="job-panel-rejected" aria-selected="false" tabindex="-1" data-status="rejected">Bị từ chối (0)</button>
+                </div>
+
+                <div class="my-job-page__toolbar">
+                    <div class="search-input search-input--standard" data-search-input>
+                        <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+                        <input type="search" placeholder="Tìm trong tin của tôi (môn, lớp, khu vực)..." aria-label="Tìm trong tin của tôi" data-job-search>
+                        <button class="search-input__clear" type="button" data-clear-search aria-label="Xóa nội dung tìm kiếm" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+                    </div>
+                    <section class="select-field" data-component="select" data-initial-open="false" data-job-sort>
+                        <span class="select-field__label" id="sort-label">Sắp xếp</span>
+                        <button class="select-control" type="button" aria-labelledby="sort-label sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-options" data-select-trigger>
+                            <span id="sort-value" data-select-value>Mới nhất</span>
+                            <img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="">
+                        </button>
+                        <div class="select-options" id="sort-options" role="listbox" aria-labelledby="sort-label" data-select-options hidden>
+                            <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Mới nhất"><span>Mới nhất</span><img src="../../assets/icons/dau-tich.svg" alt=""></button>
+                            <button class="select-option" type="button" role="option" aria-selected="false" data-value="Nhiều ứng viên nhất"><span>Nhiều ứng viên nhất</span></button>
+                            <button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí cao đến thấp"><span>Học phí cao đến thấp</span></button>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="tabs__panel" role="tabpanel" id="job-panel-all" aria-labelledby="job-tab-all" tabindex="0">
+                    <div class="my-job-page__jobs" data-job-list>
+                        <article class="job-card" data-job-card data-job-status="recruiting" data-applicants="6" data-fee="220000" data-created="4">
+                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Đang tuyển</span><span class="job-card__code">Mã tin: TT-88412 · Đăng 2 ngày trước</span></div><h2>Tìm gia sư Toán lớp 11 tại Thủ Đức</h2></div><p class="job-card__price">220.000 ₫<span>/buổi</span></p></div>
+                            <div class="job-card__tags"><span>Toán · Lớp 11</span><span>Tại nhà</span><span>Thủ Đức, TP.HCM</span></div>
+                            <div class="my-job-page__specs"><p><strong>Tần suất:</strong> 2 buổi/tuần (Tối T3, T5)</p><p><strong>Thời lượng:</strong> 90 phút</p><p><strong>Yêu cầu:</strong> Ưu tiên từ 3 năm kinh nghiệm, kèm sát chương trình ôn thi THPT.</p></div>
+                            <footer class="job-card__footer"><div class="job-card__stats"><span class="job-card__applicants">6 gia sư đã ứng tuyển</span><span>3 hồ sơ mới</span></div><div><button type="button" class="job-card__action job-card__action--primary">Xem 6 ứng viên</button> <button type="button" class="job-card__action" data-close-job data-modal-open="close-job-modal">Đóng tin</button></div></footer>
+                        </article>
+
+                        <article class="job-card" data-job-card data-job-status="recruiting" data-applicants="2" data-fee="250000" data-created="3">
+                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Đang tuyển</span><span class="job-card__code">Mã tin: TT-88209 · Đăng 4 ngày trước</span></div><h2>Tìm gia sư Tiếng Anh giao tiếp cho học sinh THPT</h2></div><p class="job-card__price">250.000 ₫<span>/buổi</span></p></div>
+                            <div class="job-card__tags"><span>Tiếng Anh · THPT</span><span>Trực tuyến</span><span>Google Meet / Zoom</span></div>
+                            <div class="my-job-page__specs"><p><strong>Tần suất:</strong> 2 buổi/tuần</p><p><strong>Lịch học:</strong> Linh hoạt cuối tuần</p><p><strong>Yêu cầu:</strong> Luyện phản xạ, thuyết trình và phát âm chuẩn IPA.</p></div>
+                            <footer class="job-card__footer"><div class="job-card__stats"><span class="job-card__applicants">2 gia sư đã ứng tuyển</span><span>Đăng 4 ngày trước</span></div><div><button type="button" class="job-card__action job-card__action--primary">Xem 2 ứng viên</button> <button type="button" class="job-card__action" data-close-job data-modal-open="close-job-modal">Đóng tin</button></div></footer>
+                        </article>
+
+                        <article class="job-card" data-job-card data-job-status="pending" data-applicants="0" data-fee="200000" data-created="5">
+                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--warning">Chờ duyệt</span><span class="job-card__code">Mã tin: TT-88590 · Gửi 3 giờ trước</span></div><h2>Tìm gia sư Vật lý lớp 11 luyện giữa học kỳ</h2></div><p class="job-card__price job-card__price--neutral">200.000 ₫<span>/buổi</span></p></div>
+                            <div class="job-card__tags"><span>Vật lý · Lớp 11</span><span>Tại nhà</span></div>
+                            <section class="alert alert--warning" role="status"><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Đang kiểm duyệt bảo mật</h3><p class="alert__message">Tin đang được kiểm tra tính xác thực và bảo vệ quyền riêng tư trước khi hiển thị công khai.</p></div></section>
+                            <footer class="job-card__footer"><div class="job-card__stats job-card__stats--muted"><span>Chưa mở ứng tuyển</span></div><button type="button" class="job-card__action">Chỉnh sửa</button></footer>
+                        </article>
+
+                        <article class="job-card job-card--closed" data-job-card data-job-status="closed" data-applicants="5" data-fee="180000" data-created="1">
+                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge">Đã đóng</span><span class="job-card__code">Mã tin: TT-87910 · Đăng 2 tuần trước</span></div><h2>Tìm gia sư Ngữ văn lớp 10</h2></div><p class="job-card__price job-card__price--neutral">180.000 ₫<span>/buổi</span></p></div>
+                            <div class="job-card__tags"><span>Ngữ văn · Lớp 10</span><span>Tại nhà</span><span>Đã chọn cô Lê Thảo Vy</span></div>
+                            <footer class="job-card__footer"><div class="job-card__stats job-card__stats--muted"><span>5 gia sư đã ứng tuyển</span><span>Lớp đang hoạt động</span></div><button type="button" class="job-card__action">Xem kết quả</button></footer>
+                        </article>
+                        <p class="my-job-page__empty" data-job-empty hidden>Không có tin nào phù hợp với bộ lọc hiện tại.</p>
+                    </div>
+                </div>
+                <div class="tabs__panel" role="tabpanel" id="job-panel-recruiting" aria-labelledby="job-tab-recruiting" tabindex="0" hidden></div>
+                <div class="tabs__panel" role="tabpanel" id="job-panel-pending" aria-labelledby="job-tab-pending" tabindex="0" hidden></div>
+                <div class="tabs__panel" role="tabpanel" id="job-panel-closed" aria-labelledby="job-tab-closed" tabindex="0" hidden></div>
+                <div class="tabs__panel" role="tabpanel" id="job-panel-rejected" aria-labelledby="job-tab-rejected" tabindex="0" hidden></div>
+            </section>
+        </section>
+
+        <aside class="my-job-page__sidebar" aria-label="Thông tin hỗ trợ">
+            <section class="my-job-sidebar-card">
+                <header class="my-job-sidebar-card__header"><h2>Ứng viên cần xem</h2><span class="my-job-sidebar-card__count">3 mới</span></header>
+                <p class="page-header__description">Tin “Tìm gia sư Toán lớp 11 tại Thủ Đức” vừa nhận thêm hồ sơ phù hợp.</p>
+                <article class="applicant-card applicant-card--compact"><header class="applicant-card__header"><div class="applicant-card__identity"><div class="applicant-card__avatar applicant-card__avatar--pending">MA</div><div><div class="applicant-card__name-row"><h3>Nguyễn Minh Anh</h3></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 4.9</span><span>ĐH Sư phạm TP.HCM</span></p></div></div></header></article>
+                <article class="applicant-card applicant-card--compact"><header class="applicant-card__header"><div class="applicant-card__identity"><div class="applicant-card__avatar applicant-card__avatar--selected">QH</div><div><div class="applicant-card__name-row"><h3>Trần Quốc Huy</h3></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 5.0</span><span>Chuyên Toán KHTN</span></p></div></div></header></article>
+                <article class="applicant-card applicant-card--compact"><header class="applicant-card__header"><div class="applicant-card__identity"><div class="applicant-card__avatar applicant-card__avatar--pending">PL</div><div><div class="applicant-card__name-row"><h3>Phạm Hoàng Long</h3></div><p class="applicant-card__details"><span>Kinh nghiệm 4 năm ôn thi</span></p></div></div></header></article>
+                <button class="my-job-sidebar-card__action" type="button">Xem ngay 3 ứng viên mới</button>
+            </section>
+
+            <section class="alert alert--warning" role="status"><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title">Kiểm duyệt an toàn</h2><p class="alert__message">Có 1 tin đang được kiểm tra nội dung để bảo vệ thông tin của gia đình.</p></div></section>
+
+            <section class="my-job-sidebar-card">
+                <h2>Cách tìm gia sư hiệu quả</h2>
+                <ol class="my-job-page__steps"><li><span>1</span><p><strong>Đăng nhu cầu học:</strong> Điền môn học, lịch học và học phí.</p></li><li><span>2</span><p><strong>Kiểm duyệt:</strong> Hệ thống xác minh thông tin.</p></li><li><span>3</span><p><strong>Nhận hồ sơ:</strong> Gia sư phù hợp gửi đề xuất.</p></li><li><span>4</span><p><strong>Duyệt và chọn:</strong> Trao đổi, học thử trước khi thanh toán.</p></li></ol>
+            </section>
+
+            <section class="my-job-sidebar-card my-job-page__support"><p>Hotline hỗ trợ phụ huynh</p><strong>1900 6868</strong><span>Miễn phí (8h00 - 21h30)</span></section>
+        </aside>
+    </div>
+
+    <section class="my-job-alternate" aria-labelledby="alternate-title">
+        <h2 id="alternate-title" class="page-header__title">Các trạng thái đặc biệt</h2>
+        <div class="my-job-alternate__grid">
+            <article class="my-job-alternate__item"><section class="alert alert--error" role="alert"><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Tin bị từ chối</h3><p class="alert__message">Nội dung chứa số điện thoại cá nhân. Vui lòng chỉnh sửa và gửi lại.</p></div></section><button class="my-job-page__secondary-action" type="button">Chỉnh sửa và gửi lại</button></article>
+            <article class="my-job-alternate__item"><section class="alert" role="status"><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Xác nhận đóng tin</h3><p class="alert__message">Gia sư sẽ không thể gửi thêm hồ sơ mới sau khi tin được đóng.</p></div></section><button class="my-job-page__secondary-action" type="button" data-modal-open="close-job-modal">Xem hộp thoại xác nhận</button></article>
+            <article class="my-job-alternate__item"><section class="alert" role="status"><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Giới hạn 5 tin đang tuyển</h3><p class="alert__message">Mỗi tài khoản phụ huynh được mở tối đa 5 tin tuyển cùng lúc.</p></div></section><button class="my-job-page__secondary-action" type="button" disabled>Đã đạt 5/5 tin</button></article>
+        </div>
+    </section>
+</div>
+</main>
+<footer class="user-footer" data-component="user-footer">
+    <div class="user-footer__inner">
+        <div class="user-footer__main">
+            <section class="user-footer__brand" aria-label="Về TriThức">
+                <a class="user-footer__brand-link" href="#trang-chu" aria-label="TriThức - Trang chủ">
+                    <img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt="">
+                    <span>Edu Connect</span>
+                </a>
+                <p>Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch. Đem lại sự an tâm tuyệt đối cho phụ huynh thông qua quy trình bảo chứng năng lực và hợp đồng ký quỹ an toàn.</p>
+                <span class="user-footer__certificate">
+                    <img src="../../assets/icons/certificate.svg" alt="">
+                    Chứng nhận đào tạo sư phạm
+                </span>
+            </section>
+
+            <nav class="user-footer__links" aria-labelledby="footer-parents-title">
+                <h2 id="footer-parents-title">Dành cho phụ huynh</h2>
+                <a href="#yeu-cau-tim-gia-su"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Đăng yêu cầu tìm gia sư</a>
+                <a href="#gia-su-tieu-bieu"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Danh sách gia sư tiêu biểu</a>
+                <a href="#quy-trinh-escrow"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy trình bảo đảm Escrow</a>
+                <a href="#bang-hoc-phi"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Bảng học phí tham khảo</a>
+            </nav>
+
+            <nav class="user-footer__links" aria-labelledby="footer-tutors-title">
+                <h2 id="footer-tutors-title">Dành cho gia sư</h2>
+                <a href="#tim-lop"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tìm lớp gia sư mới</a>
+                <a href="#tieu-chuan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tiêu chuẩn xác minh lý lịch</a>
+                <a href="#lop-nhom"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Mở lớp nhóm nhỏ</a>
+                <a href="#thu-lao"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo vệ thù lao</a>
+            </nav>
+
+            <nav class="user-footer__links" aria-labelledby="footer-support-title">
+                <h2 id="footer-support-title">Hỗ trợ &amp; pháp lý</h2>
+                <a href="#tro-giup"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Trung tâm trợ giúp học viên</a>
+                <a href="#dieu-khoan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Điều khoản sử dụng dịch vụ</a>
+                <a href="#bao-mat"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo mật dữ liệu</a>
+                <a href="#tranh-chap"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy chế giải quyết tranh chấp</a>
+            </nav>
+        </div>
+
+        <div class="user-footer__bottom">
+            <p><img src="../../assets/icons/copyright.svg" alt="">© 2026 TriThức Platform. Bảo lưu mọi quyền.</p>
+            <p class="user-footer__regions"><span>Trung tâm khu vực hỗ trợ:</span><a href="#ha-noi">Hà Nội</a><a href="#ho-chi-minh">TP. Hồ Chí Minh</a><a href="#da-nang">Đà Nẵng</a></p>
+        </div>
+    </div>
+</footer>
+</div>
+
+<dialog class="modal" id="close-job-modal" aria-labelledby="close-job-title" aria-describedby="close-job-description">
+    <div class="modal__surface">
+        <header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="close-job-title">Xác nhận đóng tin tuyển?</h2></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header>
+        <div class="modal__body"><p id="close-job-description">Gia sư sẽ không thể gửi thêm hồ sơ ứng tuyển mới. Bạn vẫn có thể xem các hồ sơ đã nhận trước đó.</p></div>
+        <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Hủy</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Đồng ý đóng tin</button></footer>
+    </div>
+</dialog>
+</body>
+</html>

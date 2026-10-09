@@ -1,5 +1,5 @@
 /**
- * EduToast.show({ type: 'success'|'error'|'warning'|'info', title, message, duration })
+ * EduToast.show({ type: 'success'|'error'|'warning'|'info'|'copy', title, message, duration, actionLabel, onAction })
  * Returns { close }. Duration is milliseconds; 0 keeps the toast until dismissed.
  * Errors persist by default; other types last 6000 ms. No business logic belongs here.
  * Declarative trigger: data-toast="success" data-toast-title="..." data-toast-message="...".
@@ -11,7 +11,8 @@
     success: { title: 'Thành công', icon: '✓' },
     error: { title: 'Có lỗi xảy ra' },
     warning: { title: 'Cảnh báo' },
-    info: { title: 'Thông tin' }
+    info: { title: 'Thông tin' },
+    copy: { title: 'Đã sao chép' }
   }
   let region
   let polite
@@ -52,10 +53,17 @@
     const content = create('div', 'toast__content')
     content.append(create('p', 'toast__title', title))
     if (message) content.append(create('p', 'toast__message', message))
-    const button = create('button', 'toast__close', '×')
+    const action = options.actionLabel ? create('button', 'toast__action', String(options.actionLabel)) : null
+    if (action) action.type = 'button'
+    const button = create('button', 'toast__close')
     button.type = 'button'
     button.setAttribute('aria-label', `Đóng thông báo: ${title}`)
-    toast.append(icon, content, button)
+    const closeIcon = create('span', 'toast__close-icon')
+    closeIcon.setAttribute('aria-hidden', 'true')
+    button.append(closeIcon)
+    toast.append(icon, content)
+    if (action) toast.append(action)
+    toast.append(button)
     region.append(toast)
 
     let timer
@@ -99,12 +107,21 @@
       if (!toast.contains(event.relatedTarget)) { focused = false; resume() }
     })
     button.addEventListener('click', close)
+    action?.addEventListener('click', () => {
+      if (typeof options.onAction === 'function') options.onAction()
+      if (options.closeOnAction !== false) close()
+    })
     document.addEventListener('visibilitychange', onVisibility)
     resume()
     return Object.freeze({ close })
   }
   document.addEventListener('click', event => {
     if (!(event.target instanceof Element)) return
+    const dismiss = event.target.closest('[data-toast-dismiss]')
+    if (dismiss) {
+      dismiss.closest('.toast')?.remove()
+      return
+    }
     const trigger = event.target.closest('[data-toast]')
     if (!trigger) return
     show({ type: trigger.dataset.toast, title: trigger.dataset.toastTitle, message: trigger.dataset.toastMessage, duration: trigger.dataset.toastDuration })

@@ -1,0 +1,64 @@
+/* API: .badge + --success | --warning | --danger | --info | --neutral.
+   Keep a visible status label; color alone must not carry the meaning. */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    max-width: 100%;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-low);
+    color: var(--color-text-secondary);
+    font-family: inherit;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    overflow-wrap: anywhere;
+}
+.badge--success {
+    background: var(--color-success-container);
+    color: var(--color-success);
+}
+.badge--warning {
+    background: var(--color-warning-container);
+    color: var(--color-warning);
+}
+.badge--danger {
+    background: var(--color-danger-container);
+    color: var(--color-danger);
+}
+.badge--info {
+    background: var(--color-info-container);
+    color: var(--color-info);
+}
+.badge--neutral {
+    background: var(--color-surface-low);
+    color: var(--color-text-secondary);
+}
+.badge-component-page {
+    padding: var(--space-6);
+    background: var(--color-background);
+}
+.badge-preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.badge--verified {
+    background: var(--color-primary-container);
+    color: var(--color-primary-hover);
+}
+.badge--escrow {
+    background: var(--color-success-container);
+    color: var(--color-success);
+}
+
+.badge-preview__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+}

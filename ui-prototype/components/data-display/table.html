@@ -1,27 +1,63 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lịch sử giao dịch — Edu Connect</title>
-<link rel="stylesheet" href="../../css/tokens.css">
-<link rel="stylesheet" href="../../css/reset.css">
-<link rel="stylesheet" href="../../css/base.css">
-<link rel="stylesheet" href="../../css/components/data-display/table.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Table — Edu Connect</title>
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components/data-display/table.css">
 </head>
-<body>
-<main class="table-example">
-<div class="table-wrapper" role="region" aria-label="Lịch sử giao dịch" tabindex="0">
-  <table class="table">
-    <caption class="table__caption">Lịch sử giao dịch</caption>
-    <thead><tr><th scope="col">Giao dịch</th><th scope="col">Thời gian</th><th scope="col" class="table__amount">Số tiền</th><th scope="col">Trạng thái</th></tr></thead>
-    <tbody>
-      <tr><th scope="row">Ký quỹ hợp đồng<small>HD-20260919-024</small></th><td><time datetime="2026-09-19T09:30">19/09/2026 · 09:30</time></td><td class="table__amount">1.100.000 ₫</td><td><span class="table__status table__status--success">Thành công</span></td></tr>
-      <tr><th scope="row">Thanh toán buổi học<small>Buổi 1 · Toán</small></th><td><time datetime="2026-09-28T21:02">28/09/2026 · 21:02</time></td><td class="table__amount">220.000 ₫</td><td><span class="table__status table__status--pending">Đang xử lý</span></td></tr>
-    </tbody>
-  </table>
-</div>
+<body class="table-component-page">
+<main class="table-preview">
+  <section class="table-frame" aria-label="Bảng bản ghi đối soát giao dịch">
+    <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Lịch sử đối soát giao dịch" tabindex="0">
+      <table class="table table--records">
+        <caption class="table__caption table__caption--sr-only">Lịch sử đối soát giao dịch PayOS và Escrow</caption>
+        <thead>
+          <tr>
+            <th scope="col">Thời gian</th>
+            <th scope="col">Mã tham chiếu</th>
+            <th scope="col">Nội dung đối soát</th>
+            <th scope="col" class="table__amount">Số tiền</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col" class="table__action-heading">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table__time"><time datetime="2026-09-19T14:32">19/09/2026 · 14:32</time></td>
+            <td><code class="table__reference">TT-ESCROW-024</code></td>
+            <th class="table__description" scope="row">Thanh toán ký quỹ qua PayOS<small>Ký quỹ 8 buổi kèm Toán 11 (HD-20260919-024)</small></th>
+            <td class="table__amount table__amount--primary">+1.160.000 ₫</td>
+            <td><span class="table__status table__status--success">Đã ký quỹ</span></td>
+            <td class="table__action"><button type="button">Chi tiết</button></td>
+          </tr>
+          <tr>
+            <td class="table__time"><time datetime="2026-09-19T14:32">19/09/2026 · 14:32</time></td>
+            <td><code class="table__reference">TR-ESC-260919</code></td>
+            <th class="table__description" scope="row">Tự động dùng số dư Ví để ký quỹ<small>Cấn trừ số dư khả dụng sẵn có vào Escrow</small></th>
+            <td class="table__amount table__amount--debit">-600.000 ₫</td>
+            <td><span class="table__status table__status--automatic">Tự động cấn trừ</span></td>
+            <td class="table__action"><button type="button">Chi tiết</button></td>
+          </tr>
+          <tr>
+            <td class="table__time"><time datetime="2026-09-28T21:02">28/09/2026 · 21:02</time></td>
+            <td><code class="table__reference">TR-260928-1120</code></td>
+            <th class="table__description" scope="row">Giải ngân Buổi 1 (Toán 11)<small>Phụ huynh đã xác nhận hoàn thành buổi học</small></th>
+            <td class="table__amount table__amount--credit">+220.000 ₫</td>
+            <td><span class="table__status table__status--success">Đã giải ngân</span></td>
+            <td class="table__action"><button type="button">Sao kê</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="table__footer">
+      <p>Hiển thị 1 - 3 trong tổng số 14 bản ghi đối soát</p>
+      <p>[Kế thừa component Pagination của Nguyễn Khắc Trường Đạt]</p>
+    </footer>
+  </section>
 </main>
 </body>
 </html>

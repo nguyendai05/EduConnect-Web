@@ -1,0 +1,214 @@
+.negotiation-page {
+    max-width: 1240px;
+    margin: auto;
+    padding: var(--space-6);
+}
+.negotiation-page [hidden],
+.modal [hidden] {
+    display: none;
+}
+.negotiation-page > .breadcrumb {
+    margin-bottom: var(--space-6);
+}
+.negotiation-page > .alert {
+    margin-bottom: var(--space-6);
+}
+.negotiation-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+    gap: var(--space-6);
+}
+.negotiation-main,
+.negotiation-sidebar,
+.negotiation-stack {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0;
+}
+.negotiation-sidebar {
+    position: sticky;
+    top: var(--space-6);
+}
+.negotiation-panel {
+    padding: var(--space-5);
+}
+.negotiation-participants {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+}
+.negotiation-person {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 0;
+}
+.negotiation-person h2 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-1);
+}
+.negotiation-person .rating {
+    display: flex;
+    margin-top: var(--space-1);
+}
+.negotiation-muted {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+.negotiation-section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+.negotiation-terms,
+.negotiation-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+}
+.negotiation-full {
+    grid-column: 1 / -1;
+}
+.negotiation-amount {
+    color: var(--color-primary);
+}
+.negotiation-change {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-secondary-container);
+    font-size: var(--font-size-sm);
+}
+.negotiation-change h3,
+.negotiation-message h3 {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-2);
+}
+.negotiation-change ul,
+.negotiation-checklist {
+    padding-left: var(--space-5);
+}
+.negotiation-change li + li,
+.negotiation-checklist li + li {
+    margin-top: var(--space-2);
+}
+.negotiation-message {
+    padding: var(--space-4);
+    border-left: 3px solid var(--color-primary);
+    background: var(--color-primary-container);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+}
+.negotiation-message p,
+.negotiation-history p {
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+.negotiation-history {
+    list-style: none;
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-5);
+}
+.negotiation-history-item {
+    position: relative;
+    border-left: 2px solid var(--color-primary-border);
+    padding-left: var(--space-5);
+    display: grid;
+    gap: var(--space-2);
+}
+.negotiation-history-item::before {
+    content: "";
+    position: absolute;
+    left: -6px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+}
+.negotiation-history-item h3 {
+    font-size: var(--font-size-sm);
+}
+.negotiation-history-item time,
+.negotiation-history-item p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+.negotiation-history-item .button {
+    justify-self: start;
+}
+.negotiation-deadline {
+    display: flex;
+    align-items: start;
+    gap: var(--space-2);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    background: var(--color-warning-container);
+    color: var(--color-warning);
+    font-size: var(--font-size-sm);
+}
+.negotiation-deadline .component-icon {
+    margin-top: 3px;
+}
+.negotiation-price {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-4);
+}
+.negotiation-price strong {
+    display: block;
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+    margin: var(--space-2) 0;
+}
+.negotiation-price p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+.negotiation-actions {
+    display: grid;
+    gap: var(--space-3);
+}
+.negotiation-checklist {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+.negotiation-form-total {
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--color-primary-container);
+}
+.negotiation-dialog-terms {
+    white-space: pre-line;
+    font-size: var(--font-size-sm);
+    background: var(--color-surface-low);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+}
+@media (max-width: 960px) {
+    .negotiation-layout {
+        grid-template-columns: 1fr;
+    }
+    .negotiation-sidebar {
+        position: static;
+    }
+}
+@media (max-width: 560px) {
+    .negotiation-page {
+        padding: var(--space-4);
+    }
+    .negotiation-terms,
+    .negotiation-form-grid {
+        grid-template-columns: 1fr;
+    }
+    .negotiation-person {
+        flex-basis: 100%;
+    }
+    .negotiation-panel {
+        padding: var(--space-4);
+    }
+}

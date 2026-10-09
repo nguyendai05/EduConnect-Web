@@ -1,22 +1,47 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thông báo — Edu Connect</title>
-<link rel="stylesheet" href="../../css/tokens.css">
-<link rel="stylesheet" href="../../css/reset.css">
-<link rel="stylesheet" href="../../css/base.css">
-<link rel="stylesheet" href="../../css/components/feedback/alert.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alert — Edu Connect</title>
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components/feedback/alert.css">
 </head>
-<body>
-<main class="alert-example">
-<section class="alert alert--warning" role="status" aria-labelledby="alert-title">
-  <span class="alert__icon" aria-hidden="true"></span>
-  <div class="alert__content"><h2 id="alert-title" class="alert__title">Buổi học đang chờ xác nhận</h2>
-  <p class="alert__message">Vui lòng kiểm tra thông tin và xác nhận khi buổi học đã hoàn thành.</p></div>
-</section>
+<body class="alert-component-page">
+<main class="alert-preview" aria-label="Các trạng thái Alert">
+  <section class="alert alert--contextual" role="status" aria-labelledby="payos-alert-title">
+    <span class="alert__icon" aria-hidden="true"></span>
+    <div class="alert__content">
+      <h2 class="alert__title" id="payos-alert-title">Cơ chế xác thực giao dịch PayOS:</h2>
+      <p class="alert__message">Giao dịch thanh toán ký quỹ chỉ được hệ thống ghi nhận chính thức sau khi nhận webhook bảo mật từ cổng thanh toán.</p>
+    </div>
+  </section>
+
+  <section class="alert alert--contextual alert--success" role="status" aria-labelledby="success-alert-title">
+    <span class="alert__icon alert__icon--double-check" aria-hidden="true"></span>
+    <div class="alert__content">
+      <h2 class="alert__title" id="success-alert-title">Thanh toán ký quỹ thành công:</h2>
+      <p class="alert__message">Khoản ký quỹ <strong>1.760.000 ₫</strong> đã được ghi nhận vào tài khoản trung gian ký quỹ Escrow bảo chứng cho 8 buổi học.</p>
+    </div>
+  </section>
+
+  <section class="alert alert--contextual alert--warning" role="status" aria-labelledby="escrow-alert-title">
+    <span class="alert__icon" aria-hidden="true"></span>
+    <div class="alert__content">
+      <h2 class="alert__title" id="escrow-alert-title">Tiền đang tạm giữ trong ký quỹ:</h2>
+      <p class="alert__message">Số tiền này được bảo hộ theo quy chế Escrow và chỉ giải ngân từng buổi sau khi học viên xác nhận buổi học thành công.</p>
+    </div>
+  </section>
+
+  <section class="alert alert--contextual alert--error" role="alert" aria-labelledby="error-alert-title">
+    <span class="alert__icon alert__icon--shield-alert" aria-hidden="true"></span>
+    <div class="alert__content">
+      <h2 class="alert__title" id="error-alert-title">Giao dịch chưa thể hoàn tất:</h2>
+      <p class="alert__message">Mã giao dịch đã hết hạn thanh toán (15 phút). Vui lòng tạo mã QR VietQR mới để thực hiện ký quỹ.</p>
+    </div>
+  </section>
 </main>
 </body>
 </html>

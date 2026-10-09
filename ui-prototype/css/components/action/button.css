@@ -1,0 +1,143 @@
+/* API: .button + --primary | --outline | --secondary | --danger.
+   Loading: aria-busy="true", disabled and .button__spinner.
+   Page code owns actions and switches loading/disabled states. */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    max-width: 100%;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color 150ms,
+        border-color 150ms;
+}
+.button--primary {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+}
+.button--outline {
+    border-color: var(--color-primary);
+    background: var(--color-surface);
+    color: var(--color-primary);
+}
+.button--secondary {
+    border-color: var(--color-border);
+    background: var(--color-surface-low);
+    color: var(--color-text-secondary);
+}
+.button--danger {
+    background: var(--color-danger);
+    color: var(--color-on-primary);
+}
+.button:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+}
+.button--outline:hover:not(:disabled) {
+    background: var(--color-primary-container);
+}
+.button--secondary:hover:not(:disabled) {
+    background: var(--color-surface-medium);
+}
+.button--danger:hover:not(:disabled) {
+    background: var(--color-danger);
+    box-shadow: inset 0 0 0 2px var(--color-on-primary);
+}
+.button:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
+.button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+.button[aria-busy="true"] {
+    opacity: 1;
+    cursor: wait;
+}
+.button__spinner {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: var(--radius-pill);
+    animation: button-spin 800ms linear infinite;
+}
+.button-component-page {
+    padding: var(--space-6);
+    background: var(--color-background);
+}
+.button-preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+}
+@keyframes button-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .button {
+        transition: none;
+    }
+    .button__spinner {
+        animation: none;
+    }
+}
+
+.button--ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+}
+.button--ghost:hover:not(:disabled) {
+    background: var(--color-surface-medium);
+}
+.button--small {
+    min-height: 32px;
+    padding: 4px 12px;
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
+}
+.button--medium {
+    min-height: 40px;
+    padding: 8px 16px;
+    line-height: 1.4;
+}
+.button--large {
+    min-height: 48px;
+    padding: 12px 20px;
+    line-height: 1.4;
+}
+.button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+.button[aria-pressed="true"] {
+    border-color: var(--color-primary);
+    background: var(--color-primary-hover);
+    color: var(--color-on-primary);
+}
+a.button--primary:hover {
+    color: var(--color-on-primary);
+}
+
+.button-preview__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+}
