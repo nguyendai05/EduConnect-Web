@@ -1,0 +1,49 @@
+.rating {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+}
+.rating__stars {
+    display: inline-flex;
+    gap: 2px;
+}
+.rating__star {
+    width: 16px;
+    height: 16px;
+    background: var(--color-warning);
+    mask: url("../../../assets/icons/star.svg") center / contain no-repeat;
+}
+.rating__star--empty {
+    background: var(--color-surface-high);
+}
+.rating__star--half {
+    background: linear-gradient(to right, var(--color-warning) 50%, var(--color-surface-high) 50%);
+}
+.rating__score {
+    color: var(--color-text);
+    font-weight: 700;
+}
+.rating__count {
+    color: var(--color-text-secondary);
+}
+.rating-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    padding: var(--space-6);
+}
+
+.rating--compact {
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--color-warning-container);
+}
+
+.rating-preview__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+}

@@ -26,11 +26,11 @@
     const visible = lessons.filter(lesson => filter === 'all' || lesson.status === filter)
     visible.forEach(lesson => {
       const card = document.createElement('article')
-      card.className = 'lesson-card lesson-card--' + (lesson.status === 'reported' ? 'pending' : lesson.status)
+      card.className = 'lesson-card lesson-card--compact lesson-card--' + (lesson.status === 'reported' ? 'pending' : lesson.status)
       card.id = 'lesson-' + lesson.id
       card.setAttribute('aria-labelledby', 'lesson-title-' + lesson.id)
       const detail = lesson.status === 'completed' ? 'Ký quỹ: Đã giải ngân 220.000 ₫' : lesson.status === 'reported' ? 'Báo cáo đang chờ xử lý · Tạm dừng xác nhận tự động' : lesson.status === 'pending' ? 'Gia sư đã điểm danh lúc 20:34 · Ký quỹ đang giữ: 220.000 ₫' : 'Ký quỹ đang giữ: 220.000 ₫'
-      card.innerHTML = `<span class="lesson-card__icon" aria-hidden="true"></span><div class="lesson-card__content"><header class="lesson-card__header"><h3 class="lesson-card__title" id="lesson-title-${lesson.id}">Buổi ${lesson.id} · ${lesson.date}</h3><span class="lesson-card__status">${labels[lesson.status]}</span></header><p class="lesson-card__schedule">19:00–20:30 · Toán lớp 11</p><p class="lesson-card__detail">${detail}</p><div class="contract-lesson-actions">${lesson.status === 'pending' ? `<button class="contract-button" type="button" data-action="confirm" data-lesson="${lesson.id}">Xác nhận buổi ${lesson.id}</button><button class="contract-button contract-button--plain" type="button" data-action="report" data-lesson="${lesson.id}">Báo vấn đề</button>` : `<button class="contract-button contract-button--secondary" type="button" data-action="detail" data-lesson="${lesson.id}">Chi tiết buổi học</button>`}</div></div>`
+      card.innerHTML = `<span class="lesson-card__number" aria-hidden="true">B${lesson.id}</span><div class="lesson-card__content"><header class="lesson-card__header"><h3 class="lesson-card__title" id="lesson-title-${lesson.id}">Buổi ${lesson.id} · ${lesson.date}</h3><span class="lesson-card__status">${labels[lesson.status]}</span></header><p class="lesson-card__schedule">19:00–20:30 · Toán lớp 11</p><p class="lesson-card__detail">${detail}</p><div class="lesson-card__actions">${lesson.status === 'pending' ? `<button class="contract-button" type="button" data-action="confirm" data-lesson="${lesson.id}">Xác nhận buổi ${lesson.id}</button><button class="contract-button contract-button--plain" type="button" data-action="report" data-lesson="${lesson.id}">Báo vấn đề</button>` : `<button class="contract-button contract-button--secondary" type="button" data-action="detail" data-lesson="${lesson.id}">Chi tiết buổi học</button>`}</div></div>`
       list.append(card)
     })
     document.getElementById('lessons-empty').hidden = visible.length > 0
@@ -43,7 +43,7 @@
     document.getElementById('finance-progress').value = completed * 220000
     document.querySelectorAll('[data-filter]').forEach(button => {
       const value = button.dataset.filter
-      const title = { all: 'Tất cả', completed: 'Hoàn thành', pending: 'Chờ xác nhận', upcoming: 'Sắp tới' }[value]
+      const title = { all: 'Tất cả', completed: 'Hoàn thành', pending: 'Chờ xác nhận', upcoming: 'Sắp tới', reported: 'Chờ xử lý' }[value]
       button.textContent = `${title} (${value === 'all' ? lessons.length : lessons.filter(l => l.status === value).length})`
       button.setAttribute('aria-pressed', String(value === filter))
       button.classList.toggle('filter-chip--selected', value === filter)
@@ -62,7 +62,7 @@
     selected = lessons.find(l => l.id === Number(button.dataset.lesson))
     report.hidden = true
     if (action === 'confirm' && selected?.status === 'pending') {
-      window.EduModal.open(modal, { title: `Xác nhận hoàn thành buổi ${selected.id}?`, message: `Buổi học ngày ${selected.date}, 19:00–20:30 với gia sư Nguyễn Minh Anh. Chỉ xác nhận khi buổi học đã diễn ra đầy đủ. Khoản ký quỹ của buổi học là 220.000 ₫.`, confirmText: 'Xác nhận hoàn thành' })
+      window.EduModal.open(modal, { title: `Xác nhận hoàn thành buổi ${selected.id}?`, message: `Buổi học ngày ${selected.date}, 19:00–20:30 với gia sư Nguyễn Minh Anh. Chỉ xác nhận khi buổi học đã diễn ra đầy đủ. Khoản ký quỹ giải ngân: 220.000 ₫, gồm thu nhập gia sư 198.000 ₫ và phí dịch vụ 22.000 ₫. Xác nhận của bạn là căn cứ hoàn tất buổi học.`, confirmText: 'Xác nhận hoàn thành' })
     } else if (action === 'report' && selected?.status === 'pending') {
       report.hidden = false
       report.querySelector('textarea').value = ''
@@ -71,6 +71,7 @@
       report.querySelector('textarea').removeAttribute('aria-invalid')
       window.EduModal.open(modal, { title: `Báo vấn đề · Buổi ${selected.id}`, message: 'Mô tả vấn đề để bộ phận hỗ trợ xem xét. Buổi học sẽ chuyển sang trạng thái chờ xử lý.', confirmText: 'Gửi báo cáo' })
     } else if (action === 'detail' && selected) info(`Buổi ${selected.id} · ${selected.date}`, `Toán lớp 11 · 19:00–20:30 · Gia sư Nguyễn Minh Anh. Trạng thái: ${labels[selected.status]}. Học phí: 220.000 ₫.`)
+    else if (action === 'contract-detail') info('Hợp đồng HD-20260919-024', 'Gia sư Nguyễn Minh Anh · Học viên Trần Gia Huy · Phụ huynh Chị Mai Lan. Toán lớp 11, học trực tiếp, 8 buổi từ 28/09 đến 23/10/2026. Lịch học: Thứ Hai và Thứ Sáu, 19:00–20:30. Học phí 220.000 ₫/buổi; tổng ký quỹ 1.760.000 ₫.')
     else if (action === 'policy') info('Quy định đổi lịch', 'Hãy trao đổi và thống nhất với gia sư trước ít nhất 24 giờ nếu bạn cần thay đổi lịch học. Các trường hợp phát sinh sát giờ cần được bộ phận hỗ trợ xem xét theo điều khoản hợp đồng.')
     else if (action === 'support') info('Hỗ trợ hợp đồng', 'Nếu có vấn đề với buổi học, chọn “Báo vấn đề” tại buổi đang chờ xác nhận và cung cấp nội dung cụ thể để được hỗ trợ.')
     else if (action === 'message') info('Tin nhắn', 'Mục trò chuyện với gia sư sẽ được mở khi tính năng Tin nhắn sẵn sàng.')

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Thanh toán qua payOS | Edu Connect</title>
+        <link rel="stylesheet" href="../../css/pages/payment/qr.css" />
+        <script src="../../js/pages/payment/qr.js" defer></script>
+    </head>
+    <body>
+        <header class="checkout-header">
+            <a class="merchant-brand" href="checkout.html" aria-label="Edu Connect">
+                <img src="../../assets/icons/logo.svg" alt="" />
+                <span>Edu Connect</span>
+            </a>
+            <span class="provider">payOS <small>Checkout</small></span>
+        </header>
+        <main>
+            <section class="checkout-card" aria-labelledby="checkout-title">
+                <h1 id="checkout-title">Thanh toán qua payOS</h1>
+                <p class="instructions">
+                    Mở ứng dụng ngân hàng để <strong>quét mã VietQR</strong> hoặc chuyển khoản đúng
+                    thông tin bên dưới.
+                </p>
+                <div class="checkout-grid">
+                    <div class="qr-panel">
+                        <div class="vietqr">Viet<span>QR</span> <small>PRO</small></div>
+                        <svg
+                            id="qr-preview"
+                            viewBox="0 0 33 33"
+                            role="img"
+                            aria-label="Hình QR minh họa, không chứa thông tin chuyển tiền"
+                        ></svg>
+                        <p class="bank-network">napas 247 <span>MB</span></p>
+                    </div>
+                    <div class="bank-details">
+                        <p class="bank-name">
+                            <span>Ngân hàng</span><strong>Ngân hàng TMCP Quân đội (MB)</strong>
+                        </p>
+                        <dl>
+                            <div>
+                                <dt>Chủ tài khoản</dt>
+                                <dd>eduConnext</dd>
+                            </div>
+                            <div>
+                                <dt>Số tài khoản minh họa</dt>
+                                <dd>DEMO-EDUCONNEXT</dd>
+                            </div>
+                            <div class="copy-row">
+                                <dt>Số tiền</dt>
+                                <dd id="amount">—</dd>
+                                <button type="button" data-copy="amount">Sao chép</button>
+                            </div>
+                            <div class="copy-row">
+                                <dt>Nội dung chuyển khoản</dt>
+                                <dd id="reference">—</dd>
+                                <button type="button" data-copy="reference">Sao chép</button>
+                            </div>
+                        </dl>
+                        <p class="notice">
+                            Giữ nguyên số tiền và nội dung chuyển khoản để giao dịch được đối soát
+                            đúng hợp đồng.
+                        </p>
+                    </div>
+                </div>
+                <div class="checkout-actions">
+                    <button type="button" id="cancel">Hủy thanh toán</button>
+                    <span id="status" role="status" aria-live="polite">Đang chờ thanh toán</span>
+                </div>
+                <details class="preview-controls">
+                    <summary>Điều khiển giả lập</summary>
+                    <p>Dùng để xem giao diện kết quả; không cập nhật ví hoặc hợp đồng thật.</p>
+                    <button type="button" id="simulate-success">
+                        Giả lập nhận thanh toán thành công
+                    </button>
+                </details>
+                <a id="restart" href="checkout.html" hidden>Quay lại thanh toán hợp đồng</a>
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Xác nhận hợp đồng — Edu Connect</title>
+        <link rel="stylesheet" href="../../css/tokens.css" />
+        <link rel="stylesheet" href="../../css/reset.css" />
+        <link rel="stylesheet" href="../../css/base.css" />
+        <link rel="stylesheet" href="../../css/components/layout/user-header.css" />
+        <link rel="stylesheet" href="../../css/components/layout/user-footer.css" />
+        <link rel="stylesheet" href="../../css/components/layout/page-header.css" />
+        <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css" />
+        <link rel="stylesheet" href="../../css/components/action/button.css" />
+        <link rel="stylesheet" href="../../css/components/action/component-icon.css" />
+        <link rel="stylesheet" href="../../css/components/feedback/badge.css" />
+        <link rel="stylesheet" href="../../css/components/feedback/alert.css" />
+        <link rel="stylesheet" href="../../css/components/feedback/modal.css" />
+        <link rel="stylesheet" href="../../css/components/feedback/toast.css" />
+        <link rel="stylesheet" href="../../css/components/data-display/avatar.css" />
+        <link rel="stylesheet" href="../../css/components/data-display/card.css" />
+        <link rel="stylesheet" href="../../css/components/data-display/info-row.css" />
+        <link rel="stylesheet" href="../../css/components/form/checkbox.css" />
+        <link rel="stylesheet" href="../../css/components/form/form-field.css" />
+        <link rel="stylesheet" href="../../css/components/form/textarea.css" />
+        <link rel="stylesheet" href="../../css/pages/contract/confirm.css" />
+        <script src="../../js/core/user-header.js" defer></script>
+        <script src="../../js/core/modal.js" defer></script>
+        <script src="../../js/core/toast.js" defer></script>
+        <script src="../../js/pages/contract/confirm.js" defer></script>
+    </head>
+    <body>
+        <header
+            class="user-header"
+            data-component="user-header"
+            data-user-variant="A"
+            data-profile-name="Chị Mai Lan"
+            data-profile-initials="ML"
+            data-profile-role="Phụ huynh"
+            data-active-nav="tutors"
+        >
+            <div class="user-header__inner">
+                <a
+                    class="user-header__brand"
+                    href="#trang-chu"
+                    aria-label="Edu Connect - Trang chủ"
+                >
+                    <span class="user-header__brand-mark" aria-hidden="true">
+                        <img src="../../assets/icons/logo.svg" alt="" />
+                    </span>
+                    <span class="user-header__brand-name">Edu Connect</span>
+                </a>
+
+                <nav class="user-header__nav" aria-label="Điều hướng chính">
+                    <a
+                        class="user-header__nav-link is-active"
+                        data-nav-key="home"
+                        data-route="/app/dashboard"
+                        href="#trang-chu"
+                        aria-current="page"
+                        >Trang chủ</a
+                    >
+                    <a
+                        class="user-header__nav-link"
+                        data-nav-key="tutors"
+                        data-route="/app/tutors"
+                        href="#tim-gia-su"
+                        >Tìm gia sư</a
+                    >
+                    <a
+                        class="user-header__nav-link"
+                        data-nav-key="requests"
+                        data-route="/app/tutor-requests"
+                        href="#tin-tim-gia-su"
+                        >Tin tìm gia sư</a
+                    >
+                    <a
+                        class="user-header__nav-link"
+                        data-nav-key="groups"
+                        data-route="/app/group-classes"
+                        href="#lop-nhom"
+                        >Lớp nhóm</a
+                    >
+                </nav>
+
+                <div class="user-header__actions">
+                    <button
+                        class="user-header__icon-button"
+                        type="button"
+                        aria-label="Tin nhắn"
+                        title="Tin nhắn"
+                        data-user-action="messages"
+                    >
+                        <img src="../../assets/icons/message.svg" alt="" />
+                    </button>
+                    <button
+                        class="user-header__icon-button"
+                        type="button"
+                        aria-label="Thông báo"
+                        title="Thông báo"
+                        data-user-action="notifications"
+                    >
+                        <img src="../../assets/icons/notification.svg" alt="" />
+                    </button>
+
+                    <span class="user-header__divider" aria-hidden="true"></span>
+
+                    <div class="user-header__account">
+                        <button
+                            class="user-header__profile"
+                            type="button"
+                            aria-label="Mở menu tài khoản"
+                            aria-haspopup="menu"
+                            aria-expanded="false"
+                            aria-controls="user-account-menu"
+                        >
+                            <span
+                                class="user-header__avatar"
+                                aria-hidden="true"
+                                data-profile-initials
+                                >LY</span
+                            >
+                            <span class="user-header__profile-copy">
+                                <strong
+                                    ><span data-profile-name>Lê Hoàng Yến</span
+                                    ><img
+                                        class="user-header__verified"
+                                        data-profile-verified
+                                        src="../../assets/icons/verified.svg"
+                                        alt="Đã xác thực"
+                                        hidden
+                                /></strong>
+                                <span data-profile-role>Gia sư Chuyên Toán</span>
+                            </span>
+                            <img
+                                class="user-header__chevron"
+                                src="../../assets/icons/mui-ten-xuong.svg"
+                                data-icon-closed="../../assets/icons/mui-ten-xuong.svg"
+                                data-icon-open="../../assets/icons/mui-ten-len.svg"
+                                alt=""
+                            />
+                        </button>
+
+                        <div
+                            class="user-header__menu"
+                            id="user-account-menu"
+                            role="menu"
+                            aria-label="Menu tài khoản"
+                            hidden
+                        >
+                            <div class="user-header__menu-summary" data-menu-summary hidden>
+                                <div class="user-header__menu-summary-heading">
+                                    <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                                    <span class="user-header__menu-badge" data-menu-summary-badge
+                                        >Gia sư TOP 1%</span
+                                    >
+                                </div>
+                                <div class="user-header__menu-balance">
+                                    <span>Ví thù lao:</span>
+                                    <strong data-menu-balance>4.850.000đ</strong>
+                                </div>
+                            </div>
+
+                            <div class="user-header__menu-section" data-menu-links>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#ho-so"
+                                    role="menuitem"
+                                    data-menu-item="0"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/profile.svg"
+                                        alt=""
+                                        data-menu-icon="profile"
+                                    />
+                                    <span data-menu-label>Hồ sơ cá nhân</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#hop-dong"
+                                    role="menuitem"
+                                    data-menu-item="1"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/calendar.svg"
+                                        alt=""
+                                        data-menu-icon="calendar"
+                                    />
+                                    <span data-menu-label>Hợp đồng của tôi</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#vi-tri-thuc"
+                                    role="menuitem"
+                                    data-menu-item="2"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/wallet.svg"
+                                        alt=""
+                                        data-menu-icon="wallet"
+                                    />
+                                    <span data-menu-label>Ví Edu Connect</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#bao-mat"
+                                    role="menuitem"
+                                    data-menu-item="3"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/shield.svg"
+                                        alt=""
+                                        data-menu-icon="shield"
+                                    />
+                                    <span data-menu-label>Bảo mật tài khoản</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                                <a
+                                    class="user-header__menu-item"
+                                    href="#lich-su-giao-dich"
+                                    role="menuitem"
+                                    data-menu-item="4"
+                                >
+                                    <img
+                                        class="user-header__menu-item-leading"
+                                        src="../../assets/icons/receipt.svg"
+                                        alt=""
+                                        data-menu-icon="receipt"
+                                    />
+                                    <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                                    <img
+                                        class="user-header__menu-item-chevron"
+                                        src="../../assets/icons/chevron-right.svg"
+                                        alt=""
+                                    />
+                                </a>
+                            </div>
+
+                            <div
+                                class="user-header__menu-section user-header__menu-section--logout"
+                            >
+                                <button
+                                    class="user-header__menu-item user-header__menu-item--danger"
+                                    type="button"
+                                    role="menuitem"
+                                    data-user-action="logout"
+                                >
+                                    <img
+                                        class="user-header__menu-item-icon"
+                                        src="../../assets/icons/dang-xuat.svg"
+                                        alt=""
+                                    />
+                                    <span data-menu-logout-label>Đăng xuất tài khoản</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="confirm-page">
+            <nav class="breadcrumb" aria-label="Đường dẫn">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item">
+                        <a class="breadcrumb__link" href="../invitation/negotiation.html"
+                            >Lời mời gia sư</a
+                        >
+                    </li>
+                    <li class="breadcrumb__item">
+                        <span class="breadcrumb__current" aria-current="page"
+                            >Xác nhận hợp đồng</span
+                        >
+                    </li>
+                </ol>
+            </nav>
+            <header class="page-header">
+                <div class="page-header__title-block">
+                    <div class="page-header__title-row">
+                        <h1 class="page-header__title">Xác nhận hợp đồng dạy – học</h1>
+                        <span class="badge badge--warning" id="confirm-status"
+                            >Chờ bạn xác nhận</span
+                        >
+                    </div>
+                    <p class="page-header__description">
+                        Kiểm tra điều khoản hai bên đã thống nhất trước khi chuyển sang ký quỹ.
+                    </p>
+                    <p class="confirm-muted">
+                        Lời mời <span data-contract="invitation">INV-20261009-024</span> · Phiên bản
+                        <span data-contract="version">2</span> ·
+                        <a href="../invitation/negotiation.html">Xem lịch sử thương lượng</a>
+                    </p>
+                </div>
+            </header>
+            <section class="alert alert--info" id="confirm-alert" role="status">
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content">
+                    <h2 class="alert__title" id="confirm-alert-title">
+                        Hãy kiểm tra kỹ trước khi xác nhận
+                    </h2>
+                    <p class="alert__message" id="confirm-alert-message">
+                        Nếu thông tin chưa đúng, hãy yêu cầu kiểm tra lại. Xác nhận điều khoản chưa
+                        làm phát sinh thanh toán.
+                    </p>
+                </div>
+            </section>
+            <div class="confirm-layout">
+                <div class="confirm-main">
+                    <section class="card" aria-labelledby="parties-title">
+                        <header class="card__header">
+                            <h2 class="card__title" id="parties-title">1. Các bên tham gia</h2>
+                        </header>
+                        <div class="card__body confirm-two-columns">
+                            <article class="confirm-party">
+                                <span
+                                    class="avatar avatar--large"
+                                    role="img"
+                                    aria-label="Chị Mai Lan"
+                                    >ML</span
+                                >
+                                <div>
+                                    <p class="confirm-muted">Phụ huynh / Học viên</p>
+                                    <h3>Chị Mai Lan</h3>
+                                    <p>Đại diện: Trần Gia Huy · Lớp 11</p>
+                                    <p class="confirm-muted">Điện thoại: 09•• ••• 678</p>
+                                </div>
+                            </article>
+                            <article class="confirm-party">
+                                <span
+                                    class="avatar avatar--large"
+                                    role="img"
+                                    aria-label="Nguyễn Minh Anh"
+                                    >MA</span
+                                >
+                                <div>
+                                    <p class="confirm-muted">Gia sư phụ trách</p>
+                                    <h3>Nguyễn Minh Anh</h3>
+                                    <span class="badge badge--verified"
+                                        ><span
+                                            class="component-icon component-icon--verified"
+                                            aria-hidden="true"
+                                        ></span
+                                        >Đã xác minh</span
+                                    >
+                                    <p class="confirm-muted">Cử nhân Sư phạm Toán</p>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+                    <section class="card" aria-labelledby="learning-title">
+                        <header class="card__header">
+                            <h2 class="card__title" id="learning-title">
+                                2. Nội dung dạy – học đã thống nhất
+                            </h2>
+                            <p class="card__description">
+                                Điều khoản được giữ nguyên từ phiên bản hai bên đã chấp nhận.
+                            </p>
+                        </header>
+                        <div class="card__body">
+                            <div class="confirm-two-columns">
+                                <dl class="info-row info-row--stacked">
+                                    <dt class="info-row__label">Môn học</dt>
+                                    <dd class="info-row__value">Toán · Lớp 11</dd>
+                                </dl>
+                                <dl class="info-row info-row--stacked">
+                                    <dt class="info-row__label">Số buổi</dt>
+                                    <dd class="info-row__value">
+                                        <span data-contract="sessions">8</span> buổi · 90 phút/buổi
+                                    </dd>
+                                </dl>
+                                <dl class="info-row info-row--stacked">
+                                    <dt class="info-row__label">Hình thức</dt>
+                                    <dd class="info-row__value">Kèm 1–1 tại nhà học sinh</dd>
+                                </dl>
+                                <dl class="info-row info-row--stacked">
+                                    <dt class="info-row__label">Địa điểm</dt>
+                                    <dd class="info-row__value">TP. Thủ Đức, TP. Hồ Chí Minh</dd>
+                                </dl>
+                                <dl class="info-row info-row--stacked">
+                                    <dt class="info-row__label">Ngày bắt đầu</dt>
+                                    <dd class="info-row__value">
+                                        <span data-contract="start"></span>
+                                    </dd>
+                                </dl>
+                                <dl class="info-row info-row--stacked">
+                                    <dt class="info-row__label">Lịch học</dt>
+                                    <dd class="info-row__value">
+                                        <span data-contract="schedule"
+                                            >Thứ Hai & Thứ Sáu · 19:00–20:30</span
+                                        >
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="confirm-note">
+                                <h3>Mục tiêu & lời nhắn thống nhất</h3>
+                                <p data-contract="message">
+                                    Củng cố kiến thức Toán lớp 11 và rèn luyện kỹ năng giải bài tập.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="card" aria-labelledby="fees-title">
+                        <header class="card__header">
+                            <h2 class="card__title" id="fees-title">3. Học phí & phí dịch vụ</h2>
+                            <p class="card__description">
+                                Phí dịch vụ 10% được khấu trừ từ thù lao gia sư, không cộng thêm vào
+                                học phí.
+                            </p>
+                        </header>
+                        <div class="card__body">
+                            <dl class="info-row">
+                                <dt class="info-row__label">Học phí mỗi buổi</dt>
+                                <dd class="info-row__value" data-contract="fee">220.000 ₫</dd>
+                            </dl>
+                            <dl class="info-row">
+                                <dt class="info-row__label">Tổng giá trị hợp đồng</dt>
+                                <dd class="info-row__value confirm-total" data-contract="total">
+                                    1.760.000 ₫
+                                </dd>
+                            </dl>
+                            <div class="confirm-fee-grid">
+                                <div>
+                                    <p>Học phí / buổi</p>
+                                    <strong data-contract="fee">220.000 ₫</strong>
+                                </div>
+                                <div>
+                                    <p>Phí dịch vụ 10%</p>
+                                    <strong data-contract="platform">22.000 ₫</strong>
+                                </div>
+                                <div>
+                                    <p>Gia sư thực nhận / buổi</p>
+                                    <strong data-contract="net">198.000 ₫</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="card" aria-labelledby="escrow-title">
+                        <header class="card__header">
+                            <h2 class="card__title" id="escrow-title">
+                                4. Ký quỹ & kích hoạt hợp đồng
+                            </h2>
+                        </header>
+                        <div class="card__body confirm-stack">
+                            <ol class="confirm-steps">
+                                <li>
+                                    <strong>Thống nhất điều khoản</strong
+                                    ><span>Hai bên chấp nhận cùng một phiên bản.</span>
+                                </li>
+                                <li aria-current="step">
+                                    <strong>Xác nhận hợp đồng</strong
+                                    ><span>Kiểm tra nội dung và các cam kết.</span>
+                                </li>
+                                <li>
+                                    <strong>Hoàn tất ký quỹ</strong
+                                    ><span
+                                        >Dùng số dư khả dụng trước, thanh toán phần còn thiếu qua
+                                        PayOS.</span
+                                    >
+                                </li>
+                                <li>
+                                    <strong>Học & xác nhận từng buổi</strong
+                                    ><span>Giải ngân theo buổi được xác nhận.</span>
+                                </li>
+                            </ol>
+                            <p class="confirm-muted">
+                                Ký quỹ không chuyển ngay toàn bộ học phí cho gia sư. Khoản hoàn tiền
+                                được xử lý theo điều khoản hợp đồng và kết quả xét duyệt.
+                            </p>
+                        </div>
+                    </section>
+                    <section class="card" aria-labelledby="rules-title">
+                        <header class="card__header">
+                            <h2 class="card__title" id="rules-title">
+                                5. Quy tắc học tập & xử lý học phí
+                            </h2>
+                        </header>
+                        <div class="card__body confirm-stack">
+                            <details class="confirm-rule" open>
+                                <summary>Buổi học, điểm danh & xác nhận</summary>
+                                <p>
+                                    Gia sư cập nhật điểm danh và nội dung đã dạy. Phụ huynh xác nhận
+                                    hoàn thành hoặc báo vấn đề trong 72 giờ từ khi nhận yêu cầu xác
+                                    nhận. Khi hết hạn mà không có phản hồi hoặc khiếu nại, buổi học
+                                    được xử lý theo quy tắc xác nhận tự động của hợp đồng.
+                                </p>
+                                <p>
+                                    Học phí mỗi buổi được phân bổ thành phí dịch vụ và thu nhập thực
+                                    nhận của gia sư theo cơ cấu ở trên.
+                                </p>
+                            </details>
+                            <details class="confirm-rule" open>
+                                <summary>Hoàn tiền & chấm dứt hợp đồng</summary>
+                                <p>
+                                    Khoản ký quỹ của các buổi chưa được giải ngân được xem xét hoàn
+                                    theo lý do hủy và điều khoản đã thống nhất. Sau khi yêu cầu được
+                                    duyệt, khoản hoàn được cộng vào số dư khả dụng để sử dụng cho
+                                    hợp đồng khác.
+                                </p>
+                            </details>
+                            <details class="confirm-rule">
+                                <summary>Đổi lịch & xử lý tranh chấp</summary>
+                                <p>
+                                    Mọi thay đổi về lịch, học phí hoặc số buổi cần được hai bên xác
+                                    nhận trên hệ thống. Khi có tranh chấp, khoản tiền liên quan được
+                                    tạm giữ để kiểm tra trước khi quyết định giải ngân hoặc hoàn
+                                    tiền.
+                                </p>
+                            </details>
+                            <details class="confirm-rule">
+                                <summary>Trách nhiệm hai bên</summary>
+                                <p>
+                                    Phụ huynh chuẩn bị điều kiện học tập, hoàn tất ký quỹ và phản
+                                    hồi buổi học đúng hạn. Gia sư dạy đúng lịch, chuẩn bị nội dung
+                                    phù hợp và cập nhật kết quả buổi học. Hai bên thông báo kịp thời
+                                    khi cần điều chỉnh.
+                                </p>
+                            </details>
+                        </div>
+                    </section>
+                    <section class="card" aria-labelledby="signatures-title">
+                        <header class="card__header">
+                            <h2 class="card__title" id="signatures-title">
+                                6. Trạng thái xác nhận
+                            </h2>
+                        </header>
+                        <div class="card__body confirm-two-columns">
+                            <div class="confirm-signature">
+                                <h3>Gia sư · Nguyễn Minh Anh</h3>
+                                <span class="badge badge--success">Đã xác nhận điều khoản</span>
+                                <p class="confirm-muted" id="tutor-confirmed-at"></p>
+                            </div>
+                            <div class="confirm-signature">
+                                <h3>Phụ huynh · Chị Mai Lan</h3>
+                                <span class="badge badge--warning" id="parent-status"
+                                    >Chờ bạn xác nhận</span
+                                >
+                                <p class="confirm-muted" id="parent-confirmed-at">
+                                    Hạn xác nhận: <span id="confirm-deadline"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="card" aria-labelledby="consent-title">
+                        <header class="card__header">
+                            <h2 class="card__title" id="consent-title">
+                                7. Cam kết trước khi xác nhận
+                            </h2>
+                            <p class="card__description">Đọc và chọn đủ 5 nội dung bên dưới.</p>
+                        </header>
+                        <div class="card__body confirm-stack" id="consents">
+                            <label class="checkbox-option"
+                                ><span class="checkbox-hit-area"
+                                    ><input type="checkbox" data-consent id="consent-1" /><span
+                                        class="checkbox-box"
+                                        aria-hidden="true"
+                                    ></span></span
+                                ><span class="checkbox-option__copy"
+                                    >Tôi đã kiểm tra thông tin hai bên, môn học, số buổi, học phí,
+                                    lịch học và địa điểm.</span
+                                ></label
+                            >
+                            <label class="checkbox-option"
+                                ><span class="checkbox-hit-area"
+                                    ><input type="checkbox" data-consent id="consent-2" /><span
+                                        class="checkbox-box"
+                                        aria-hidden="true"
+                                    ></span></span
+                                ><span class="checkbox-option__copy"
+                                    >Tôi hiểu học phí được ký quỹ, không chuyển toàn bộ ngay cho gia
+                                    sư.</span
+                                ></label
+                            >
+                            <label class="checkbox-option"
+                                ><span class="checkbox-hit-area"
+                                    ><input type="checkbox" data-consent id="consent-3" /><span
+                                        class="checkbox-box"
+                                        aria-hidden="true"
+                                    ></span></span
+                                ><span class="checkbox-option__copy"
+                                    >Tôi hiểu học phí được giải ngân theo từng buổi học đã xác
+                                    nhận.</span
+                                ></label
+                            >
+                            <label class="checkbox-option"
+                                ><span class="checkbox-hit-area"
+                                    ><input type="checkbox" data-consent id="consent-4" /><span
+                                        class="checkbox-box"
+                                        aria-hidden="true"
+                                    ></span></span
+                                ><span class="checkbox-option__copy"
+                                    >Tôi hiểu quy tắc xác nhận sau 72 giờ khi không có phản hồi hoặc
+                                    khiếu nại.</span
+                                ></label
+                            >
+                            <label class="checkbox-option"
+                                ><span class="checkbox-hit-area"
+                                    ><input type="checkbox" data-consent id="consent-5" /><span
+                                        class="checkbox-box"
+                                        aria-hidden="true"
+                                    ></span></span
+                                ><span class="checkbox-option__copy"
+                                    >Tôi đồng ý ghi nhận các yêu cầu đổi lịch, hủy buổi và chấm dứt
+                                    hợp đồng trên hệ thống.</span
+                                ></label
+                            >
+                            <div class="confirm-select-all">
+                                <label class="checkbox-option"
+                                    ><span class="checkbox-hit-area"
+                                        ><input type="checkbox" id="select-all" /><span
+                                            class="checkbox-box"
+                                            aria-hidden="true"
+                                        ></span></span
+                                    ><span class="checkbox-option__copy"
+                                        >Chọn tất cả cam kết</span
+                                    ></label
+                                >
+                                <p id="consent-count" role="status">Đã chọn 0/5 điều khoản</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <aside class="confirm-sidebar" aria-label="Tóm tắt và xác nhận">
+                    <section class="card confirm-panel confirm-stack">
+                        <h2 class="card__title">Tóm tắt hợp đồng</h2>
+                        <span class="badge badge--warning" id="summary-status">Chờ xác nhận</span>
+                        <dl class="info-row">
+                            <dt class="info-row__label">Môn học</dt>
+                            <dd class="info-row__value">Toán · Lớp 11</dd>
+                        </dl>
+                        <dl class="info-row">
+                            <dt class="info-row__label">Quy mô</dt>
+                            <dd class="info-row__value">
+                                <span data-contract="sessions">8</span> buổi × 90 phút
+                            </dd>
+                        </dl>
+                        <dl class="info-row">
+                            <dt class="info-row__label">Học phí / buổi</dt>
+                            <dd class="info-row__value" data-contract="fee">220.000 ₫</dd>
+                        </dl>
+                        <div class="confirm-price">
+                            <span>Tổng học phí cần ký quỹ</span
+                            ><strong data-contract="total">1.760.000 ₫</strong>
+                        </div>
+                        <p class="confirm-muted">
+                            Sau khi xác nhận, bạn chuyển sang kiểm tra số dư và thanh toán ký quỹ.
+                            Không tự động trừ tiền ở bước này.
+                        </p>
+                        <button
+                            class="button button--primary"
+                            type="button"
+                            id="confirm-button"
+                            disabled
+                        >
+                            Xác nhận hợp đồng</button
+                        ><a
+                            class="button button--primary"
+                            href="../payment/checkout.html?from=contract"
+                            id="checkout-link"
+                            hidden
+                            >Tiếp tục ký quỹ</a
+                        >
+                        <p class="confirm-muted" id="confirm-hint">
+                            Cần chọn đủ 5 cam kết để tiếp tục.
+                        </p>
+                        <button class="button button--outline" type="button" id="report-button">
+                            Thông tin chưa đúng / Cần sửa lại</button
+                        ><button class="button button--ghost" type="button" id="print-button">
+                            In / Lưu bản PDF</button
+                        ><a href="../invitation/negotiation.html">Quay lại lời mời</a>
+                    </section>
+                </aside>
+            </div>
+        </main>
+        <footer class="user-footer" data-component="user-footer">
+            <div class="user-footer__inner">
+                <div class="user-footer__main">
+                    <section class="user-footer__brand" aria-label="Về Edu Connect">
+                        <a
+                            class="user-footer__brand-link"
+                            href="#trang-chu"
+                            aria-label="Edu Connect - Trang chủ"
+                        >
+                            <img
+                                class="user-footer__brand-mark"
+                                src="../../assets/icons/logo.svg"
+                                alt=""
+                            />
+                            <span>Edu Connect</span>
+                        </a>
+                        <p>
+                            Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch. Đem
+                            lại sự an tâm tuyệt đối cho phụ huynh thông qua quy trình bảo chứng năng
+                            lực và hợp đồng ký quỹ an toàn.
+                        </p>
+                        <span class="user-footer__certificate">
+                            <img src="../../assets/icons/certificate.svg" alt="" />
+                            Chứng nhận đào tạo sư phạm
+                        </span>
+                    </section>
+
+                    <nav class="user-footer__links" aria-labelledby="footer-parents-title">
+                        <h2 id="footer-parents-title">Dành cho phụ huynh</h2>
+                        <a href="#yeu-cau-tim-gia-su"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Đăng yêu
+                            cầu tìm gia sư</a
+                        >
+                        <a href="#gia-su-tieu-bieu"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Danh sách
+                            gia sư tiêu biểu</a
+                        >
+                        <a href="#quy-trinh-escrow"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Quy trình
+                            bảo đảm Escrow</a
+                        >
+                        <a href="#bang-hoc-phi"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Bảng học
+                            phí tham khảo</a
+                        >
+                    </nav>
+
+                    <nav class="user-footer__links" aria-labelledby="footer-tutors-title">
+                        <h2 id="footer-tutors-title">Dành cho gia sư</h2>
+                        <a href="#tim-lop"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Tìm lớp
+                            gia sư mới</a
+                        >
+                        <a href="#tieu-chuan"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Tiêu chuẩn
+                            xác minh lý lịch</a
+                        >
+                        <a href="#lop-nhom"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Mở lớp
+                            nhóm nhỏ</a
+                        >
+                        <a href="#thu-lao"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Chính sách
+                            bảo vệ thù lao</a
+                        >
+                    </nav>
+
+                    <nav class="user-footer__links" aria-labelledby="footer-support-title">
+                        <h2 id="footer-support-title">Hỗ trợ &amp; pháp lý</h2>
+                        <a href="#tro-giup"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Trung tâm
+                            trợ giúp học viên</a
+                        >
+                        <a href="#dieu-khoan"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Điều khoản
+                            sử dụng dịch vụ</a
+                        >
+                        <a href="#bao-mat"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Chính sách
+                            bảo mật dữ liệu</a
+                        >
+                        <a href="#tranh-chap"
+                            ><img src="../../assets/icons/footer-link-arrow.svg" alt="" />Quy chế
+                            giải quyết tranh chấp</a
+                        >
+                    </nav>
+                </div>
+
+                <div class="user-footer__bottom">
+                    <p>
+                        <img src="../../assets/icons/copyright.svg" alt="" />© 2026 Edu Connect
+                        Platform. Bảo lưu mọi quyền.
+                    </p>
+                    <p class="user-footer__regions">
+                        <span>Trung tâm khu vực hỗ trợ:</span><a href="#ha-noi">Hà Nội</a
+                        ><a href="#ho-chi-minh">TP. Hồ Chí Minh</a><a href="#da-nang">Đà Nẵng</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+        <dialog
+            class="modal"
+            id="confirm-modal"
+            aria-labelledby="confirm-modal-title"
+            aria-describedby="confirm-modal-description"
+        >
+            <div class="modal__surface">
+                <header class="modal__header">
+                    <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
+                    <div class="modal__heading">
+                        <h2 id="confirm-modal-title">Xác nhận hợp đồng</h2>
+                    </div>
+                    <button
+                        class="modal__close"
+                        type="button"
+                        data-modal-close
+                        aria-label="Đóng hộp thoại"
+                    >
+                        <span class="modal__close-icon" aria-hidden="true"></span>
+                    </button>
+                </header>
+                <div class="modal__body">
+                    <p id="confirm-modal-description"></p>
+                    <div class="confirm-note" id="confirm-modal-summary"></div>
+                </div>
+                <footer class="modal__footer">
+                    <button
+                        class="modal__button modal__button--secondary"
+                        type="button"
+                        data-modal-close
+                        autofocus
+                    >
+                        Xem lại</button
+                    ><button
+                        class="modal__button modal__button--primary"
+                        type="button"
+                        data-modal-confirm
+                    >
+                        Tôi đồng ý xác nhận
+                    </button>
+                </footer>
+            </div>
+        </dialog>
+        <dialog class="modal" id="report-modal" aria-labelledby="report-title">
+            <form id="report-form">
+                <header class="modal__header">
+                    <div class="modal__heading">
+                        <h2 id="report-title">Yêu cầu kiểm tra điều khoản</h2>
+                    </div>
+                    <button
+                        class="modal__close"
+                        type="button"
+                        data-modal-close
+                        aria-label="Đóng hộp thoại"
+                    >
+                        <span class="modal__close-icon" aria-hidden="true"></span>
+                    </button>
+                </header>
+                <div class="modal__body">
+                    <p>Hợp đồng sẽ tạm dừng bước xác nhận để hai bên kiểm tra lại nội dung.</p>
+                    <label class="form-field__label" for="report-message">Nội dung cần sửa *</label
+                    ><textarea
+                        class="textarea-control"
+                        id="report-message"
+                        maxlength="1000"
+                        rows="4"
+                        required
+                        placeholder="Nêu rõ thông tin nào chưa đúng với thỏa thuận"
+                    ></textarea>
+                </div>
+                <footer class="modal__footer">
+                    <button
+                        class="modal__button modal__button--secondary"
+                        type="button"
+                        data-modal-close
+                    >
+                        Quay lại</button
+                    ><button class="button button--primary" type="submit">
+                        Ghi nhận yêu cầu kiểm tra
+                    </button>
+                </footer>
+            </form>
+        </dialog>
+    </body>
+</html>

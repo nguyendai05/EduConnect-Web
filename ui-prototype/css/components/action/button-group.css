@@ -1,0 +1,12 @@
+.button-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.button-group-preview {
+    padding: var(--space-6);
+    display: grid;
+    gap: var(--space-4);
+}
