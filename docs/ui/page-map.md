@@ -15,7 +15,7 @@ Các trang trong ứng dụng chính thức sử dụng đường dẫn mô tả
 | Ví | `wallet/` | 11 Ví -> `wallet/index` |
 | Trò chuyện | `chat/` | Các trang trò chuyện -> `chat/<descriptive-name>` |
 | Thông báo | `notification/` | Các trang thông báo -> `notification/<descriptive-name>` |
-| Quản trị | `admin/` | 33 Chi tiết duyệt gia sư -> `admin/tutor-review-detail` |
+| Quản trị | `admin/` | 33 Chi tiết duyệt gia sư -> `admin/tutor-review-detail`; 34 Chi tiết duyệt tin -> `admin/job-review-detail`; 40 Hàng đợi tin -> `admin/job-review-queue` |
 
 Trong các ví dụ trên, `<descriptive-name>` là phần giữ chỗ cho tên mô tả chức năng của trang.
 

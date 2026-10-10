@@ -2,13 +2,70 @@
   const page = document.querySelector('[data-applicants-page]')
   if (!page) return
 
+  // Dữ liệu tin đăng dùng chung với trang "Tin của tôi" (my-job.html).
+  const jobs = {
+    'TT-88412': {
+      code: 'TT-88412',
+      title: 'Tìm gia sư Toán lớp 11 tại Thủ Đức',
+      status: 'Đang tuyển',
+      tags: ['Toán', 'Lớp 11 · THPT', 'Tại nhà'],
+      fee: '220.000 ₫ / buổi',
+      frequency: '2 buổi / tuần',
+      region: 'P. Linh Trung, TP. Thủ Đức',
+      experience: 'Tối thiểu 3 năm kinh nghiệm',
+      goal: 'Củng cố Hình học không gian & Hàm số 11',
+      subjectLine: 'yêu cầu học Toán lớp 11 của em Gia Huy',
+      contract: 'HD-20260926-025'
+    },
+    'TT-88209': {
+      code: 'TT-88209',
+      title: 'Tìm gia sư Tiếng Anh giao tiếp cho học sinh THPT',
+      status: 'Đang tuyển',
+      tags: ['Tiếng Anh', 'THPT', 'Trực tuyến'],
+      fee: '250.000 ₫ / buổi',
+      frequency: '2 buổi / tuần',
+      region: 'Google Meet / Zoom',
+      experience: 'Ưu tiên có chứng chỉ IELTS',
+      goal: 'Luyện phản xạ, thuyết trình và phát âm chuẩn IPA',
+      subjectLine: 'yêu cầu học Tiếng Anh giao tiếp của em Khánh My',
+      contract: 'HD-20260926-018'
+    },
+    'TT-88590': {
+      code: 'TT-88590',
+      title: 'Tìm gia sư Vật lý lớp 11 luyện giữa học kỳ',
+      status: 'Chờ duyệt',
+      tags: ['Vật lý', 'Lớp 11 · THPT', 'Tại nhà'],
+      fee: '200.000 ₫ / buổi',
+      frequency: '2 buổi / tuần',
+      region: 'P. Linh Trung, TP. Thủ Đức',
+      experience: 'Tối thiểu 2 năm kinh nghiệm',
+      goal: 'Ôn dao động cơ và sóng cơ trước bài kiểm tra giữa học kỳ 1',
+      subjectLine: 'yêu cầu học Vật lý lớp 11 của em Gia Huy',
+      contract: null
+    },
+    'TT-87910': {
+      code: 'TT-87910',
+      title: 'Tìm gia sư Ngữ văn lớp 10',
+      status: 'Đã đóng',
+      tags: ['Ngữ văn', 'Lớp 10 · THPT', 'Tại nhà'],
+      fee: '180.000 ₫ / buổi',
+      frequency: '2 buổi / tuần',
+      region: 'P. 25, Quận Bình Thạnh',
+      experience: 'Từ 1 năm kinh nghiệm',
+      goal: 'Rèn nghị luận xã hội và cảm thụ tác phẩm văn học',
+      subjectLine: 'yêu cầu học Ngữ văn lớp 10 của em Bảo Anh',
+      contract: 'HD-20260926-011'
+    }
+  }
+
   const list = page.querySelector('[data-applicants-list]')
-  const cards = Array.from(page.querySelectorAll('[data-applicant-card]'))
   const search = page.querySelector('[data-applicant-search]')
   const filters = Array.from(page.querySelectorAll('[data-applicant-filter]'))
   const sort = page.querySelector('[data-applicant-sort]')
   const resultCount = page.querySelector('[data-result-count]')
   const empty = page.querySelector('[data-applicants-empty]')
+  const emptyTitle = page.querySelector('#applicants-empty-title')
+  const emptyDescription = page.querySelector('.applicants-empty .empty-state__description')
   const compareBar = page.querySelector('[data-compare-bar]')
   const compareTitle = page.querySelector('[data-compare-title]')
   const compareSummary = page.querySelector('[data-compare-summary]')
@@ -16,8 +73,26 @@
   const confirmSummary = document.querySelector('[data-confirm-summary]')
   const compareModal = document.getElementById('applicants-compare-modal')
   const confirmModal = document.getElementById('applicants-confirm-modal')
+  const handoff = page.querySelector('[data-contract-handoff]')
   let activeFilter = 'all'
   let pendingTutor = null
+
+  const requestedJob = (new URLSearchParams(window.location.search).get('job') || '').trim().toUpperCase()
+  const job = jobs[requestedJob]
+  const allCards = Array.from(page.querySelectorAll('[data-applicant-card]'))
+
+  if (!job) {
+    page.querySelectorAll('[data-applicants-content]').forEach(node => { node.hidden = true })
+    const notFound = page.querySelector('[data-job-not-found]')
+    if (notFound) notFound.hidden = false
+    const requestedLabel = page.querySelector('[data-requested-job-id]')
+    if (requestedLabel) requestedLabel.textContent = requestedJob || 'chưa được cung cấp'
+    document.title = 'Không tìm thấy tin tìm gia sư | Edu Connect'
+    return
+  }
+
+  allCards.forEach(card => { card.hidden = card.dataset.job !== requestedJob })
+  const cards = allCards.filter(card => card.dataset.job === requestedJob)
 
   const normalize = value => String(value || '')
     .normalize('NFD')
@@ -95,12 +170,16 @@
     actionRow.append(makeCell('th', 'Hành động', 'row'))
     selected.forEach(card => {
       const cell = document.createElement('td')
-      const button = document.createElement('button')
-      button.type = 'button'
-      button.className = 'modal__button modal__button--primary'
-      button.dataset.compareSelect = card.dataset.name
-      button.textContent = `Chọn ${card.dataset.name.split(' ').slice(-2).join(' ')}`
-      cell.append(button)
+      if (card.dataset.status === 'pending') {
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.className = 'modal__button modal__button--primary'
+        button.dataset.compareSelect = card.dataset.name
+        button.textContent = `Chọn ${card.dataset.name.split(' ').slice(-2).join(' ')}`
+        cell.append(button)
+      } else {
+        cell.textContent = card.dataset.status === 'selected' ? 'Đã chọn gia sư này' : 'Không còn mở ứng tuyển'
+      }
       actionRow.append(cell)
     })
     tbody.append(actionRow)
@@ -136,7 +215,7 @@
     confirmSummary.append(name, details, fee)
     window.EduModal?.open(confirmModal, {
       title: `Xác nhận chọn gia sư ${card.dataset.name}?`,
-      message: `Bạn sắp chọn ${card.dataset.name} cho yêu cầu học Toán lớp 11 của em Gia Huy.`,
+      message: `Bạn sắp chọn ${card.dataset.name} cho ${job.subjectLine}.`,
       confirmText: 'Đồng ý & tiếp tục',
       cancelText: 'Xem lại',
       variant: 'confirm'
@@ -180,6 +259,46 @@
     empty.hidden = visible !== 0
   }
 
+  const setRender = (key, value) => {
+    const node = page.querySelector(`[data-render="${key}"]`)
+    if (node) node.textContent = value
+  }
+
+  const renderJob = () => {
+    document.title = `Ứng viên · ${job.title} | Edu Connect`
+    setRender('breadcrumb', `Ứng viên (Mã tin: ${job.code})`)
+    setRender('title', `${cards.length} gia sư đã ứng tuyển`)
+    setRender('status', job.status)
+    setRender('job-title', job.title)
+    setRender('job-fee', job.fee)
+    setRender('job-frequency', job.frequency)
+    setRender('job-region', job.region)
+    setRender('job-experience', job.experience)
+    setRender('job-goal', job.goal)
+    setRender('modal-subject', `Bạn sắp chọn gia sư cho ${job.subjectLine}.`)
+
+    const tags = page.querySelector('[data-render="job-tags"]')
+    if (tags) {
+      const classes = ['tag', 'tag tag--neutral', 'tag tag--format']
+      tags.replaceChildren(...job.tags.map((label, index) => {
+        const tag = document.createElement('span')
+        tag.className = classes[index] || 'tag'
+        tag.textContent = label
+        return tag
+      }))
+    }
+
+    const viewJob = page.querySelector('[data-view-job]')
+    if (viewJob) viewJob.href = `detail.html?id=${job.code}`
+
+    if (job.contract && handoff) handoff.href = `../contract/confirm.html?contract=${job.contract}`
+
+    if (!cards.length && emptyTitle && emptyDescription) {
+      emptyTitle.textContent = 'Tin chưa mở ứng tuyển'
+      emptyDescription.textContent = 'Tin đang chờ kiểm duyệt nên chưa nhận hồ sơ gia sư. Bạn sẽ thấy ứng viên tại đây sau khi tin được đăng công khai.'
+    }
+  }
+
   filters.forEach(filter => {
     filter.addEventListener('click', () => {
       activeFilter = filter.dataset.applicantFilter
@@ -215,21 +334,16 @@
       return
     }
     if (target.closest('[data-clear-compare]')) {
-      cards.forEach(card => { card.querySelector('[data-compare-checkbox]').checked = false })
+      cards.forEach(card => {
+        const checkbox = card.querySelector('[data-compare-checkbox]')
+        if (checkbox) checkbox.checked = false
+      })
       updateCompareBar()
       return
     }
-    if (target.closest('[data-open-confirm-demo]')) {
-      openConfirm(cards[0])
-      return
-    }
     const card = target.closest('[data-applicant-card]')
-    if (!card) {
-      if (target.closest('[data-view-job]')) showToast('info', 'Xem tin đăng', 'Bản mẫu giữ nguyên tại trang hiện tại và chưa điều hướng sang backend.')
-      return
-    }
+    if (!card) return
     if (target.closest('[data-select-tutor]')) openConfirm(card)
-    if (target.closest('[data-view-profile]')) showToast('info', card.dataset.name, 'Hồ sơ chi tiết sẽ được mở khi trang hồ sơ gia sư được tích hợp.')
     if (target.closest('[data-message]')) showToast('info', 'Mở cuộc trò chuyện', `Bắt đầu nhắn tin với ${card.dataset.name}.`)
   })
 
@@ -259,14 +373,19 @@
     status.className = 'applicant-card__status applicant-card__status--selected'
     updateFilterCounts()
     applyView()
+    if (handoff) {
+      if (job.contract) handoff.hidden = false
+      else showToast('info', 'Tin chưa mở ứng tuyển', 'Gia sư sẽ bắt đầu gửi hồ sơ sau khi tin được duyệt.')
+    }
     showToast('success', 'Đã ghi nhận lựa chọn', `${pendingTutor.dataset.name} đã được chọn. Hệ thống chuyển sang bước xác nhận điều khoản.`)
     pendingTutor = null
   })
 
   page.querySelector('[data-component="user-header"]')?.addEventListener('user-header:action', event => {
-    if (event.detail.action !== 'logout') showToast('info', 'Tính năng minh họa', 'Thao tác này chưa kết nối dữ liệu thật trong giai đoạn prototype.')
+    if (event.detail.action !== 'logout') showToast('info', 'Thông báo', 'Tính năng chưa sẵn sàng.')
   })
 
+  renderJob()
   updateFilterCounts()
   updateCompareBar()
   applyView()

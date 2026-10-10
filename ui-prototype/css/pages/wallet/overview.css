@@ -58,32 +58,6 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-3);
 }
-.wallet-flow {
-    margin-top: var(--space-5);
-    padding: var(--space-4);
-    border-radius: var(--radius-md);
-    background: var(--color-primary-container);
-}
-.wallet-flow h2 {
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--space-3);
-}
-.wallet-flow ol {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-3);
-    font-size: var(--font-size-xs);
-}
-.wallet-flow strong,
-.wallet-flow span {
-    display: block;
-}
-.wallet-flow span {
-    margin-top: var(--space-2);
-    color: var(--color-text-secondary);
-}
 .wallet-section-heading {
     display: flex;
     align-items: center;
@@ -265,9 +239,6 @@
     .wallet-balances,
     .wallet-sidebar {
         grid-template-columns: 1fr;
-    }
-    .wallet-flow ol {
-        grid-template-columns: 1fr 1fr;
     }
     .wallet-panel {
         padding: var(--space-4);

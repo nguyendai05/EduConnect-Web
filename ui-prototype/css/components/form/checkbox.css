@@ -1,7 +1,7 @@
 :root {
-  --checkbox-primary: #1a6fd4;
-  --checkbox-border: #cbd5e1;
-  --checkbox-muted: #94a3b8;
+  --checkbox-primary: var(--color-primary);
+  --checkbox-border: var(--color-surface-high);
+  --checkbox-muted: var(--color-text-muted);
 }
 
 .checkbox-preview {
@@ -25,7 +25,7 @@
   gap: var(--space-4);
   padding-bottom: var(--space-4);
   margin-bottom: var(--space-4);
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .checkbox-demo__header h1 {
@@ -67,7 +67,7 @@
 
 .checkbox-option {
   padding: 0.625rem;
-  border-radius: 0.5rem;
+  border-radius: var(--control-radius);
 }
 
 .checkbox-option:hover {
@@ -138,8 +138,8 @@
 }
 
 .checkbox-hit-area input:disabled + .checkbox-box {
-  background: #f1f5f9;
-  border-color: #e2e8f0;
+  background: var(--color-surface-low);
+  border-color: var(--color-border);
 }
 
 .checkbox-option__copy {
@@ -172,7 +172,7 @@
   justify-content: space-between;
   gap: var(--space-4);
   padding-top: var(--space-2);
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--color-border);
 }
 
 .checkbox-state {

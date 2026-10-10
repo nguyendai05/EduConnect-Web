@@ -13,12 +13,13 @@
     <link rel="stylesheet" href="../../css/components/form/checkbox.css">
     <link rel="stylesheet" href="../../css/components/feedback/alert.css">
     <link rel="stylesheet" href="../../css/pages/auth/login.css">
+
 </head>
 <body class="auth-login-page" data-login-state="">
     <header class="auth-login-header">
         <div class="container auth-login-header__content">
-            <a class="auth-login-header__back" href="#trang-chu">← Về trang chủ</a>
-            <a class="auth-login-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
+            <a class="auth-login-header__back" href="../tutor/search.html">← Về trang chủ</a>
+            <a class="auth-login-header__brand" href="../tutor/search.html" aria-label="Edu Connect - Trang chủ">
                 <img src="../../assets/icons/logo.svg" alt="">
                 <span>Edu Connect</span>
             </a>
@@ -27,15 +28,12 @@
     </header>
 
     <main class="auth-login-main">
-        <div class="auth-login-main__intro">
-            <p>Học đúng người · Dạy đúng nhu cầu</p>
-            <span>Hệ sinh thái kết nối và quản lý gia sư bảo đảm chất lượng</span>
-        </div>
+
 
         <section class="auth-login-card" aria-labelledby="login-title">
             <header class="auth-login-card__heading">
                 <h1 id="login-title">Đăng nhập</h1>
-                <p>Chào mừng bạn quay lại Edu Connect.</p>
+
             </header>
 
             <section class="alert alert--error auth-login-status" role="alert" aria-live="polite" hidden>
@@ -54,7 +52,7 @@
                 </div>
 
                 <div class="auth-login-form__field" data-component="password-input">
-                    <div class="auth-login-form__field-label"><label for="login-password">Mật khẩu</label><a href="#quen-mat-khau">Quên mật khẩu?</a></div>
+                    <div class="auth-login-form__field-label"><label for="login-password">Mật khẩu</label></div>
                     <div class="password-control" data-password-control>
                         <img class="auth-login-form__leading-icon" src="../../assets/icons/lock.svg" alt="">
                         <input class="password-control__input" id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" aria-describedby="login-password-error" required>
@@ -73,12 +71,12 @@
                 <button class="auth-login-form__submit" type="button" data-login-submit><span data-login-submit-label>Đăng nhập</span><span class="auth-login-form__spinner" aria-hidden="true" hidden></span></button>
             </form>
 
-            <p class="auth-login-card__register">Chưa có tài khoản? <a href="#dang-ky">Đăng ký ngay</a></p>
+            <p class="auth-login-card__register">Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
         </section>
     </main>
 
     <footer class="auth-login-footer">
-        <div class="container"><span>© 2026 Edu Connect</span><span><a href="#dieu-khoan">Điều khoản sử dụng</a><a href="#bao-mat">Chính sách bảo mật</a></span></div>
+        <div class="container"><span>© 2026 Edu Connect</span></div>
     </footer>
     <script src="../../js/core/password-input.js" defer></script>
     <script src="../../js/pages/auth/login.js" defer></script>

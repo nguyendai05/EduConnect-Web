@@ -2,18 +2,6 @@
   background: var(--color-background);
 }
 
-.create-page .user-header {
-  position: sticky;
-  z-index: 100;
-  top: 0;
-  width: 100%;
-}
-
-.create-page .user-header__nav {
-  display: flex;
-  gap: clamp(var(--space-4), 3vw, 3.5rem);
-}
-
 .create-page .page-header {
   align-items: stretch;
   justify-content: stretch;
@@ -90,7 +78,7 @@
 .create-page__moderation {
   margin-bottom: var(--space-6);
   background: var(--color-surface-low);
-  border-left-color: var(--color-primary);
+
 }
 
 .create-page__moderation .alert__title {
@@ -129,8 +117,7 @@
 
 .create-card,
 .create-actions,
-.create-sidebar-card,
-.create-simulation {
+.create-sidebar-card{
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -151,16 +138,15 @@
   height: 1.75rem;
   flex: 0 0 auto;
   place-items: center;
-  color: var(--color-primary-hover);
-  background: var(--color-primary-container);
+  color: var(--color-secondary);
+  background: var(--color-secondary-container);
   border-radius: var(--radius-md);
   font-size: var(--font-size-xs);
   font-weight: 700;
 }
 
 .create-card__header h2,
-.create-sidebar-card__header h2,
-.create-simulation h2 {
+.create-sidebar-card__header h2{
   color: var(--color-text);
   font-size: var(--font-size-lg);
   font-weight: 600;
@@ -219,7 +205,8 @@
 
 .create-page .select-control[aria-expanded="true"],
 .create-page .select-control:focus-visible {
-  border: 2px solid var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
   outline: 0;
 }
 
@@ -460,102 +447,6 @@
   font-weight: 600;
 }
 
-.create-timeline {
-  display: grid;
-  gap: var(--space-4);
-  padding: 0;
-  list-style: none;
-}
-
-.create-timeline li {
-  display: grid;
-  grid-template-columns: 1.5rem minmax(0, 1fr);
-  gap: var(--space-2);
-}
-
-.create-timeline li > span {
-  display: grid;
-  width: 1.5rem;
-  height: 1.5rem;
-  place-items: center;
-  color: var(--color-text-secondary);
-  background: var(--color-surface-medium);
-  border-radius: var(--radius-pill);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-}
-
-.create-timeline .is-current > span {
-  color: var(--color-on-primary);
-  background: var(--color-primary);
-}
-
-.create-timeline strong {
-  color: var(--color-text);
-  font-size: var(--font-size-xs);
-}
-
-.create-timeline p {
-  margin-top: var(--space-1);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
-  line-height: 1.5;
-}
-
-.create-trust {
-  padding: var(--space-4);
-  color: var(--color-text-secondary);
-  background: var(--color-primary-container);
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-xs);
-}
-
-.create-trust strong {
-  display: block;
-  margin-bottom: var(--space-1);
-  color: var(--color-primary-hover);
-  font-size: var(--font-size-sm);
-}
-
-.create-simulation {
-  display: grid;
-  gap: var(--space-4);
-  margin-top: var(--space-8);
-  padding: var(--space-6);
-}
-
-.create-simulation > header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-4);
-}
-
-.create-simulation > header p {
-  margin-top: var(--space-1);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
-}
-
-.create-simulation > header > div:last-child {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: var(--space-2);
-}
-
-.create-limit-alert[hidden] {
-  display: none;
-}
-
-.create-limit-alert a {
-  display: inline-flex;
-  margin-top: var(--space-3);
-  color: var(--color-danger);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-}
-
 .create-modal-summary {
   display: grid;
   gap: var(--space-2);
@@ -593,9 +484,6 @@
 }
 
 @media (max-width: 64rem) {
-  .create-page .user-header__nav {
-    display: none;
-  }
 
   .create-page__workflow {
     grid-template-columns: 1fr;
@@ -630,14 +518,12 @@
     grid-column: auto;
   }
 
-  .create-actions,
-  .create-simulation > header {
+  .create-actions{
     align-items: stretch;
     flex-direction: column;
   }
 
-  .create-actions > div,
-  .create-simulation > header > div:last-child {
+  .create-actions > div{
     justify-content: stretch;
   }
 
@@ -648,20 +534,17 @@
 
 @media (max-width: 36rem) {
   .create-card__header,
-  .create-card__body,
-  .create-simulation {
+  .create-card__body{
     padding: var(--space-4);
   }
 
-  .create-actions > div,
-  .create-simulation > header > div:last-child {
+  .create-actions > div{
     display: grid;
     grid-template-columns: 1fr;
     width: 100%;
   }
 
-  .create-actions .create-button,
-  .create-simulation .create-button {
+  .create-actions .create-button{
     width: 100%;
   }
 

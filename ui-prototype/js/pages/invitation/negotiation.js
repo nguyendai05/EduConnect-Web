@@ -4,6 +4,66 @@
     const money = (value) => new Intl.NumberFormat("vi-VN").format(value) + " ₫";
     const dateTime = (value) =>
         new Intl.DateTimeFormat("vi-VN", { dateStyle: "short", timeStyle: "short" }).format(value);
+
+    // Fixture lời mời theo mã ?invite=. Dùng lại dữ liệu mẫu sẵn có của trang.
+    const invitations = {
+        "INV-20261009-024": {
+            code: "INV-20261009-024",
+            tutor: "Nguyễn Minh Anh",
+            initials: "MA",
+            rating: "4,9",
+            ratingCount: "126 đánh giá",
+            contract: "HD-20260926-025",
+            subject: "Toán học · Lớp 11 (THPT)",
+            format: "Tại nhà học sinh · TP. Thủ Đức, TP.HCM",
+            descriptor: "Toán lớp 11 · Dạy tại nhà",
+            v1: { fee: 200000, sessions: 8, schedule: "Thứ Hai & Thứ Tư · 19:00–20:30", message: "Mong thầy hỗ trợ Gia Huy củng cố kiến thức Toán lớp 11." },
+            v2: { fee: 220000, sessions: 8, schedule: "Thứ Hai & Thứ Sáu · 19:00–20:30", message: "Thứ Tư tôi đã có lịch dạy nên xin chuyển sang tối thứ Sáu. Với học phí 220.000 ₫/buổi, tôi sẽ chuẩn bị thêm tài liệu luyện tập chuyên sâu cho Gia Huy." },
+        },
+        "INV-20261009-018": {
+            code: "INV-20261009-018",
+            tutor: "Trần Quốc Huy",
+            initials: "QH",
+            rating: "4,8",
+            ratingCount: "89 đánh giá",
+            contract: "HD-20260926-018",
+            subject: "Tiếng Anh · Lớp 11 (THPT)",
+            format: "Trực tuyến qua Google Meet · Quận 7, TP.HCM",
+            descriptor: "Tiếng Anh lớp 11 · Học trực tuyến",
+            v1: { fee: 250000, sessions: 10, schedule: "Thứ Ba & Thứ Năm · 19:00–20:30", message: "Mong thầy giúp con luyện phát âm và Writing cho kỳ thi IELTS sắp tới." },
+            v2: { fee: 270000, sessions: 10, schedule: "Thứ Ba & Thứ Bảy · 19:00–20:30", message: "Tôi có thể dạy thêm thứ Bảy buổi tối. Với học phí 270.000 ₫/buổi, tôi sẽ kèm bộ đề IELTS Writing theo từng tuần cho con." },
+        },
+        "INV-20261009-011": {
+            code: "INV-20261009-011",
+            tutor: "Lê Thảo Vy",
+            initials: "TV",
+            rating: "4,9",
+            ratingCount: "61 đánh giá",
+            contract: "HD-20260926-011",
+            subject: "Ngữ văn · Lớp 8 (THCS)",
+            format: "Tại nhà học sinh · Bình Thạnh, TP.HCM",
+            descriptor: "Ngữ văn lớp 8 · Dạy tại nhà",
+            v1: { fee: 180000, sessions: 12, schedule: "Thứ Ba & Thứ Năm · 18:00–19:30", message: "Con cần cải thiện kỹ năng nghị luận văn học và cách lập dàn ý." },
+            v2: { fee: 180000, sessions: 12, schedule: "Thứ Năm & Thứ Bảy · 08:00–09:30", message: "Đề xuất chuyển một buổi sang sáng thứ Bảy để con học khi tỉnh táo nhất, học phí giữ nguyên 180.000 ₫/buổi." },
+        },
+        "INV-20261009-005": {
+            code: "INV-20261009-005",
+            tutor: "Phạm Hoàng Long",
+            initials: "PL",
+            rating: "5,0",
+            ratingCount: "42 đánh giá",
+            contract: "HD-20260926-005",
+            subject: "Toán · Luyện thi THPT",
+            format: "Tại nhà học sinh · Quận 3, TP.HCM",
+            descriptor: "Toán luyện thi · Dạy tại nhà",
+            v1: { fee: 300000, sessions: 10, schedule: "Thứ Tư & Thứ Sáu · 18:30–20:00", message: "Em cần luyện các đề vận dụng cao trước kỳ thi tốt nghiệp THPT." },
+            v2: { fee: 320000, sessions: 10, schedule: "Thứ Tư & Thứ Bảy · 09:00–10:30", message: "Tôi bổ sung buổi sáng thứ Bảy và tăng cường bộ đề tự luyện; học phí 320.000 ₫/buổi." },
+        },
+    };
+
+    const requestedInvite = new URLSearchParams(window.location.search).get("invite");
+    const record = invitations[requestedInvite] || invitations["INV-20261009-024"];
+
     const now = Date.now();
     const deadline = now + 3 * 24 * 60 * 60 * 1000;
     const startDate = new Date(now + 7 * 24 * 60 * 60 * 1000);
@@ -11,20 +71,19 @@
         {
             number: 1,
             author: "Bạn",
-            fee: 200000,
-            sessions: 8,
-            schedule: "Thứ Hai & Thứ Tư · 19:00–20:30",
-            message: "Mong thầy hỗ trợ Gia Huy củng cố kiến thức Toán lớp 11.",
+            fee: record.v1.fee,
+            sessions: record.v1.sessions,
+            schedule: record.v1.schedule,
+            message: record.v1.message,
             date: now - 24 * 60 * 60 * 1000,
         },
         {
             number: 2,
-            author: "Nguyễn Minh Anh",
-            fee: 220000,
-            sessions: 8,
-            schedule: "Thứ Hai & Thứ Sáu · 19:00–20:30",
-            message:
-                "Thứ Tư tôi đã có lịch dạy nên xin chuyển sang tối thứ Sáu. Với học phí 220.000 ₫/buổi, tôi sẽ chuẩn bị thêm tài liệu luyện tập chuyên sâu cho Gia Huy.",
+            author: record.tutor,
+            fee: record.v2.fee,
+            sessions: record.v2.sessions,
+            schedule: record.v2.schedule,
+            message: record.v2.message,
             date: now,
         },
     ];
@@ -99,7 +158,7 @@
             ],
             countered: [
                 "Đã gửi đề xuất mới",
-                "Đề xuất của bạn đang chờ Nguyễn Minh Anh phản hồi. Các phiên bản trước vẫn được giữ trong lịch sử.",
+                "Đề xuất của bạn đang chờ " + record.tutor + " phản hồi. Các phiên bản trước vẫn được giữ trong lịch sử.",
             ],
             accepted: [
                 "Hai bên đã thống nhất điều khoản",
@@ -130,11 +189,14 @@
         byId("response-title").textContent = state === "pending" ? "Phản hồi đề xuất" : label;
         byId("response-description").textContent =
             state === "pending"
-                ? "Nguyễn Minh Anh đang chờ bạn phản hồi phiên bản " + version.number + "."
+                ? record.tutor + " đang chờ bạn phản hồi phiên bản " + version.number + "."
                 : message;
         byId("response-actions").hidden = state !== "pending";
         byId("agreed-button").hidden = state !== "accepted";
         byId("contract-next").hidden = state !== "accepted";
+        if (state === "accepted") {
+            byId("contract-next").href = `../contract/confirm.html?contract=${encodeURIComponent(record.contract)}`;
+        }
         byId("deadline-label").textContent = ["accepted", "rejected"].includes(state)
             ? "Đã kết thúc phản hồi"
             : "Hạn phản hồi";
@@ -214,7 +276,9 @@
                 sessionStorage.setItem(
                     "edu-agreed-proposal",
                     JSON.stringify({
-                        invitation: "INV-20261009-024",
+                        invitation: record.code,
+                        contract: record.contract,
+                        tutor: record.tutor,
                         version: current().number,
                         fee: current().fee,
                         sessions: current().sessions,
@@ -315,6 +379,35 @@
         render();
         notify("Đã gửi đề xuất mới. Vui lòng chờ gia sư phản hồi.");
     });
+
+    // Dựng danh tính gia sư + mã lời mời cho lời mời đang xem.
+    function renderIdentity() {
+        document.title = `Lời mời & thương lượng với ${record.tutor} — Edu Connect`;
+        const crumb = document.querySelector("[data-neg-crumb]");
+        if (crumb) crumb.textContent = record.tutor;
+        const pageTitle = document.querySelector("[data-neg-title]");
+        if (pageTitle) pageTitle.textContent = `Lời mời học với ${record.tutor}`;
+        const pageDesc = document.querySelector("[data-neg-desc]");
+        if (pageDesc) pageDesc.textContent = `${record.code} · ${record.descriptor}`;
+        const tutorName = document.querySelector("[data-neg-tutor]");
+        if (tutorName) tutorName.textContent = record.tutor;
+        const tutorAvatar = document.querySelector("[data-neg-tutor-avatar]");
+        if (tutorAvatar) {
+            tutorAvatar.textContent = record.initials;
+            tutorAvatar.setAttribute("aria-label", record.tutor);
+        }
+        const rating = document.querySelector("[data-neg-rating]");
+        if (rating) rating.textContent = record.rating;
+        const ratingCount = document.querySelector("[data-neg-rating-count]");
+        if (ratingCount) ratingCount.textContent = record.ratingCount;
+        const subject = document.querySelector("[data-neg-subject]");
+        if (subject) subject.textContent = record.subject;
+        const format = document.querySelector("[data-neg-format]");
+        if (format) format.textContent = record.format;
+        byId("contract-next").href = `../contract/confirm.html?contract=${encodeURIComponent(record.contract)}`;
+    }
+    renderIdentity();
+
     // Configure existing shared header links locally.
     const header = document.querySelector(".user-header");
     const links = {

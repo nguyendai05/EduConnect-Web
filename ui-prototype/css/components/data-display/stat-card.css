@@ -18,10 +18,41 @@
     font-size: var(--font-size-base);
     font-weight: 600;
 }
+/* Pastille icon: biến thể mức độ của thẻ cha tô nền qua --stat-card-accent-container,
+   ngoài biến thể thì pastille giữ nền trung tính. */
+.stat-card__icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-pill);
+    background: var(--stat-card-accent-container, var(--color-primary-container));
+}
+.stat-card__icon img {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+/* Bản Pastille kích thước nhỏ (2rem) cho lưới thẻ đặc như dashboard: góc md,
+   trong suốt cho tới khi thẻ mang biến thể mức độ. */
+.stat-card__icon--small {
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-md);
+    background: var(--stat-card-accent-container, transparent);
+}
 .stat-card__value {
-    font-size: var(--font-size-3xl);
-    font-weight: 700;
+    font-family: var(--font-family-display);
+    font-size: 2.25rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
     line-height: var(--line-height-tight);
+    color: var(--stat-card-accent, inherit);
+}
+/* Bản giữ con số màu chữ mặc định khi pastille và badge đã tải mức độ;
+   phải đặt sau .stat-card__value. */
+.stat-card__value--neutral {
+    color: inherit;
 }
 .stat-card__unit {
     font-size: var(--font-size-sm);
@@ -32,13 +63,25 @@
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
 }
+/* Variantes de sévérité : elles ne posent que les encres, la pastille lit
+   --stat-card-accent-container et le nombre lit --stat-card-accent.
+   Aucun liseré décoratif : la sévérité reste portée par le texte et les icônes. */
 .stat-card--warning {
-    border-top: 3px solid var(--color-warning);
+    --stat-card-accent: var(--color-warning);
+    --stat-card-accent-container: var(--color-warning-container);
 }
 .stat-card--danger {
-    border-top: 3px solid var(--color-danger);
+    --stat-card-accent: var(--color-danger);
+    --stat-card-accent-container: var(--color-danger-container);
 }
-
+.stat-card--success {
+    --stat-card-accent: var(--color-success);
+    --stat-card-accent-container: var(--color-success-container);
+}
+.stat-card--info {
+    --stat-card-accent: var(--color-info);
+    --stat-card-accent-container: var(--color-info-container);
+}
 .stat-card-preview {
     padding: var(--space-6);
     display: grid;

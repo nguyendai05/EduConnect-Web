@@ -22,6 +22,7 @@
     (category === 'all' || t.type === category) &&
     (!byId('date-from').value || t.date >= byId('date-from').value) &&
     (!byId('date-to').value || t.date <= byId('date-to').value)) : []
+  const contractHref = contract => `../contract/student-detail.html?id=${encodeURIComponent(contract)}`
   const render = () => {
     const items = filtered()
     const pages = Math.max(1, Math.ceil(items.length / pageSize))
@@ -42,7 +43,7 @@
       wrapper.innerHTML = '<table class="table"><caption class="table__caption">Giao dịch trong kỳ</caption><thead><tr><th scope="col">Giao dịch</th><th scope="col">Số tiền</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead><tbody></tbody></table>'
       items.slice((page - 1) * pageSize, page * pageSize).forEach(t => {
         const row = document.createElement('tr')
-        row.innerHTML = '<th scope="row">' + t.title + '<small>' + t.id + '</small><small>' + dateLabel(t.date) + ' · ' + t.time + '</small></th><td class="table__amount ' + (t.amount > 0 ? 'wallet-credit' : '') + '">' + (t.amount > 0 ? '+' : '−') + money(Math.abs(t.amount)) + '<small>' + t.account + '</small></td><td><span class="table__status table__status--success">' + t.status + '</span></td><td><button class="wallet-button" type="button" data-transaction="' + t.id + '" aria-label="Chi tiết ' + t.id + '">Chi tiết</button></td>'
+        row.innerHTML = '<th scope="row">' + t.title + '<small><a href="' + contractHref(t.contract) + '">Hợp đồng ' + t.contract + '</a></small><small>' + t.id + '</small><small>' + dateLabel(t.date) + ' · ' + t.time + '</small></th><td class="table__amount ' + (t.amount > 0 ? 'wallet-credit' : '') + '">' + (t.amount > 0 ? '+' : '−') + money(Math.abs(t.amount)) + '<small>' + t.account + '</small></td><td><span class="table__status table__status--success">' + t.status + '</span></td><td><button class="wallet-button" type="button" data-transaction="' + t.id + '" aria-label="Chi tiết ' + t.id + '">Chi tiết</button></td>'
         wrapper.querySelector('tbody').append(row)
       })
       panel.append(wrapper)
@@ -67,7 +68,14 @@
     fields.forEach(([label, value]) => {
       const row = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd')
       dt.textContent = label
-      dd.textContent = value
+      if (label === 'Hợp đồng') {
+        const link = document.createElement('a')
+        link.href = contractHref(value)
+        link.textContent = value
+        dd.append(link)
+      } else {
+        dd.textContent = value
+      }
       row.append(dt, dd)
       detail.append(row)
     })
@@ -90,10 +98,5 @@
     setTimeout(() => URL.revokeObjectURL(url), 1000)
     window.EduToast.show({ type: 'success', title: 'Đã tạo sao kê', message: items.length + ' giao dịch theo bộ lọc hiện tại.' })
   })
-  const walletLink = document.querySelector('[data-menu-item="2"]')
-  walletLink.href = '#wallet'
-  walletLink.querySelector('[data-menu-label]').textContent = 'Ví Edu Connect'
-  document.querySelector('[data-menu-item="1"]').href = '../contract/student-detail.html'
-  document.querySelector('[data-menu-item="4"]').href = '#transactions'
   render()
 })()

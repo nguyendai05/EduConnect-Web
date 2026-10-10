@@ -65,7 +65,7 @@
 }
 
 .tutor-card--selected {
-    border-color: var(--color-primary);
+    border-color: var(--color-border);
     background: var(--color-primary-container);
 }
 .tutor-card--compact {

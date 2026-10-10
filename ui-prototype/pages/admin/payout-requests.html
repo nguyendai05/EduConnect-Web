@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Danh sách yêu cầu rút tiền | Edu Connect</title>
+    <link rel="icon" href="../../assets/icons/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <!-- Component: AdminShell, AdminSidebar, AdminHeader | Nguồn: components/layout/{admin-shell,admin-sidebar,admin-header}.html; JS: js/core/admin-header.js -->
+    <link rel="stylesheet" href="../../css/components/layout/admin-sidebar.css">
+    <link rel="stylesheet" href="../../css/components/layout/admin-header.css">
+    <!-- Component: Breadcrumb, Tabs, Pagination | Nguồn: components/navigation/{breadcrumb,tabs,pagination}.html -->
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <link rel="stylesheet" href="../../css/components/navigation/tabs.css">
+    <link rel="stylesheet" href="../../css/components/navigation/pagination.css">
+    <!-- Component: SearchInput, Select | Nguồn: components/form/{search-input,select}.html; JS: js/core/search-input.js -->
+    <link rel="stylesheet" href="../../css/components/form/search-input.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+    <!-- Component: Button, Table, Avatar, StatCard | Nguồn: components/action/button.html; components/data-display/{table,avatar,stat-card}.html -->
+    <link rel="stylesheet" href="../../css/components/action/button.css">
+    <link rel="stylesheet" href="../../css/components/data-display/table.css">
+    <link rel="stylesheet" href="../../css/components/data-display/avatar.css">
+    <link rel="stylesheet" href="../../css/components/data-display/stat-card.css">
+    <!-- Component: Badge, Alert, Loading, EmptyState | Nguồn: components/feedback/{badge,alert,loading,empty-state}.html -->
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/feedback/loading.css">
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/pages/admin/payout-requests.css">
+</head>
+<body class="payout-requests-page">
+    <a class="payout-requests__skip-link" href="#payout-main">Đến nội dung chính</a>
+    <div class="admin-shell" data-component="admin-shell" data-payout-requests>
+        <!-- Component: AdminSidebar | Nguồn: components/layout/admin-sidebar.html -->
+        <aside class="admin-sidebar admin-shell__sidebar" aria-label="Thanh điều hướng quản trị" data-component="admin-sidebar">
+        <div class="admin-sidebar__main">
+            <header class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="dashboard.html" aria-label="Edu Connect quản trị">
+                    <span class="admin-sidebar__brand-mark" aria-hidden="true"><img class="admin-sidebar__brand-logo" src="../../assets/icons/logo.svg" alt="Logo"></span>
+                    <span class="admin-sidebar__brand-name">Edu Connect</span>
+                </a>
+                <span class="admin-sidebar__role">Quản trị</span>
+            </header>
+
+            <p class="admin-sidebar__group-label">Điều hành</p>
+            <nav class="admin-sidebar__nav" aria-label="Các mục quản trị">
+                <a class="admin-sidebar__item" href="dashboard.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="tutor-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
+                    <span class="admin-sidebar__badge" aria-label="4 hồ sơ chờ xử lý">4</span>
+                </a>
+                <a class="admin-sidebar__item" href="job-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
+                    <span class="admin-sidebar__badge" aria-label="5 tin chờ xử lý">5</span>
+                </a>
+                <a class="admin-sidebar__item" href="reports.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
+                    <span class="admin-sidebar__badge" aria-label="6 báo cáo cần xử lý">6</span>
+                </a>
+                <a class="admin-sidebar__item is-active" href="payout-requests.html" aria-current="page">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
+                    <span class="admin-sidebar__badge" aria-label="5 yêu cầu rút tiền chờ xử lý">5</span>
+                </a>
+                <a class="admin-sidebar__item" href="audit-logs.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
+                </a>
+            </nav>
+        </div>
+        <footer class="admin-sidebar__footer">Edu Connect · Quản trị hệ thống</footer>
+    </aside>
+        <!-- Component: AdminHeader | Nguồn: components/layout/admin-header.html; JS: js/core/admin-header.js -->
+        <header class="admin-header" data-component="admin-header" data-has-unread="false">
+        <form class="admin-header__search" role="search" data-admin-search>
+            <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
+            <img class="admin-header__icon admin-header__search-icon" src="../../assets/icons/search.svg" alt="">
+            <input class="admin-header__search-input" id="admin-global-search" name="query" type="search" autocomplete="off" placeholder="Tìm kiếm theo mã tin, mã hồ sơ gia sư, mã yêu cầu rút tiền..." data-search-input>
+            <button class="admin-header__clear-search" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><img class="admin-header__icon" src="../../assets/icons/cancel.svg" alt=""></button>
+            <section class="admin-header__search-results" aria-label="Kết quả tìm kiếm nhanh" data-search-results hidden>
+                <div class="admin-header__popover-heading">
+                    <span>Kết quả khớp mã</span>
+                    <span>ESC để đóng</span>
+                </div>
+                <a class="admin-header__result" href="payout-request-detail.html?id=PO-2026-0841">
+                    <span class="admin-header__result-type admin-header__result-type--neutral">RÚT TIỀN</span>
+                    <span class="admin-header__result-copy"><strong>PO-2026-0841 · Nguyễn Minh Anh</strong><span>Tạo hôm nay, 10:15 · Số tiền 1.000.000 ₫</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+            </section>
+        </form>
+
+        <div class="admin-header__utilities">
+            <span class="admin-header__system-status"><span aria-hidden="true"></span>Hệ thống bình thường</span>
+            <div class="admin-header__popover-wrap" data-notification-wrap>
+                <button class="admin-header__icon-button" type="button" aria-label="Thông báo hệ thống" aria-expanded="false" aria-controls="admin-notification-popover" data-notification-trigger><img class="admin-header__icon" src="../../assets/icons/notification.svg" alt=""><span class="admin-header__notification-dot" aria-hidden="true"></span></button>
+                <section class="admin-header__notification-popover" id="admin-notification-popover" aria-label="Thông báo vận hành" data-notification-popover hidden>
+                    <div class="admin-header__notification-title"><strong>Thông báo vận hành</strong><span>3 mới</span></div>
+                    <a class="admin-header__notification" href="payout-requests.html"><img class="admin-header__icon" src="../../assets/icons/wallet.svg" alt=""><span><strong>5 yêu cầu rút tiền chờ xử lý</strong><small>Tổng giá trị đang khóa trong Số dư chờ rút cần đối soát.</small><time>2 phút trước</time></span></a>
+                    <a class="admin-header__notification" href="payout-request-detail.html?id=PO-2026-0832"><img class="admin-header__icon" src="../../assets/icons/warning-triangle.svg" alt=""><span><strong>Cảnh báo đối soát: #PO-2026-0832</strong><small>Tên chủ tài khoản nhận không khớp hồ sơ đã xác minh.</small><time>26 phút trước</time></span></a>
+                    <a class="admin-header__popover-link" href="audit-logs.html">Xem tất cả nhật ký thao tác</a>
+                </section>
+            </div>
+            <span class="admin-header__divider" aria-hidden="true"></span>
+            <div class="admin-header__popover-wrap" data-profile-wrap>
+                <button class="admin-header__profile-trigger" type="button" aria-expanded="false" aria-controls="admin-profile-popover" data-profile-trigger>
+                    <span class="admin-header__avatar" aria-hidden="true">QT</span>
+                    <span class="admin-header__profile-copy"><strong>Quản trị viên</strong><small>Admin</small></span>
+                    <img class="admin-header__chevron admin-header__icon" src="../../assets/icons/mui-ten-xuong.svg" alt="">
+                </button>
+                <section class="admin-header__profile-popover" id="admin-profile-popover" aria-label="Tài khoản quản trị" data-profile-popover hidden>
+                    <div class="admin-header__profile-summary"><strong>Nguyễn Xuân Đại</strong><span>admin@educonnect.vn</span><span class="admin-header__permission"><img class="admin-header__icon" src="../../assets/icons/shield-user.svg" alt="">Quyền hạn: Root Superadmin</span></div>
+                    <nav class="admin-header__profile-menu" aria-label="Tác vụ tài khoản quản trị">
+                        <a href="audit-logs.html"><img class="admin-header__icon" src="../../assets/icons/audit-log.svg" alt="">Nhật ký thao tác cá nhân</a>
+                        <a class="is-danger" href="../auth/login.html"><img class="admin-header__icon" src="../../assets/icons/dang-xuat.svg" alt="">Đăng xuất phiên quản trị</a>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </header>
+        <main class="admin-shell__workspace" id="payout-main" tabindex="-1">
+            <div class="admin-shell__content payout-requests">
+                <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
+                <header class="admin-shell__page-header payout-requests__header">
+                    <div>
+                        <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="dashboard.html">Tổng quan</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Yêu cầu rút tiền</span></li></ol></nav>
+                        <h1>Yêu cầu rút tiền</h1>
+                        <p>Theo dõi và xử lý các yêu cầu rút số dư của gia sư về tài khoản ngân hàng.</p>
+                    </div>
+                    <div class="payout-requests__refresh">
+                        <button class="button button--secondary" type="button" data-payout-refresh><svg class="payout-requests__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6.1 7a7 7 0 0 1 11.6-1L20 9M4 15l2.3 3A7 7 0 0 0 17.9 17"/></svg>Làm mới</button>
+                        <span class="payout-requests__updated" data-payout-updated>Đang cập nhật…</span>
+                    </div>
+                </header>
+                <!-- Component: StatCard, Badge | Nguồn: components/data-display/stat-card.html; components/feedback/badge.html -->
+                <section class="payout-requests__summary" aria-label="Tổng quan dòng tiền rút">
+                    <article class="stat-card stat-card--warning payout-requests__metric">
+                        <div class="stat-card__header"><h2 class="payout-requests__metric-label">Chờ xử lý</h2><span class="stat-card__icon"><img src="../../assets/icons/clock.svg" alt=""></span></div>
+                        <p class="payout-requests__metric-value"><strong class="stat-card__value" data-payout-count="pending">0</strong><span class="stat-card__unit">yêu cầu cần duyệt</span></p>
+                        <div class="payout-requests__metric-footer"><span class="badge badge--warning">Chưa đối soát</span><span data-payout-total="pending">—</span></div>
+                    </article>
+                    <article class="stat-card stat-card--info payout-requests__metric">
+                        <div class="stat-card__header"><h2 class="payout-requests__metric-label">Đang xử lý</h2><span class="stat-card__icon"><img src="../../assets/icons/wallet.svg" alt=""></span></div>
+                        <p class="payout-requests__metric-value"><strong class="stat-card__value" data-payout-count="processing">0</strong><span class="stat-card__unit">yêu cầu chờ chuyển tiền</span></p>
+                        <div class="payout-requests__metric-footer"><span class="badge badge--info">Đã duyệt, chưa có mã GD</span><span data-payout-total="processing">—</span></div>
+                    </article>
+                    <article class="stat-card stat-card--success payout-requests__metric">
+                        <div class="stat-card__header"><h2 class="payout-requests__metric-label">Đã chuyển tiền</h2><span class="stat-card__icon"><img src="../../assets/icons/check-double.svg" alt=""></span></div>
+                        <p class="payout-requests__metric-value"><strong class="stat-card__value" data-payout-count="completed">0</strong><span class="stat-card__unit">yêu cầu hoàn tất</span></p>
+                        <div class="payout-requests__metric-footer"><span class="badge badge--success">Đã tất toán</span><span data-payout-total="completed">—</span></div>
+                    </article>
+                    <article class="stat-card stat-card--danger payout-requests__metric">
+                        <div class="stat-card__header"><h2 class="payout-requests__metric-label">Từ chối</h2><span class="stat-card__icon"><img src="../../assets/icons/cancel.svg" alt=""></span></div>
+                        <p class="payout-requests__metric-value"><strong class="stat-card__value" data-payout-count="rejected">0</strong><span class="stat-card__unit">yêu cầu đã trả lại số dư</span></p>
+                        <div class="payout-requests__metric-footer"><span class="badge badge--danger">Đã đóng hồ sơ</span><span data-payout-total="rejected">—</span></div>
+                    </article>
+                </section>
+                <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
+                <section class="alert alert--contextual payout-requests__notice" aria-labelledby="payout-notice-title">
+                    <span class="alert__icon alert__icon--lock" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <h2 class="alert__title" id="payout-notice-title">Tiền của yêu cầu đang chờ xử lý đã được tách khỏi số dư khả dụng</h2>
+                        <p class="alert__message">Tiền của yêu cầu đang chờ xử lý nằm trong Số dư chờ rút. Mở chi tiết để duyệt, từ chối hoặc xác nhận chuyển khoản.</p>
+                    </div>
+                </section>
+                <!-- Component: Tabs, SearchInput, Select | Nguồn: components/navigation/tabs.html; components/form/{search-input,select}.html -->
+                <section class="payout-requests__toolbar" aria-label="Tìm kiếm và lọc yêu cầu rút tiền">
+                    <div class="payout-requests__toolbar-heading">
+                        <div class="tabs tabs--contained" data-tabs data-payout-status-tabs>
+                            <div class="tabs__list" role="tablist" aria-label="Trạng thái yêu cầu rút tiền">
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-all" aria-selected="true" aria-controls="payout-results" data-payout-status="all">Tất cả <span class="tabs__badge" data-status-count="all">0</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-pending" aria-selected="false" aria-controls="payout-results" tabindex="-1" data-payout-status="pending">Chờ xử lý <span class="tabs__badge" data-status-count="pending">0</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-processing" aria-selected="false" aria-controls="payout-results" tabindex="-1" data-payout-status="processing">Đang xử lý <span class="tabs__badge" data-status-count="processing">0</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-completed" aria-selected="false" aria-controls="payout-results" tabindex="-1" data-payout-status="completed">Đã chuyển tiền <span class="tabs__badge" data-status-count="completed">0</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-rejected" aria-selected="false" aria-controls="payout-results" tabindex="-1" data-payout-status="rejected">Từ chối <span class="tabs__badge" data-status-count="rejected">0</span></button>
+                            </div>
+                        </div>
+                        <p class="payout-requests__priority"><img src="../../assets/icons/shield-alert.svg" alt="">Cần đối soát trước khi duyệt: <strong data-payout-flagged-count>0 yêu cầu</strong></p>
+                    </div>
+                    <form class="payout-requests__filters" role="search" data-payout-filters>
+                        <div class="search-input search-input--compact" data-search-input>
+                            <label class="sr-only" for="payout-search">Tìm kiếm yêu cầu rút tiền</label>
+                            <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                            <input id="payout-search" type="search" name="query" placeholder="Tìm theo mã phiếu, tên gia sư, ngân hàng, số tài khoản…" autocomplete="off" maxlength="200" data-payout-search>
+                            <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                        </div>
+                        <div class="select-field"><label class="sr-only" for="payout-bank">Ngân hàng nhận</label><select class="select-control select-control--native" id="payout-bank" name="bank"><option value="all">Ngân hàng: Tất cả</option></select></div>
+                        <div class="select-field"><label class="sr-only" for="payout-period">Thời điểm tạo</label><select class="select-control select-control--native" id="payout-period" name="period"><option value="all">Thời gian: Tất cả</option><option value="today">Trong hôm nay</option><option value="7d">7 ngày qua</option><option value="30d">30 ngày qua</option><option value="stale">Quá 3 ngày chưa xử lý</option></select></div>
+                        <div class="select-field"><label class="sr-only" for="payout-sort">Sắp xếp yêu cầu</label><select class="select-control select-control--native" id="payout-sort" name="sort"><option value="newest">Sắp xếp: Mới nhất</option><option value="oldest">Sắp xếp: Cũ nhất</option><option value="amount">Sắp xếp: Số tiền cao nhất</option><option value="warning">Sắp xếp: Ưu tiên cảnh báo</option></select></div>
+                    </form>
+                    <div class="payout-requests__results-heading"><p data-payout-result-summary aria-live="polite" aria-atomic="true">Đang tải yêu cầu rút tiền…</p><button class="button button--ghost button--small" type="button" data-payout-reset hidden>Xóa bộ lọc</button></div>
+                </section>
+                <section id="payout-results" role="tabpanel" aria-labelledby="payout-tab-all" aria-busy="true" tabindex="0" data-payout-results>
+                    <!-- Component: Loading | Nguồn: components/feedback/loading.html -->
+                    <div class="loading" role="status" data-component="loading" data-payout-loading><span class="loading__spinner" aria-hidden="true"></span><p class="loading__text">Đang tải danh sách yêu cầu rút tiền…</p></div>
+                    <div class="table-frame" data-payout-table hidden>
+                        <!-- Component: Table | Nguồn: components/data-display/table.html -->
+                        <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách yêu cầu rút tiền, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                            <table class="table table--review">
+                                <caption class="table__caption table__caption--sr-only">Danh sách yêu cầu rút tiền theo trạng thái và bộ lọc</caption>
+                                <thead><tr><th scope="col">Mã yêu cầu &amp; gia sư</th><th scope="col">Số tiền rút</th><th scope="col">Ngân hàng nhận</th><th scope="col">Cảnh báo đối soát</th><th scope="col">Thời gian tạo</th><th scope="col">Trạng thái</th><th scope="col" class="table__action-heading">Thao tác</th></tr></thead>
+                                <tbody data-payout-list></tbody>
+                            </table>
+                        </div>
+                        <div class="payout-requests__table-footer">
+                            <!-- Component: Pagination | Nguồn: components/navigation/pagination.html; JS: js/core/pagination.js -->
+                            <nav class="pagination pagination--table" aria-label="Phân trang danh sách yêu cầu rút tiền" data-component="pagination" data-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1">
+                                <p class="pagination__summary">Hiển thị <strong data-range-start>0</strong>–<strong data-range-end>0</strong> trong <strong data-total-count>0</strong> yêu cầu</p>
+                                <div class="pagination__controls">
+                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button>
+                                    <span class="pagination__controls" data-page-numbers><button class="pagination__button is-current" type="button" data-page="1" aria-current="page">1</button></span>
+                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau" disabled><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+                                </div>
+                            </nav>
+                            <div class="payout-requests__page-size"><label for="payout-page-size">Số yêu cầu mỗi trang</label><select class="select-control select-control--native" id="payout-page-size" data-payout-page-size><option value="3">3</option><option value="5" selected>5</option><option value="10">10</option></select></div>
+                        </div>
+                    </div>
+                    <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                    <div class="empty-state" data-component="empty-state" data-payout-empty hidden><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title">Không tìm thấy yêu cầu rút tiền</h2><p class="empty-state__description">Thử thay đổi từ khóa, ngân hàng hoặc mốc thời gian để xem các yêu cầu trong trạng thái này.</p><button class="button button--outline" type="button" data-payout-reset>Xóa bộ lọc</button></div>
+                </section>
+
+                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải danh sách, tìm kiếm, lọc và phân trang yêu cầu rút tiền.</p></noscript>
+            </div>
+        </main>
+
+        <template id="payout-row-template">
+            <tr data-payout-row>
+                <th scope="row"><span class="table__reference" data-payout-code></span><div class="table__person"><span class="avatar avatar--small" aria-hidden="true" data-payout-avatar></span><div><strong data-payout-tutor></strong><small data-payout-tutor-meta></small></div></div></th>
+                <td><span class="payout-requests__amount" data-payout-amount></span><small data-payout-balance></small></td>
+                <td><span data-payout-bank></span><small class="payout-requests__account" data-payout-account></small><small data-payout-holder></small></td>
+                <td><span class="badge" data-payout-warning-badge></span><small class="table__review-note" data-payout-warning-note></small></td>
+                <td><time class="table__submitted" data-payout-date></time><small data-payout-time></small></td>
+                <td><span class="badge" data-payout-status></span><small data-payout-handler></small></td>
+                <td class="table__action"><a href="payout-request-detail.html" data-payout-detail>Xem &amp; xử lý</a></td>
+            </tr>
+        </template>
+    </div>
+    <script src="../../js/core/admin-header.js" defer></script>
+    <script src="../../js/core/search-input.js" defer></script>
+    <script src="../../js/core/tabs.js" defer></script>
+    <script src="../../js/core/pagination.js" defer></script>
+    <script src="../../js/pages/admin/payout-data.js" defer></script>
+    <script src="../../js/pages/admin/payout-requests.js" defer></script>
+</body>
+</html>

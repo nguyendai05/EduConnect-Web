@@ -11,7 +11,6 @@
   const descriptionCounter = page.querySelector('#description-counter')
   const contactNotice = page.querySelector('#contact-notice')
   const confirmModal = document.querySelector('#create-confirm-modal')
-  const limitAlert = page.querySelector('#limit-alert')
   const draftKey = 'edu-connect:create-job-draft'
   let suppressDraftSave = false
 
@@ -189,13 +188,6 @@
 
   page.querySelector('[data-scroll-preview]')?.addEventListener('click', () => {
     page.querySelector('#live-preview-container')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  })
-
-  page.querySelector('[data-open-confirm]')?.addEventListener('click', openConfirm)
-  page.querySelector('[data-open-success]')?.addEventListener('click', openSuccess)
-  page.querySelector('[data-toggle-limit]')?.addEventListener('click', () => {
-    limitAlert.hidden = !limitAlert.hidden
-    if (!limitAlert.hidden) limitAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   })
 
   confirmModal?.addEventListener('modal:confirm', () => {

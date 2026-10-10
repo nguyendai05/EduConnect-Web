@@ -5,46 +5,128 @@
     const formatTime = (value) => new Date(value).toLocaleString("vi-VN");
     const key = "edu-contract-confirmation";
     const now = Date.now();
-    const defaultTerms = {
-        invitation: "INV-20261009-024",
-        version: 2,
-        fee: 220000,
-        sessions: 8,
-        schedule: "Thứ Hai & Thứ Sáu · 19:00–20:30",
-        message:
-            "Chuẩn bị thêm tài liệu luyện tập chuyên sâu, củng cố kiến thức Toán lớp 11 cho Gia Huy.",
-        start: new Date(now + 7 * 86400000).toLocaleDateString("vi-VN"),
+    const defaultStart = new Date(now + 7 * 86400000).toLocaleDateString("vi-VN");
+
+    // Fixture hợp đồng theo mã ?contract=. Trùng khớp với dữ liệu lời mời ở negotiation.
+    const CONTRACTS = {
+        "HD-20260926-025": {
+            code: "HD-20260926-025",
+            invitation: "INV-20261009-024",
+            version: 2,
+            tutor: "Nguyễn Minh Anh",
+            initials: "MA",
+            qualification: "Cử nhân Sư phạm Toán",
+            subject: "Toán · Lớp 11",
+            fee: 220000,
+            sessions: 8,
+            schedule: "Thứ Hai & Thứ Sáu · 19:00–20:30",
+            message: "Củng cố kiến thức Toán lớp 11 và rèn luyện kỹ năng giải bài tập.",
+        },
+        "HD-20260926-018": {
+            code: "HD-20260926-018",
+            invitation: "INV-20261009-018",
+            version: 2,
+            tutor: "Trần Quốc Huy",
+            initials: "QH",
+            qualification: "Cử nhân Sư phạm Tiếng Anh · IELTS 8.0",
+            subject: "Tiếng Anh · Lớp 11",
+            fee: 270000,
+            sessions: 10,
+            schedule: "Thứ Ba & Thứ Bảy · 19:00–20:30",
+            message: "Luyện phát âm, Writing và giải đề IELTS theo từng tuần.",
+        },
+        "HD-20260926-011": {
+            code: "HD-20260926-011",
+            invitation: "INV-20261009-011",
+            version: 2,
+            tutor: "Lê Thảo Vy",
+            initials: "TV",
+            qualification: "Cử nhân Ngữ văn",
+            subject: "Ngữ văn · Lớp 8",
+            fee: 180000,
+            sessions: 12,
+            schedule: "Thứ Năm & Thứ Bảy · 08:00–09:30",
+            message: "Rèn nghị luận văn học và kỹ năng lập dàn ý cho đề bài.",
+        },
+        "HD-20260926-005": {
+            code: "HD-20260926-005",
+            invitation: "INV-20261009-005",
+            version: 2,
+            tutor: "Phạm Hoàng Long",
+            initials: "PL",
+            qualification: "Thạc sĩ Toán ứng dụng",
+            subject: "Toán · Luyện thi",
+            fee: 320000,
+            sessions: 10,
+            schedule: "Thứ Tư & Thứ Bảy · 09:00–10:30",
+            message: "Luyện các đề vận dụng cao trước kỳ thi tốt nghiệp THPT.",
+        },
+    };
+
+    const requestedContract = new URLSearchParams(window.location.search).get("contract");
+    const base = CONTRACTS[requestedContract] || CONTRACTS["HD-20260926-025"];
+    const contractCode = CONTRACTS[requestedContract] ? requestedContract : base.code;
+
+    const baseTerms = () => ({
+        contract: base.code,
+        invitation: base.invitation,
+        version: base.version,
+        tutor: base.tutor,
+        initials: base.initials,
+        qualification: base.qualification,
+        subject: base.subject,
+        fee: base.fee,
+        sessions: base.sessions,
+        schedule: base.schedule,
+        message: base.message,
+        start: defaultStart,
         acceptedAt: now,
         tutorConfirmedAt: now,
-    };
+    });
+
+    const agreed = (() => {
+        try {
+            const proposal = JSON.parse(sessionStorage.getItem("edu-agreed-proposal") || "null");
+            if (!proposal || proposal.contract !== base.code) return null;
+            return {
+                contract: base.code,
+                invitation: typeof proposal.invitation === "string" ? proposal.invitation : base.invitation,
+                version: Number.isFinite(proposal.version) ? proposal.version : base.version,
+                tutor: typeof proposal.tutor === "string" ? proposal.tutor : base.tutor,
+                initials: base.initials,
+                qualification: base.qualification,
+                subject: base.subject,
+                fee: Number.isFinite(proposal.fee) ? proposal.fee : base.fee,
+                sessions: Number.isFinite(proposal.sessions) ? proposal.sessions : base.sessions,
+                schedule: typeof proposal.schedule === "string" ? proposal.schedule : base.schedule,
+                message: typeof proposal.message === "string" ? proposal.message : base.message,
+                start: typeof proposal.start === "string" ? proposal.start : defaultStart,
+                acceptedAt: Number.isFinite(proposal.acceptedAt) ? proposal.acceptedAt : now,
+                tutorConfirmedAt: Number.isFinite(proposal.tutorConfirmedAt) ? proposal.tutorConfirmedAt : now,
+            };
+        } catch {
+            return null;
+        }
+    })();
+
+    const incomingTerms = agreed || baseTerms();
+
     let record;
     let storageAvailable = true;
     try {
-        const proposal = JSON.parse(sessionStorage.getItem("edu-agreed-proposal") || "null");
         const previous = JSON.parse(sessionStorage.getItem(key) || "null");
-        const valid =
-            proposal &&
-            proposal.invitation === defaultTerms.invitation &&
-            proposal.version === 2 &&
-            proposal.fee === 220000 &&
-            proposal.sessions === 8 &&
-            typeof proposal.schedule === "string" &&
-            typeof proposal.message === "string" &&
-            typeof proposal.start === "string" &&
-            Number.isFinite(proposal.acceptedAt);
-        const terms = valid ? proposal : defaultTerms;
         const same =
             previous &&
-            previous.terms?.invitation === terms.invitation &&
-            previous.terms?.fee === terms.fee &&
-            previous.terms?.sessions === terms.sessions &&
-            previous.terms?.schedule === terms.schedule &&
-            (!valid || previous.terms?.acceptedAt === terms.acceptedAt);
+            previous.terms?.contract === incomingTerms.contract &&
+            previous.terms?.fee === incomingTerms.fee &&
+            previous.terms?.sessions === incomingTerms.sessions &&
+            previous.terms?.schedule === incomingTerms.schedule &&
+            previous.terms?.acceptedAt === incomingTerms.acceptedAt;
         record =
             same && Number.isFinite(previous.deadline)
                 ? previous
                 : {
-                      terms,
+                      terms: incomingTerms,
                       deadline: now + 72 * 3600000,
                       confirmedAt: null,
                       report: null,
@@ -53,13 +135,14 @@
     } catch {
         storageAvailable = false;
         record = {
-            terms: defaultTerms,
+            terms: incomingTerms,
             deadline: now + 72 * 3600000,
             confirmedAt: null,
             report: null,
         };
     }
     const terms = record.terms;
+    const checkoutHref = `../payment/checkout.html?from=contract&contract=${encodeURIComponent(contractCode)}`;
     const checks = [...document.querySelectorAll("[data-consent]")];
     const all = byId("select-all");
     const expired = () => !record.confirmedAt && Date.now() >= record.deadline;
@@ -95,6 +178,20 @@
             expired() ||
             !storageAvailable;
     }
+    function renderIdentity() {
+        document.title = `Xác nhận hợp đồng ${terms.contract} — Edu Connect`;
+        const nameNode = document.querySelector("[data-contract-tutor]");
+        if (nameNode) nameNode.textContent = terms.tutor;
+        const avatarNode = document.querySelector("[data-contract-tutor-avatar]");
+        if (avatarNode) {
+            avatarNode.textContent = terms.initials;
+            avatarNode.setAttribute("aria-label", terms.tutor);
+        }
+        const qualificationNode = document.querySelector("[data-contract-qualification]");
+        if (qualificationNode) qualificationNode.textContent = terms.qualification;
+        const signatureNode = document.querySelector("[data-contract-signature]");
+        if (signatureNode) signatureNode.textContent = "Gia sư · " + terms.tutor;
+    }
     function render() {
         const values = {
             ...terms,
@@ -106,6 +203,7 @@
         document.querySelectorAll("[data-contract]").forEach((node) => {
             node.textContent = values[node.dataset.contract];
         });
+        byId("checkout-link").href = checkoutHref;
         byId("tutor-confirmed-at").textContent =
             "Điều khoản xác nhận lúc " + formatTime(terms.tutorConfirmedAt || terms.acceptedAt);
         const deadlineNode = byId("confirm-deadline");
@@ -150,6 +248,7 @@
         }
         updateConsent();
     }
+    renderIdentity();
     checks.forEach((field) => field.addEventListener("change", updateConsent));
     all.addEventListener("change", () => {
         checks.forEach((field) => {
@@ -161,7 +260,11 @@
         render();
         if (byId("confirm-button").disabled) return;
         byId("confirm-modal-summary").textContent =
-            "Học viên: Trần Gia Huy · Toán lớp 11\nGia sư: Nguyễn Minh Anh\n" +
+            "Học viên: Trần Gia Huy · " +
+            terms.subject +
+            "\nGia sư: " +
+            terms.tutor +
+            "\n" +
             terms.sessions +
             " buổi × " +
             money(terms.fee) +
@@ -194,7 +297,7 @@
             event.preventDefault();
             return;
         }
-        window.location.href = "../payment/checkout.html?from=contract";
+        window.location.href = checkoutHref;
     });
     byId("report-button").addEventListener("click", () => {
         if (record.confirmedAt || record.report || expired()) return;

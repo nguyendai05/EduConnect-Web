@@ -4,6 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Thanh toán qua payOS | Edu Connect</title>
+        <link rel="stylesheet" href="../../css/tokens.css" />
+        <link rel="stylesheet" href="../../css/base.css" />
+        <link rel="stylesheet" href="../../css/components/action/button.css" />
         <link rel="stylesheet" href="../../css/pages/payment/qr.css" />
         <script src="../../js/pages/payment/qr.js" defer></script>
     </head>
@@ -18,10 +21,7 @@
         <main>
             <section class="checkout-card" aria-labelledby="checkout-title">
                 <h1 id="checkout-title">Thanh toán qua payOS</h1>
-                <p class="instructions">
-                    Mở ứng dụng ngân hàng để <strong>quét mã VietQR</strong> hoặc chuyển khoản đúng
-                    thông tin bên dưới.
-                </p>
+                <p class="instructions">Thông tin thanh toán mẫu. Mã QR không dùng để chuyển tiền.</p>
                 <div class="checkout-grid">
                     <div class="qr-panel">
                         <div class="vietqr">Viet<span>QR</span> <small>PRO</small></div>
@@ -39,12 +39,16 @@
                         </p>
                         <dl>
                             <div>
+                                <dt>Hợp đồng</dt>
+                                <dd id="contract">—</dd>
+                            </div>
+                            <div>
                                 <dt>Chủ tài khoản</dt>
-                                <dd>eduConnext</dd>
+                                <dd>Edu Connect</dd>
                             </div>
                             <div>
                                 <dt>Số tài khoản minh họa</dt>
-                                <dd>DEMO-EDUCONNEXT</dd>
+                                <dd>DEMO-EDUCONNECT</dd>
                             </div>
                             <div class="copy-row">
                                 <dt>Số tiền</dt>
@@ -65,16 +69,15 @@
                 </div>
                 <div class="checkout-actions">
                     <button type="button" id="cancel">Hủy thanh toán</button>
+                    <a class="button button--secondary" id="reconcile" href="result.html"
+                        >Tôi đã chuyển khoản · kiểm tra đối soát</a
+                    >
                     <span id="status" role="status" aria-live="polite">Đang chờ thanh toán</span>
                 </div>
-                <details class="preview-controls">
-                    <summary>Điều khiển giả lập</summary>
-                    <p>Dùng để xem giao diện kết quả; không cập nhật ví hoặc hợp đồng thật.</p>
-                    <button type="button" id="simulate-success">
-                        Giả lập nhận thanh toán thành công
-                    </button>
-                </details>
-                <a id="restart" href="checkout.html" hidden>Quay lại thanh toán hợp đồng</a>
+
+                <a id="restart" class="button button--secondary" href="checkout.html" hidden
+                    >Quay lại thanh toán hợp đồng</a
+                >
             </section>
         </main>
     </body>

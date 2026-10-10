@@ -38,9 +38,6 @@
     justify-content: flex-start;
     min-height: 64px;
 }
-.contract-page #finance {
-    border-top: 3px solid var(--color-primary);
-}
 .contract-page #released-money {
     color: var(--color-success);
 }
@@ -237,7 +234,7 @@
 .contract-timeline {
     list-style: none;
     padding: 0 0 0 var(--space-4);
-    border-left: 2px solid var(--color-primary-container);
+
 }
 .contract-timeline li {
     position: relative;

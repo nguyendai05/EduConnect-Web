@@ -4,30 +4,27 @@
     if (!header) return
 
     const parentMenuItems = [
-      { label: 'Hồ sơ cá nhân', href: '#ho-so', icon: 'profile' },
-      { label: 'Hợp đồng của tôi', href: '#hop-dong', icon: 'calendar' },
-      { label: 'Ví TriThức', href: '#vi-tri-thuc', icon: 'wallet' },
-      { label: 'Bảo mật tài khoản', href: '#bao-mat', icon: 'shield' },
-      { label: 'Lịch sử giao dịch & Hóa đơn', href: '#lich-su-giao-dich', icon: 'receipt' }
+      { label: 'Hồ sơ cá nhân', href: '../../pages/account/profile.html', icon: 'profile' },
+      { label: 'Ví Edu Connect', href: '../../pages/wallet/overview.html', icon: 'wallet' },
+      { label: 'Lịch sử giao dịch & Hóa đơn', href: '../../pages/wallet/overview.html#transactions', icon: 'receipt' }
     ]
 
     const tutorMenuItems = [
-      { label: 'Hồ sơ giảng dạy công khai', href: '#ho-so-gia-su', icon: 'profile' },
-      { label: 'Lịch dạy & Khung rảnh', href: '#lich-day', icon: 'calendar' },
-      { label: 'Ví TriThức & Rút tiền', href: '#vi-tri-thuc', icon: 'wallet' },
-      { label: 'Bảo mật & Xác thực CCCD', href: '#bao-mat', icon: 'shield' }
+      { label: 'Hồ sơ giảng dạy', href: '../../pages/tutor/my-profile.html', icon: 'profile' },
+      { label: 'Thiết lập lịch rảnh', href: '../../pages/tutor/my-profile.html#lich-ranh', icon: 'calendar' },
+      { label: 'Ví Edu Connect', href: '../../pages/wallet/overview.html', icon: 'wallet' }
     ]
     const iconAssetPath = '../../assets/icons/'
 
     const variants = {
-      A: { activeNav: 'home', profileName: 'Chị Mai Lan', initials: 'ML', profileRole: 'Phụ huynh', menuItems: parentMenuItems, logoutLabel: 'Đăng xuất' },
+      A: { activeNav: 'none', profileName: 'Chị Mai Lan', initials: 'ML', profileRole: 'Phụ huynh', menuItems: parentMenuItems, logoutLabel: 'Đăng xuất' },
       B: { activeNav: 'tutors', profileName: 'Chị Mai Lan', initials: 'ML', profileRole: 'Phụ huynh', menuItems: parentMenuItems, logoutLabel: 'Đăng xuất' },
       C: { activeNav: 'requests', profileName: 'Chị Mai Lan', initials: 'ML', profileRole: 'Phụ huynh', menuItems: parentMenuItems, logoutLabel: 'Đăng xuất' },
-      D: { activeNav: 'groups', profileName: 'Chị Mai Lan', initials: 'ML', profileRole: 'Phụ huynh', menuItems: parentMenuItems, logoutLabel: 'Đăng xuất' },
+      D: { activeNav: 'none', profileName: 'Chị Mai Lan', initials: 'ML', profileRole: 'Phụ huynh', menuItems: parentMenuItems, logoutLabel: 'Đăng xuất' },
       E: { activeNav: 'none', profileName: 'Chị Mai Lan', initials: 'ML', profileRole: 'Đang quản lý ví', menuItems: parentMenuItems, logoutLabel: 'Đăng xuất' },
-      STUDENT: { activeNav: 'home', profileName: 'Minh Quân', initials: 'MQ', profileRole: 'Học viên Lớp 12 - Tự nhiên', menuItems: parentMenuItems, logoutLabel: 'Đăng xuất' },
+      STUDENT: { activeNav: 'none', profileName: 'Minh Quân', initials: 'MQ', profileRole: 'Học viên Lớp 12 - Tự nhiên', menuItems: parentMenuItems, logoutLabel: 'Đăng xuất' },
       TUTOR: {
-        activeNav: 'home',
+        activeNav: 'requests',
         profileName: 'Lê Hoàng Yến',
         initials: 'LY',
         profileRole: 'Gia sư Chuyên Toán',
@@ -36,7 +33,6 @@
         logoutLabel: 'Đăng xuất tài khoản',
         summary: {
           title: 'Tài khoản xác thực',
-          badge: 'Gia sư TOP 1%',
           balance: '4.850.000đ'
         }
       }
@@ -51,7 +47,6 @@
     const profileVerified = header.querySelector('[data-profile-verified]')
     const menuSummary = header.querySelector('[data-menu-summary]')
     const menuSummaryTitle = header.querySelector('[data-menu-summary-title]')
-    const menuSummaryBadge = header.querySelector('[data-menu-summary-badge]')
     const menuBalance = header.querySelector('[data-menu-balance]')
     const menuLogoutLabel = header.querySelector('[data-menu-logout-label]')
     const menuLinkElements = Array.from(header.querySelectorAll('[data-menu-item]'))
@@ -95,7 +90,6 @@
     if (menuSummary) menuSummary.hidden = !variant.summary
     if (variant.summary) {
       if (menuSummaryTitle) menuSummaryTitle.textContent = variant.summary.title
-      if (menuSummaryBadge) menuSummaryBadge.textContent = variant.summary.badge
       if (menuBalance) menuBalance.textContent = variant.summary.balance
     }
 
@@ -156,11 +150,11 @@
       if (nextOpen) {
         menu.hidden = false
         window.requestAnimationFrame(() => {
-          if (isOpen) menu.classList.add('is-open')
+          if (!isOpen) return
+          menu.classList.add('is-open')
+          if (focusTarget === 'first') menuItems[0]?.focus()
+          if (focusTarget === 'last') menuItems[menuItems.length - 1]?.focus()
         })
-
-        if (focusTarget === 'first') menuItems[0]?.focus()
-        if (focusTarget === 'last') menuItems[menuItems.length - 1]?.focus()
         return
       }
 

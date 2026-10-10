@@ -5,15 +5,16 @@
     align-items: center;
     gap: var(--space-1);
     max-width: 100%;
-    padding: var(--space-1) var(--space-3);
+    min-height: 1.5rem;
+    padding: 0.1875rem 0.5rem;
     border: 1px solid transparent;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     background: var(--color-surface-low);
     color: var(--color-text-secondary);
     font-family: inherit;
     font-size: var(--font-size-xs);
     font-weight: 600;
-    line-height: var(--line-height-base);
+    line-height: 1.35;
     overflow-wrap: anywhere;
 }
 .badge--success {
@@ -48,9 +49,17 @@
 }
 
 .badge--verified {
-    background: var(--color-primary-container);
+    padding-inline: 0;
+    background: transparent;
     color: var(--color-primary-hover);
 }
+.badge > img,
+.badge > .component-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex: 0 0 auto;
+}
+.badge--danger > img[src$="verified.svg"] { display: none; }
 .badge--escrow {
     background: var(--color-success-container);
     color: var(--color-success);

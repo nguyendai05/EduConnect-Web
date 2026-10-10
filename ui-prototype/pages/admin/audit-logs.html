@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nhật ký hệ thống | Edu Connect</title>
+    <link rel="icon" href="../../assets/icons/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/layout/admin-sidebar.css">
+    <link rel="stylesheet" href="../../css/components/layout/admin-header.css">
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <link rel="stylesheet" href="../../css/components/navigation/tabs.css">
+    <link rel="stylesheet" href="../../css/components/navigation/pagination.css">
+    <link rel="stylesheet" href="../../css/components/navigation/filter-chip.css">
+    <link rel="stylesheet" href="../../css/components/form/search-input.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
+    <link rel="stylesheet" href="../../css/components/data-display/table.css">
+    <link rel="stylesheet" href="../../css/components/data-display/avatar.css">
+    <link rel="stylesheet" href="../../css/components/data-display/info-row.css">
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/feedback/modal.css">
+    <link rel="stylesheet" href="../../css/components/feedback/loading.css">
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/pages/admin/audit-logs.css">
+</head>
+<body class="audit-logs-page">
+    <a class="audit-logs__skip-link" href="#audit-main">Đến nội dung chính</a>
+    <!-- Component: AdminShell, AdminSidebar | Nguồn: components/layout/{admin-shell,admin-sidebar}.html -->
+    <div class="admin-shell" data-component="admin-shell" data-audit-logs>
+        <aside class="admin-sidebar admin-shell__sidebar" aria-label="Thanh điều hướng quản trị" data-component="admin-sidebar">
+        <div class="admin-sidebar__main">
+            <header class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="dashboard.html" aria-label="Edu Connect quản trị">
+                    <span class="admin-sidebar__brand-mark" aria-hidden="true"><img class="admin-sidebar__brand-logo" src="../../assets/icons/logo.svg" alt="Logo"></span>
+                    <span class="admin-sidebar__brand-name">Edu Connect</span>
+                </a>
+                <span class="admin-sidebar__role">Quản trị</span>
+            </header>
+
+            <p class="admin-sidebar__group-label">Điều hành</p>
+            <nav class="admin-sidebar__nav" aria-label="Các mục quản trị">
+                <a class="admin-sidebar__item" href="dashboard.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="tutor-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
+                    <span class="admin-sidebar__badge" aria-label="4 hồ sơ chờ xử lý">4</span>
+                </a>
+                <a class="admin-sidebar__item" href="job-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
+                    <span class="admin-sidebar__badge" aria-label="5 tin chờ xử lý">5</span>
+                </a>
+                <a class="admin-sidebar__item" href="reports.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
+                    <span class="admin-sidebar__badge" aria-label="6 báo cáo cần xử lý">6</span>
+                </a>
+                <a class="admin-sidebar__item" href="payout-requests.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
+                    <span class="admin-sidebar__badge" aria-label="5 yêu cầu rút tiền chờ xử lý">5</span>
+                </a>
+                <a class="admin-sidebar__item is-active" href="audit-logs.html" aria-current="page">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
+                </a>
+            </nav>
+        </div>
+        <footer class="admin-sidebar__footer">Edu Connect · Quản trị hệ thống</footer>
+    </aside>
+        <!-- Component: AdminHeader | Nguồn: components/layout/admin-header.html; JS: js/core/admin-header.js -->
+        <header class="admin-header" data-component="admin-header" data-has-unread="false">
+        <form class="admin-header__search" role="search" data-admin-search>
+            <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
+            <img class="admin-header__icon admin-header__search-icon" src="../../assets/icons/search.svg" alt="">
+            <input class="admin-header__search-input" id="admin-global-search" name="query" type="search" autocomplete="off" placeholder="Tìm kiếm theo mã tin, mã hồ sơ gia sư, mã yêu cầu rút tiền..." data-search-input>
+            <button class="admin-header__clear-search" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><img class="admin-header__icon" src="../../assets/icons/cancel.svg" alt=""></button>
+            <section class="admin-header__search-results" aria-label="Kết quả tìm kiếm nhanh" data-search-results hidden>
+                <div class="admin-header__popover-heading">
+                    <span>Kết quả khớp mã</span>
+                    <span>ESC để đóng</span>
+                </div>
+                <a class="admin-header__result" href="job-review-detail.html?id=TT-8841">
+                    <span class="admin-header__result-type admin-header__result-type--neutral">TIN TÌM GIA SƯ</span>
+                    <span class="admin-header__result-copy"><strong>TT-8841 · Gia sư Tiếng Anh lớp 10</strong><span>Phụ huynh: Lê Hoàng Nam · Chờ duyệt</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+                <a class="admin-header__result" href="tutor-review-detail.html?id=HSGS-9041">
+                    <span class="admin-header__result-type">HỒ SƠ GIA SƯ</span>
+                    <span class="admin-header__result-copy"><strong>HSGS-9041 · Trần Minh Khoa</strong><span>Chờ xác minh chứng chỉ giảng dạy</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+                <a class="admin-header__result" href="payout-request-detail.html?id=PO-2026-0841">
+                    <span class="admin-header__result-type admin-header__result-type--accent">YÊU CẦU RÚT TIỀN</span>
+                    <span class="admin-header__result-copy"><strong>PO-2026-0841 · Nguyễn Minh Anh</strong><span>Chờ quản trị xử lý</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+            </section>
+        </form>
+
+        <div class="admin-header__utilities">
+            <span class="admin-header__system-status"><span aria-hidden="true"></span>Hệ thống bình thường</span>
+            <div class="admin-header__popover-wrap" data-notification-wrap>
+                <button class="admin-header__icon-button" type="button" aria-label="Thông báo hệ thống" aria-expanded="false" aria-controls="admin-notification-popover" data-notification-trigger><img class="admin-header__icon" src="../../assets/icons/notification.svg" alt=""><span class="admin-header__notification-dot" aria-hidden="true"></span></button>
+                <section class="admin-header__notification-popover" id="admin-notification-popover" aria-label="Thông báo vận hành" data-notification-popover hidden>
+                    <div class="admin-header__notification-title"><strong>Thông báo vận hành</strong><span>3 mới</span></div>
+                    <a class="admin-header__notification" href="tutor-review-queue.html"><img class="admin-header__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span><strong>Duyệt hồ sơ gia sư mới</strong><small>Trần Thị Mai Hương vừa tải chứng chỉ Sư phạm Toán.</small><time>4 phút trước</time></span></a>
+                    <a class="admin-header__notification" href="payout-requests.html"><img class="admin-header__icon admin-header__notification-icon--accent" src="../../assets/icons/wallet.svg" alt=""><span><strong>Yêu cầu rút tiền: #HĐ-8910</strong><small>Số tiền 3.500.000đ từ gia sư Nguyễn Hữu Nam.</small><time>18 phút trước</time></span></a>
+                    <a class="admin-header__popover-link" href="audit-logs.html">Xem tất cả nhật ký thông báo</a>
+                </section>
+            </div>
+            <span class="admin-header__divider" aria-hidden="true"></span>
+            <div class="admin-header__popover-wrap" data-profile-wrap>
+                <button class="admin-header__profile-trigger" type="button" aria-expanded="false" aria-controls="admin-profile-popover" data-profile-trigger>
+                    <span class="admin-header__avatar" aria-hidden="true">QT</span>
+                    <span class="admin-header__profile-copy"><strong>Quản trị viên</strong><small>Admin</small></span>
+                    <img class="admin-header__chevron admin-header__icon" src="../../assets/icons/mui-ten-xuong.svg" alt="">
+                </button>
+                <section class="admin-header__profile-popover" id="admin-profile-popover" aria-label="Tài khoản quản trị" data-profile-popover hidden>
+                    <div class="admin-header__profile-summary"><strong>Nguyễn Xuân Đại</strong><span>admin@educonnect.vn</span><span class="admin-header__permission"><img class="admin-header__icon" src="../../assets/icons/shield-user.svg" alt="">Quyền hạn: Root Superadmin</span></div>
+                    <nav class="admin-header__profile-menu" aria-label="Tác vụ tài khoản quản trị">
+                        <a href="audit-logs.html"><img class="admin-header__icon" src="../../assets/icons/audit-log.svg" alt="">Nhật ký thao tác cá nhân</a>
+                        <a class="is-danger" href="../auth/login.html"><img class="admin-header__icon" src="../../assets/icons/dang-xuat.svg" alt="">Đăng xuất phiên quản trị</a>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </header>
+        <main class="admin-shell__workspace" id="audit-main" tabindex="-1">
+            <div class="admin-shell__content audit-logs">
+                <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
+                <header class="admin-shell__page-header audit-logs__header">
+                    <div>
+                        <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="dashboard.html">Tổng quan</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Nhật ký hệ thống</span></li></ol></nav>
+                        <h1>Nhật ký hệ thống</h1>
+                        <p>Theo dõi các thao tác quản trị và hoạt động tự động quan trọng để phục vụ kiểm tra và truy vết.</p>
+                    </div>
+                    <div class="audit-logs__refresh">
+                        <!-- Component: Button | Nguồn: components/action/button.html -->
+                        <button class="button button--secondary" type="button" data-audit-refresh><svg class="audit-logs__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6.1 7a7 7 0 0 1 11.6-1L20 9M4 15l2.3 3A7 7 0 0 0 17.9 17"/></svg>Làm mới</button>
+                        <span class="audit-logs__updated" data-audit-updated>Đang tải nhật ký…</span>
+                    </div>
+                </header>
+
+                <!-- Component: Alert, Badge | Nguồn: components/feedback/{alert,badge}.html -->
+                <section class="alert alert--contextual audit-logs__notice" aria-labelledby="audit-notice-title">
+                    <span class="alert__icon alert__icon--shield-alert" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <h2 class="alert__title" id="audit-notice-title">Nhật ký chỉ đọc<span class="badge badge--info">Bảo mật cao</span></h2>
+                        <p class="alert__message">Nhật ký chỉ đọc. Thông tin nhạy cảm được che khi hiển thị.</p>
+                    </div>
+
+                </section>
+
+                <section class="audit-logs__toolbar" aria-label="Tìm kiếm và lọc nhật ký hệ thống">
+                    <div class="audit-logs__toolbar-heading">
+                        <!-- Component: Tabs | Nguồn: components/navigation/tabs.html; JS: js/core/tabs.js -->
+                        <div class="tabs tabs--contained" data-tabs data-audit-result-tabs>
+                            <div class="tabs__list" role="tablist" aria-label="Lọc theo kết quả thao tác">
+                                <button class="tabs__tab" type="button" role="tab" id="audit-tab-all" aria-selected="true" aria-controls="audit-results" data-audit-result="all">Tất cả <span class="tabs__badge" data-result-count="all">30</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="audit-tab-success" aria-selected="false" aria-controls="audit-results" tabindex="-1" data-audit-result="success">Thành công <span class="tabs__badge" data-result-count="success">18</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="audit-tab-review" aria-selected="false" aria-controls="audit-results" tabindex="-1" data-audit-result="review">Cần rà soát <span class="tabs__badge" data-result-count="review">5</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="audit-tab-failed" aria-selected="false" aria-controls="audit-results" tabindex="-1" data-audit-result="failed">Thất bại <span class="tabs__badge" data-result-count="failed">7</span></button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Component: SearchInput, Select | Nguồn: components/form/{search-input,select}.html; JS: js/core/search-input.js -->
+                    <form class="audit-logs__filters" role="search" id="audit-filters" data-audit-filters>
+                        <div class="search-input search-input--compact" data-search-input>
+                            <label class="sr-only" for="audit-search">Tìm kiếm trong nhật ký hệ thống</label>
+                            <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                            <input id="audit-search" type="search" name="query" placeholder="Tìm theo người thực hiện, hành động, đối tượng…" autocomplete="off" maxlength="200" data-audit-search>
+                            <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                        </div>
+                        <div class="select-field">
+                            <label class="sr-only" for="audit-actor">Người thực hiện</label>
+                            <select class="select-control select-control--native" id="audit-actor" name="actor">
+                                <option value="all">Người: Tất cả</option>
+                                <option value="admin">Quản trị viên</option>
+                                <option value="moderator">Điều phối viên</option>
+                                <option value="system">Hệ thống (tự động)</option>
+                            </select>
+                        </div>
+                        <div class="select-field">
+                            <label class="sr-only" for="audit-action">Loại hành động</label>
+                            <select class="select-control select-control--native" id="audit-action" name="action">
+                                <option value="all">Loại hành động: Tất cả</option>
+                                <option value="tutor">Duyệt hồ sơ gia sư</option>
+                                <option value="job">Duyệt tin tìm gia sư</option>
+                                <option value="payout">Yêu cầu rút tiền &amp; giải ngân</option>
+                                <option value="dispute">Báo cáo &amp; tranh chấp</option>
+                                <option value="contract">Hợp đồng &amp; hoàn tiền</option>
+                                <option value="automation">Tác vụ tự động của lớp học</option>
+                                <option value="account">Tài khoản &amp; bảo mật</option>
+                                <option value="report">Xuất báo cáo đối soát</option>
+                            </select>
+                        </div>
+                        <div class="select-field">
+                            <label class="sr-only" for="audit-target">Loại đối tượng</label>
+                            <select class="select-control select-control--native" id="audit-target" name="target">
+                                <option value="all">Đối tượng: Tất cả</option>
+                                <option value="tutor-profile">Hồ sơ gia sư</option>
+                                <option value="job-post">Tin tìm gia sư</option>
+                                <option value="contract">Hợp đồng</option>
+                                <option value="lesson">Buổi học &amp; lớp nhóm</option>
+                                <option value="dispute">Báo cáo &amp; tranh chấp</option>
+                                <option value="payout">Yêu cầu rút tiền</option>
+                                <option value="account">Tài khoản</option>
+                                <option value="report">Báo cáo đối soát</option>
+                            </select>
+                        </div>
+                        <div class="select-field">
+                            <label class="sr-only" for="audit-range">Khoảng thời gian</label>
+                            <select class="select-control select-control--native" id="audit-range" name="range">
+                                <option value="today">Hôm nay</option>
+                                <option value="7d">7 ngày gần đây</option>
+                                <option value="30d" selected>30 ngày gần đây</option>
+                                <option value="custom">Tùy chọn ngày…</option>
+                                <option value="all">Toàn bộ thời gian</option>
+                            </select>
+                        </div>
+                        <div class="select-field">
+                            <label class="sr-only" for="audit-sort">Sắp xếp bản ghi</label>
+                            <select class="select-control select-control--native" id="audit-sort" name="sort">
+                                <option value="newest">Mới nhất</option>
+                                <option value="oldest">Cũ nhất</option>
+                            </select>
+                        </div>
+
+                        <!-- Component: Input (date) | Nguồn: components/form/input.html -->
+                        <div class="audit-logs__range" data-audit-range-fields hidden>
+                            <div class="select-field">
+                                <label class="select-field__label" for="audit-date-from">Từ ngày</label>
+                                <div class="input-control"><input class="input-control__input" id="audit-date-from" name="dateFrom" type="date" value="2026-09-10"></div>
+                            </div>
+                            <div class="select-field">
+                                <label class="select-field__label" for="audit-date-to">Đến ngày</label>
+                                <div class="input-control"><input class="input-control__input" id="audit-date-to" name="dateTo" type="date" value="2026-10-09"></div>
+                            </div>
+                            <p class="audit-logs__range-hint">Áp dụng theo múi giờ Việt Nam (UTC+7), tính từ 00:00 ngày bắt đầu đến 23:59 ngày kết thúc.</p>
+                        </div>
+                    </form>
+
+                    <!-- Component: FilterChip | Nguồn: components/navigation/filter-chip.html -->
+                    <div class="audit-logs__active">
+                        <span class="audit-logs__active-label" id="audit-chips-label">Đang áp dụng:</span>
+                        <div class="filter-chip-list audit-logs__chips" role="group" aria-labelledby="audit-chips-label" data-audit-chips></div>
+                        <button class="button button--ghost button--small audit-logs__clear" type="button" data-audit-reset hidden>Xóa bộ lọc</button>
+                    </div>
+
+                    <div class="audit-logs__results-heading">
+                        <p data-audit-result-summary aria-live="polite" aria-atomic="true">Đang tải nhật ký hệ thống…</p>
+                        <p class="audit-logs__privacy"><img src="../../assets/icons/lock.svg" alt="">Trường nhạy cảm luôn ở dạng đã che</p>
+                    </div>
+                </section>
+
+                <section id="audit-results" role="tabpanel" aria-labelledby="audit-tab-all" aria-busy="true" tabindex="0" data-audit-results>
+                    <!-- Component: Loading | Nguồn: components/feedback/loading.html -->
+                    <div class="loading" role="status" data-component="loading" data-audit-loading><span class="loading__spinner" aria-hidden="true"></span><p class="loading__text">Đang tải nhật ký hệ thống…</p></div>
+                    <!-- Component: Table, Pagination, Select | Nguồn: components/data-display/table.html; components/navigation/pagination.html; JS: js/core/pagination.js -->
+                    <div class="table-frame" data-audit-table hidden>
+                        <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Nhật ký hệ thống, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                            <table class="table table--review audit-logs__table">
+                                <caption class="table__caption table__caption--sr-only">Nhật ký hệ thống theo thời gian, người thực hiện, hành động, đối tượng, kết quả và địa chỉ IP</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Thời gian</th>
+                                        <th scope="col">Người thực hiện</th>
+                                        <th scope="col">Hành động</th>
+                                        <th scope="col">Đối tượng</th>
+                                        <th scope="col">Kết quả</th>
+                                        <th scope="col">Địa chỉ IP</th>
+                                        <th scope="col" class="table__action-heading">Chi tiết</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-audit-list></tbody>
+                            </table>
+                        </div>
+                        <div class="audit-logs__table-footer">
+                            <nav class="pagination pagination--table" aria-label="Phân trang nhật ký hệ thống" data-component="pagination" data-pagination data-total="30" data-page-size="10" data-current="1" data-last-page="3">
+                                <p class="pagination__summary">Hiển thị <strong data-range-start>1</strong>–<strong data-range-end>10</strong> trong <strong data-total-count>30</strong> bản ghi</p>
+                                <div class="pagination__controls">
+                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button>
+                                    <span class="pagination__controls" data-page-numbers></span>
+                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span>Sau</span></button>
+                                </div>
+                            </nav>
+                            <div class="audit-logs__page-size"><label for="audit-page-size">Số bản ghi mỗi trang</label><select class="select-control select-control--native" id="audit-page-size" data-audit-page-size><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option></select></div>
+                        </div>
+                    </div>
+                    <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                    <div class="empty-state" data-component="empty-state" data-audit-empty hidden><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title">Không có bản ghi nhật ký phù hợp</h2><p class="empty-state__description">Thử đổi khoảng thời gian hoặc xóa bộ lọc.</p><button class="button button--outline" type="button" data-audit-reset>Xóa bộ lọc</button></div>
+                </section>
+                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải nhật ký, tìm kiếm và lọc bản ghi.</p></noscript>
+            </div>
+        </main>
+
+        <!-- Component con: TableRow | Nguồn: tự sinh trong js/pages/admin/audit-logs.js -->
+        <template id="audit-row-template">
+            <tr data-audit-row>
+                <td><time class="table__submitted" data-audit-time></time><small data-audit-clock></small></td>
+                <td>
+                    <div class="table__person">
+                        <span class="avatar avatar--small" aria-hidden="true" data-audit-avatar></span>
+                        <span class="audit-logs__actor-icon" data-audit-actor-icon hidden><img src="../../assets/icons/settings.svg" alt=""></span>
+                        <div><strong data-audit-actor></strong><small data-audit-actor-role></small></div>
+                    </div>
+                </td>
+                <td><span class="table__primary" data-audit-action></span><small class="audit-logs__code" data-audit-action-code></small></td>
+                <td><a class="table__primary audit-logs__target" data-audit-target></a><small data-audit-target-ref></small></td>
+                <td><span class="badge" data-audit-result></span><small class="audit-logs__change" data-audit-change></small></td>
+                <td><span class="audit-logs__ip" data-audit-ip></span></td>
+                <td class="table__action"><button type="button" data-audit-detail>Xem</button></td>
+            </tr>
+        </template>
+    </div>
+
+    <!-- Component: Modal, InfoRow, Badge, Button | Nguồn: components/feedback/{modal,badge}.html; components/data-display/info-row.html; components/action/button.html; JS: js/core/modal.js -->
+    <dialog class="modal audit-logs__modal" id="audit-detail-modal" data-component="modal" aria-labelledby="audit-modal-title">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--info" aria-hidden="true"></span>
+                <div class="modal__heading">
+                    <h2 id="audit-modal-title">Chi tiết nhật ký</h2>
+                    <p>Bản ghi đối soát chỉ đọc (read-only)</p>
+                </div>
+                <button class="modal__close" type="button" aria-label="Đóng chi tiết nhật ký" data-modal-close><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body audit-logs__modal-body">
+                <p class="audit-logs__modal-note">Bản ghi không thể chỉnh sửa hay xóa khỏi giao diện quản trị.</p>
+
+                <section class="audit-logs__section" aria-labelledby="audit-section-event">
+                    <div class="audit-logs__section-head">
+                        <h3 class="audit-logs__section-label" id="audit-section-event">1. Thông tin sự kiện</h3>
+                        <span class="badge badge--neutral" data-audit-d-scope>Phạm vi: toàn hệ thống</span>
+                    </div>
+                    <div class="audit-logs__panel" data-audit-d-event></div>
+                </section>
+
+                <section class="audit-logs__section" aria-labelledby="audit-section-diff">
+                    <div class="audit-logs__section-head">
+                        <h3 class="audit-logs__section-label" id="audit-section-diff">2. Biến động dữ liệu (trước / sau)</h3>
+                        <span class="audit-logs__section-meta" data-audit-d-fields>0 trường thay đổi</span>
+                    </div>
+                    <div class="audit-logs__diffs" data-audit-d-diff></div>
+                </section>
+
+                <section class="audit-logs__section" aria-labelledby="audit-section-payload">
+                    <div class="audit-logs__section-head">
+                        <h3 class="audit-logs__section-label" id="audit-section-payload">3. Dữ liệu kỹ thuật (JSON log)</h3>
+                        <span class="audit-logs__section-meta">Đã che trường nhạy cảm</span>
+                    </div>
+                    <p class="audit-logs__redaction" data-audit-d-redacted></p>
+                    <pre class="audit-logs__payload" tabindex="0" data-audit-d-payload></pre>
+                </section>
+            </div>
+            <footer class="modal__footer audit-logs__modal-footer">
+                <p class="audit-logs__copy-status" role="status" aria-live="polite" data-audit-copy-status></p>
+                <div class="audit-logs__modal-actions">
+                    <button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng chi tiết</button>
+                    <button class="modal__button modal__button--primary" type="button" data-audit-copy>Sao chép mã tham chiếu</button>
+                </div>
+            </footer>
+        </div>
+    </dialog>
+
+    <script src="../../js/core/admin-header.js" defer></script>
+    <script src="../../js/core/search-input.js" defer></script>
+    <script src="../../js/core/tabs.js" defer></script>
+    <script src="../../js/core/pagination.js" defer></script>
+    <script src="../../js/core/modal.js" defer></script>
+    <script src="../../js/pages/admin/audit-logs.js" defer></script>
+</body>
+</html>

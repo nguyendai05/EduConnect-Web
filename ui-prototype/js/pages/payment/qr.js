@@ -3,29 +3,106 @@
     const key = "edu-payment-preview";
     const byId = (id) => document.getElementById(id);
     const money = (value) => new Intl.NumberFormat("vi-VN").format(value) + " ₫";
-    let attempt;
-    try {
-        attempt = JSON.parse(sessionStorage.getItem(key));
-    } catch {
-        attempt = null;
-    }
-    const hasValidAttempt =
-        attempt &&
-        attempt.contract === "HD-20260926-025" &&
-        attempt.total === 1760000 &&
-        attempt.wallet === 340000 &&
-        attempt.due === 1420000 &&
-        Number.isFinite(attempt.expiresAt) &&
-        typeof attempt.reference === "string";
-    if (!hasValidAttempt) {
-        attempt = {
-            reference: "ECX 26092602501",
-            contract: "HD-20260926-025",
+    // Page-only payment fixtures; amounts must match the checkout and wallet statement.
+    // Totals come from contract/confirm.js (fee × sessions) minus the wallet deduction.
+    const contracts = {
+        "HD-20260926-025": {
+            title: "Học Toán cùng Nguyễn Minh Anh",
             total: 1760000,
             wallet: 340000,
             due: 1420000,
+            reference: "ECX 26092602501",
+        },
+        "HD-20260926-018": {
+            title: "Luyện Tiếng Anh cùng Trần Quốc Huy",
+            total: 2700000,
+            wallet: 340000,
+            due: 2360000,
+            reference: "ECX 26092601801",
+        },
+        "HD-20260926-011": {
+            title: "Học Ngữ văn cùng Lê Thảo Vy",
+            total: 2160000,
+            wallet: 340000,
+            due: 1820000,
+            reference: "ECX 26092601101",
+        },
+        "HD-20260926-005": {
+            title: "Luyện thi Toán cùng Phạm Hoàng Long",
+            total: 3200000,
+            wallet: 340000,
+            due: 2860000,
+            reference: "ECX 26092600501",
+        },
+    };
+    const params = new URLSearchParams(location.search);
+    const requested = params.get("contract") || params.get("id");
+    // No silent fallback: an unknown or missing code stops the flow instead of opening another contract.
+    const contractId = requested && Object.hasOwn(contracts, requested) ? requested : null;
+    const confirmHref = `../contract/confirm.html${
+        contractId ? `?contract=${encodeURIComponent(contractId)}` : ""
+    }`;
+    const brand = document.querySelector(".merchant-brand");
+    if (!contractId) {
+        document.title = "Không tìm thấy hợp đồng — Edu Connect";
+        byId("contract").textContent = requested
+            ? `Không tìm thấy hợp đồng ${requested}`
+            : "Liên kết thanh toán thiếu mã hợp đồng";
+        byId("amount").textContent = "—";
+        byId("reference").textContent = "—";
+        document.querySelector(".instructions").textContent = requested
+            ? `Không có phiên thanh toán nào cho hợp đồng ${requested}. Chưa có khoản tiền nào bị trừ.`
+            : "Liên kết mở trang thanh toán thiếu mã hợp đồng. Chưa có khoản tiền nào bị trừ.";
+        // Only the contract line stays: no QR, no account and no amount to transfer.
+        document.querySelector(".qr-panel").hidden = true;
+        document.querySelector(".bank-name").hidden = true;
+        document.querySelectorAll(".bank-details dl > div").forEach((row, index) => {
+            row.hidden = index > 0;
+        });
+        document.querySelector(".notice").hidden = true;
+        byId("cancel").hidden = true;
+        byId("reconcile").hidden = true;
+        byId("status").textContent = requested
+            ? `Không tìm thấy hợp đồng ${requested} trong danh sách ký quỹ của bạn.`
+            : "Liên kết mở trang thanh toán thiếu mã hợp đồng.";
+        const fromDetail = params.get("from") === "contract-detail";
+        const restart = byId("restart");
+        restart.hidden = false;
+        restart.textContent = fromDetail ? "Quay lại hợp đồng" : "Về trang xác nhận hợp đồng";
+        restart.href = fromDetail
+            ? `../contract/student-detail.html?id=${encodeURIComponent(requested || "")}`
+            : confirmHref;
+        if (brand) brand.href = confirmHref;
+        return;
+    }
+    const expected = contracts[contractId];
+    const isMine = (value) =>
+        value &&
+        value.contract === contractId &&
+        value.total === expected.total &&
+        value.wallet === expected.wallet &&
+        value.due === expected.due &&
+        Number.isFinite(value.expiresAt) &&
+        typeof value.reference === "string";
+    let attempt;
+    try {
+        const stored = JSON.parse(sessionStorage.getItem(key) || "null");
+        // A stored attempt is only reused when it matches this contract and its amounts.
+        attempt = isMine(stored) ? stored : null;
+    } catch {
+        attempt = null;
+    }
+    if (!attempt) {
+        attempt = {
+            reference: expected.reference,
+            contract: contractId,
+            contractTitle: expected.title,
+            total: expected.total,
+            wallet: expected.wallet,
+            due: expected.due,
             expiresAt: Date.now() + 15 * 60 * 1000,
             state: "pending",
+            from: params.get("from"),
         };
         try {
             sessionStorage.setItem(key, JSON.stringify(attempt));
@@ -33,20 +110,26 @@
             // The page can still display its default payment information.
         }
     }
-    if (
-        !attempt ||
-        attempt.contract !== "HD-20260926-025" ||
-        attempt.total !== 1760000 ||
-        attempt.wallet !== 340000 ||
-        attempt.due !== 1420000 ||
-        !Number.isFinite(attempt.expiresAt) ||
-        typeof attempt.reference !== "string"
-    ) {
+    if (!isMine(attempt)) {
         byId("status").textContent = "Không thể tải thông tin thanh toán.";
         return;
     }
+    const resultUrl = (status) => {
+        const query = new URLSearchParams({ status, id: contractId, preview: "1" });
+        if (attempt.from) query.set("from", attempt.from);
+        return `result.html?${query.toString()}`;
+    };
+    const checkoutUrl = () =>
+        `checkout.html?contract=${encodeURIComponent(contractId)}${
+            attempt.from ? `&from=${encodeURIComponent(attempt.from)}` : ""
+        }`;
+    document.title = `Thanh toán ký quỹ ${contractId} qua payOS | Edu Connect`;
+    // The brand link must return to this contract's checkout step, not to a default one.
+    if (brand) brand.href = checkoutUrl();
+    byId("contract").textContent = `${contractId} · ${expected.title}`;
     byId("amount").textContent = money(attempt.due);
     byId("reference").textContent = attempt.reference;
+    byId("reconcile").href = resultUrl("pending");
     // Decorative matrix deliberately contains no valid payment data.
     const svg = byId("qr-preview");
     const square = (x, y, size, fill) => {
@@ -79,11 +162,19 @@
     label.setAttribute("font-size", "3");
     label.textContent = "DEMO";
     svg.append(label);
-    const save = () => sessionStorage.setItem(key, JSON.stringify(attempt));
+    const save = () => {
+        try {
+            sessionStorage.setItem(key, JSON.stringify(attempt));
+        } catch {
+            // Preview state is lost when storage is unavailable; nothing else changes.
+        }
+    };
     const disable = (message) => {
         document.querySelectorAll("button").forEach((button) => (button.disabled = true));
+        byId("reconcile").hidden = true;
         byId("status").textContent = message;
         byId("restart").hidden = false;
+        byId("restart").href = checkoutUrl();
     };
     const tick = () => {
         const seconds = Math.max(0, Math.ceil((attempt.expiresAt - Date.now()) / 1000));
@@ -103,10 +194,9 @@
         attempt.state = state;
         attempt.completedAt = Date.now();
         save();
-        location.href = `result.html?view=${state}&preview=1`;
+        location.href = resultUrl(state);
     };
     byId("cancel").addEventListener("click", () => finish("cancelled"));
-    byId("simulate-success").addEventListener("click", () => finish("success"));
     document.querySelectorAll("[data-copy]").forEach((button) => {
         button.addEventListener("click", async () => {
             const text = button.dataset.copy === "amount" ? String(attempt.due) : attempt.reference;

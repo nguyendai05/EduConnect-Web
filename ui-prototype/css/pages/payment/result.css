@@ -96,7 +96,7 @@
     overflow-wrap: anywhere;
 }
 .result-total {
-    border-top: 1px solid var(--color-primary-border);
+    border-top: 1px solid var(--color-border);
     margin-top: var(--space-2);
 }
 .result-total dd {

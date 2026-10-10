@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tổng quan quản trị | Edu Connect</title>
+    <link rel="icon" href="../../assets/icons/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/layout/admin-sidebar.css">
+    <link rel="stylesheet" href="../../css/components/layout/admin-header.css">
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
+    <link rel="stylesheet" href="../../css/components/data-display/card.css">
+    <link rel="stylesheet" href="../../css/components/data-display/stat-card.css">
+    <link rel="stylesheet" href="../../css/components/data-display/avatar.css">
+    <link rel="stylesheet" href="../../css/components/data-display/info-row.css">
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/loading.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/pages/admin/dashboard.css">
+</head>
+<body class="dashboard-page">
+    <a class="dashboard__skip-link" href="#dashboard-main">Đến nội dung chính</a>
+    <div class="admin-shell" data-component="admin-shell" data-dashboard>
+        <!-- Component: AdminSidebar | Nguồn: components/layout/admin-sidebar.html; CSS: css/components/layout/admin-sidebar.css -->
+        <aside class="admin-sidebar admin-shell__sidebar" aria-label="Thanh điều hướng quản trị" data-component="admin-sidebar">
+        <div class="admin-sidebar__main">
+            <header class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="dashboard.html" aria-label="Edu Connect quản trị">
+                    <span class="admin-sidebar__brand-mark" aria-hidden="true"><img class="admin-sidebar__brand-logo" src="../../assets/icons/logo.svg" alt="Logo"></span>
+                    <span class="admin-sidebar__brand-name">Edu Connect</span>
+                </a>
+                <span class="admin-sidebar__role">Quản trị</span>
+            </header>
+
+            <p class="admin-sidebar__group-label">Điều hành</p>
+            <nav class="admin-sidebar__nav" aria-label="Các mục quản trị">
+                <a class="admin-sidebar__item is-active" href="dashboard.html" aria-current="page">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="tutor-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
+                    <span class="admin-sidebar__badge" aria-label="4 hồ sơ chờ xử lý">4</span>
+                </a>
+                <a class="admin-sidebar__item" href="job-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
+                    <span class="admin-sidebar__badge" aria-label="5 tin chờ xử lý">5</span>
+                </a>
+                <a class="admin-sidebar__item" href="reports.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
+                    <span class="admin-sidebar__badge" aria-label="6 báo cáo cần xử lý">6</span>
+                </a>
+                <a class="admin-sidebar__item" href="payout-requests.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
+                    <span class="admin-sidebar__badge" aria-label="5 yêu cầu rút tiền chờ xử lý">5</span>
+                </a>
+                <a class="admin-sidebar__item" href="audit-logs.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
+                </a>
+            </nav>
+        </div>
+        <footer class="admin-sidebar__footer">Edu Connect · Quản trị hệ thống</footer>
+    </aside>
+
+        <!-- Component: AdminHeader | Nguồn: components/layout/admin-header.html; JS: js/core/admin-header.js -->
+        <header class="admin-header" data-component="admin-header" data-has-unread="false">
+        <form class="admin-header__search" role="search" data-admin-search>
+            <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
+            <img class="admin-header__icon admin-header__search-icon" src="../../assets/icons/search.svg" alt="">
+            <input class="admin-header__search-input" id="admin-global-search" name="query" type="search" autocomplete="off" placeholder="Tìm kiếm theo mã tin, mã hồ sơ gia sư, mã yêu cầu rút tiền..." data-search-input>
+            <button class="admin-header__clear-search" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><img class="admin-header__icon" src="../../assets/icons/cancel.svg" alt=""></button>
+            <section class="admin-header__search-results" aria-label="Kết quả tìm kiếm nhanh" data-search-results hidden>
+                <div class="admin-header__popover-heading">
+                    <span>Kết quả khớp mã</span>
+                    <span>ESC để đóng</span>
+                </div>
+                <a class="admin-header__result" href="job-review-detail.html?id=TT-8841">
+                    <span class="admin-header__result-type admin-header__result-type--neutral">TIN TÌM GIA SƯ</span>
+                    <span class="admin-header__result-copy"><strong>TT-8841 · Gia sư Tiếng Anh lớp 10</strong><span>Phụ huynh: Lê Hoàng Nam · Chờ duyệt</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+                <a class="admin-header__result" href="tutor-review-detail.html?id=HSGS-9041">
+                    <span class="admin-header__result-type">HỒ SƠ GIA SƯ</span>
+                    <span class="admin-header__result-copy"><strong>HSGS-9041 · Trần Minh Khoa</strong><span>Chờ xác minh chứng chỉ giảng dạy</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+                <a class="admin-header__result" href="payout-request-detail.html?id=PO-2026-0841">
+                    <span class="admin-header__result-type admin-header__result-type--accent">YÊU CẦU RÚT TIỀN</span>
+                    <span class="admin-header__result-copy"><strong>PO-2026-0841 · Nguyễn Minh Anh</strong><span>Chờ quản trị xử lý</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+            </section>
+        </form>
+
+        <div class="admin-header__utilities">
+            <span class="admin-header__system-status"><span aria-hidden="true"></span>Hệ thống bình thường</span>
+            <div class="admin-header__popover-wrap" data-notification-wrap>
+                <button class="admin-header__icon-button" type="button" aria-label="Thông báo hệ thống" aria-expanded="false" aria-controls="admin-notification-popover" data-notification-trigger><img class="admin-header__icon" src="../../assets/icons/notification.svg" alt=""><span class="admin-header__notification-dot" aria-hidden="true"></span></button>
+                <section class="admin-header__notification-popover" id="admin-notification-popover" aria-label="Thông báo vận hành" data-notification-popover hidden>
+                    <div class="admin-header__notification-title"><strong>Thông báo vận hành</strong><span>3 mới</span></div>
+                    <a class="admin-header__notification" href="tutor-review-queue.html?status=pending"><img class="admin-header__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span><strong>Duyệt hồ sơ gia sư mới</strong><small>Trần Thị Mai Hương vừa tải chứng chỉ Sư phạm Toán.</small><time>4 phút trước</time></span></a>
+                    <a class="admin-header__notification" href="payout-requests.html?status=pending"><img class="admin-header__icon admin-header__notification-icon--accent" src="../../assets/icons/wallet.svg" alt=""><span><strong>Yêu cầu rút tiền: #HĐ-8910</strong><small>Số tiền 3.500.000đ từ gia sư Nguyễn Hữu Nam.</small><time>18 phút trước</time></span></a>
+                    <a class="admin-header__popover-link" href="audit-logs.html">Xem tất cả nhật ký thông báo</a>
+                </section>
+            </div>
+            <span class="admin-header__divider" aria-hidden="true"></span>
+            <div class="admin-header__popover-wrap" data-profile-wrap>
+                <button class="admin-header__profile-trigger" type="button" aria-expanded="false" aria-controls="admin-profile-popover" data-profile-trigger>
+                    <span class="admin-header__avatar" aria-hidden="true">QT</span>
+                    <span class="admin-header__profile-copy"><strong>Quản trị viên</strong><small>Admin</small></span>
+                    <img class="admin-header__chevron admin-header__icon" src="../../assets/icons/mui-ten-xuong.svg" alt="">
+                </button>
+                <section class="admin-header__profile-popover" id="admin-profile-popover" aria-label="Tài khoản quản trị" data-profile-popover hidden>
+                    <div class="admin-header__profile-summary"><strong>Nguyễn Xuân Đại</strong><span>admin@educonnect.vn</span><span class="admin-header__permission"><img class="admin-header__icon" src="../../assets/icons/shield-user.svg" alt="">Quyền hạn: Root Superadmin</span></div>
+                    <nav class="admin-header__profile-menu" aria-label="Tác vụ tài khoản quản trị">
+                        <a href="audit-logs.html"><img class="admin-header__icon" src="../../assets/icons/audit-log.svg" alt="">Nhật ký thao tác cá nhân</a>
+                        <a class="is-danger" href="../auth/login.html"><img class="admin-header__icon" src="../../assets/icons/dang-xuat.svg" alt="">Đăng xuất phiên quản trị</a>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </header>
+
+        <main class="admin-shell__workspace" id="dashboard-main" tabindex="-1">
+            <div class="admin-shell__content dashboard">
+                <header class="admin-shell__page-header dashboard__header">
+                    <div>
+                        <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><span>Quản trị</span></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Tổng quan</span></li></ol></nav>
+                        <h1>Tổng quan quản trị</h1>
+                        <p>Theo dõi hàng đợi cần xử lý và các chỉ số vận hành chính của Edu Connect.</p>
+                    </div>
+                    <div class="dashboard__refresh">
+                        <button class="button button--secondary" type="button" data-dashboard-refresh><svg class="dashboard__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6.1 7a7 7 0 0 1 11.6-1L20 9M4 15l2.3 3A7 7 0 0 0 17.9 17"/></svg>Làm mới dữ liệu</button>
+                        <p class="dashboard__updated" aria-live="polite" data-dashboard-updated>Đang tải số liệu tổng quan…</p>
+                    </div>
+                </header>
+
+                <!-- Component: Loading | Nguồn: components/feedback/loading.html -->
+                <div class="loading dashboard__loading" role="status" data-dashboard-loading><span class="loading__spinner" aria-hidden="true"></span><p class="loading__text">Đang tải số liệu tổng quan vận hành…</p></div>
+
+                <div class="dashboard__content" data-dashboard-content aria-busy="true" hidden>
+                    <section class="dashboard__section" aria-labelledby="ops-title">
+                        <div class="dashboard__section-head">
+                            <div>
+                                <h2 class="dashboard__section-title" id="ops-title">Chỉ số vận hành</h2>
+                                <p class="dashboard__section-note">Cộng đồng người dùng, nội dung chờ duyệt và hợp đồng đang chạy trong 30 ngày gần nhất.</p>
+                            </div>
+                            <a class="dashboard__link" href="audit-logs.html">Xem nhật ký hệ thống<img class="dashboard__link-icon" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                        </div>
+                        <!-- Component: StatCard, Badge, Button | Nguồn: components/data-display/stat-card.html; components/feedback/badge.html; components/action/button.html -->
+                        <div class="dashboard__metrics" data-dashboard-metrics></div>
+                    </section>
+
+                    <section class="dashboard__section" aria-labelledby="finance-title">
+                        <div class="dashboard__section-head">
+                            <div>
+                                <h2 class="dashboard__section-title" id="finance-title">Dòng tiền &amp; ký quỹ</h2>
+                                <p class="dashboard__section-note">Giá trị giao dịch, phí nền tảng và số dư escrow đang giữ theo sổ cái Edu Connect.</p>
+                            </div>
+                            <a class="dashboard__link" href="payout-requests.html">Xem yêu cầu rút tiền<img class="dashboard__link-icon" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                        </div>
+                        <div class="dashboard__metrics dashboard__metrics--finance" data-dashboard-finance></div>
+                    </section>
+
+                    <div class="dashboard__grid">
+                        <div class="dashboard__column">
+                            <section class="dashboard__section" aria-labelledby="chart-title">
+                                <div class="dashboard__section-head">
+                                    <div>
+                                        <h2 class="dashboard__section-title" id="chart-title">Biểu đồ tổng quan</h2>
+
+                                    </div>
+                                    <span class="badge badge--neutral">Dữ liệu minh họa</span>
+                                </div>
+                                <!-- Component: Card, Badge | Nguồn: components/data-display/card.html; components/feedback/badge.html -->
+                                <div class="dashboard__charts">
+                                    <article class="card dashboard__chart-card">
+                                        <div class="card__header dashboard__chart-head">
+                                            <div>
+                                                <h3 class="card__title">GMV theo tháng</h3>
+                                                <p class="card__description">Sáu tháng gần nhất: tổng giá trị giao dịch và phí nền tảng thu.</p>
+                                            </div>
+                                            <span class="badge badge--info">6 tháng</span>
+                                        </div>
+                                        <div class="card__body dashboard__chart-body">
+                                            <div class="dashboard__chart" role="img" aria-label="Biểu đồ cột GMV theo tháng" data-gmv-chart></div>
+                                            <ul class="dashboard__legend" aria-hidden="true">
+                                                <li class="dashboard__legend-item"><span class="dashboard__swatch dashboard__swatch--gmv" aria-hidden="true"></span>GMV đã thanh toán</li>
+                                                <li class="dashboard__legend-item"><span class="dashboard__swatch dashboard__swatch--fee" aria-hidden="true"></span>Phí nền tảng thu</li>
+                                            </ul>
+                                            <p class="dashboard__chart-summary" data-gmv-summary></p>
+                                        </div>
+                                        <div class="card__footer dashboard__chart-caption">Chiều cao cột do trang tính từ dữ liệu mẫu; không phải số liệu kế toán thực tế.</div>
+                                    </article>
+
+                                    <article class="card dashboard__chart-card">
+                                        <div class="card__header dashboard__chart-head">
+                                            <div>
+                                                <h3 class="card__title">Cơ cấu dòng tiền ký quỹ</h3>
+                                                <p class="card__description">Tỷ trọng các trạng thái tiền trong 30 ngày gần nhất.</p>
+                                            </div>
+                                            <span class="badge badge--escrow">Escrow</span>
+                                        </div>
+                                        <div class="card__body dashboard__chart-body">
+                                            <div class="dashboard__stack" role="img" aria-label="Biểu đồ thanh tỷ trọng các trạng thái dòng tiền ký quỹ" data-escrow-chart></div>
+                                            <ul class="dashboard__mix-list" data-escrow-list></ul>
+                                            <p class="dashboard__chart-summary" data-escrow-summary></p>
+                                        </div>
+                                        <div class="card__footer dashboard__chart-caption">Tổng dòng tiền <strong data-escrow-total></strong>.</div>
+                                    </article>
+                                </div>
+                            </section>
+
+                            <section class="dashboard__section" aria-labelledby="queue-title">
+                                <div class="dashboard__section-head">
+                                    <div>
+                                        <h2 class="dashboard__section-title" id="queue-title">Hàng đợi cần xử lý</h2>
+                                        <p class="dashboard__section-note">Sắp xếp theo mức độ khẩn cấp; mỗi hàng đợi mở thẳng trang kiểm duyệt tương ứng.</p>
+                                    </div>
+                                    <span class="badge badge--warning" data-dashboard-priority-total>Đang tải…</span>
+                                </div>
+                                <div class="card dashboard__queue">
+                                    <ul class="dashboard__queue-list" data-dashboard-queue></ul>
+                                    <div class="card__footer dashboard__queue-footer">
+                                        <p class="dashboard__foot-note" data-dashboard-queue-updated>Đang kiểm tra hàng đợi…</p>
+                                        <div class="dashboard__queue-actions">
+                                            <a class="dashboard__link" href="reports.html?status=open">Xem tất cả báo cáo đang mở<img class="dashboard__link-icon" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                                            <a class="dashboard__link" href="audit-logs.html?module=tutor">Xem nhật ký kiểm duyệt<img class="dashboard__link-icon" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="dashboard__section" aria-labelledby="activity-title">
+                                <div class="dashboard__section-head">
+                                    <div>
+                                        <h2 class="dashboard__section-title" id="activity-title">Hoạt động hệ thống gần đây</h2>
+                                        <p class="dashboard__section-note">Thao tác của quản trị viên và tác vụ tự động, ghi theo múi giờ Việt Nam.</p>
+                                    </div>
+                                    <a class="dashboard__link" href="audit-logs.html">Xem toàn bộ nhật ký hệ thống<img class="dashboard__link-icon" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                                </div>
+                                <!-- Component: Card, Avatar, Badge, InfoRow | Nguồn: components/data-display/{card,avatar,info-row}.html; components/feedback/badge.html -->
+                                <div class="card dashboard__activity-card">
+                                    <ol class="dashboard__activity" data-dashboard-activity></ol>
+                                </div>
+                            </section>
+                        </div>
+
+                        <aside class="dashboard__aside" aria-label="Tình trạng hệ thống">
+                            <section class="card dashboard__panel" aria-labelledby="integrity-title">
+                                <div class="card__header dashboard__panel-head">
+                                    <div>
+                                        <h2 class="card__title dashboard__panel-title" id="integrity-title">Tính toàn vẹn dòng tiền</h2>
+                                        <p class="card__description">Kiểm toán tự động của sổ cái Edu Connect Escrow.</p>
+                                    </div>
+                                    <span class="badge badge--success" data-dashboard-integrity-score>Đang kiểm tra…</span>
+                                </div>
+                                <div class="card__body dashboard__panel-body" data-dashboard-checks></div>
+                                <div class="card__footer dashboard__panel-foot">
+                                    <p class="dashboard__foot-note" data-dashboard-integrity-time></p>
+                                    <p class="dashboard__foot-note">Không cho phép điều chỉnh số dư thủ công.</p>
+                                </div>
+                            </section>
+
+                            <section class="card dashboard__panel" aria-labelledby="service-title">
+                                <div class="card__header dashboard__panel-head">
+                                    <div>
+                                        <h2 class="card__title dashboard__panel-title" id="service-title">Dịch vụ nền</h2>
+                                        <p class="card__description">Trạng thái tác vụ định kỳ của hệ thống.</p>
+                                    </div>
+                                </div>
+                                <div class="card__body dashboard__panel-body" data-dashboard-services></div>
+                            </section>
+
+
+                        </aside>
+                    </div>
+                </div>
+                <noscript><p class="dashboard__noscript">Vui lòng bật JavaScript để tải số liệu tổng quan, biểu đồ và các hàng đợi cần xử lý.</p></noscript>
+            </div>
+        </main>
+
+        <template id="dashboard-metric-template">
+            <article class="stat-card dashboard__metric">
+                <div class="stat-card__header">
+                    <h3 class="stat-card__label dashboard__metric-label" data-metric-label></h3>
+                    <span class="stat-card__icon stat-card__icon--small" aria-hidden="true"><img src="../../assets/icons/dashboard.svg" alt="" data-metric-icon></span>
+                </div>
+                <p class="dashboard__metric-value"><strong class="stat-card__value" data-metric-value></strong><span class="stat-card__unit" data-metric-unit></span></p>
+                <p class="stat-card__description dashboard__metric-note" data-metric-note></p>
+                <div class="dashboard__metric-footer">
+                    <span class="badge" data-metric-badge></span>
+                    <a class="dashboard__metric-link" data-metric-link href="audit-logs.html"><span data-metric-link-label></span><img class="dashboard__link-icon" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                </div>
+            </article>
+        </template>
+
+        <template id="dashboard-queue-template">
+            <li class="dashboard__queue-item">
+                <span class="dashboard__queue-icon" aria-hidden="true"><img src="../../assets/icons/clock.svg" alt="" data-queue-icon></span>
+                <div class="dashboard__queue-main">
+                    <div class="dashboard__queue-heading">
+                        <h3 class="dashboard__queue-title" data-queue-title></h3>
+                        <span class="badge" data-queue-badge></span>
+                    </div>
+                    <p class="dashboard__queue-meta" data-queue-meta></p>
+                    <p class="dashboard__queue-reason" data-queue-reason></p>
+                </div>
+                <div class="dashboard__queue-side">
+                    <p class="dashboard__queue-count" data-queue-count></p>
+                    <a class="button button--outline button--small" data-queue-link href="tutor-review-queue.html?status=pending"><span data-queue-link-label>Xem hàng đợi</span></a>
+                </div>
+            </li>
+        </template>
+
+        <template id="dashboard-activity-template">
+            <li class="dashboard__activity-item">
+                <span class="avatar avatar--small" aria-hidden="true" data-activity-avatar></span>
+                <div class="dashboard__activity-body">
+                    <div class="dashboard__activity-head">
+                        <span class="badge" data-activity-actor></span>
+                        <strong class="dashboard__activity-title" data-activity-title></strong>
+                        <time class="dashboard__activity-time" datetime="" data-activity-time></time>
+                    </div>
+                    <dl class="info-row info-row--compact"><dt class="info-row__label">Đối tượng</dt><dd class="info-row__value" data-activity-target></dd></dl>
+                    <dl class="info-row info-row--compact"><dt class="info-row__label">Kết quả</dt><dd class="info-row__value" data-activity-result></dd></dl>
+                    <a class="dashboard__link dashboard__activity-link" data-activity-link href="audit-logs.html"><span data-activity-link-label>Xem bản ghi liên quan</span><img class="dashboard__link-icon" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                </div>
+            </li>
+        </template>
+
+        <template id="dashboard-check-template">
+            <div class="dashboard__check">
+                <div class="dashboard__check-head">
+                    <h3 class="dashboard__check-title" data-check-title></h3>
+                    <span class="badge" data-check-badge></span>
+                </div>
+                <p class="dashboard__check-description" data-check-description></p>
+                <dl class="info-row info-row--compact"><dt class="info-row__label">Kết quả quét</dt><dd class="info-row__value" data-check-value></dd></dl>
+            </div>
+        </template>
+
+        <template id="dashboard-service-template">
+            <div class="dashboard__service">
+                <span class="dashboard__service-dot" aria-hidden="true" data-service-dot></span>
+                <p class="dashboard__service-label" data-service-label></p>
+                <span class="badge" data-service-badge></span>
+            </div>
+        </template>
+    </div>
+    <script src="../../js/core/admin-header.js" defer></script>
+    <script src="../../js/pages/admin/dashboard.js" defer></script>
+</body>
+</html>

@@ -336,8 +336,8 @@
   line-height: 1.3333;
 }
 
-.admin-header__result-status.is-success { background: #dcfce7; color: var(--color-success); }
-.admin-header__result-status.is-warning { background: #fef3c7; color: var(--color-warning); }
+.admin-header__result-status.is-success { background: var(--color-success-container); color: var(--color-success); }
+.admin-header__result-status.is-warning { background: var(--color-warning-container); color: var(--color-warning); }
 
 .admin-header__search-footer {
   display: flex;
@@ -423,7 +423,7 @@
 .admin-header__profile-menu a:hover { background: var(--color-surface-low); }
 .admin-header__profile-menu .admin-header__icon { width: 1.125rem; height: 1.125rem; color: var(--color-text-secondary); }
 .admin-header__profile-menu a.is-danger { margin-top: var(--space-1); border-top: 1px solid var(--color-surface-high); color: var(--color-danger); font-weight: 600; }
-.admin-header__profile-menu a.is-danger:hover { background: #fee2e2; }
+.admin-header__profile-menu a.is-danger:hover { background: var(--color-danger-container); }
 .admin-header__profile-menu a.is-danger .admin-header__icon { color: inherit; }
 
 .admin-header__icon-button:focus-visible,

@@ -217,18 +217,6 @@
     window.requestAnimationFrame(() => applyView({ preserveReferenceCount: !hasAppliedFilters }))
   })
 
-  page.addEventListener('click', event => {
-    if (!(event.target instanceof Element)) return
-    const profileButton = event.target.closest('[data-view-profile]')
-    if (profileButton) {
-      window.EduToast?.show({
-        type: 'info',
-        title: `Hồ sơ ${profileButton.dataset.tutorName}`,
-        message: 'Đây là prototype giao diện; trang hồ sơ chi tiết chưa kết nối dữ liệu thật.'
-      })
-    }
-  })
-
   page.querySelector('[data-component="user-header"]')?.addEventListener('user-header:action', event => {
     const labels = {
       messages: 'Tin nhắn',
@@ -237,7 +225,7 @@
     }
     const title = labels[event.detail?.action]
     if (!title) return
-    window.EduToast?.show({ type: 'info', title, message: 'Chức năng này chưa kết nối dữ liệu thật.' })
+    window.EduToast?.show({ type: 'info', title, message: 'Tính năng chưa sẵn sàng.' })
   })
 
   syncChoiceStyles()

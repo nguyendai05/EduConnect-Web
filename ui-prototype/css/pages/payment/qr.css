@@ -3,9 +3,9 @@
 }
 body {
     margin: 0;
-    background: #f3f4f5;
-    color: #172b40;
-    font-family: Arial, sans-serif;
+    background: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-family-base);
     line-height: 1.6;
 }
 button,
@@ -17,17 +17,17 @@ button {
     cursor: pointer;
     font: inherit;
     padding: 9px 18px;
-    border: 1px solid #b9c5d0;
+    border: 1px solid var(--color-border);
     border-radius: 7px;
     background: white;
-    color: #284255;
+    color: var(--color-primary);
 }
 button:disabled {
     cursor: default;
     opacity: 0.5;
 }
 :focus-visible {
-    outline: 3px solid #167cba;
+    outline: 3px solid var(--color-primary);
     outline-offset: 4px;
 }
 .checkout-header {
@@ -36,13 +36,13 @@ button:disabled {
     align-items: center;
     padding: 22px max(24px, calc((100% - 1080px) / 2));
     background: white;
-    box-shadow: 0 2px 5px #00000012;
+    border-bottom: 1px solid var(--color-border);
 }
 .merchant-brand {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    color: #244d6c;
+    color: var(--color-ink);
     font-size: 22px;
     font-weight: 700;
     text-decoration: none;
@@ -51,6 +51,8 @@ button:disabled {
     width: 46px;
     height: 46px;
 }
+/* Màu của payOS, VietQR và NAPAS là nhận diện của nhà cung cấp dịch vụ
+   được mô phỏng, không phải bảng màu của Edu Connect; giữ nguyên ở đây có chủ đích. */
 .provider {
     color: #00a669;
     font-size: 25px;
@@ -67,12 +69,15 @@ main {
 .checkout-card {
     padding: 30px 38px;
     background: white;
-    border: 1px solid #dce2e8;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
 }
 h1 {
     margin: 0;
     text-align: center;
-    font-size: 23px;
+    font-family: var(--font-family-display);
+    font-size: 2rem;
+    font-weight: 500;
 }
 .instructions {
     text-align: center;
@@ -107,7 +112,7 @@ h1 {
     max-width: 100%;
     margin: 12px auto;
     border: 1px solid #42689d;
-    background: white;
+    background: var(--color-surface);
     shape-rendering: crispEdges;
 }
 .bank-network {
@@ -123,7 +128,7 @@ h1 {
 }
 .bank-name span,
 dt {
-    color: #687a88;
+    color: var(--color-text-muted);
 }
 dl > div {
     margin-bottom: 16px;
@@ -145,7 +150,7 @@ dd {
     grid-column: 2;
     grid-row: 1 / 3;
     align-self: center;
-    background: #e5f5ee;
+    background: var(--color-primary-container);
     border: 0;
     font-size: 13px;
     padding: 6px 10px;
@@ -161,20 +166,10 @@ dd {
 }
 #status {
     font-size: 14px;
-    color: #627687;
-}
-.preview-controls {
-    border-top: 1px solid #e3e8ec;
-    margin-top: 26px;
-    padding-top: 16px;
-    font-size: 13px;
-    color: #637181;
+    color: var(--color-text-muted);
 }
 summary {
     cursor: pointer;
-}
-[hidden] {
-    display: none !important;
 }
 @media (max-width: 680px) {
     .checkout-grid {

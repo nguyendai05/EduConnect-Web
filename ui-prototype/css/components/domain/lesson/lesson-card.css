@@ -96,7 +96,7 @@
 }
 .lesson-card--compact.lesson-card--pending {
     background: var(--color-surface-low);
-    border-left: 3px solid var(--color-warning);
+
 }
 .lesson-card__number {
     display: grid;

@@ -8,9 +8,11 @@ Tên component được giữ bằng tiếng Anh để thuận tiện đối chi
 
 - UserHeader: phần đầu trang dành cho người dùng
 - UserFooter: phần chân trang dành cho người dùng
+- AccountFooter: phần chân trang tối giản cho các màn quản lý hồ sơ cá nhân
 - AdminHeader: phần đầu trang quản trị
 - AdminSidebar: thanh bên của trang quản trị
 - Container: khung chứa nội dung
+- BrandMasthead: tiêu đề chức năng gọn, dùng cho màn tìm gia sư và tìm lớp
 
 ## Điều hướng
 

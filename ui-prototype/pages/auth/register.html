@@ -12,20 +12,21 @@
     <link rel="stylesheet" href="../../css/components/form/password-input.css">
     <link rel="stylesheet" href="../../css/components/feedback/alert.css">
     <link rel="stylesheet" href="../../css/pages/auth/register.css">
+
 </head>
 <body class="auth-register-page">
     <header class="auth-register-header">
         <div class="container auth-register-header__content">
-            <a class="auth-register-header__back" href="#trang-chu">← Về trang chủ</a>
-            <a class="auth-register-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+            <a class="auth-register-header__back" href="../tutor/search.html">← Về trang chủ</a>
+            <a class="auth-register-header__brand" href="../tutor/search.html" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
             <span class="auth-register-header__spacer" aria-hidden="true"></span>
         </div>
     </header>
 
     <main class="auth-register-main">
-        <div class="auth-register-main__intro"><p>Học đúng người · Dạy đúng nhu cầu</p><span>Gia nhập hệ sinh thái kết nối và quản lý gia sư bảo đảm chất lượng</span></div>
+
         <section class="auth-register-card" aria-labelledby="register-title">
-            <header class="auth-register-card__heading"><h1 id="register-title">Đăng ký tài khoản</h1><p>Tạo tài khoản để bắt đầu sử dụng Edu Connect.</p></header>
+            <header class="auth-register-card__heading"><h1 id="register-title">Đăng ký tài khoản</h1></header>
             <section class="alert alert--success auth-register-status" role="status" aria-live="polite" hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><p class="alert__message" data-register-status></p></div></section>
 
             <form class="auth-register-form" novalidate data-register-form>
@@ -49,7 +50,7 @@
         </section>
     </main>
 
-    <footer class="auth-register-footer"><div class="container"><span>© 2026 Edu Connect</span><span><a href="#dieu-khoan">Điều khoản sử dụng</a><a href="#bao-mat">Chính sách bảo mật</a></span></div></footer>
+    <footer class="auth-register-footer"><div class="container"><span>© 2026 Edu Connect</span></div></footer>
     <script src="../../js/core/password-input.js" defer></script>
     <script src="../../js/pages/auth/register.js" defer></script>
 </body>

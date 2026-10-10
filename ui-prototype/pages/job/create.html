@@ -37,54 +37,81 @@
 <div class="user-shell" data-component="user-shell" data-create-job-page>
     <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
     <header class="user-header" data-component="user-header" data-user-variant="B">
-        <div class="user-header__inner">
-            <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
-                <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-                <span class="user-header__brand-name">Edu Connect</span>
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư">
+            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
+            <span class="user-header__brand-name">Edu Connect</span>
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="../../pages/chat/messages.html" aria-label="Tin nhắn" title="Tin nhắn">
+                <img src="../../assets/icons/message.svg" alt="">
             </a>
 
-            <nav class="user-header__nav" aria-label="Điều hướng chính">
-                <a class="user-header__nav-link" data-nav-key="home" data-route="/app/dashboard" href="#trang-chu">Trang chủ</a>
-                <a class="user-header__nav-link is-active" data-nav-key="tutors" data-route="/app/tutors" href="#tim-gia-su" aria-current="page">Tìm gia sư</a>
-                <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="my-job.html">Tin tìm gia sư</a>
-                <a class="user-header__nav-link" data-nav-key="groups" data-route="/app/group-classes" href="#lop-nhom">Lớp nhóm</a>
-            </nav>
+            <span class="user-header__divider" aria-hidden="true"></span>
 
-            <div class="user-header__actions">
-                <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" title="Tin nhắn" data-user-action="messages"><img src="../../assets/icons/message.svg" alt=""></button>
-                <button class="user-header__icon-button" type="button" aria-label="Thông báo" title="Thông báo" data-user-action="notifications"><img src="../../assets/icons/notification.svg" alt=""></button>
-                <span class="user-header__divider" aria-hidden="true"></span>
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
+                </button>
 
-                <div class="user-header__account">
-                    <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="create-user-account-menu">
-                        <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
-                        <span class="user-header__profile-copy"><strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong><span data-profile-role>Phụ huynh</span></span>
-                        <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
-                    </button>
-
-                    <div class="user-header__menu" id="create-user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
-                        <div class="user-header__menu-summary" data-menu-summary hidden><div class="user-header__menu-summary-heading"><strong data-menu-summary-title>Tài khoản xác thực</strong><span class="user-header__menu-badge" data-menu-summary-badge>Gia sư TOP 1%</span></div><div class="user-header__menu-balance"><span>Ví thù lao:</span><strong data-menu-balance>4.850.000đ</strong></div></div>
-                        <div class="user-header__menu-section" data-menu-links>
-                            <a class="user-header__menu-item" href="#ho-so" role="menuitem" data-menu-item="0"><img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile"><span data-menu-label>Hồ sơ cá nhân</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
-                            <a class="user-header__menu-item" href="#hop-dong" role="menuitem" data-menu-item="1"><img class="user-header__menu-item-leading" src="../../assets/icons/calendar.svg" alt="" data-menu-icon="calendar"><span data-menu-label>Hợp đồng của tôi</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
-                            <a class="user-header__menu-item" href="#vi-tri-thuc" role="menuitem" data-menu-item="2"><img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet"><span data-menu-label>Ví TriThức</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
-                            <a class="user-header__menu-item" href="#bao-mat" role="menuitem" data-menu-item="3"><img class="user-header__menu-item-leading" src="../../assets/icons/shield.svg" alt="" data-menu-icon="shield"><span data-menu-label>Bảo mật tài khoản</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
-                            <a class="user-header__menu-item" href="#lich-su-giao-dich" role="menuitem" data-menu-item="4"><img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt"><span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span><img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt=""></a>
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
                         </div>
-                        <div class="user-header__menu-section user-header__menu-section--logout"><button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout"><img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt=""><span data-menu-logout-label>Đăng xuất tài khoản</span></button></div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="../../pages/account/profile.html" role="menuitem" data-menu-item="0">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="../../pages/wallet/overview.html" role="menuitem" data-menu-item="1">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="../../pages/wallet/overview.html#transactions" role="menuitem" data-menu-item="2">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt="">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
     <main class="user-shell__main">
         <div class="user-shell__content">
             <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
             <nav class="breadcrumb create-page__breadcrumb" aria-label="Breadcrumb">
                 <ol class="breadcrumb__list">
-                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="#trang-chu">Trang chủ</a></li>
-                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="#tin-tim-gia-su">Tin tìm gia sư</a></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="my-job.html">Tin tìm gia sư</a></li>
                     <li class="breadcrumb__item"><a class="breadcrumb__link" href="my-job.html">Tin của tôi</a></li>
                     <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Đăng tin</span></li>
                 </ol>
@@ -278,7 +305,7 @@
 
                 <aside class="create-page__sidebar" aria-label="Xem trước và quy trình kiểm duyệt">
                     <section class="create-sidebar-card" id="live-preview-container">
-                        <header class="create-sidebar-card__header"><h2>Bản xem trước tin đăng</h2><span>Live Preview</span></header>
+                        <header class="create-sidebar-card__header"><h2>Bản xem trước tin đăng</h2></header>
                         <!-- Component: JobCard | Nguồn: components/domain/job/job-card.html -->
                         <article class="job-card create-preview-card">
                             <div class="job-card__top">
@@ -295,39 +322,24 @@
                         </article>
                     </section>
 
-                    <section class="create-sidebar-card">
-                        <header class="create-sidebar-card__header"><h2>Quy trình sau khi gửi tin</h2></header>
-                        <ol class="create-timeline">
-                            <li class="is-current"><span>1</span><div><strong>Chuyển trạng thái “Chờ duyệt”</strong><p>Tin được lưu an toàn vào danh sách quản lý của bạn.</p></div></li>
-                            <li><span>2</span><div><strong>Kiểm duyệt nội dung (30–60 phút)</strong><p>Đội ngũ Edu Connect thẩm định tính xác thực và an toàn.</p></div></li>
-                            <li><span>3</span><div><strong>Mở trạng thái “Đang tuyển”</strong><p>Tin xuất hiện công khai để gia sư ứng tuyển.</p></div></li>
-                            <li><span>4</span><div><strong>Nhận hồ sơ ứng tuyển</strong><p>Phụ huynh xem hồ sơ, trao đổi và xếp lịch học thử.</p></div></li>
-                        </ol>
-                    </section>
 
-                    <section class="create-trust"><strong>✓ Miễn phí 100% cho gia đình</strong><p>Edu Connect không thu phí đăng tin hay phí hoa hồng từ phụ huynh và học sinh.</p></section>
+
+
                 </aside>
             </div>
 
-            <section class="create-simulation" aria-labelledby="simulation-title">
-                <header><div><h2 id="simulation-title">Mô phỏng các trạng thái kiểm duyệt &amp; hệ thống</h2><p>Xem thử các kịch bản phản hồi giao diện thực tế của Edu Connect.</p></div><div><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--secondary button--medium create-button create-button--secondary" type="button" data-open-confirm>Mở modal xác nhận</button><button class="button button--secondary button--medium create-button create-button--secondary" type="button" data-open-success>Mở modal gửi thành công</button><button class="button button--ghost button--medium create-button create-button--ghost" type="button" data-toggle-limit>Mô phỏng hạn mức 5/5</button></div></header>
-                <section class="alert alert--error create-limit-alert" id="limit-alert" role="alert" hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Bạn đã đạt giới hạn 5/5 tin đang tuyển cùng lúc</h3><p class="alert__message">Vui lòng đóng bớt tin đã tìm được gia sư trước khi tạo tin mới.</p><a href="my-job.html">Quản lý tin của tôi</a></div></section>
-            </section>
+
         </div>
     </main>
 
     <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
     <footer class="user-footer" data-component="user-footer">
-        <div class="user-footer__inner">
-            <div class="user-footer__main">
-                <section class="user-footer__brand" aria-label="Về Edu Connect"><a class="user-footer__brand-link" href="#trang-chu"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a><p>Nền tảng kết nối gia sư chất lượng cao và quản lý học tập minh bạch, an toàn cho phụ huynh.</p><span class="user-footer__certificate"><img src="../../assets/icons/certificate.svg" alt="">Chứng nhận đào tạo sư phạm</span></section>
-                <nav class="user-footer__links" aria-labelledby="footer-parents-title"><h2 id="footer-parents-title">Dành cho phụ huynh</h2><a href="create.html"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Đăng yêu cầu tìm gia sư</a><a href="#gia-su-tieu-bieu"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Danh sách gia sư tiêu biểu</a><a href="#quy-trinh"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy trình bảo đảm Escrow</a><a href="#hoc-phi"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Bảng học phí tham khảo</a></nav>
-                <nav class="user-footer__links" aria-labelledby="footer-tutors-title"><h2 id="footer-tutors-title">Dành cho gia sư</h2><a href="#tim-lop"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tìm lớp gia sư mới</a><a href="#tieu-chuan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Tiêu chuẩn xác minh lý lịch</a><a href="#lop-nhom"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Mở lớp nhóm nhỏ</a><a href="#thu-lao"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo vệ thù lao</a></nav>
-                <nav class="user-footer__links" aria-labelledby="footer-support-title"><h2 id="footer-support-title">Hỗ trợ &amp; pháp lý</h2><a href="#tro-giup"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Trung tâm trợ giúp học viên</a><a href="#dieu-khoan"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Điều khoản sử dụng dịch vụ</a><a href="#bao-mat"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Chính sách bảo mật dữ liệu</a><a href="#tranh-chap"><img src="../../assets/icons/footer-link-arrow.svg" alt="">Quy chế giải quyết tranh chấp</a></nav>
-            </div>
-            <div class="user-footer__bottom"><p><img src="../../assets/icons/copyright.svg" alt="">© 2026 Edu Connect. Bảo lưu mọi quyền.</p><p class="user-footer__regions"><span>Trung tâm khu vực hỗ trợ:</span><a href="#ha-noi">Hà Nội</a><a href="#ho-chi-minh">TP. Hồ Chí Minh</a><a href="#da-nang">Đà Nẵng</a></p></div>
-        </div>
-    </footer>
+    <div class="user-footer__inner">
+        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
+        <p class="user-footer__copyright">© 2026 Edu Connect</p>
+    </div>
+</footer>
 </div>
 
 <!-- Component: Modal | Nguồn: components/feedback/modal.html -->

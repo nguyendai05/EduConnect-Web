@@ -129,7 +129,7 @@
 .auth-shell__feedback {
   padding: var(--space-3);
   border-radius: var(--radius-md);
-  background: #fee2e2;
+  background: var(--color-danger-container);
   color: var(--color-danger);
   font-size: var(--font-size-sm);
   line-height: 1.4286;
@@ -245,7 +245,7 @@
 }
 
 .auth-shell__role-options label:has(input:checked) {
-  border-color: var(--color-primary);
+  border-color: var(--color-border);
   background: var(--color-primary-container);
   color: var(--color-primary-hover);
   font-weight: 600;

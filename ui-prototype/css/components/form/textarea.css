@@ -1,6 +1,6 @@
 :root {
-  --textarea-border: #e2e8f0;
-  --textarea-focus: #1a6fd4;
+  --textarea-border: var(--color-control-border);
+  --textarea-focus: var(--color-primary);
 }
 
 .textarea-preview {
@@ -62,8 +62,8 @@
 
 .textarea-field__label {
   color: var(--color-text);
-  font-size: var(--font-size-xs);
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
 }
 
 .textarea-field__required {
@@ -72,7 +72,7 @@
 
 .textarea-field__counter,
 .textarea-field__help {
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 0.6875rem;
   line-height: 1.5;
 }
@@ -96,11 +96,25 @@
 }
 
 .textarea-control:focus {
-  border: 2px solid var(--textarea-focus);
+  border-color: var(--textarea-focus);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.textarea-control[aria-invalid="true"] {
+  border-color: var(--color-danger);
 }
 
 .textarea-field__help {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   margin: 0;
+}
+
+.textarea-field__help img {
+  flex: 0 0 auto;
+  width: 1rem;
+  height: 1rem;
 }
 
 @media (max-width: 30rem) {

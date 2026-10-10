@@ -141,11 +141,6 @@
       return
     }
 
-    if (target.closest('[data-profile-action]')) {
-      toast('info', 'Hồ sơ gia sư', 'Trang hồ sơ công khai sẽ được kết nối ở giai đoạn tích hợp.')
-      return
-    }
-
     const card = target.closest('[data-discover-job]')
     if (!card) return
 
@@ -159,16 +154,11 @@
 
     if (target.closest('[data-view-application]')) {
       toast('info', 'Ứng tuyển của bạn', 'Phụ huynh đang xem xét hồ sơ và chưa yêu cầu thêm thông tin.')
-      return
-    }
-
-    if (target.closest('[data-view-job]')) {
-      toast('info', card.dataset.title, 'Trang chi tiết ứng tuyển chưa được kết nối trong prototype này.')
     }
   })
 
   page.querySelector('[data-component="user-header"]')?.addEventListener('user-header:action', event => {
-    if (event.detail.action !== 'logout') toast('info', 'Tính năng minh họa', 'Chức năng này chưa kết nối dữ liệu thật.')
+    if (event.detail.action !== 'logout') toast('info', 'Thông báo', 'Tính năng chưa sẵn sàng.')
   })
 
   applyView()

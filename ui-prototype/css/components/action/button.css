@@ -10,13 +10,13 @@
     max-width: 100%;
     padding: var(--space-2) var(--space-4);
     border: 1px solid transparent;
-    border-radius: var(--radius-md);
+    border-radius: var(--control-radius);
     background: var(--color-primary);
     color: var(--color-on-primary);
     font: inherit;
     font-size: var(--font-size-sm);
     font-weight: 600;
-    line-height: var(--line-height-base);
+    line-height: 1.4;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
@@ -29,13 +29,13 @@
     color: var(--color-on-primary);
 }
 .button--outline {
-    border-color: var(--color-primary);
+    border-color: var(--color-control-border);
     background: var(--color-surface);
     color: var(--color-primary);
 }
 .button--secondary {
-    border-color: var(--color-border);
-    background: var(--color-surface-low);
+    border-color: var(--color-control-border);
+    background: var(--color-surface);
     color: var(--color-text-secondary);
 }
 .button--danger {
@@ -46,17 +46,19 @@
     background: var(--color-primary-hover);
 }
 .button--outline:hover:not(:disabled) {
-    background: var(--color-primary-container);
+    border-color: var(--color-primary);
+    background: var(--color-paper);
 }
 .button--secondary:hover:not(:disabled) {
-    background: var(--color-surface-medium);
+    border-color: var(--color-text-muted);
+    background: var(--color-surface-low);
 }
 .button--danger:hover:not(:disabled) {
-    background: var(--color-danger);
-    box-shadow: inset 0 0 0 2px var(--color-on-primary);
+    background: color-mix(in srgb, var(--color-danger), var(--color-text) 18%);
+    color: var(--color-on-primary);
 }
 .button:focus-visible {
-    outline: 3px solid var(--color-primary);
+    outline: 2px solid var(--color-primary);
     outline-offset: 3px;
 }
 .button:disabled {
@@ -105,7 +107,7 @@
     color: var(--color-text-secondary);
 }
 .button--ghost:hover:not(:disabled) {
-    background: var(--color-surface-medium);
+    background: var(--color-surface-low);
 }
 .button--small {
     min-height: 32px;
