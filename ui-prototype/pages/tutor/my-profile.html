@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Hồ sơ gia sư của tôi · Edu Connect</title>
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -16,7 +19,6 @@
     <link rel="stylesheet" href="../../css/components/layout/user-header.css">
     <link rel="stylesheet" href="../../css/components/layout/account-footer.css">
     <link rel="stylesheet" href="../../css/components/layout/page-header.css">
-    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
     <link rel="stylesheet" href="../../css/pages/tutor/my-profile.css">
 </head>
 <!-- States available: draft, pending, rejected, verified. -->
@@ -29,14 +31,14 @@
         data-active-nav="none"
     >
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/job/discover.html" aria-label="Edu Connect - Tin tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -99,13 +101,8 @@
 
     <main class="user-shell__main tutor-profile-page__main">
         <div class="user-shell__content tutor-profile-page__content">
-            <nav class="breadcrumb tutor-profile-breadcrumb" aria-label="Breadcrumb">
-                <ol class="breadcrumb__list">
-                    <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Hồ sơ gia sư của tôi</span></li>
-                </ol>
-            </nav>
 
-            <header class="page-header account-page-heading"><div class="page-header__title-block"><h1 class="page-header__title">Hồ sơ giảng dạy</h1><p class="page-header__description">Giới thiệu thế mạnh, kinh nghiệm và cách bạn đồng hành với học viên.</p></div></header>
+            <header class="page-header account-page-heading"><div class="page-header__title-block"><h1 class="page-header__title">Hồ sơ giảng dạy</h1></div></header>
             <section class="alert alert--warning tutor-profile-state-message" role="status" aria-live="polite">
                 <span class="alert__icon" aria-hidden="true"></span>
                 <div class="alert__content">
@@ -163,7 +160,6 @@
 
                     <section class="tutor-profile-section">
                         <h3>Học vấn &amp; chứng chỉ</h3>
-
 
                         <div class="tutor-profile-grid tutor-profile-grid--education">
                             <div class="tutor-profile-field">
@@ -411,6 +407,9 @@
         </div>
     </footer>
 
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
     <script src="../../js/core/user-header.js" defer></script>
     <script src="../../js/core/switch.js" defer></script>
     <script src="../../js/core/file-upload.js" defer></script>

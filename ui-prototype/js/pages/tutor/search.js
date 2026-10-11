@@ -1,13 +1,25 @@
+/* Tìm gia sư: danh sách RENDER từ EduStore.list('offerings') (lọc publicly listable) + Store.tutor.
+ * Trang không còn giữ card cứng trong HTML; markup thẻ nằm trong <template data-tutor-card-template>.
+ * Số kết quả = số thẻ thật vừa render. Bộ lọc môn/cấp/khu vực/học phí ánh xạ vào đúng trường store. */
 (() => {
   const page = document.querySelector('[data-tutor-search-page]')
   if (!page) return
+
+  const Store = window.EduStore
+  const Route = window.EduRoute
+  if (!Store || !Route) return
+
+  const SUBJECT_LABELS = { toan: 'Toán học', 'vat-ly': 'Vật lý', 'tieng-anh': 'Tiếng Anh', 'ngu-van': 'Ngữ văn', 'hoa-hoc': 'Hóa học', ielts: 'IELTS', 'luyen-viet': 'Luyện viết' }
+  const GRADE_LABELS = { 'tieu-hoc': 'Tiểu học', thcs: 'THCS', '10': 'Lớp 10', '11': 'Lớp 11', '12': 'Lớp 12', 'luyen-thi': 'Luyện thi' }
+  const DELIVERY_LABELS = { home: 'Dạy tại nhà', online: 'Dạy trực tuyến', both: 'Dạy tại nhà & trực tuyến' }
+  const TYPE_LABELS = { SERVICE: 'Dịch vụ 1 kèm 1', GROUP_CLASS: 'Lớp nhóm' }
 
   const searchForm = page.querySelector('[data-tutor-search-form]')
   const searchInput = page.querySelector('[data-search-query]')
   const clearSearch = page.querySelector('[data-clear-search]')
   const filter = page.querySelector('[data-tutor-filter]')
   const list = page.querySelector('[data-tutor-list]')
-  const cards = Array.from(page.querySelectorAll('[data-tutor-card]'))
+  const template = page.querySelector('[data-tutor-card-template]')
   const emptyState = page.querySelector('[data-tutor-empty]')
   const pagination = page.querySelector('[data-pagination]')
   const resultCount = page.querySelector('[data-result-count]')
@@ -16,9 +28,8 @@
   const feeOutput = page.querySelector('[data-fee-output]')
   const feeMaxLabel = page.querySelector('[data-fee-max-label]')
 
-  if (!searchForm || !searchInput || !filter || !list) return
+  if (!searchForm || !searchInput || !filter || !list || !template) return
 
-  const initialOrder = new Map(cards.map((card, index) => [card, index]))
   let hasAppliedFilters = false
 
   const normalize = value => String(value || '')
@@ -27,6 +38,93 @@
     .toLowerCase()
     .replace(/đ/g, 'd')
     .trim()
+
+  const fill = (card, selector, value) => {
+    const node = card.querySelector(selector)
+    if (node) node.textContent = value
+  }
+
+  /* Ngày/khung giờ chỉ tồn tại cho GROUP_CLASS (schedule); SERVICE không có → để trống, không bịa. */
+  const scheduleSignals = offering => {
+    const days = []
+    const periods = []
+    if (offering.type === 'GROUP_CLASS' && Array.isArray(offering.schedule)) {
+      offering.schedule.forEach(slot => {
+        const key = slot.day === 1 ? 'cn' : String(slot.day)
+        if (!days.includes(key)) days.push(key)
+        const hour = Number(String(slot.start || '').slice(0, 2))
+        const period = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening'
+        if (!periods.includes(period)) periods.push(period)
+      })
+    }
+    return { days: days.join(','), periods: periods.join(',') }
+  }
+
+  /* Một thẻ từ store: ghép offering + tutor + ratingSummary; không có chuỗi HTML nối tay. */
+  const buildCard = (offering, order) => {
+    const tutor = Store.tutor(offering.tutorId)
+    if (!tutor) return null
+    const summary = Store.ratingSummary(tutor.id)
+    const schedule = scheduleSignals(offering)
+    const card = template.content.firstElementChild.cloneNode(true)
+
+    card.dataset.offeringId = offering.id
+    card.dataset.tutorId = tutor.id
+    card.dataset.order = String(order)
+    card.dataset.publishedAt = offering.publishedAt || ''
+    card.dataset.name = normalize(`${tutor.name} ${offering.title}`)
+    card.dataset.subject = offering.subject
+    card.dataset.grade = offering.grade
+    card.dataset.region = offering.region
+    card.dataset.district = normalize(offering.district)
+    card.dataset.delivery = offering.mode || tutor.delivery
+    card.dataset.price = String(offering.price)
+    card.dataset.rating = String(summary.hasData ? summary.average : 0)
+    card.dataset.verified = String(tutor.verified === true)
+    card.dataset.days = schedule.days
+    card.dataset.periods = schedule.periods
+
+    fill(card, '[data-card-avatar]', tutor.initials)
+    const avatar = card.querySelector('[data-card-avatar]')
+    if (avatar) avatar.setAttribute('aria-label', `Ảnh đại diện ${tutor.name}`)
+    fill(card, '[data-card-name]', tutor.name)
+    const verifiedBadge = card.querySelector('[data-card-verified]')
+    if (verifiedBadge) verifiedBadge.hidden = !tutor.verified
+    fill(card, '[data-card-tag-subject]', offering.subjectLabel || SUBJECT_LABELS[offering.subject] || offering.subject)
+    fill(card, '[data-card-tag-grade]', offering.gradeLabel || GRADE_LABELS[offering.grade] || offering.grade)
+    fill(card, '[data-card-tag-type]', TYPE_LABELS[offering.type] || offering.type)
+    fill(card, '[data-card-bio]', tutor.bio || '')
+    fill(card, '[data-card-experience]', `${tutor.experienceYears} năm kinh nghiệm`)
+    fill(card, '[data-card-district]', offering.district || tutor.district)
+    fill(card, '[data-card-delivery]', DELIVERY_LABELS[offering.mode || tutor.delivery] || '')
+    fill(card, '[data-card-classes]', `Đã dạy ${tutor.classesTaught} lớp`)
+    fill(card, '[data-card-price]', Store.formatMoney(offering.price))
+    fill(card, '[data-card-unit]', offering.unitLabel || '')
+
+    const ratingWrap = card.querySelector('[data-card-rating-wrap]')
+    if (summary.hasData) {
+      const score = summary.average.toFixed(1).replace('.', ',')
+      fill(card, '[data-card-rating]', score)
+      fill(card, '[data-card-rating-count]', `(${summary.count} đánh giá)`)
+      if (ratingWrap) ratingWrap.setAttribute('aria-label', `Đánh giá ${score} trên 5 sao từ ${summary.count} đánh giá`)
+    } else {
+      fill(card, '[data-card-rating]', '—')
+      fill(card, '[data-card-rating-count]', 'Chưa có đánh giá công khai')
+      if (ratingWrap) ratingWrap.setAttribute('aria-label', 'Chưa có đánh giá công khai')
+    }
+
+    const link = card.querySelector('[data-card-link]')
+    if (link) link.href = Route.page('tutorProfile', { id: tutor.id })
+
+    return card
+  }
+
+  const cards = Store.list('offerings')
+    .filter(item => Store.isPubliclyListable(item))
+    .map((item, index) => buildCard(item, index + 1))
+    .filter(Boolean)
+
+  list.replaceChildren(...cards)
 
   const selectedValues = selector => Array.from(filter.querySelectorAll(selector))
     .filter(input => input.checked)
@@ -69,7 +167,7 @@
     if (!range || !feeOutput) return
     const value = Number(range.value)
     const formatted = value.toLocaleString('vi-VN')
-    feeOutput.textContent = `150k - ${Math.round(value / 1000)}k`
+    feeOutput.textContent = `Tối đa ${formatted} ₫`
     if (feeMaxLabel) feeMaxLabel.textContent = `${formatted} ₫/buổi`
   }
 
@@ -83,12 +181,7 @@
   }
 
   const cardMatches = (card, state) => {
-    const searchable = normalize([
-      card.dataset.name,
-      card.dataset.subject,
-      card.dataset.grade,
-      card.dataset.district
-    ].join(' '))
+    const searchable = normalize([card.dataset.name, card.dataset.subject, card.dataset.grade, card.dataset.district].join(' '))
     const queryMatches = !state.query || searchable.includes(state.query)
     const subjectMatches = state.subject === 'all' || card.dataset.subject === state.subject
     const gradeMatches = state.grades.length === 0 || matchesAny(card.dataset.grade, state.grades)
@@ -109,25 +202,33 @@
       if (sort === 'rating') return Number(second.dataset.rating) - Number(first.dataset.rating)
       if (sort === 'price-asc') return Number(first.dataset.price) - Number(second.dataset.price)
       if (sort === 'price-desc') return Number(second.dataset.price) - Number(first.dataset.price)
-      return initialOrder.get(first) - initialOrder.get(second)
+      if (sort === 'newest') return (Date.parse(second.dataset.publishedAt) || 0) - (Date.parse(first.dataset.publishedAt) || 0)
+      return Number(first.dataset.order) - Number(second.dataset.order)
     })
     sorted.forEach(card => list.append(card))
+    return sorted
   }
 
-  const applyView = ({ preserveReferenceCount = false } = {}) => {
+  const applyView = ({ preservePage = false } = {}) => {
     const state = getState()
-    sortCards(currentSort())
-    let visible = 0
-    cards.forEach(card => {
-      const show = !hasAppliedFilters || cardMatches(card, state)
-      card.hidden = !show
-      if (show) visible += 1
-    })
+    const matching = sortCards(currentSort()).filter(card => !hasAppliedFilters || cardMatches(card, state))
+    const visible = matching.length
+    const pageSize = Number(pagination?.dataset.pageSize) || visible || 1
+    const lastPage = Math.max(1, Math.ceil(visible / pageSize))
+    const current = preservePage ? Math.min(Number(pagination?.dataset.current) || 1, lastPage) : 1
+    const shown = new Set(matching.slice((current - 1) * pageSize, current * pageSize))
+    cards.forEach(card => { card.hidden = !shown.has(card) })
 
     const showEmpty = visible === 0
     if (emptyState) emptyState.hidden = !showEmpty
-    if (pagination) pagination.hidden = showEmpty
-    if (resultCount) resultCount.textContent = preserveReferenceCount || !hasAppliedFilters ? '128' : String(visible)
+    if (pagination) {
+      pagination.hidden = showEmpty
+      pagination.dispatchEvent(new CustomEvent('pagination:update', {
+        bubbles: true,
+        detail: { total: visible, pageSize, current }
+      }))
+    }
+    if (resultCount) resultCount.textContent = String(visible)
     updateLocationLabel(state)
     updateFilterCount(state)
     updateFee()
@@ -148,7 +249,7 @@
     })
   }
 
-  const resetFilters = () => {
+  const resetFilters = (preserveQuery = false) => {
     const subject = filter.querySelector('[data-filter-subject]')
     const region = filter.querySelector('[data-filter-region]')
     const district = filter.querySelector('[data-filter-district]')
@@ -166,11 +267,13 @@
       button.classList.remove('is-selected')
       button.setAttribute('aria-pressed', 'false')
     })
-    searchInput.value = ''
+    if (!preserveQuery) searchInput.value = ''
     hasAppliedFilters = true
     syncChoiceStyles()
     applyView()
   }
+
+  pagination?.addEventListener('pagination:change', () => applyView({ preservePage: true }))
 
   searchForm.addEventListener('submit', event => {
     event.preventDefault()
@@ -214,20 +317,22 @@
 
   page.querySelector('[data-sort-select]')?.addEventListener('click', event => {
     if (!(event.target instanceof Element) || !event.target.closest('[data-sort]')) return
-    window.requestAnimationFrame(() => applyView({ preserveReferenceCount: !hasAppliedFilters }))
+    window.requestAnimationFrame(() => applyView())
   })
 
   page.querySelector('[data-component="user-header"]')?.addEventListener('user-header:action', event => {
     const labels = {
       messages: 'Tin nhắn',
-      notifications: 'Thông báo',
-      logout: 'Đăng xuất'
+      notifications: 'Thông báo'
     }
     const title = labels[event.detail?.action]
     if (!title) return
     window.EduToast?.show({ type: 'info', title, message: 'Tính năng chưa sẵn sàng.' })
   })
 
-  syncChoiceStyles()
-  applyView({ preserveReferenceCount: true })
+  // Trang chủ dẫn sang kèm ?q= — phải nạp vào ô tìm kiếm trước lần render đầu.
+  const initialQuery = new URLSearchParams(window.location.search).get('q')
+  if (initialQuery && searchInput) searchInput.value = initialQuery
+
+  resetFilters(true)
 })()

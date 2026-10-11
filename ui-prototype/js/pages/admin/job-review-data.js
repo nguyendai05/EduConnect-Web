@@ -1,64 +1,170 @@
-/** Dữ liệu minh họa chung cho hàng đợi và chi tiết duyệt tin. Không gọi API. */
+/**
+ * Façade MỎNG cho hai trang kiểm duyệt tin tìm gia sư (admin/job-review-queue.html,
+ * admin/job-review-detail.html). Không còn một bảng fixture `TT-*` riêng ở đây:
+ * hàng đợi, số đếm, người đăng, chi tiết và quyết định đều đọc/ghi EduStore —
+ * cùng một nguồn với bảng tin công khai `job/*` và trang Tổng quan.
+ *
+ * Trang phải chạy được khi EduStore vắng mặt: façade báo `available:false` và các
+ * hàm trả rỗng thay vì ném lỗi; chính trang sẽ ẩn nội dung và hiện thông báo.
+ *
+ * Khoá quyết định cũ `educonnect:job-review-decisions:v1` (nguồn thứ hai, song song
+ * với EduStore) được xoá có kiểm soát khi khởi tạo — KHÔNG dùng sessionStorage.clear().
+ */
 (() => {
-  const fixtures = [
-    { id: 'TT-8841', title: 'Gia sư Tiếng Anh lớp 10', poster: 'Lê Hoàng Nam', initials: 'LN', role: 'Phụ huynh', subject: 'english', subjectLabel: 'Tiếng Anh', grade: 'Lớp 10', fee: 250000, region: 'Q. Bình Thạnh, TP.HCM', format: 'Tại nhà phụ huynh', sessions: '2 buổi/tuần', submitted: '2026-10-09T08:20:00+07:00', signal: 'Phát hiện số điện thoại ẩn', status: 'pending', description: 'Cần gia sư hỗ trợ học sinh lớp 10 củng cố ngữ pháp, luyện kỹ năng đọc hiểu và giao tiếp tiếng Anh. Học vào tối thứ Ba và thứ Năm, mỗi buổi 90 phút. Ưu tiên gia sư có kinh nghiệm giảng dạy chương trình THPT.' },
-    { id: 'TT-8840', title: 'Gia sư Hóa học 11 ôn thi ĐGNL', poster: 'Trần Thị Hồng', initials: 'TH', role: 'Phụ huynh', subject: 'chemistry', subjectLabel: 'Hóa học', grade: 'Lớp 11', fee: 220000, region: 'Q. Cầu Giấy, Hà Nội', format: 'Trực tuyến', sessions: '3 buổi/tuần', submitted: '2026-10-09T08:35:00+07:00', signal: 'Chứa từ khóa tài khoản mạng xã hội', status: 'pending', description: 'Tìm gia sư Hóa học lớp 11 để hệ thống kiến thức và luyện bài tập đánh giá năng lực. Học trực tuyến vào các tối thứ Hai, thứ Tư và thứ Sáu. Cần có lộ trình và bài kiểm tra tiến bộ hàng tuần.' },
-    { id: 'TT-8839', title: 'Tìm gia sư Toán lớp 9 ôn thi vào 10', poster: 'Nguyễn Văn An', initials: 'NA', role: 'Phụ huynh', subject: 'math', subjectLabel: 'Toán học', grade: 'Lớp 9', fee: 200000, region: 'Q. Tân Bình, TP.HCM', format: 'Tại nhà', sessions: '2 buổi/tuần', submitted: '2026-10-09T09:05:00+07:00', signal: '', status: 'pending', description: 'Cần gia sư Toán giúp học sinh lớp 9 ôn thi vào lớp 10, tập trung đại số và hình học. Học tại nhà vào cuối tuần, mỗi buổi 90 phút. Ưu tiên người kiên nhẫn, có kinh nghiệm luyện thi.' },
-    { id: 'TT-8838', title: 'Luyện thi IELTS General 6.5 cấp tốc', poster: 'Phạm Minh Quân', initials: 'MQ', role: 'Học viên đi làm', subject: 'ielts', subjectLabel: 'IELTS', grade: 'Người đi làm', fee: 350000, region: 'Toàn quốc', format: 'Trực tuyến', sessions: '3 buổi/tuần', submitted: '2026-10-09T09:30:00+07:00', signal: '', status: 'pending', description: 'Tìm gia sư IELTS General với mục tiêu 6.5 trong 3 tháng. Trình độ hiện tại khoảng 5.0, cần cải thiện Writing và Speaking. Học trực tuyến sau 20 giờ để phù hợp lịch làm việc.' },
-    { id: 'TT-8837', title: 'Kèm môn Ngữ văn lớp 12 tốt nghiệp THPT', poster: 'Vũ Mai Trang', initials: 'MT', role: 'Phụ huynh', subject: 'literature', subjectLabel: 'Ngữ văn', grade: 'Lớp 12', fee: 230000, region: 'Q. 7, TP.HCM', format: 'Tại nhà', sessions: '1 buổi/tuần', submitted: '2026-10-09T10:10:00+07:00', signal: '', status: 'pending', description: 'Cần gia sư Ngữ văn lớp 12 hướng dẫn kỹ năng đọc hiểu, nghị luận xã hội và nghị luận văn học để chuẩn bị thi tốt nghiệp THPT. Học sáng Chủ nhật, mỗi buổi 120 phút.' },
-    { id: 'TT-8836', title: 'Gia sư Toán lớp 8 củng cố kiến thức', poster: 'Đỗ Thị Lan', initials: 'DL', role: 'Phụ huynh', subject: 'math', subjectLabel: 'Toán học', grade: 'Lớp 8', fee: 180000, region: 'Q. Thanh Xuân, Hà Nội', format: 'Tại nhà', sessions: '2 buổi/tuần', submitted: '2026-10-08T15:15:00+07:00', signal: '', status: 'hiring', description: 'Hỗ trợ học sinh lớp 8 củng cố kiến thức Toán, luyện bài tập và chuẩn bị kiểm tra giữa kỳ. Lịch học vào tối thứ Ba và thứ Sáu.' },
-    { id: 'TT-8835', title: 'Tiếng Anh giao tiếp cho người đi làm', poster: 'Bùi Đức Minh', initials: 'BM', role: 'Học viên đi làm', subject: 'english', subjectLabel: 'Tiếng Anh', grade: 'Người đi làm', fee: 300000, region: 'Toàn quốc', format: 'Trực tuyến', sessions: '2 buổi/tuần', submitted: '2026-10-08T14:00:00+07:00', signal: '', status: 'hiring', description: 'Luyện giao tiếp tiếng Anh trong công việc, tập trung thuyết trình và trao đổi với đồng nghiệp. Học trực tuyến buổi tối.' },
-    { id: 'TT-8834', title: 'Ôn tập Vật lý lớp 12', poster: 'Hoàng Thu Hà', initials: 'HH', role: 'Phụ huynh', subject: 'physics', subjectLabel: 'Vật lý', grade: 'Lớp 12', fee: 240000, region: 'Q. Hải Châu, Đà Nẵng', format: 'Tại nhà', sessions: '2 buổi/tuần', submitted: '2026-10-07T10:00:00+07:00', signal: '', status: 'closed', description: 'Ôn tập Vật lý lớp 12 và luyện đề tốt nghiệp. Tin đã đóng vì phụ huynh đã tìm được gia sư phù hợp.' },
-    { id: 'TT-8833', title: 'Tìm gia sư Toán lớp 10', poster: 'Trương Quốc Bảo', initials: 'TB', role: 'Phụ huynh', subject: 'math', subjectLabel: 'Toán học', grade: 'Lớp 10', fee: 200000, region: 'TP. Thủ Đức, TP.HCM', format: 'Tại nhà', sessions: '2 buổi/tuần', submitted: '2026-10-07T09:00:00+07:00', signal: 'Nội dung chứa thông tin liên hệ ngoài', status: 'rejected', description: 'Tìm gia sư Toán lớp 10 hỗ trợ học tại nhà. Tin bị từ chối do chứa thông tin liên hệ ngoài nền tảng; người đăng cần chỉnh sửa trước khi gửi lại.' },
-  ];
+  const LEGACY_DECISIONS_KEY = 'educonnect:job-review-decisions:v1';
+  const Store = window.EduStore;
 
-  const details = {
-    'TT-8841': { schedule: ['Thứ Ba · 19:00–20:30', 'Thứ Năm · 19:00–20:30'], duration: '90 phút/buổi', experience: 'Tối thiểu 2 năm giảng dạy', qualification: 'Sinh viên Sư phạm hoặc đã tốt nghiệp chuyên ngành Tiếng Anh', tutorNote: 'Ưu tiên gia sư phát âm chuẩn, kiên nhẫn và có phương pháp tương tác phản xạ chủ động. Cần xem trước chứng chỉ hoặc thẻ sinh viên khi nhận lớp.', privateNote: 'Buổi tối nếu đến ngõ thì gọi cho mẹ cháu qua số không chín 0 ba 8 tám tám xxx hoặc nhắn qua Zalo để mở cửa hầm gửi xe.' },
-    'TT-8840': { schedule: ['Thứ Hai · 19:30–21:00', 'Thứ Tư · 19:30–21:00', 'Thứ Sáu · 19:30–21:00'], duration: '90 phút/buổi', experience: 'Tối thiểu 2 năm luyện thi', qualification: 'Chuyên ngành Hóa học hoặc Sư phạm Hóa học', tutorNote: 'Có lộ trình ôn thi đánh giá năng lực và bài kiểm tra tiến bộ hàng tuần.', privateNote: 'Có thể trao đổi thêm qua tài khoản Zalo của phụ huynh trước khi nhận lớp.' },
-    'TT-8839': { schedule: ['Thứ Bảy · 09:00–10:30', 'Chủ nhật · 09:00–10:30'], duration: '90 phút/buổi', experience: 'Có kinh nghiệm ôn thi vào lớp 10', qualification: 'Chuyên ngành Toán hoặc Sư phạm Toán', tutorNote: 'Kiên nhẫn, giải thích rõ từng bước và theo sát mức độ tiến bộ của học sinh.' },
-    'TT-8838': { schedule: ['Thứ Hai · 20:00–21:30', 'Thứ Tư · 20:00–21:30', 'Thứ Sáu · 20:00–21:30'], duration: '90 phút/buổi', experience: 'Có kinh nghiệm luyện IELTS General', qualification: 'IELTS 7.5 trở lên hoặc trình độ tương đương', tutorNote: 'Có thể chữa bài Writing chi tiết và luyện Speaking theo tình huống thực tế.' },
-    'TT-8837': { schedule: ['Chủ nhật · 08:00–10:00'], duration: '120 phút/buổi', experience: 'Có kinh nghiệm luyện thi tốt nghiệp THPT', qualification: 'Chuyên ngành Ngữ văn hoặc Sư phạm Ngữ văn', tutorNote: 'Hướng dẫn xây dựng dàn ý và nhận xét bài viết sau mỗi buổi học.' },
-    'TT-8836': { schedule: ['Thứ Ba · 19:00–20:30', 'Thứ Sáu · 19:00–20:30'], duration: '90 phút/buổi', experience: 'Có kinh nghiệm dạy chương trình THCS', qualification: 'Chuyên ngành Toán hoặc Sư phạm Toán', tutorNote: 'Củng cố kiến thức nền và hướng dẫn phương pháp tự học.' },
-    'TT-8835': { schedule: ['Thứ Ba · 20:00–21:30', 'Thứ Năm · 20:00–21:30'], duration: '90 phút/buổi', experience: 'Có kinh nghiệm dạy tiếng Anh giao tiếp', qualification: 'Chuyên ngành Tiếng Anh hoặc chứng chỉ giảng dạy phù hợp', tutorNote: 'Ưu tiên tình huống giao tiếp trong công việc và thuyết trình.' },
-    'TT-8834': { schedule: ['Thứ Tư · 19:00–20:30', 'Thứ Bảy · 19:00–20:30'], duration: '90 phút/buổi', experience: 'Có kinh nghiệm luyện thi tốt nghiệp THPT', qualification: 'Chuyên ngành Vật lý hoặc Sư phạm Vật lý', tutorNote: 'Có hệ thống bài tập từ cơ bản đến nâng cao.' },
-    'TT-8833': { schedule: ['Thứ Ba · 19:00–20:30', 'Thứ Năm · 19:00–20:30'], duration: '90 phút/buổi', experience: 'Có kinh nghiệm dạy chương trình THPT', qualification: 'Chuyên ngành Toán hoặc Sư phạm Toán', tutorNote: 'Theo sát chương trình học và hỗ trợ bài tập trên lớp.', privateNote: 'Ghi chú gửi kèm có thông tin liên hệ ngoài nền tảng.' },
-  };
-  const storageKey = 'educonnect:job-review-decisions:v1';
-  const readDecisions = () => {
+  const dropLegacyDecisionKey = () => {
     try {
-      const saved = JSON.parse(window.sessionStorage.getItem(storageKey) || '{}');
-      if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return {};
-      const valid = {};
-      fixtures.forEach(job => {
-        const decision = saved[job.id];
-        if (!decision || !['hiring', 'rejected'].includes(decision.status)) return;
-        if (typeof decision.reviewedAt !== 'string' || !Number.isFinite(Date.parse(decision.reviewedAt))) return;
-        if (typeof decision.reason !== 'string' || decision.reason.length > 1000) return;
-        if (decision.status === 'rejected' && decision.reason.trim().length < 10) return;
-        if (job.status !== 'pending') return;
-        valid[job.id] = { status: decision.status, reason: decision.reason, reviewedAt: decision.reviewedAt };
-      });
-      return valid;
-    } catch {
-      return {};
+      /* removeItem idempotent: xoá thẳng, không đọc giá trị cũ làm dữ liệu. */
+      window.sessionStorage.removeItem(LEGACY_DECISIONS_KEY);
+    } catch { /* storage bị chặn: khoá cũ vốn không còn được đọc ở bất kỳ đâu */ }
+  };
+
+  /* Từ vựng nhãn/badge hàng đợi đang có — khoá đúng bằng Store.JOB_QUEUE_BUCKETS. */
+  const BUCKET_TEXT = Object.freeze({
+    pending: Object.freeze({ label: 'Chờ duyệt', summary: 'chờ duyệt', badge: 'badge--warning' }),
+    hiring: Object.freeze({ label: 'Đang tuyển', summary: 'đang tuyển', badge: 'badge--success' }),
+    closed: Object.freeze({ label: 'Đã đóng', summary: 'đã đóng', badge: 'badge--neutral' }),
+    rejected: Object.freeze({ label: 'Bị từ chối', summary: 'bị từ chối', badge: 'badge--danger' }),
+  });
+
+  const bucketInfo = key => {
+    const text = BUCKET_TEXT[key];
+    if (text) return text;
+    const label = String(key || 'không xác định');
+    return Object.freeze({ label, summary: label.toLowerCase(), badge: 'badge--neutral' });
+  };
+
+  const available = Boolean(Store
+    && typeof Store.jobQueue === 'function'
+    && typeof Store.jobQueueCounts === 'function'
+    && typeof Store.jobBucket === 'function'
+    && typeof Store.decideJob === 'function');
+
+  dropLegacyDecisionKey();
+
+  /* ---------------- Người đăng: Suy ra từ learner, không viết tay ở trang admin ---------------- */
+
+  const NO_POSTER = Object.freeze({
+    name: 'Người đăng không có trong dữ liệu mẫu',
+    initials: '—',
+    role: 'Không xác định',
+    district: '',
+    responseRate: null,
+    learnerId: null,
+  });
+
+  const posterOf = job => {
+    const poster = Store.jobPoster(job.id);
+    if (poster) return poster;
+    return Object.freeze({ ...NO_POSTER, learnerId: job.learnerId || null });
+  };
+
+  /* ---------------- Hàng đợi ---------------- */
+
+  const safeBucket = bucket => (Store.JOB_QUEUE_BUCKETS.includes(bucket) ? bucket : 'all');
+
+  /** Một hàng đợi = jobQueue(bucket) của store, kèm người đăng và số hồ sơ dẫn xuất. */
+  const queue = (bucket = 'all') => {
+    if (!available) return [];
+    return Store.jobQueue(safeBucket(bucket)).map(job => Object.freeze({
+      job,
+      bucket: Store.jobBucket(job),
+      poster: posterOf(job),
+      applicationCount: Store.applicationsOfJob(job.id).length,
+    }));
+  };
+
+  const counts = () => {
+    if (!available) return { all: 0, total: 0, pending: 0, hiring: 0, closed: 0, rejected: 0 };
+    return Store.jobQueueCounts();
+  };
+
+  /* ---------------- Chi tiết ---------------- */
+
+  /** detail(id) — id thiếu/sai trả null; trang phải hiện not-found, KHÔNG chọn bản ghi khác. */
+  const detail = id => {
+    if (!available || !id) return null;
+    const job = Store.job(String(id));
+    if (!job) return null;
+    const learner = job.learnerId ? Store.learner(job.learnerId) : null;
+    return Object.freeze({
+      job,
+      bucket: Store.jobBucket(job),
+      poster: posterOf(job),
+      learner: learner || null,
+      applicationCount: Store.applicationsOfJob(job.id).length,
+    });
+  };
+
+  /* ---------------- Quyết định kiểm duyệt: ghi thẳng vào store ---------------- */
+
+  const reviewerId = () => {
+    const persona = available && typeof Store.getPersona === 'function' ? Store.getPersona() : null;
+    /* Chỉ persona role 'admin' được đứng tên quyết định; phiên phụ huynh/gia sư trả null để store
+       chặn và trang hiện lý do — không ghi audit log sai người. */
+    return (persona && persona.role === 'admin' && persona.id) || null;
+  };
+
+  const REASON_MESSAGES = Object.freeze({
+    'job-not-found': 'Tin không còn trong dữ liệu dùng chung — có thể tin đã bị xoá. Hàng đợi sẽ được đọc lại từ store.',
+    'invalid-decision': 'Quyết định kiểm duyệt không hợp lệ. Hệ thống chỉ nhận: duyệt, từ chối, đóng tin, mở lại.',
+    'invalid-transition': 'Tin đang ở trạng thái khác nên thao tác này bị chặn; không có gì thay đổi.',
+    'reason-required': 'Lý do từ chối cần tối thiểu 10 ký tự để người đăng biết cách chỉnh sửa và gửi lại.',
+    duplicated: 'Quyết định này đã được ghi trước đó — bấm lặp không tạo lần xử lý thứ hai.',
+    'storage-failed': 'Trình duyệt không lưu được dữ liệu demo, nên quyết định chưa được ghi. Trạng thái tin giữ nguyên.',
+    'invalid-state': 'Không lưu được quyết định vì dữ liệu không hợp lệ. Trạng thái tin giữ nguyên.',
+    'store-unavailable': 'Không đọc được EduStore (js/data/store.js) trên trang này, nên quyết định chưa được ghi.',
+    'reviewer-not-admin': 'Phiên đang mở không phải quản trị viên nên không được ghi quyết định kiểm duyệt — tránh vết kiểm toán đứng tên sai người. Đăng nhập persona ADMIN-01 để duyệt tin.',
+  });
+
+  /** Câu tiếng Việt cho từng `reason` store trả về (invalid-transition kèm nhãn nhóm hiện tại). */
+  const reasonMessage = result => {
+    if (!result || result.ok) return '';
+    if (result.reason === 'invalid-transition') {
+      const bucket = bucketInfo(result.bucket);
+      return `Tin đang ở nhóm “${bucket.label}” nên không thực hiện được thao tác này. Trạng thái tin giữ nguyên.`;
     }
+    return REASON_MESSAGES[result.reason] || `Không ghi được quyết định (mã ${result.reason || 'unknown'}). Trạng thái tin giữ nguyên.`;
   };
-  const list = () => {
-    const decisions = readDecisions();
-    return fixtures.map(job => ({ ...job, ...details[job.id], gender: 'Không yêu cầu', ...decisions[job.id] }));
+
+  /** decide({ jobId, decision, note }) — gọi THẬT Store.decideJob, có idempotency chống bấm đúp. */
+  const decide = ({ jobId, decision, note = '' } = {}) => {
+    if (!available) return Object.freeze({ ok: false, reason: 'store-unavailable', message: REASON_MESSAGES['store-unavailable'] });
+    const reviewer = reviewerId();
+    const result = Store.decideJob({
+      jobId,
+      decision,
+      reviewerId: reviewer,
+      note,
+      idempotency: `job-review:${jobId}:${decision}`,
+    });
+    return Object.freeze({
+      ...result,
+      reviewerId: reviewer,
+      message: result && result.ok ? '' : reasonMessage(result),
+    });
   };
-  const get = id => list().find(job => job.id === id);
-  const review = (id, nextStatus, reason = '') => {
-    const job = get(id);
-    if (!job || job.status !== 'pending') throw new Error('Tin không còn ở trạng thái chờ duyệt.');
-    if (!['hiring', 'rejected'].includes(nextStatus)) throw new Error('Trạng thái duyệt không hợp lệ.');
-    const trimmedReason = String(reason).trim();
-    if (nextStatus === 'rejected' && (trimmedReason.length < 10 || trimmedReason.length > 1000)) throw new Error('Lý do từ chối cần có từ 10 đến 1000 ký tự.');
-    const decisions = readDecisions();
-    decisions[id] = { status: nextStatus, reason: nextStatus === 'rejected' ? trimmedReason : '', reviewedAt: new Date().toISOString() };
-    // Chỉ đổi trạng thái sau khi lưu thành công; lỗi lưu được trang xử lý bằng Alert/Toast.
-    window.sessionStorage.setItem(storageKey, JSON.stringify(decisions));
-    return get(id);
-  };
-  window.EduJobReview = Object.freeze({ list, get, review });
+
+  const frozenBuckets = (() => {
+    const keys = available ? Store.JOB_QUEUE_BUCKETS.slice() : Object.keys(BUCKET_TEXT);
+    return Object.freeze(keys.reduce((acc, key) => {
+      acc[key] = bucketInfo(key);
+      return acc;
+    }, {}));
+  })();
+
+  window.EduJobReview = Object.freeze({
+    available,
+    buckets: frozenBuckets,
+    bucketInfo,
+    queue,
+    counts,
+    detail,
+    decide,
+    reasonMessage,
+    reviewerId,
+    LEGACY_DECISIONS_KEY,
+  });
 })();

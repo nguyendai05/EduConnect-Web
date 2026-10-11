@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Báo cáo &amp; tranh chấp | Edu Connect</title>
-    <link rel="icon" href="../../assets/icons/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/base.css">
@@ -14,7 +16,6 @@
     <!-- Component: AdminHeader | Nguồn: css/components/layout/admin-header.css -->
     <link rel="stylesheet" href="../../css/components/layout/admin-header.css">
     <!-- Component: Breadcrumb | Nguồn: css/components/navigation/breadcrumb.css -->
-    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
     <!-- Component: Tabs | Nguồn: css/components/navigation/tabs.css -->
     <link rel="stylesheet" href="../../css/components/navigation/tabs.css">
     <!-- Component: Pagination | Nguồn: css/components/navigation/pagination.css -->
@@ -49,8 +50,7 @@
         <div class="admin-sidebar__main">
             <header class="admin-sidebar__header">
                 <a class="admin-sidebar__brand" href="dashboard.html" aria-label="Edu Connect quản trị">
-                    <span class="admin-sidebar__brand-mark" aria-hidden="true"><img class="admin-sidebar__brand-logo" src="../../assets/icons/logo.svg" alt="Logo"></span>
-                    <span class="admin-sidebar__brand-name">Edu Connect</span>
+                    <img class="admin-sidebar__brand-logo" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000">
                 </a>
                 <span class="admin-sidebar__role">Quản trị</span>
             </header>
@@ -60,21 +60,24 @@
                 <a class="admin-sidebar__item" href="dashboard.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
                 </a>
+                <a class="admin-sidebar__item" href="manage.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/settings.svg" alt=""><span class="admin-sidebar__item-label">Quản lý nền tảng</span></span>
+                </a>
                 <a class="admin-sidebar__item" href="tutor-review-queue.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
-                    <span class="admin-sidebar__badge" aria-label="4 hồ sơ chờ xử lý">4</span>
+                    <span class="admin-sidebar__badge" data-admin-count="tutors" hidden></span>
                 </a>
                 <a class="admin-sidebar__item" href="job-review-queue.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
-                    <span class="admin-sidebar__badge" aria-label="5 tin chờ xử lý">5</span>
+                    <span class="admin-sidebar__badge" data-admin-count="jobs" hidden></span>
                 </a>
                 <a class="admin-sidebar__item is-active" href="reports.html" aria-current="page">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
-                    <span class="admin-sidebar__badge" aria-label="6 báo cáo cần xử lý">6</span>
+                    <span class="admin-sidebar__badge" data-admin-count="reports" hidden></span>
                 </a>
                 <a class="admin-sidebar__item" href="payout-requests.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
-                    <span class="admin-sidebar__badge" aria-label="5 yêu cầu rút tiền chờ xử lý">5</span>
+                    <span class="admin-sidebar__badge" data-admin-count="payouts" hidden></span>
                 </a>
                 <a class="admin-sidebar__item" href="audit-logs.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
@@ -144,9 +147,9 @@
             <div class="admin-shell__content reports">
                 <header class="admin-shell__page-header reports__header">
                     <div>
-                        <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><span>Quản trị</span></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Báo cáo &amp; tranh chấp</span></li></ol></nav>
+
                         <h1>Báo cáo &amp; tranh chấp</h1>
-                        <p>Theo dõi các phản ánh cần xem xét và những khoản đang tạm giữ chờ kết luận.</p>
+
                     </div>
                     <div class="reports__refresh">
                         <button class="button button--secondary" type="button" data-reports-refresh><svg class="reports__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6.1 7a7 7 0 0 1 11.6-1L20 9M4 15l2.3 3A7 7 0 0 0 17.9 17"/></svg>Làm mới</button>
@@ -155,22 +158,22 @@
                 </header>
 
                 <section class="reports__summary" aria-label="Tổng quan hàng đợi báo cáo">
-                    <article class="stat-card reports__metric">
+                    <article class="stat-card stat-card--compact reports__metric">
                         <div class="stat-card__header"><h2 class="reports__metric-label">Toàn bộ vụ việc</h2><span class="stat-card__icon"><img src="../../assets/icons/dispute.svg" alt=""></span></div>
                         <p class="reports__metric-value"><strong class="stat-card__value" data-reports-total-count>0</strong><span class="stat-card__unit">báo cáo</span></p>
                         <div class="reports__metric-footer"><span class="badge badge--neutral">Bao gồm đã kết luận</span></div>
                     </article>
-                    <article class="stat-card reports__metric">
+                    <article class="stat-card stat-card--compact reports__metric">
                         <div class="stat-card__header"><h2 class="reports__metric-label">Mới tiếp nhận</h2><span class="stat-card__icon"><img src="../../assets/icons/notification.svg" alt=""></span></div>
                         <p class="reports__metric-value"><strong class="stat-card__value" data-reports-open-count>0</strong><span class="stat-card__unit">cần thẩm tra</span></p>
                         <div class="reports__metric-footer"><span class="badge badge--info">Chưa có người thụ lý</span><span data-reports-open-lock>0 vụ đang giữ khoản</span></div>
                     </article>
-                    <article class="stat-card stat-card--warning reports__metric">
+                    <article class="stat-card stat-card--compact stat-card--warning reports__metric">
                         <div class="stat-card__header"><h2 class="reports__metric-label">Đang xác minh</h2><span class="stat-card__icon"><img src="../../assets/icons/shield-alert.svg" alt=""></span></div>
                         <p class="reports__metric-value"><strong class="stat-card__value" data-reports-investigating-count>0</strong><span class="stat-card__unit">đang đối chiếu</span></p>
                         <div class="reports__metric-footer"><span class="badge badge--warning">Quản trị viên thụ lý</span><span>Chưa kết luận vi phạm</span></div>
                     </article>
-                    <article class="stat-card stat-card--success reports__metric">
+                    <article class="stat-card stat-card--compact stat-card--success reports__metric">
                         <div class="stat-card__header"><h2 class="reports__metric-label">Đã có kết luận</h2><span class="stat-card__icon"><img src="../../assets/icons/check-double.svg" alt=""></span></div>
                         <p class="reports__metric-value"><strong class="stat-card__value" data-reports-resolved-count>0</strong><span class="stat-card__unit">đã xử lý</span></p>
                         <div class="reports__metric-footer"><span class="badge badge--success">Đã lưu vết</span><span data-reports-dismissed-count>0 vụ đã bác bỏ</span></div>
@@ -223,7 +226,7 @@
                                 <tbody data-reports-list></tbody>
                             </table>
                         </div>
-                        <div class="reports__table-footer">
+                        <div class="reports__table-footer table-footer">
                             <nav class="pagination pagination--table" aria-label="Phân trang danh sách báo cáo" data-component="pagination" data-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1">
                                 <p class="pagination__summary">Hiển thị <strong data-range-start>0</strong>–<strong data-range-end>0</strong> trong <strong data-total-count>0</strong> báo cáo</p>
                                 <div class="pagination__controls">
@@ -232,12 +235,11 @@
                                     <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau" disabled><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
                                 </div>
                             </nav>
-                            <div class="reports__page-size"><label for="reports-page-size">Số vụ việc mỗi trang</label><select class="select-control select-control--native" id="reports-page-size" data-reports-page-size><option value="5">5</option><option value="8" selected>8</option><option value="10">10</option></select></div>
+                            <div class="reports__page-size table-footer__page-size"><label for="reports-page-size">Số vụ việc mỗi trang</label><select class="select-control select-control--native" id="reports-page-size" data-reports-page-size><option value="5">5</option><option value="8" selected>8</option><option value="10">10</option></select></div>
                         </div>
                     </div>
                     <div class="empty-state" data-component="empty-state" data-reports-empty hidden><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title">Không tìm thấy báo cáo phù hợp</h2><p class="empty-state__description">Thử đổi từ khóa, chọn mức độ khác hoặc xóa bộ lọc để xem các vụ việc trong trạng thái này.</p><button class="button button--outline" type="button" data-reports-reset>Xóa bộ lọc</button></div>
                 </section>
-
 
                 <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải danh sách, tìm kiếm và lọc báo cáo.</p></noscript>
             </div>
@@ -256,6 +258,12 @@
             </tr>
         </template>
     </div>
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
+    <script src="../../js/pages/admin/tutor-review-data.js" defer></script>
+    <script src="../../js/pages/admin/payout-data.js" defer></script>
+    <script src="../../js/core/admin-sidebar.js" defer></script>
     <script src="../../js/core/admin-header.js" defer></script>
     <script src="../../js/core/search-input.js" defer></script>
     <script src="../../js/core/tabs.js" defer></script>

@@ -2,54 +2,68 @@
   --font-family-base: "Segoe UI", Arial, sans-serif;
   --font-family-display: Cambria, Georgia, "Times New Roman", serif;
 
-  --color-primary: #1f5245;
-  --color-primary-hover: #153f34;
-  --color-primary-container: #edf3ef;
-  --color-primary-focus: #c6d8ca;
-  --color-primary-border: #99b19d;
-  --color-primary-link-hover: #356b5b;
-  --color-secondary: #934832;
-  --color-secondary-container: #f6e9e2;
-  --color-accent: #b56c51;
-  --color-ink: #142f29;
-  --color-paper: #fffdf8;
-  --color-on-ink: #f9f6ef;
-  --color-on-ink-muted: #ced9cb;
-  --color-ink-border: #52705f;
-  --color-ink-raised: #2a5042;
-  --color-ink-active: #365748;
-  --color-paper-border: #e0dcc7;
-  --color-paper-rule: #e8d7bb;
-  --color-avatar-sage: #e6ecdc;
-  --color-avatar-sand: #f3e8d3;
-  --color-avatar-sand-ink: #7a5935;
-  --color-avatar-lilac: #e9e7f0;
-  --color-avatar-lilac-ink: #665b7d;
-  --color-avatar-slate: #e3ecee;
-  --color-avatar-slate-ink: #43616f;
+  /* PHƯƠNG ÁN A — THÔNG VÀ ĐẤT NUNG.
+     Xanh thông là hành động và lựa chọn; đất nung chỉ là trang trí và điều hướng phụ. */
+  --color-primary: #1D4B40;
+  --color-primary-hover: #173C33;
+  --color-primary-container: #E3EEEA;
+  --color-primary-focus: #B9D2C9;
+  --color-primary-border: #8FB3A8;
+  --color-primary-link-hover: #2F6355;
+  --color-secondary: #AD532A;
+  --color-secondary-hover: #93451F;
+  --color-secondary-text: #93451F;
+  --color-accent-on-ink: #E9A982;
+  --color-secondary-container: #F3E1D6;
+  --color-accent: #AD532A;
+  --color-ink: #16332C;
+  --color-on-ink: #F7F4EE;
+  --color-on-ink-muted: #C3D5CE;
+  --color-ink-border: #4E6B62;
+  --color-ink-raised: #245047;
+  --color-ink-active: #305F54;
+  --color-paper-border: #E0DACC;
+  --color-paper-rule: #E6DCCB;
+  --color-avatar-sage: #E3EEEA;
+  --color-avatar-sand: #F3E1D6;
+  --color-avatar-sand-ink: #8A4A26;
+  --color-avatar-lilac: #E9E7F0;
+  --color-avatar-lilac-ink: #665B7D;
+  --color-avatar-slate: #E4EAE9;
+  --color-avatar-slate-ink: #44615B;
 
-  --color-background: #f5f4ef;
-  --color-surface: #ffffff;
-  --color-surface-low: #f1f0ea;
-  --color-surface-medium: #e7e7df;
-  --color-surface-high: #c4cabe;
+  --color-background: #F7F4EE;
+  --color-surface: #FFFDFA;
+  --color-surface-low: #EEEAE2;
+  --color-surface-medium: #E4E1D8;
+  --color-surface-high: #C9C4B7;
+  --color-paper: #F7F4EE;
 
-  --color-text: #202b26;
-  --color-text-secondary: #526159;
-  --color-text-muted: #69746c;
-  --color-border: #dddfd6;
-  --color-control-border: #bdc6bc;
-  --color-focus-ring: rgb(31 82 69 / 15%);
+  --color-text: #1E2623;
+  --color-text-secondary: #5F6860;
+  --color-text-muted: #6C746D;
+  --color-border: #D8D2C6;
+  --color-control-border: #C3BEB1;
+  --color-control-border-hover: #A9A396;
+  --color-focus-ring: rgb(29 75 64 / 22%);
+  --color-disabled-background: #EEEAE2;
+  --color-disabled-text: #5E655E;
+  --color-disabled-border: #DDD8CE;
+  --color-on-primary: #FFFDFA;
 
-  --color-success: #326644;
-  --color-success-container: #edf5ee;
-  --color-warning: #8b5f18;
-  --color-warning-container: #f9f0dc;
-  --color-danger: #a5333f;
-  --color-danger-container: #faecee;
-  --color-info: #476777;
-  --color-info-container: #eef3f5;
-  --color-on-primary: #ffffff;
+  /* Ngữ nghĩa. Chữ trên nền nhạt dùng biến thể *-text đậm để đạt 4.5:1. */
+  --color-success: #2F9E5B;
+  --color-success-container: #E2F1E9;
+  --color-success-text: #1F6F43;
+  --color-warning: #B7791F;
+  --color-warning-container: #F8ECC9;
+  --color-warning-text: #7A510E;
+  --color-danger: #C0263B;
+  --color-danger-container: #FBE5E9;
+  --color-danger-text: #A61E34;
+  --color-info: #4A625C;
+  --color-info-container: #E7EDEA;
+  --color-info-text: #35514A;
 
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -61,6 +75,13 @@
 
   --line-height-tight: 1.25;
   --line-height-base: 1.6;
+
+  /* Cỡ chữ của ô nhập tăng lên 16px ở màn hẹp để đủ dễ đọc và không bị
+      trình duyệt trên zoom khi focus. */
+  --control-font-size: var(--font-size-sm);
+  --touch-target: 2.75rem;
+  --user-header-height: 4.75rem;
+  --scroll-offset: calc(var(--user-header-height) + var(--space-4));
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -76,14 +97,27 @@
   --radius-lg: 0.625rem;
   --radius-xl: 0.875rem;
   --control-height: 2.75rem;
-  --control-radius: 0.375rem;
+  --control-radius: 0.4375rem;
   --radius-pill: 9999px;
 
   --container-max-width: 80rem;
   --admin-sidebar-width: 15rem;
   --admin-header-height: 4rem;
-  --shadow-sm: 0 1px 2px rgb(32 43 38 / 4%);
-  --shadow-md: 0 6px 20px rgb(32 43 38 / 8%);
-  --shadow-lg: 0 20px 48px rgb(32 43 38 / 15%);
+  --admin-nav-height: 0rem;
+  --admin-scroll-offset: calc(var(--admin-header-height) + var(--admin-nav-height) + var(--space-4));
+  --shadow-sm: 0 1px 2px rgb(30 38 35 / 5%);
+  --shadow-md: 0 6px 20px rgb(30 38 35 / 8%);
+  --shadow-lg: 0 20px 48px rgb(30 38 35 / 16%);
   --shadow-card: none;
+
+}
+
+/* Màn hẹp: header người dùng xuống hai hàng và ô nhập cần chữ 16px.
+   Khai báo một chỗ duy nhất để mọi component và page lấy theo. */
+@media (max-width: 64rem) {
+  :root {
+    --user-header-height: 6.5rem;
+    --control-font-size: 1rem;
+    --admin-nav-height: 3.5rem;
+  }
 }

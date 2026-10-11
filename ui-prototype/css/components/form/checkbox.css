@@ -116,7 +116,7 @@
   left: 0.375rem;
   width: 0.4rem;
   height: 0.7rem;
-  border: solid #fff;
+  border: solid var(--color-on-primary);
   border-width: 0 2px 2px 0;
   content: "";
   transform: rotate(45deg);
@@ -128,7 +128,7 @@
   left: 0.3rem;
   width: 0.6rem;
   height: 2px;
-  background: #fff;
+  background: var(--color-on-primary);
   content: "";
 }
 

@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
         <title>Xác nhận hợp đồng — Edu Connect</title>
         <link rel="stylesheet" href="../../css/tokens.css" />
         <link rel="stylesheet" href="../../css/reset.css" />
@@ -20,10 +23,15 @@
         <link rel="stylesheet" href="../../css/components/data-display/avatar.css" />
         <link rel="stylesheet" href="../../css/components/data-display/card.css" />
         <link rel="stylesheet" href="../../css/components/data-display/info-row.css" />
+        <link rel="stylesheet" href="../../css/components/data-display/table.css" />
         <link rel="stylesheet" href="../../css/components/form/checkbox.css" />
         <link rel="stylesheet" href="../../css/components/form/form-field.css" />
+        <link rel="stylesheet" href="../../css/components/form/select.css" />
         <link rel="stylesheet" href="../../css/components/form/textarea.css" />
         <link rel="stylesheet" href="../../css/pages/contract/confirm.css" />
+        <script src="../../js/core/route.js" defer></script>
+        <script src="../../js/data/fixtures.js" defer></script>
+        <script src="../../js/data/store.js" defer></script>
         <script src="../../js/core/user-header.js" defer></script>
         <script src="../../js/core/modal.js" defer></script>
         <script src="../../js/core/toast.js" defer></script>
@@ -37,17 +45,17 @@
             data-profile-name="Chị Mai Lan"
             data-profile-initials="ML"
             data-profile-role="Phụ huynh"
-            data-active-nav="tutors"
+            data-active-nav="none"
         >
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link is-active" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html" aria-current="page">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -74,7 +82,7 @@
                         </div>
                         <div class="user-header__menu-balance">
                             <span>Ví thù lao:</span>
-                            <strong data-menu-balance>4.850.000đ</strong>
+                            <strong data-menu-balance>—</strong>
                         </div>
                     </div>
 
@@ -111,438 +119,388 @@
             <nav class="breadcrumb" aria-label="Đường dẫn">
                 <ol class="breadcrumb__list">
                     <li class="breadcrumb__item">
-                        <a class="breadcrumb__link" href="../invitation/negotiation.html"
-                            >Lời mời gia sư</a
-                        >
+                        <a class="breadcrumb__link" href="../invitation/negotiation.html" id="crumb-source">Đơn đăng ký</a>
                     </li>
                     <li class="breadcrumb__item">
-                        <span class="breadcrumb__current" aria-current="page"
-                            >Xác nhận hợp đồng</span
-                        >
+                        <span class="breadcrumb__current" aria-current="page">Xác nhận hợp đồng</span>
                     </li>
                 </ol>
             </nav>
+
             <header class="page-header">
                 <div class="page-header__title-block">
                     <div class="page-header__title-row">
                         <h1 class="page-header__title">Xác nhận hợp đồng dạy – học</h1>
-                        <span class="badge badge--warning" id="confirm-status"
-                            >Chờ bạn xác nhận</span
-                        >
+                        <span class="badge badge--neutral" id="confirm-status">Đang đọc dữ liệu</span>
                     </div>
-                    <p class="page-header__description">
-                        Kiểm tra điều khoản hai bên đã thống nhất trước khi chuyển sang ký quỹ.
-                    </p>
-                    <p class="confirm-muted">
-                        Lời mời <span data-contract="invitation">INV-20261009-024</span> · Phiên bản
-                        <span data-contract="version">2</span> ·
-                        <a href="../invitation/negotiation.html">Xem lịch sử thương lượng</a>
-                    </p>
+                    <p class="confirm-muted" id="confirm-reference">Trang đọc hợp đồng, đơn và phiên thanh toán từ bộ dữ liệu dùng chung.</p>
                 </div>
             </header>
-            <section class="alert" id="confirm-alert" role="status">
-                <span class="alert__icon" aria-hidden="true"></span>
-                <div class="alert__content">
-                    <h2 class="alert__title" id="confirm-alert-title">
-                        Hãy kiểm tra kỹ trước khi xác nhận
-                    </h2>
-                    <p class="alert__message" id="confirm-alert-message">
-                        Nếu thông tin chưa đúng, hãy yêu cầu kiểm tra lại. Xác nhận điều khoản chưa
-                        làm phát sinh thanh toán.
-                    </p>
+
+            <!-- Hợp đồng không tồn tại: chỉ báo lỗi, không tự thay bằng hợp đồng khác -->
+            <section class="card" id="not-found" hidden>
+                <div class="card__body confirm-stack">
+                    <h2 class="card__title" id="not-found-title">Không tìm thấy hợp đồng</h2>
+                    <p class="confirm-muted" id="not-found-description">Mở trang này từ liên kết có tham số ?contract= hoặc ?order= hợp lệ.</p>
+                    <a class="button button--outline" href="../order/history.html">Xem lịch sử đơn</a>
                 </div>
             </section>
-            <div class="confirm-layout">
-                <div class="confirm-main">
-                    <section class="card" aria-labelledby="parties-title">
-                        <header class="card__header">
-                            <h2 class="card__title" id="parties-title">1. Các bên tham gia</h2>
-                        </header>
-                        <div class="card__body confirm-two-columns">
-                            <article class="confirm-party">
-                                <span
-                                    class="avatar avatar--large"
-                                    role="img"
-                                    aria-label="Chị Mai Lan"
-                                    >ML</span
-                                >
-                                <div>
-                                    <p class="confirm-muted">Phụ huynh / Học viên</p>
-                                    <h3>Chị Mai Lan</h3>
-                                    <p>Đại diện: Trần Gia Huy · Lớp 11</p>
-                                    <p class="confirm-muted">Điện thoại: 09•• ••• 678</p>
-                                </div>
-                            </article>
-                            <article class="confirm-party">
-                                <span
-                                    class="avatar avatar--large"
-                                    role="img"
-                                    aria-label="Nguyễn Minh Anh"
-                                    data-contract-tutor-avatar
-                                    >MA</span
-                                >
-                                <div>
-                                    <p class="confirm-muted">Gia sư phụ trách</p>
-                                    <h3 data-contract-tutor>Nguyễn Minh Anh</h3>
-                                    <span class="badge badge--verified"
-                                        ><span
-                                            class="component-icon component-icon--verified"
-                                            aria-hidden="true"
-                                        ></span
-                                        >Đã xác minh</span
-                                    >
-                                    <p class="confirm-muted" data-contract-qualification>Cử nhân Sư phạm Toán</p>
-                                </div>
-                            </article>
-                        </div>
-                    </section>
-                    <section class="card" aria-labelledby="learning-title">
-                        <header class="card__header">
-                            <h2 class="card__title" id="learning-title">
-                                2. Nội dung dạy – học đã thống nhất
-                            </h2>
 
-                        </header>
-                        <div class="card__body">
-                            <div class="confirm-two-columns">
-                                <dl class="info-row info-row--stacked">
-                                    <dt class="info-row__label">Môn học</dt>
-                                    <dd class="info-row__value" data-contract="subject">Toán · Lớp 11</dd>
-                                </dl>
-                                <dl class="info-row info-row--stacked">
-                                    <dt class="info-row__label">Số buổi</dt>
-                                    <dd class="info-row__value">
-                                        <span data-contract="sessions">8</span> buổi · 90 phút/buổi
-                                    </dd>
-                                </dl>
-                                <dl class="info-row info-row--stacked">
-                                    <dt class="info-row__label">Hình thức</dt>
-                                    <dd class="info-row__value">Kèm 1–1 tại nhà học sinh</dd>
-                                </dl>
-                                <dl class="info-row info-row--stacked">
-                                    <dt class="info-row__label">Địa điểm</dt>
-                                    <dd class="info-row__value">TP. Thủ Đức, TP. Hồ Chí Minh</dd>
-                                </dl>
-                                <dl class="info-row info-row--stacked">
-                                    <dt class="info-row__label">Ngày bắt đầu</dt>
-                                    <dd class="info-row__value">
-                                        <span data-contract="start"></span>
-                                    </dd>
-                                </dl>
-                                <dl class="info-row info-row--stacked">
-                                    <dt class="info-row__label">Lịch học</dt>
-                                    <dd class="info-row__value">
-                                        <span data-contract="schedule"
-                                            >Thứ Hai & Thứ Sáu · 19:00–20:30</span
-                                        >
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="confirm-note">
-                                <h3>Mục tiêu & lời nhắn thống nhất</h3>
-                                <p data-contract="message">
-                                    Củng cố kiến thức Toán lớp 11 và rèn luyện kỹ năng giải bài tập.
+            <div id="confirm-content">
+                <section class="alert alert--warning" id="reference-alert" hidden role="status">
+                    <span class="alert__icon" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <h2 class="alert__title" id="reference-alert-title">Tham chiếu trong liên kết không khớp</h2>
+                        <p class="alert__message" id="reference-alert-message"></p>
+                    </div>
+                </section>
+
+                <section class="alert alert--info" id="persona-alert" hidden role="status">
+                    <span class="alert__icon" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <h2 class="alert__title">Đang xem theo persona demo</h2>
+                        <p class="alert__message" id="persona-alert-message"></p>
+                    </div>
+                </section>
+
+                <div class="confirm-layout">
+                    <div class="confirm-main">
+                        <section class="card" aria-labelledby="contract-title">
+                            <header class="card__header">
+                                <h2 class="card__title" id="contract-title">1. Hợp đồng &amp; các bên</h2>
+                                <p class="card__description">
+                                    Mã hợp đồng, trạng thái và phiên bản điều khoản lấy từ cùng một bản
+                                    ghi mà trang chi tiết hợp đồng và trang thanh toán sử dụng.
                                 </p>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="card" aria-labelledby="fees-title">
-                        <header class="card__header">
-                            <h2 class="card__title" id="fees-title">3. Học phí & phí dịch vụ</h2>
-                            <p class="card__description">
-                                Phí dịch vụ 10% được khấu trừ từ thù lao gia sư, không cộng thêm vào
-                                học phí.
-                            </p>
-                        </header>
-                        <div class="card__body">
-                            <dl class="info-row">
-                                <dt class="info-row__label">Học phí mỗi buổi</dt>
-                                <dd class="info-row__value" data-contract="fee">220.000 ₫</dd>
-                            </dl>
-                            <dl class="info-row">
-                                <dt class="info-row__label">Tổng giá trị hợp đồng</dt>
-                                <dd class="info-row__value confirm-total" data-contract="total">
-                                    1.760.000 ₫
-                                </dd>
-                            </dl>
-                            <div class="confirm-fee-grid">
-                                <div>
-                                    <p>Học phí / buổi</p>
-                                    <strong data-contract="fee">220.000 ₫</strong>
-                                </div>
-                                <div>
-                                    <p>Phí dịch vụ 10%</p>
-                                    <strong data-contract="platform">22.000 ₫</strong>
-                                </div>
-                                <div>
-                                    <p>Gia sư thực nhận / buổi</p>
-                                    <strong data-contract="net">198.000 ₫</strong>
+                            </header>
+                            <div class="card__body confirm-stack">
+                                <dl class="info-row">
+                                    <dt class="info-row__label">Mã hợp đồng</dt>
+                                    <dd class="info-row__value" id="contract-id">—</dd>
+                                </dl>
+                                <dl class="info-row">
+                                    <dt class="info-row__label">Trạng thái hợp đồng</dt>
+                                    <dd class="info-row__value"><span class="badge badge--neutral" id="contract-status-badge">—</span></dd>
+                                </dl>
+                                <dl class="info-row">
+                                    <dt class="info-row__label">Điều khoản áp dụng</dt>
+                                    <dd class="info-row__value" id="contract-terms">—</dd>
+                                </dl>
+                                <dl class="info-row">
+                                    <dt class="info-row__label">Thời điểm ký</dt>
+                                    <dd class="info-row__value" id="contract-signed">—</dd>
+                                </dl>
+                                <div class="confirm-two-columns">
+                                    <article class="confirm-party">
+                                        <span class="avatar avatar--large" role="img" aria-label="Học viên" id="learner-avatar">—</span>
+                                        <div>
+                                            <p class="confirm-muted">Phụ huynh / Học viên</p>
+                                            <h3 id="learner-name">—</h3>
+                                            <p class="confirm-muted" id="learner-meta"></p>
+                                        </div>
+                                    </article>
+                                    <article class="confirm-party">
+                                        <span class="avatar avatar--large" role="img" aria-label="Gia sư" id="tutor-avatar">—</span>
+                                        <div>
+                                            <p class="confirm-muted">Gia sư phụ trách</p>
+                                            <h3 id="tutor-name">—</h3>
+                                            <p class="confirm-muted" id="tutor-meta"></p>
+                                        </div>
+                                    </article>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                    <section class="card" aria-labelledby="escrow-title">
-                        <header class="card__header">
-                            <h2 class="card__title" id="escrow-title">
-                                4. Ký quỹ & kích hoạt hợp đồng
-                            </h2>
-                        </header>
-                        <div class="card__body confirm-stack">
-                            <ol class="confirm-steps">
-                                <li>
-                                    <strong>Thống nhất điều khoản</strong
-                                    ><span>Hai bên chấp nhận cùng một phiên bản.</span>
-                                </li>
-                                <li aria-current="step">
-                                    <strong>Xác nhận hợp đồng</strong
-                                    ><span>Kiểm tra nội dung và các cam kết.</span>
-                                </li>
-                                <li>
-                                    <strong>Hoàn tất ký quỹ</strong
-                                    ><span
-                                        >Dùng số dư khả dụng trước, thanh toán phần còn thiếu qua
-                                        PayOS.</span
-                                    >
-                                </li>
-                                <li>
-                                    <strong>Học & xác nhận từng buổi</strong
-                                    ><span>Giải ngân theo buổi được xác nhận.</span>
-                                </li>
-                            </ol>
-                            <p class="confirm-muted">
-                                Ký quỹ không chuyển ngay toàn bộ học phí cho gia sư. Khoản hoàn tiền
-                                được xử lý theo điều khoản hợp đồng và kết quả xét duyệt.
-                            </p>
-                        </div>
-                    </section>
-                    <section class="card" aria-labelledby="rules-title">
-                        <header class="card__header">
-                            <h2 class="card__title" id="rules-title">
-                                5. Quy tắc học tập & xử lý học phí
-                            </h2>
-                        </header>
-                        <div class="card__body confirm-stack">
-                            <details class="confirm-rule" open>
-                                <summary>Buổi học, điểm danh & xác nhận</summary>
-                                <p>
-                                    Gia sư cập nhật điểm danh và nội dung đã dạy. Phụ huynh xác nhận
-                                    hoàn thành hoặc báo vấn đề trong 72 giờ từ khi nhận yêu cầu xác
-                                    nhận. Khi hết hạn mà không có phản hồi hoặc khiếu nại, buổi học
-                                    được xử lý theo quy tắc xác nhận tự động của hợp đồng.
+                        </section>
+
+                        <section class="card" aria-labelledby="order-title">
+                            <header class="card__header">
+                                <h2 class="card__title" id="order-title">2. Đơn đăng ký liên kết</h2>
+                                <p class="card__description">
+                                   Snapshot hạng mục bất biến tại thời điểm tạo đơn — giá hiển thị ở
+                                    đây là giá của đơn, không phải giá hiện tại của dịch vụ.
                                 </p>
-                                <p>
-                                    Học phí mỗi buổi được phân bổ thành phí dịch vụ và thu nhập thực
-                                    nhận của gia sư theo cơ cấu ở trên.
-                                </p>
-                            </details>
-                            <details class="confirm-rule" open>
-                                <summary>Hoàn tiền & chấm dứt hợp đồng</summary>
-                                <p>
-                                    Khoản ký quỹ của các buổi chưa được giải ngân được xem xét hoàn
-                                    theo lý do hủy và điều khoản đã thống nhất. Sau khi yêu cầu được
-                                    duyệt, khoản hoàn được cộng vào số dư khả dụng để sử dụng cho
-                                    hợp đồng khác.
-                                </p>
-                            </details>
-                            <details class="confirm-rule">
-                                <summary>Đổi lịch & xử lý tranh chấp</summary>
-                                <p>
-                                    Mọi thay đổi về lịch, học phí hoặc số buổi cần được hai bên xác
-                                    nhận trên hệ thống. Khi có tranh chấp, khoản tiền liên quan được
-                                    tạm giữ để kiểm tra trước khi quyết định giải ngân hoặc hoàn
-                                    tiền.
-                                </p>
-                            </details>
-                            <details class="confirm-rule">
-                                <summary>Trách nhiệm hai bên</summary>
-                                <p>
-                                    Phụ huynh chuẩn bị điều kiện học tập, hoàn tất ký quỹ và phản
-                                    hồi buổi học đúng hạn. Gia sư dạy đúng lịch, chuẩn bị nội dung
-                                    phù hợp và cập nhật kết quả buổi học. Hai bên thông báo kịp thời
-                                    khi cần điều chỉnh.
-                                </p>
-                            </details>
-                        </div>
-                    </section>
-                    <section class="card" aria-labelledby="signatures-title">
-                        <header class="card__header">
-                            <h2 class="card__title" id="signatures-title">
-                                6. Trạng thái xác nhận
-                            </h2>
-                        </header>
-                        <div class="card__body confirm-two-columns">
-                            <div class="confirm-signature">
-                                <h3 data-contract-signature>Gia sư · Nguyễn Minh Anh</h3>
-                                <span class="badge badge--success">Đã xác nhận điều khoản</span>
-                                <p class="confirm-muted" id="tutor-confirmed-at"></p>
+                            </header>
+                            <div class="card__body confirm-stack">
+                                <div class="confirm-two-columns">
+                                    <dl class="info-row">
+                                        <dt class="info-row__label">Mã đơn</dt>
+                                        <dd class="info-row__value" id="order-id">—</dd>
+                                    </dl>
+                                    <dl class="info-row">
+                                        <dt class="info-row__label">Kênh tạo đơn</dt>
+                                        <dd class="info-row__value" id="order-channel">—</dd>
+                                    </dl>
+                                    <dl class="info-row">
+                                        <dt class="info-row__label">Nguồn tham chiếu</dt>
+                                        <dd class="info-row__value" id="order-source">—</dd>
+                                    </dl>
+                                    <dl class="info-row">
+                                        <dt class="info-row__label">Trạng thái đơn</dt>
+                                        <dd class="info-row__value"><span class="badge badge--neutral" id="order-status-badge">—</span></dd>
+                                    </dl>
+                                    <dl class="info-row">
+                                        <dt class="info-row__label">Trạng thái thanh toán</dt>
+                                        <dd class="info-row__value"><span class="badge badge--neutral" id="order-payment-badge">—</span></dd>
+                                    </dl>
+                                </div>
+                                <div class="table-frame">
+                                    <table class="table">
+                                        <caption class="table__caption">Hạng mục trong đơn đăng ký</caption>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Dịch vụ / lớp</th>
+                                                <th scope="col">Đơn giá</th>
+                                                <th scope="col">Số buổi</th>
+                                                <th scope="col">Thời lượng</th>
+                                                <th scope="col">Thành tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="items-body"></tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <div class="confirm-signature">
-                                <h3>Phụ huynh · Chị Mai Lan</h3>
-                                <span class="badge badge--warning" id="parent-status"
-                                    >Chờ bạn xác nhận</span
-                                >
-                                <p class="confirm-muted" id="parent-confirmed-at">
-                                    Hạn xác nhận: <span id="confirm-deadline"></span>
+                        </section>
+
+                        <section class="card" aria-labelledby="fees-title">
+                            <header class="card__header">
+                                <h2 class="card__title" id="fees-title">3. Học phí &amp; phí nền tảng</h2>
+                            </header>
+                            <div class="card__body confirm-stack">
+                                <dl class="info-row">
+                                    <dt class="info-row__label">Tổng giá trị cần ký quỹ</dt>
+                                    <dd class="info-row__value confirm-total" id="fee-total">—</dd>
+                                </dl>
+                                <p class="confirm-muted" id="fee-rate-note"></p>
+                                <div class="confirm-fee-grid" id="fee-grid"></div>
+                                <p class="confirm-muted" id="reconcile-note" role="status"></p>
+                            </div>
+                        </section>
+
+                        <section class="card" aria-labelledby="payments-title" id="payments-wrapper">
+                            <header class="card__header">
+                                <h2 class="card__title" id="payments-title">4. Phiên thanh toán của đơn</h2>
+                                <p class="card__description">
+                                    Bản ghi phiên thanh toán trong dữ liệu mẫu; chưa có cổng thanh toán
+                                    thật nào được gọi từ trang này.
+                                </p>
+                            </header>
+                            <div class="card__body">
+                                <div class="table-frame">
+                                    <table class="table">
+                                        <caption class="table__caption">Các phiên thanh toán đã ghi nhận</caption>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Mã phiên</th>
+                                                <th scope="col">Phương thức</th>
+                                                <th scope="col">Tổng phiên</th>
+                                                <th scope="col">Từ ví</th>
+                                                <th scope="col">Còn lại qua cổng</th>
+                                                <th scope="col">Trạng thái</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="payments-body"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                        <p class="confirm-muted" id="payments-empty" hidden>
+                            Đơn này chưa có phiên thanh toán nào trong dữ liệu mẫu.
+                        </p>
+
+                        <section class="card" aria-labelledby="escrow-title">
+                            <header class="card__header">
+                                <h2 class="card__title" id="escrow-title">5. Ký quỹ &amp; kích hoạt hợp đồng</h2>
+                            </header>
+                            <div class="card__body confirm-stack">
+                                <ol class="confirm-steps">
+                                    <li>
+                                        <strong>Thống nhất điều khoản</strong>
+                                        <span>Hai bên chấp nhận cùng một phiên bản điều khoản.</span>
+                                    </li>
+                                    <li aria-current="step">
+                                        <strong>Xác nhận hợp đồng</strong>
+                                        <span>Kiểm tra nội dung và các cam kết trên trang này.</span>
+                                    </li>
+                                    <li>
+                                        <strong>Hoàn tất ký quỹ</strong>
+                                        <span>Dùng số dư khả dụng trước, thanh toán phần còn thiếu ở trang checkout.</span>
+                                    </li>
+                                    <li>
+                                        <strong>Học &amp; xác nhận từng buổi</strong>
+                                        <span>Giải ngân theo từng buổi được xác nhận.</span>
+                                    </li>
+                                </ol>
+                                <p class="confirm-muted">
+                                    Ký quỹ không chuyển ngay toàn bộ học phí cho gia sư. Khoản hoàn tiền
+                                    được xử lý theo điều khoản hợp đồng và kết quả xét duyệt.
                                 </p>
                             </div>
-                        </div>
-                    </section>
-                    <section class="card" aria-labelledby="consent-title">
-                        <header class="card__header">
-                            <h2 class="card__title" id="consent-title">
-                                7. Cam kết trước khi xác nhận
-                            </h2>
-                            <p class="card__description">Đọc và chọn đủ 5 nội dung bên dưới.</p>
-                        </header>
-                        <div class="card__body confirm-stack" id="consents">
-                            <label class="checkbox-option"
-                                ><span class="checkbox-hit-area"
-                                    ><input type="checkbox" data-consent id="consent-1" /><span
-                                        class="checkbox-box"
-                                        aria-hidden="true"
-                                    ></span></span
-                                ><span class="checkbox-option__copy"
-                                    >Tôi đã kiểm tra thông tin hai bên, môn học, số buổi, học phí,
-                                    lịch học và địa điểm.</span
-                                ></label
-                            >
-                            <label class="checkbox-option"
-                                ><span class="checkbox-hit-area"
-                                    ><input type="checkbox" data-consent id="consent-2" /><span
-                                        class="checkbox-box"
-                                        aria-hidden="true"
-                                    ></span></span
-                                ><span class="checkbox-option__copy"
-                                    >Tôi hiểu học phí được ký quỹ, không chuyển toàn bộ ngay cho gia
-                                    sư.</span
-                                ></label
-                            >
-                            <label class="checkbox-option"
-                                ><span class="checkbox-hit-area"
-                                    ><input type="checkbox" data-consent id="consent-3" /><span
-                                        class="checkbox-box"
-                                        aria-hidden="true"
-                                    ></span></span
-                                ><span class="checkbox-option__copy"
-                                    >Tôi hiểu học phí được giải ngân theo từng buổi học đã xác
-                                    nhận.</span
-                                ></label
-                            >
-                            <label class="checkbox-option"
-                                ><span class="checkbox-hit-area"
-                                    ><input type="checkbox" data-consent id="consent-4" /><span
-                                        class="checkbox-box"
-                                        aria-hidden="true"
-                                    ></span></span
-                                ><span class="checkbox-option__copy"
-                                    >Tôi hiểu quy tắc xác nhận sau 72 giờ khi không có phản hồi hoặc
-                                    khiếu nại.</span
-                                ></label
-                            >
-                            <label class="checkbox-option"
-                                ><span class="checkbox-hit-area"
-                                    ><input type="checkbox" data-consent id="consent-5" /><span
-                                        class="checkbox-box"
-                                        aria-hidden="true"
-                                    ></span></span
-                                ><span class="checkbox-option__copy"
-                                    >Tôi đồng ý ghi nhận các yêu cầu đổi lịch, hủy buổi và chấm dứt
-                                    hợp đồng trên hệ thống.</span
-                                ></label
-                            >
-                            <div class="confirm-select-all">
+                        </section>
+
+                        <section class="card" aria-labelledby="rules-title">
+                            <header class="card__header">
+                                <h2 class="card__title" id="rules-title">6. Quy tắc học tập &amp; xử lý học phí</h2>
+                            </header>
+                            <div class="card__body confirm-stack">
+                                <details class="confirm-rule" open>
+                                    <summary>Buổi học, điểm danh &amp; xác nhận</summary>
+                                    <p>
+                                        Gia sư cập nhật điểm danh và nội dung đã dạy. Phụ huynh xác nhận
+                                        hoàn thành hoặc báo vấn đề trong 72 giờ từ khi nhận yêu cầu xác
+                                        nhận. Khi hết hạn mà không có phản hồi hoặc khiếu nại, buổi học
+                                        được xử lý theo quy tắc xác nhận tự động của hợp đồng.
+                                    </p>
+                                    <p>
+                                        Học phí mỗi buổi được phân bổ thành phí nền tảng và thù lao thực
+                                        nhận của gia sư theo cơ cấu ở mục 3.
+                                    </p>
+                                </details>
+                                <details class="confirm-rule" open>
+                                    <summary>Hoàn tiền &amp; chấm dứt hợp đồng</summary>
+                                    <p>
+                                        Khoản ký quỹ của các buổi chưa được giải ngân được xem xét hoàn
+                                        theo lý do hủy và điều khoản đã thống nhất. Sau khi yêu cầu được
+                                        duyệt, khoản hoàn được cộng vào số dư khả dụng để sử dụng cho
+                                        hợp đồng khác.
+                                    </p>
+                                </details>
+                                <details class="confirm-rule">
+                                    <summary>Đổi lịch &amp; xử lý tranh chấp</summary>
+                                    <p>
+                                        Mọi thay đổi về lịch, học phí hoặc số buổi cần được hai bên xác
+                                        nhận trên hệ thống. Khi có tranh chấp, khoản tiền liên quan được
+                                        tạm giữ để kiểm tra trước khi quyết định giải ngân hoặc hoàn
+                                        tiền.
+                                    </p>
+                                </details>
+                                <details class="confirm-rule">
+                                    <summary>Trách nhiệm hai bên</summary>
+                                    <p>
+                                        Phụ huynh chuẩn bị điều kiện học tập, hoàn tất ký quỹ và phản hồi
+                                        buổi học đúng hạn. Gia sư dạy đúng lịch, chuẩn bị nội dung phù hợp
+                                        và cập nhật kết quả buổi học. Hai bên thông báo kịp thời khi cần
+                                        điều chỉnh.
+                                    </p>
+                                </details>
+                            </div>
+                        </section>
+
+                        <section class="card" id="consent-card" aria-labelledby="consent-title">
+                            <header class="card__header">
+                                <h2 class="card__title" id="consent-title">7. Cam kết trước khi xác nhận</h2>
+                                <p class="card__description">Đọc và chọn đủ 5 nội dung bên dưới.</p>
+                            </header>
+                            <div class="card__body confirm-stack">
                                 <label class="checkbox-option"
                                     ><span class="checkbox-hit-area"
-                                        ><input type="checkbox" id="select-all" /><span
+                                        ><input type="checkbox" data-consent id="consent-1" /><span
                                             class="checkbox-box"
                                             aria-hidden="true"
                                         ></span></span
                                     ><span class="checkbox-option__copy"
-                                        >Chọn tất cả cam kết</span
+                                        >Tôi đã kiểm tra thông tin hai bên, môn học, số buổi, học phí và
+                                        trạng thái đơn ở các mục trên.</span
                                     ></label
                                 >
-                                <p id="consent-count" role="status">Đã chọn 0/5 điều khoản</p>
+                                <label class="checkbox-option"
+                                    ><span class="checkbox-hit-area"
+                                        ><input type="checkbox" data-consent id="consent-2" /><span
+                                            class="checkbox-box"
+                                            aria-hidden="true"
+                                        ></span></span
+                                    ><span class="checkbox-option__copy"
+                                        >Tôi hiểu học phí được ký quỹ, không chuyển toàn bộ ngay cho gia
+                                        sư.</span
+                                    ></label
+                                >
+                                <label class="checkbox-option"
+                                    ><span class="checkbox-hit-area"
+                                        ><input type="checkbox" data-consent id="consent-3" /><span
+                                            class="checkbox-box"
+                                            aria-hidden="true"
+                                        ></span></span
+                                    ><span class="checkbox-option__copy"
+                                        >Tôi hiểu học phí được giải ngân theo từng buổi học đã xác
+                                        nhận.</span
+                                    ></label
+                                >
+                                <label class="checkbox-option"
+                                    ><span class="checkbox-hit-area"
+                                        ><input type="checkbox" data-consent id="consent-4" /><span
+                                            class="checkbox-box"
+                                            aria-hidden="true"
+                                        ></span></span
+                                    ><span class="checkbox-option__copy"
+                                        >Tôi hiểu quy tắc xác nhận sau 72 giờ khi không có phản hồi hoặc
+                                        khiếu nại.</span
+                                    ></label
+                                >
+                                <label class="checkbox-option"
+                                    ><span class="checkbox-hit-area"
+                                        ><input type="checkbox" data-consent id="consent-5" /><span
+                                            class="checkbox-box"
+                                            aria-hidden="true"
+                                        ></span></span
+                                    ><span class="checkbox-option__copy"
+                                        >Tôi đồng ý ghi nhận các yêu cầu đổi lịch, hủy buổi và chấm dứt
+                                        hợp đồng trên hệ thống.</span
+                                    ></label
+                                >
+                                <div class="confirm-select-all">
+                                    <label class="checkbox-option"
+                                        ><span class="checkbox-hit-area"
+                                            ><input type="checkbox" id="select-all" /><span
+                                                class="checkbox-box"
+                                                aria-hidden="true"
+                                            ></span></span
+                                        ><span class="checkbox-option__copy"
+                                            >Chọn tất cả cam kết</span
+                                        ></label
+                                    >
+                                    <p id="consent-count" role="status">Đã chọn 0/5 điều khoản</p>
+                                </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    </div>
+
+                    <aside class="confirm-sidebar" aria-label="Tóm tắt và xác nhận">
+                        <section class="card confirm-panel confirm-stack">
+                            <h2 class="card__title">Tóm tắt hợp đồng</h2>
+                            <span class="badge badge--neutral" id="summary-status">—</span>
+                            <dl class="info-row">
+                                <dt class="info-row__label">Hợp đồng</dt>
+                                <dd class="info-row__value" id="sidebar-contract-id">—</dd>
+                            </dl>
+                            <div class="confirm-price">
+                                <span>Tổng cần ký quỹ</span><strong id="summary-total">—</strong>
+                            </div>
+                            <div class="confirm-stack" id="sidebar-actions"></div>
+                            <p class="confirm-muted" id="confirm-hint">Đang đọc trạng thái đơn…</p>
+                            <p class="confirm-muted">
+                                Xác nhận điều khoản là thao tác demo trong tab này; trang không trừ tiền
+                                và không gọi backend.
+                            </p>
+                            <a href="../invitation/negotiation.html" id="back-link">Quay lại đơn đăng ký</a>
+                        </section>
+                    </aside>
                 </div>
-                <aside class="confirm-sidebar" aria-label="Tóm tắt và xác nhận">
-                    <section class="card confirm-panel confirm-stack">
-                        <h2 class="card__title">Tóm tắt hợp đồng</h2>
-                        <span class="badge badge--warning" id="summary-status">Chờ xác nhận</span>
-                        <dl class="info-row">
-                            <dt class="info-row__label">Môn học</dt>
-                            <dd class="info-row__value" data-contract="subject">Toán · Lớp 11</dd>
-                        </dl>
-                        <dl class="info-row">
-                            <dt class="info-row__label">Quy mô</dt>
-                            <dd class="info-row__value">
-                                <span data-contract="sessions">8</span> buổi × 90 phút
-                            </dd>
-                        </dl>
-                        <dl class="info-row">
-                            <dt class="info-row__label">Học phí / buổi</dt>
-                            <dd class="info-row__value" data-contract="fee">220.000 ₫</dd>
-                        </dl>
-                        <div class="confirm-price">
-                            <span>Tổng học phí cần ký quỹ</span
-                            ><strong data-contract="total">1.760.000 ₫</strong>
-                        </div>
-                        <p class="confirm-muted">
-                            Sau khi xác nhận, bạn chuyển sang kiểm tra số dư và thanh toán ký quỹ.
-                            Không tự động trừ tiền ở bước này.
-                        </p>
-                        <button
-                            class="button button--primary"
-                            type="button"
-                            id="confirm-button"
-                            disabled
-                        >
-                            Xác nhận hợp đồng</button
-                        ><a
-                            class="button button--primary"
-                            href="../payment/checkout.html?from=contract"
-                            id="checkout-link"
-                            hidden
-                            >Tiếp tục ký quỹ</a
-                        >
-                        <p class="confirm-muted" id="confirm-hint">
-                            Cần chọn đủ 5 cam kết để tiếp tục.
-                        </p>
-                        <button class="button button--outline" type="button" id="report-button">
-                            Thông tin chưa đúng / Cần sửa lại</button
-                        ><button class="button button--ghost" type="button" id="print-button">
-                            In / Lưu bản PDF</button
-                        ><a href="../invitation/negotiation.html">Quay lại lời mời</a>
-                    </section>
-                </aside>
             </div>
         </main>
         <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
-        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
         <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
         <p class="user-footer__copyright">© 2026 Edu Connect</p>
     </div>
 </footer>
-        <dialog
-            class="modal"
-            id="confirm-modal"
-            aria-labelledby="confirm-modal-title"
-            aria-describedby="confirm-modal-description"
-        >
+
+        <dialog class="modal" id="confirm-modal" aria-labelledby="confirm-modal-title" aria-describedby="confirm-modal-description">
             <div class="modal__surface">
                 <header class="modal__header">
                     <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
                     <div class="modal__heading">
                         <h2 id="confirm-modal-title">Xác nhận hợp đồng</h2>
                     </div>
-                    <button
-                        class="modal__close"
-                        type="button"
-                        data-modal-close
-                        aria-label="Đóng hộp thoại"
-                    >
+                    <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại">
                         <span class="modal__close-icon" aria-hidden="true"></span>
                     </button>
                 </header>
@@ -551,62 +509,51 @@
                     <div class="confirm-note" id="confirm-modal-summary"></div>
                 </div>
                 <footer class="modal__footer">
-                    <button
-                        class="modal__button modal__button--secondary"
-                        type="button"
-                        data-modal-close
-                        autofocus
-                    >
+                    <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>
                         Xem lại</button
-                    ><button
-                        class="modal__button modal__button--primary"
-                        type="button"
-                        data-modal-confirm
-                    >
+                    ><button class="modal__button modal__button--primary" type="button" data-modal-confirm>
                         Tôi đồng ý xác nhận
                     </button>
                 </footer>
             </div>
         </dialog>
-        <dialog class="modal" id="report-modal" aria-labelledby="report-title">
-            <form id="report-form">
+
+        <dialog class="modal" id="cancel-modal" aria-labelledby="cancel-modal-title" aria-describedby="cancel-modal-description">
+            <div class="modal__surface">
                 <header class="modal__header">
+                    <span class="modal__icon modal__icon--danger" aria-hidden="true"></span>
                     <div class="modal__heading">
-                        <h2 id="report-title">Yêu cầu kiểm tra điều khoản</h2>
+                        <h2 id="cancel-modal-title">Hủy đơn &amp; hợp đồng</h2>
                     </div>
-                    <button
-                        class="modal__close"
-                        type="button"
-                        data-modal-close
-                        aria-label="Đóng hộp thoại"
-                    >
+                    <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại">
                         <span class="modal__close-icon" aria-hidden="true"></span>
                     </button>
                 </header>
-                <div class="modal__body">
-                    <p>Hợp đồng sẽ tạm dừng bước xác nhận để hai bên kiểm tra lại nội dung.</p>
-                    <label class="form-field__label" for="report-message">Nội dung cần sửa *</label
-                    ><textarea
-                        class="textarea-control"
-                        id="report-message"
-                        maxlength="1000"
-                        rows="4"
-                        required
-                        placeholder="Nêu rõ thông tin nào chưa đúng với thỏa thuận"
-                    ></textarea>
+                <div class="modal__body confirm-stack">
+                    <p id="cancel-modal-description"></p>
+                    <p class="confirm-note" id="cancel-target">—</p>
+                    <div class="form-field">
+                        <label class="form-field__label" for="cancel-policy">Chính sách hoàn tiền demo *</label>
+                        <div class="select-field">
+                            <select class="select-control select-control--native" id="cancel-policy"></select>
+                        </div>
+                        <p class="confirm-muted" id="cancel-policy-note"></p>
+                    </div>
+                    <div class="confirm-note" id="cancel-preview"></div>
+                    <div class="form-field">
+                        <label class="form-field__label" for="cancel-reason">Lý do hủy (5–400 ký tự) *</label>
+                        <textarea class="textarea-control" id="cancel-reason" maxlength="400" rows="4" placeholder="Nêu lý do hủy để lại dấu vết trong dữ liệu demo"></textarea>
+                        <p class="confirm-error" id="cancel-error" hidden role="alert"></p>
+                    </div>
                 </div>
                 <footer class="modal__footer">
-                    <button
-                        class="modal__button modal__button--secondary"
-                        type="button"
-                        data-modal-close
-                    >
-                        Quay lại</button
-                    ><button class="button button--primary" type="submit">
-                        Ghi nhận yêu cầu kiểm tra
+                    <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>
+                        Giữ lại hợp đồng</button
+                    ><button class="modal__button modal__button--danger" type="button" data-modal-confirm>
+                        Gửi yêu cầu hủy
                     </button>
                 </footer>
-            </form>
+            </div>
         </dialog>
     </body>
 </html>

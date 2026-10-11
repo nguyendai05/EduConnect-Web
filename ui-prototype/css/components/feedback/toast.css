@@ -36,7 +36,7 @@
 .toast__content { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .toast__title { margin: 0; font-size: var(--font-size-sm); font-weight: 700; }
 .toast__message { margin: var(--space-1) 0 0; color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: var(--line-height-base); }
-.toast__close { display: grid; flex: 0 0 2.75rem; height: 2.75rem; place-items: center; padding: 0; border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-text-muted); font: inherit; font-size: var(--font-size-xl); cursor: pointer; }
+.toast__close { display: grid; flex: 0 0 2.75rem; height: 2.75rem; place-items: center; padding: 0; border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-text-secondary); font: inherit; font-size: var(--font-size-xl); cursor: pointer; }
 .toast__close:hover { background: var(--color-surface-low); color: var(--color-text); }
 .toast__close:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 2px; }
 .toast__action { flex: 0 0 auto; min-height: 2.5rem; padding: var(--space-2); border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-primary); font: inherit; font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; }
@@ -94,7 +94,7 @@
 }
 
 .toast--warning .toast__icon {
-  color: var(--color-warning);
+  color: var(--color-warning-text);
   background: transparent;
   border: 2px solid currentColor;
   border-radius: var(--radius-pill);

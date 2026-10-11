@@ -1,21 +1,21 @@
 /* Preview page only. Product pages use the individual component stylesheets. */
 .component-board__header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); width: min(100% - 4rem, 76rem); margin-inline: auto; padding-block: var(--space-6); border-bottom: 1px solid var(--color-border); }
 .component-board__header a { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--color-ink); font-size: var(--font-size-lg); font-weight: 600; }
-.component-board__header img { width: 2rem; height: 2rem; }
-.component-board__header > span { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+.component-board__header img { width: 11rem; height: auto; }
+.component-board__header > span { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
 .component-board__main { width: min(100% - 4rem, 76rem); margin: var(--space-8) auto var(--space-10); }
 .component-board__intro { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-8); margin-bottom: var(--space-8); }
-.component-board__eyebrow { color: var(--color-secondary); font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.06em; }
+.component-board__eyebrow { color: var(--color-secondary-text); font-size: var(--font-size-xs); font-weight: 600; letter-spacing: 0.06em; }
 .component-board__intro h1 { margin-block: var(--space-2); font-size: 3rem; }
 .component-board__intro p:last-child { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
-.component-board__palette { display: flex; gap: var(--space-4); }
-.component-board__palette span { display: grid; gap: var(--space-2); min-width: 4rem; color: var(--color-text-secondary); font-size: var(--font-size-xs); }
+.component-board__palette { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.component-board__palette span { display: grid; gap: var(--space-2); flex: 0 1 4.5rem; min-width: 4rem; color: var(--color-text-secondary); font-size: var(--font-size-xs); }
 .component-board__palette span::before { height: 2rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--swatch); content: ""; }
 .component-board__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
 .component-board__panel { display: grid; min-width: 0; align-content: start; gap: var(--space-5); padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); }
 .component-board__panel--wide { grid-column: 1 / -1; }
 .component-board__panel > header { display: flex; align-items: baseline; gap: var(--space-3); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); }
-.component-board__panel > header > span { color: var(--color-secondary); font-family: var(--font-family-display); font-size: var(--font-size-lg); }
+.component-board__panel > header > span { color: var(--color-secondary-text); font-family: var(--font-family-display); font-size: var(--font-size-lg); }
 .component-board__panel > header h2 { font-size: var(--font-size-base); font-weight: 600; }
 .component-board__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
 .component-board__dialog-trigger { justify-self: start; }
@@ -32,6 +32,7 @@
 .component-board__tutor h3 { font-size: var(--font-size-base); }
 .component-board__tutor p { margin-block: var(--space-1); color: var(--color-text-secondary); font-size: var(--font-size-xs); }
 .component-board__tutor > strong { color: var(--color-primary); font-size: var(--font-size-lg); font-variant-numeric: tabular-nums; }
-.component-board__tutor small { display: block; color: var(--color-text-muted); font-size: var(--font-size-xs); font-weight: 400; }
+.component-board__tutor small { display: block; color: var(--color-text-secondary); font-size: var(--font-size-xs); font-weight: 400; }
 @media (max-width: 64rem) { .component-board__fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } .component-board__choices { grid-template-columns: 1fr; } }
 @media (max-width: 48rem) { .component-board__main, .component-board__header { width: calc(100% - 2rem); } .component-board__grid { grid-template-columns: 1fr; } .component-board__panel { padding: var(--space-5); } .component-board__fields { grid-template-columns: 1fr; } .component-board__intro h1 { font-size: 2.5rem; } }
+@media (max-width: 22rem) { .component-board__main, .component-board__header { width: calc(100% - 1.25rem); } .component-board__panel { padding: var(--space-4); } .component-board__palette { gap: var(--space-3); } }

@@ -1,4 +1,4 @@
-/* Tutor profile composition. Reuses UserHeader, Breadcrumb, Input, and Alert components. */
+/* Tutor profile composition. Reuses UserHeader, Input, and Alert components. */
 .tutor-profile-page {
   display: flex;
   min-height: 100vh;
@@ -8,10 +8,6 @@
 
 .tutor-profile-page__main {
   flex: 1 0 auto;
-}
-
-.tutor-profile-breadcrumb {
-  margin-bottom: var(--space-6);
 }
 
 /* Temporary Badge fallback until the shared Badge component is implemented. */
@@ -40,12 +36,12 @@
 
 .tutor-profile-page[data-tutor-state="verified"] .tutor-profile-status {
   background: var(--color-success-container);
-  color: var(--color-success);
+  color: var(--color-success-text);
 }
 
 .tutor-profile-page[data-tutor-state="pending"] .tutor-profile-status {
   background: var(--color-warning-container);
-  color: var(--color-warning);
+  color: var(--color-warning-text);
 }
 
 .tutor-profile-page[data-tutor-state="rejected"] .tutor-profile-status {
@@ -75,6 +71,7 @@
 
 .tutor-profile-card__top {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-4);
@@ -82,14 +79,18 @@
 
 .tutor-profile-card__identity {
   display: flex;
+  /* Khối chữ mở hết phần còn lại của hàng thay vì gói ở ~175px. */
+  flex: 1 1 auto;
   align-items: center;
   gap: var(--space-4);
+  min-width: 0;
 }
 
 .tutor-profile-avatar {
   display: grid;
   width: 4.5rem;
   height: 4.5rem;
+  flex: 0 0 auto;
   place-items: center;
   border: 2px solid var(--color-surface);
   border-radius: var(--radius-pill);
@@ -98,6 +99,11 @@
   font-size: var(--font-size-xl);
   font-weight: 700;
   box-shadow: var(--shadow-sm);
+}
+
+.tutor-profile-card__identity > div {
+  display: grid;
+  min-width: 0;
 }
 
 .tutor-profile-card__identity h2 {
@@ -276,7 +282,7 @@
 }
 
 .tutor-profile-system-stats__heading span {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-weight: 400;
   text-transform: none;
 }
@@ -342,7 +348,7 @@
 }
 
 .tutor-profile-counter {
-  color: var(--color-text-muted) !important;
+  color: var(--color-text-secondary) !important;
   font-size: var(--font-size-xs) !important;
   line-height: 1.3333 !important;
   text-align: right;
@@ -458,6 +464,8 @@
 
 .tutor-profile-mode span {
   display: grid;
+  /* Nhãn phương thức dạy dùng hết thẻ thay vì co theo max-content (~69px). */
+  flex: 1 1 auto;
   gap: 0.125rem;
   min-width: 0;
 }
@@ -557,7 +565,7 @@
 }
 
 .tutor-profile-certificate__icon--pending {
-  color: var(--color-warning);
+  color: var(--color-warning-text);
 }
 
 .tutor-profile-certificates article > div {
@@ -586,7 +594,7 @@
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-pill);
   background: var(--color-success-container);
-  color: var(--color-success);
+  color: var(--color-success-text);
   font-size: var(--font-size-xs);
   font-weight: 600;
   line-height: 1.3333;
@@ -595,7 +603,7 @@
 
 .tutor-profile-certificate__status--pending {
   background: var(--color-warning-container);
-  color: var(--color-warning);
+  color: var(--color-warning-text);
 }
 
 .tutor-profile-certificates button {
@@ -630,6 +638,65 @@
 
   .tutor-profile-card__top {
     flex-direction: column;
+    /* Hàng dọc: khối chữ kéo hết bề rộng để cột tên không dừng ở ~175px. */
+    align-items: stretch;
+  }
+
+  .tutor-profile-card__identity {
+    min-height: var(--touch-target);
+  }
+
+  /* Vùng chạm của công tắc đủ cao trên màn cảm ứng; track và thumb giữ nguyên kích thước. */
+  .tutor-profile-accepting .switch-control {
+    height: var(--touch-target);
+    display: grid;
+    place-content: center;
+  }
+
+  .tutor-profile-inline-action,
+  .tutor-profile-action,
+  .tutor-profile-schedule button,
+  .tutor-profile-mode label,
+  .tutor-profile-certificates article > button {
+    min-height: var(--touch-target);
+  }
+
+  .tutor-profile-certificates article > button {
+    padding-inline: var(--space-3);
+  }
+
+  /* Dòng chứng chỉ: một hàng thông tin, hai nút hành động ở hàng riêng. */
+  .tutor-profile-certificates article {
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  }
+
+  .tutor-profile-certificates article > div {
+    grid-column: 2;
+  }
+
+  .tutor-profile-certificates article > .tutor-profile-certificate__status {
+    grid-column: 3;
+  }
+
+  .tutor-profile-certificates article > button {
+    grid-row: 2;
+  }
+
+  .tutor-profile-certificates article > button:first-of-type {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .tutor-profile-certificates article > button:last-of-type {
+    grid-column: 3;
+  }
+
+  /* Tên tệp dài hiện đầy đủ thay vì bị cắt bằng dấu ba chấm. */
+  .tutor-profile-certificates strong {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -653,14 +720,6 @@
 
   .tutor-profile-inline-action {
     width: 100%;
-  }
-
-  .tutor-profile-certificates article {
-    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
-  }
-
-  .tutor-profile-certificates article > button {
-    grid-column: span 1;
   }
 
   .tutor-profile-card__actions {

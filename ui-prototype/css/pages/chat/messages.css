@@ -1,13 +1,14 @@
 .chat-page {
+    --chat-gutter: var(--space-6);
     max-width: 1440px;
     margin: auto;
-    padding: var(--space-6);
+    padding: var(--chat-gutter);
 }
 .chat-layout {
     display: grid;
     grid-template-columns: 280px minmax(0, 1fr) 270px;
-    height: calc(100dvh - 128px);
-    min-height: 480px;
+    height: calc(100dvh - var(--user-header-height) - (2 * var(--chat-gutter)) - 1px);
+    min-height: 24rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -46,7 +47,7 @@
 .chat-contact-count {
     margin-top: auto;
     padding: var(--space-4);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-xs);
 }
 .chat-conversation {
@@ -82,7 +83,7 @@
 }
 .chat-person p {
     font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
 }
 .chat-icon-button {
     display: inline-grid;
@@ -143,7 +144,7 @@
 }
 .chat-day {
     align-self: center;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     background: var(--color-surface-low);
     border-radius: var(--radius-pill);
     padding: 3px 12px;
@@ -172,7 +173,7 @@
 .chat-message time {
     display: block;
     margin-top: 4px;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-xs);
 }
 .chat-message--sent time {
@@ -214,7 +215,7 @@
 .chat-composer__hint {
     flex: 1;
     font-size: 10px;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
 }
 .chat-send {
     display: inline-flex;
@@ -283,7 +284,7 @@
     margin-top: var(--space-2);
 }
 .chat-context-card dt {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
 }
 .chat-context-card dd {
     margin: 0;
@@ -351,14 +352,12 @@
         display: grid;
     }
 }
-@media (max-width: 700px) {
+@media (max-width: 48rem) {
     .chat-page {
-        padding: var(--space-3);
+        --chat-gutter: var(--space-3);
     }
     .chat-layout {
         display: block;
-        height: calc(100dvh - 104px);
-        min-height: 420px;
     }
     .chat-contacts {
         height: 100%;
@@ -377,10 +376,15 @@
         display: grid;
     }
     .chat-composer__hint {
-        font-size: 9px;
+        font-size: var(--font-size-xs);
     }
     .chat-notice {
         padding: var(--space-2);
         margin: var(--space-2);
     }
+}
+
+@media (max-width: 64rem) {
+    .chat-icon-button,
+    .chat-send { min-width: var(--touch-target); min-height: var(--touch-target); }
 }

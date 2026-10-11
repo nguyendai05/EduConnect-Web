@@ -38,7 +38,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
 }
 
@@ -63,7 +63,7 @@
 }
 
 .detail-status--hiring {
-  color: var(--color-success);
+  color: var(--color-success-text);
   background: var(--color-success-container);
 }
 
@@ -75,7 +75,7 @@
 }
 
 .detail-code {
-  color: var(--color-text-secondary);
+  color: var(--color-text);
   background: var(--color-surface-medium);
 }
 
@@ -143,7 +143,9 @@
 
 .detail-sidebar {
   position: sticky;
-  top: calc(5.25rem + var(--space-4));
+  top: var(--scroll-offset);
+  max-height: calc(100dvh - var(--scroll-offset) - var(--space-4));
+  overflow-y: auto;
   gap: var(--space-4);
 }
 
@@ -231,7 +233,7 @@
 }
 
 .detail-card__header > span {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -268,7 +270,7 @@
   width: 1.25rem;
   height: 1.25rem;
   flex: 0 0 auto;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .detail-spec-grid article > strong {
@@ -290,13 +292,13 @@
 }
 
 .detail-spec--fee > strong {
-  color: var(--color-success) !important;
+  color: var(--color-success-text) !important;
   font-size: var(--font-size-base) !important;
 }
 
 .detail-spec--fee small {
   grid-column: 1 / -1;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-style: italic;
 }
@@ -318,7 +320,7 @@
 .detail-label {
   display: block;
   margin-bottom: var(--space-2);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -378,7 +380,7 @@
   height: 3.5rem;
   flex: 0 0 auto;
   place-items: center;
-  color: var(--color-warning);
+  color: var(--color-warning-text);
   background: var(--color-warning-container);
   border: 1px solid color-mix(in srgb, var(--color-warning), transparent 70%);
   border-radius: var(--radius-pill);
@@ -455,7 +457,7 @@
   display: inline-flex;
   margin-top: var(--space-2);
   padding: var(--space-1) var(--space-2);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   background: var(--color-surface-low);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
@@ -475,19 +477,19 @@
 }
 
 .application-label-row small {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
 }
 
 .application-rate__comparison {
   margin: 0;
-  color: var(--color-success);
+  color: var(--color-success-text);
   font-size: var(--font-size-xs);
   font-weight: 600;
 }
 
 .application-rate__comparison.is-different {
-  color: var(--color-warning);
+  color: var(--color-warning-text);
 }
 
 .application-schedule {
@@ -523,6 +525,12 @@
   margin: var(--space-1) 0 var(--space-2);
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
+}
+
+.application-slot-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
 }
 
 .application-slots {
@@ -561,7 +569,7 @@
   height: 2rem;
   flex: 0 0 auto;
   place-items: center;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   background: transparent;
   border: 0;
   border-radius: var(--radius-sm);
@@ -585,7 +593,7 @@
   display: block;
   margin-top: var(--space-2);
   padding: var(--space-2);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   background: var(--color-primary-container);
   border-radius: var(--radius-sm);
   font-size: 0.6875rem;
@@ -681,7 +689,7 @@
   display: flex;
   justify-content: space-between;
   gap: var(--space-4);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
 
@@ -692,7 +700,7 @@
 }
 
 .detail-modal--success .modal__icon {
-  color: var(--color-success);
+  color: var(--color-success-text);
   background: var(--color-success-container);
 }
 
@@ -714,6 +722,8 @@
 
   .detail-sidebar {
     position: static;
+    max-height: none;
+    overflow: visible;
     grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
   }
 }

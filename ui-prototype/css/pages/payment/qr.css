@@ -48,17 +48,19 @@ button:disabled {
     text-decoration: none;
 }
 .merchant-brand img {
-    width: 46px;
-    height: 46px;
+    width: 12rem;
+    height: auto;
 }
 /* Màu của payOS, VietQR và NAPAS là nhận diện của nhà cung cấp dịch vụ
    được mô phỏng, không phải bảng màu của Edu Connect; giữ nguyên ở đây có chủ đích. */
 .provider {
-    color: #00a669;
+    /* Bỏ #00a669: QR ở đây là DEMO, không mô phỏng màu nhận diện của nhà cung cấp thật. */
+    color: var(--color-primary);
     font-size: 25px;
     font-weight: 700;
 }
 .provider small {
+    color: var(--color-text-primary);
     font-size: 12px;
 }
 main {
@@ -85,31 +87,45 @@ h1 {
 }
 .checkout-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     gap: 48px;
     align-items: start;
+}
+.qr-panel,
+.bank-details {
+    min-width: 0;
 }
 .qr-panel {
     text-align: center;
 }
 .vietqr {
-    color: #ed2439;
+    /*
+     * Bỏ hex #ed2439: QR ở đây là DEMO nên không mô phỏng màu thương hiệu của
+     * nhà cung cấp thanh toán thật, và màu đó khiến nhãn 12px chỉ đạt 3.15:1.
+     */
+    color: var(--color-primary);
     font-weight: 800;
     font-size: 30px;
 }
+.qr-panel .provider small {
+    color: var(--color-text-primary);
+}
 .vietqr span,
 .bank-network {
-    color: #254c91;
+    /* Bỏ #254c91 — không dựng bảng màu thứ hai ngoài token. */
+    color: var(--color-primary-strong, var(--color-primary));
 }
 .vietqr small {
-    background: #ffdb40;
-    color: #159b69;
+    background: var(--color-surface-medium);
+    color: var(--color-text-primary);
     padding: 0 4px;
 }
+/* QR giữ đúng tỉ lệ 1:1 và co theo bề rộng khung ở mọi cỡ màn hình. */
 #qr-preview {
     display: block;
-    width: 248px;
-    max-width: 100%;
+    width: min(248px, 100%);
+    height: auto;
+    aspect-ratio: 1 / 1;
     margin: 12px auto;
     border: 1px solid #42689d;
     background: var(--color-surface);
@@ -128,7 +144,7 @@ h1 {
 }
 .bank-name span,
 dt {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
 }
 dl > div {
     margin-bottom: 16px;
@@ -142,14 +158,22 @@ dd {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     column-gap: 12px;
+    align-items: center;
 }
 .copy-row dt {
     grid-column: 1;
 }
+.copy-row dd {
+    min-width: 0;
+}
 .copy-row button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     grid-column: 2;
     grid-row: 1 / 3;
     align-self: center;
+    min-height: var(--control-height);
     background: var(--color-primary-container);
     border: 0;
     font-size: 13px;
@@ -166,7 +190,7 @@ dd {
 }
 #status {
     font-size: 14px;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
 }
 summary {
     cursor: pointer;

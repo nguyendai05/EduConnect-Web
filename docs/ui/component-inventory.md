@@ -54,6 +54,10 @@ Tên component được giữ bằng tiếng Anh để thuận tiện đối chi
 - InfoRow: dòng thông tin
 - Avatar: ảnh đại diện
 - Table: bảng dữ liệu
+- Chart: biểu đồ dùng chung (`js/core/charts.js` + `css/components/data-display/chart.css`), có hai biến thể:
+  - `EduChart.bar(container, { title, metricLabel, unit, from, to, rows, total, invalidReason, emptyLabel })` — biểu đồ cột theo mốc thời gian, kèm ô chọn khoảng ngày do trang tự render, báo lỗi khi `from > to`, empty state khi không có dữ liệu, không sinh `NaN`/`Infinity` khi tổng bằng 0
+  - `EduChart.pie(container, { title, slices, emptyLabel })` — donut SVG thật bằng `stroke-dasharray`, legend có nhãn chữ + số lượng + phần trăm
+  - Cả hai luôn sinh kèm bảng số liệu có `caption`/`scope` để không chỉ phân biệt bằng màu; đang dùng ở `admin/dashboard.html` và `tutor/manage.html` — **không nhân bản implementation thứ hai**
 
 ## Thành phần nghiệp vụ
 
@@ -64,3 +68,17 @@ Tên component được giữ bằng tiếng Anh để thuận tiện đối chi
 - WalletBalanceCard: thẻ số dư ví
 
 Không cần tạo ngay mọi component trong danh sách. Mục đích là giúp nhóm nhận biết thành phần nào nên thuộc giao diện dùng chung, tránh sao chép lặp lại trong từng trang.
+
+## Module JavaScript dùng chung (không phải component render)
+
+Ngoài component giao diện, prototype có bốn module dùng chung trong `js/core/` và `js/data/`. Đây là hạ tầng, không phải component có markup riêng:
+
+- `EduRoute` (`js/core/route.js`): sổ đăng ký 40 tuyến, resolver base path theo độ sâu trang, sinh URL bằng `URLSearchParams`, allowlist `from`/return route chống open redirect, chuẩn hoá `href`/`src` cục bộ
+- `EduFixtures` (`js/data/fixtures.js`): thực thể mẫu và quan hệ, chỉ đọc
+- `EduStore` (`js/data/store.js`): store có version, bảng trạng thái/hành động, helper tiền tệ và định dạng, `escapeHtml`
+- `EduChart` (`js/core/charts.js`): xem mục Chart ở trên
+
+Hai module core có hành vi được cập nhật và ảnh hưởng tới mọi trang:
+
+- `user-header.js`: menu tài khoản dựng lại từ registry theo **vai trò persona** (learner 5 mục, tutor 5 mục) thay vì hard-code theo biến thể chữ cái; brand ở header và footer dẫn về `home.html`; logout gọi `EduStore.logout()` rồi về trang đăng nhập. Vẫn giữ `data-user-variant`, các class biến thể, khối summary, hành vi keyboard/Escape/focusout và sự kiện `user-header:action`
+- `admin-sidebar.js`: trước đây là file rỗng. Nay chuẩn hoá sidebar trên cả 10 trang admin — chèn mục còn thiếu (`manage.html`), đồng bộ `is-active`/`aria-current="page"` theo trang hiện tại, trang chi tiết được tính là đang ở mục hàng đợi cha

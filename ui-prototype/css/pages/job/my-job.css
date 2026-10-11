@@ -19,9 +19,6 @@
   margin-left: auto;
 }
 
-.my-job-page__breadcrumb {
-  margin-bottom: var(--space-5);
-}
 .my-job-sidebar-card{
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -98,10 +95,11 @@
   line-height: 1.4;
 }
 
-.my-job-page .job-card--closed {
-  opacity: 0.82;
-}
-
+/*
+ * Bỏ `opacity: .82`: no lam mu toi TOAN BO chu trong card (10 nut chu t 3.53:1 den 4.28:1,
+ * duoc §8 coi la chu thong thuong can >=4.5:1). Trang thai "Đã đóng" da co nhan chu va
+ * badge rieng, nen khong can them lop giam mo.
+ */
 .my-job-page .job-card--closed h2 {
   color: var(--color-text-secondary);
   text-decoration: line-through;
@@ -128,7 +126,7 @@
 
 .my-job-page__empty {
   padding: var(--space-8);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   text-align: center;
 }
 
@@ -152,7 +150,7 @@
 
 .my-job-sidebar-card__count {
   padding: var(--space-1) var(--space-2);
-  color: var(--color-warning);
+  color: var(--color-warning-text);
   background: var(--color-warning-container);
   border-radius: var(--radius-pill);
   font-size: var(--font-size-xs);

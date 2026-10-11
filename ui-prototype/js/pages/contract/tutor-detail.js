@@ -1,118 +1,180 @@
-/* Trang chi tiết hợp đồng phía gia sư. Dữ liệu nội trang dùng cho bản mẫu; snapshot 05/10/2026 thay bằng giờ server khi tích hợp JSP. */
+/* Trang chi tiết hợp đồng phía gia sư — MỌI số liệu đọc từ EduStore.
+ * Bản trước cất bảng hằng số riêng theo mã hợp đồng (8 buổi · 220.000 ₫ cho
+ * HD-20260919-024, attendance là object rỗng), trong khi trang học viên và trang xác nhận
+ * đọc cùng hợp đồng đó là 24 buổi · 210.000 ₫ · 5.040.000 ₫ với 7 bản ghi điểm danh thật.
+ * Cùng một hợp đồng phải hiện cùng số ở mọi màn (§5 nhiệm vụ). */
 (() => {
-  const contracts = {
-    'HD-20260919-024': {
-      title: 'Hợp đồng dạy Toán cho Gia Huy', status: 'Đang thực hiện', crumb: 'Chi tiết hợp đồng dạy HD-20260919-024',
-      summary: 'HD-20260919-024 · Toán lớp 11 · Học trực tiếp', student: 'Trần Gia Huy', studentNote: 'Học viên lớp 11',
-      studentInitials: 'GH', guardian: 'Chị Mai Lan', course: 'Toán · Chương trình THPT', courseLabel: 'Toán lớp 11',
-      mode: 'Trực tiếp tại nhà học viên', modeLine: 'Học trực tiếp tại nhà.', schedule: ['Thứ Hai & Thứ Sáu', '19:00–20:30'],
-      timeOfDay: '19:00–20:30', startAt: '19:00', minutes: 90, period: '28/09/2026 – 23/10/2026', fee: 220000,
-      dates: ['28/09/2026', '02/10/2026', '05/10/2026', '09/10/2026', '12/10/2026', '16/10/2026', '19/10/2026', '23/10/2026'],
-      states: ['completed', 'completed', 'pending', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming'],
-      attendance: { 1: 'present', 2: 'present', 3: 'present' },
-      pendingLesson: { lesson: 3, attended: '05/10/2026, 20:34', deadline: '08/10/2026, 20:34' },
-      next: { lesson: 4, weekday: 'Thứ Sáu', date: '09/10/2026', topic: 'Phương trình lượng giác nâng cao' },
-      awaitingDeposit: null, chat: true,
-      activity: [
-        { iso: '2026-10-05T20:34', text: '05/10/2026 · 20:34', note: 'Bạn đã điểm danh buổi 3: học viên có mặt.' },
-        { iso: '2026-10-05T20:30', text: '05/10/2026 · 20:30', note: 'Buổi 2 được tự động xác nhận. 198.000 ₫ đã chuyển vào số dư khả dụng.' },
-        { iso: '2026-09-28T21:02', text: '28/09/2026 · 21:02', note: 'Phụ huynh đã xác nhận buổi 1 và đánh giá 5 sao.' }
-      ]
-    },
-    'HD-20260926-025': {
-      title: 'Hợp đồng dạy Toán lớp 11 (kỳ 2) cho Gia Huy', status: 'Chờ ký quỹ', crumb: 'Chi tiết hợp đồng dạy HD-20260926-025',
-      summary: 'HD-20260926-025 · Toán lớp 11 · Học trực tiếp', student: 'Trần Gia Huy', studentNote: 'Học viên lớp 11',
-      studentInitials: 'GH', guardian: 'Chị Mai Lan', course: 'Toán · Chương trình THPT', courseLabel: 'Toán lớp 11',
-      mode: 'Trực tiếp tại nhà học viên', modeLine: 'Học trực tiếp tại nhà.', schedule: ['Thứ Hai & Thứ Sáu', '19:00–20:30'],
-      timeOfDay: '19:00–20:30', startAt: '19:00', minutes: 90, period: '02/11/2026 – 27/11/2026', fee: 220000,
-      dates: ['02/11/2026', '06/11/2026', '09/11/2026', '13/11/2026', '16/11/2026', '20/11/2026', '23/11/2026', '27/11/2026'],
-      states: ['upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming'],
-      attendance: {}, pendingLesson: null, next: null,
-      awaitingDeposit: { total: 1760000, wallet: 340000, due: 1420000 }, chat: true,
-      activity: [
-        { iso: '2026-09-26T21:05', text: '26/09/2026 · 21:05', note: 'Phụ huynh đã xác nhận điều khoản. Hợp đồng chờ hoàn tất ký quỹ.' },
-        { iso: '2026-09-26T20:12', text: '26/09/2026 · 20:12', note: 'Bạn và phụ huynh thống nhất lịch Thứ Hai & Thứ Sáu, 19:00–20:30.' }
-      ]
-    },
-    'HD-20260928-027': {
-      title: 'Hợp đồng dạy Toán lớp 10 cho Minh Khang', status: 'Đang thực hiện', crumb: 'Chi tiết hợp đồng dạy HD-20260928-027',
-      summary: 'HD-20260928-027 · Toán lớp 10 · Học trực tiếp', student: 'Nguyễn Minh Khang', studentNote: 'Học viên lớp 10',
-      studentInitials: 'MK', guardian: 'Anh Hoàng Nam', course: 'Toán · Chương trình THPT', courseLabel: 'Toán lớp 10',
-      mode: 'Trực tiếp tại nhà học viên', modeLine: 'Học trực tiếp tại nhà.', schedule: ['Thứ Ba & Thứ Bảy', '20:00–21:30'],
-      timeOfDay: '20:00–21:30', startAt: '20:00', minutes: 90, period: '15/09/2026 – 17/10/2026', fee: 180000,
-      dates: ['15/09/2026', '19/09/2026', '22/09/2026', '26/09/2026', '29/09/2026', '03/10/2026', '06/10/2026', '10/10/2026', '13/10/2026', '17/10/2026'],
-      states: ['completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'upcoming', 'upcoming', 'upcoming', 'upcoming'],
-      attendance: { 1: 'present', 2: 'present', 3: 'late', 4: 'present', 5: 'present', 6: 'present' },
-      pendingLesson: null,
-      next: { lesson: 7, weekday: 'Thứ Bảy', date: '06/10/2026', topic: 'Hàm số bậc hai và đồ thị' },
-      awaitingDeposit: null, chat: true,
-      activity: [
-        { iso: '2026-10-03T21:32', text: '03/10/2026 · 21:32', note: 'Buổi 6 được xác nhận. 162.000 ₫ đã chuyển vào số dư khả dụng.' },
-        { iso: '2026-09-28T22:10', text: '28/09/2026 · 22:10', note: 'Phụ huynh đã ký quỹ đầy đủ 1.800.000 ₫ cho 10 buổi học.' },
-        { iso: '2026-09-15T21:28', text: '15/09/2026 · 21:28', note: 'Buổi đầu tiên hoàn thành.' }
-      ]
-    },
-    'HD-20260905-019': {
-      title: 'Hợp đồng ôn Toán lớp 9 cho Ngọc Anh', status: 'Đang thực hiện', crumb: 'Chi tiết hợp đồng dạy HD-20260905-019',
-      summary: 'HD-20260905-019 · Toán lớp 9 · Học trực tuyến', student: 'Trần Ngọc Anh', studentNote: 'Học viên lớp 9',
-      studentInitials: 'NA', guardian: 'Chị Thu Hà', course: 'Toán · Chương trình THCS', courseLabel: 'Toán lớp 9',
-      mode: 'Trực tuyến', modeLine: 'Học trực tuyến qua lớp học của nền tảng.', schedule: ['Chủ Nhật & Thứ Năm', '19:00–20:30'],
-      timeOfDay: '19:00–20:30', startAt: '19:00', minutes: 90, period: '20/09/2026 – 29/10/2026', fee: 160000,
-      dates: ['20/09/2026', '24/09/2026', '27/09/2026', '01/10/2026', '04/10/2026', '08/10/2026', '11/10/2026', '15/10/2026', '18/10/2026', '22/10/2026', '25/10/2026', '29/10/2026'],
-      states: ['completed', 'completed', 'completed', 'completed', 'pending', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming'],
-      attendance: { 1: 'present', 2: 'present', 3: 'present', 4: 'late', 5: 'present' },
-      pendingLesson: { lesson: 5, attended: '04/10/2026, 20:36', deadline: '07/10/2026, 20:36' },
-      next: { lesson: 6, weekday: 'Thứ Năm', date: '08/10/2026', topic: 'Hệ phương trình và bài toán thực tế' },
-      awaitingDeposit: null, chat: true,
-      activity: [
-        { iso: '2026-10-04T20:36', text: '04/10/2026 · 20:36', note: 'Bạn đã điểm danh buổi 5: học viên có mặt. Đang chờ phụ huynh xác nhận.' },
-        { iso: '2026-10-01T20:31', text: '01/10/2026 · 20:31', note: 'Buổi 4 được xác nhận. 144.000 ₫ đã chuyển vào số dư khả dụng.' },
-        { iso: '2026-09-20T20:29', text: '20/09/2026 · 20:29', note: 'Hợp đồng bắt đầu sau khi phụ huynh ký quỹ 1.920.000 ₫.' }
-      ]
+  const Route = window.EduRoute
+  const Store = window.EduStore
+  if (!Route || !Store) return
+
+  const byId = id => document.getElementById(id)
+  const money = value => Store.formatMoney(value)
+  const { CONTRACT_STATUS, PAYMENT_STATUS, REFUND_STATE, CHANNELS, statusOf } = Store
+
+  const MODE_LABEL = Object.freeze({
+    online: 'Trực tuyến',
+    home: 'Trực tiếp tại nhà học viên',
+    both: 'Trực tiếp tại nhà hoặc trực tuyến'
+  })
+  const attendanceLabels = Object.freeze({ present: 'Có mặt', late: 'Đi muộn', absent: 'Vắng mặt' })
+
+  const channelLabel = key => (CHANNELS.find(item => item.key === key) || { label: key || '—' }).label
+
+  const buildFromStore = id => {
+    const record = Store.contract(id)
+    if (!record) return null
+    const order = Store.order(record.orderId)
+    const item = order && Array.isArray(order.items) ? order.items[0] : null
+    const learner = Store.learner(record.learnerId)
+    const tutor = Store.tutor(record.tutorId)
+    const offering = item && item.offeringId ? Store.offering(item.offeringId) : null
+    const payments = order ? Store.paymentsByOrder(order.id) : []
+    const status = statusOf(CONTRACT_STATUS, record.status)
+    const modeLabel = (offering && MODE_LABEL[offering.mode])
+      || (item && item.offeringType === 'GROUP_CLASS' ? 'Lớp nhóm (tại trung tâm)' : 'Chưa ghi rõ hình thức')
+    const scheduleParts = String((item && item.scheduleText) || '').split(',').map(part => part.trim()).filter(Boolean)
+    const weekdayText = scheduleParts[0] || 'Chưa ghi trong snapshot'
+    const timeOfDay = scheduleParts.length > 1 ? scheduleParts.slice(1).join(', ') : '—'
+    const startAt = timeOfDay.split('–')[0].trim().replace('.', ':').slice(0, 5)
+    const course = (offering && offering.subjectLabel) || (item && item.offeringTitle) || record.id
+    const gradeLabel = (offering && offering.gradeLabel) || ''
+    const sessionsList = Store.sessionsOf(record.id)
+    const dates = sessionsList.map(entry => entry.date)
+    const releasedSessions = Store.sessionsReleasedOf(record.id)
+    const byLesson = new Map(sessionsList.filter(entry => entry.attendance).map(entry => [entry.no, entry.attendance]))
+    const states = sessionsList.map(entry => {
+      if (entry.no <= releasedSessions) return 'completed'
+      if (entry.attendance && entry.attendance.status !== 'absent') return 'pending'
+      if (entry.attendance) return 'cancelled'
+      return ['cancelled', 'cancellation_pending'].includes(record.status) ? 'cancelled' : 'upcoming'
+    })
+    const pendingEntry = sessionsList.find(entry => entry.no > releasedSessions && entry.attendance && entry.attendance.status !== 'absent')
+    const upcomingEntry = sessionsList.find((entry, index) => states[index] === 'upcoming')
+    const deadlineOf = iso => {
+      const ms = Date.parse(iso)
+      return Number.isFinite(ms) ? Store.formatDate(new Date(ms + 72 * 3600000).toISOString(), true) : '72 giờ theo điều khoản'
+    }
+    const walletSummary = Store.walletSummary(record.learnerId)
+    const split = Store.splitRelease(record.unitPrice, Number(record.feeRate) || Store.DEMO_FEE_RATE)
+
+    const activityEntries = []
+    if (order) activityEntries.push({ iso: order.createdAt, note: 'Đơn ' + order.id + ' tạo ' + channelLabel(order.channel).toLowerCase() + '.' })
+    if (record.signedAt) activityEntries.push({ iso: record.signedAt, note: 'Hai bên xác nhận điều khoản ' + record.termsVersion + ' · ' + record.sessions + ' buổi.' })
+    payments.forEach(payment => activityEntries.push({ iso: payment.createdAt, note: 'Phiên ' + payment.id + ' — ' + statusOf(PAYMENT_STATUS, payment.status).label + ' · ' + money(payment.total) + '.' }))
+    byLesson.forEach(entry => activityEntries.push({ iso: entry.at, note: 'Điểm danh buổi ' + entry.lesson + ': ' + (attendanceLabels[entry.status] || entry.status) + '.' }))
+    Store.list('financialEvents')
+      .filter(event => event.contractId === record.id && event.type === 'release')
+      .forEach(event => activityEntries.push({ iso: event.date, note: 'Giải ngân ' + money(event.grossReleased) + ' cho ' + event.sessionsReleased + ' buổi · ledger ' + (event.ledgerId || 'chưa có') + '.' }))
+    if (order && order.refund) activityEntries.push({ iso: order.refund.completedAt || order.refund.requestedAt, note: 'Hoàn tiền ' + money(order.refund.amount) + ' — ' + statusOf(REFUND_STATE, order.refund.state).label + '.' })
+
+    return {
+      contract: record,
+      title: 'Hợp đồng ' + course + ' cho ' + (learner ? learner.studentName : record.learnerId),
+      status: status.label,
+      statusKey: record.status,
+      summary: record.id + ' · ' + course + ' · ' + modeLabel,
+      student: learner ? learner.studentName : record.learnerId,
+      studentNote: 'Học viên ' + (learner ? learner.grade : '—'),
+      studentInitials: learner ? learner.initials : '—',
+      guardian: learner ? learner.name : record.learnerId,
+      tutor: tutor ? tutor.name : record.tutorId,
+      initials: tutor ? tutor.initials : '—',
+      course: course + (gradeLabel ? ' · ' + gradeLabel : ''),
+      courseLabel: course + (gradeLabel ? ' — ' + gradeLabel : ''),
+      mode: modeLabel,
+      modeLine: modeLabel + '.',
+      schedule: [weekdayText, timeOfDay],
+      weekdayText,
+      timeOfDay,
+      startAt,
+      minutes: item ? item.durationMinutes : 0,
+      dates,
+      states,
+      period: dates.length
+        ? dates[0] + ' – ' + dates[dates.length - 1] + ' (' + sessionsList.filter(entry => entry.source === 'attendance').length
+          + ' mốc lấy từ bản ghi điểm danh thật, ' + sessionsList.filter(entry => entry.source === 'suy-dien').length + ' mốc suy diễn theo nhịp 3 ngày)'
+        : 'Chưa có ngày ký trong dữ liệu mẫu',
+      fee: Store.toInteger(record.unitPrice),
+      feeRate: Number(record.feeRate) || Store.DEMO_FEE_RATE,
+      income: split.tutorNetReleased,
+      serviceFee: split.platformFeeReleased,
+      total: Store.toInteger(record.total),
+      sessions: record.sessions,
+      completedSessions: Store.toInteger(record.completedSessions),
+      releasedSessions,
+      held: Store.escrowOf(record.id),
+      releasedMoney: Store.grossReleasedOf(record.id),
+      pendingLesson: pendingEntry
+        ? { lesson: pendingEntry.no, attended: Store.formatDate(pendingEntry.attendance.at, true), deadline: deadlineOf(pendingEntry.attendance.at) }
+        : null,
+      next: upcomingEntry
+        ? { lesson: upcomingEntry.no, weekday: weekdayText, date: upcomingEntry.date, topic: 'Nội dung theo kế hoạch của gia sư (dữ liệu mẫu chưa ghi từng buổi)' }
+        : null,
+      awaitingDeposit: record.status === 'awaiting_payment'
+        ? { wallet: walletSummary.availableToUse, due: Math.max(0, Store.toInteger(record.total) - Store.toInteger(walletSummary.availableToUse)) }
+        : null,
+      activity: activityEntries.filter(entry => entry.iso)
+        .sort((a, b) => String(b.iso).localeCompare(String(a.iso)))
+        .map(entry => ({ iso: String(entry.iso), text: Store.formatDate(entry.iso, true), note: entry.note })),
+      chat: Boolean(tutor) && !status.terminal
     }
   }
-  const byId = id => document.getElementById(id)
-  const money = value => new Intl.NumberFormat('vi-VN').format(value) + ' ₫'
-  const serviceRate = 0.1
-  const params = new URLSearchParams(location.search)
-  const requested = params.get('id') || params.get('contract')
-  const contractId = requested && !contracts[requested] ? null : requested || 'HD-20260919-024'
-  const contract = contractId ? contracts[contractId] : null
+
+  const requested = Route.param('id', 'contractTutorDetail')
+  /* Bản cũ fallback cứng về HD-20260919-024 khi thiếu/sai tham số. */
+  const contractId = requested || null
+  const contract = contractId ? buildFromStore(contractId) : null
   if (!contract) {
-    byId('crumb-contract').textContent = 'Không tìm thấy hợp đồng'
-    byId('not-found-title').textContent = `Không tìm thấy hợp đồng ${requested}`
-    byId('not-found-description').textContent = 'Mã hợp đồng trong liên kết không thuộc danh sách lớp bạn đang nhận. Vui lòng mở hợp đồng từ tin nhắn hoặc trang việc đã nhận.'
-    for (const node of [byId('contract-header'), byId('contract-progress'), byId('contract-spotlight'), byId('contract-columns')]) node.hidden = true
+    byId('not-found-title').textContent = requested ? 'Không tìm thấy hợp đồng ' + requested : 'Thiếu mã hợp đồng'
+    byId('not-found-description').textContent = requested
+      ? 'Mã trong liên kết không tồn tại trong dữ liệu dùng chung. Trang không tự mở một hợp đồng khác.'
+      : 'Mở trang này từ liên kết có tham số ?id= hợp lệ (từ trang việc đã nhận hoặc trang ví).'
+    for (const node of [byId('contract-header'), byId('contract-progress'), byId('contract-spotlight'), byId('contract-columns')]) {
+      if (node) node.hidden = true
+    }
     byId('contract-not-found').hidden = false
     return
   }
   const fee = contract.fee
-  const income = Math.round(fee * (1 - serviceRate))
-  const serviceFee = Math.round(fee * serviceRate)
-  const sessions = contract.dates.length
-  const incomeTotal = income * sessions
+  const income = contract.income
+  const serviceFee = contract.serviceFee
+  const sessions = contract.sessions
+  const incomeTotal = Store.list('financialEvents')
+    .filter(event => event.type === 'release' && event.contractId === contract.contract.id)
+    .reduce((sum, event) => sum + Store.toInteger(event.tutorNetReleased), 0)
   const weekdayNames = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy']
   const weekdayOf = date => {
-    const [day, month, year] = date.split('/')
-    return weekdayNames[new Date(`${year}-${month}-${day}T12:00:00+07:00`).getUTCDay()]
+    const [day, month, year] = String(date).split('/')
+    const parsed = new Date(year + '-' + month + '-' + day + 'T12:00:00+07:00')
+    return Number.isNaN(parsed.getTime()) ? '—' : weekdayNames[parsed.getUTCDay()]
   }
-  const lessons = contract.dates.map((date, index) => ({
-    id: index + 1,
-    date,
-    status: contract.states[index],
-    attendance: contract.attendance[index + 1] || null
-  }))
-  // The static design represents 05/10/2026. Replace this snapshot with server time in JSP.
-  const snapshot = Date.parse(document.getElementById('contract').dataset.snapshotAt)
-  const openedAt = Date.now()
-  const currentTime = () => snapshot + Date.now() - openedAt
-  const attendanceLabels = { present: 'Có mặt', late: 'Đi muộn', absent: 'Vắng mặt' }
+  const lessons = contract.dates.map((date, index) => {
+    const storeSession = Store.sessionsOf(contract.contract.id)[index]
+    const record = storeSession && storeSession.attendance
+    return {
+      id: index + 1,
+      date: date || ('buổi ' + (index + 1)),
+      status: contract.states[index],
+      attendance: record ? record.status : null,
+      note: record ? record.note : '',
+      homework: record ? record.homework : ''
+    }
+  })
+  /**
+   * Bản cũ đóng băng "bây giờ" vào data-snapshot-at (05/10/2026), nên mọi câu "còn X giờ"
+   * hay "đã qua hạn" là số bịa quanh một mốc cố định. Window điểm danh cần giờ thật của
+   * máy đang xem prototype; khi tích hợp, thay bằng server time.
+   */
+  const currentTime = () => Date.now()
   const startTime = lesson => {
-    const [day, month, year] = lesson.date.split('/')
-    return Date.parse(`${year}-${month}-${day}T${contract.startAt}:00+07:00`)
+    const [day, month, year] = String(lesson.date).split('/')
+    const ms = Date.parse(year + '-' + month + '-' + day + 'T' + contract.startAt + ':00+07:00')
+    return Number.isFinite(ms) ? ms : NaN
   }
-  const canAttend = lesson => lesson.status === 'upcoming' && !contract.awaitingDeposit &&
-    currentTime() >= startTime(lesson) && currentTime() <= startTime(lesson) + (49.5 * 60 * 60 * 1000)
+  const canAttend = lesson => lesson.status === 'upcoming' && !contract.awaitingDeposit
+    && Number.isFinite(startTime(lesson))
+    && currentTime() >= startTime(lesson) && currentTime() <= startTime(lesson) + (49.5 * 60 * 60 * 1000)
   const labels = {
     completed: 'Đã giải ngân',
     pending: 'Chờ xác nhận',
@@ -159,8 +221,6 @@
 
   const renderFacts = () => {
     document.title = `${contract.title} — Edu Connect`
-    byId('crumb-contract').textContent = contract.crumb
-    byId('crumb-contract').title = contract.crumb
     byId('contract-title').textContent = contract.title
     byId('contract-status').textContent = contract.status
     byId('contract-summary').textContent = contract.summary
@@ -366,43 +426,43 @@
       window.EduToast.show({ type: 'warning', title: 'Ngoài thời gian điểm danh', message: 'Vui lòng kiểm tra lịch học hoặc liên hệ hỗ trợ.' })
       return
     }
-    selected.note = notes.querySelector('#lesson-note').value.trim()
-    selected.homework = notes.querySelector('#lesson-homework').value.trim()
     const attendance = attendanceOptions.querySelector('input[name="attendance"]:checked').value
-    selected.attendance = attendance
-    selected.status = 'pending'
+    const result = Store.markAttendance({
+      contractId: contract.contract.id,
+      lessonNo: selected.id,
+      status: attendance,
+      note: notes.querySelector('#lesson-note').value.trim(),
+      homework: notes.querySelector('#lesson-homework').value.trim(),
+      idempotency: 'tutor-detail:attendance:' + contract.contract.id + ':' + selected.id
+    })
+    if (!result.ok) {
+      event.preventDefault()
+      const messages = {
+        'not-next-lesson': `Cần điểm danh buổi ${result.lastMarkedLesson + 1} trước; dữ liệu không cho phép nhảy số buổi.`,
+        'already-marked': 'Buổi này đã được điểm danh rồi.',
+        'contract-not-active': 'Hợp đồng không ở trạng thái đang chạy nên không ghi điểm danh.',
+        'contract-terminal': 'Hợp đồng đã kết thúc.',
+        'invalid-lesson': 'Buổi học nằm ngoài phạm vi hợp đồng.',
+        'invalid-attendance-status': 'Tình trạng tham gia không hợp lệ.',
+        'invalid-note-length': 'Nhận xét hoặc bài tập vượt giới hạn ký tự.',
+        duplicated: 'Yêu cầu đã gửi trước đó — bấm lặp không tạo lần điểm danh thứ hai.',
+        'storage-failed': 'Không lưu được vào storage của tab. State trước đó được giữ nguyên.',
+        'invalid-state': 'Không lưu được vì dữ liệu không hợp lệ. State trước đó được giữ nguyên.'
+      }
+      window.EduToast.show({ type: 'error', title: 'Chưa ghi được điểm danh', message: messages[result.reason] || result.reason })
+      return
+    }
     const attendanceLabel = { present: 'Có mặt', late: 'Đi muộn', absent: 'Vắng mặt' }[attendance]
-    const title = `Đã điểm danh buổi ${selected.id}: ${attendanceLabel}`
-
-    const banner = document.getElementById('pending-alert')
-    banner.hidden = false
-    banner.classList.remove('alert--success')
-    banner.classList.add('alert--warning')
-    document.getElementById('pending-title').textContent = `Buổi ${selected.id} đang chờ học viên hoặc phụ huynh xác nhận`
-    document.getElementById('pending-description').textContent = `Điểm danh đã được ghi nhận: ${attendanceLabel}. Thu nhập ${money(income)} đang chờ xác nhận.`
-    const actions = document.getElementById('pending-actions')
-    actions.replaceChildren()
-    const detail = document.createElement('button')
-    detail.className = 'contract-button contract-button--secondary'
-    detail.type = 'button'
-    detail.dataset.action = 'detail'
-    detail.dataset.lesson = String(selected.id)
-    detail.textContent = `Xem chi tiết buổi ${selected.id}`
-    actions.append(detail)
-    const timelineItem = document.createElement('li')
-    const time = document.createElement('time')
-    const description = document.createElement('p')
-    time.dateTime = new Date().toISOString()
-    time.textContent = 'Vừa xong'
-    description.textContent = title
-    timelineItem.append(time, description)
-    document.getElementById('activity-list').prepend(timelineItem)
-    const nextAttendanceButton = document.getElementById('next-attendance-button')
-    const nextAttendanceNote = document.getElementById('next-attendance-note')
-    if (nextAttendanceButton) nextAttendanceButton.hidden = false
-    if (nextAttendanceNote) nextAttendanceNote.textContent = `Đã điểm danh: ${attendanceLabel}. Đang chờ phụ huynh xác nhận.`
-    render()
-    window.EduToast.show({ type: 'success', title, message: 'Buổi học đã chuyển sang trạng thái chờ xác nhận.' })
+    window.EduToast.show({
+      type: 'success',
+      title: 'Đã điểm danh buổi ' + selected.id + ': ' + attendanceLabel,
+      message: attendance === 'absent'
+        ? 'Buổi vắng được ghi nhận và KHÔNG tính là buổi hoàn thành, nên không có khoản giải ngân chờ xác nhận.'
+        : `Đã ghi vào dữ liệu dùng chung: ${result.data.completedSessions}/${contract.sessions} buổi đã học. Thu nhập ${money(income)} chỉ giải ngân khi học viên xác nhận.`
+    })
+    /* Reload để mọi màn (học viên, ví, dashboard) đọc cùng một state,
+       thay vì sửa object trong trang rồi báo "đã ghi nhận" như bản trước. */
+    window.setTimeout(() => window.location.reload(), 900)
   })
 
   modal.addEventListener('modal:close', () => {

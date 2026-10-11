@@ -29,6 +29,8 @@
 .tutor-profile-sidebar {
   position: sticky;
   top: calc(var(--user-header-height) + var(--space-4));
+  max-height: calc(100dvh - var(--scroll-offset) - var(--space-4));
+  overflow-y: auto;
 }
 
 .tutor-profile-hero.tutor-card {
@@ -187,7 +189,7 @@
 }
 
 .tutor-profile-facts small {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-weight: 500;
   letter-spacing: normal;
@@ -205,65 +207,160 @@
   font-size: var(--font-size-xs);
 }
 
+.tutor-profile-demo-note {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-base);
+}
+
 .tutor-profile-plans {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   gap: var(--space-4);
 }
 
+.tutor-profile-offerings__owner-note.alert {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3);
+  border-left-width: 1px;
+  background: var(--color-primary-container);
+}
+
 .tutor-profile-plan {
-  position: relative;
   display: grid;
   align-content: start;
   gap: var(--space-2);
-  min-height: 12rem;
+  min-width: 0;
   padding: var(--space-4);
   background: var(--color-surface-low);
 }
 
-.tutor-profile-plan.is-selected,
-.tutor-profile-plan[aria-pressed="true"] {
+.tutor-profile-plan.is-selected {
   border-color: var(--color-border);
   background: var(--color-paper);
 }
 
-.tutor-profile-plan__check {
-  position: absolute;
-  top: var(--space-3);
-  right: var(--space-3);
-  display: none;
-  width: 1.5rem;
-  height: 1.5rem;
-  place-items: center;
-  border-radius: var(--radius-pill);
-  background: var(--color-primary);
-  color: var(--color-on-primary);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
+.tutor-profile-plan__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
 }
 
-.tutor-profile-plan.is-selected .tutor-profile-plan__check {
-  display: grid;
+.tutor-profile-plan__hit {
+  cursor: pointer;
 }
 
-.tutor-profile-plan .tutor-card__tags {
-  padding-right: var(--space-6);
+.tutor-profile-plan__title {
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  overflow-wrap: anywhere;
 }
 
-.tutor-profile-plan > strong {
+.tutor-profile-plan__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.tutor-profile-plan__price strong {
   color: var(--color-primary-hover);
   font-size: var(--font-size-lg);
 }
 
-.tutor-profile-plan > small,
-.tutor-profile-plan > p {
+.tutor-profile-plan__price small {
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
 }
 
-.tutor-profile-plan > p {
-  margin: var(--space-1) 0 0;
-  line-height: var(--line-height-base);
+.tutor-profile-plan__rows {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tutor-profile-plan__rows li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.tutor-profile-plan__rows li span:last-child {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.tutor-profile-plan__link {
+  margin-top: var(--space-2);
+  justify-self: start;
+}
+
+.tutor-profile-jobs {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.tutor-profile-job {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-low);
+}
+
+.tutor-profile-job__body {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.tutor-profile-job__title {
+  margin: 0;
+  font-size: var(--font-size-base);
+}
+
+.tutor-profile-job__meta {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.tutor-profile-job__aside {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.tutor-profile-job__budget {
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-hover);
+}
+
+.tutor-profile-jobs__empty {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.tutor-profile-booking__cta .button.is-disabled {
+  opacity: 0.55;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .tutor-profile-schedule {
@@ -280,7 +377,7 @@
   padding: var(--space-2);
   border-radius: var(--radius-md);
   background: var(--color-surface-low);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   text-align: center;
 }
 
@@ -424,6 +521,48 @@
   font-size: var(--font-size-xs);
 }
 
+.tutor-profile-booking__selection > strong {
+  font-size: var(--font-size-sm);
+  overflow-wrap: anywhere;
+}
+
+.tutor-profile-booking__facts {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tutor-profile-booking__facts li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.tutor-profile-booking__facts li span:last-child {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.tutor-profile-booking__blocked.alert {
+  padding: var(--space-3);
+  border-left-width: 1px;
+}
+
+.tutor-profile-booking__cta {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.tutor-profile-booking__cta .button {
+  width: 100%;
+  justify-content: center;
+}
+
 .tutor-profile-booking__selection p {
   display: flex;
   flex-wrap: wrap;
@@ -472,6 +611,8 @@
 
   .tutor-profile-sidebar {
     position: static;
+    max-height: none;
+    overflow: visible;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

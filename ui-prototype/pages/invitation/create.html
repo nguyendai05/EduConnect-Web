@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mời Nguyễn Minh Anh dạy | Edu Connect</title>
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
+    <title>Mời gia sư dạy | Edu Connect</title>
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/base.css">
@@ -26,6 +29,9 @@
     <link rel="stylesheet" href="../../css/components/form/radio.css">
     <link rel="stylesheet" href="../../css/components/form/textarea.css">
     <link rel="stylesheet" href="../../css/pages/invitation/create.css">
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
     <script src="../../js/core/user-header.js" defer></script>
     <script src="../../js/core/radio.js" defer></script>
     <script src="../../js/core/modal.js" defer></script>
@@ -38,14 +44,14 @@
     <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
     <header class="user-header" data-component="user-header" data-user-variant="B" data-active-nav="tutors">
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link is-active" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html" aria-current="page">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link is-active" data-nav-key="tutors" href="../../pages/tutor/search.html" aria-current="page">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -111,7 +117,15 @@
             <div class="user-shell__content">
                 <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
                 <nav class="breadcrumb" aria-label="Breadcrumb"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="../tutor/search.html">Tìm gia sư</a></li><li class="breadcrumb__item"><a class="breadcrumb__link" href="../tutor/profile.html" data-breadcrumb-tutor>Nguyễn Minh Anh</a></li><li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Mời dạy</span></li></ol></nav>
-                <div class="invitation-create-heading__row"><div><h1 data-create-heading>Mời Nguyễn Minh Anh dạy</h1><p>Đề xuất môn học, học phí và lịch học cho gia sư.</p></div></div>
+                <div class="invitation-create-heading__row"><div><h1 data-create-heading>Mời gia sư dạy</h1></div></div>
+                <section class="alert alert--error invitation-create-not-found" data-invitation-not-found role="alert" hidden>
+                    <span class="alert__icon" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <h2 class="alert__title" data-not-found-title>Không tìm thấy gia sư</h2>
+                        <p class="alert__message" data-not-found-message>Đường dẫn tham chiếu tới gia sư hoặc dịch vụ không tồn tại trong dữ liệu mẫu.</p>
+                        <a class="button button--outline" href="../tutor/search.html" data-not-found-back>Về trang tìm gia sư</a>
+                    </div>
+                </section>
             </div>
         </section>
 
@@ -121,11 +135,11 @@
                 <section class="card invitation-tutor" aria-labelledby="invitation-tutor-name"><span class="avatar avatar--large" role="img" aria-label="Ảnh đại diện Nguyễn Minh Anh" data-create-avatar>MA</span><div class="invitation-tutor__body"><div class="invitation-tutor__title"><h2 id="invitation-tutor-name" data-create-name>Nguyễn Minh Anh</h2><span class="badge badge--verified"><span class="component-icon component-icon--verified" aria-hidden="true"></span>Đã xác minh</span></div><p><strong data-create-subjects>Toán · Vật lý</strong><span aria-hidden="true">•</span><span class="rating rating--compact"><span class="rating__stars" aria-hidden="true"><span class="rating__star"></span></span><span class="rating__score" data-create-rating>4,9</span><span class="rating__count" data-create-rating-count>(126 đánh giá)</span></span><span aria-hidden="true">•</span><span data-create-experience>5 năm kinh nghiệm</span><span aria-hidden="true">•</span><span data-create-classes>84 lớp đã dạy</span></p><p><img src="../../assets/icons/dinh-vi.svg" alt=""><span data-create-location>Thủ Đức, TP. Hồ Chí Minh</span><span aria-hidden="true">•</span><span data-create-delivery>Dạy tại nhà &amp; trực tuyến</span></p></div></section>
 
                 <!-- Component: Card, Radio | Nguồn: components/data-display/card.html; components/form/radio.html; JS: js/core/radio.js -->
-                <section class="card invitation-section" aria-labelledby="subject-title"><header class="invitation-section__header"><div><h2 id="subject-title"><span>1</span>Môn học</h2></div><small>Bắt buộc</small></header><fieldset class="invitation-subjects" data-subject-group><legend class="sr-only">Chọn môn học</legend>
-                    <label class="card card--interactive invitation-subject is-selected" data-subject-card><input type="radio" name="subject" value="toan-thpt" data-label="Toán • THPT" data-rate="200000" checked><span class="invitation-subject__check" aria-hidden="true">✓</span><strong>Toán • THPT</strong><b>200.000 ₫</b><small>90 phút / buổi</small><span class="badge badge--info">Phổ biến nhất</span></label>
-                    <label class="card card--interactive invitation-subject" data-subject-card><input type="radio" name="subject" value="toan-thcs" data-label="Toán • THCS" data-rate="180000"><span class="invitation-subject__check" aria-hidden="true">✓</span><strong>Toán • THCS</strong><b>180.000 ₫</b><small>90 phút / buổi</small></label>
-                    <label class="card card--interactive invitation-subject" data-subject-card><input type="radio" name="subject" value="vat-ly-thpt" data-label="Vật lý • THPT" data-rate="220000"><span class="invitation-subject__check" aria-hidden="true">✓</span><strong>Vật lý • THPT</strong><b>220.000 ₫</b><small>90 phút / buổi</small></label>
-                </fieldset></section>
+                <section class="card invitation-section" aria-labelledby="subject-title"><header class="invitation-section__header"><div><h2 id="subject-title"><span>1</span>Môn học</h2></div><small>Bắt buộc</small></header><fieldset class="invitation-subjects" data-subject-group><legend class="sr-only">Chọn dịch vụ hoặc lớp của gia sư</legend></fieldset></section>
+
+                <template data-invitation-offering-template>
+                    <label class="card card--interactive invitation-subject" data-subject-card><input type="radio" name="subject" data-label="" data-rate="" data-offering-id="" data-tutor-id=""><span class="invitation-subject__check" aria-hidden="true">✓</span><strong data-offering-title>—</strong><b data-offering-price>—</b><small data-offering-meta>—</small></label>
+                </template>
 
                 <!-- Component: Card, Input, Button | Nguồn: components/data-display/card.html; components/form/input.html; components/action/button.html -->
                 <section class="card invitation-section" aria-labelledby="frequency-title"><header class="invitation-section__header"><div><h2 id="frequency-title"><span>2</span>Số buổi &amp; tần suất</h2></div></header><div class="invitation-frequency"><div class="form-field"><label class="form-field__label" for="total-sessions">Tổng số buổi</label><div class="invitation-stepper"><button class="button button--secondary" type="button" data-session-adjust="-1" aria-label="Giảm một buổi">−</button><label class="input-control"><input class="input-control__input" id="total-sessions" type="number" min="1" max="60" value="8"><span class="input-control__suffix">buổi</span></label><button class="button button--secondary" type="button" data-session-adjust="1" aria-label="Tăng một buổi">+</button></div></div><div class="form-field"><span class="form-field__label">Số buổi mỗi tuần</span><div class="invitation-frequency__options" role="group" aria-label="Số buổi mỗi tuần"><button type="button" data-frequency="1">1 buổi</button><button class="is-selected" type="button" data-frequency="2" aria-pressed="true">2 buổi</button><button type="button" data-frequency="3">3 buổi</button><button type="button" data-frequency="4">4 buổi</button></div><span class="badge badge--info invitation-timeline"><img src="../../assets/icons/clock.svg" alt=""><span data-estimated-timeline>Thời lượng dự kiến: khoảng 4 tuần</span></span></div></div></section>
@@ -155,14 +169,10 @@
             </aside>
         </div>
 
-
     </main>
 
     <!-- Component: Modal | Nguồn: components/feedback/modal.html; JS: js/core/modal.js -->
-    <dialog class="modal" id="confirm-invitation-modal" aria-labelledby="confirm-invitation-title" aria-describedby="confirm-invitation-description"><div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="confirm-invitation-title">Gửi lời mời cho Nguyễn Minh Anh?</h2><p>Kiểm tra lại đề xuất trước khi gửi</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header><div class="modal__body"><p id="confirm-invitation-description">Bạn đang gửi đề xuất học Toán · THPT gồm 8 buổi với mức học phí 200.000 ₫/buổi.</p><p class="modal__note">Bạn chưa phải thanh toán ngay. Việc ký quỹ chỉ diễn ra sau khi gia sư đồng ý.</p></div><footer class="modal__footer"><button class="modal__button modal__button--ghost" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận gửi</button></footer></div></dialog>
-
-    <!-- Component: Modal Success | Nguồn: components/feedback/modal.html; JS: js/core/modal.js -->
-    <dialog class="modal" id="invitation-success-modal" aria-labelledby="invitation-success-title" aria-describedby="invitation-success-description"><div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--success" aria-hidden="true"></span><div class="modal__heading"><h2 id="invitation-success-title">Đã gửi lời mời thành công!</h2><p>Gia sư có 7 ngày để phản hồi</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header><div class="modal__body"><p id="invitation-success-description">Gia sư Nguyễn Minh Anh đã nhận được đề xuất dạy của bạn và có thể đề xuất lại thời gian biểu phù hợp hơn.</p></div><footer class="modal__footer"><button class="modal__button modal__button--ghost" type="button" data-modal-close>Về danh sách gia sư</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xem chi tiết lời mời</button></footer></div></dialog>
+    <dialog class="modal" id="confirm-invitation-modal" aria-labelledby="confirm-invitation-title" aria-describedby="confirm-invitation-description"><div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="confirm-invitation-title">Gửi lời mời cho Nguyễn Minh Anh?</h2><p>Kiểm tra lại đề xuất trước khi gửi</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header><div class="modal__body"><p id="confirm-invitation-description">Bạn đang gửi đề xuất học cho gia sư theo các điều khoản đã chọn.</p><p class="modal__note">Bạn chưa phải thanh toán ngay. Việc ký quỹ chỉ diễn ra sau khi gia sư đồng ý.</p><p class="alert alert--error invitation-confirm-error" data-invitation-error role="alert" hidden></p></div><footer class="modal__footer"><button class="modal__button modal__button--ghost" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận gửi</button></footer></div></dialog>
 
     <!-- Component: Toast | Nguồn: components/feedback/toast.html; JS: js/core/toast.js -->
     <section class="toast-region" aria-label="Thông báo"></section>
@@ -170,7 +180,7 @@
     <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
     <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
-        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
         <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
         <p class="user-footer__copyright">© 2026 Edu Connect</p>
     </div>

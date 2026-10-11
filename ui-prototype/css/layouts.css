@@ -102,6 +102,10 @@
   .user-shell__grid {
     grid-template-columns: 1fr;
   }
+
+  .admin-shell__workspace {
+    margin-left: 0;
+  }
 }
 
 @media (max-width: 48rem) {

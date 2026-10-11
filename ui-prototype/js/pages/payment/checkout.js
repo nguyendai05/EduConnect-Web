@@ -1,238 +1,245 @@
-/* Local checkout preview only; production sessions must be created by the server. */
+/**
+ * Trang thanh toán ký quỹ DEMO.
+ * Mọi số liệu (total, availableToUse, escrowHeld, walletUsed, payosDue, feeRate) đọc từ
+ * EduStore/EduFixtures — không hard-code, không fallback sang bản ghi khác khi ID lạ.
+ * `from` chỉ nhận giá trị trong allowlist của EduRoute.safeReturn (chống open redirect).
+ * Trang này không ghi paid/credit ví/activate hợp đồng; nó chỉ mở phiên QR mô phỏng.
+ */
 (() => {
-    const money = (value) => new Intl.NumberFormat("vi-VN").format(value) + " ₫";
-    // Page-only payment fixtures. Amounts mirror the wallet statement; the server owns the real figures.
-    // Tutor, subject, scale, fee and schedule come from contract/confirm.js so one contract reads the same everywhere.
-    const contracts = {
-        "HD-20260926-025": {
-            title: "Học Toán cùng Nguyễn Minh Anh",
-            tutor: "Nguyễn Minh Anh",
-            tutorNote: "Gia sư Toán · Đã xác minh",
-            initials: "MA",
-            student: "Trần Gia Huy",
-            guardian: "Chị Mai Lan",
-            course: "Toán lớp 11",
-            sessions: 8,
-            minutes: 90,
-            fee: 220000,
-            schedule: ["Thứ Hai & Thứ Sáu", "19:00–20:30"],
-            total: 1760000,
-            wallet: 340000,
-            due: 1420000,
-            available: 340000,
-            reference: "ECX 26092602501",
-            status: "Chờ ký quỹ",
-        },
-        "HD-20260926-018": {
-            title: "Luyện Tiếng Anh cùng Trần Quốc Huy",
-            tutor: "Trần Quốc Huy",
-            tutorNote: "Gia sư Tiếng Anh · Đã xác minh",
-            initials: "QH",
-            student: "Trần Gia Huy",
-            guardian: "Chị Mai Lan",
-            course: "Tiếng Anh lớp 11",
-            sessions: 10,
-            minutes: 90,
-            fee: 270000,
-            schedule: ["Thứ Ba & Thứ Bảy", "19:00–20:30"],
-            total: 2700000,
-            wallet: 340000,
-            due: 2360000,
-            available: 340000,
-            reference: "ECX 26092601801",
-            status: "Chờ ký quỹ",
-        },
-        "HD-20260926-011": {
-            title: "Học Ngữ văn cùng Lê Thảo Vy",
-            tutor: "Lê Thảo Vy",
-            tutorNote: "Gia sư Ngữ văn · Đã xác minh",
-            initials: "TV",
-            student: "Trần Gia Huy",
-            guardian: "Chị Mai Lan",
-            course: "Ngữ văn lớp 8",
-            sessions: 12,
-            minutes: 90,
-            fee: 180000,
-            schedule: ["Thứ Năm & Thứ Bảy", "08:00–09:30"],
-            total: 2160000,
-            wallet: 340000,
-            due: 1820000,
-            available: 340000,
-            reference: "ECX 26092601101",
-            status: "Chờ ký quỹ",
-        },
-        "HD-20260926-005": {
-            title: "Luyện thi Toán cùng Phạm Hoàng Long",
-            tutor: "Phạm Hoàng Long",
-            tutorNote: "Gia sư Toán · Đã xác minh",
-            initials: "PL",
-            student: "Trần Gia Huy",
-            guardian: "Chị Mai Lan",
-            course: "Toán · Luyện thi",
-            sessions: 10,
-            minutes: 90,
-            fee: 320000,
-            schedule: ["Thứ Tư & Thứ Bảy", "09:00–10:30"],
-            total: 3200000,
-            wallet: 340000,
-            due: 2860000,
-            available: 340000,
-            reference: "ECX 26092600501",
-            status: "Chờ ký quỹ",
-        },
-    };
-    const params = new URLSearchParams(location.search);
-    const requested = params.get("contract") || params.get("id");
-    // No silent fallback: an unknown or missing code never renders another contract.
-    const contractId = requested && Object.hasOwn(contracts, requested) ? requested : null;
-    const contract = contractId ? contracts[contractId] : null;
-    // ?from=contract is the return route set by the contract confirmation page.
-    const from = params.get("from");
-    const confirmHref = `../contract/confirm.html${
-        contractId ? `?contract=${encodeURIComponent(contractId)}` : ""
-    }`;
-    const originRoutes = {
-        contract: confirmHref,
-        "contract-detail": `../contract/student-detail.html?id=${encodeURIComponent(
-            contractId || requested || "",
-        )}`,
-    };
-    const returnTo = originRoutes[from] || null;
-    // When the code cannot be rendered, offer the page the user came from, else the confirmation page.
-    const backHref = returnTo || "../contract/confirm.html";
-    const back = document.getElementById("back-to-contract");
-    back.href = backHref;
-    back.textContent = from === "contract-detail" ? "Quay lại hợp đồng" : "Quay lại xác nhận hợp đồng";
-    back.hidden = false;
+    const Route = window.EduRoute;
+    const Store = window.EduStore;
     const byId = (id) => document.getElementById(id);
-    const setText = (id, value) => {
-        byId(id).textContent = value;
-    };
-    const setHtml = (id, lines) => {
-        byId(id).replaceChildren();
-        lines.forEach((line, index) => {
-            if (index) byId(id).append(document.createElement("br"));
-            byId(id).append(line);
+    const setText = (id, value) => Store.text(byId(id), value);
+    const setAll = (selector, value) =>
+        document.querySelectorAll(selector).forEach((node) => {
+            node.textContent = value;
         });
+
+    const contractParam = Route.param("contract", "paymentCheckout");
+    const orderParam = Route.param("order", "paymentCheckout");
+    const paymentParam = Route.param("payment", "paymentCheckout");
+    const from = Route.safeReturn(Route.param("from", "paymentCheckout"));
+
+    const RETURN_TARGETS = {
+        contract: (id) => Route.page("contractConfirm", id ? { contract: id } : undefined),
+        "contract-detail": (id) => Route.page("contractStudentDetail", id ? { id } : undefined),
+        cart: () => Route.page("cart"),
+        "order-history": () => Route.page("orderHistory"),
     };
+    const returnHref = (RETURN_TARGETS[from] || RETURN_TARGETS.contract)(contractParam);
+
+    const back = byId("back-to-contract");
+    back.href = returnHref;
+    back.textContent = from === "contract-detail" ? "Quay lại hợp đồng" : "Quay lại bước xác nhận";
+    back.hidden = false;
+
+    const fail = (title, message) => {
+        document.title = `${title} — Edu Connect`;
+        byId("payment-layout").hidden = true;
+        setText("page-status", "Không mở được phiên");
+        setText("contract-line", message);
+        setText("page-error-title", title);
+        setText("page-error-message", message);
+        const actions = byId("page-error-actions");
+        actions.replaceChildren();
+        const backLink = document.createElement("a");
+        backLink.className = "payment-link";
+        backLink.href = returnHref;
+        backLink.textContent = from ? "Quay lại trang vừa mở" : "Mở trang xác nhận hợp đồng";
+        const walletLink = document.createElement("a");
+        walletLink.className = "payment-link";
+        walletLink.href = Route.page("walletOverview", { hash: "transactions" });
+        walletLink.textContent = "Xem lịch sử ví Edu Connect";
+        actions.append(backLink, walletLink);
+        byId("page-error").hidden = false;
+    };
+
+    const contract = contractParam ? Store.contract(contractParam) : null;
     if (!contract) {
-        document.title = "Không tìm thấy hợp đồng — Edu Connect";
-        setText(
-            "contract-line",
-            requested
-                ? `Không tìm thấy hợp đồng ${requested} trong danh sách ký quỹ`
-                : "Liên kết thanh toán không kèm mã hợp đồng",
+        fail(
+            "Không tìm thấy hợp đồng",
+            contractParam
+                ? `Không có hợp đồng ${contractParam} trong dữ liệu mẫu. Trang không hiển thị hợp đồng khác thay thế; chưa có khoản tiền nào bị trừ.`
+                : "Liên kết mở trang thanh toán thiếu mã hợp đồng. Trang không tự chọn hợp đồng khác; chưa có khoản tiền nào bị trừ.",
         );
-        const headerStatus = document.querySelector(".page-header__status");
-        if (headerStatus) headerStatus.textContent = "Chưa xác định hợp đồng";
-        document.querySelector(".payment-layout").hidden = true;
-        const notice = document.createElement("section");
-        notice.className = "alert alert--error";
-        notice.setAttribute("role", "alert");
-        const icon = document.createElement("span");
-        icon.className = "alert__icon";
-        icon.setAttribute("aria-hidden", "true");
-        const content = document.createElement("div");
-        content.className = "alert__content";
-        const noticeTitle = document.createElement("h3");
-        noticeTitle.className = "alert__title";
-        noticeTitle.textContent = "Không tìm thấy hợp đồng";
-        const noticeMessage = document.createElement("p");
-        noticeMessage.className = "alert__message";
-        noticeMessage.textContent = requested
-            ? `Không có hợp đồng ${requested} trong danh sách ký quỹ của bạn. Trang không hiển thị hợp đồng khác thay thế; chưa có khoản tiền nào bị trừ.`
-            : "Liên kết mở trang thanh toán thiếu mã hợp đồng. Trang không tự chọn một hợp đồng khác; chưa có khoản tiền nào bị trừ.";
-        const noticeActions = document.createElement("div");
-        noticeActions.className = "payment-heading";
-        const noticeBack = document.createElement("a");
-        noticeBack.className = "payment-link";
-        noticeBack.href = backHref;
-        noticeBack.textContent = from ? "Quay lại trang vừa mở" : "Mở trang xác nhận hợp đồng";
-        const noticeWallet = document.createElement("a");
-        noticeWallet.className = "payment-link";
-        noticeWallet.href = "../wallet/overview.html#transactions";
-        noticeWallet.textContent = "Xem ký quỹ trong ví Edu Connect";
-        noticeActions.append(noticeBack, noticeWallet);
-        content.append(noticeTitle, noticeMessage, noticeActions);
-        notice.append(icon, content);
-        document.querySelector(".payment-layout").after(notice);
         return;
     }
-    document.title = `Thanh toán ký quỹ ${contractId} — Edu Connect`;
-    setText("contract-line", `${contractId} · ${contract.title}`);
-    setText("breakdown-scale", `${contract.sessions} buổi × ${money(contract.fee)}`);
-    setText("sidebar-contract", contractId);
-    setText("sidebar-initials", contract.initials);
-    setText("sidebar-tutor", contract.tutor);
-    setText("sidebar-tutor-note", contract.tutorNote);
-    setText("sidebar-student", contract.student);
-    setText("sidebar-course", contract.course);
-    setText("sidebar-scale", `${contract.sessions} buổi · ${contract.minutes} phút/buổi`);
-    setText("sidebar-fee", `${money(contract.fee)}/buổi`);
-    setHtml("sidebar-schedule", contract.schedule);
-    setText("projection-available", money(contract.available - contract.wallet));
-    setText("projection-escrow", money(contract.total));
-    byId("balance-available").firstChild.textContent = contract.available.toLocaleString("vi-VN") + " ";
-    document.querySelectorAll("[data-total]").forEach((node) => (node.textContent = money(contract.total)));
-    document.querySelectorAll("[data-deduction]").forEach((node) => (node.textContent = "−" + money(contract.wallet)));
-    document.querySelectorAll("[data-due]").forEach((node) => (node.textContent = money(contract.due)));
-    const consent = document.getElementById("payment-consent");
-    const button = document.getElementById("pay-button");
-    const error = document.getElementById("payment-error");
-    button.textContent = `Thanh toán qua PayOS · ${money(contract.due)}`;
-    consent.addEventListener("change", () => {
-        button.disabled = !consent.checked;
-        error.hidden = true;
-    });
-    document.getElementById("payment-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        if (!consent.checked) {
-            consent.reportValidity();
+
+    let order = null;
+    if (orderParam) {
+        order = Store.order(orderParam);
+        if (!order || order.contractId !== contract.id) {
+            fail(
+                "Đơn không khớp hợp đồng",
+                order
+                    ? `Đơn ${order.id} không thuộc hợp đồng ${contract.id}. Trang không ghép chéo bản ghi; chưa có khoản tiền nào bị trừ.`
+                    : `Không tìm thấy đơn ${orderParam} trong dữ liệu mẫu.`,
+            );
             return;
         }
-        const attempt = {
-            reference: contract.reference,
-            contract: contractId,
-            contractTitle: contract.title,
-            total: contract.total,
-            wallet: contract.wallet,
-            due: contract.due,
-            expiresAt: Date.now() + 15 * 60 * 1000,
-            state: "pending",
-            from: returnTo ? from : null,
-        };
-        try {
-            const previous = JSON.parse(sessionStorage.getItem("edu-payment-preview") || "null");
-            const reusable =
-                previous?.state === "pending" &&
-                previous.contract === contractId &&
-                previous.expiresAt > Date.now();
-            if (!reusable) sessionStorage.setItem("edu-payment-preview", JSON.stringify(attempt));
-            // The contract code and the return route travel with the link so the QR step cannot drift.
-            location.href =
-                `qr.html?contract=${encodeURIComponent(contractId)}` +
-                (returnTo ? `&from=${encodeURIComponent(from)}` : "");
-        } catch {
-            error.hidden = false;
+    } else if (contract.orderId) {
+        order = Store.order(contract.orderId);
+    }
+    if (order && Store.toInteger(order.total) !== Store.toInteger(contract.total)) {
+        fail(
+            "Dữ liệu không nhất quán",
+            `Tổng của hợp đồng ${contract.id} (${Store.formatMoney(contract.total)}) khác tổng đơn ${order.id} (${Store.formatMoney(order.total)}). Trang dừng lại thay vì hiển thị số tiền mâu thuẫn.`,
+        );
+        return;
+    }
+
+    const contractPayments = Store.list("payments").filter((item) => item.contractId === contract.id);
+    let paymentRecord = null;
+    if (paymentParam) {
+        paymentRecord = Store.payment(paymentParam);
+        if (!paymentRecord || paymentRecord.contractId !== contract.id) {
+            fail(
+                "Phiên thanh toán không khớp",
+                paymentRecord
+                    ? `Phiên ${paymentRecord.id} không thuộc hợp đồng ${contract.id}.`
+                    : `Không tìm thấy phiên thanh toán ${paymentParam} trong dữ liệu mẫu.`,
+            );
+            return;
         }
+    } else if (contractPayments.length) {
+        const open = contractPayments.filter(
+            (item) => item.status === "unpaid" || item.status === "pending",
+        );
+        paymentRecord = open[0] || contractPayments[contractPayments.length - 1];
+    }
+
+    // Ví đọc theo chủ sở hữu hợp đồng để khớp với trang ví/lịch sử của CÙNG bản ghi;
+    // sessionLearnerId() chỉ là fallback khi hợp đồng thiếu learnerId.
+    const walletOwnerId = contract.learnerId || Store.sessionLearnerId();
+    const wallet = Store.walletSummary(walletOwnerId);
+
+    const total = Store.toInteger(contract.total);
+    const walletUsed = paymentRecord
+        ? Store.toInteger(paymentRecord.walletUsed)
+        : Math.min(wallet.availableToUse, total);
+    const payosDue = paymentRecord ? Store.toInteger(paymentRecord.payosDue) : total - walletUsed;
+    const verified = Boolean(paymentRecord && paymentRecord.status === "verified");
+
+    const feeRate = Number.isFinite(Number(contract.feeRate))
+        ? Number(contract.feeRate)
+        : Store.DEMO_FEE_RATE;
+
+    const item = order && Array.isArray(order.items) && order.items.length ? order.items[0] : null;
+    const tutor = Store.tutor(contract.tutorId);
+    const learner = Store.learner(contract.learnerId);
+    const contractStatus = Store.statusOf(Store.CONTRACT_STATUS, contract.status);
+
+    document.title = `Thanh toán ký quỹ ${contract.id} — Edu Connect`;
+    setText("page-status", contractStatus.label);
+    setText(
+        "contract-line",
+        `${contract.id} · ${item ? item.offeringTitle : "Hợp đồng ký quỹ học phí"}`,
+    );
+
+    setText("breakdown-scale", `${contract.sessions} buổi × ${Store.formatMoney(contract.unitPrice)}`);
+    setText(
+        "breakdown-wallet-note",
+        walletUsed > 0
+            ? `Từ số dư khả dụng ${Store.formatMoney(wallet.availableToUse)}`
+            : "Phiên này không dùng số dư ví",
+    );
+    setText(
+        "breakdown-due-note",
+        payosDue === 0
+            ? "Ví đủ chi trả — không phát sinh khoản trả ngoài"
+            : "Qua cổng PayOS (DEMO)",
+    );
+    setAll("[data-total]", Store.formatMoney(total));
+    setAll("[data-wallet-used]", `${walletUsed > 0 ? "−" : ""}${Store.formatMoney(walletUsed)}`);
+    setAll("[data-due]", Store.formatMoney(payosDue));
+    setText(
+        "breakdown-identity",
+        `${Store.formatMoney(walletUsed)} (ví) + ${Store.formatMoney(payosDue)} (PayOS) = ${Store.formatMoney(total)} (tổng học phí của hợp đồng).`,
+    );
+    setText(
+        "fee-note",
+        `Phí nền tảng hiển thị cho demo là ${Math.round(feeRate * 100)}% trên phần giải ngân cho gia sư, đọc từ feeRate của hợp đồng / DEMO_FEE_RATE. Đây là giả định mẫu chưa được nhóm chốt, không phải chính sách production.`,
+    );
+
+    setText("wallet-available", Store.formatMoney(wallet.availableToUse));
+    setText("wallet-escrow", Store.formatMoney(Store.escrowOf(contract.id)));
+    if (payosDue === 0) {
+        setText("wallet-available-note", "Ví đủ chi trả hợp đồng này, không cần trả thêm ngoài.");
+    }
+
+    setText("sidebar-contract", contract.id);
+    setText("sidebar-initials", tutor ? tutor.initials : "—");
+    setText("sidebar-tutor", tutor ? tutor.name : contract.tutorId);
+    setText(
+        "sidebar-tutor-note",
+        tutor && tutor.profileStatus === "approved" ? "Gia sư đã xác minh" : "Gia sư phụ trách",
+    );
+    setText(
+        "sidebar-student",
+        learner
+            ? learner.studentName && learner.studentName !== learner.name
+                ? `${learner.name} · Học viên: ${learner.studentName}`
+                : learner.name
+            : contract.learnerId || "—",
+    );
+    setText("sidebar-order", order ? order.id : "—");
+    setText("sidebar-course", item ? item.offeringTitle : "—");
+    setText(
+        "sidebar-scale",
+        `${contract.sessions} buổi${item && item.durationMinutes ? ` · ${item.durationMinutes} phút/buổi` : ""}`,
+    );
+    setText("sidebar-fee", `${Store.formatMoney(contract.unitPrice)}/buổi`);
+    setText("sidebar-schedule", item && item.scheduleText ? item.scheduleText : "—");
+    setText(
+        "projection-available",
+        Store.formatMoney(Math.max(0, wallet.availableToUse - walletUsed)),
+    );
+    setText("projection-escrow", Store.formatMoney(total));
+
+    const consent = byId("payment-consent");
+    const payButton = byId("pay-button");
+    payButton.textContent = verified
+        ? "Xem kết quả thanh toán"
+        : payosDue > 0
+          ? `Thanh toán qua PayOS (DEMO) · ${Store.formatMoney(payosDue)}`
+          : "Xác nhận dùng ví · Không phát sinh khoản trả ngoài";
+    consent.addEventListener("change", () => {
+        payButton.disabled = !consent.checked;
     });
-    document.getElementById("view-terms").addEventListener("click", () => {
+
+    byId("payment-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!consent.checked) {
+            consent.focus();
+            return;
+        }
+        byId("payment-loading").hidden = false;
+        payButton.disabled = true;
+        if (verified) {
+            Route.go("paymentResult", { id: paymentRecord.id, status: "success" });
+            return;
+        }
+        Route.go(
+            "paymentQr",
+            paymentRecord
+                ? { contract: contract.id, payment: paymentRecord.id }
+                : { contract: contract.id },
+        );
+    });
+
+    byId("view-terms").addEventListener("click", () => {
+        const policy = Store.DEMO_REFUND_POLICY.beforeFirstSession;
         window.EduModal.open("shared-modal", {
-            title: "Điều khoản ký quỹ",
-            message: `Tổng ký quỹ là ${money(contract.total)} cho ${contract.sessions} buổi học. Sử dụng ${money(
-                contract.wallet,
-            )} từ số dư ví và thanh toán ${money(contract.due)} qua PayOS. Tiền được giữ theo hợp đồng và giải ngân theo từng buổi đã được xác nhận. Yêu cầu thay đổi lịch hoặc hoàn tiền được xem xét theo điều khoản hai bên đã thống nhất.`,
+            title: "Điều khoản ký quỹ (demo)",
+            message: `Tổng ký quỹ là ${Store.formatMoney(total)} cho ${contract.sessions} buổi học. Phiên này dùng ${Store.formatMoney(walletUsed)} từ ví và ${Store.formatMoney(payosDue)} qua PayOS (DEMO). Tiền được giữ ký quỹ và giải ngân từng buổi sau khi buổi học được xác nhận; phí nền tảng demo ${Math.round(feeRate * 100)}% là giả định chưa chốt. Chính sách hoàn hủy demo "${policy.label}": ${policy.note}`,
             variant: "info",
         });
     });
-    document.getElementById("view-contract").addEventListener("click", () => {
+
+    byId("view-contract").addEventListener("click", () => {
         window.EduModal.open("shared-modal", {
-            title: `Hợp đồng ${contractId}`,
-            message: `Phụ huynh: ${contract.guardian} · Học viên: ${contract.student} · Gia sư: ${
-                contract.tutor
-            }. ${contract.course}, học trực tiếp, ${contract.sessions} buổi × ${contract.minutes} phút. Lịch dự kiến: ${contract.schedule[0]}, ${contract.schedule[1]}. Học phí: ${money(
-                contract.fee,
-            )}/buổi. Trạng thái: ${contract.status}.`,
+            title: `Hợp đồng ${contract.id}`,
+            message: `Người học: ${learner ? learner.name : contract.learnerId} · Gia sư: ${tutor ? tutor.name : contract.tutorId}. ${item ? `${item.offeringTitle}. ` : ""}${contract.sessions} buổi × ${Store.formatMoney(contract.unitPrice)}. Tổng ký quỹ ${Store.formatMoney(total)}, trong đó ${Store.formatMoney(walletUsed)} từ ví và ${Store.formatMoney(payosDue)} qua PayOS (DEMO). Trạng thái hợp đồng: ${contractStatus.label}.`,
             variant: "info",
         });
     });

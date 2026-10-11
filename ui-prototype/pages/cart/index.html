@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
+    <title>Giỏ đăng ký | Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
+    <link rel="stylesheet" href="../../css/components/layout/page-header.css">
+    <link rel="stylesheet" href="../../css/components/data-display/card.css">
+    <link rel="stylesheet" href="../../css/components/data-display/info-row.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
+    <link rel="stylesheet" href="../../css/components/feedback/modal.css">
+    <link rel="stylesheet" href="../../css/components/feedback/toast.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+    <link rel="stylesheet" href="../../css/components/form/radio.css">
+    <link rel="stylesheet" href="../../css/pages/cart/index.css">
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
+    <script src="../../js/core/user-header.js" defer></script>
+    <script src="../../js/core/modal.js" defer></script>
+    <script src="../../js/core/toast.js" defer></script>
+    <script src="../../js/pages/cart/index.js" defer></script>
+</head>
+<body class="cart-page">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
+<div class="user-shell" data-component="user-shell" data-cart-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
+    <header class="user-header" data-component="user-header" data-user-variant="B" data-active-nav="none">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="../../pages/chat/messages.html" aria-label="Tin nhắn" title="Tin nhắn">
+                <img src="../../assets/icons/message.svg" alt="">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>0 ₫</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="../../pages/account/profile.html" role="menuitem" data-menu-item="0">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt="">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <main class="user-shell__main">
+        <div class="user-shell__content cart-page__content">
+            <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
+            <header class="page-header">
+                <div class="page-header__title-block">
+                    <h1 class="page-header__title">Giỏ đăng ký</h1>
+                    <p class="page-header__description">Giả định demo: mỗi dòng mang “số chỗ” = số học viên đăng ký; dịch vụ 1 kèm 1 mặc định 1 chỗ, không dùng số lượng như hàng hóa.</p>
+                </div>
+            </header>
+
+            <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+            <section class="empty-state cart-empty" data-cart-empty hidden aria-labelledby="cart-empty-title">
+                <span class="empty-state__icon" aria-hidden="true"></span>
+                <h2 class="empty-state__title" id="cart-empty-title">Giỏ đăng ký trống</h2>
+                <p class="empty-state__description">Thêm dịch vụ hoặc lớp nhóm từ trang chi tiết để bắt đầu đăng ký.</p>
+                <div class="cart-empty__actions">
+                    <a class="button button--primary button--medium" href="../../pages/tutor/search.html">Tìm gia sư</a>
+                    <a class="button button--outline button--medium" href="../../pages/home.html">Về trang chủ</a>
+                </div>
+            </section>
+
+            <div class="cart-layout" data-cart-layout>
+                <div class="cart-list" data-cart-list aria-label="Các dòng trong giỏ đăng ký"></div>
+
+                <aside class="cart-aside">
+                    <!-- Component: Card, InfoRow, Badge, Button, Alert | Nguồn: components/data-display/{card,info-row}.html; components/feedback/{badge,alert}.html; components/action/button.html -->
+                    <section class="card cart-summary" aria-labelledby="cart-summary-title">
+                        <h2 id="cart-summary-title">Tóm tắt đơn</h2>
+                        <span class="badge badge--neutral cart-summary__demo">Bản xem trước · Giao dịch mô phỏng</span>
+                        <dl class="cart-summary__info">
+                            <div class="info-row"><dt class="info-row__label">Số dòng</dt><dd class="info-row__value" data-cart-lines>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Tổng số chỗ / học viên</dt><dd class="info-row__value" data-cart-seats-count>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Tổng tạm tính</dt><dd class="info-row__value cart-summary__total" data-cart-total>—</dd></div>
+                            <div class="info-row" data-cart-learner-row><dt class="info-row__label">Học viên</dt><dd class="info-row__value" data-cart-learner>—</dd></div>
+                        </dl>
+
+                        <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
+                        <div class="alert cart-summary__alert" data-cart-learner-alert hidden role="status">
+                            <span class="alert__icon" aria-hidden="true"></span>
+                            <div class="alert__content">
+                                <h3 class="alert__title">Phiên demo không phải học viên</h3>
+                                <p class="alert__message">Đăng nhập bằng persona học viên để tiến hành đăng ký. <a href="../../pages/auth/login.html" data-learner-login-link>Tới trang đăng nhập</a></p>
+                            </div>
+                        </div>
+
+                        <div class="cart-summary__actions">
+                            <button class="button button--primary button--medium" type="button" data-checkout>Tiến hành đăng ký</button>
+                            <a class="button button--outline button--medium" href="../../pages/tutor/search.html">Tiếp tục tìm dịch vụ</a>
+                            <button class="button button--ghost button--medium" type="button" data-clear-cart>Xóa toàn bộ giỏ</button>
+                        </div>
+                        <p class="cart-summary__note">Tổng tạm tính đọc từ giỏ trong store mẫu; giá và điều khoản chốt nằm ở hợp đồng sau khi tạo đơn.</p>
+                    </section>
+
+                    <div class="cart-issues" data-checkout-issues role="region" aria-label="Vấn đề cần xử lý trước khi đăng ký" hidden></div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Component: Modal | Nguồn: components/feedback/modal.html; JS: js/core/modal.js -->
+    <dialog class="modal" id="clear-cart-modal" aria-labelledby="clear-cart-title" aria-describedby="clear-cart-description">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--danger" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="clear-cart-title">Xóa toàn bộ giỏ?</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body"><p id="clear-cart-description">Tất cả dòng trong giỏ đăng ký sẽ bị xóa và không khôi phục được trong phiên demo này.</p></div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--ghost" type="button" data-modal-close>Giữ lại</button>
+                <button class="modal__button modal__button--danger" type="button" data-modal-confirm>Xóa tất cả</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
+    <footer class="user-footer" data-component="user-footer">
+    <div class="user-footer__inner">
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
+        <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
+        <p class="user-footer__copyright">© 2026 Edu Connect</p>
+    </div>
+</footer>
+</div>
+</body>
+</html>

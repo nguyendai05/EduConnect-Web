@@ -1,147 +1,127 @@
-/* Preview only. No bank payload, network payment or wallet mutation is performed. */
+/**
+ * Trang QR DEMO: không payload ngân hàng dùng được, không link thanh toán thật,
+ * không copy nội dung tài khoản ngân hàng thật (tài khoản/nội dung đều là giá trị DEMO).
+ * Số tiền và reference đọc từ EduStore theo đúng contract/payment của URL.
+ * Hủy ở đây CHỈ hủy PHIÊN QR (payment → cancelled), không đổi trạng thái order/contract.
+ * Link "Tôi đã chuyển khoản" dẫn tới result với status=pending — status chỉ là presentation,
+ * trang result tự đọc bản ghi thật trong store.
+ */
 (() => {
-    const key = "edu-payment-preview";
+    const Route = window.EduRoute;
+    const Store = window.EduStore;
     const byId = (id) => document.getElementById(id);
-    const money = (value) => new Intl.NumberFormat("vi-VN").format(value) + " ₫";
-    // Page-only payment fixtures; amounts must match the checkout and wallet statement.
-    // Totals come from contract/confirm.js (fee × sessions) minus the wallet deduction.
-    const contracts = {
-        "HD-20260926-025": {
-            title: "Học Toán cùng Nguyễn Minh Anh",
-            total: 1760000,
-            wallet: 340000,
-            due: 1420000,
-            reference: "ECX 26092602501",
-        },
-        "HD-20260926-018": {
-            title: "Luyện Tiếng Anh cùng Trần Quốc Huy",
-            total: 2700000,
-            wallet: 340000,
-            due: 2360000,
-            reference: "ECX 26092601801",
-        },
-        "HD-20260926-011": {
-            title: "Học Ngữ văn cùng Lê Thảo Vy",
-            total: 2160000,
-            wallet: 340000,
-            due: 1820000,
-            reference: "ECX 26092601101",
-        },
-        "HD-20260926-005": {
-            title: "Luyện thi Toán cùng Phạm Hoàng Long",
-            total: 3200000,
-            wallet: 340000,
-            due: 2860000,
-            reference: "ECX 26092600501",
-        },
-    };
-    const params = new URLSearchParams(location.search);
-    const requested = params.get("contract") || params.get("id");
-    // No silent fallback: an unknown or missing code stops the flow instead of opening another contract.
-    const contractId = requested && Object.hasOwn(contracts, requested) ? requested : null;
-    const confirmHref = `../contract/confirm.html${
-        contractId ? `?contract=${encodeURIComponent(contractId)}` : ""
-    }`;
+
+    const contractParam = Route.param("contract", "paymentQr");
+    const paymentParam = Route.param("payment", "paymentQr");
+    const statusEl = byId("status");
+    const restart = byId("restart");
     const brand = document.querySelector(".merchant-brand");
-    if (!contractId) {
-        document.title = "Không tìm thấy hợp đồng — Edu Connect";
-        byId("contract").textContent = requested
-            ? `Không tìm thấy hợp đồng ${requested}`
-            : "Liên kết thanh toán thiếu mã hợp đồng";
+
+    const contract = contractParam ? Store.contract(contractParam) : null;
+
+    const fail = (message, backHref, backLabel) => {
+        document.title = "Không mở được phiên thanh toán — Edu Connect";
+        byId("contract").textContent = contractParam || "—";
+        byId("payment-id").textContent = "—";
         byId("amount").textContent = "—";
         byId("reference").textContent = "—";
-        document.querySelector(".instructions").textContent = requested
-            ? `Không có phiên thanh toán nào cho hợp đồng ${requested}. Chưa có khoản tiền nào bị trừ.`
-            : "Liên kết mở trang thanh toán thiếu mã hợp đồng. Chưa có khoản tiền nào bị trừ.";
-        // Only the contract line stays: no QR, no account and no amount to transfer.
+        byId("instructions").textContent = message;
+        byId("demo-marker").hidden = true;
         document.querySelector(".qr-panel").hidden = true;
         document.querySelector(".bank-name").hidden = true;
-        document.querySelectorAll(".bank-details dl > div").forEach((row, index) => {
-            row.hidden = index > 0;
+        document.querySelectorAll(".bank-details dl > div").forEach((row) => {
+            row.hidden = true;
         });
-        document.querySelector(".notice").hidden = true;
+        byId("notice").hidden = true;
+        byId("cancel-note").hidden = true;
+        byId("session-timer").hidden = true;
         byId("cancel").hidden = true;
         byId("reconcile").hidden = true;
-        byId("status").textContent = requested
-            ? `Không tìm thấy hợp đồng ${requested} trong danh sách ký quỹ của bạn.`
-            : "Liên kết mở trang thanh toán thiếu mã hợp đồng.";
-        const fromDetail = params.get("from") === "contract-detail";
-        const restart = byId("restart");
+        statusEl.textContent = message;
         restart.hidden = false;
-        restart.textContent = fromDetail ? "Quay lại hợp đồng" : "Về trang xác nhận hợp đồng";
-        restart.href = fromDetail
-            ? `../contract/student-detail.html?id=${encodeURIComponent(requested || "")}`
-            : confirmHref;
-        if (brand) brand.href = confirmHref;
-        return;
-    }
-    const expected = contracts[contractId];
-    const isMine = (value) =>
-        value &&
-        value.contract === contractId &&
-        value.total === expected.total &&
-        value.wallet === expected.wallet &&
-        value.due === expected.due &&
-        Number.isFinite(value.expiresAt) &&
-        typeof value.reference === "string";
-    let attempt;
-    try {
-        const stored = JSON.parse(sessionStorage.getItem(key) || "null");
-        // A stored attempt is only reused when it matches this contract and its amounts.
-        attempt = isMine(stored) ? stored : null;
-    } catch {
-        attempt = null;
-    }
-    if (!attempt) {
-        attempt = {
-            reference: expected.reference,
-            contract: contractId,
-            contractTitle: expected.title,
-            total: expected.total,
-            wallet: expected.wallet,
-            due: expected.due,
-            expiresAt: Date.now() + 15 * 60 * 1000,
-            state: "pending",
-            from: params.get("from"),
-        };
-        try {
-            sessionStorage.setItem(key, JSON.stringify(attempt));
-        } catch {
-            // The page can still display its default payment information.
-        }
-    }
-    if (!isMine(attempt)) {
-        byId("status").textContent = "Không thể tải thông tin thanh toán.";
-        return;
-    }
-    const resultUrl = (status) => {
-        const query = new URLSearchParams({ status, id: contractId, preview: "1" });
-        if (attempt.from) query.set("from", attempt.from);
-        return `result.html?${query.toString()}`;
+        restart.textContent = backLabel;
+        restart.href = backHref;
+        if (brand) brand.href = backHref;
     };
-    const checkoutUrl = () =>
-        `checkout.html?contract=${encodeURIComponent(contractId)}${
-            attempt.from ? `&from=${encodeURIComponent(attempt.from)}` : ""
-        }`;
-    document.title = `Thanh toán ký quỹ ${contractId} qua payOS | Edu Connect`;
-    // The brand link must return to this contract's checkout step, not to a default one.
-    if (brand) brand.href = checkoutUrl();
-    byId("contract").textContent = `${contractId} · ${expected.title}`;
-    byId("amount").textContent = money(attempt.due);
-    byId("reference").textContent = attempt.reference;
-    byId("reconcile").href = resultUrl("pending");
-    // Decorative matrix deliberately contains no valid payment data.
-    const svg = byId("qr-preview");
-    const square = (x, y, size, fill) => {
-        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        Object.entries({ x, y, width: size, height: size, fill }).forEach(([name, value]) =>
-            rect.setAttribute(name, value),
+
+    if (!contract) {
+        fail(
+            contractParam
+                ? `Không tìm thấy hợp đồng ${contractParam} trong dữ liệu mẫu. Trang không hiển thị hợp đồng khác thay thế; chưa có khoản tiền nào bị trừ.`
+                : "Liên kết mở trang QR thiếu mã hợp đồng. Chưa có khoản tiền nào bị trừ.",
+            contractParam
+                ? Route.page("paymentCheckout", { contract: contractParam })
+                : Route.page("contractConfirm"),
+            contractParam ? "Quay lại trang thanh toán" : "Về trang xác nhận hợp đồng",
         );
+        return;
+    }
+
+    const checkoutHref = Route.page("paymentCheckout", { contract: contract.id });
+    if (brand) brand.href = checkoutHref;
+
+    let paymentRecord = null;
+    if (paymentParam) {
+        paymentRecord = Store.payment(paymentParam);
+        if (!paymentRecord || paymentRecord.contractId !== contract.id) {
+            fail(
+                paymentRecord
+                    ? `Phiên thanh toán ${paymentRecord.id} không thuộc hợp đồng ${contract.id}. Trang không ghép chéo bản ghi.`
+                    : `Không tìm thấy phiên thanh toán ${paymentParam} trong dữ liệu mẫu.`,
+                checkoutHref,
+                "Quay lại trang thanh toán hợp đồng",
+            );
+            return;
+        }
+    } else {
+        const candidates = Store.list("payments").filter((item) => item.contractId === contract.id);
+        paymentRecord =
+            candidates.find((item) => item.status === "unpaid" || item.status === "pending") ||
+            candidates[candidates.length - 1] ||
+            null;
+    }
+    if (!paymentRecord) {
+        fail(
+            `Hợp đồng ${contract.id} chưa có phiên thanh toán nào trong dữ liệu mẫu. Chưa có khoản tiền nào bị trừ.`,
+            checkoutHref,
+            "Quay lại trang thanh toán hợp đồng",
+        );
+        return;
+    }
+
+    const order = contract.orderId ? Store.order(contract.orderId) : null;
+    const item = order && Array.isArray(order.items) && order.items.length ? order.items[0] : null;
+    const due = Store.toInteger(paymentRecord.payosDue);
+    const reference = `EDU-DEMO ${paymentRecord.id}`;
+    const paymentStatus = Store.statusOf(Store.PAYMENT_STATUS, paymentRecord.status);
+    const live = paymentRecord.status === "unpaid" || paymentRecord.status === "pending";
+
+    document.title = `Thanh toán ký quỹ ${contract.id} qua payOS (DEMO) | Edu Connect`;
+    byId("contract").textContent = `${contract.id}${item ? ` · ${item.offeringTitle}` : ""}`;
+    byId("payment-id").textContent = paymentRecord.id;
+    byId("amount").textContent = Store.formatMoney(due);
+    byId("reference").textContent = reference;
+    byId("reconcile").href = Route.page("paymentResult", {
+        id: paymentRecord.id,
+        status: live ? "pending" : undefined,
+    });
+
+    // QR trang trí: ma trận sinh theo mã phiên, chỉ mang tính minh họa, KHÔNG phải payload VietQR/ngân hàng.
+    const svg = byId("qr-preview");
+    const NS = "http://www.w3.org/2000/svg";
+    const seed = Array.from(paymentRecord.id).reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
+    const square = (x, y, size, className) => {
+        const rect = document.createElementNS(NS, "rect");
+        rect.setAttribute("x", x);
+        rect.setAttribute("y", y);
+        rect.setAttribute("width", size);
+        rect.setAttribute("height", size);
+        rect.setAttribute("class", className);
         svg.append(rect);
     };
     for (let y = 2; y < 31; y++) {
         for (let x = 2; x < 31; x++) {
-            if ((x * 17 + y * 11 + x * y) % 7 < 3) square(x, y, 1, "#172b40");
+            if ((x * 17 + y * 11 + x * y + seed) % 7 < 3) square(x, y, 1, "qr-on");
         }
     }
     [
@@ -149,66 +129,100 @@
         [24, 2],
         [2, 24],
     ].forEach(([x, y]) => {
-        square(x - 1, y - 1, 9, "white");
-        square(x, y, 7, "#172b40");
-        square(x + 1, y + 1, 5, "white");
-        square(x + 2, y + 2, 3, "#172b40");
+        square(x - 1, y - 1, 9, "qr-off");
+        square(x, y, 7, "qr-on");
+        square(x + 1, y + 1, 5, "qr-off");
+        square(x + 2, y + 2, 3, "qr-on");
     });
-    square(11, 13, 11, "white");
-    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    square(11, 13, 11, "qr-off");
+    const label = document.createElementNS(NS, "text");
     label.setAttribute("x", "16.5");
     label.setAttribute("y", "19");
     label.setAttribute("text-anchor", "middle");
     label.setAttribute("font-size", "3");
+    label.setAttribute("class", "qr-label");
     label.textContent = "DEMO";
     svg.append(label);
-    const save = () => {
-        try {
-            sessionStorage.setItem(key, JSON.stringify(attempt));
-        } catch {
-            // Preview state is lost when storage is unavailable; nothing else changes.
+
+    const dialog = byId("qr-modal");
+    const timerEl = byId("session-timer");
+    let timer = null;
+
+    const endSessionView = (message) => {
+        byId("cancel").hidden = true;
+        timerEl.hidden = true;
+        if (timer) clearInterval(timer);
+        statusEl.textContent = message;
+    };
+
+    if (!live) {
+        statusEl.textContent = `Phiên ${paymentRecord.id} đang ở trạng thái "${paymentStatus.label}". Không thể quét lại phiên này.`;
+        byId("cancel").hidden = true;
+        byId("reconcile").textContent = "Xem kết quả phiên";
+        byId("reconcile").href = Route.page("paymentResult", { id: paymentRecord.id });
+        timerEl.hidden = true;
+    } else {
+        if (due === 0) {
+            statusEl.textContent =
+                "Ví đã đủ chi trả: không phát sinh khoản trả ngoài, không cần chuyển khoản.";
         }
-    };
-    const disable = (message) => {
-        document.querySelectorAll("button").forEach((button) => (button.disabled = true));
-        byId("reconcile").hidden = true;
-        byId("status").textContent = message;
-        byId("restart").hidden = false;
-        byId("restart").href = checkoutUrl();
-    };
-    const tick = () => {
-        const seconds = Math.max(0, Math.ceil((attempt.expiresAt - Date.now()) / 1000));
-        if (attempt.state !== "pending") {
-            disable("Phiên thanh toán đã kết thúc.");
-            return;
-        }
-        if (!seconds) {
-            attempt.state = "expired";
-            save();
-            disable("Phiên đã hết hạn. Khoản ví tạm giữ được hoàn lại theo luồng thanh toán.");
-        }
-    };
-    const finish = (state) => {
-        tick();
-        if (attempt.state !== "pending") return;
-        attempt.state = state;
-        attempt.completedAt = Date.now();
-        save();
-        location.href = resultUrl(state);
-    };
-    byId("cancel").addEventListener("click", () => finish("cancelled"));
+        // Đồng hồ phiên chỉ phục vụ trình diễn; hết giờ KHÔNG mutate store.
+        const deadline = Date.now() + 15 * 60 * 1000;
+        const renderTimer = () => {
+            const seconds = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+            timerEl.textContent = `Phiên mô phỏng còn lại ${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+            if (!seconds) {
+                endSessionView(
+                    "Phiên mô phỏng đã hết thời gian hiển thị. Bản ghi thanh toán không thay đổi; tải lại trang hoặc quay lại bước thanh toán để mở phiên mới.",
+                );
+            }
+        };
+        renderTimer();
+        timer = setInterval(renderTimer, 1000);
+        window.addEventListener("pagehide", () => clearInterval(timer), { once: true });
+
+        byId("cancel").addEventListener("click", () => {
+            window.EduModal.open(dialog, {
+                title: "Hủy phiên thanh toán",
+                message: `Chỉ hủy PHIÊN QR ${paymentRecord.id} của hợp đồng ${contract.id}. Đơn đăng ký và hợp đồng KHÔNG bị hủy; bạn có thể mở lại thanh toán sau.`,
+                confirmText: "Hủy phiên QR",
+                cancelText: "Giữ phiên",
+                variant: "danger",
+            });
+        });
+        dialog.addEventListener("modal:confirm", () => {
+            const result = Store.once(`qr-session-cancel:${paymentRecord.id}`, () =>
+                Store.mutate((draft) => {
+                    const record = draft.payments.find((item2) => item2.id === paymentRecord.id);
+                    if (!record) return { ok: false, reason: "unknown-payment" };
+                    if (record.status !== "unpaid" && record.status !== "pending") {
+                        return { ok: false, reason: "not-cancellable" };
+                    }
+                    record.status = "cancelled";
+                    record.note = "Người dùng hủy PHIÊN QR — đơn và hợp đồng không bị hủy.";
+                    return { data: { paymentId: record.id } };
+                }),
+            );
+            if (result && result.ok) {
+                Route.go("paymentResult", { id: paymentRecord.id, status: "cancelled" });
+                return;
+            }
+            statusEl.textContent =
+                result && result.duplicated
+                    ? "Phiên này đã bị hủy trước đó; không ghi nhận thao tác trùng."
+                    : "Không thể hủy phiên: bản ghi không còn ở trạng thái chờ.";
+        });
+    }
+
     document.querySelectorAll("[data-copy]").forEach((button) => {
         button.addEventListener("click", async () => {
-            const text = button.dataset.copy === "amount" ? String(attempt.due) : attempt.reference;
+            const value = button.dataset.copy === "amount" ? String(due) : reference;
             try {
-                await navigator.clipboard.writeText(text);
-                byId("status").textContent = "Đã sao chép: " + text;
+                await navigator.clipboard.writeText(value);
+                statusEl.textContent = `Đã sao chép nội dung demo: ${value}`;
             } catch {
-                byId("status").textContent = "Vui lòng sao chép thủ công: " + text;
+                statusEl.textContent = `Vui lòng sao chép thủ công: ${value}`;
             }
         });
     });
-    tick();
-    const timer = setInterval(tick, 1000);
-    window.addEventListener("pagehide", () => clearInterval(timer), { once: true });
 })();

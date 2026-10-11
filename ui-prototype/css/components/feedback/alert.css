@@ -1,6 +1,6 @@
 .alert { --alert-color: var(--color-info); --alert-background: var(--color-paper); --alert-icon: url("../../../assets/icons/info-circle.svg"); display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); border: 1px solid color-mix(in srgb, var(--alert-color), transparent 75%); border-radius: var(--radius-md); background: var(--alert-background); }
-.alert--success { --alert-color: var(--color-success); --alert-background: var(--color-success-container); --alert-icon: url("../../../assets/icons/check-circle.svg"); }
-.alert--warning { --alert-color: var(--color-warning); --alert-background: var(--color-warning-container); --alert-icon: url("../../../assets/icons/warning-triangle.svg"); }
+.alert--success { --alert-color: var(--color-success-text); --alert-background: var(--color-success-container); --alert-icon: url("../../../assets/icons/check-circle.svg"); }
+.alert--warning { --alert-color: var(--color-warning-text); --alert-background: var(--color-warning-container); --alert-icon: url("../../../assets/icons/warning-triangle.svg"); }
 .alert--error { --alert-color: var(--color-danger); --alert-background: var(--color-danger-container); --alert-icon: url("../../../assets/icons/error-circle.svg"); }
 .alert__icon { flex: 0 0 1.25rem; height: 1.25rem; margin-top: 2px; background: var(--alert-color); -webkit-mask: var(--alert-icon) center / contain no-repeat; mask: var(--alert-icon) center / contain no-repeat; }
 .alert__content { min-width: 0; overflow-wrap: anywhere; }
@@ -22,13 +22,13 @@
 }
 
 .alert--contextual.alert--success {
-  --alert-color: var(--color-success);
+  --alert-color: var(--color-success-text);
   --alert-context-background: var(--color-success-container);
   --alert-context-border: color-mix(in srgb, var(--color-success), transparent 55%);
 }
 
 .alert--contextual.alert--warning {
-  --alert-color: var(--color-warning);
+  --alert-color: var(--color-warning-text);
   --alert-context-background: var(--color-warning-container);
   --alert-context-border: color-mix(in srgb, var(--color-warning), transparent 55%);
 }

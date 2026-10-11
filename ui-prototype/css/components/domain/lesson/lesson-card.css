@@ -9,13 +9,13 @@
     background: var(--color-surface);
 }
 .lesson-card--pending {
-    --lesson-status: var(--color-warning);
+    --lesson-status: var(--color-warning-text);
 }
 .lesson-card--completed {
-    --lesson-status: var(--color-success);
+    --lesson-status: var(--color-success-text);
 }
 .lesson-card--cancelled {
-    --lesson-status: var(--color-danger);
+    --lesson-status: var(--color-danger-text);
 }
 .lesson-card__icon {
     flex: 0 0 2rem;
@@ -61,7 +61,7 @@
 }
 .lesson-card__detail {
     margin-top: var(--space-3);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-xs);
 }
 @media (max-width: 480px) {

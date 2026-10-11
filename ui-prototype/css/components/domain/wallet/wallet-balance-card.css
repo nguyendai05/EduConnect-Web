@@ -9,20 +9,20 @@
     background: var(--color-surface);
 }
 .wallet-balance-card--escrow {
-    --balance-color: var(--color-warning);
+    --balance-color: var(--color-warning-text);
     --balance-icon: url("../../../../assets/icons/lock.svg");
 }
 .wallet-balance-card--available {
     background: var(--color-ink);
     border-color: var(--color-ink);
-    --balance-color: var(--color-accent);
+    --balance-color: var(--color-on-ink);
 }
 .wallet-balance-card--available .wallet-balance-card__title,
 .wallet-balance-card--available .wallet-balance-card__description {
     color: var(--color-on-ink);
 }
 .wallet-balance-card--pending {
-    --balance-color: var(--color-text-muted);
+    --balance-color: var(--color-text-secondary);
     --balance-icon: url("../../../../assets/icons/clock.svg");
 }
 .wallet-balance-card__header {
@@ -54,7 +54,7 @@
     font-size: var(--font-size-xl);
 }
 .wallet-balance-card__description {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-sm);
 }
 

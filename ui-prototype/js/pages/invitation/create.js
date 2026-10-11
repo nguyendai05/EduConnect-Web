@@ -1,82 +1,102 @@
+/* Trang tạo lời mời: danh sách gia sư + dịch vụ/lớp lấy từ EduStore (một nguồn). */
 (() => {
   const root = document.querySelector('[data-invitation-create-page]')
   if (!root) return
 
-  const currency = value => `${new Intl.NumberFormat('vi-VN').format(value)} ₫`
+  const Store = window.EduStore
+  if (!Store) return
 
-  const TUTORS = {
-    'GS-01': {
-      id: 'GS-01', name: 'Nguyễn Minh Anh', initials: 'MA', subjects: 'Toán · Vật lý',
-      rating: '4,9', ratingCount: 126, experience: '5 năm kinh nghiệm', classes: '84 lớp đã dạy',
-      location: 'Thủ Đức, TP. Hồ Chí Minh', district: 'Thủ Đức', delivery: 'Dạy tại nhà & trực tuyến',
-      availability: 'Thứ 2 (18:00–21:00), Thứ 4 (18:00–21:00), Thứ 6 (18:30–21:00), Thứ 7 (08:00–11:30)',
-      invite: 'INV-20261009-024',
-      plans: [
-        { subject: 'Toán', grade: 'THPT', price: 200000 },
-        { subject: 'Toán', grade: 'THCS', price: 180000 },
-        { subject: 'Vật lý', grade: 'THPT', price: 220000 }
-      ]
-    },
-    'GS-02': {
-      id: 'GS-02', name: 'Trần Quốc Huy', initials: 'QH', subjects: 'Tiếng Anh · IELTS',
-      rating: '4,8', ratingCount: 89, experience: '4 năm kinh nghiệm', classes: '62 lớp đã dạy',
-      location: 'Quận 7, TP. Hồ Chí Minh', district: 'Quận 7', delivery: 'Dạy trực tuyến & tại nhà',
-      availability: 'Thứ 3 (19:00–21:00), Thứ 5 (19:00–21:00), Thứ 7 (09:00–11:30), Chủ nhật (09:00–11:30)',
-      invite: 'INV-20261009-018',
-      plans: [
-        { subject: 'Tiếng Anh', grade: 'THPT', price: 250000 },
-        { subject: 'IELTS', grade: 'Người đi làm', price: 300000 },
-        { subject: 'Tiếng Anh', grade: 'THCS', price: 220000 }
-      ]
-    },
-    'GS-03': {
-      id: 'GS-03', name: 'Lê Thảo Vy', initials: 'TV', subjects: 'Ngữ văn · Luyện viết',
-      rating: '4,9', ratingCount: 61, experience: '3 năm kinh nghiệm', classes: '45 lớp đã dạy',
-      location: 'Bình Thạnh, TP. Hồ Chí Minh', district: 'Bình Thạnh', delivery: 'Dạy tại nhà',
-      availability: 'Thứ 3 (18:00–20:30), Thứ 5 (18:00–20:30), Thứ 7 (08:00–11:00)',
-      invite: 'INV-20261009-011',
-      plans: [
-        { subject: 'Ngữ văn', grade: 'THCS', price: 180000 },
-        { subject: 'Ngữ văn', grade: 'THPT', price: 200000 },
-        { subject: 'Luyện viết', grade: 'THCS', price: 160000 }
-      ]
-    },
-    'GS-04': {
-      id: 'GS-04', name: 'Phạm Hoàng Long', initials: 'PL', subjects: 'Toán · Vật lý',
-      rating: '5,0', ratingCount: 42, experience: '6 năm kinh nghiệm', classes: '110 lớp đã dạy',
-      location: 'Quận 3, TP. Hồ Chí Minh', district: 'Quận 3', delivery: 'Dạy tại nhà & trực tuyến',
-      availability: 'Thứ 3 (18:30–21:00), Thứ 5 (18:30–21:00), Thứ 7 (08:00–11:30)',
-      invite: 'INV-20261009-005',
-      plans: [
-        { subject: 'Toán', grade: 'Luyện thi', price: 300000 },
-        { subject: 'Toán', grade: 'THPT', price: 280000 },
-        { subject: 'Vật lý', grade: 'THPT', price: 260000 }
-      ]
+  const params = new URLSearchParams(window.location.search)
+  const requestedOfferingId = params.get('offeringId') || params.get('offering')
+  const requestedTutorId = params.get('tutorId') || params.get('tutor')
+
+  const DELIVERY_LABEL = { both: 'Dạy tại nhà & trực tuyến', home: 'Dạy tại nhà', online: 'Dạy trực tuyến' }
+
+  const listableOfferings = Store.list('offerings').filter(offering => Store.isPubliclyListable(offering))
+  const offeringsById = new Map(listableOfferings.map(offering => [offering.id, offering]))
+
+  const form = root.querySelector('[data-invitation-form]')
+  const notFound = root.querySelector('[data-invitation-not-found]')
+  const notFoundTitle = root.querySelector('[data-not-found-title]')
+  const notFoundMessage = root.querySelector('[data-not-found-message]')
+  const notFoundBack = root.querySelector('[data-not-found-back]')
+
+  const showNotFound = (title, message) => {
+    if (form) form.hidden = true
+    if (notFound) {
+      notFound.hidden = false
+      if (notFoundTitle) notFoundTitle.textContent = title
+      if (notFoundMessage) notFoundMessage.textContent = message
+      if (notFoundBack) notFoundBack.href = window.EduRoute ? window.EduRoute.page('tutorSearch') : '../tutor/search.html'
     }
   }
 
-  const requestedTutor = new URLSearchParams(window.location.search).get('tutor')
-  const tutor = (requestedTutor && TUTORS[requestedTutor]) || TUTORS['GS-01']
+  /* Không fallback về gia sư khác khi deep-link trỏ tới id không tồn tại. */
+  let scopedTutorId = null
+  let initialOffering = null
 
-  const form = root.querySelector('[data-invitation-form]')
+  if (requestedOfferingId) {
+    const offering = offeringsById.get(requestedOfferingId)
+    if (!offering) {
+      showNotFound('Không tìm thấy dịch vụ/lớp',
+        `Mã dịch vụ “${requestedOfferingId}” không tồn tại hoặc không còn mở để gửi lời mời.`)
+      return
+    }
+    if (requestedTutorId && offering.tutorId !== requestedTutorId) {
+      showNotFound('Gia sư và dịch vụ không khớp',
+        `Dịch vụ “${offering.title}” không thuộc gia sư mang mã “${requestedTutorId}”.`)
+      return
+    }
+    scopedTutorId = offering.tutorId
+    initialOffering = offering
+  } else if (requestedTutorId) {
+    const tutor = Store.tutor(requestedTutorId)
+    if (!tutor) {
+      showNotFound('Không tìm thấy gia sư',
+        `Mã gia sư “${requestedTutorId}” không có trong dữ liệu mẫu.`)
+      return
+    }
+    const theirs = listableOfferings.filter(offering => offering.tutorId === requestedTutorId)
+    if (!theirs.length) {
+      showNotFound('Gia sư chưa mở dịch vụ',
+        `${tutor.name} hiện chưa có dịch vụ/lớp công khai để gửi lời mời.`)
+      return
+    }
+    scopedTutorId = requestedTutorId
+    initialOffering = theirs[0]
+  } else {
+    if (!listableOfferings.length) {
+      showNotFound('Chưa có dịch vụ để mời',
+        'Chưa có gia sư nào mở dịch vụ/lớp công khai trong dữ liệu mẫu.')
+      return
+    }
+    scopedTutorId = listableOfferings[0].tutorId
+    initialOffering = listableOfferings[0]
+  }
+
+  const offeringsToShow = scopedTutorId
+    ? listableOfferings.filter(offering => offering.tutorId === scopedTutorId)
+    : listableOfferings
+
   const sessionsInput = root.querySelector('#total-sessions')
   const rateInput = root.querySelector('#rate-input')
   const startInput = root.querySelector('#start-date')
   const messageInput = root.querySelector('#invitation-message')
   const confirmModal = document.querySelector('#confirm-invitation-modal')
-  const successModal = document.querySelector('#invitation-success-modal')
+
   const state = {
-    subject: `${tutor.plans[0].subject} • ${tutor.plans[0].grade}`,
-    listedRate: tutor.plans[0].price,
-    rate: tutor.plans[0].price,
-    sessions: 8,
+    offering: initialOffering,
+    subject: `${initialOffering.subjectLabel} • ${initialOffering.gradeLabel}`,
+    listedRate: initialOffering.price,
+    rate: initialOffering.price,
+    durationMinutes: initialOffering.durationMinutes,
+    sessions: Math.min(initialOffering.sessions, 24),
     frequency: 2,
-    format: `Tại nhà (${tutor.district})`
+    format: `Tại nhà (${initialOffering.district})`
   }
-  let openSuccessAfterClose = false
 
   const formatNumber = value => new Intl.NumberFormat('vi-VN').format(Math.max(0, Number(value) || 0))
-  const formatMoney = value => `${formatNumber(value)} ₫`
+  const formatMoney = value => Store.formatMoney(value)
   const setText = (selector, value) => {
     root.querySelectorAll(selector).forEach(element => { element.textContent = value })
   }
@@ -86,17 +106,9 @@
   }
   const clamp = (value, min, max) => Math.min(max, Math.max(min, Number(value) || min))
 
-  const slugify = value => String(value)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/đ/g, 'd')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-
   const getSchedule = () => {
     const slots = [...root.querySelectorAll('[data-slot]')]
-    if (!slots.length) return 'Chưa chọn khung giờ'
+    if (!slots.length) return state.offering.scheduleText || 'Chưa chọn khung giờ'
     return slots.map(slot => `${slot.dataset.day} (${slot.dataset.time.split('–')[0]})`).join('\n')
   }
 
@@ -115,76 +127,33 @@
     setText('[data-summary-slots]', getSchedule())
   }
 
-  const selectSubject = input => {
-    state.subject = input.dataset.label
-    state.listedRate = Number(input.dataset.rate)
-    state.rate = state.listedRate
-    root.querySelectorAll('[data-subject-card]').forEach(card => {
-      const selected = card.contains(input)
-      card.classList.toggle('is-selected', selected)
-      card.setAttribute('aria-pressed', String(selected))
-    })
-    if (rateInput) rateInput.value = formatNumber(state.rate)
-    setText('[data-listed-subject]', state.subject)
-    setText('[data-listed-rate]', formatMoney(state.listedRate))
-    updateSummary()
+  const subjectLabelsFor = tutorId => {
+    const labels = [...new Set(listableOfferings
+      .filter(offering => offering.tutorId === tutorId)
+      .map(offering => offering.subjectLabel))]
+    return labels.length ? labels.join(' · ') : '—'
   }
 
-  const bindSubjectInputs = () => {
-    root.querySelectorAll('input[name="subject"]').forEach(input => {
-      input.addEventListener('change', () => selectSubject(input))
-    })
+  const availabilityFor = tutorId => {
+    const schedules = [...new Set(listableOfferings
+      .filter(offering => offering.tutorId === tutorId)
+      .map(offering => offering.scheduleText)
+      .filter(Boolean))]
+    return schedules.length ? schedules.join(' · ') : 'Chưa có lịch công khai'
   }
 
-  const renderSubjectCards = () => {
-    const group = root.querySelector('[data-subject-group]')
-    if (!group) return
-    group.querySelectorAll('[data-subject-card]').forEach(card => card.remove())
-    tutor.plans.forEach((plan, index) => {
-      const label = document.createElement('label')
-      label.className = 'card card--interactive invitation-subject'
-      label.dataset.subjectCard = ''
-      const input = document.createElement('input')
-      input.type = 'radio'
-      input.name = 'subject'
-      input.value = slugify(`${plan.subject}-${plan.grade}`)
-      input.dataset.label = `${plan.subject} • ${plan.grade}`
-      input.dataset.rate = String(plan.price)
-      if (index === 0) {
-        input.checked = true
-        label.classList.add('is-selected')
-      }
-      const check = document.createElement('span')
-      check.className = 'invitation-subject__check'
-      check.setAttribute('aria-hidden', 'true')
-      check.textContent = '✓'
-      const title = document.createElement('strong')
-      title.textContent = `${plan.subject} • ${plan.grade}`
-      const price = document.createElement('b')
-      price.textContent = currency(plan.price)
-      const unit = document.createElement('small')
-      unit.textContent = '90 phút / buổi'
-      label.append(input, check, title, price, unit)
-      if (index === 0) {
-        const badge = document.createElement('span')
-        badge.className = 'badge badge--info'
-        badge.textContent = 'Phổ biến nhất'
-        label.append(badge)
-      }
-      group.append(label)
-    })
-    bindSubjectInputs()
-  }
-
-  const prefillTutor = () => {
+  const prefillHero = offering => {
+    const tutor = Store.tutor(offering.tutorId) || { name: offering.tutorId, initials: 'GS', rating: 0, reviewCount: 0, experienceYears: 0, classesTaught: 0, district: offering.district, delivery: 'home' }
     document.title = `Mời ${tutor.name} dạy | Edu Connect`
+
     const breadcrumb = root.querySelector('[data-breadcrumb-tutor]')
     if (breadcrumb) {
       breadcrumb.textContent = tutor.name
-      breadcrumb.href = `../tutor/profile.html?id=${encodeURIComponent(tutor.id)}`
+      breadcrumb.href = `../tutor/profile.html?id=${encodeURIComponent(tutor.id || offering.tutorId)}`
     }
     const backLink = root.querySelector('[data-back-link]')
-    if (backLink) backLink.href = `../tutor/profile.html?id=${encodeURIComponent(tutor.id)}`
+    if (backLink) backLink.href = `../tutor/profile.html?id=${encodeURIComponent(tutor.id || offering.tutorId)}`
+
     const heading = root.querySelector('[data-create-heading]')
     if (heading) heading.textContent = `Mời ${tutor.name} dạy`
     const avatar = root.querySelector('[data-create-avatar]')
@@ -193,14 +162,15 @@
       avatar.setAttribute('aria-label', `Ảnh đại diện ${tutor.name}`)
     }
     setText('[data-create-name]', tutor.name)
-    setText('[data-create-subjects]', tutor.subjects)
-    setText('[data-create-rating]', tutor.rating)
-    setText('[data-create-rating-count]', `(${tutor.ratingCount} đánh giá)`)
-    setText('[data-create-experience]', tutor.experience)
-    setText('[data-create-classes]', tutor.classes)
-    setText('[data-create-location]', tutor.location)
-    setText('[data-create-delivery]', tutor.delivery)
-    setText('[data-tutor-availability]', tutor.availability)
+    setText('[data-create-subjects]', subjectLabelsFor(offering.tutorId))
+    setText('[data-create-rating]', formatNumber(tutor.rating))
+    setText('[data-create-rating-count]', `(${tutor.reviewCount} đánh giá)`)
+    setText('[data-create-experience]', `${tutor.experienceYears} năm kinh nghiệm`)
+    setText('[data-create-classes]', `${tutor.classesTaught} lớp đã dạy`)
+    setText('[data-create-location]', tutor.district || '—')
+    setText('[data-create-delivery]', DELIVERY_LABEL[tutor.delivery] || '—')
+    setText('[data-tutor-availability]', availabilityFor(offering.tutorId))
+
     const summaryAvatar = root.querySelector('[data-summary-avatar]')
     if (summaryAvatar) {
       summaryAvatar.textContent = tutor.initials
@@ -208,14 +178,71 @@
     }
     setText('[data-summary-name]', tutor.name)
     setAttr('#invitation-tutor-name', 'aria-label', tutor.name)
+
     const heroRating = root.querySelector('.invitation-tutor .rating')
-    if (heroRating) heroRating.setAttribute('aria-label', `Đánh giá ${tutor.rating} trên 5 sao từ ${tutor.ratingCount} đánh giá`)
+    if (heroRating) heroRating.setAttribute('aria-label', `Đánh giá ${formatNumber(tutor.rating)} trên 5 sao từ ${tutor.reviewCount} đánh giá`)
+  }
+
+  const applyOffering = offering => {
+    state.offering = offering
+    state.subject = `${offering.subjectLabel} • ${offering.gradeLabel}`
+    state.listedRate = offering.price
+    state.rate = offering.price
+    state.durationMinutes = offering.durationMinutes
+    const home = root.querySelector('input[name="learning-format"]:checked')
+    state.format = home && home.value === 'online'
+      ? 'Trực tuyến (Google Meet)'
+      : `Tại nhà (${offering.district})`
+    root.querySelectorAll('[data-subject-card]').forEach(card => {
+      const input = card.querySelector('input[name="subject"]')
+      const selected = input && input.dataset.offeringId === offering.id
+      card.classList.toggle('is-selected', selected)
+      if (input) input.checked = selected
+    })
+    if (rateInput) rateInput.value = formatNumber(state.rate)
+    setText('[data-listed-subject]', state.subject)
+    setText('[data-listed-rate]', formatMoney(state.listedRate))
+    prefillHero(offering)
+    updateSummary()
+  }
+
+  const renderOfferingCards = () => {
+    const group = root.querySelector('[data-subject-group]')
+    const template = root.querySelector('[data-invitation-offering-template]')
+    if (!group || !template) return
+    group.querySelectorAll('[data-subject-card]').forEach(card => card.remove())
+    offeringsToShow.forEach(offering => {
+      const tutor = Store.tutor(offering.tutorId)
+      const node = template.content.firstElementChild.cloneNode(true)
+      const input = node.querySelector('input[name="subject"]')
+      if (input) {
+        input.value = offering.id
+        input.dataset.label = `${offering.subjectLabel} • ${offering.gradeLabel}`
+        input.dataset.rate = String(offering.price)
+        input.dataset.offeringId = offering.id
+        input.dataset.tutorId = offering.tutorId
+      }
+      const title = node.querySelector('[data-offering-title]')
+      if (title) title.textContent = offering.title
+      const price = node.querySelector('[data-offering-price]')
+      if (price) price.textContent = formatMoney(offering.price)
+      const meta = node.querySelector('[data-offering-meta]')
+      if (meta) meta.textContent = `${tutor ? tutor.name : offering.tutorId} · ${offering.unitLabel}`
+      group.append(node)
+    })
+    group.querySelectorAll('input[name="subject"]').forEach(input => {
+      input.addEventListener('change', () => {
+        const offering = offeringsById.get(input.dataset.offeringId)
+        if (offering) applyOffering(offering)
+      })
+    })
+    applyOffering(initialOffering)
   }
 
   root.querySelectorAll('[data-session-adjust]').forEach(button => {
     button.addEventListener('click', () => {
       state.sessions = clamp(state.sessions + Number(button.dataset.sessionAdjust), 1, 60)
-      sessionsInput.value = state.sessions
+      if (sessionsInput) sessionsInput.value = state.sessions
       updateSummary()
     })
   })
@@ -248,7 +275,7 @@
   root.querySelectorAll('input[name="learning-format"]').forEach(input => {
     input.addEventListener('change', () => {
       const home = input.value === 'home'
-      state.format = home ? `Tại nhà (${tutor.district})` : 'Trực tuyến (Google Meet)'
+      state.format = home ? `Tại nhà (${state.offering.district})` : 'Trực tuyến (Google Meet)'
       root.querySelector('[data-location-field]')?.toggleAttribute('hidden', !home)
       root.querySelectorAll('[data-format-card]').forEach(card => {
         card.classList.toggle('radio-option--selected', card.contains(input))
@@ -270,10 +297,6 @@
   root.querySelectorAll('[data-remove-slot]').forEach(bindRemoveSlot)
 
   root.querySelector('[data-add-slot]')?.addEventListener('click', () => {
-    if (root.querySelector('[data-slot][data-day="Thứ 6"]')) {
-      window.EduToast?.show({ type: 'info', title: 'Đã đủ lịch mẫu', message: 'Bạn có thể xóa một khung giờ trước khi thêm lịch khác.' })
-      return
-    }
     const slot = document.createElement('article')
     slot.dataset.slot = ''
     slot.dataset.day = 'Thứ 6'
@@ -300,10 +323,40 @@
     updateSummary()
   })
 
+  /* Lý do tiếng Việt cho TỪNG reason mà Store.createInvitation chặn. */
+  const REASON_MESSAGES = {
+    'learner-required': 'Bạn cần đăng nhập bằng tài khoản phụ huynh/học viên để gửi lời mời.',
+    'tutor-not-found': 'Không tìm thấy gia sư trong dữ liệu mẫu.',
+    'offering-not-found': 'Không tìm thấy dịch vụ/lớp được chọn.',
+    'offering-not-of-tutor': 'Dịch vụ/lớp này không thuộc gia sư đang được mời.',
+    'offering-not-listable': 'Dịch vụ/lớp này không còn mở công khai để nhận lời mời.',
+    'invalid-proposal': 'Đề xuất chưa hợp lệ: học phí, số buổi và thời lượng phải lớn hơn 0.',
+    'duplicated': 'Lời mời cho dịch vụ/lớp này đã được gửi trước đó; không tạo trùng lặp.',
+    'storage-failed': 'Không lưu được lời mời do bộ nhớ trình duyệt bị chặn. Vui lòng thử lại.',
+    'invalid-state': 'Dữ liệu lời mời không hợp lệ, vui lòng tải lại trang.',
+    'mutation-failed': 'Không gửi được lời mời do lỗi dữ liệu nội bộ.'
+  }
+
+  const errorNode = confirmModal ? confirmModal.querySelector('[data-invitation-error]') : null
+
+  const clearError = () => {
+    if (errorNode) { errorNode.textContent = ''; errorNode.hidden = true }
+  }
+
+  const renderError = message => {
+    if (errorNode) {
+      errorNode.textContent = message
+      errorNode.hidden = false
+    } else {
+      window.EduToast?.show({ type: 'error', title: 'Không gửi được lời mời', message })
+    }
+  }
+
   const openConfirm = () => {
     const total = state.sessions * state.rate
+    clearError()
     window.EduModal?.open('confirm-invitation-modal', {
-      title: `Gửi lời mời cho ${tutor.name}?`,
+      title: `Gửi lời mời cho ${Store.tutor(state.offering.tutorId)?.name || 'gia sư'}?`,
       message: `Đề xuất học môn ${state.subject} gồm ${state.sessions} buổi, ${state.frequency} buổi mỗi tuần với học phí ${formatMoney(state.rate)}/buổi. Tổng dự kiến ${formatMoney(total)}.`,
       confirmText: 'Xác nhận gửi',
       cancelText: 'Xem lại'
@@ -311,35 +364,36 @@
   }
 
   root.querySelectorAll('[data-open-confirm]').forEach(button => button.addEventListener('click', openConfirm))
-  confirmModal?.addEventListener('modal:confirm', () => { openSuccessAfterClose = true })
-  confirmModal?.addEventListener('modal:close', () => {
-    if (!openSuccessAfterClose) return
-    openSuccessAfterClose = false
-    setTimeout(() => {
-      window.EduModal?.open('invitation-success-modal', {
-        title: 'Đã gửi lời mời thành công!',
-        message: `Gia sư ${tutor.name} đã nhận được đề xuất dạy của bạn. Thầy/cô sẽ có 7 ngày để phản hồi hoặc đề xuất thời gian biểu phù hợp hơn.`,
-        confirmText: 'Xem chi tiết lời mời',
-        cancelText: 'Về danh sách gia sư',
-        variant: 'success'
-      })
-    }, 0)
-  })
 
-  successModal?.addEventListener('modal:confirm', () => {
-    window.location.href = `../invitation/negotiation.html?invite=${encodeURIComponent(tutor.invite)}`
+  confirmModal?.addEventListener('modal:confirm', event => {
+    const result = Store.createInvitation({
+      learnerId: Store.sessionLearnerId(),
+      tutorId: state.offering.tutorId,
+      offeringId: state.offering.id,
+      message: messageInput ? messageInput.value.trim() : '',
+      proposal: {
+        pricePerSession: state.rate,
+        sessions: state.sessions,
+        durationMinutes: state.durationMinutes,
+        scheduleText: getSchedule()
+      },
+      idempotency: 'invite:create:' + state.offering.id
+    })
+    if (result.ok) {
+      window.location.href = `negotiation.html?id=${encodeURIComponent(result.data.id)}`
+      return
+    }
+    event.preventDefault()
+    let message = REASON_MESSAGES[result.reason] || `Không gửi được lời mời (${result.reason}).`
+    if (result.reason === 'invitation-open-exists' && result.invitationId) {
+      message = `Bạn đã có lời mời đang mở cho dịch vụ/lớp này (mã ${result.invitationId}). Vui lòng chờ gia sư phản hồi.`
+    }
+    renderError(message)
   })
 
   form?.addEventListener('submit', event => event.preventDefault())
 
-  prefillTutor()
-  renderSubjectCards()
-  state.subject = `${tutor.plans[0].subject} • ${tutor.plans[0].grade}`
-  state.listedRate = tutor.plans[0].price
-  state.rate = tutor.plans[0].price
-  if (rateInput) rateInput.value = formatNumber(state.rate)
-  setText('[data-listed-subject]', state.subject)
-  setText('[data-listed-rate]', formatMoney(state.listedRate))
-  setText('[data-message-counter]', `${messageInput?.value.length || 0} / 500`)
+  renderOfferingCards()
+  setText('[data-message-counter]', `${messageInput ? messageInput.value.length : 0} / 500`)
   updateSummary()
 })()

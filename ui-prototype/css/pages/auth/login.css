@@ -45,8 +45,8 @@
 }
 
 .auth-login-header__brand img {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 13rem;
+  height: auto;
 }
 
 .auth-login-main {
@@ -222,7 +222,7 @@
 
 .auth-login-footer {
   padding: var(--space-4) 0 var(--space-6);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   line-height: 1.3333;
 }
@@ -267,8 +267,8 @@
     display: none;
   }
 
-  .auth-login-header__brand span {
-    display: none;
+  .auth-login-header__brand img {
+    width: 10.5rem;
   }
 
   .auth-login-main {

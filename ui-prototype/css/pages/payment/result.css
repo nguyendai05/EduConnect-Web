@@ -7,7 +7,7 @@
     margin-bottom: var(--space-6);
 }
 .result-card {
-    --result-color: var(--color-warning);
+    --result-color: var(--color-warning-text);
     max-width: 860px;
     margin: auto;
     padding: var(--space-8);
@@ -17,7 +17,7 @@
     box-shadow: var(--shadow-sm);
 }
 .result-card[data-state="success"] {
-    --result-color: var(--color-success);
+    --result-color: var(--color-success-text);
 }
 .result-card[data-state="failed"],
 .result-card[data-state="cancelled"] {
@@ -81,6 +81,7 @@
 }
 .result-card dl > div {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: var(--space-4);
     padding-block: var(--space-3);
@@ -88,12 +89,22 @@
 }
 .result-card dt {
     color: var(--color-text-secondary);
+    flex: 1 1 auto;
+    min-width: 0;
 }
 .result-card dd {
     margin: 0;
+    flex: 0 1 auto;
     text-align: right;
     font-weight: 600;
     overflow-wrap: anywhere;
+}
+/* Số tiền không bao giờ bị tách rời đơn vị ₫. */
+#money-total,
+#money-wallet,
+#money-payos,
+#money-grand-total {
+    white-space: nowrap;
 }
 .result-total {
     border-top: 1px solid var(--color-border);
@@ -182,7 +193,7 @@
 .result-help {
     text-align: center;
     font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     margin-top: var(--space-4);
 }
 .result-page :focus-visible {
@@ -197,6 +208,7 @@
     }
     .result-card dl > div {
         flex-direction: column;
+        flex-wrap: nowrap;
         gap: var(--space-1);
     }
     .result-card dd {

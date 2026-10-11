@@ -19,6 +19,15 @@ h4 {
   line-height: var(--line-height-tight);
 }
 
+/* Bù chiều cao header dính khi nhảy tới anchor hoặc dùng scrollIntoView. */
+[id] {
+  scroll-margin-top: var(--scroll-offset);
+}
+
+.admin-shell [id] {
+  scroll-margin-top: var(--admin-scroll-offset);
+}
+
 h1 {
   font-family: var(--font-family-display);
   font-weight: 500;

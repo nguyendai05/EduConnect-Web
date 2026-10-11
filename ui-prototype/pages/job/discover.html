@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Tin tìm gia sư | Edu Connect</title>
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -12,7 +15,6 @@
     <link rel="stylesheet" href="../../css/components/layout/user-header.css">
     <link rel="stylesheet" href="../../css/components/layout/page-header.css">
     <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
-    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
     <link rel="stylesheet" href="../../css/components/navigation/filter-panel.css">
     <link rel="stylesheet" href="../../css/components/navigation/filter-chip.css">
     <link rel="stylesheet" href="../../css/components/navigation/pagination.css">
@@ -25,6 +27,9 @@
     <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
     <link rel="stylesheet" href="../../css/components/feedback/toast.css">
     <link rel="stylesheet" href="../../css/pages/job/discover.css">
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
     <script src="../../js/core/user-header.js" defer></script>
     <script src="../../js/core/search-input.js" defer></script>
     <script src="../../js/core/filter-panel.js" defer></script>
@@ -43,14 +48,14 @@
     <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
     <header class="user-header" data-component="user-header" data-user-variant="TUTOR" data-active-nav="requests">
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/job/discover.html" aria-label="Edu Connect - Tin tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
-            <a class="user-header__nav-link is-active" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html" aria-current="page">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link is-active" data-nav-key="requests" href="../../pages/job/discover.html" aria-current="page">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -113,9 +118,6 @@
 
     <main class="user-shell__main">
         <div class="user-shell__content discover-page__content">
-            <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
-            <nav class="breadcrumb" aria-label="Breadcrumb"><ol class="breadcrumb__list"><li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Tin tìm gia sư</span></li></ol></nav>
-
             <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
             <!-- Component: BrandMasthead | Nguồn: components/layout/brand-masthead.html -->
             <header class="page-header discover-page__header brand-masthead" data-component="brand-masthead">
@@ -123,16 +125,14 @@
 
                     <h1 class="page-header__title" aria-label="Tin tìm gia sư">Tin tìm gia sư</h1>
 
-                    <div class="page-header__actions"><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--outline button--medium page-header__action page-header__action--secondary discover-page__applications-link" type="button" data-show-applied><img src="../../assets/icons/receipt.svg" alt="">Ứng tuyển của tôi <span>3</span></button></div>
+                    <div class="page-header__actions"><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--outline button--medium page-header__action page-header__action--secondary discover-page__applications-link" type="button" data-show-applied><img src="../../assets/icons/receipt.svg" alt="">Ứng tuyển của tôi <span data-applications-count>0</span></button></div>
                 </div>
 
             </header>
 
-
-
             <!-- Component: SearchInput | Nguồn: components/form/search-input.html -->
             <form class="discover-search" data-discover-search-form>
-                <div class="search-input search-input--compact" data-search-input><svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" value="Toán lớp 11" placeholder="Tìm theo môn học, lớp, khu vực..." aria-label="Tìm tin gia sư" data-discover-search><button class="search-input__clear" type="button" data-clear-search aria-label="Xóa tìm kiếm"><svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17"/></svg></button></div>
+                <div class="search-input search-input--compact" data-search-input><svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" value="" placeholder="Tìm theo môn học, lớp, khu vực..." aria-label="Tìm tin gia sư" data-discover-search><button class="search-input__clear" type="button" data-clear-search aria-label="Xóa tìm kiếm"><svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17"/></svg></button></div>
                 <!-- Component: Button | Nguồn: components/action/button.html -->
                 <button class="button button--primary button--medium discover-search__button" type="submit">Tìm kiếm</button>
             </form>
@@ -143,12 +143,12 @@
                     <!-- Component: FilterPanel | Nguồn: components/navigation/filter-panel.html -->
                     <form class="filter-panel discover-filter" data-filter-panel data-discover-filter>
                         <div class="filter-panel__header"><h2><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16M8 4v4M16 10v4M10 16v4"/></svg>Bộ lọc tìm kiếm</h2><button class="filter-panel__reset" type="reset" data-reset-filter>Xóa bộ lọc</button></div>
-                        <div class="filter-panel__group"><label for="discover-subject">Môn học</label><div class="filter-panel__select-wrap"><select id="discover-subject" name="subject" data-filter-subject><option>Toán học</option><option>Vật lý</option><option>Hóa học</option><option>Tiếng Anh</option><option>Ngữ văn</option></select><svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6"/></svg></div></div>
+                        <div class="filter-panel__group"><label for="discover-subject">Môn học</label><div class="filter-panel__select-wrap"><select id="discover-subject" name="subject" data-filter-subject><option value="">Tất cả môn học</option><option>Toán học</option><option>Vật lý</option><option>Hóa học</option><option>Tiếng Anh</option><option>Ngữ văn</option></select><svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6"/></svg></div></div>
                         <fieldset class="filter-panel__group"><legend>Cấp lớp</legend><div class="filter-panel__grade-grid"><label><input type="radio" name="grade" value="all"><span>Tất cả</span></label><label><input type="radio" name="grade" value="thcs"><span>THCS</span></label><label class="is-selected"><input type="radio" name="grade" value="10" checked><span>THPT</span></label><label><input type="radio" name="grade" value="exam"><span>Luyện thi</span></label></div></fieldset>
                         <div class="filter-panel__group"><label for="discover-region">Khu vực</label><div class="filter-panel__select-wrap"><select id="discover-region" name="region" data-filter-region><option value="all">Tất cả khu vực</option><option value="thu-duc" selected>TP. Thủ Đức, TP.HCM</option><option value="binh-thanh">Quận Bình Thạnh, TP.HCM</option><option value="online">Trực tuyến toàn quốc</option></select><svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6"/></svg></div></div>
                         <fieldset class="filter-panel__group discover-filter__choices"><legend>Hình thức học</legend><label><input type="radio" name="format" value="all"><span></span>Tất cả hình thức</label><label><input type="radio" name="format" value="home" checked><span></span>Dạy tại nhà học sinh</label><label><input type="radio" name="format" value="online"><span></span>Dạy trực tuyến</label></fieldset>
                         <div class="filter-panel__group"><div class="filter-panel__range-heading"><label for="discover-fee">Học phí / buổi</label><output for="discover-fee" data-fee-output>≤ 300.000 ₫</output></div><input id="discover-fee" name="fee-range" class="filter-panel__range" type="range" min="100000" max="600000" step="10000" value="300000" data-filter-fee><div class="filter-panel__range-values"><span>100.000 ₫</span><span>600.000+ ₫</span></div></div>
-                        <fieldset class="filter-panel__group"><legend>Số buổi / tuần</legend><div class="discover-filter__button-grid"><button type="button" data-filter-sessions="1">1</button><button class="is-selected" type="button" data-filter-sessions="2">2</button><button type="button" data-filter-sessions="3">3</button><button type="button" data-filter-sessions="4">4+</button></div></fieldset>
+                        <fieldset class="filter-panel__group"><legend>Số buổi / tuần</legend><div class="discover-filter__button-grid"><button type="button" data-filter-sessions="all">Tất cả</button><button type="button" data-filter-sessions="1">1</button><button class="is-selected" type="button" data-filter-sessions="2">2</button><button type="button" data-filter-sessions="3">3</button><button type="button" data-filter-sessions="4">4+</button></div></fieldset>
                         <div class="filter-panel__group"><label for="discover-experience">Yêu cầu kinh nghiệm</label><div class="filter-panel__select-wrap"><select id="discover-experience" name="experience" data-filter-experience><option value="0">Không yêu cầu</option><option value="1">Từ 1 năm</option><option value="2">Từ 2 năm</option><option value="3" selected>Từ 3 năm trở lên</option><option value="5">Từ 5 năm trở lên</option></select><svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6"/></svg></div></div>
                         <fieldset class="filter-panel__group"><legend>Giới tính gia sư</legend><div class="discover-filter__button-grid discover-filter__button-grid--three"><button class="is-selected" type="button" data-filter-gender="all">Tất cả</button><button type="button" data-filter-gender="male">Nam</button><button type="button" data-filter-gender="female">Nữ</button></div></fieldset>
                         <label class="filter-panel__check"><input type="checkbox" name="hiring-only" checked data-filter-hiring><span class="filter-panel__check-box"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6"/></svg></span><span>Chỉ hiện tin đang tuyển</span></label>
@@ -158,41 +158,32 @@
 
                 <section class="discover-results" aria-label="Kết quả tin tìm gia sư">
                     <!-- Component: Select | Nguồn: components/form/select.html -->
-                    <div class="discover-results__toolbar"><div><strong data-result-title>24 tin phù hợp</strong><span>Cập nhật mới nhất cho hồ sơ của bạn</span></div><section class="select-field discover-results__sort" data-component="select" data-initial-open="false" data-discover-sort><span class="select-field__label" id="discover-sort-label">Sắp xếp</span><button class="select-control" type="button" aria-labelledby="discover-sort-label discover-sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="discover-sort-options" data-select-trigger><span id="discover-sort-value" data-select-value>Phù hợp nhất</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt=""></button><div class="select-options" id="discover-sort-options" role="listbox" data-select-options hidden><button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Phù hợp nhất" data-sort="default"><span>Phù hợp nhất</span><img src="../../assets/icons/dau-tich.svg" alt=""></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Mới nhất" data-sort="newest"><span>Mới nhất</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí cao nhất" data-sort="fee-desc"><span>Học phí cao nhất</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Ít ứng viên nhất" data-sort="applicants"><span>Ít ứng viên nhất</span></button></div></section></div>
+                    <div class="discover-results__toolbar"><div><strong data-result-title>Tin tìm gia sư</strong><span>Cập nhật mới nhất cho hồ sơ của bạn</span></div><section class="select-field discover-results__sort" data-component="select" data-initial-open="false" data-discover-sort><span class="select-field__label" id="discover-sort-label">Sắp xếp</span><button class="select-control" type="button" aria-labelledby="discover-sort-label discover-sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="discover-sort-options" data-select-trigger><span id="discover-sort-value" data-select-value>Phù hợp nhất</span><img class="select-control__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt=""></button><div class="select-options" id="discover-sort-options" role="listbox" data-select-options hidden><button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Phù hợp nhất" data-sort="default"><span>Phù hợp nhất</span><img src="../../assets/icons/dau-tich.svg" alt=""></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Mới nhất" data-sort="newest"><span>Mới nhất</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí cao nhất" data-sort="fee-desc"><span>Học phí cao nhất</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Ít ứng viên nhất" data-sort="applicants"><span>Ít ứng viên nhất</span></button></div></section></div>
 
                     <!-- Component: FilterChip | Nguồn: components/navigation/filter-chip.html -->
-                    <div class="discover-results__chips"><button class="filter-chip filter-chip--selected" type="button" data-filter-chip aria-pressed="true">Toán học</button><button class="filter-chip filter-chip--selected" type="button" data-filter-chip aria-pressed="true">THPT</button><button class="filter-chip filter-chip--selected" type="button" data-filter-chip aria-pressed="true">TP. Thủ Đức</button><button class="filter-chip" type="button" data-filter-chip aria-pressed="false">Tại nhà</button></div>
+                    <div class="discover-results__chips" hidden></div>
 
                     <!-- Component: JobCard | Nguồn: components/domain/job/job-card.html -->
-                    <div class="discover-job-list" data-discover-list>
-                        <article class="job-card discover-job discover-job--recommended" data-discover-job data-job-id="TT-8841" data-order="1" data-title="Tìm gia sư Toán lớp 11 tại Thủ Đức" data-subject="toan hoc" data-grade="thpt" data-region="thu-duc" data-format="home" data-fee="220000" data-sessions="2" data-experience="3" data-gender="all" data-status="hiring" data-applicants="3">
-                            <div class="discover-job__label">Phù hợp nhất với hồ sơ của bạn</div><div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Đang tuyển</span><span class="job-card__code">· 2 giờ trước · Mã tin #TT-8841</span></div><h2>Tìm gia sư Toán lớp 11 tại Thủ Đức</h2></div><p class="job-card__price">220.000 ₫<span>/ buổi</span></p></div><div class="job-card__tags"><span>Toán học</span><span>Lớp 11 · THPT</span><span>Tại nhà học sinh</span></div><div class="discover-job__parameters"><p><small>Tần suất</small><strong>2 buổi / tuần · 90 phút</strong></p><p><small>Địa điểm</small><strong>P. Linh Trung, TP. Thủ Đức</strong></p><p><small>Yêu cầu</small><strong>Kinh nghiệm từ 3 năm</strong></p></div><p class="discover-job__description">Củng cố Hình học không gian và Hàm số 11. Học sinh cần gia sư kiên nhẫn, có lộ trình rõ ràng và theo sát bài tập trên lớp.</p><footer class="job-card__footer"><div class="job-card__stats"><span><strong>3 gia sư</strong> đã ứng tuyển</span><span>Hạn nhận hồ sơ: 28/10</span></div><div class="discover-job__actions"><button class="job-card__action" type="button" data-save-job>Lưu tin</button><a class="job-card__action job-card__action--primary" href="detail.html?id=TT-8841">Xem chi tiết để ứng tuyển</a></div></footer>
-                        </article>
+                    <!-- Danh sách do js/pages/job/discover.js render từ EduStore.jobBoard(); đây chỉ là mẫu thẻ, không chứa dữ liệu cứng -->
+                    <div class="discover-job-list" data-discover-list></div>
 
-                        <article class="job-card discover-job" data-discover-job data-job-id="TT-8820" data-order="2" data-title="Tìm gia sư Vật lý lớp 11 luyện giữa học kỳ" data-subject="vat ly" data-grade="thpt" data-region="thu-duc" data-format="home" data-fee="200000" data-sessions="2" data-experience="2" data-gender="all" data-status="hiring" data-applicants="2">
-                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Đang tuyển</span><span class="job-card__code">· 5 giờ trước · Mã tin #TT-8820</span></div><h2>Tìm gia sư Vật lý lớp 11 luyện giữa học kỳ</h2></div><p class="job-card__price">200.000 ₫<span>/ buổi</span></p></div><div class="job-card__tags"><span>Vật lý</span><span>Lớp 11 · THPT</span><span>Tại nhà học sinh</span></div><div class="discover-job__parameters"><p><small>Tần suất</small><strong>2 buổi / tuần · 90 phút</strong></p><p><small>Địa điểm</small><strong>P. Hiệp Bình Chánh, TP. Thủ Đức</strong></p><p><small>Yêu cầu</small><strong>Kinh nghiệm từ 2 năm</strong></p></div><p class="discover-job__description">Ôn tập dao động cơ và sóng cơ theo chương trình trường, kết hợp bài tập phân loại để chuẩn bị kiểm tra giữa kỳ.</p><footer class="job-card__footer"><div class="job-card__stats"><span><strong>2 gia sư</strong> đã ứng tuyển</span></div><div class="discover-job__actions"><button class="job-card__action" type="button" data-save-job>Lưu tin</button><a class="job-card__action job-card__action--primary" href="detail.html?id=TT-8820">Xem chi tiết</a></div></footer>
+                    <template data-discover-job-template>
+                        <article class="job-card discover-job" data-discover-job data-job-id="" data-order="" data-title="" data-subject="" data-grade="" data-region="" data-format="" data-fee="" data-sessions="" data-experience="" data-gender="" data-status="hiring" data-applicants="" data-created="">
+                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info" data-job-badge>Đang tuyển</span><span class="job-card__code" data-job-code></span></div><h2 data-job-title-node></h2></div><p class="job-card__price"><span data-job-fee-node></span><span>/ buổi</span></p></div>
+                            <div class="job-card__tags"><span data-job-tag-subject></span><span data-job-tag-grade></span><span data-job-tag-mode></span></div>
+                            <div class="discover-job__parameters"><p><small>Tần suất</small><strong data-job-frequency></strong></p><p><small>Địa điểm</small><strong data-job-district></strong></p><p><small>Yêu cầu</small><strong data-job-requirement></strong></p></div>
+                            <div class="discover-job__application-state" data-job-application hidden><img src="../../assets/icons/receipt.svg" alt=""><span>Đơn ứng tuyển: <strong data-job-application-status></strong></span><small data-job-application-rate></small></div>
+                            <p class="discover-job__description" data-job-description></p>
+                            <footer class="job-card__footer"><div class="job-card__stats"><span><strong data-job-applicants-node></strong> đã ứng tuyển</span><span data-job-deadline></span></div><div class="discover-job__actions"><button class="job-card__action" type="button" data-save-job>Lưu tin</button><a class="job-card__action job-card__action--primary" href="detail.html" data-job-detail-link>Xem chi tiết để ứng tuyển</a><a class="job-card__action job-card__action--primary" href="detail.html" data-view-application hidden>Xem ứng tuyển của bạn</a></div></footer>
                         </article>
-
-                        <article class="job-card discover-job" data-discover-job data-job-id="TT-8796" data-order="3" data-title="Cần gia sư Toán lớp 9 ôn thi vào lớp 10" data-subject="toan hoc" data-grade="thcs" data-region="binh-thanh" data-format="home" data-fee="250000" data-sessions="3" data-experience="2" data-gender="all" data-status="hiring" data-applicants="8">
-                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Đang tuyển</span><span class="job-card__code">· 1 ngày trước · Mã tin #TT-8796</span></div><h2>Cần gia sư Toán lớp 9 ôn thi vào lớp 10</h2></div><p class="job-card__price">250.000 ₫<span>/ buổi</span></p></div><div class="job-card__tags"><span>Toán học</span><span>Lớp 9 · THCS</span><span>Tại nhà học sinh</span></div><div class="discover-job__parameters"><p><small>Tần suất</small><strong>3 buổi / tuần · 90 phút</strong></p><p><small>Địa điểm</small><strong>P. 25, Quận Bình Thạnh</strong></p><p><small>Yêu cầu</small><strong>Kinh nghiệm từ 2 năm</strong></p></div><p class="discover-job__description">Gia cố hình học đường tròn và bài toán thực tế bằng cách lập phương trình. Cần gia sư kiên nhẫn và giải thích trực quan.</p><footer class="job-card__footer"><div class="job-card__stats"><span><strong>8 gia sư</strong> đã ứng tuyển</span></div><div class="discover-job__actions"><button class="job-card__action" type="button" data-save-job>Lưu tin</button><a class="job-card__action job-card__action--primary" href="detail.html?id=TT-8796">Xem chi tiết để ứng tuyển</a></div></footer>
-                        </article>
-
-                        <article class="job-card discover-job discover-job--applied" id="ung-tuyen-cua-toi" data-discover-job data-job-id="TT-8750" data-order="4" data-title="Tìm gia sư Toán lớp 10 tại Quận 3" data-subject="toan hoc" data-grade="thpt" data-region="other" data-format="home" data-fee="220000" data-sessions="2" data-experience="3" data-gender="all" data-status="applied" data-applicants="5">
-                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Bạn đã ứng tuyển · 1 ngày trước</span><span class="job-card__code">Mã tin #TT-8750</span></div><h2>Tìm gia sư Toán lớp 10 tại Quận 3</h2></div><p class="job-card__price">220.000 ₫<span>/ buổi</span></p></div><div class="job-card__tags"><span>Toán học</span><span>Lớp 10 · THPT</span><span>Tại nhà học sinh</span></div><div class="discover-job__parameters"><p><small>Học phí mong muốn</small><strong>220.000 ₫ · Bạn đề xuất 230.000 ₫</strong></p><p><small>Tần suất</small><strong>2 buổi / tuần</strong></p><p><small>Địa điểm</small><strong>P. Võ Thị Sáu, Quận 3</strong></p></div><div class="discover-job__application-state"><img src="../../assets/icons/receipt.svg" alt=""><span>Đơn ứng tuyển: <strong>Phụ huynh đang xem xét hồ sơ</strong></span><small>Hẹn trao đổi trước 28/10</small></div><footer class="job-card__footer"><div class="job-card__stats"><span><strong>5 gia sư</strong> đã ứng tuyển</span></div><div class="discover-job__actions"><a class="job-card__action" href="detail.html?id=TT-8750">Xem chi tiết tin</a><button class="job-card__action job-card__action--primary" type="button" data-view-application>Xem ứng tuyển của bạn</button></div></footer>
-                        </article>
-
-                        <article class="job-card discover-job" data-discover-job data-job-id="TT-8620" data-order="5" data-title="Tìm gia sư Tiếng Anh giao tiếp cho học sinh THPT" data-subject="tieng anh" data-grade="thpt" data-region="online" data-format="online" data-fee="230000" data-sessions="2" data-experience="2" data-gender="all" data-status="hiring" data-applicants="3">
-                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Đang tuyển</span><span class="job-card__code">· 4 ngày trước · Mã tin #TT-8620</span></div><h2>Tìm gia sư Tiếng Anh giao tiếp cho học sinh THPT</h2></div><p class="job-card__price">230.000 ₫<span>/ buổi</span></p></div><div class="job-card__tags"><span>Tiếng Anh</span><span>THPT</span><span>Trực tuyến toàn quốc</span></div><div class="discover-job__parameters"><p><small>Tần suất</small><strong>2 buổi / tuần</strong></p><p><small>Hình thức</small><strong>Google Meet</strong></p><p><small>Yêu cầu</small><strong>Ưu tiên có chứng chỉ IELTS</strong></p></div><p class="discover-job__description">Luyện phát âm chuẩn IPA và phản xạ giao tiếp tự tin cho học sinh chuẩn bị kế hoạch du học cuối cấp.</p><footer class="job-card__footer"><div class="job-card__stats"><span><strong>3 gia sư</strong> đã ứng tuyển</span></div><div class="discover-job__actions"><button class="job-card__action" type="button" data-save-job>Lưu tin</button><a class="job-card__action job-card__action--primary" href="detail.html?id=TT-8620">Xem chi tiết</a></div></footer>
-                        </article>
-                    </div>
+                    </template>
 
                     <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
                     <section class="empty-state discover-empty" data-discover-empty hidden aria-labelledby="discover-empty-title"><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title" id="discover-empty-title">Không tìm thấy tin phù hợp</h2><p class="empty-state__description">Hãy thử thay đổi từ khóa hoặc bộ lọc tìm kiếm.</p></section>
                     <!-- Component: Pagination | Nguồn: components/navigation/pagination.html -->
-                    <nav class="pagination" aria-label="Phân trang tin tìm gia sư" data-pagination data-total="24" data-page-size="5" data-current="1" data-last-page="5"><p class="pagination__summary">Hiển thị <strong data-range-start>1</strong> - <strong data-range-end>5</strong> trên tổng số <strong data-total-count>24</strong> tin tìm gia sư</p><div class="pagination__controls"><button class="pagination__button pagination__button--wide" type="button" data-page-action="previous"><svg viewBox="0 0 24 24" fill="none"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button><button class="pagination__button is-current" type="button" data-page="1">1</button><button class="pagination__button" type="button" data-page="2">2</button><button class="pagination__button" type="button" data-page="3">3</button><button class="pagination__button" type="button" data-page="4">4</button><button class="pagination__button" type="button" data-page="5">5</button><button class="pagination__button pagination__button--wide" type="button" data-page-action="next"><span>Sau</span><svg viewBox="0 0 24 24" fill="none"><path d="m9 18 6-6-6-6"/></svg></button></div></nav>
+                    <nav class="pagination" aria-label="Phân trang tin tìm gia sư" data-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1"><p class="pagination__summary">Hiển thị <strong data-range-start>0</strong> - <strong data-range-end>0</strong> trên tổng số <strong data-total-count>0</strong> tin tìm gia sư</p><div class="pagination__controls"><button class="pagination__button pagination__button--wide" type="button" data-page-action="previous"><svg viewBox="0 0 24 24" fill="none"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button><div data-page-numbers></div><button class="pagination__button pagination__button--wide" type="button" data-page-action="next"><span>Sau</span><svg viewBox="0 0 24 24" fill="none"><path d="m9 18 6-6-6-6"/></svg></button></div></nav>
                 </section>
             </div>
-
 
         </div>
     </main>
@@ -200,7 +191,7 @@
     <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
     <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
-        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
         <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
         <p class="user-footer__copyright">© 2026 Edu Connect</p>
     </div>

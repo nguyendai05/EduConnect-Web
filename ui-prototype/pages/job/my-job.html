@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Tin tìm gia sư của tôi | Edu Connect</title>
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -12,7 +15,6 @@
     <link rel="stylesheet" href="../../css/components/layout/user-header.css">
     <link rel="stylesheet" href="../../css/components/layout/page-header.css">
     <link rel="stylesheet" href="../../css/components/layout/user-footer.css">
-    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
     <link rel="stylesheet" href="../../css/components/navigation/tabs.css">
     <link rel="stylesheet" href="../../css/components/form/search-input.css">
     <link rel="stylesheet" href="../../css/components/form/select.css">
@@ -22,11 +24,16 @@
     <link rel="stylesheet" href="../../css/components/feedback/modal.css">
     <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
     <link rel="stylesheet" href="../../css/pages/job/my-job.css">
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
     <script src="../../js/core/user-header.js" defer></script>
     <script src="../../js/core/tabs.js" defer></script>
     <script src="../../js/core/search-input.js" defer></script>
     <script src="../../js/core/select.js" defer></script>
     <script src="../../js/core/modal.js" defer></script>
+    <!-- Component: Toast | Nguồn: components/feedback/toast.html; JS: js/core/toast.js -->
+    <script src="../../js/core/toast.js" defer></script>
     <script src="../../js/pages/job/my-job.js" defer></script>
 </head>
 <body class="my-job-page">
@@ -35,14 +42,14 @@
 <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
 <header class="user-header" data-component="user-header" data-user-variant="C">
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link is-active" data-nav-key="requests" href="../../pages/job/discover.html" aria-current="page">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -104,22 +111,15 @@
 </header>
 <main class="user-shell__main">
 <div class="user-shell__content">
-    <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
-    <nav class="breadcrumb my-job-page__breadcrumb" aria-label="Breadcrumb">
-        <ol class="breadcrumb__list">
-            <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Tin của tôi</span></li>
-        </ol>
-    </nav>
-
     <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
     <header class="page-header">
         <div class="page-header__content">
             <div class="page-header__title-block">
                 <div class="page-header__title-row">
                     <h1 class="page-header__title">Tin tìm gia sư của tôi</h1>
-                    <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Tin đang tuyển: 2 / 5</span>
+                    <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span><span data-header-job-summary>Tin đang tuyển: — / —</span></span>
                 </div>
-                <p class="page-header__description">Đăng nhu cầu học và quản lý các gia sư đã ứng tuyển. Bạn có thể có tối đa 5 tin đang tuyển cùng lúc.</p>
+
             </div>
             <div class="page-header__actions">
                 <!-- Component: Button | Nguồn: components/action/button.html -->
@@ -128,18 +128,16 @@
         </div>
     </header>
 
-
-
     <div class="user-shell__grid my-job-page__grid">
         <section class="my-job-page__primary" aria-label="Danh sách tin tìm gia sư">
             <!-- Component: Tabs | Nguồn: components/navigation/tabs.html -->
             <section class="tabs my-job-page__tabs" data-tabs data-job-tabs>
                 <div class="tabs__list" role="tablist" aria-label="Trạng thái tin đăng">
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-all" aria-controls="job-panel-all" aria-selected="true" tabindex="0" data-status="all">Tất cả (4)</button>
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-recruiting" aria-controls="job-panel-recruiting" aria-selected="false" tabindex="-1" data-status="recruiting">Đang tuyển (2)</button>
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-pending" aria-controls="job-panel-pending" aria-selected="false" tabindex="-1" data-status="pending">Chờ duyệt (1)</button>
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-closed" aria-controls="job-panel-closed" aria-selected="false" tabindex="-1" data-status="closed">Đã đóng (1)</button>
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-rejected" aria-controls="job-panel-rejected" aria-selected="false" tabindex="-1" data-status="rejected">Bị từ chối (0)</button>
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-all" aria-controls="job-panel-all" aria-selected="true" tabindex="0" data-status="all">Tất cả</button>
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-recruiting" aria-controls="job-panel-recruiting" aria-selected="false" tabindex="-1" data-status="open">Đang tuyển</button>
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-pending" aria-controls="job-panel-pending" aria-selected="false" tabindex="-1" data-status="pending">Chờ duyệt</button>
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-closed" aria-controls="job-panel-closed" aria-selected="false" tabindex="-1" data-status="closed">Đã đóng</button>
+                    <button class="tabs__tab" type="button" role="tab" id="job-tab-rejected" aria-controls="job-panel-rejected" aria-selected="false" tabindex="-1" data-status="rejected">Bị từ chối</button>
                 </div>
 
                 <div class="my-job-page__toolbar">
@@ -165,42 +163,26 @@
                 </div>
 
                 <div class="tabs__panel" role="tabpanel" id="job-panel-all" aria-labelledby="job-tab-all" tabindex="0">
-                    <!-- Component: JobCard | Nguồn: components/domain/job/job-card.html -->
+                    <!-- Danh sách do js/pages/job/my-job.js render từ EduStore.jobsByLearner(sessionLearnerId()); không còn thẻ hard-code -->
                     <div class="my-job-page__jobs" data-job-list>
-                        <article class="job-card" data-job-card data-job-status="recruiting" data-applicants="6" data-fee="220000" data-created="4">
-                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Đang tuyển</span><span class="job-card__code">Mã tin: TT-88412 · Đăng 2 ngày trước</span></div><h2>Tìm gia sư Toán lớp 11 tại Thủ Đức</h2></div><p class="job-card__price">220.000 ₫<span>/buổi</span></p></div>
-                            <div class="job-card__tags"><span>Toán · Lớp 11</span><span>Tại nhà</span><span>Thủ Đức, TP.HCM</span></div>
-                            <div class="my-job-page__specs"><p><strong>Tần suất:</strong> 2 buổi/tuần (Tối T3, T5)</p><p><strong>Thời lượng:</strong> 90 phút</p><p><strong>Yêu cầu:</strong> Ưu tiên từ 3 năm kinh nghiệm, kèm sát chương trình ôn thi THPT.</p></div>
-                            <footer class="job-card__footer"><div class="job-card__stats"><span class="job-card__applicants">6 gia sư đã ứng tuyển</span><span>3 hồ sơ mới</span></div><div><a class="job-card__action job-card__action--primary" href="applicants.html?job=TT-88412">Xem 6 ứng viên</a> <button type="button" class="job-card__action" data-close-job data-modal-open="close-job-modal">Đóng tin</button></div></footer>
-                        </article>
-
-                        <article class="job-card" data-job-card data-job-status="recruiting" data-applicants="2" data-fee="250000" data-created="3">
-                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info">Đang tuyển</span><span class="job-card__code">Mã tin: TT-88209 · Đăng 4 ngày trước</span></div><h2>Tìm gia sư Tiếng Anh giao tiếp cho học sinh THPT</h2></div><p class="job-card__price">250.000 ₫<span>/buổi</span></p></div>
-                            <div class="job-card__tags"><span>Tiếng Anh · THPT</span><span>Trực tuyến</span><span>Google Meet / Zoom</span></div>
-                            <div class="my-job-page__specs"><p><strong>Tần suất:</strong> 2 buổi/tuần</p><p><strong>Lịch học:</strong> Linh hoạt cuối tuần</p><p><strong>Yêu cầu:</strong> Luyện phản xạ, thuyết trình và phát âm chuẩn IPA.</p></div>
-                            <footer class="job-card__footer"><div class="job-card__stats"><span class="job-card__applicants">2 gia sư đã ứng tuyển</span><span>Đăng 4 ngày trước</span></div><div><a class="job-card__action job-card__action--primary" href="applicants.html?job=TT-88209">Xem 2 ứng viên</a> <button type="button" class="job-card__action" data-close-job data-modal-open="close-job-modal">Đóng tin</button></div></footer>
-                        </article>
-
-                        <article class="job-card" data-job-card data-job-status="pending" data-applicants="0" data-fee="200000" data-created="5">
-                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--warning">Chờ duyệt</span><span class="job-card__code">Mã tin: TT-88590 · Gửi 3 giờ trước</span></div><h2>Tìm gia sư Vật lý lớp 11 luyện giữa học kỳ</h2></div><p class="job-card__price job-card__price--neutral">200.000 ₫<span>/buổi</span></p></div>
-                            <div class="job-card__tags"><span>Vật lý · Lớp 11</span><span>Tại nhà</span></div>
-                            <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
-                            <section class="alert alert--warning" role="status"><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Đang kiểm duyệt bảo mật</h3><p class="alert__message">Tin đang được kiểm tra tính xác thực và bảo vệ quyền riêng tư trước khi hiển thị công khai.</p></div></section>
-                            <footer class="job-card__footer"><div class="job-card__stats job-card__stats--muted"><span>Chưa mở ứng tuyển</span></div><div><a class="job-card__action" href="applicants.html?job=TT-88590">Ứng viên (0)</a> <button type="button" class="job-card__action">Chỉnh sửa</button></div></footer>
-                        </article>
-
-                        <article class="job-card job-card--closed" data-job-card data-job-status="closed" data-applicants="5" data-fee="180000" data-created="1">
-                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge">Đã đóng</span><span class="job-card__code">Mã tin: TT-87910 · Đăng 2 tuần trước</span></div><h2>Tìm gia sư Ngữ văn lớp 10</h2></div><p class="job-card__price job-card__price--neutral">180.000 ₫<span>/buổi</span></p></div>
-                            <div class="job-card__tags"><span>Ngữ văn · Lớp 10</span><span>Tại nhà</span><span>Đã chọn cô Lê Thảo Vy</span></div>
-                            <footer class="job-card__footer"><div class="job-card__stats job-card__stats--muted"><span>5 gia sư đã ứng tuyển</span><span>Lớp đang hoạt động</span></div><a class="job-card__action job-card__action--primary" href="applicants.html?job=TT-87910">Xem kết quả ứng tuyển</a></footer>
-                        </article>
                         <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
                         <section class="empty-state my-job-page__empty" data-job-empty hidden aria-labelledby="my-job-empty-title">
                             <span class="empty-state__icon" aria-hidden="true"></span>
                             <h2 class="empty-state__title" id="my-job-empty-title">Không có tin phù hợp</h2>
-                            <p class="empty-state__description">Không có tin nào phù hợp với bộ lọc hiện tại.</p>
+                            <p class="empty-state__description" data-job-empty-description>Không có tin nào phù hợp với bộ lọc hiện tại.</p>
                         </section>
                     </div>
+
+                    <!-- Component: JobCard | Nguồn: components/domain/job/job-card.html — mẫu thẻ, JS clone và điền dữ liệu store -->
+                    <template data-job-card-template>
+                        <article class="job-card" data-job-card data-job-id="" data-job-status="open" data-applicants="" data-fee="" data-created="">
+                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info" data-card-badge>Đang tuyển</span><span class="job-card__code" data-card-code></span></div><h2 data-card-title></h2></div><p class="job-card__price"><span data-card-fee></span><span>/buổi</span></p></div>
+                            <div class="job-card__tags"><span data-card-tag-subject></span><span data-card-tag-mode></span><span data-card-tag-district></span></div>
+                            <section class="alert alert--warning" role="status" data-card-pending hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Đang kiểm duyệt bảo mật</h3><p class="alert__message">Tin đang được kiểm tra trước khi hiển thị công khai và chưa nhận hồ sơ ứng tuyển.</p></div></section>
+                            <div class="my-job-page__specs"><p><strong>Tần suất:</strong> <span data-card-sessions></span></p><p><strong>Thời lượng:</strong> <span data-card-duration></span></p><p><strong>Yêu cầu:</strong> <span data-card-experience></span></p><p><strong>Mô tả:</strong> <span data-card-description></span></p></div>
+                            <footer class="job-card__footer"><div class="job-card__stats"><span class="job-card__applicants" data-card-applicants></span><span data-card-created-label></span></div><div><a class="job-card__action job-card__action--primary" href="applicants.html" data-card-applicants-link>Xem ứng viên</a> <button type="button" class="job-card__action" data-close-job data-modal-open="close-job-modal" hidden>Đóng tin</button></div></footer>
+                        </article>
+                    </template>
                 </div>
                 <div class="tabs__panel" role="tabpanel" id="job-panel-recruiting" aria-labelledby="job-tab-recruiting" tabindex="0" hidden></div>
                 <div class="tabs__panel" role="tabpanel" id="job-panel-pending" aria-labelledby="job-tab-pending" tabindex="0" hidden></div>
@@ -209,34 +191,31 @@
             </section>
         </section>
 
-        <aside class="my-job-page__sidebar" aria-label="Thông tin hỗ trợ">
+        <aside class="my-job-page__sidebar" aria-label="Thông tin hỗ trợ" data-my-job-sidebar>
             <section class="my-job-sidebar-card">
-                <header class="my-job-sidebar-card__header"><h2>Ứng viên cần xem</h2><span class="my-job-sidebar-card__count">3 mới</span></header>
-                <p class="page-header__description">Tin “Tìm gia sư Toán lớp 11 tại Thủ Đức” vừa nhận thêm hồ sơ phù hợp.</p>
+                <header class="my-job-sidebar-card__header"><h2>Ứng viên cần xem</h2><span class="my-job-sidebar-card__count" data-sidebar-count>—</span></header>
+                <p class="page-header__description" data-sidebar-job>Chọn một tin để xem hồ sơ ứng tuyển.</p>
+                <!-- Danh sách hồ sơ do js/pages/job/my-job.js render từ EduStore.applicationsOfJob(); đây chỉ là mẫu -->
+                <div data-sidebar-applicants></div>
                 <!-- Component: ApplicantCard | Nguồn: components/domain/job/applicant-card.html -->
-                <article class="applicant-card applicant-card--compact"><header class="applicant-card__header"><div class="applicant-card__identity"><div class="applicant-card__avatar applicant-card__avatar--pending">MA</div><div><div class="applicant-card__name-row"><h3>Nguyễn Minh Anh</h3></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 4.9</span><span>ĐH Sư phạm TP.HCM</span></p></div></div></header></article>
-                <article class="applicant-card applicant-card--compact"><header class="applicant-card__header"><div class="applicant-card__identity"><div class="applicant-card__avatar applicant-card__avatar--selected">QH</div><div><div class="applicant-card__name-row"><h3>Trần Quốc Huy</h3></div><p class="applicant-card__details"><span class="applicant-card__rating">★ 5.0</span><span>Chuyên Toán KHTN</span></p></div></div></header></article>
-                <article class="applicant-card applicant-card--compact"><header class="applicant-card__header"><div class="applicant-card__identity"><div class="applicant-card__avatar applicant-card__avatar--pending">PL</div><div><div class="applicant-card__name-row"><h3>Phạm Hoàng Long</h3></div><p class="applicant-card__details"><span>Kinh nghiệm 4 năm ôn thi</span></p></div></div></header></article>
+                <template data-sidebar-applicant-template>
+                    <article class="applicant-card applicant-card--compact"><header class="applicant-card__header"><div class="applicant-card__identity"><div class="applicant-card__avatar" data-sidebar-avatar>—</div><div><div class="applicant-card__name-row"><h3 data-sidebar-name>—</h3></div><p class="applicant-card__details"><span data-sidebar-detail>—</span></p></div></div></header></article>
+                </template>
                 <!-- Component: Button | Nguồn: components/action/button.html -->
-                <a class="button button--primary button--medium my-job-sidebar-card__action" href="applicants.html?job=TT-88412">Xem ngay 3 ứng viên mới</a>
+                <a class="button button--primary button--medium my-job-sidebar-card__action" href="applicants.html" data-sidebar-action>Xem hồ sơ ứng tuyển</a>
             </section>
 
             <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
 
-
-
-
-
         </aside>
     </div>
-
 
 </div>
 </main>
 <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
 <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
-        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
         <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
         <p class="user-footer__copyright">© 2026 Edu Connect</p>
     </div>

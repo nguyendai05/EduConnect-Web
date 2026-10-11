@@ -2,14 +2,39 @@
  * No messages or attachments are uploaded; state is kept for this page session only.
  */
 (() => {
-  // Hợp đồng liên kết của từng cuộc trò chuyện; cùng bộ dữ liệu với trang chi tiết hợp đồng.
-  const contracts = {
-    'HD-20260919-024': { course: 'Toán lớp 11', status: 'Đang thực hiện', progress: 3, sessions: 8, fee: 220000, income: 198000, mode: 'Học trực tiếp', next: { lesson: 4, weekday: 'Thứ Sáu', date: '09/10/2026', time: '19:00–20:30', topic: 'Phương trình lượng giác nâng cao' } },
-    'HD-20260926-025': { course: 'Toán lớp 11', status: 'Chờ ký quỹ', progress: 0, sessions: 8, fee: 220000, income: 198000, mode: 'Học trực tiếp', next: null },
-    'HD-20260810-018': { course: 'Toán lớp 11', status: 'Đã hủy', progress: 4, sessions: 5, fee: 180000, income: 162000, mode: 'Học trực tiếp', next: null },
-    'HD-20260715-012': { course: 'Toán lớp 9', status: 'Đã kết thúc', progress: 7, sessions: 8, fee: 220000, income: 198000, mode: 'Học trực tiếp', next: null },
-    'HD-20260928-027': { course: 'Toán lớp 10', status: 'Đang thực hiện', progress: 6, sessions: 10, fee: 180000, income: 162000, mode: 'Học trực tiếp', next: { lesson: 7, weekday: 'Thứ Ba', date: '06/10/2026', time: '20:00–21:30', topic: 'Hàm số bậc hai và đồ thị' } },
-    'HD-20260905-019': { course: 'Toán lớp 9', status: 'Đang thực hiện', progress: 5, sessions: 12, fee: 160000, income: 144000, mode: 'Học trực tuyến', next: { lesson: 6, weekday: 'Thứ Năm', date: '08/10/2026', time: '19:00–20:30', topic: 'Hệ phương trình và bài toán thực tế' } }
+  const Store = window.EduStore
+  /* Dải "hợp đồng liên kết" đọc từ EduStore — cùng bản ghi với trang chi tiết hợp đồng.
+     Bảng hard-code cũ ở đây mâu thuẫn số liệu thật (HD-20260905-019 ghi "Đang thực hiện"
+     trong khi hợp đồng đã hủy; HD-20260919-024 ghi 8 buổi/220.000 đ thay vì 24/210.000 đ). */
+  const MODE_LABEL = { online: 'Học trực tuyến', home: 'Học trực tiếp tại nhà', both: 'Học trực tiếp hoặc trực tuyến' }
+  const contractSummary = id => {
+    if (!Store) return null
+    const record = Store.contract(id)
+    if (!record) return null
+    const order = Store.order(record.orderId)
+    const item = order && Array.isArray(order.items) ? order.items[0] : null
+    const offering = item && item.offeringId ? Store.offering(item.offeringId) : null
+    const split = Store.splitRelease(record.unitPrice, Number(record.feeRate) || Store.DEMO_FEE_RATE)
+    const upcoming = Store.sessionsOf(record.id).find(entry => entry.no > Store.toInteger(record.completedSessions))
+    const parts = String((item && item.scheduleText) || '').split(',').map(part => part.trim()).filter(Boolean)
+    return {
+      course: (offering && offering.subjectLabel) || (item && item.offeringTitle) || 'Dịch vụ đã đặt',
+      status: Store.statusOf(Store.CONTRACT_STATUS, record.status).label,
+      progress: Store.toInteger(record.completedSessions),
+      sessions: Store.toInteger(record.sessions),
+      fee: Store.toInteger(record.unitPrice),
+      income: split.tutorNetReleased,
+      mode: (offering && MODE_LABEL[offering.mode]) || (item && item.offeringType === 'GROUP_CLASS' ? 'Lớp nhóm' : 'Chưa ghi rõ hình thức'),
+      next: upcoming
+        ? {
+          lesson: upcoming.no,
+          weekday: parts[0] || 'Chưa ghi lịch',
+          date: upcoming.date,
+          time: (parts[1] || '—') + (item ? ' · ' + item.durationMinutes + ' phút' : ''),
+          topic: 'Theo kế hoạch của gia sư (dữ liệu mẫu chưa ghi từng buổi)'
+        }
+        : null
+    }
   }
   const conversations = [
     { id: 'lan', name: 'Chị Mai Lan', initials: 'ML', student: 'Trần Gia Huy', course: 'Toán · Lớp 11', mode: 'Học trực tiếp', unread: 0, contractId: 'HD-20260919-024', contractIds: ['HD-20260919-024', 'HD-20260926-025', 'HD-20260810-018', 'HD-20260715-012'], messages: [
@@ -142,7 +167,7 @@
   }
   const updateSend = () => { byId('send-button').disabled = !input.value.trim() && !attachment }
   const renderLinked = () => {
-    const record = selectedContract && contracts[selectedContract] ? contracts[selectedContract] : null
+    const record = selectedContract ? contractSummary(selectedContract) : null
     const href = detailHref(selectedContract)
     for (const id of ['contract-link', 'linked-contract']) byId(id).hidden = !record
     byId('linked-lesson').hidden = !record || !record.next
@@ -213,6 +238,7 @@
   document.querySelectorAll('[data-chat-filter]').forEach(button => button.addEventListener('click', () => { filter = button.dataset.chatFilter; renderThreads() }))
   byId('back-to-contacts').addEventListener('click', () => {
     layout.classList.remove('chat-layout--conversation', 'chat-layout--context')
+    byId('toggle-context').setAttribute('aria-expanded', 'false')
     byId('conversation-search').focus()
   })
   const closeContext = () => {
@@ -278,12 +304,12 @@
     notice.textContent = `Không tìm thấy cuộc trò chuyện nào liên quan tới hợp đồng ${requestedContract}.`
     notice.hidden = false
   }
-  renderThreads()
-  renderConversation()
   if (matchedThread) {
     matchedThread.unread = 0
     layout.classList.add('chat-layout--conversation')
     byId('chat-status').textContent = `Đang mở cuộc trò chuyện với ${matchedThread.name} về hợp đồng ${requestedContract}.`
-    renderThreads()
   }
+  // Mở pane trước khi đo chiều cao lịch sử; pane ẩn trên mobile chưa cuộn được.
+  renderThreads()
+  renderConversation()
 })()

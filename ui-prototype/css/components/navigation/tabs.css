@@ -4,7 +4,7 @@
 .tabs__tab:hover { background: var(--color-surface-low); }
 .tabs__tab[aria-selected="true"] { color: var(--color-primary); border-bottom-color: var(--color-primary); font-weight: 600; }
 .tabs__tab:disabled,
-.tabs__tab[aria-disabled="true"] { color: var(--color-text-muted); cursor: not-allowed; opacity: 0.62; }
+.tabs__tab[aria-disabled="true"] { color: var(--color-text-secondary); cursor: not-allowed; opacity: 0.62; }
 .tabs__tab:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -4px; }
 .tabs__panel { padding: var(--space-6); color: var(--color-text-secondary); }
 .tabs__panel[hidden] { display: none; }

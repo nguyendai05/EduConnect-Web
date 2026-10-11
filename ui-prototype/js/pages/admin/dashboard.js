@@ -4,33 +4,96 @@
   if (!page) return;
 
   // Dữ liệu minh họa của bản mẫu; thay bằng dữ liệu server khi tích hợp JSP.
+  /**
+   * Số liệu tài chính lấy từ fixture dùng chung để mọi màn cùng reference khớp nhau.
+   * Không hard-code: escrow tính từ ví học viên, giải ngân tính từ release event.
+   */
+  const storeFinance = () => {
+    const Store = window.EduStore;
+    if (!Store) return { escrowHeld: 0, escrowByContract: 0, tutorNetReleased: 0, grossReleased: 0, platformFeeReleased: 0, awaiting: 0, disputed: 0, walletCount: 0 };
+    const wallets = Store.list('wallets');
+    /* Hai đường tính độc lập cho cùng một khái niệm ký quỹ: cộng theo ví học viên
+       và cộng theo từng hợp đồng. Lệch nhau là defect dữ liệu, không phải lỗi hiển thị. */
+    const escrowHeld = wallets.filter(item => item.ownerType === 'learner')
+      .reduce((sum, item) => sum + Store.escrowHeldOf(item.ownerId), 0);
+    const escrowByContract = Store.list('contracts').reduce((sum, item) => sum + Store.escrowOf(item.id), 0);
+    const revenue = Store.revenueSummary();
+    const awaiting = Store.list('payments').filter(item => item.status === 'pending').reduce((sum, item) => sum + Store.toInteger(item.payosDue), 0);
+    const disputed = Store.list('orders').filter(item => item.refund && item.refund.state === 'pending').reduce((sum, item) => sum + Store.toInteger(item.refund.amount), 0);
+    return { escrowHeld, escrowByContract, tutorNetReleased: revenue.tutorNetReleased, grossReleased: revenue.grossReleased, platformFeeReleased: revenue.platformFeeReleased, awaiting, disputed, walletCount: wallets.length };
+  };
+
+  /**
+   * Số liệu vận hành của luồng kiểm duyệt TIN lấy thẳng từ EduStore.
+   * Trước hàm này hai thẻ "Tin tìm gia sư chờ duyệt" và "Tin chờ duyệt quá SLA" ghi chữ ký tay
+   * (count: 5, "Tin TT-8839 gửi lúc 09:05") nên sau khi admin duyệt thật trên trang hàng đợi,
+   * dashboard vẫn báo còn tin chờ — hai màn cùng một con số nhưng lệch nhau.
+   */
+  const jobOps = () => {
+    const Store = window.EduStore;
+    if (!Store || typeof Store.jobQueue !== 'function') {
+      return { pending: 0, flagged: 0, overdueCount: 0, oldest: null, oldestWaitHours: 0 };
+    }
+    const pending = Store.jobQueue('pending');
+    const oldest = pending.length ? pending[0] : null;
+    const waitHours = oldest
+      ? Math.max(0, Math.floor((Date.now() - new Date(oldest.submittedAt || oldest.publishedAt).getTime()) / 3600000))
+      : 0;
+    return {
+      pending: pending.length,
+      flagged: pending.filter(item => Boolean(item.signal)).length,
+      overdueCount: pending.filter(item => {
+        const at = new Date(item.submittedAt || item.publishedAt).getTime();
+        return Number.isFinite(at) && Date.now() - at >= 4 * 3600000;
+      }).length,
+      oldest,
+      oldestWaitHours: waitHours
+    };
+  };
+
+  /** Số đếm vận hành lấy từ fixture dùng chung, không hard-code số toàn hệ thống. */
+  const storeCounts = () => {
+    const Store = window.EduStore;
+    if (!Store) return { users: 0, tutorsApproved: 0, openPosts: 0, reportsOpen: 0 };
+    const reports = Store.list('reports');
+    return {
+      users: Store.userList().length,
+      tutorsApproved: Store.FIXTURES.tutors.filter(item => item.profileStatus === 'approved').length,
+      openPosts: Store.list('jobs').filter(item => item.status === 'approved' && item.availability === 'open').length
+        + Store.list('offerings').filter(Store.isPubliclyListable).length,
+      reportsOpen: reports.filter(item => !Store.REPORT_STATE[item.state].terminal).length
+    };
+  };
+
   const buildSnapshot = () => {
+    const ops = jobOps();
+    const admin = window.EduAdminSummary.summary();
     const queues = [
-      { key: 'tutor', title: 'Hồ sơ gia sư chờ xác minh', icon: 'tutor-verification.svg', count: 4, countUnit: 'hồ sơ', badge: { label: 'Chờ duyệt', tone: 'warning' }, meta: '1 hồ sơ đã xác thực CCCD điện tử, có thể duyệt ngay trong hôm nay.', reason: 'SLA kiểm duyệt: dưới 4 giờ làm việc.', urgent: true, href: 'tutor-review-queue.html?status=pending', linkLabel: 'Xem hàng đợi' },
-      { key: 'job', title: 'Tin tìm gia sư chờ duyệt', icon: 'tutor-search.svg', count: 5, countUnit: 'tin', badge: { label: '2 tin cần kiểm tra', tone: 'warning' }, meta: 'Hệ thống gắn cờ vì nghi chứa số điện thoại hoặc tài khoản Zalo trong ghi chú riêng.', reason: 'Ưu tiên rà soát thủ công trước khi công khai tin.', urgent: true, href: 'job-review-queue.html?status=pending', linkLabel: 'Xem hàng đợi' },
-      { key: 'report', title: 'Báo cáo & tranh chấp đang mở', icon: 'dispute.svg', count: 6, countUnit: 'vụ việc', amount: 1060000, badge: { label: 'Cần xử lý', tone: 'danger' }, meta: '3 báo cáo mới về buổi học và 3 vụ đang được xác minh.', reason: 'Có {amount} đang bị khóa trong ký quỹ chờ kết luận.', urgent: true, href: 'reports.html?status=unresolved', linkLabel: 'Xem báo cáo' },
-      { key: 'payout', title: 'Yêu cầu rút tiền chờ xử lý', icon: 'wallet.svg', count: 5, countUnit: 'yêu cầu', amount: 19690000, badge: { label: 'Chờ phê duyệt', tone: 'warning' }, meta: 'Tổng {amount} từ 5 gia sư đang chờ quản trị xử lý.', reason: 'Ưu tiên yêu cầu gửi trước 09:00 để giải ngân trong ngày.', urgent: true, href: 'payout-requests.html?status=pending', linkLabel: 'Xem yêu cầu' },
-      { key: 'sla', title: 'Tin chờ duyệt quá SLA', icon: 'clock.svg', count: 1, countUnit: 'tin', badge: { label: 'Quá 4 giờ', tone: 'info' }, meta: 'Tin TT-8839 gửi lúc 09:05, hiện chưa có kiểm duyệt viên phụ trách.', reason: 'Sắp xếp: ưu tiên tin chờ lâu nhất.', urgent: false, href: 'job-review-queue.html?status=pending&sort=oldest', linkLabel: 'Xem hàng đợi' },
+      { key: 'tutor', title: 'Hồ sơ gia sư chờ xác minh', icon: 'tutor-verification.svg', count: admin.tutors, countUnit: 'hồ sơ', badge: { label: 'Chờ duyệt', tone: 'warning' }, meta: 'Các hồ sơ đang chờ quyết định trong hàng đợi xác minh.', reason: 'Kiểm tra thông tin và tài liệu trước khi duyệt.', urgent: admin.tutors > 0, href: 'tutor-review-queue.html?status=pending', linkLabel: 'Xem hàng đợi' },
+      { key: 'job', title: 'Tin tìm gia sư chờ duyệt', icon: 'tutor-search.svg', count: ops.pending, countUnit: 'tin', badge: { label: `${ops.flagged} tin có tín hiệu liên hệ ngoài`, tone: 'warning' }, meta: 'Đếm từ jobQueue("pending") của EduStore — cùng tập mà hàng đợi duyệt tin đang trưng bày; tín hiệu gắn cờ lấy từ field signal của từng tin.', reason: 'Ưu tiên rà soát thủ công trước khi công khai tin.', urgent: ops.pending > 0, href: 'job-review-queue.html?status=pending', linkLabel: 'Xem hàng đợi' },
+      { key: 'report', title: 'Báo cáo & tranh chấp đang mở', icon: 'dispute.svg', count: storeCounts().reportsOpen, countUnit: 'vụ việc', amount: storeFinance().disputed, badge: { label: 'Cần xử lý', tone: 'danger' }, meta: 'Đếm từ report có state chưa terminal trong fixture dùng chung; cùng tập với trang Reports và với report người dùng vừa gửi.', reason: 'Có {amount} đang chờ hoàn tiền theo đơn đã yêu cầu hủy.', urgent: true, href: 'reports.html?status=unresolved', linkLabel: 'Xem báo cáo' },
+      { key: 'payout', title: 'Yêu cầu rút tiền chờ xử lý', icon: 'wallet.svg', count: admin.payouts, countUnit: 'yêu cầu', amount: admin.payoutAmount, badge: { label: 'Chờ phê duyệt', tone: 'warning' }, meta: `Tổng {amount} từ ${admin.payouts} yêu cầu đang chờ xử lý.`, reason: 'Đối chiếu yêu cầu trong hàng đợi rút tiền.', urgent: admin.payouts > 0, href: 'payout-requests.html?status=pending', linkLabel: 'Xem yêu cầu' },
+      { key: 'sla', title: 'Tin chờ duyệt quá SLA', icon: 'clock.svg', count: ops.overdueCount, countUnit: 'tin', badge: { label: ops.oldest ? `Chờ ${ops.oldestWaitHours} giờ` : 'Không có tin chờ', tone: 'info' }, meta: ops.oldest ? `Tin ${ops.oldest.id} gửi lúc ${new Intl.DateTimeFormat('vi-VN', { hour: '2-digit', minute: '2-digit' }).format(new Date(ops.oldest.submittedAt))}, hiện chưa có kiểm duyệt viên phụ trách.` : 'Hàng đợi kiểm duyệt đang trống — mọi tin đã được duyệt hoặc từ chối trong dữ liệu mẫu.', reason: 'Sắp xếp: ưu tiên tin chờ lâu nhất.', urgent: false, href: 'job-review-queue.html?status=pending&sort=oldest', linkLabel: 'Xem hàng đợi' },
     ];
     const queueCount = key => queues.filter(item => item.key === key).reduce((total, item) => total + item.count, 0);
 
     return {
       asOf: new Date().toISOString(),
       operations: [
-        { key: 'users', label: 'Người dùng hoạt động', icon: 'profile.svg', kind: 'count', value: 12486, unit: 'người dùng', note: 'Phụ huynh và học viên đăng nhập trong 30 ngày gần nhất.', badge: { label: 'Tăng 840 so với tháng trước', tone: 'success' }, href: 'audit-logs.html?module=account', linkLabel: 'Xem nhật ký người dùng' },
-        { key: 'tutors', label: 'Gia sư đã xác minh', icon: 'verified.svg', kind: 'count', value: 1284, unit: 'gia sư', note: 'Hồ sơ đã duyệt chứng chỉ và xác thực giấy tờ tùy thân.', badge: { label: 'Đã bảo chứng', tone: 'verified' }, href: 'tutor-review-queue.html?status=verified', linkLabel: 'Xem hồ sơ gia sư' },
+        { key: 'users', label: 'Người dùng trong dữ liệu mẫu', icon: 'profile.svg', kind: 'count', value: storeCounts().users, unit: 'persona demo', note: 'Đếm từ persona trong fixture dùng chung, không phải số người dùng toàn hệ thống.', badge: { label: 'Dữ liệu demo', tone: 'success' }, href: 'manage.html?tab=users', linkLabel: 'Xem người dùng' },
+        { key: 'tutors', label: 'Hồ sơ gia sư đã duyệt', icon: 'verified.svg', kind: 'count', value: admin.verifiedTutors, unit: 'hồ sơ', note: 'Cùng dữ liệu với hàng đợi xác minh và các quyết định đã lưu trong phiên xem trước.', badge: { label: 'Dữ liệu demo', tone: 'verified' }, href: 'tutor-review-queue.html?status=verified', linkLabel: 'Xem hồ sơ gia sư' },
         { key: 'pending-tutor', label: 'Hồ sơ chờ duyệt', icon: 'certificate.svg', kind: 'count', value: queueCount('tutor'), unit: 'hồ sơ', tone: 'warning', note: 'Chờ xác minh chứng chỉ giảng dạy và giấy tờ tùy thân.', badge: { label: 'Cần xử lý hôm nay', tone: 'warning' }, href: 'tutor-review-queue.html?status=pending', linkLabel: 'Xem hàng đợi' },
-        { key: 'pending-job', label: 'Tin tìm gia sư chờ duyệt', icon: 'tutor-search.svg', kind: 'count', value: queueCount('job'), unit: 'tin đăng', tone: 'warning', note: '2 tin có tín hiệu chứa thông tin liên hệ ngoài nền tảng.', badge: { label: '2 tin cần kiểm tra', tone: 'warning' }, href: 'job-review-queue.html?status=pending', linkLabel: 'Xem hàng đợi' },
-        { key: 'open-posts', label: 'Tin đăng & lớp đang mở', icon: 'calendar.svg', kind: 'count', value: 148, unit: 'niêm yết', note: '96 tin đang tuyển và 52 lớp nhóm đang mở nhận học viên.', badge: { label: 'Đang tuyển', tone: 'success' }, href: 'job-review-queue.html?status=hiring', linkLabel: 'Xem tin đang tuyển' },
+        { key: 'pending-job', label: 'Tin tìm gia sư chờ duyệt', icon: 'tutor-search.svg', kind: 'count', value: queueCount('job'), unit: 'tin đăng', tone: 'warning', note: `${ops.flagged} tin có tín hiệu chứa thông tin liên hệ ngoài nền tảng.`, badge: { label: `${ops.flagged} tin cần kiểm tra`, tone: 'warning' }, href: 'job-review-queue.html?status=pending', linkLabel: 'Xem hàng đợi' },
+        { key: 'open-posts', label: 'Tin đăng & lớp đang mở', icon: 'calendar.svg', kind: 'count', value: storeCounts().openPosts, unit: 'niêm yết', note: 'Tin tìm gia sư approved+open cộng với offering/lớp nhóm public+open trong fixture dùng chung.', badge: { label: 'Dữ liệu demo', tone: 'success' }, href: 'manage.html?tab=offerings', linkLabel: 'Xem dịch vụ và lớp' },
         { key: 'contracts', label: 'Hợp đồng đang hoạt động', icon: 'receipt.svg', kind: 'count', value: 317, unit: 'hợp đồng', note: 'Hợp đồng đã cọc và đang trong giai đoạn diễn ra buổi học.', badge: { label: 'Theo dõi tiến độ', tone: 'info' }, href: 'audit-logs.html?module=contract', linkLabel: 'Xem nhật ký hợp đồng' },
         { key: 'reports', label: 'Báo cáo đang mở', icon: 'shield-alert.svg', kind: 'count', value: queueCount('report'), unit: 'vụ việc', tone: 'danger', note: 'Báo cáo vi phạm nội dung hoặc tranh chấp buổi học, hợp đồng.', badge: { label: 'Cần xử lý', tone: 'danger' }, href: 'reports.html?status=unresolved', linkLabel: 'Xem báo cáo' },
-        { key: 'payouts', label: 'Yêu cầu rút tiền chờ xử lý', icon: 'wallet.svg', kind: 'count', value: queueCount('payout'), unit: 'yêu cầu', tone: 'warning', amount: 19690000, note: 'Tổng {amount} đang chờ quản trị phê duyệt.', badge: { label: 'Chờ phê duyệt', tone: 'warning' }, href: 'payout-requests.html?status=pending', linkLabel: 'Xem yêu cầu' },
+        { key: 'payouts', label: 'Yêu cầu rút tiền chờ xử lý', icon: 'wallet.svg', kind: 'count', value: queueCount('payout'), unit: 'yêu cầu', tone: 'warning', amount: admin.payoutAmount, note: 'Tổng {amount} đang chờ quản trị phê duyệt.', badge: { label: 'Chờ phê duyệt', tone: 'warning' }, href: 'payout-requests.html?status=pending', linkLabel: 'Xem yêu cầu' },
       ],
       finance: [
-        { key: 'gmv', label: 'Tổng giá trị giao dịch', icon: 'payment-copy.svg', kind: 'money', value: 18472500000, unit: 'GMV 30 ngày', tone: 'success', note: 'Giá trị hợp đồng đã thanh toán qua ký quỹ, chưa trừ phí nền tảng.', badge: { label: 'Tăng 2,3% theo tháng', tone: 'success' }, href: 'audit-logs.html?module=payout', linkLabel: 'Xem nhật ký thanh toán' },
-        { key: 'fee', label: 'Doanh thu phí nền tảng', icon: 'receipt.svg', kind: 'money', value: 1477800000, unit: 'phí thu 30 ngày', note: 'Mức phí 8% áp trên giá trị hợp đồng đã hoàn tất buổi học.', badge: { label: 'Đối soát tự động', tone: 'info' }, href: 'payout-requests.html?status=completed', linkLabel: 'Xem khoản đã đối soát' },
-        { key: 'escrow', label: 'Ký quỹ đang giữ', icon: 'lock.svg', kind: 'money', value: 6820000000, unit: 'escrow đang giữ', note: 'Tiền phụ huynh đã cọc, chờ xác nhận đủ số buổi học trước khi giải ngân.', badge: { label: 'Khớp sổ cái', tone: 'escrow' }, href: 'reports.html?status=open', linkLabel: 'Xem tiền đang giữ' },
-        { key: 'released', label: 'Đã giải ngân cho gia sư', icon: 'check-double.svg', kind: 'money', value: 11940000000, unit: 'giải ngân 30 ngày', tone: 'success', note: 'Chuyển vào số dư khả dụng sau khi học viên xác nhận buổi học.', badge: { label: 'Không số dư âm', tone: 'success' }, href: 'payout-requests.html?status=completed', linkLabel: 'Xem yêu cầu rút tiền' },
+        { key: 'gmv', label: 'Tổng giá trị đã giải ngân (demo)', icon: 'payment-copy.svg', kind: 'money', value: window.EduStore ? window.EduStore.revenueSummary().grossReleased : 0, unit: 'grossReleased từ fixture', tone: 'success', note: 'Tính từ release event trong fixture dùng chung. Held/planned/withdrawal không được cộng vào.', badge: { label: 'Dữ liệu demo', tone: 'success' }, href: 'audit-logs.html?module=payout', linkLabel: 'Xem nhật ký thanh toán' },
+        { key: 'fee', label: 'Phí nền tảng đã giải ngân (demo)', icon: 'receipt.svg', kind: 'money', value: window.EduStore ? window.EduStore.revenueSummary().platformFeeReleased : 0, unit: 'platformFeeReleased', note: `Tính từ release event với feeRateSnapshot; DEMO_FEE_RATE = ${window.EduStore ? Math.round(window.EduStore.DEMO_FEE_RATE * 100) : 10}% là giả định demo chưa được nhóm chốt.`, badge: { label: 'Giả định demo', tone: 'info' }, href: 'payout-requests.html?status=completed', linkLabel: 'Xem khoản đã đối soát' },
+        { key: 'escrow', label: 'Ký quỹ đang giữ (demo)', icon: 'lock.svg', kind: 'money', value: storeFinance().escrowHeld, unit: 'suy từ payment − release − refund', note: 'Tổng ký quỹ đang giữ của các hợp đồng trong fixture dùng chung; phần chưa xác nhận đủ buổi học thì chưa giải ngân.', badge: { label: 'Từ fixture chung', tone: 'escrow' }, href: 'reports.html?status=open', linkLabel: 'Xem tiền đang giữ' },
+        { key: 'released', label: 'Đã giải ngân cho gia sư (demo)', icon: 'check-double.svg', kind: 'money', value: storeFinance().tutorNetReleased, unit: 'tutorNetReleased', tone: 'success', note: 'Tổng tutorNetReleased từ release event; không cộng held/planned và không tính lại withdrawal.', badge: { label: 'Từ fixture chung', tone: 'success' }, href: 'payout-requests.html?status=completed', linkLabel: 'Xem yêu cầu rút tiền' },
       ],
       queues,
       activity: [
@@ -38,7 +101,7 @@
         { actor: 'Quản trị viên', tone: 'info', initials: 'QT', title: 'Duyệt hồ sơ gia sư', target: 'Lê Quỳnh Chi · Toán cấp hai, Hà Nội', result: 'Hồ sơ chuyển sang Đã xác minh và được gắn huy hiệu bảo chứng.', at: '2026-10-10T01:20:00+07:00', href: 'tutor-review-queue.html?status=verified', linkLabel: 'Xem hồ sơ gia sư' },
         { actor: 'Phụ huynh', tone: 'danger', initials: 'PH', title: 'Gửi báo cáo tranh chấp buổi học', target: 'Buổi 3 — HĐ-20260919-024 · Ngữ văn 12', result: '{amount} đang bị khóa trong ký quỹ chờ quản trị kết luận.', amount: 220000, at: '2026-10-09T20:42:00+07:00', href: 'reports.html?status=open', linkLabel: 'Xem báo cáo' },
         { actor: 'Gia sư', tone: 'warning', initials: 'GS', title: 'Gửi yêu cầu rút tiền', target: 'Trần Minh Khoa · {amount} về tài khoản ngân hàng đã liên kết', amount: 2500000, result: 'Đáp ứng điều kiện thời gian giữ tiền, chờ quản trị phê duyệt.', at: '2026-10-09T18:15:00+07:00', href: 'payout-requests.html?status=pending', linkLabel: 'Xem yêu cầu rút tiền' },
-        { actor: 'Hệ thống', tone: 'neutral', initials: 'HT', title: 'Gắn cờ tin tìm gia sư cần rà soát', target: 'TT-8841 · Gia sư Tiếng Anh lớp 10', result: 'Phát hiện số điện thoại trong ghi chú riêng; tin đang chờ kiểm duyệt.', at: '2026-10-09T15:30:00+07:00', href: 'job-review-queue.html?status=pending', linkLabel: 'Xem hàng đợi tin' },
+        { actor: 'Hệ thống', tone: 'neutral', initials: 'HT', title: 'Gắn cờ tin tìm gia sư cần rà soát', target: jobOps().flagged ? (() => { const flagged = window.EduStore.jobQueue('pending').filter(item => Boolean(item.signal)); return flagged.length ? `${flagged[0].id} · ${flagged[0].title}` : 'Không còn tin chờ duyệt có tín hiệu'; })() : 'Không còn tin chờ duyệt có tín hiệu', result: 'Phát hiện số điện thoại trong ghi chú riêng ở bản ghi kiểm duyệt; tin vẫn nằm trong hàng đợi cho tới khi quản trị quyết định.', at: '2026-10-09T15:30:00+07:00', href: 'job-review-queue.html?status=pending', linkLabel: 'Xem hàng đợi tin' },
         { actor: 'Hệ thống', tone: 'neutral', initials: 'HT', title: 'Hủy lớp nhóm thiếu số lượng tối thiểu', target: 'Lớp Hóa 10 Nâng cao · LH-1002', result: 'Hoàn 100% {amount} ký quỹ cho 2 học viên vào ví khả dụng.', amount: 800000, at: '2026-10-09T09:05:00+07:00', href: 'audit-logs.html?module=automation', linkLabel: 'Xem nhật ký lớp học' },
       ],
       gmvTrend: [
@@ -50,16 +113,25 @@
         { label: 'T10', full: 'Tháng 10/2026', gmv: 18472500000, fee: 1477800000 },
       ],
       escrowMix: [
-        { key: 'released', label: 'Đã giải ngân', value: 11940000000 },
-        { key: 'held', label: 'Đang ký quỹ (HELD)', value: 6820000000 },
-        { key: 'awaiting', label: 'Chờ học viên xác nhận buổi học', value: 1265000000 },
-        { key: 'disputed', label: 'Đang tranh chấp', value: 385000000 },
+        { key: 'released', label: 'Đã giải ngân (tutorNetReleased)', value: storeFinance().tutorNetReleased },
+        { key: 'held', label: 'Đang ký quỹ (escrowHeld)', value: storeFinance().escrowHeld },
+        { key: 'awaiting', label: 'Phiên thanh toán đang chờ', value: storeFinance().awaiting },
+        { key: 'disputed', label: 'Đang chờ hoàn tiền', value: storeFinance().disputed },
       ],
-      integrity: [
-        { title: '1. Không có số dư âm', status: { label: 'Đạt', tone: 'success' }, description: 'Không phát hiện ví nào có số dư khả dụng, đang giữ hoặc chờ rút nhỏ hơn 0.', value: '0 ví bất thường trong {count} ví đang mở', count: 4812 },
-        { title: '2. Số dư đang giữ khớp ký quỹ', status: { label: 'Đạt', tone: 'success' }, description: 'Tổng số dư đang giữ khớp toàn bộ khoản escrow ở trạng thái HELD.', value: 'Khớp {amount}, độ lệch 0', amount: 6820000000 },
-        { title: '3. Tiền không tự sinh ra hoặc mất đi', status: { label: 'Đạt', tone: 'success' }, description: 'Tổng tiền nạp trừ tổng tiền đã rút khớp với tổng số dư hiện có của toàn hệ thống.', value: 'Tổng dư {amount}, khớp tuyệt đối', amount: 20410000000 },
-      ],
+      integrity: (() => {
+        const Store = window.EduStore;
+        const finance = storeFinance();
+        const wallets = Store ? Store.list('wallets') : [];
+        const negative = wallets.filter(item => Store.toInteger(item.availableToUse) < 0 || Store.escrowHeldOf(item.ownerId) < 0).length;
+        const releases = Store ? Store.releasesOf() : [];
+        const unbalanced = releases.filter(item => Store.toInteger(item.grossReleased) !== Store.toInteger(item.tutorNetReleased) + Store.toInteger(item.platformFeeReleased)).length;
+        const escrowDelta = Math.abs(finance.escrowHeld - finance.escrowByContract);
+        return [
+          { title: '1. Không có số dư âm', status: { label: negative === 0 ? 'Đạt (tính từ fixture)' : `${negative} ví bất thường`, tone: negative === 0 ? 'success' : 'danger' }, description: 'Đếm trực tiếp từ ví trong fixture dùng chung, không phải con số cố định.', value: `${negative} ví bất thường trong ${wallets.length} ví của fixture` },
+          { title: '2. Ký quỹ khớp giữa hai đường tính', status: { label: escrowDelta === 0 ? 'Đạt (đối soát fixture)' : `Lệch ${escrowDelta.toLocaleString('vi-VN')} ₫`, tone: escrowDelta === 0 ? 'success' : 'danger' }, description: 'Cộng escrow theo từng ví học viên và theo từng hợp đồng phải ra cùng một số. escrow dẫn từ payment − release − refund. Đây là đối soát trong dữ liệu demo, CHƯA phải đối soát ledger phía server.', value: `Escrow theo ví: ${finance.escrowHeld.toLocaleString('vi-VN')} ₫ · theo hợp đồng: ${finance.escrowByContract.toLocaleString('vi-VN')} ₫` },
+          { title: '3. gross = net + fee', status: { label: unbalanced === 0 ? 'Đạt (tính từ fixture)' : `${unbalanced} release lệch`, tone: unbalanced === 0 ? 'success' : 'danger' }, description: 'Kiểm bất biến grossReleased = tutorNetReleased + platformFeeReleased trên từng release event.', value: `${releases.length} release event, ${unbalanced} lệch bất biến` },
+        ];
+      })(),
       services: [
         { label: 'Task quét giải ngân 72 giờ', status: { label: 'Bình thường', tone: 'success' }, tone: 'ok' },
         { label: 'Task quét cờ tin tuyển', status: { label: 'Đang chạy', tone: 'info' }, tone: 'ok' },
@@ -203,9 +275,10 @@
     root.replaceChildren(fragment);
     const passed = snapshot.integrity.filter(item => item.status.tone === 'success').length;
     const score = page.querySelector('[data-dashboard-integrity-score]');
-    score.className = `badge ${passed === snapshot.integrity.length ? 'badge--success' : 'badge--warning'}`;
-    score.textContent = `${passed} / ${snapshot.integrity.length} kiểm tra đạt`;
-    setText(page, '[data-dashboard-integrity-time]', `Kiểm tra tự động lúc ${timeFormat.format(now)} · ${dateFormat.format(now)}`);
+    score.className = 'badge badge--neutral';
+    // Các mục "kiểm tra" dưới đây là GIẢ ĐỊNH của dữ liệu mẫu, chưa có kiểm tra đối soát thật ở backend.
+    score.textContent = `${passed} / ${snapshot.integrity.length} giả định demo (chưa có kiểm tra thật)`;
+    setText(page, '[data-dashboard-integrity-time]', `Hiển thị từ fixture mẫu lúc ${timeFormat.format(now)} · ${dateFormat.format(now)} — không phải kết quả đối soát`);
   };
 
   const renderServices = services => {
@@ -221,31 +294,70 @@
     root.replaceChildren(fragment);
   };
 
-  // Biểu đồ chỉ là markup + CSS của trang: chiều cao cột và bề rộng đoạn thanh đặt nội tuyến từ dữ liệu mẫu.
-  const renderGmvChart = trend => {
+  // Biểu đồ dùng module chung js/core/charts.js — cùng implementation với tutor/manage, không tự tính riêng.
+  const renderRevenueChart = () => {
     const chart = page.querySelector('[data-gmv-chart]');
-    const fragment = document.createDocumentFragment();
-    const max = Math.max(...trend.map(item => item.gmv));
-    trend.forEach(item => {
-      const group = document.createElement('div');
-      group.className = 'dashboard__bar-group';
-      const pair = document.createElement('div');
-      pair.className = 'dashboard__bar-pair';
-      [{ modifier: 'dashboard__bar--gmv', value: item.gmv }, { modifier: 'dashboard__bar--fee', value: item.fee }].forEach(series => {
-        const bar = document.createElement('span');
-        bar.className = `dashboard__bar ${series.modifier}`;
-        bar.style.height = `${Math.max((series.value / max) * 100, 2).toFixed(1)}%`;
-        pair.append(bar);
+    if (!chart || !window.EduChart || !window.EduStore) return;
+    const Store = window.EduStore;
+    const Chart = window.EduChart;
+
+    const draw = (from, to) => {
+      const series = Store.revenueSeries({ metric: 'platformFeeReleased', from, to });
+      Chart.bar(chart, {
+        title: 'Phí nền tảng đã giải ngân (demo)',
+        metricLabel: 'platformFeeReleased',
+        unit: series.unit,
+        from,
+        to,
+        rows: series.rows,
+        total: series.total,
+        invalidReason: series.invalid ? series.reason : null,
+        emptyLabel: 'Không có release event trong khoảng ngày này.',
+        description: 'Tính từ release event trong fixture dùng chung; held/planned/withdrawal không được tính vào doanh thu.'
       });
-      const label = document.createElement('p');
-      label.className = 'dashboard__bar-label';
-      label.textContent = item.label;
-      group.append(pair, label);
-      fragment.append(group);
+      setText(page, '[data-gmv-summary]', series.invalid
+        ? 'Khoảng ngày không hợp lệ: ngày bắt đầu phải trước hoặc bằng ngày kết thúc.'
+        : `Mô tả dữ liệu: ${series.rows.length ? series.rows.map(row => `${row.label} ${Store.formatMoney(row.value)}`).join('; ') : 'không có dữ liệu'}.`);
+    };
+
+    if (!chart.dataset.rangeBuilt) {
+      chart.dataset.rangeBuilt = 'true';
+      const range = document.createElement('div');
+      range.className = 'dashboard__chart-range';
+      range.innerHTML = '<label for="dashboard-range-from">Từ ngày</label>' +
+        '<input id="dashboard-range-from" type="date" data-range-from value="2026-07-01">' +
+        '<label for="dashboard-range-to">Đến ngày</label>' +
+        '<input id="dashboard-range-to" type="date" data-range-to value="2026-10-31">';
+      chart.parentNode.insertBefore(range, chart);
+      range.addEventListener('change', () => {
+        draw(range.querySelector('[data-range-from]').value, range.querySelector('[data-range-to]').value);
+      });
+      draw('2026-07-01', '2026-10-31');
+    }
+  };
+
+  // Pie thật (SVG) cho trạng thái đơn đăng ký — không dùng thanh tỷ trọng thay cho pie.
+  const renderOrderStatusPie = () => {
+    if (!window.EduChart || !window.EduStore) return;
+    const anchor = page.querySelector('[data-gmv-chart]');
+    if (!anchor) return;
+    let host = page.querySelector('[data-order-status-pie]');
+    if (!host) {
+      const section = document.createElement('section');
+      section.className = 'dashboard__pie-panel';
+      const heading = document.createElement('h2');
+      heading.textContent = 'Cơ cấu trạng thái đơn đăng ký (demo)';
+      host = document.createElement('div');
+      host.setAttribute('data-order-status-pie', '');
+      section.append(heading, host);
+      const block = anchor.closest('section') || anchor;
+      block.parentNode.insertBefore(section, block.nextSibling);
+    }
+    window.EduChart.pie(host, {
+      title: null,
+      slices: window.EduStore.orderStatusDistribution(),
+      emptyLabel: 'Chưa có đơn đăng ký trong dữ liệu mẫu.'
     });
-    chart.replaceChildren(fragment);
-    chart.setAttribute('aria-label', `Biểu đồ cột nhóm: GMV và phí nền tảng thu theo ${trend.length} tháng gần nhất, dữ liệu minh họa. Chi tiết giá trị nằm ở phần mô tả bên dưới biểu đồ.`);
-    setText(page, '[data-gmv-summary]', `Mô tả dữ liệu: ${trend.map(item => `${item.full} GMV ${money.format(item.gmv)}, phí nền tảng thu ${money.format(item.fee)}`).join('; ')}.`);
   };
 
   const renderEscrowChart = (segments, total) => {
@@ -254,7 +366,8 @@
     const chartFragment = document.createDocumentFragment();
     const listFragment = document.createDocumentFragment();
     segments.forEach(item => {
-      const share = item.value / total;
+      // total = 0 thì share phải là 0, không được ra NaN.
+      const share = total > 0 ? item.value / total : 0;
       const segment = document.createElement('span');
       segment.className = `dashboard__stack-segment dashboard__stack-segment--${item.key}`;
       segment.style.width = `${(share * 100).toFixed(2)}%`;
@@ -312,8 +425,9 @@
     renderActivity(snapshot.activity, asOf);
     renderChecks(snapshot, asOf);
     renderServices(snapshot.services);
-    renderGmvChart(snapshot.gmvTrend);
+    renderRevenueChart();
     renderEscrowChart(snapshot.escrowMix, escrowTotal);
+    renderOrderStatusPie();
     syncSidebar();
   };
 

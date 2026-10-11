@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Chi tiết tin tìm gia sư | Edu Connect</title>
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -18,9 +21,13 @@
     <link rel="stylesheet" href="../../css/components/data-display/avatar.css">
     <link rel="stylesheet" href="../../css/components/data-display/tag.css">
     <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
     <link rel="stylesheet" href="../../css/components/feedback/modal.css">
     <link rel="stylesheet" href="../../css/components/feedback/toast.css">
     <link rel="stylesheet" href="../../css/pages/job/detail.css">
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
     <script src="../../js/core/user-header.js" defer></script>
     <script src="../../js/core/modal.js" defer></script>
     <!-- Component: Toast | Nguồn: components/feedback/toast.html; JS: js/core/toast.js -->
@@ -33,14 +40,14 @@
     <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
     <header class="user-header" data-component="user-header" data-user-variant="TUTOR" data-active-nav="requests">
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/job/discover.html" aria-label="Edu Connect - Tin tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
-            <a class="user-header__nav-link is-active" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html" aria-current="page">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link is-active" data-nav-key="requests" href="../../pages/job/discover.html" aria-current="page">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -104,18 +111,18 @@
     <main class="user-shell__main">
         <div class="user-shell__content detail-page__content">
             <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
-            <nav class="breadcrumb detail-page__breadcrumb" data-detail-content aria-label="Breadcrumb"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="discover.html">Tin tìm gia sư</a></li><li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" data-render="breadcrumb">Toán lớp 11 tại Thủ Đức (Mã tin: TT-8841)</span></li></ol></nav>
+            <nav class="breadcrumb detail-page__breadcrumb" data-detail-content aria-label="Breadcrumb"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="discover.html">Tin tìm gia sư</a></li><li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" data-render="breadcrumb">Chi tiết tin</span></li></ol></nav>
 
             <section class="detail-card detail-not-found" data-detail-not-found hidden aria-labelledby="detail-not-found-title">
                 <header class="detail-card__header"><div><img src="../../assets/icons/info-circle.svg" alt=""><h2 id="detail-not-found-title">Không tìm thấy tin</h2></div></header>
-                <p>Không có tin tìm gia sư nào mang mã <strong data-detail-requested-id>—</strong>. Tin có thể đã bị đóng hoặc đường dẫn không đúng.</p>
+                <p>Không có tin tìm gia sư nào mang mã <strong data-detail-requested-id>—</strong> trong dữ liệu dùng chung. Tin có thể đã bị đóng hoặc đường dẫn không đúng.</p>
                 <div class="application-actions"><a class="button button--primary button--medium detail-button detail-button--primary" href="discover.html">Quay lại bảng tin tìm gia sư</a></div>
             </section>
 
             <header class="detail-hero" data-detail-content>
                 <div>
-                    <div class="detail-hero__meta"><!-- Component: Badge | Nguồn: components/feedback/badge.html --><span class="badge badge--info detail-status detail-status--hiring" data-render="status"><i></i>Đang tuyển</span><span class="detail-code" data-render="code">Mã tin: #TT-8841</span><span><img src="../../assets/icons/clock.svg" alt=""><span data-render="posted">Đăng 2 ngày trước</span></span><span aria-hidden="true">•</span><span><img src="../../assets/icons/profile.svg" alt=""><span data-render="applicants">6 gia sư đã ứng tuyển</span></span></div>
-                    <h1 data-render="title">Tìm gia sư Toán lớp 11 tại Thủ Đức</h1>
+                    <div class="detail-hero__meta"><!-- Component: Badge | Nguồn: components/feedback/badge.html --><span class="badge badge--info detail-status detail-status--hiring" data-render="status"><i></i>Đang tuyển</span><span class="detail-code" data-render="code">Mã tin: —</span><span><img src="../../assets/icons/clock.svg" alt=""><span data-render="posted">—</span></span><span aria-hidden="true">•</span><span><img src="../../assets/icons/profile.svg" alt=""><span data-render="applicants">—</span></span></div>
+                    <h1 data-render="title">Chi tiết tin tìm gia sư</h1>
                 </div>
                 <!-- Component: Button | Nguồn: components/action/button.html -->
                 <a class="button button--outline button--medium detail-button detail-button--outline" href="discover.html"><span aria-hidden="true">←</span>Quay lại danh sách</a>
@@ -123,30 +130,30 @@
 
             <div class="detail-layout" data-detail-content>
                 <div class="detail-main">
-                    <section class="detail-match" aria-labelledby="match-title"><span class="detail-match__icon" aria-hidden="true">✓</span><div><h2 id="match-title">Tiêu chí hồ sơ phù hợp</h2><p>Hồ sơ gia sư của bạn phù hợp với tiêu chí của tin này: <strong data-render="match-subject">Môn Toán</strong>, cấp lớp <strong data-render="match-grade">THPT</strong>, khu vực <strong data-render="match-region">TP. Thủ Đức</strong> và kinh nghiệm đạt yêu cầu (<strong data-render="match-experience">5 năm</strong>).</p></div></section>
+                    <section class="detail-match" aria-labelledby="match-title"><span class="detail-match__icon" aria-hidden="true">✓</span><div><h2 id="match-title">Tiêu chí hồ sơ phù hợp</h2><p>Hồ sơ gia sư của bạn phù hợp với tiêu chí của tin này: <strong data-render="match-subject">—</strong>, cấp lớp <strong data-render="match-grade">—</strong>, khu vực <strong data-render="match-region">—</strong> và kinh nghiệm đạt yêu cầu (<strong data-render="match-experience">—</strong>).</p></div></section>
 
                     <section class="detail-card" aria-labelledby="needs-title">
                         <header class="detail-card__header"><div><img src="../../assets/icons/library.svg" alt=""><h2 id="needs-title">Thông tin nhu cầu học</h2></div><span>Đặc tả chuẩn</span></header>
                         <div class="detail-spec-grid">
                             <!-- Component: Tag | Nguồn: components/data-display/tag.html -->
-                            <article><div><span class="detail-spec__icon">∑</span><span>Môn học</span></div><strong class="tag detail-spec__badge" data-render="subject">Toán</strong></article>
-                            <article><div><img src="../../assets/icons/library.svg" alt=""><span>Cấp lớp</span></div><strong class="tag tag--neutral detail-spec__badge" data-render="grade">Lớp 11 · THPT</strong></article>
-                            <article><div><img src="../../assets/icons/calendar.svg" alt=""><span>Tần suất học</span></div><strong data-render="frequency">2 buổi / tuần</strong></article>
-                            <article class="detail-spec--fee"><div><img src="../../assets/icons/wallet.svg" alt=""><span>Học phí mong muốn</span></div><strong data-render="fee">220.000 ₫ / buổi</strong><small>Mức phụ huynh mong muốn. Bạn có thể đề xuất mức khác khi ứng tuyển.</small></article>
-                            <article><div><span class="detail-spec__icon">⌂</span><span>Hình thức học</span></div><strong data-render="format">Tại nhà học sinh</strong></article>
-                            <article><div><img src="../../assets/icons/dinh-vi.svg" alt=""><span>Khu vực học</span></div><strong data-render="region">P. Linh Trung, TP. Thủ Đức</strong></article>
-                            <article><div><span class="detail-spec__icon">▣</span><span>Kinh nghiệm</span></div><strong data-render="experience">Từ 3 năm trở lên</strong></article>
-                            <article><div><img src="../../assets/icons/profile.svg" alt=""><span>Yêu cầu giới tính</span></div><strong data-render="gender">Không yêu cầu (Nam/Nữ)</strong></article>
+                            <article><div><span class="detail-spec__icon">∑</span><span>Môn học</span></div><strong class="tag detail-spec__badge" data-render="subject">—</strong></article>
+                            <article><div><img src="../../assets/icons/library.svg" alt=""><span>Cấp lớp</span></div><strong class="tag tag--neutral detail-spec__badge" data-render="grade">—</strong></article>
+                            <article><div><img src="../../assets/icons/calendar.svg" alt=""><span>Tần suất học</span></div><strong data-render="frequency">—</strong></article>
+                            <article class="detail-spec--fee"><div><img src="../../assets/icons/wallet.svg" alt=""><span>Học phí mong muốn</span></div><strong data-render="fee">—</strong><small>Mức phụ huynh mong muốn. Bạn có thể đề xuất mức khác khi ứng tuyển.</small></article>
+                            <article><div><span class="detail-spec__icon">⌂</span><span>Hình thức học</span></div><strong data-render="format">—</strong></article>
+                            <article><div><img src="../../assets/icons/dinh-vi.svg" alt=""><span>Khu vực học</span></div><strong data-render="region">—</strong></article>
+                            <article><div><span class="detail-spec__icon">▣</span><span>Kinh nghiệm</span></div><strong data-render="experience">—</strong></article>
+                            <article><div><img src="../../assets/icons/profile.svg" alt=""><span>Yêu cầu giới tính</span></div><strong data-render="gender">—</strong></article>
                         </div>
                     </section>
 
                     <section class="detail-card" aria-labelledby="goals-title">
                         <header class="detail-card__header"><div><span class="detail-card__target">◎</span><h2 id="goals-title">Mục tiêu &amp; Tình hình học tập</h2></div></header>
-                        <div class="detail-goals"><p data-render="goals">Gia Huy hiện đang học lớp 11 và cần củng cố phần Hàm số lượng giác và Hình học không gian. Gia đình mong muốn tìm gia sư có kinh nghiệm dạy THPT, giảng dễ hiểu và có phương pháp sư phạm rõ ràng để chuẩn bị cho kỳ kiểm tra sắp tới.</p><div><span class="detail-label">Trọng tâm kiến thức</span><div class="detail-focus-list" data-render="focus-list"><span>✓ Hàm số lượng giác</span><span>✓ Hình học không gian</span><span>▣ Lộ trình ôn tập giữa kỳ &amp; học kỳ 1</span></div></div><aside class="detail-privacy"><img src="../../assets/icons/lock.svg" alt=""><p><strong>Bảo vệ an toàn thông tin:</strong> Địa chỉ cụ thể và số điện thoại phụ huynh được bảo mật trên Edu Connect, chỉ chia sẻ khi hai bên chính thức ký kết hợp đồng dạy học.</p></aside></div>
+                        <div class="detail-goals"><p data-render="goals">—</p><div><span class="detail-label">Trọng tâm kiến thức</span><div class="detail-focus-list" data-render="focus-list"></div></div><aside class="detail-privacy"><img src="../../assets/icons/lock.svg" alt=""><p><strong>Bảo vệ an toàn thông tin:</strong> Địa chỉ cụ thể và số điện thoại phụ huynh được bảo mật trên Edu Connect, chỉ chia sẻ khi hai bên chính thức ký kết hợp đồng dạy học.</p></aside></div>
                     </section>
 
                     <!-- Components: Avatar, Badge | Nguồn: components/data-display/avatar.html, components/feedback/badge.html -->
-                    <section class="detail-parent" aria-label="Thông tin phụ huynh"><div class="detail-parent__identity"><span class="avatar avatar--medium avatar--neutral detail-parent__avatar" role="img" aria-label="Ảnh đại diện Chị Mai Lan" data-render="parent-initials">ML</span><div><div class="detail-parent__name"><h2 data-render="parent-name">Chị Mai Lan</h2><span class="badge badge--verified"><img src="../../assets/icons/verified.svg" alt="">Đã xác thực</span></div><p>Phụ huynh của học sinh <strong data-render="parent-child">Gia Huy (Lớp 11)</strong></p><div class="detail-parent__stats"><span>⚡ Tỷ lệ phản hồi: <span data-render="parent-response">100%</span></span><span>•</span><span data-render="parent-since">Thành viên từ 2024</span></div></div></div><aside><strong>Trao đổi bảo đảm:</strong><span>Mọi tương tác ban đầu diễn ra trên kênh chat an toàn Edu Connect.</span></aside></section>
+                    <section class="detail-parent" aria-label="Thông tin phụ huynh"><div class="detail-parent__identity"><span class="avatar avatar--medium avatar--neutral detail-parent__avatar" role="img" aria-label="Ảnh đại diện người đăng tin" data-render="parent-initials">—</span><div><div class="detail-parent__name"><h2 data-render="parent-name">—</h2><span class="badge badge--verified"><img src="../../assets/icons/verified.svg" alt="">Đã xác thực</span></div><p>Phụ huynh của học sinh <strong data-render="parent-child">—</strong></p><div class="detail-parent__stats"><span>⚡ Tỷ lệ phản hồi: <span data-render="parent-response">—</span></span><span>•</span><span data-render="parent-since">—</span></div></div></div><aside><strong>Trao đổi bảo đảm:</strong><span>Mọi tương tác ban đầu diễn ra trên kênh chat an toàn Edu Connect.</span></aside></section>
                 </div>
 
                 <aside class="detail-sidebar">
@@ -154,13 +161,13 @@
                         <header><h2 id="application-title">Gửi ứng tuyển</h2><p>Đề xuất mức học phí và lịch bạn có thể dạy cho lớp này.</p><span>ⓘ Mỗi gia sư chỉ có 1 lượt ứng tuyển cho mỗi tin</span></header>
                         <!-- Components biểu mẫu: FormField (components/form/form-field.html), Input (components/form/input.html), Textarea (components/form/textarea.html) -->
                         <form class="application-form" data-application-form novalidate>
-                            <div class="form-field application-rate"><div class="application-label-row"><label class="form-field__label" for="proposed-rate">Học phí đề xuất <span class="form-field__required">*</span></label><small>VNĐ / buổi</small></div><div class="input-control"><input class="input-control__input input-control__input--money" id="proposed-rate" name="rate" type="text" inputmode="numeric" value="220.000" required data-rate-input><span class="input-control__suffix">₫ / buổi</span></div><p class="application-rate__comparison" data-rate-comparison>✓ Bằng mức phụ huynh mong muốn (220.000 ₫)</p><p class="form-field__message">Mức học phí này là đề xuất của bạn khi ứng tuyển. Thỏa thuận chính thức được xác nhận ở bước lập hợp đồng.</p></div>
+                            <div class="form-field application-rate"><div class="application-label-row"><label class="form-field__label" for="proposed-rate">Học phí đề xuất <span class="form-field__required">*</span></label><small>VNĐ / buổi</small></div><div class="input-control"><input class="input-control__input input-control__input--money" id="proposed-rate" name="rate" type="text" inputmode="numeric" required data-rate-input><span class="input-control__suffix">₫ / buổi</span></div><p class="application-rate__comparison" data-rate-comparison></p><p class="form-field__message">Mức học phí này là đề xuất của bạn khi ứng tuyển. Thỏa thuận chính thức được xác nhận ở bước lập hợp đồng.</p></div>
 
-                            <fieldset class="application-schedule"><div class="application-label-row"><legend>Lịch bạn có thể dạy <span>*</span></legend><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--ghost button--small" type="button" data-prefill-slots>Dùng lịch rảnh từ hồ sơ</button></div><p>Khung giờ bạn có thể nhận lớp (chưa phải lịch học cố định).</p><div class="application-slots" data-slot-list><div class="application-slot" data-slot data-day="Thứ 2"><span><img src="../../assets/icons/calendar.svg" alt="">Thứ 2 · 19:00 - 20:30</span><button type="button" aria-label="Xóa khung giờ Thứ 2" data-remove-slot>×</button></div><div class="application-slot" data-slot data-day="Thứ 6"><span><img src="../../assets/icons/calendar.svg" alt="">Thứ 6 · 19:00 - 20:30</span><button type="button" aria-label="Xóa khung giờ Thứ 6" data-remove-slot>×</button></div></div><button class="button button--outline button--medium application-add-slot" type="button" data-add-slot><span aria-hidden="true">＋</span>Thêm khung giờ khác</button><small>Lịch rảnh trong hồ sơ: Thứ 2 (18h-21h), Thứ 4 (18h-21h), Thứ 6 (18h30-21h).</small><p class="application-error" data-slot-error hidden>Vui lòng chọn ít nhất một khung giờ.</p></fieldset>
+                            <fieldset class="application-schedule"><div class="application-label-row"><legend>Lịch bạn có thể dạy <span>*</span></legend><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--ghost button--small" type="button" data-prefill-slots>Dùng lịch rảnh từ hồ sơ</button></div><p>Khung giờ bạn có thể nhận lớp (chưa phải lịch học cố định).</p><div class="application-slots" data-slot-list></div><button class="button button--outline button--medium application-add-slot" type="button" data-add-slot><span aria-hidden="true">＋</span>Thêm khung giờ khác</button><small>Lịch rảnh trong hồ sơ: Thứ 2 (18h-21h), Thứ 4 (18h-21h), Thứ 6 (18h30-21h).</small><p class="application-error" data-slot-error hidden>Vui lòng chọn ít nhất một khung giờ.</p></fieldset>
 
-                            <div class="textarea-field"><div class="textarea-field__label-row"><label class="textarea-field__label" for="cover-note">Lời nhắn giới thiệu phương pháp <span class="textarea-field__required">*</span></label></div><textarea class="textarea-control" id="cover-note" name="cover-note" rows="5" required data-cover-note>Chào chị Lan, tôi hiện có 5 năm kinh nghiệm dạy Toán THPT tại khu vực Thủ Đức. Với phần Hàm số và Hình học không gian, tôi thường kiểm tra lại kiến thức nền trước rồi xây dựng lộ trình luyện tập theo mục tiêu của học sinh. Tôi hiện có thể dạy tối thứ 2 và thứ 6.</textarea><p class="textarea-field__help">Nên nêu kinh nghiệm dạy học sinh lớp 11, phương pháp giảng dạy và lý do lịch dạy phù hợp. Không chia sẻ SĐT, Zalo hay email.</p></div>
+                            <div class="textarea-field"><div class="textarea-field__label-row"><label class="textarea-field__label" for="cover-note">Lời nhắn giới thiệu phương pháp <span class="textarea-field__required">*</span></label></div><textarea class="textarea-control" id="cover-note" name="cover-note" rows="5" required data-cover-note placeholder="Nêu kinh nghiệm, phương pháp giảng dạy và lý do lịch dạy phù hợp."></textarea><p class="textarea-field__help">Nên nêu kinh nghiệm dạy học sinh cùng cấp lớp, phương pháp giảng dạy và lý do lịch dạy phù hợp. Không chia sẻ SĐT, Zalo hay email.</p></div>
 
-                            <section class="application-summary" aria-labelledby="summary-title"><h3 id="summary-title">Tóm tắt ứng tuyển</h3><dl><div><dt>Học phí đề xuất:</dt><dd data-summary-rate>220.000 ₫ / buổi</dd></div><div><dt>Lịch dự kiến:</dt><dd data-summary-slots>Thứ 2 &amp; Thứ 6 (19:00 - 20:30)</dd></div><div><dt>Trạng thái ban đầu:</dt><dd class="application-summary__status"><i></i>Đang chờ phụ huynh xem xét</dd></div></dl></section>
+                            <section class="application-summary" aria-labelledby="summary-title"><h3 id="summary-title">Tóm tắt ứng tuyển</h3><dl><div><dt>Học phí đề xuất:</dt><dd data-summary-rate>—</dd></div><div><dt>Lịch dự kiến:</dt><dd data-summary-slots>—</dd></div><div><dt>Trạng thái ban đầu:</dt><dd class="application-summary__status"><i></i>Đang chờ phụ huynh xem xét</dd></div></dl></section>
                             <div class="application-actions"><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--primary button--medium detail-button detail-button--primary" type="submit"><span aria-hidden="true">➤</span>Gửi ứng tuyển</button><a class="button button--ghost button--medium detail-button detail-button--ghost" href="discover.html">Quay lại</a></div>
                         </form>
                     </section>
@@ -176,7 +183,7 @@
     <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
     <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
-        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
         <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
         <p class="user-footer__copyright">© 2026 Edu Connect</p>
     </div>
@@ -184,11 +191,10 @@
 </div>
 
 <!-- Component: Modal | Nguồn: components/feedback/modal.html -->
-<dialog class="modal" id="application-confirm-modal" aria-labelledby="application-confirm-title"><div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="application-confirm-title">Xác nhận gửi ứng tuyển</h2><p>Kiểm tra lại đề xuất trước khi gửi.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon" aria-hidden="true"></span></button></header><div class="modal__body"><p data-render="modal-confirm-parent">Bạn chuẩn bị gửi đề xuất học phí và lịch dạy cho phụ huynh Chị Mai Lan. Mỗi gia sư chỉ có 1 lượt ứng tuyển cho tin này.</p><dl class="detail-modal-summary"><div><dt>Học phí đề xuất</dt><dd data-modal-rate>220.000 ₫ / buổi</dd></div><div><dt>Lịch có thể dạy</dt><dd data-modal-slots>Thứ 2 &amp; Thứ 6</dd></div></dl><p class="modal__note"><strong>Cam kết bảo mật Edu Connect:</strong> Thông tin liên hệ chỉ được hiển thị sau khi ký kết hợp đồng.</p></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Hủy bỏ</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận gửi</button></footer></div></dialog>
+<dialog class="modal" id="application-confirm-modal" aria-labelledby="application-confirm-title"><div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="application-confirm-title">Xác nhận gửi ứng tuyển</h2><p>Kiểm tra lại đề xuất trước khi gửi.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon" aria-hidden="true"></span></button></header><div class="modal__body"><p data-render="modal-confirm-parent">Bạn chuẩn bị gửi đề xuất học phí và lịch dạy cho phụ huynh. Mỗi gia sư chỉ có 1 lượt ứng tuyển cho tin này.</p><dl class="detail-modal-summary"><div><dt>Học phí đề xuất</dt><dd data-modal-rate>—</dd></div><div><dt>Lịch có thể dạy</dt><dd data-modal-slots>—</dd></div></dl><p class="modal__note"><strong>Cam kết bảo mật Edu Connect:</strong> Thông tin liên hệ chỉ được hiển thị sau khi ký kết hợp đồng.</p></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Hủy bỏ</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận gửi</button></footer></div></dialog>
 
 <!-- Component: Modal | Nguồn: components/feedback/modal.html -->
-<dialog class="modal detail-modal--success" id="application-success-modal" aria-labelledby="application-success-title"><div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="application-success-title">Ứng tuyển thành công!</h2><p>Hồ sơ đã được chuyển tới phụ huynh.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon" aria-hidden="true"></span></button></header><div class="modal__body"><p data-render="modal-success-parent">Hồ sơ và đề xuất của bạn đã được chuyển tới phụ huynh Chị Mai Lan. Bạn sẽ nhận được thông báo ngay khi phụ huynh phản hồi.</p></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng cửa sổ</button><a class="modal__button modal__button--primary" href="discover.html#ung-tuyen-cua-toi" data-track-application>Theo dõi tại Quản lý ứng tuyển</a></footer></div></dialog>
+<dialog class="modal detail-modal--success" id="application-success-modal" aria-labelledby="application-success-title"><div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--success" aria-hidden="true"></span><div class="modal__heading"><h2 id="application-success-title">Ứng tuyển thành công!</h2><p>Hồ sơ đã được chuyển tới phụ huynh.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon" aria-hidden="true"></span></button></header><div class="modal__body"><p data-render="modal-success-parent">Hồ sơ và đề xuất của bạn đã được chuyển tới phụ huynh. Bạn sẽ nhận được thông báo ngay khi phụ huynh phản hồi.</p></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng cửa sổ</button><a class="modal__button modal__button--primary" href="discover.html#ung-tuyen-cua-toi" data-track-application>Theo dõi tại Quản lý ứng tuyển</a></footer></div></dialog>
 
-<!-- Component: Modal | Nguồn: components/feedback/modal.html -->
 </body>
 </html>

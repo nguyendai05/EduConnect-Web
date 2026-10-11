@@ -74,7 +74,7 @@
   background: var(--color-surface);
   border: 1px solid var(--select-border);
   border-radius: var(--control-radius);
-  font-size: var(--font-size-sm);
+  font-size: var(--control-font-size);
   font-weight: 500;
   text-align: left;
   cursor: pointer;
@@ -85,9 +85,9 @@
   outline-offset: 2px;
 }
 
-.select-control:hover:not(:disabled) { border-color: var(--color-text-muted); }
+.select-control:hover:not(:disabled) { border-color: var(--color-text-secondary); }
 .select-control[aria-expanded="true"] { border-color: var(--select-focus); box-shadow: 0 0 0 3px var(--color-focus-ring); }
-.select-control:disabled { background: var(--color-surface-low); color: var(--color-text-muted); cursor: not-allowed; }
+.select-control:disabled { background: var(--color-surface-low); color: var(--color-text-secondary); cursor: not-allowed; }
 
 .select-control__chevron {
   width: 1rem;
@@ -99,7 +99,7 @@
 .select-control--native {
   display: block;
   min-width: 0;
-  min-height: 2.5rem;
+  min-height: var(--control-height);
   padding-right: 2.25rem;
   appearance: none;
   background: var(--color-surface) url("../../../assets/icons/mui-ten-xuong.svg") right 0.75rem center / 1rem no-repeat;

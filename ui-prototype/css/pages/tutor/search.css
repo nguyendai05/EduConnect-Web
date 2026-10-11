@@ -67,7 +67,7 @@
 }
 
 .tutor-search-filter__selected-count {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   white-space: nowrap;
 }
@@ -83,7 +83,7 @@
 
 .tutor-search-filter__district .input-control__input {
   min-height: 2.375rem;
-  font-size: var(--font-size-xs);
+  font-size: var(--control-font-size);
 }
 
 .tutor-search-filter__radios {
@@ -221,7 +221,7 @@
 }
 
 .tutor-search-results__sort .select-control {
-  min-height: 2.25rem;
+  min-height: var(--control-height);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   font-size: var(--font-size-xs);
@@ -327,7 +327,7 @@
 .tutor-search-card__meta .rating {
   gap: var(--space-1);
   padding: var(--space-1) var(--space-2);
-  color: var(--color-warning);
+  color: var(--color-warning-text);
   background: var(--color-warning-container);
 }
 
@@ -406,6 +406,8 @@
 }
 
 @media (max-width: 64rem) {
+  .tutor-search-filter__days button,
+  .tutor-search-filter__periods button { min-height: var(--touch-target); }
 
   .tutor-search-layout {
     grid-template-columns: 1fr;

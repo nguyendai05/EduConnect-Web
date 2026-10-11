@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Xử lý báo cáo &amp; tranh chấp | Edu Connect</title>
-    <link rel="icon" href="../../assets/icons/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/base.css">
@@ -53,8 +55,7 @@
         <div class="admin-sidebar__main">
             <header class="admin-sidebar__header">
                 <a class="admin-sidebar__brand" href="dashboard.html" aria-label="Edu Connect quản trị">
-                    <span class="admin-sidebar__brand-mark" aria-hidden="true"><img class="admin-sidebar__brand-logo" src="../../assets/icons/logo.svg" alt="Logo"></span>
-                    <span class="admin-sidebar__brand-name">Edu Connect</span>
+                    <img class="admin-sidebar__brand-logo" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000">
                 </a>
                 <span class="admin-sidebar__role">Quản trị</span>
             </header>
@@ -64,21 +65,24 @@
                 <a class="admin-sidebar__item" href="dashboard.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
                 </a>
+                <a class="admin-sidebar__item" href="manage.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/settings.svg" alt=""><span class="admin-sidebar__item-label">Quản lý nền tảng</span></span>
+                </a>
                 <a class="admin-sidebar__item" href="tutor-review-queue.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
-                    <span class="admin-sidebar__badge" aria-label="4 hồ sơ chờ xử lý">4</span>
+                    <span class="admin-sidebar__badge" data-admin-count="tutors" hidden></span>
                 </a>
                 <a class="admin-sidebar__item" href="job-review-queue.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
-                    <span class="admin-sidebar__badge" aria-label="5 tin chờ xử lý">5</span>
+                    <span class="admin-sidebar__badge" data-admin-count="jobs" hidden></span>
                 </a>
                 <a class="admin-sidebar__item is-active" href="reports.html" aria-current="page">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
-                    <span class="admin-sidebar__badge" aria-label="6 báo cáo cần xử lý">6</span>
+                    <span class="admin-sidebar__badge" data-admin-count="reports" hidden></span>
                 </a>
                 <a class="admin-sidebar__item" href="payout-requests.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
-                    <span class="admin-sidebar__badge" aria-label="5 yêu cầu rút tiền chờ xử lý">5</span>
+                    <span class="admin-sidebar__badge" data-admin-count="payouts" hidden></span>
                 </a>
                 <a class="admin-sidebar__item" href="audit-logs.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
@@ -141,7 +145,7 @@
     </header>
         <main class="admin-shell__workspace" id="report-main" tabindex="-1">
             <div class="admin-shell__content report-detail">
-                <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><span>Quản trị</span></li><li class="breadcrumb__item"><a class="breadcrumb__link" href="reports.html">Báo cáo &amp; tranh chấp</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Xử lý báo cáo</span></li></ol></nav>
+                <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="reports.html">Báo cáo &amp; tranh chấp</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Xử lý báo cáo</span></li></ol></nav>
                 <header class="report-detail__header">
                     <div>
                         <div class="report-detail__title-row">
@@ -150,7 +154,7 @@
                             <span class="badge" data-detail-severity></span>
                             <span class="badge badge--danger" data-detail-lock hidden>Khoản đang giữ</span>
                         </div>
-                        <p>Đối chiếu dữ liệu liên quan và ghi nhận kết luận xử lý cho vụ việc. <span data-detail-viewing>Đang xem vụ việc BC-2026-041.</span></p>
+                        <p><span data-detail-viewing>Đang xem vụ việc BC-2026-041.</span></p>
                     </div>
                     <a class="button button--secondary" href="reports.html"><span class="report-detail__back-arrow" aria-hidden="true">←</span>Quay lại danh sách</a>
                 </header>
@@ -255,9 +259,9 @@
                             <p class="report-detail__option-detail" data-resolution-detail>Chọn một phương án để xem mô tả tác động.</p>
 
                             <div class="textarea-field">
-                                <div class="textarea-field__label-row"><label class="textarea-field__label" for="report-decision-note">Kết luận xử lý <span class="textarea-field__required" aria-hidden="true">*</span></label><span class="textarea-field__counter" data-note-count>0/1000</span></div>
-                                <textarea class="textarea-control" id="report-decision-note" rows="5" maxlength="1000" minlength="10" required aria-describedby="report-note-help report-note-error" placeholder="Nhập căn cứ đối chiếu và kết luận của quản trị viên…" data-decision-note></textarea>
-                                <p class="textarea-field__help" id="report-note-help">Bắt buộc với thao tác kết luận, từ 10 đến 1000 ký tự, dùng làm căn cứ lưu vết kiểm toán. Không ghi thông tin cá nhân nhạy cảm.</p>
+                                <div class="textarea-field__label-row"><label class="textarea-field__label" for="report-decision-note">Kết luận xử lý <span class="textarea-field__required" aria-hidden="true">*</span></label><span class="textarea-field__counter" data-note-count>0/600</span></div>
+                                <textarea class="textarea-control" id="report-decision-note" rows="5" maxlength="600" minlength="10" required aria-describedby="report-note-help report-note-error" placeholder="Nhập căn cứ đối chiếu và kết luận của quản trị viên…" data-decision-note></textarea>
+                                <p class="textarea-field__help" id="report-note-help">Bắt buộc với thao tác kết luận, từ 10 đến 600 ký tự, dùng làm căn cứ lưu vết kiểm toán. Không ghi thông tin cá nhân nhạy cảm.</p>
                                 <p class="report-detail__error" role="alert" id="report-note-error" data-note-error hidden></p>
                             </div>
 
@@ -303,6 +307,12 @@
             </div>
         </dialog>
     </div>
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
+    <script src="../../js/pages/admin/tutor-review-data.js" defer></script>
+    <script src="../../js/pages/admin/payout-data.js" defer></script>
+    <script src="../../js/core/admin-sidebar.js" defer></script>
     <script src="../../js/core/admin-header.js" defer></script>
     <script src="../../js/core/radio.js" defer></script>
     <script src="../../js/core/modal.js" defer></script>

@@ -10,10 +10,10 @@
 }
 
 /* Gắn vào footer Table; khung bảng sở hữu đường viền. */
-.pagination.pagination--table { min-height: 4.5rem; padding-inline: 0; border: 0; border-radius: 0; }
+.pagination.pagination--table { min-height: 0; padding: 0; background: transparent; border: 0; border-radius: 0; }
 .pagination--table .pagination__summary { font-size: var(--font-size-xs); }
-.pagination--table .pagination__button { width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md); font-size: var(--font-size-xs); }
-.pagination--table .pagination__button--wide { width: auto; }
+.pagination--table .pagination__button { min-width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md); font-size: var(--font-size-xs); }
+.pagination--table .pagination__button:not(.pagination__button--wide) { width: 2.25rem; }
 
 .pagination-demo {
   width: 100%;
@@ -75,7 +75,7 @@
   padding-inline: 0.875rem;
 }
 
-.pagination__button:hover:not(:disabled) {
+.pagination__button:hover:not(:disabled):not(.is-current) {
   background: var(--color-background);
 }
 
@@ -110,9 +110,14 @@
   width: 1.75rem;
   height: 2.75rem;
   place-items: center;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: 700;
+}
+
+@media (max-width: 64rem) {
+  .pagination--table .pagination__button { min-width: var(--touch-target); height: var(--touch-target); }
+  .pagination--table .pagination__button:not(.pagination__button--wide) { width: var(--touch-target); }
 }
 
 @media (max-width: 42rem) {

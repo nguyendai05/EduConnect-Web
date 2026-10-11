@@ -43,7 +43,7 @@
   background: transparent;
   border: 0;
   outline: 0;
-  font-size: var(--font-size-sm);
+  font-size: var(--control-font-size);
   line-height: 1.5;
 }
 
@@ -53,7 +53,7 @@
 }
 
 .input-control__input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   opacity: 1;
 }
 
@@ -62,7 +62,7 @@
   left: var(--input-padding-inline);
   width: 1.125rem;
   height: 1.125rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   pointer-events: none;
 }
 
@@ -95,7 +95,7 @@
 }
 
 .input-control:has(.input-control__input:disabled) {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   background: var(--color-surface-low);
   border-color: var(--color-surface-medium);
   box-shadow: none;
@@ -103,10 +103,10 @@
 }
 
 .input-control__input:disabled {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   cursor: not-allowed;
   opacity: 1;
-  -webkit-text-fill-color: var(--color-text-muted);
+  -webkit-text-fill-color: var(--color-text-secondary);
 }
 
 /* Chỉ phục vụ trang minh họa Input. */
@@ -196,7 +196,7 @@
 
 .input-demo__note {
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   line-height: 1.45;
 }

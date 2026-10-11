@@ -71,7 +71,7 @@
 
 .create-quota p {
   margin-top: var(--space-1);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
 }
 
@@ -91,14 +91,6 @@
 
 .create-page__moderation .alert__message strong {
   color: var(--color-text);
-}
-
-.create-page__safe-badge {
-  padding: var(--space-1) var(--space-2);
-  color: var(--color-primary-hover);
-  background: var(--color-primary-container);
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-xs);
 }
 
 .create-page__workflow {
@@ -138,7 +130,7 @@
   height: 1.75rem;
   flex: 0 0 auto;
   place-items: center;
-  color: var(--color-secondary);
+  color: var(--color-secondary-text);
   background: var(--color-secondary-container);
   border-radius: var(--radius-md);
   font-size: var(--font-size-xs);
@@ -174,7 +166,7 @@
 
 .create-field__counter {
   flex: 0 0 auto;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
 }
 
@@ -247,7 +239,7 @@
 }
 
 .create-mode-grid small {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-weight: 400;
   line-height: 1.45;
@@ -348,7 +340,9 @@
 
 .create-page__sidebar {
   position: sticky;
-  top: var(--space-4);
+  top: var(--scroll-offset);
+  max-height: calc(100dvh - var(--scroll-offset) - var(--space-4));
+  overflow-y: auto;
 }
 
 .create-sidebar-card {
@@ -368,7 +362,7 @@
 
 .create-sidebar-card__header > span {
   padding: var(--space-1) var(--space-2);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   background: var(--color-surface-low);
   border-radius: var(--radius-pill);
   font-size: var(--font-size-xs);
@@ -408,7 +402,7 @@
 }
 
 .create-preview-card .job-card__price small {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-weight: 400;
 }
@@ -464,7 +458,7 @@
 }
 
 .create-modal-summary dt {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .create-modal-summary dd {
@@ -491,6 +485,8 @@
 
   .create-page__sidebar {
     position: static;
+    max-height: none;
+    overflow: visible;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

@@ -1,95 +1,148 @@
-/* Trang chi tiết hợp đồng phía phụ huynh. Dữ liệu ký quỹ nội trang, dùng cho bản mẫu giao diện. */
+/* Trang chi tiết hợp đồng phía phụ huynh — MỌI số liệu đọc từ EduStore.
+ * Bản trước cất bảng hằng số riêng theo mã hợp đồng: HD-20260919-024 ở đây ghi
+ * "8 buổi · 220.000 ₫", trong khi trang xác nhận hợp đồng đọc đúng hợp đồng đó là
+ * "24 buổi · 210.000 ₫ · 5.040.000 ₫". Yêu cầu của nhiệm vụ: các màn cùng một
+ * hợp đồng/đơn/phiên thanh toán phải khớp total/fee/sessions/schedule. */
 (() => {
-  const contracts = {
-    'HD-20260919-024': {
-      title: 'Học Toán cùng Nguyễn Minh Anh', status: 'Đang thực hiện', crumb: 'Chi tiết hợp đồng học HD-20260919-024',
-      summary: 'HD-20260919-024 · Toán lớp 11 · Học trực tiếp', student: 'Trần Gia Huy', guardian: 'Chị Mai Lan',
-      tutor: 'Nguyễn Minh Anh', tutorNote: 'Gia sư Toán · Đã xác minh', initials: 'MA', course: 'Toán lớp 11',
-      level: 'Toán · Lớp 11 (THPT)', mode: 'Trực tiếp tại nhà học viên', schedule: ['Thứ Hai & Thứ Sáu', '19:00–20:30 · 90 phút/buổi'],
-      timeOfDay: '19:00–20:30', minutes: 90, period: '28/09/2026 – 23/10/2026', fee: 220000,
-      dates: ['28/09/2026', '02/10/2026', '05/10/2026', '09/10/2026', '12/10/2026', '16/10/2026', '19/10/2026', '23/10/2026'],
-      states: ['completed', 'completed', 'pending', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming'],
-      pending: { lesson: 3, attended: '05/10/2026 lúc 20:34', deadline: '08/10/2026 · 20:34' },
-      next: { lesson: 4, weekday: 'Thứ Sáu', date: '09/10/2026', topic: 'Phương trình lượng giác nâng cao' },
-      activity: [
-        { iso: '2026-10-05T20:34', text: '05/10/2026 · 20:34', note: 'Gia sư đã điểm danh buổi 3. Đang chờ học viên xác nhận.' },
-        { iso: '2026-10-05T20:30', text: '05/10/2026 · 20:30', note: 'Buổi 2 đã hoàn thành. Khoản ký quỹ 220.000 ₫ đã được giải ngân.' },
-        { iso: '2026-09-28T21:02', text: '28/09/2026 · 21:02', note: 'Bạn đã xác nhận hoàn thành buổi 1.' }
-      ],
-      escrowNote: 'Khoản ký quỹ được theo dõi theo từng buổi học. Buổi học có báo cáo sẽ chờ xử lý trước khi giải ngân.',
-      chat: true
-    },
-    'HD-20260926-025': {
-      title: 'Học Toán cùng Nguyễn Minh Anh', status: 'Chờ ký quỹ', crumb: 'Chi tiết hợp đồng học HD-20260926-025',
-      summary: 'HD-20260926-025 · Toán lớp 11 · Học trực tiếp', student: 'Trần Gia Huy', guardian: 'Chị Mai Lan',
-      tutor: 'Nguyễn Minh Anh', tutorNote: 'Gia sư Toán · Đã xác minh', initials: 'MA', course: 'Toán lớp 11',
-      level: 'Toán · Lớp 11 (THPT)', mode: 'Trực tiếp tại nhà học viên', schedule: ['Thứ Hai & Thứ Sáu', '19:00–20:30 · 90 phút/buổi'],
-      timeOfDay: '19:00–20:30', minutes: 90, period: '02/11/2026 – 27/11/2026', fee: 220000,
-      dates: ['02/11/2026', '06/11/2026', '09/11/2026', '13/11/2026', '16/11/2026', '20/11/2026', '23/11/2026', '27/11/2026'],
-      states: ['upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming'],
-      pending: null, next: null, awaitingDeposit: { wallet: 340000, due: 1420000 },
-      activity: [
-        { iso: '2026-09-26T21:05', text: '26/09/2026 · 21:05', note: 'Gia sư và phụ huynh đã thống nhất điều khoản. Hợp đồng chờ ký quỹ để kích hoạt lịch học.' },
-        { iso: '2026-09-26T20:40', text: '26/09/2026 · 20:40', note: 'Bạn đã xác nhận nội dung hợp đồng.' }
-      ],
-      escrowNote: 'Học phí chưa chuyển ngay cho gia sư. Ký quỹ chỉ được ghi nhận khi nhận được xác nhận thanh toán hợp lệ.',
-      chat: true
-    },
-    'HD-20260810-018': {
-      title: 'Ôn Toán lớp 11 cùng Nguyễn Minh Anh', status: 'Đã hủy', crumb: 'Chi tiết hợp đồng học HD-20260810-018',
-      summary: 'HD-20260810-018 · Toán lớp 11 · Học trực tiếp', student: 'Trần Gia Huy', guardian: 'Chị Mai Lan',
-      tutor: 'Nguyễn Minh Anh', tutorNote: 'Gia sư Toán · Đã xác minh', initials: 'MA', course: 'Toán lớp 11',
-      level: 'Toán · Lớp 11 (THPT)', mode: 'Trực tiếp tại nhà học viên', schedule: ['Thứ Ba & Thứ Năm', '18:00–19:30 · 90 phút/buổi'],
-      timeOfDay: '18:00–19:30', minutes: 90, period: '11/08/2026 – 25/08/2026', fee: 180000,
-      dates: ['11/08/2026', '13/08/2026', '18/08/2026', '20/08/2026', '25/08/2026'],
-      states: ['completed', 'completed', 'completed', 'completed', 'cancelled'],
-      pending: null, next: null,
-      activity: [
-        { iso: '2026-09-15T18:10', text: '15/09/2026 · 18:10', note: 'Buổi 5 đã hủy theo thỏa thuận. 180.000 ₫ ký quỹ được hoàn về số dư khả dụng (REF-260915-0012).' },
-        { iso: '2026-08-20T19:32', text: '20/08/2026 · 19:32', note: 'Buổi 4 hoàn thành. Khoản ký quỹ 180.000 ₫ đã được giải ngân.' },
-        { iso: '2026-08-11T19:28', text: '11/08/2026 · 19:28', note: 'Hợp đồng bắt đầu với buổi học đầu tiên.' }
-      ],
-      escrowNote: 'Hợp đồng đã kết thúc sớm. Số dư hoàn trả hiển thị trong lịch sử giao dịch của ví.',
-      chat: true
-    },
-    'HD-20260715-012': {
-      title: 'Toán lớp 9 cùng Nguyễn Minh Anh', status: 'Đã kết thúc', crumb: 'Chi tiết hợp đồng học HD-20260715-012',
-      summary: 'HD-20260715-012 · Toán lớp 9 · Học trực tiếp', student: 'Trần Gia Huy', guardian: 'Chị Mai Lan',
-      tutor: 'Nguyễn Minh Anh', tutorNote: 'Gia sư Toán · Đã xác minh', initials: 'MA', course: 'Toán lớp 9',
-      level: 'Toán · Lớp 9 (THCS)', mode: 'Trực tiếp tại nhà học viên', schedule: ['Thứ Tư & Thứ Bảy', '19:00–20:30 · 90 phút/buổi'],
-      timeOfDay: '19:00–20:30', minutes: 90, period: '15/07/2026 – 08/08/2026', fee: 220000,
-      dates: ['15/07/2026', '18/07/2026', '22/07/2026', '25/07/2026', '29/07/2026', '01/08/2026', '05/08/2026', '08/08/2026'],
-      states: ['completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'cancelled'],
-      pending: null, next: null,
-      activity: [
-        { iso: '2026-08-30T09:20', text: '30/08/2026 · 09:20', note: 'Hợp đồng kết thúc. 220.000 ₫ ký quỹ còn lại của buổi không diễn ra được hoàn về ví (REF-260830-0008).' },
-        { iso: '2026-08-05T20:31', text: '05/08/2026 · 20:31', note: 'Buổi 7 hoàn thành. Khoản ký quỹ 220.000 ₫ đã được giải ngân.' },
-        { iso: '2026-07-15T20:34', text: '15/07/2026 · 20:34', note: 'Hợp đồng bắt đầu với buổi học đầu tiên.' }
-      ],
-      escrowNote: 'Hợp đồng đã tất toán. Không còn khoản ký quỹ đang giữ cho hợp đồng này.',
-      chat: true
+  const Route = window.EduRoute
+  const Store = window.EduStore
+  if (!Route || !Store) return
+
+  const byId = id => document.getElementById(id)
+  const money = value => Store.formatMoney(value)
+  const { CONTRACT_STATUS, PAYMENT_STATUS, REFUND_STATE, CHANNELS, statusOf } = Store
+
+  const MODE_LABEL = Object.freeze({
+    online: 'Trực tuyến',
+    home: 'Trực tiếp tại nhà học viên',
+    both: 'Trực tiếp tại nhà hoặc trực tuyến'
+  })
+
+  /**
+   * Mốc từng buổi lấy từ store (EduStore.sessionsOf) — cùng một nguồn với trang gia sư,
+   * để hai màn không tự sinh ngày rồi lệch nhau. Buổi đã điểm danh dùng ngày thật của
+   * bản ghi điểm danh; phần còn lại nối tiếp theo nhịp 3 ngày và được ghi rõ là suy diễn.
+   */
+
+  const channelLabel = key => (CHANNELS.find(item => item.key === key) || { label: key || '—' }).label
+  const modeOf = (offering, item) => (offering && MODE_LABEL[offering.mode])
+    || (item && item.offeringType === 'GROUP_CLASS' ? 'Lớp nhóm (tại trung tâm)' : 'Chưa ghi rõ hình thức')
+
+  const buildActivity = (contract, order, payments) => {
+    const entries = []
+    if (order) {
+      entries.push({ iso: order.createdAt, note: 'Đơn ' + order.id + ' tạo ' + channelLabel(order.channel).toLowerCase() + ', snapshot ' + order.items.length + ' hạng mục.' })
+      if (order.cancellation) entries.push({ iso: order.cancellation.requestedAt, note: 'Yêu cầu hủy: ' + order.cancellation.reason + ' — trạng thái hủy ' + order.cancellation.state + '.' })
+      if (order.refund) entries.push({ iso: order.refund.completedAt || order.refund.requestedAt, note: 'Hoàn tiền ' + money(order.refund.amount) + ' — ' + statusOf(REFUND_STATE, order.refund.state).label + '.' })
+    }
+    if (contract.signedAt) entries.push({ iso: contract.signedAt, note: 'Hai bên xác nhận điều khoản ' + contract.termsVersion + ' · ' + contract.sessions + ' buổi.' })
+    payments.forEach(payment => entries.push({ iso: payment.createdAt, note: 'Phiên ' + payment.id + ' — ' + statusOf(PAYMENT_STATUS, payment.status).label + ' · ' + money(payment.total) + '.' }))
+    Store.list('financialEvents')
+      .filter(event => event.contractId === contract.id && event.type === 'release')
+      .forEach(event => entries.push({ iso: event.date, note: 'Giải ngân ' + money(event.grossReleased) + ' cho ' + event.sessionsReleased + ' buổi · ledger ' + (event.ledgerId || 'chưa có') + '.' }))
+    return entries.filter(entry => entry.iso)
+      .sort((a, b) => String(b.iso).localeCompare(String(a.iso)))
+      .map(entry => ({ iso: String(entry.iso), text: Store.formatDate(entry.iso, true), note: entry.note }))
+  }
+
+  const buildFromStore = id => {
+    const contract = Store.contract(id)
+    if (!contract) return null
+    const order = Store.order(contract.orderId)
+    const item = order && Array.isArray(order.items) ? order.items[0] : null
+    const learner = Store.learner(contract.learnerId)
+    const tutor = Store.tutor(contract.tutorId)
+    const offering = item && item.offeringId ? Store.offering(item.offeringId) : null
+    const payments = order ? Store.paymentsByOrder(order.id) : []
+    const status = statusOf(CONTRACT_STATUS, contract.status)
+    const releasedSessions = Store.sessionsReleasedOf(contract.id)
+    const held = Store.escrowOf(contract.id)
+    const scheduleParts = String((item && item.scheduleText) || '').split(',').map(part => part.trim()).filter(Boolean)
+    const weekdayText = scheduleParts[0] || 'Chưa ghi trong snapshot'
+    const timeOfDay = scheduleParts.length > 1 ? scheduleParts.slice(1).join(', ') : '—'
+    const course = (offering && offering.subjectLabel) || (item && item.offeringTitle) || contract.id
+    const sessionList = Store.sessionsOf(contract.id)
+    const dates = sessionList.map(item => item.date)
+    const markedDates = sessionList.filter(item => item.source === 'attendance').length
+    const states = Array.from({ length: contract.sessions }, (_, index) => {
+      const no = index + 1
+      if (no <= releasedSessions) return 'completed'
+      if (no <= contract.completedSessions) return 'pending'
+      return ['cancelled', 'cancellation_pending'].includes(contract.status) ? 'cancelled' : 'upcoming'
+    })
+    const pendingIndex = states.indexOf('pending')
+    const upcomingIndex = states.indexOf('upcoming')
+    const walletSummary = Store.walletSummary(contract.learnerId)
+    const awaitingDeposit = contract.status === 'awaiting_payment'
+      ? { wallet: walletSummary.availableToUse, due: Math.max(0, Store.toInteger(contract.total) - Store.toInteger(walletSummary.availableToUse)) }
+      : null
+    return {
+      id: contract.id,
+      contract,
+      order,
+      item,
+      title: course + ' — ' + (tutor ? tutor.name : contract.tutorId),
+      status: status.label,
+      statusKey: contract.status,
+      summary: contract.id + ' · ' + course + ' · ' + modeOf(offering, item),
+      student: learner ? learner.studentName : contract.learnerId,
+      guardian: learner ? learner.name : contract.learnerId,
+      tutor: tutor ? tutor.name : contract.tutorId,
+      tutorNote: (tutor ? tutor.district + ' · ' : '') + (tutor && tutor.verified ? 'Đã xác minh hồ sơ' : 'Hồ sơ chưa xác minh'),
+      initials: tutor ? tutor.initials : '—',
+      course,
+      level: course + ' · ' + ((offering && offering.gradeLabel) || 'khối chưa ghi trong snapshot'),
+      mode: modeOf(offering, item),
+      schedule: [weekdayText, timeOfDay + ' · ' + money(contract.unitPrice) + '/buổi'],
+      weekdayText,
+      timeOfDay,
+      minutes: item ? item.durationMinutes : 0,
+      dates,
+      states,
+      period: dates.length ? dates[0] + ' – ' + dates[dates.length - 1] + ' (' + markedDates + ' mốc lấy từ bản ghi điểm danh thật, ' + (dates.length - markedDates) + ' mốc suy diễn theo nhịp 3 ngày)' : 'Hợp đồng chưa có ngày ký trong dữ liệu mẫu',
+      fee: Store.toInteger(contract.unitPrice),
+      feeRate: Number.isFinite(Number(contract.feeRate)) && Number(contract.feeRate) > 0 ? Number(contract.feeRate) : Store.DEMO_FEE_RATE,
+      total: Store.toInteger(contract.total),
+      held,
+      releasedMoney: Store.grossReleasedOf(contract.id),
+      refundedMoney: Store.succeededRefundOf(contract),
+      sessions: contract.sessions,
+      completedSessions: contract.completedSessions,
+      releasedSessions,
+      pending: pendingIndex >= 0
+        ? { lesson: pendingIndex + 1, attended: 'buổi ' + (pendingIndex + 1) + ' ngày ' + (dates[pendingIndex] || '—'), deadline: 'quy tắc 72 giờ nêu trong điều khoản' }
+        : null,
+      next: upcomingIndex >= 0
+        ? { lesson: upcomingIndex + 1, weekday: weekdayText, date: dates[upcomingIndex] || '—', topic: 'Nội dung theo kế hoạch của gia sư (dữ liệu mẫu chưa ghi từng buổi)' }
+        : null,
+      awaitingDeposit,
+      activity: buildActivity(contract, order, payments),
+      escrowNote: 'Ký quỹ đang giữ ' + money(held) + ' / ' + money(contract.total) + ' · đã giải ngân '
+        + money(Store.grossReleasedOf(contract.id)) + ' (' + releasedSessions + '/' + contract.sessions + ' buổi). '
+        + 'escrow = payment − release − refund, tính một nguồn trong store.',
+      chat: Boolean(tutor) && !status.terminal
     }
   }
-  const byId = id => document.getElementById(id)
-  const money = value => new Intl.NumberFormat('vi-VN').format(value) + ' ₫'
-  const params = new URLSearchParams(location.search)
-  const requested = params.get('id') || params.get('contract')
-  const fallback = 'HD-20260919-024'
-  const contractId = requested && contracts[requested] ? requested : requested ? null : fallback
-  const contract = contractId ? contracts[contractId] : null
+
+  const requested = Route.param('id', 'contractStudentDetail')
+  /* Không fallback cứng về một hợp đồng cụ thể khi thiếu/ sai tham số: bản cũ luôn mở
+     HD-20260919-024, nên link hỏng vẫn hiện "hợp đồng của bạn" với số của người khác. */
+  const contractId = requested || null
+  const contract = contractId ? buildFromStore(contractId) : null
   const hidden = [byId('contract-header'), byId('contract-progress'), byId('pending-alert'), byId('contract-columns')]
   if (!contract) {
-    byId('crumb-contract').textContent = 'Không tìm thấy hợp đồng'
-    byId('not-found-title').textContent = `Không tìm thấy hợp đồng ${requested}`
-    byId('not-found-description').textContent = 'Mã hợp đồng trong liên kết không thuộc danh sách hợp đồng của bạn. Vui lòng mở hợp đồng từ ví hoặc trang xác nhận hợp đồng.'
-    hidden.forEach(node => { node.hidden = true })
+    byId('not-found-title').textContent = requested ? 'Không tìm thấy hợp đồng ' + requested : 'Thiếu mã hợp đồng'
+    byId('not-found-description').textContent = requested
+      ? 'Mã trong liên kết không tồn tại trong dữ liệu dùng chung. Trang không tự mở một hợp đồng khác.'
+      : 'Mở trang này từ liên kết có tham số ?id= hợp lệ (ví dụ từ trang ví, lịch sử đơn hoặc trang xác nhận hợp đồng).'
+    hidden.forEach(node => { if (node) node.hidden = true })
     byId('contract-not-found').hidden = false
     return
   }
-  const total = contract.fee * contract.dates.length
-  const serviceRate = 0.1
+  const total = contract.total
+  const serviceRate = contract.feeRate
   const labels = { completed: 'Đã hoàn thành', pending: 'Chờ xác nhận', upcoming: 'Sắp tới', reported: 'Chờ xử lý', cancelled: 'Đã hủy' }
-  let lessons = contract.dates.map((date, index) => ({ id: index + 1, date, status: contract.states[index] }))
+  let lessons = contract.dates.map((date, index) => ({ id: index + 1, date: date || ('buổi ' + (index + 1)), status: contract.states[index] }))
   let filter = 'all'
   let action = null
   let selected = null
@@ -110,8 +163,6 @@
   const renderFacts = () => {
     const panel = byId('finance')
     document.title = `${contract.title} — Edu Connect`
-    byId('crumb-contract').textContent = contract.crumb
-    byId('crumb-contract').title = contract.crumb
     byId('contract-title').textContent = contract.title
     byId('contract-status').textContent = contract.status
     byId('contract-summary').textContent = contract.summary
@@ -181,7 +232,7 @@
       banner.classList.remove('alert--success')
       banner.classList.add('alert--warning')
       byId('pending-title').textContent = `Buổi ${contract.pending.lesson} đang chờ bạn xác nhận`
-      byId('pending-description').textContent = `Gia sư đã điểm danh ngày ${contract.pending.attended}. Hạn phản hồi: ${contract.pending.deadline}. Hãy xác nhận hoàn thành hoặc báo vấn đề trước thời hạn.`
+      byId('pending-description').textContent = `Buổi học đã được ghi nhận là diễn ra (${contract.pending.attended}). Hạn phản hồi: ${contract.pending.deadline}. Hãy xác nhận hoàn thành để giải ngân, hoặc báo vấn đề nếu buổi học không đúng thỏa thuận.`
       for (const [label, kind, style] of [['Xác nhận buổi ' + contract.pending.lesson, 'confirm', 'contract-button'], ['Báo vấn đề', 'report', 'contract-button contract-button--plain']]) {
         const button = document.createElement('button')
         button.className = style
@@ -197,9 +248,12 @@
   }
   const renderFinance = () => {
     const count = counters()
-    const released = count.completed * contract.fee
-    const held = (count.pending + count.upcoming + count.reported) * contract.fee
-    const refunded = count.cancelled * contract.fee
+    /* Tiền lấy thẳng từ dòng tiền trong store, không phải (số buổi × đơn giá).
+       Công thức cũ hiển thị count.cancelled × fee như "đã hoàn" dù số hoàn thật khác,
+       và coi released = completed × unitPrice dù feeRate có thể khác DEMO_FEE_RATE. */
+    const released = contract.releasedMoney
+    const held = contract.held
+    const refunded = contract.refundedMoney
     byId('finance-status').textContent = contract.awaitingDeposit ? 'Chưa ký quỹ' : refunded ? `Đã tất toán · hoàn ${money(refunded)}` : held ? `Đang giữ ${money(held)}` : 'Đã ký quỹ đầy đủ'
     byId('finance-amount').textContent = money(total)
     byId('finance-progress').max = String(total)
@@ -298,25 +352,64 @@
       return
     }
     const confirmed = action === 'confirm'
-    selected.status = confirmed ? 'completed' : 'reported'
-    const title = confirmed ? `Đã xác nhận hoàn thành buổi ${selected.id}` : `Đã ghi nhận báo cáo buổi ${selected.id}`
-    const banner = byId('pending-alert')
-    banner.classList.toggle('alert--success', confirmed)
-    banner.classList.toggle('alert--warning', !confirmed)
-    byId('pending-title').textContent = title
-    byId('pending-description').textContent = confirmed ? `Thông tin buổi học và trạng thái ký quỹ đã được cập nhật. Giải ngân ${money(contract.fee)}.` : 'Buổi học đang chờ xử lý. Xác nhận tự động được tạm dừng.'
-    byId('pending-actions').hidden = true
-    const item = document.createElement('li')
-    const time = document.createElement('time')
-    time.dateTime = new Date().toISOString()
-    time.textContent = 'Vừa xong'
-    const text = document.createElement('p')
-    text.textContent = title
-    item.append(time, text)
-    byId('activity-list').prepend(item)
-    contract.pending = null
-    render()
-    window.EduToast.show({ type: 'success', title, message: confirmed ? 'Cảm ơn bạn đã phản hồi về buổi học.' : 'Vui lòng theo dõi trạng thái xử lý của buổi học.' })
+    const note = report.querySelector('textarea').value.trim()
+    const record = contract.contract
+    if (confirmed) {
+      const result = Store.releaseSession({
+        contractId: record.id,
+        lessonNo: selected.id,
+        idempotency: 'student-detail:release:' + record.id + ':' + selected.id
+      })
+      if (!result.ok) {
+        event.preventDefault()
+        const messages = {
+          'lesson-not-attended': 'Buổi này chưa được ghi nhận là đã diễn ra trong dữ liệu mẫu, nên chưa có căn cứ giải ngân.',
+          'already-released': 'Buổi này đã được xác nhận và giải ngân trước đó.',
+          'contract-terminal': 'Hợp đồng đã ở trạng thái cuối nên không giải ngân thêm.',
+          'not-next-session': 'Buổi học được giải ngân theo thứ tự; hãy xác nhận buổi gần nhất trước.',
+          duplicated: 'Yêu cầu đã gửi trước đó — bấm lặp không tạo thêm khoản giải ngân.',
+          'storage-failed': 'Không lưu được vào storage của tab. State trước đó được giữ nguyên.',
+          'invalid-state': 'Không lưu được vì dữ liệu không hợp lệ. State trước đó được giữ nguyên.'
+        }
+        window.EduToast.show({ type: 'error', title: 'Chưa xác nhận được buổi học', message: messages[result.reason] || result.reason })
+        return
+      }
+      window.EduToast.show({
+        type: 'success',
+        title: 'Đã xác nhận buổi ' + selected.id,
+        message: 'Giải ngân ' + money(result.data.grossReleased) + ' (gia sư nhận ' + money(result.data.tutorNetReleased)
+          + ', phí nền tảng ' + money(result.data.platformFeeReleased) + ') · bút toán ' + result.data.ledgerId + '.'
+      })
+    } else {
+      const result = Store.submitReport({
+        reporterId: record.learnerId,
+        targetType: 'contract',
+        targetId: record.id,
+        reason: 'other',
+        evidenceNote: 'Buổi ' + selected.id + ': ' + note,
+        screenshotCount: 0,
+        idempotency: 'student-detail:report:' + record.id + ':' + selected.id
+      })
+      if (!result.ok) {
+        event.preventDefault()
+        const messages = {
+          'duplicate-open-report': 'Hợp đồng này đang có báo cáo chưa được xử lý (' + (result.reportId || '') + ').',
+          duplicated: 'Yêu cầu đã gửi trước đó — bấm lặp không tạo thêm báo cáo.',
+          'unknown-target': 'Không tìm thấy đối tượng để báo cáo.',
+          'storage-failed': 'Không lưu được vào storage của tab. State trước đó được giữ nguyên.'
+        }
+        window.EduToast.show({ type: 'error', title: 'Chưa gửi được báo cáo', message: messages[result.reason] || result.reason })
+        return
+      }
+      window.EduToast.show({
+        type: 'success',
+        title: 'Đã ghi nhận báo cáo buổi ' + selected.id,
+        message: 'Mã báo cáo ' + result.data.reportId + ' — hàng đợi quản trị đọc cùng một bản ghi này.'
+      })
+    }
+    /* Reload để mọi màn (tiến độ, escrow, ví, dashboard) đọc lại cùng một state;
+       không sửa object cục bộ rồi báo "đã giải ngân" như bản trước. */
+    window.setTimeout(() => window.location.reload(), 900)
   })
   modal.addEventListener('modal:close', () => {
     report.hidden = true

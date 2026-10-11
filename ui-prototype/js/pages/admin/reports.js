@@ -16,7 +16,8 @@
   const pagination = page.querySelector('[data-pagination]');
   const pageSize = page.querySelector('[data-reports-page-size]');
   const refresh = page.querySelector('[data-reports-refresh]');
-  const template = page.querySelector('#reports-row-template');
+  // <template> nam ngoai phan tu `page` (dat cuoi body) nen phai tra tu document.
+  const template = document.getElementById('reports-row-template');
   const currency = new Intl.NumberFormat('vi-VN');
   const dateFormat = new Intl.DateTimeFormat('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Ho_Chi_Minh' });
   const timeFormat = new Intl.DateTimeFormat('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' });
@@ -48,7 +49,7 @@
       setText(row, '[data-report-title]', report.title);
       setText(row, '[data-report-reference]', report.id);
       setText(row, '[data-report-summary]', report.summary);
-      setText(row, '[data-report-evidence-count]', `${report.evidence.length} minh chứng (dữ liệu minh họa)`);
+      setText(row, '[data-report-evidence-count]', `${report.evidence.length} minh chứng`);
       setText(row, '[data-report-avatar]', report.initials);
       setText(row, '[data-report-reporter]', report.reporter);
       setText(row, '[data-report-reporter-role]', report.reporterRole);
@@ -188,7 +189,21 @@
       return;
     }
     const tab = [...tabs.querySelectorAll('[data-reports-status]')].find(item => item.dataset.reportsStatus === requested);
-    if (!tab) return;
+    if (!tab) {
+      // Giá trị ngoài danh sách phải được nói rõ, không âm thầm trả về tab mặc định như thể không có vấn đề gì.
+      const allowed = [...tabs.querySelectorAll('[data-reports-status]')].map(item => item.dataset.reportsStatus);
+      allowed.push('unresolved');
+      const notice = document.createElement('p');
+      notice.className = 'alert alert--warning reports__query-alert';
+      notice.setAttribute('role', 'status');
+      const bold = document.createElement('strong');
+      bold.textContent = `Bộ lọc không hợp lệ: ?status=${requested}. `;
+      const rest = document.createElement('span');
+      rest.textContent = `Giá trị được chấp nhận: ${allowed.join(', ')}. Đã hiển thị toàn bộ báo cáo.`;
+      notice.append(bold, rest);
+      results.parentNode.insertBefore(notice, results);
+      return;
+    }
     status = tab.dataset.reportsStatus;
     tabs.querySelectorAll('[role="tab"]').forEach(item => {
       const active = item === tab;

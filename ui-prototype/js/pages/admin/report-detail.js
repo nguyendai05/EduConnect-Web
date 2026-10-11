@@ -3,10 +3,8 @@
   if (!page) return;
   const store = window.EduReport;
   const { statuses, severities, types } = store;
-  const records = store.list();
   const requestedId = new URLSearchParams(window.location.search).get('id');
-  let report = records.find(item => item.id === requestedId) || records[0] || null;
-  const usedFallback = Boolean(requestedId) && Boolean(report) && report.id !== requestedId;
+  let report = requestedId ? store.get(requestedId) || null : null;
 
   const currency = new Intl.NumberFormat('vi-VN');
   const dateFormat = new Intl.DateTimeFormat('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Ho_Chi_Minh' });
@@ -16,6 +14,7 @@
   const money = value => (value ? `${currency.format(value)} ₫` : 'Không giữ khoản');
 
   const note = page.querySelector('[data-decision-note]');
+  note.maxLength = store.bounds.summaryMax;
   const noteError = page.querySelector('[data-note-error]');
   const optionsHost = page.querySelector('[data-resolution-options]');
   const decision = page.querySelector('[data-detail-decision]');
@@ -40,7 +39,7 @@
       input.type = 'radio';
       input.name = 'report-resolution';
       input.value = option.key;
-      input.checked = report.resolution === option.key;
+      input.checked = report.resolution?.code === option.key;
       input.disabled = closed;
       const circle = document.createElement('span');
       circle.className = 'radio-circle';
@@ -180,15 +179,16 @@
     page.querySelector('[data-detail-content]').hidden = !found;
     page.querySelector('[data-detail-not-found]').hidden = found;
     page.querySelector('[data-detail-status]').hidden = !found;
-    page.querySelector('[data-detail-fallback]').hidden = !usedFallback;
-    if (usedFallback) setText('[data-fallback-message]', `Không tìm thấy vụ việc “${requestedId}” trong dữ liệu mẫu, trang đang hiển thị vụ việc đầu tiên (${report.id}).`);
+    page.querySelector('[data-detail-fallback]').hidden = true;
     if (!found) {
-      document.title = 'Không có vụ việc nào | Edu Connect';
+      document.title = 'Không tìm thấy báo cáo | Edu Connect';
+      const description = page.querySelector('[data-detail-not-found] p');
+      if (description) description.textContent = requestedId ? `Không tìm thấy báo cáo “${requestedId}”. Vui lòng quay lại danh sách để chọn báo cáo cần xử lý.` : 'Liên kết thiếu mã báo cáo. Vui lòng mở lại từ danh sách báo cáo.';
       return;
     }
     document.title = `${report.id} · Xử lý báo cáo | Edu Connect`;
     setText('[data-detail-heading]', `Xử lý báo cáo · ${report.scope}`);
-    setText('[data-detail-viewing]', `Đang xem vụ việc ${report.id} — ${report.reporter} báo cáo ${report.reported}.`);
+    setText('[data-detail-viewing]', `${report.id} · ${report.reporter} báo cáo ${report.reported}`);
     const statusBadge = page.querySelector('[data-detail-status]');
     statusBadge.className = `badge ${statuses[report.status].badge}`;
     statusBadge.textContent = statuses[report.status].label;
@@ -269,15 +269,15 @@
   const clearNoteError = () => {
     note.removeAttribute('aria-invalid');
     noteError.hidden = true;
-    setText('[data-note-count]', `${note.value.length}/1000`);
+    setText('[data-note-count]', `${note.value.length}/${store.bounds.summaryMax}`);
   };
 
   const validateDecision = nextStatus => {
     const trimmed = note.value.trim();
-    if (trimmed.length > 1000) {
-      noteError.textContent = 'Kết luận xử lý tối đa 1000 ký tự.';
+    if (trimmed.length > store.bounds.summaryMax) {
+      noteError.textContent = `Kết luận xử lý tối đa ${store.bounds.summaryMax} ký tự.`;
     } else if (trimmed.length < 10) {
-      noteError.textContent = 'Vui lòng nhập kết luận xử lý từ 10 đến 1000 ký tự để làm căn cứ lưu vết.';
+      noteError.textContent = `Vui lòng nhập kết luận xử lý từ 10 đến ${store.bounds.summaryMax} ký tự để làm căn cứ lưu vết.`;
     } else if (nextStatus === 'resolved' && !selectedResolution()) {
       noteError.textContent = 'Hãy chọn một phương án xử lý trước khi xác nhận kết luận.';
     } else {
@@ -295,7 +295,9 @@
     const message = modal.querySelector('[data-modal-error]');
     message.hidden = true;
     try {
-      report = store.decide(report.id, { status: nextStatus, note: note.value, resolution: selectedResolution() ? selectedResolution().value : '' });
+      const result = store.decide(report.id, { status: nextStatus, note: note.value, resolution: selectedResolution() ? selectedResolution().value : '' });
+      if (!result.ok) throw new Error(result.reason);
+      report = result.report;
       render();
       window.EduModal.close(modal, 'confirm');
       errorToast?.close();

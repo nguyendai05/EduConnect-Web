@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
         <title>Lời mời & thương lượng — Edu Connect</title>
         <link rel="stylesheet" href="../../css/tokens.css" />
         <link rel="stylesheet" href="../../css/reset.css" />
@@ -10,7 +13,6 @@
         <link rel="stylesheet" href="../../css/components/layout/user-header.css" />
         <link rel="stylesheet" href="../../css/components/layout/user-footer.css" />
         <link rel="stylesheet" href="../../css/components/layout/page-header.css" />
-        <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css" />
         <link rel="stylesheet" href="../../css/components/action/button.css" />
         <link rel="stylesheet" href="../../css/components/action/icon-button.css" />
         <link rel="stylesheet" href="../../css/components/action/component-icon.css" />
@@ -28,6 +30,9 @@
         <link rel="stylesheet" href="../../css/components/form/input.css" />
         <link rel="stylesheet" href="../../css/components/form/textarea.css" />
         <link rel="stylesheet" href="../../css/pages/invitation/negotiation.css" />
+        <script src="../../js/core/route.js" defer></script>
+        <script src="../../js/data/fixtures.js" defer></script>
+        <script src="../../js/data/store.js" defer></script>
         <script src="../../js/core/user-header.js" defer></script>
         <script src="../../js/core/modal.js" defer></script>
         <script src="../../js/core/toast.js" defer></script>
@@ -44,14 +49,14 @@
             data-active-nav="tutors"
         >
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link is-active" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html" aria-current="page">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link is-active" data-nav-key="tutors" href="../../pages/tutor/search.html" aria-current="page">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -112,14 +117,7 @@
     </div>
 </header>
         <main class="negotiation-page" id="invitation">
-            <nav class="breadcrumb" aria-label="Đường dẫn">
-                <ol class="breadcrumb__list">
-                    <li class="breadcrumb__item"><span>Lời mời gia sư</span></li>
-                    <li class="breadcrumb__item">
-                        <span class="breadcrumb__current" aria-current="page" data-neg-crumb>Nguyễn Minh Anh</span>
-                    </li>
-                </ol>
-            </nav>
+
             <header class="page-header">
                 <div class="page-header__content">
                     <div class="page-header__title-block">
@@ -135,6 +133,15 @@
                     </div>
                 </div>
             </header>
+            <section class="alert alert--error negotiation-not-found" data-neg-not-found role="alert" hidden>
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content">
+                    <h2 class="alert__title">Không tìm thấy lời mời</h2>
+                    <p class="alert__message" data-neg-not-found-message>
+                        Mã lời mời không tồn tại trong dữ liệu mẫu.
+                    </p>
+                </div>
+            </section>
             <section class="alert alert--warning" id="status-alert" aria-labelledby="status-title">
                 <span class="alert__icon" aria-hidden="true"></span>
                 <div class="alert__content">
@@ -151,13 +158,13 @@
                         aria-label="Hai bên tham gia"
                     >
                         <div class="negotiation-person">
-                            <span class="avatar avatar--medium" role="img" aria-label="Chị Mai Lan"
-                                >ML</span
+                            <span class="avatar avatar--medium" role="img" aria-label="Người học" data-neg-learner-avatar
+                                >–</span
                             >
                             <div>
-                                <p class="negotiation-muted">Phụ huynh</p>
-                                <h2>Chị Mai Lan</h2>
-                                <p class="negotiation-muted">Học sinh: Trần Gia Huy · Lớp 11</p>
+                                <p class="negotiation-muted">Người học</p>
+                                <h2 data-neg-learner>—</h2>
+                                <p class="negotiation-muted" data-neg-learner-student>Học sinh: —</p>
                             </div>
                         </div>
                         <span class="tag tag--neutral">Kết nối học tập</span>
@@ -263,6 +270,16 @@
                             <span class="badge badge--neutral" id="history-count">2 phiên bản</span>
                         </header>
                         <ol class="negotiation-history" id="proposal-history"></ol>
+                        <template data-proposal-item-template>
+                            <li class="negotiation-history-item">
+                                <h3><span data-proposal-version>Phiên bản</span> · <span data-proposal-author>—</span></h3>
+                                <time class="negotiation-muted" data-proposal-time datetime="">—</time>
+                                <span class="badge badge--neutral" data-proposal-status>—</span>
+                                <p data-proposal-summary>—</p>
+                                <p class="negotiation-muted" data-proposal-note hidden>—</p>
+                                <button class="button button--ghost button--small" type="button" data-proposal-detail>Xem chi tiết</button>
+                            </li>
+                        </template>
                     </section>
                 </div>
                 <aside class="negotiation-sidebar" aria-label="Phản hồi lời mời">
@@ -283,8 +300,9 @@
                         </div>
                         <div class="negotiation-price">
                             <p>Tổng học phí dự kiến</p>
-                            <strong data-value="total">1.760.000 ₫</strong>
-                            <p id="price-detail">8 buổi × 220.000 ₫ · 90 phút/buổi</p>
+                            <strong data-value="total">—</strong>
+                            <p id="price-detail">—</p>
+                            <p class="negotiation-muted" data-fee-note>—</p>
                         </div>
                         <div class="negotiation-actions" id="response-actions">
                             <button class="button button--primary" type="button" id="accept-button">
@@ -299,12 +317,14 @@
                                 type="button"
                                 id="counter-button"
                             >
-                                Thương lượng lại (Lượt 2/3)
+                                Đề xuất lại
                             </button>
                             <button class="button button--ghost" type="button" id="reject-button">
                                 Từ chối lời mời
                             </button>
                         </div>
+                        <p class="alert alert--error" data-response-error role="alert" hidden></p>
+                        <p class="alert alert--info" data-viewonly-note role="status" hidden></p>
                         <a
                             class="button button--primary"
                             id="contract-next"
@@ -341,7 +361,7 @@
         </main>
         <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
-        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
         <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
         <p class="user-footer__copyright">© 2026 Edu Connect</p>
     </div>

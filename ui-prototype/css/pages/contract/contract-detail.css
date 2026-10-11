@@ -8,7 +8,7 @@
 }
 .contract-spotlight {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-4);
     margin-top: var(--space-6);
     align-items: stretch;
@@ -23,14 +23,20 @@
     height: 100%;
 }
 .contract-button:disabled {
-    opacity: 0.55;
+    /*
+     * Khong dung opacity: no composite ca chu lan nen va lam mau khong con doc
+     * duoc tren token. Giu nhan bien phap qua nen trung tinh + con tro + ghi chu
+     "kha luc tu" ben canh nut (danhang cua §8: trang thai disabled dung token ngu nghia).
+     */
     cursor: not-allowed;
     background: var(--color-surface-medium);
-    color: var(--color-text-muted);
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
 }
+/* Số cột tự theo chiều rộng của ô chứa: sidebar hẹp tự xuống một cột. */
 .contract-management {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
     gap: var(--space-3);
     margin-top: var(--space-4);
 }
@@ -39,7 +45,7 @@
     min-height: 64px;
 }
 .contract-page #released-money {
-    color: var(--color-success);
+    color: var(--color-success-text);
 }
 .contract-page #held-money {
     color: var(--color-primary);
@@ -62,9 +68,6 @@
         grid-template-columns: 1fr;
     }
 }
-.contract-breadcrumb-slot {
-    margin-bottom: var(--space-6);
-}
 .contract-eyebrow {
     color: var(--color-primary);
     font-size: var(--font-size-xs);
@@ -72,7 +75,7 @@
     letter-spacing: 0.08em;
 }
 .contract-muted {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-sm);
 }
 .contract-progress {
@@ -117,7 +120,7 @@
 }
 .contract-columns {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 19rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
     gap: var(--space-6);
     margin-top: var(--space-6);
 }
@@ -147,12 +150,12 @@
 }
 .contract-facts {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
     margin-block: var(--space-6);
 }
 .contract-facts dt {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-xs);
     margin-bottom: var(--space-1);
 }
@@ -256,7 +259,7 @@
 }
 .contract-timeline time {
     font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
 }
 .contract-money {
     font-size: var(--font-size-2xl);
@@ -271,11 +274,13 @@
 }
 .contract-finance div {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: var(--space-2);
 }
 .contract-finance dt {
     color: var(--color-text-secondary);
+    min-width: 0;
 }
 .contract-finance dd {
     margin: 0;
@@ -304,6 +309,11 @@
     align-items: center;
     gap: var(--space-3);
     margin-bottom: var(--space-4);
+}
+/* Cột chữ lớn lên theo chỗ trống thay vì co theo nội dung ngắn nhất. */
+.contract-tutor > div {
+    flex: 1 1 auto;
+    min-width: 0;
 }
 .contract-tutor h2 {
     margin-bottom: var(--space-1);
@@ -334,7 +344,7 @@
 .contract-report {
     padding: 0 var(--space-6) var(--space-6);
 }
-@media (max-width: 950px) {
+@media (max-width: 64rem) {
     .contract-columns {
         grid-template-columns: 1fr;
     }

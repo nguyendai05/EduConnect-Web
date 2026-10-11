@@ -1,16 +1,12 @@
-:root { --user-header-height: 4.75rem; }
 .user-header { position: sticky; top: 0; z-index: 100; width: 100%; min-height: var(--user-header-height); margin: 0; border-bottom: 1px solid var(--color-border); background: var(--color-paper); }
 .user-header__inner { display: flex; align-items: center; gap: var(--space-6); width: min(100% - 4rem, var(--container-max-width)); min-height: var(--user-header-height); margin-inline: auto; }
 .user-header__brand { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .625rem; color: var(--color-ink); }
 .user-header__brand:hover { color: var(--color-primary); }
-.user-header__brand-mark { display: grid; width: 2.25rem; height: 2.25rem; flex: 0 0 auto; place-items: center; }
-.user-header__brand-mark img { width: 100%; height: 100%; }
-.user-header__brand-name { font-size: 1.3125rem; font-weight: 650; letter-spacing: -.045em; line-height: 1; }
+.user-header__logo { display: block; width: 13rem; height: auto; }
 .user-header__nav { display: flex; align-self: stretch; align-items: stretch; justify-content: center; flex: 1 1 auto; gap: clamp(1rem, 2vw, 2rem); min-width: 0; }
 .user-header__nav-link { position: relative; display: inline-flex; align-items: center; color: var(--color-text-secondary); font-size: .8125rem; font-weight: 500; white-space: nowrap; }
 .user-header__nav-link:hover, .user-header__nav-link.is-active { color: var(--color-primary); }
 .user-header__nav-link.is-active { font-weight: 650; }
-.user-header__nav-link.is-active::after { position: absolute; right: 0; bottom: 0; left: 0; height: 3px; background: var(--color-primary); content: ''; }
 .user-header__actions { display: flex; flex: 0 0 auto; align-items: center; gap: .625rem; margin-left: auto; }
 .user-header__icon-button, .user-header__profile { color: var(--color-text); background: transparent; border: 0; cursor: pointer; }
 .user-header__icon-button { display: grid; width: 2.5rem; height: 2.5rem; padding: 0; place-items: center; border-radius: var(--radius-md); }
@@ -33,7 +29,7 @@
 .user-header__menu[hidden], .user-header__menu-item[hidden], .user-header__menu-summary[hidden] { display: none; }
 .user-header__menu-summary { padding: 1rem 1.125rem; background: var(--color-paper); }
 .user-header__menu-summary-heading { display: flex; align-items: center; justify-content: space-between; gap: .75rem; font-size: .8125rem; }
-.user-header__menu-balance { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-top: .75rem; padding-top: .75rem; border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: .75rem; }
+.user-header__menu-balance { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-top: .75rem; padding-top: .75rem; border-top: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: .75rem; }
 .user-header__menu-balance strong { color: var(--color-text); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
 .user-header__menu-section { padding: .375rem 0; border-top: 1px solid var(--color-border); }
 .user-header__menu-item { display: flex; width: 100%; min-height: 2.75rem; align-items: center; gap: .75rem; padding: .625rem 1.125rem; color: var(--color-text); background: transparent; border: 0; cursor: pointer; font: inherit; font-size: .8125rem; line-height: 1.5; text-align: left; }
@@ -45,14 +41,15 @@
 .user-header__menu-item--danger:hover { background: var(--color-danger-container); color: var(--color-danger); }
 .user-header :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
 @media (max-width: 64rem) {
+  .user-header__icon-button { width: var(--touch-target); height: var(--touch-target); }
+  .user-header__menu { max-height: calc(100dvh - var(--user-header-height) - var(--space-6)); overflow-y: auto; }
  .user-header__inner { flex-wrap: wrap; gap: 0 var(--space-4); padding-top: .5rem; }
  .user-header__nav { order: 3; flex: 1 1 100%; height: 2.75rem; justify-content: flex-start; gap: var(--space-6); overflow-x: auto; }
  .user-header__nav-link { flex: 0 0 auto; }
 }
 @media (max-width: 48rem) {
  .user-header__inner { width: calc(100% - 2rem); }
- .user-header__brand-name { font-size: 1.125rem; }
- .user-header__brand-mark { width: 2rem; height: 2rem; }
+ .user-header__logo { width: 10.5rem; }
  .user-header__actions { gap: .125rem; }
  .user-header__profile-copy, .user-header__divider, .user-header__chevron { display: none; }
  .user-header__nav { gap: var(--space-5); }

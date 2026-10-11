@@ -1,4 +1,4 @@
-/* Profile page composition. Reuses UserHeader, Breadcrumb, Input, and Alert components. */
+/* Profile page composition. Reuses UserHeader, Input, and Alert components. */
 .profile-page {
   --profile-avatar-size: 4.5rem;
 
@@ -12,14 +12,11 @@
   flex: 1 0 auto;
 }
 
-.profile-breadcrumb {
-  margin-bottom: var(--space-6);
-}
-
 /* Page-specific account navigation; there is no AccountNav component yet. */
 .profile-page__layout {
   display: grid;
-  grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 2fr);
+  /* Rail điều hướng giữ bản nhỏ để khối thông tin còn đủ chỗ cho hai cột form. */
+  grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
   gap: var(--space-6);
   align-items: start;
 }
@@ -97,7 +94,7 @@
 
 /* Temporary Button variant until the shared Button supports primary and secondary actions. */
 .profile-action {
-  min-height: 2.5rem;
+  min-height: var(--control-height);
   padding: var(--space-2) var(--space-3);
   border: 1px solid transparent;
   border-radius: var(--radius-md);
@@ -217,7 +214,7 @@
 }
 
 .profile-value--locked span:last-child {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   line-height: 1.3333;
 }
@@ -225,7 +222,7 @@
 .profile-value--empty {
   min-height: 5rem;
   border-style: dashed;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
 
@@ -263,7 +260,7 @@
 
 .profile-form__hint {
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   line-height: 1.3333;
   text-align: right;

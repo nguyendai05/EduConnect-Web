@@ -69,12 +69,12 @@
 }
 
 .job-card__badge--warning {
-  color: var(--color-warning);
+  color: var(--color-warning-text);
   background: var(--color-warning-container);
 }
 
 .job-card__code {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
 
@@ -109,7 +109,7 @@
   align-items: center;
   gap: 0.25rem;
   padding: 0.125rem 0.5rem;
-  color: var(--color-warning);
+  color: var(--color-warning-text);
   background: var(--color-warning-container);
   border: 1px solid color-mix(in srgb, var(--color-warning), transparent 65%);
   border-radius: 0.375rem;
@@ -160,7 +160,7 @@
 }
 
 .job-card__stats--muted {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .job-card__applicants {

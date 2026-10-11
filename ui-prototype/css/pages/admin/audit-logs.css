@@ -26,7 +26,7 @@
 }
 .audit-logs__header p { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
 .audit-logs__refresh { display: grid; flex: 0 0 auto; justify-items: end; gap: var(--space-2); }
-.audit-logs__updated { color: var(--color-text-muted); font-size: 0.6875rem; }
+.audit-logs__updated { color: var(--color-text-secondary); font-size: 0.6875rem; }
 .audit-logs__icon { width: 1.125rem; height: 1.125rem; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Banner append-only */
@@ -72,14 +72,14 @@
   gap: var(--space-3);
 }
 .audit-logs__toolbar-heading .tabs { min-width: 0; max-width: 100%; }
-.audit-logs__filters { display: grid; grid-template-columns: minmax(16rem, 1.6fr) repeat(5, minmax(9rem, 1fr)); gap: var(--space-3); }
+.audit-logs__filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: var(--space-3); }
 .audit-logs__filters .select-control--native { width: 100%; }
 
 /* Hàng chọn ngày tùy chọn — nằm trong lưới của biểu mẫu lọc */
 .audit-logs__range { display: grid; grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 12rem)); gap: var(--space-3); align-items: end; }
 .audit-logs__range-hint {
   grid-column: 1 / -1;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 0.6875rem;
   line-height: 1.6;
 }
@@ -94,14 +94,14 @@
   border-top: 1px solid var(--color-border);
 }
 .audit-logs__active-label {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 .audit-logs__chips { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); min-width: 0; }
-.audit-logs__chips-empty { color: var(--color-text-muted); font-size: var(--font-size-xs); }
+.audit-logs__chips-empty { color: var(--color-text-secondary); font-size: var(--font-size-xs); }
 .audit-logs__clear { flex: 0 0 auto; }
 
 /* Dòng tóm tắt kết quả */
@@ -114,7 +114,7 @@
   min-height: 2rem;
   padding-top: var(--space-3);
   border-top: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
 }
 .audit-logs__privacy { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
@@ -146,18 +146,6 @@
 .audit-logs__change { line-height: 1.6; }
 
 /* Footer bảng + phân trang */
-.audit-logs__table-footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-4);
-  padding-inline: var(--space-4);
-  background: var(--color-surface-low);
-  border-top: 1px solid var(--color-border);
-}
-.audit-logs__table-footer .pagination { flex: 1 1 auto; }
-.audit-logs__page-size { display: flex; align-items: center; gap: var(--space-2); padding-block: var(--space-3); color: var(--color-text-muted); font-size: var(--font-size-xs); }
-.audit-logs__page-size select { width: 4.75rem; }
 
 /* Hộp thoại chi tiết (read-only) */
 .audit-logs__modal { width: min(44rem, calc(100% - 2rem)); }
@@ -185,7 +173,7 @@
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
-.audit-logs__section-meta { color: var(--color-text-muted); font-size: 0.6875rem; }
+.audit-logs__section-meta { color: var(--color-text-secondary); font-size: 0.6875rem; }
 .audit-logs__panel {
   display: grid;
   gap: var(--space-1);
@@ -207,7 +195,7 @@
   font-size: var(--font-size-xs);
   font-weight: 700;
 }
-.audit-logs__diff-field small { color: var(--color-text-muted); font-weight: 400; }
+.audit-logs__diff-field small { color: var(--color-text-secondary); font-weight: 400; }
 .audit-logs__diff-values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
 .audit-logs__diff-cell {
   display: grid;
@@ -218,11 +206,11 @@
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.audit-logs__diff-label { color: var(--color-text-muted); font-size: 0.6875rem; }
+.audit-logs__diff-label { color: var(--color-text-secondary); font-size: 0.6875rem; }
 .audit-logs__diff-cell strong { font-size: var(--font-size-sm); font-weight: 600; }
 .audit-logs__diff-cell--after .audit-logs__diff-label { color: var(--color-primary); font-weight: 600; }
 .audit-logs__redaction {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 0.6875rem;
   line-height: 1.7;
   overflow-wrap: anywhere;
@@ -245,7 +233,7 @@
 .audit-logs__modal-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); }
 .audit-logs__copy-status {
   min-height: 1.25rem;
-  color: var(--color-success);
+  color: var(--color-success-text);
   font-size: 0.6875rem;
   font-weight: 600;
 }
@@ -282,7 +270,6 @@
   .audit-logs__toolbar { padding: var(--space-4); }
   .audit-logs__filters { grid-template-columns: 1fr; }
   .audit-logs__range { grid-template-columns: 1fr; }
-  .audit-logs__page-size { width: 100%; justify-content: space-between; padding-top: 0; }
   .audit-logs__active { align-items: flex-start; flex-direction: column; }
   .audit-logs__chips { width: 100%; }
   .audit-logs__modal-footer { align-items: stretch; flex-direction: column-reverse; }

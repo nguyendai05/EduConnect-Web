@@ -279,7 +279,7 @@
 
   const render = () => {
     document.title = `${request.id} · Xử lý yêu cầu rút tiền | Edu Connect`;
-    setText('[data-detail-record]', `Đang xem yêu cầu ${request.id} · ${request.tutor} (${request.tutorCode}) · trạng thái ${statusInfo().label.toLowerCase()}.`);
+    setText('[data-detail-record]', `${request.id} · ${request.tutor} (${request.tutorCode})`);
     const notice = page.querySelector('[data-detail-fallback]');
     notice.hidden = !isUnknownId();
     if (!notice.hidden) setText('[data-fallback-description]', `Mã “${requestedId || '(để trống)'}” không khớp yêu cầu nào trong danh sách, trang đang hiển thị yêu cầu mới nhất ${request.id}. Hãy chọn lại đúng yêu cầu trong danh sách nếu cần xử lý bản ghi khác.`);

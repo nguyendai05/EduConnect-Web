@@ -52,8 +52,10 @@
   const showSuccess = () => {
     form.reset();
     statusContainer.hidden = false;
-    status.textContent = 'Tạo tài khoản thành công! Bạn có thể chuyển sang trang đăng nhập.';
+    status.textContent = 'Tạo tài khoản thành công (mô phỏng). Mật khẩu không được lưu lại ở bất kỳ đâu. Tiếp tục luồng demo bằng liên kết "Xác minh email" hoặc "Đăng nhập" bên dưới.';
     form.hidden = true;
+    statusContainer.setAttribute('tabindex', '-1');
+    statusContainer.focus();
   };
 
   Object.entries(fields).forEach(([key, input]) => {

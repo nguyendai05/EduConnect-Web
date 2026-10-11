@@ -2,13 +2,13 @@
 .user-footer { margin-top: auto; background: var(--color-ink); color: var(--color-on-ink); }
 .user-footer__inner { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-6); width: min(100% - 4rem, var(--container-max-width)); margin-inline: auto; padding-block: var(--space-6); }
 .user-footer__brand-link { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--color-on-ink); font-size: var(--font-size-base); font-weight: 600; }
-.user-footer__brand-link:hover { color: var(--color-accent); }
-.user-footer__brand-mark { width: 2rem; height: 2rem; }
+.user-footer__brand-link:hover { color: var(--color-accent-on-ink); }
+.user-footer__brand-mark { display: block; width: 11.5rem; height: auto; }
 .user-footer__quick-links { display: flex; flex-wrap: wrap; gap: var(--space-5); margin-left: auto; }
 .user-footer__quick-links a { color: var(--color-on-ink-muted); font-size: var(--font-size-sm); }
-.user-footer__quick-links a:hover { color: var(--color-accent); }
+.user-footer__quick-links a:hover { color: var(--color-accent-on-ink); }
 .user-footer__copyright { color: var(--color-on-ink-muted); font-size: var(--font-size-xs); }
-.user-footer :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+.user-footer :focus-visible { outline: 2px solid var(--color-accent-on-ink); outline-offset: 4px; }
 @media (max-width: 48rem) {
   .user-footer__inner { width: calc(100% - 2rem); gap: var(--space-4); }
   .user-footer__quick-links { width: 100%; margin-left: 0; }

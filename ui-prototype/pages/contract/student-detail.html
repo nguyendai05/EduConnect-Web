@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
         <title>Hợp đồng học — Edu Connect</title>
         <link rel="stylesheet" href="../../css/tokens.css" />
         <link rel="stylesheet" href="../../css/reset.css" />
@@ -15,12 +18,14 @@
         <link rel="stylesheet" href="../../css/components/feedback/toast.css" />
         <link rel="stylesheet" href="../../css/components/feedback/empty-state.css" />
         <link rel="stylesheet" href="../../css/components/domain/lesson/lesson-card.css" />
-        <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css" />
         <link rel="stylesheet" href="../../css/components/layout/page-header.css" />
         <link rel="stylesheet" href="../../css/components/navigation/filter-chip.css" />
         <link rel="stylesheet" href="../../css/components/form/form-field.css" />
         <link rel="stylesheet" href="../../css/pages/contract/contract-detail.css" />
         <link rel="stylesheet" href="../../css/pages/contract/student-detail.css" />
+        <script src="../../js/core/route.js" defer></script>
+        <script src="../../js/data/fixtures.js" defer></script>
+        <script src="../../js/data/store.js" defer></script>
         <script src="../../js/core/user-header.js" defer></script>
         <script src="../../js/core/modal.js" defer></script>
         <script src="../../js/core/toast.js" defer></script>
@@ -34,14 +39,14 @@
             data-active-nav="none"
         >
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -102,20 +107,7 @@
     </div>
 </header>
         <main class="contract-page contract-page--student" id="contract">
-            <div class="contract-breadcrumb-slot">
-                <nav class="breadcrumb" aria-label="Đường dẫn">
-                    <ol class="breadcrumb__list">
-                        <li class="breadcrumb__item" aria-current="page">
-                            <span
-                                class="breadcrumb__current"
-                                id="crumb-contract"
-                                title="Chi tiết hợp đồng học HD-20260919-024"
-                                >Chi tiết hợp đồng học HD-20260919-024</span
-                            >
-                        </li>
-                    </ol>
-                </nav>
-            </div>
+
             <section class="empty-state" id="contract-not-found" hidden>
                 <span class="empty-state__icon" aria-hidden="true"></span>
                 <h3 class="empty-state__title" id="not-found-title">Không tìm thấy hợp đồng</h3>
@@ -437,7 +429,7 @@
         </main>
         <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
-        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
         <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
         <p class="user-footer__copyright">© 2026 Edu Connect</p>
     </div>

@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
         <title>Ví & Lịch sử giao dịch — Edu Connect</title>
         <link rel="stylesheet" href="../../css/tokens.css" />
         <link rel="stylesheet" href="../../css/reset.css" />
@@ -18,6 +21,9 @@
         <link rel="stylesheet" href="../../css/components/feedback/toast.css" />
         <link rel="stylesheet" href="../../css/components/feedback/empty-state.css" />
         <link rel="stylesheet" href="../../css/pages/wallet/overview.css" />
+        <script src="../../js/core/route.js" defer></script>
+        <script src="../../js/data/fixtures.js" defer></script>
+        <script src="../../js/data/store.js" defer></script>
         <script src="../../js/core/user-header.js" defer></script>
         <script src="../../js/core/tabs.js" defer></script>
         <script src="../../js/core/modal.js" defer></script>
@@ -35,14 +41,14 @@
             data-active-nav="none"
         >
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -107,8 +113,8 @@
             <nav class="breadcrumb" aria-label="Đường dẫn">
                 <ol class="breadcrumb__list">
                     <li class="breadcrumb__item">
-                        <a class="breadcrumb__link" href="../contract/student-detail.html?id=HD-20260919-024"
-                            >Học tập của tôi</a
+                        <a class="breadcrumb__link" href="../order/history.html" id="crumb-parent"
+                            >Đơn đăng ký của tôi</a
                         >
                     </li>
                     <li class="breadcrumb__item" aria-current="page">
@@ -118,114 +124,63 @@
             </nav>
             <header class="page-header">
                 <div class="page-header__title-block">
-                    <h1 class="page-header__title">Ví & Lịch sử giao dịch</h1>
-                    <p class="page-header__description">WLT-MLAN-7792 · Chủ ví: Chị Mai Lan</p>
+                    <h1 class="page-header__title">Ví &amp; Lịch sử giao dịch</h1>
+                    <p class="page-header__description" id="wallet-owner-line">
+                        Số dư và sao kê đọc theo tài khoản của phiên demo hiện tại.
+                    </p>
                 </div>
             </header>
-            <section class="wallet-summary" aria-label="Tổng tài sản">
-                <img src="../../assets/icons/wallet.svg" alt="" />
-                <div>
-                    <p>Tổng tài sản trong tài khoản</p>
-                    <strong>1.660.000 ₫</strong>
-                    <p>340.000 ₫ khả dụng · 1.320.000 ₫ đang ký quỹ</p>
+            <!-- Persona chưa có chủ ví: không mượn số dư của tài khoản khác -->
+            <section class="wallet-panel" id="wallet-missing" hidden>
+                <div class="wallet-section-heading">
+                    <h2>Tài khoản demo này chưa có ví</h2>
+                </div>
+                <p class="wallet-note">
+                    Trang chỉ hiển thị số dư của học viên hoặc gia sư mà phiên demo đang dùng. Persona
+                    hiện tại không có bản ghi ví nên trang không hiển thị số liệu mẫu của tài khoản khác.
+                </p>
+                <div class="wallet-missing-actions">
+                    <a class="wallet-button wallet-button--secondary" href="../order/history.html"
+                        >Xem lịch sử đơn</a
+                    ><a class="wallet-button wallet-button--secondary" href="../auth/login.html"
+                        >Đổi tài khoản demo</a
+                    >
                 </div>
             </section>
+            <div id="wallet-content">
             <div class="wallet-layout">
                 <div class="wallet-main">
                     <section class="wallet-panel" aria-label="Số dư ví">
-                        <div class="wallet-balances">
-                            <article
-                                class="wallet-balance-card wallet-balance-card--available"
-                                aria-labelledby="balance-available"
-                            >
-                                <header class="wallet-balance-card__header">
-                                    <h2 class="wallet-balance-card__title" id="balance-available">
-                                        Số dư khả dụng
-                                    </h2>
-                                    <span
-                                        class="wallet-balance-card__icon"
-                                        aria-hidden="true"
-                                    ></span>
-                                </header>
-                                <p class="wallet-balance-card__amount">340.000 <span>₫</span></p>
-                                <p class="wallet-balance-card__description">
-                                    Dùng để cấn trừ học phí của hợp đồng tiếp theo.
-                                </p>
-                            </article>
-                            <article
-                                class="wallet-balance-card wallet-balance-card--escrow"
-                                aria-labelledby="balance-escrow"
-                            >
-                                <header class="wallet-balance-card__header">
-                                    <h2 class="wallet-balance-card__title" id="balance-escrow">
-                                        Đang ký quỹ
-                                    </h2>
-                                    <span
-                                        class="wallet-balance-card__icon"
-                                        aria-hidden="true"
-                                    ></span>
-                                </header>
-                                <p class="wallet-balance-card__amount">1.320.000 <span>₫</span></p>
-                                <p class="wallet-balance-card__description">
-                                    Gồm 1 buổi chờ xác nhận và 5 buổi sắp học.
-                                </p>
-                            </article>
-                            <article
-                                class="wallet-balance-card wallet-balance-card--pending"
-                                aria-labelledby="balance-pending"
-                            >
-                                <header class="wallet-balance-card__header">
-                                    <h2 class="wallet-balance-card__title" id="balance-pending">
-                                        Chờ rút tiền
-                                    </h2>
-                                    <span
-                                        class="wallet-balance-card__icon"
-                                        aria-hidden="true"
-                                    ></span>
-                                </header>
-                                <p class="wallet-balance-card__amount">0 <span>₫</span></p>
-                                <p class="wallet-balance-card__description">
-                                    Không có yêu cầu rút tiền đang xử lý.
-                                </p>
-                            </article>
-                        </div>
-
+                        <div class="wallet-balances" id="wallet-balances"></div>
+                        <p class="wallet-note" id="balances-note"></p>
                     </section>
                     <section class="wallet-panel" id="escrow">
                         <div class="wallet-section-heading">
-                            <h2>Khoản tiền đang ký quỹ</h2>
-                            <span class="wallet-pill">Đang thực hiện</span>
+                            <h2>Hợp đồng liên quan đến ví</h2>
+                            <span class="wallet-pill">Theo bản ghi hợp đồng trong dữ liệu mẫu</span>
                         </div>
-                        <div class="wallet-contract">
-                            <div class="wallet-section-heading">
-                                <div>
-                                    <h3>Toán lớp 11 · Gia Huy</h3>
-                                    <p>HD-20260919-024 · Gia sư Nguyễn Minh Anh</p>
-                                </div>
-                                <strong>1.320.000 ₫</strong>
-                            </div>
-                            <label for="escrow-progress">Đã giải ngân 2 / 8 buổi</label
-                            ><progress id="escrow-progress" value="2" max="8">2/8</progress>
-                            <div class="wallet-section-heading">
-                                <p>Đã giải ngân: 440.000 ₫</p>
-                                <p>220.000 ₫ / buổi</p>
-                            </div>
-                            <p class="wallet-note">
-                                Buổi 3 đang chờ xác nhận. Buổi tiếp theo: Thứ Sáu, 09/10/2026 ·
-                                19:00–20:30.
-                            </p>
-                            <a
-                                class="wallet-button wallet-button--secondary"
-                                href="../contract/student-detail.html?id=HD-20260919-024"
-                                >Xem chi tiết hợp đồng</a
-                            >
+                        <div class="wallet-contracts" id="wallet-contracts"></div>
+                        <p class="wallet-note" id="escrow-empty">
+                            Tài khoản này chưa có hợp đồng nào trong dữ liệu mẫu.
+                        </p>
+                    </section>
+                    <!-- Persona gia sư: JS bỏ hidden và điền breakdown từ sự kiện release -->
+                    <section class="wallet-panel" id="wallet-revenue" hidden>
+                        <div class="wallet-section-heading">
+                            <h2>Doanh thu gia sư</h2>
+                            <span class="wallet-pill">Chỉ tính từ sự kiện giải ngân</span>
                         </div>
+                        <h3 class="wallet-subheading">Bản ghi giải ngân (release)</h3>
+                        <dl class="wallet-breakdown" id="revenue-breakdown"></dl>
+                        <p class="wallet-note" id="revenue-invariant" role="status"></p>
+                        <h3 class="wallet-subheading">Các khoản không phải doanh thu</h3>
+                        <dl class="wallet-breakdown" id="non-revenue-breakdown"></dl>
                     </section>
                     <section class="wallet-panel" id="transactions">
                         <div class="wallet-section-heading">
                             <div>
                                 <h2>Lịch sử giao dịch</h2>
-                                <p>Theo dõi biến động số dư và ký quỹ.</p>
+
                             </div>
                             <button
                                 class="wallet-button wallet-button--secondary"
@@ -239,13 +194,11 @@
                             <label
                                 >Từ ngày<input
                                     type="date"
-                                    id="date-from"
-                                    value="2026-09-01" /></label
+                                    id="date-from" /></label
                             ><label
                                 >Đến ngày<input
                                     type="date"
-                                    id="date-to"
-                                    value="2026-10-05" /></label
+                                    id="date-to" /></label
                             ><button
                                 class="wallet-button wallet-button--secondary"
                                 id="reset-dates"
@@ -271,12 +224,12 @@
                                     class="tabs__tab"
                                     type="button"
                                     role="tab"
-                                    id="tab-payos"
-                                    aria-controls="panel-payos"
+                                    id="tab-withdrawal"
+                                    aria-controls="panel-withdrawal"
                                     aria-selected="false"
                                     tabindex="-1"
                                 >
-                                    Thanh toán PayOS</button
+                                    Rút tiền</button
                                 ><button
                                     class="tabs__tab"
                                     type="button"
@@ -319,8 +272,8 @@
                             <div
                                 class="tabs__panel"
                                 role="tabpanel"
-                                id="panel-payos"
-                                aria-labelledby="tab-payos"
+                                id="panel-withdrawal"
+                                aria-labelledby="tab-withdrawal"
                                 tabindex="0"
                                 hidden
                             ></div>
@@ -375,16 +328,20 @@
                 <aside class="wallet-sidebar" aria-label="Thông tin ví">
                     <section class="wallet-panel">
                         <div class="wallet-owner">
-                            <span>ML</span>
+                            <span id="owner-initials">—</span>
                             <div>
-                                <h2>Chị Mai Lan</h2>
-                                <p>Phụ huynh · Gia Huy</p>
+                                <h2 id="owner-name">—</h2>
+                                <p id="owner-role">—</p>
                             </div>
                         </div>
+                        <p class="wallet-note" id="balances-persona">
+                            Phiên demo chưa chọn persona.
+                        </p>
                         <a
                             class="wallet-button wallet-button--secondary"
-                            href="../contract/student-detail.html?id=HD-20260919-024"
-                            >Hợp đồng đang học</a
+                            href="../order/history.html"
+                            id="sidebar-primary-link"
+                            >Đơn đăng ký của tôi</a
                         ><button
                             class="wallet-button wallet-button--secondary"
                             type="button"
@@ -392,15 +349,20 @@
                         >
                             Chính sách số dư & rút tiền
                         </button>
+                        <p class="wallet-note wallet-demo">
+                            Số dư, bút toán và thao tác rút tiền trên trang này là dữ liệu demo trong
+                            sessionStorage của tab; chưa có ngân hàng hay backend nào được kết nối.
+                        </p>
                     </section>
 
                 </aside>
+            </div>
             </div>
             <noscript>Vui lòng bật JavaScript để xem lịch sử giao dịch.</noscript>
         </main>
         <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
-        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
         <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
         <p class="user-footer__copyright">© 2026 Edu Connect</p>
     </div>

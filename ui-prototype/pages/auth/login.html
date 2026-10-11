@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Đăng nhập · Edu Connect</title>
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -11,6 +14,7 @@
     <link rel="stylesheet" href="../../css/components/form/input.css">
     <link rel="stylesheet" href="../../css/components/form/password-input.css">
     <link rel="stylesheet" href="../../css/components/form/checkbox.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
     <link rel="stylesheet" href="../../css/components/feedback/alert.css">
     <link rel="stylesheet" href="../../css/pages/auth/login.css">
 
@@ -18,23 +22,37 @@
 <body class="auth-login-page" data-login-state="">
     <header class="auth-login-header">
         <div class="container auth-login-header__content">
-            <a class="auth-login-header__back" href="../tutor/search.html">← Về trang chủ</a>
-            <a class="auth-login-header__brand" href="../tutor/search.html" aria-label="Edu Connect - Trang chủ">
-                <img src="../../assets/icons/logo.svg" alt="">
-                <span>Edu Connect</span>
-            </a>
+            <a class="auth-login-header__back" href="../../pages/home.html">← Về trang chủ</a>
+            <a class="auth-login-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="brand-logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000"></a>
             <span class="auth-login-header__spacer" aria-hidden="true"></span>
         </div>
     </header>
 
     <main class="auth-login-main">
 
-
         <section class="auth-login-card" aria-labelledby="login-title">
             <header class="auth-login-card__heading">
                 <h1 id="login-title">Đăng nhập</h1>
 
             </header>
+
+            <section class="alert alert--info" data-login-demo>
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content">
+                    <p class="alert__title">Bản xem trước — đây không phải xác thực thật</p>
+                    <p class="alert__message">Đăng nhập chỉ mô phỏng bằng dữ liệu demo: không kiểm tra mật khẩu thật, không tạo phiên thật, không gửi email và không có tài khoản nào được tạo. Nhập một email demo bên dưới với mật khẩu bất kỳ để xem giao diện theo vai trò.</p>
+                    <p class="alert__message" data-login-demo-emails></p>
+                    <div data-login-session hidden>
+                        <p class="alert__message" data-login-session-message></p>
+                        <p class="alert__message"><button class="button button--outline button--small" type="button" data-login-logout>Đăng xuất (demo)</button></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="alert alert--success" role="status" aria-live="polite" data-login-success hidden>
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content"><p class="alert__message" data-login-success-message></p></div>
+            </section>
 
             <section class="alert alert--error auth-login-status" role="alert" aria-live="polite" hidden>
                 <span class="alert__icon" aria-hidden="true"></span>
@@ -52,7 +70,7 @@
                 </div>
 
                 <div class="auth-login-form__field" data-component="password-input">
-                    <div class="auth-login-form__field-label"><label for="login-password">Mật khẩu</label></div>
+                    <div class="auth-login-form__field-label"><label for="login-password">Mật khẩu</label><a href="forgot-password.html">Quên mật khẩu?</a></div>
                     <div class="password-control" data-password-control>
                         <img class="auth-login-form__leading-icon" src="../../assets/icons/lock.svg" alt="">
                         <input class="password-control__input" id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" aria-describedby="login-password-error" required>
@@ -72,12 +90,21 @@
             </form>
 
             <p class="auth-login-card__register">Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+
+            <nav class="auth-login-card__register" aria-label="Liên kết demo của luồng tài khoản">
+                Liên kết demo: <a href="verify-email.html?token=DEMO-VERIFY-VALID">Xác minh email</a>
+                · <a href="forgot-password.html">Quên mật khẩu</a>
+                · <a href="reset-password.html?token=DEMO-RESET-VALID">Đặt lại mật khẩu</a>
+            </nav>
         </section>
     </main>
 
     <footer class="auth-login-footer">
         <div class="container"><span>© 2026 Edu Connect</span></div>
     </footer>
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
     <script src="../../js/core/password-input.js" defer></script>
     <script src="../../js/pages/auth/login.js" defer></script>
 </body>

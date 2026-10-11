@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Đăng tin tìm gia sư | Edu Connect</title>
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -24,6 +27,9 @@
     <link rel="stylesheet" href="../../css/components/feedback/modal.css">
     <link rel="stylesheet" href="../../css/components/feedback/toast.css">
     <link rel="stylesheet" href="../../css/pages/job/create.css">
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
     <script src="../../js/core/user-header.js" defer></script>
     <script src="../../js/core/select.js" defer></script>
     <script src="../../js/core/radio.js" defer></script>
@@ -38,14 +44,14 @@
     <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
     <header class="user-header" data-component="user-header" data-user-variant="B">
     <div class="user-header__inner">
-        <a class="user-header__brand" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư">
-            <span class="user-header__brand-mark" aria-hidden="true"><img src="../../assets/icons/logo.svg" alt=""></span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link is-active" data-nav-key="requests" href="../../pages/job/discover.html" aria-current="page">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
@@ -111,7 +117,7 @@
             <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
             <nav class="breadcrumb create-page__breadcrumb" aria-label="Breadcrumb">
                 <ol class="breadcrumb__list">
-                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="my-job.html">Tin tìm gia sư</a></li>
+
                     <li class="breadcrumb__item"><a class="breadcrumb__link" href="my-job.html">Tin của tôi</a></li>
                     <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Đăng tin</span></li>
                 </ol>
@@ -123,9 +129,9 @@
                     <div class="page-header__title-block">
                         <div class="page-header__title-row">
                             <h1 class="page-header__title">Đăng tin tìm gia sư</h1>
-                            <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span>Dành cho phụ huynh &amp; học sinh</span>
+
                         </div>
-                        <p class="page-header__description">Mô tả nhu cầu học để các gia sư phù hợp có thể chủ động tìm hiểu và nộp hồ sơ ứng tuyển.</p>
+
                     </div>
 
                     <section class="create-quota" aria-label="Hạn mức tin đang tuyển">
@@ -139,7 +145,7 @@
             <section class="alert create-page__moderation" role="status">
                 <span class="alert__icon" aria-hidden="true"></span>
                 <div class="alert__content">
-                    <h2 class="alert__title">Tin sẽ được kiểm duyệt trước khi đăng công khai <!-- Component: Badge | Nguồn: components/feedback/badge.html --><span class="badge badge--info create-page__safe-badge">Quy trình an toàn</span></h2>
+                    <h2 class="alert__title">Tin sẽ được kiểm duyệt trước khi đăng công khai <!-- Component: Badge | Nguồn: components/feedback/badge.html --></h2>
                     <p class="alert__message">Sau khi gửi, tin sẽ ở trạng thái <strong>Chờ duyệt</strong>. Gia sư chỉ có thể xem chi tiết và ứng tuyển sau khi đội ngũ Edu Connect hoàn tất xác thực nội dung. Vui lòng không cung cấp số điện thoại, email hoặc Zalo trong phần mô tả.</p>
                 </div>
             </section>
@@ -322,12 +328,8 @@
                         </article>
                     </section>
 
-
-
-
                 </aside>
             </div>
-
 
         </div>
     </main>
@@ -335,7 +337,7 @@
     <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
     <footer class="user-footer" data-component="user-footer">
     <div class="user-footer__inner">
-        <a class="user-footer__brand-link" href="../../pages/tutor/search.html" aria-label="Edu Connect - Tìm gia sư"><img class="user-footer__brand-mark" src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a>
+        <a class="user-footer__brand-link" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
         <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../../pages/tutor/search.html">Tìm gia sư</a><a href="../../pages/job/discover.html">Tin tìm gia sư</a><a href="../../pages/job/create.html">Đăng tin</a></nav>
         <p class="user-footer__copyright">© 2026 Edu Connect</p>
     </div>

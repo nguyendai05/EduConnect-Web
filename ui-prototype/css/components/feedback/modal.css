@@ -28,13 +28,13 @@
   place-items: center;
   border-radius: var(--radius-md);
   background: var(--color-secondary-container);
-  color: var(--color-secondary);
+  color: var(--color-secondary-text);
   font-size: var(--font-size-xl);
   font-weight: 700;
 }
 .modal__heading { flex: 1; min-width: 0; }
 .modal__heading h2 { margin: 0; font-family: var(--font-family-display); font-size: 1.625rem; font-weight: 500; line-height: 1.25; letter-spacing: -0.02em; }
-.modal__heading p { margin: var(--space-1) 0 0; color: var(--color-text-muted); font-size: var(--font-size-sm); }
+.modal__heading p { margin: var(--space-1) 0 0; color: var(--color-text-secondary); font-size: var(--font-size-sm); }
 .modal__close {
   display: grid;
   flex: 0 0 2.75rem;
@@ -82,7 +82,7 @@
 .modal__close-icon { --modal-icon: url("../../../assets/icons/close.svg"); }
 
 .modal__icon--success {
-  color: var(--color-success);
+  color: var(--color-success-text);
   background: var(--color-success-container);
 }
 
@@ -163,7 +163,7 @@
   width: 2rem;
   height: 2rem;
   flex-basis: 2rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .modal-specimen .modal__close-icon {

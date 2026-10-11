@@ -1,15 +1,12 @@
+/**
+ * Hàng đợi duyệt tin tìm gia sư — mọi dòng tin, số đếm và bộ lọc đọc từ EduStore
+ * (Store.jobQueue(bucket) / Store.jobQueueCounts()), không còn bảng fixture riêng.
+ * Card render bằng <template id="queue-row-template"> nên hook-check vẫn thấy markup trong HTML.
+ */
 (() => {
   const page = document.querySelector('[data-job-review-queue]');
   if (!page) return;
 
-  // Dữ liệu mẫu của prototype; thay bằng dữ liệu server khi tích hợp JSP.
-  let jobs = window.EduJobReview.list();
-  const statuses = {
-    pending: { label: 'Chờ duyệt', summary: 'chờ duyệt', badge: 'badge--warning' },
-    hiring: { label: 'Đang tuyển', summary: 'đang tuyển', badge: 'badge--success' },
-    closed: { label: 'Đã đóng', summary: 'đã đóng', badge: 'badge--neutral' },
-    rejected: { label: 'Bị từ chối', summary: 'bị từ chối', badge: 'badge--danger' },
-  };
   const form = page.querySelector('[data-queue-filters]');
   const search = page.querySelector('[data-queue-search]');
   const tabs = page.querySelector('[data-queue-status-tabs]');
@@ -22,13 +19,28 @@
   const pageSize = page.querySelector('[data-queue-page-size]');
   const refresh = page.querySelector('[data-queue-refresh]');
   const template = page.querySelector('#queue-row-template');
-  const currency = new Intl.NumberFormat('vi-VN');
-  const dateFormat = new Intl.DateTimeFormat('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Ho_Chi_Minh' });
+  const storeError = page.querySelector('[data-store-error]');
+
+  const Review = window.EduJobReview;
+  const Store = window.EduStore;
+
+  /* Store vắng mặt (script lỗi): ẩn nội dung, nói rõ lý do, KHÔNG ném Uncaught và KHÔNG
+     hiển thị bảng tin mẫu — số liệu stale còn tệ hơn trang trống. */
+  if (!Store || !Review || !Review.available) {
+    page.querySelectorAll('[data-store-content]').forEach(node => { node.hidden = true; });
+    if (storeError) storeError.hidden = false;
+    const updated = page.querySelector('[data-queue-updated]');
+    if (updated) updated.textContent = 'Không tải được hàng đợi';
+    return;
+  }
+
+  const { buckets, queue, counts } = Review;
   const timeFormat = new Intl.DateTimeFormat('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' });
+  const dateFormat = new Intl.DateTimeFormat('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Ho_Chi_Minh' });
   let status = 'pending';
   let filtered = [];
   let isLoading = true;
-  const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase().trim();
+  const normalize = value => String(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase().trim();
   const setText = (root, selector, value) => { root.querySelector(selector).textContent = value; };
 
   const renderRows = () => {
@@ -37,31 +49,34 @@
     const size = Number(pageSize.value);
     const visible = filtered.slice((current - 1) * size, current * size);
     const fragment = document.createDocumentFragment();
-    visible.forEach(job => {
+    visible.forEach(entry => {
+      const { job, poster, bucket, applicationCount } = entry;
       const row = template.content.firstElementChild.cloneNode(true);
       row.dataset.queueRow = job.id;
       setText(row, '[data-job-title]', job.title);
       setText(row, '[data-job-reference]', job.id);
-      setText(row, '[data-job-sessions]', job.sessions);
-      setText(row, '[data-job-avatar]', job.initials);
-      setText(row, '[data-job-poster]', job.poster);
-      setText(row, '[data-job-role]', job.role);
-      setText(row, '[data-job-subject]', `${job.subjectLabel} · ${job.grade}`);
-      setText(row, '[data-job-fee]', `${currency.format(job.fee)} ₫ / buổi`);
-      setText(row, '[data-job-region]', job.region);
-      setText(row, '[data-job-format]', job.format);
-      const submitted = new Date(job.submitted);
+      setText(row, '[data-job-sessions]', `${job.sessionsPerWeek} buổi/tuần · ${job.durationMinutes} phút/buổi`);
+      setText(row, '[data-job-applications]', `${applicationCount} hồ sơ ứng tuyển`);
+      setText(row, '[data-job-avatar]', poster.initials);
+      setText(row, '[data-job-poster]', poster.name);
+      setText(row, '[data-job-role]', `${poster.role} · ${poster.learnerId || '—'}`);
+      setText(row, '[data-job-subject]', `${job.subjectLabel} · ${job.gradeLabel}`);
+      // Store.formatMoney() đã tự thêm đơn vị tiền tệ — không nối ký hiệu đồng thủ công (A9).
+      setText(row, '[data-job-fee]', `${Store.formatMoney(job.budgetPerSession)} / buổi`);
+      setText(row, '[data-job-region]', job.district);
+      setText(row, '[data-job-format]', job.modeLabel);
+      const submitted = new Date(job.submittedAt);
       const date = row.querySelector('[data-job-date]');
-      date.dateTime = job.submitted;
+      date.dateTime = job.submittedAt;
       date.textContent = dateFormat.format(submitted);
       setText(row, '[data-job-time]', timeFormat.format(submitted));
       const signal = row.querySelector('[data-job-signal]');
       signal.classList.add(job.signal ? 'badge--warning' : 'badge--neutral');
       signal.textContent = job.signal ? 'Cần kiểm tra' : 'Bình thường';
-      setText(row, '[data-job-signal-note]', job.signal);
+      setText(row, '[data-job-signal-note]', job.signal || 'Không có tín hiệu rà soát.');
       const badge = row.querySelector('[data-job-status]');
-      badge.classList.add(statuses[job.status].badge);
-      badge.textContent = statuses[job.status].label;
+      badge.classList.add(buckets[bucket].badge);
+      badge.textContent = buckets[bucket].label;
       const button = row.querySelector('[data-job-detail]');
       button.href = `job-review-detail.html?id=${encodeURIComponent(job.id)}`;
       button.setAttribute('aria-label', `Xem chi tiết tin ${job.id}`);
@@ -73,22 +88,21 @@
   };
 
   const applyFilters = () => {
+    const info = buckets[status];
     const query = normalize(search.value);
     const signal = form.elements.signal.value;
     const subject = form.elements.subject.value;
     const sort = form.elements.sort.value;
-    filtered = jobs.filter(job => job.status === status
-      && (!query || normalize(`${job.id} ${job.title} ${job.poster} ${job.subjectLabel} ${job.grade} ${job.region} ${job.format}`).includes(query))
-      && (signal === 'all' || (signal === 'flagged' ? Boolean(job.signal) : !job.signal))
-      && (subject === 'all' || job.subject === subject));
-    filtered.sort((left, right) => {
-      if (sort === 'priority') {
-        const priority = Number(Boolean(right.signal)) - Number(Boolean(left.signal));
-        if (priority) return priority;
-      }
-      return sort === 'newest' ? new Date(right.submitted) - new Date(left.submitted) : new Date(left.submitted) - new Date(right.submitted);
+    // Store.jobQueue(bucket) đã sắp theo submittedAt TĂNG dần — tin chờ lâu nhất lên đầu.
+    filtered = queue(status).filter(entry => {
+      const { job, poster } = entry;
+      return (!query || normalize([job.id, job.title, poster.name, job.subjectLabel, job.gradeLabel, job.district, job.modeLabel].join(' ')).includes(query))
+        && (signal === 'all' || (signal === 'flagged' ? Boolean(job.signal) : !job.signal))
+        && (subject === 'all' || job.subject === subject);
     });
-    setText(page, '[data-queue-result-summary]', `${filtered.length} tin ${statuses[status].summary}`);
+    if (sort === 'newest') filtered = filtered.slice().reverse();
+    if (sort === 'priority') filtered = filtered.slice().sort((left, right) => Number(Boolean(right.job.signal)) - Number(Boolean(left.job.signal)));
+    setText(page, '[data-queue-result-summary]', `${filtered.length} tin ${info.summary}`);
     const hasFilters = Boolean(query) || signal !== 'all' || subject !== 'all' || sort !== 'priority';
     page.querySelector('.job-review-queue__results-heading [data-queue-reset]').hidden = !hasFilters;
     pagination.dispatchEvent(new CustomEvent('pagination:update', { detail: { total: filtered.length, pageSize: Number(pageSize.value), current: 1 } }));
@@ -96,19 +110,20 @@
   };
 
   const syncCounts = () => {
-    Object.keys(statuses).forEach(key => setText(page, `[data-status-count="${key}"]`, jobs.filter(job => job.status === key).length));
-    const pending = jobs.filter(job => job.status === 'pending');
-    const flagged = pending.filter(job => job.signal).length;
-    setText(page, '[data-queue-pending-count]', pending.length);
+    const tally = counts();
+    Object.keys(buckets).forEach(key => setText(page, `[data-status-count="${key}"]`, tally[key]));
+    const pending = queue('pending');
+    const flagged = pending.filter(entry => Boolean(entry.job.signal)).length;
+    setText(page, '[data-queue-pending-count]', tally.pending);
     setText(page, '[data-queue-flagged-count]', flagged);
     setText(page, '[data-queue-priority-count]', `${flagged} tin`);
+    setText(page, '[data-queue-store-total]', `${tally.total} tin trong dữ liệu dùng chung`);
     const sidebarCount = page.querySelector('.admin-sidebar__item.is-active .admin-sidebar__badge');
-    sidebarCount.textContent = pending.length;
-    sidebarCount.setAttribute('aria-label', `${pending.length} tin chờ xử lý`);
+    sidebarCount.textContent = tally.pending;
+    sidebarCount.setAttribute('aria-label', `${tally.pending} tin chờ xử lý`);
   };
 
   const loadJobs = () => {
-    jobs = window.EduJobReview.list();
     syncCounts();
     isLoading = true;
     results.setAttribute('aria-busy', 'true');
@@ -127,6 +142,7 @@
       applyFilters();
     }, 450);
   };
+
   form.addEventListener('submit', event => { event.preventDefault(); applyFilters(); });
   form.addEventListener('input', event => { if (event.target === search) applyFilters(); });
   form.addEventListener('change', event => { if (event.target instanceof HTMLSelectElement) applyFilters(); });

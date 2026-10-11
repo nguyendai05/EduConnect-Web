@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Nhật ký hệ thống | Edu Connect</title>
-    <link rel="icon" href="../../assets/icons/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/base.css">
@@ -38,8 +40,7 @@
         <div class="admin-sidebar__main">
             <header class="admin-sidebar__header">
                 <a class="admin-sidebar__brand" href="dashboard.html" aria-label="Edu Connect quản trị">
-                    <span class="admin-sidebar__brand-mark" aria-hidden="true"><img class="admin-sidebar__brand-logo" src="../../assets/icons/logo.svg" alt="Logo"></span>
-                    <span class="admin-sidebar__brand-name">Edu Connect</span>
+                    <img class="admin-sidebar__brand-logo" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000">
                 </a>
                 <span class="admin-sidebar__role">Quản trị</span>
             </header>
@@ -49,21 +50,24 @@
                 <a class="admin-sidebar__item" href="dashboard.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
                 </a>
+                <a class="admin-sidebar__item" href="manage.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/settings.svg" alt=""><span class="admin-sidebar__item-label">Quản lý nền tảng</span></span>
+                </a>
                 <a class="admin-sidebar__item" href="tutor-review-queue.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
-                    <span class="admin-sidebar__badge" aria-label="4 hồ sơ chờ xử lý">4</span>
+                    <span class="admin-sidebar__badge" data-admin-count="tutors" hidden></span>
                 </a>
                 <a class="admin-sidebar__item" href="job-review-queue.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
-                    <span class="admin-sidebar__badge" aria-label="5 tin chờ xử lý">5</span>
+                    <span class="admin-sidebar__badge" data-admin-count="jobs" hidden></span>
                 </a>
                 <a class="admin-sidebar__item" href="reports.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
-                    <span class="admin-sidebar__badge" aria-label="6 báo cáo cần xử lý">6</span>
+                    <span class="admin-sidebar__badge" data-admin-count="reports" hidden></span>
                 </a>
                 <a class="admin-sidebar__item" href="payout-requests.html">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
-                    <span class="admin-sidebar__badge" aria-label="5 yêu cầu rút tiền chờ xử lý">5</span>
+                    <span class="admin-sidebar__badge" data-admin-count="payouts" hidden></span>
                 </a>
                 <a class="admin-sidebar__item is-active" href="audit-logs.html" aria-current="page">
                     <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
@@ -137,7 +141,7 @@
                     <div>
                         <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="dashboard.html">Tổng quan</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Nhật ký hệ thống</span></li></ol></nav>
                         <h1>Nhật ký hệ thống</h1>
-                        <p>Theo dõi các thao tác quản trị và hoạt động tự động quan trọng để phục vụ kiểm tra và truy vết.</p>
+
                     </div>
                     <div class="audit-logs__refresh">
                         <!-- Component: Button | Nguồn: components/action/button.html -->
@@ -282,7 +286,7 @@
                                 <tbody data-audit-list></tbody>
                             </table>
                         </div>
-                        <div class="audit-logs__table-footer">
+                        <div class="audit-logs__table-footer table-footer">
                             <nav class="pagination pagination--table" aria-label="Phân trang nhật ký hệ thống" data-component="pagination" data-pagination data-total="30" data-page-size="10" data-current="1" data-last-page="3">
                                 <p class="pagination__summary">Hiển thị <strong data-range-start>1</strong>–<strong data-range-end>10</strong> trong <strong data-total-count>30</strong> bản ghi</p>
                                 <div class="pagination__controls">
@@ -291,7 +295,7 @@
                                     <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg><span>Sau</span></button>
                                 </div>
                             </nav>
-                            <div class="audit-logs__page-size"><label for="audit-page-size">Số bản ghi mỗi trang</label><select class="select-control select-control--native" id="audit-page-size" data-audit-page-size><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option></select></div>
+                            <div class="audit-logs__page-size table-footer__page-size"><label for="audit-page-size">Số bản ghi mỗi trang</label><select class="select-control select-control--native" id="audit-page-size" data-audit-page-size><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option></select></div>
                         </div>
                     </div>
                     <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
@@ -370,6 +374,12 @@
         </div>
     </dialog>
 
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
+    <script src="../../js/pages/admin/tutor-review-data.js" defer></script>
+    <script src="../../js/pages/admin/payout-data.js" defer></script>
+    <script src="../../js/core/admin-sidebar.js" defer></script>
     <script src="../../js/core/admin-header.js" defer></script>
     <script src="../../js/core/search-input.js" defer></script>
     <script src="../../js/core/tabs.js" defer></script>
