@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>Auth shell</title>
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -23,7 +26,7 @@
 
             <section class="auth-shell__variant-panel" id="auth-login-panel" role="tabpanel" aria-labelledby="auth-login-tab" data-auth-variant-panel="login">
                 <section class="auth-shell__content auth-shell__card" aria-labelledby="auth-login-title">
-                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#trang-chu">← Quay lại</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a></div>
+                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#trang-chu">← Quay lại</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img class="brand-logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000"></a></div>
                     <header class="auth-shell__heading"><h1 id="auth-login-title">Đăng nhập</h1><p>Chào mừng bạn quay trở lại với Edu Connect.</p></header>
                     <div class="auth-shell__feedback" role="alert" hidden data-auth-feedback></div>
                     <form class="auth-shell__form" data-shell-slot="auth-form">
@@ -38,7 +41,7 @@
 
             <section class="auth-shell__variant-panel" id="auth-register-panel" role="tabpanel" aria-labelledby="auth-register-tab" data-auth-variant-panel="register" hidden>
                 <section class="auth-shell__content auth-shell__card" aria-labelledby="auth-register-title">
-                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#trang-chu">← Quay lại</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a></div>
+                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#trang-chu">← Quay lại</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img class="brand-logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000"></a></div>
                     <header class="auth-shell__heading"><h1 id="auth-register-title">Tạo tài khoản mới</h1><p>Gia nhập cộng đồng học tập uy tín.</p></header>
                     <form class="auth-shell__form" data-shell-slot="auth-form">
                         <div class="auth-shell__field"><label for="register-name">Họ và tên</label><input id="register-name" name="name" type="text" autocomplete="name" placeholder="Nhập họ và tên" required></div>
@@ -52,7 +55,7 @@
 
             <section class="auth-shell__variant-panel" id="auth-forgot-panel" role="tabpanel" aria-labelledby="auth-forgot-tab" data-auth-variant-panel="forgot" hidden>
                 <section class="auth-shell__content auth-shell__card" aria-labelledby="auth-forgot-title">
-                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#dang-nhap">← Quay lại đăng nhập</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a></div>
+                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#dang-nhap">← Quay lại đăng nhập</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img class="brand-logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000"></a></div>
                     <header class="auth-shell__heading"><h1 id="auth-forgot-title">Khôi phục mật khẩu</h1><p>Nhập email hoặc SĐT đã đăng ký để nhận mã OTP xác nhận.</p></header>
                     <div class="auth-shell__feedback auth-shell__feedback--info" role="status">Mã xác thực có hiệu lực trong 15 phút.</div>
                     <form class="auth-shell__form" data-shell-slot="auth-form"><div class="auth-shell__field"><label for="forgot-identifier">Email hoặc số điện thoại</label><input id="forgot-identifier" name="identifier" type="text" inputmode="email" autocomplete="username" placeholder="Nhập email hoặc số điện thoại" required></div><button class="auth-shell__primary-action" type="button" data-shell-slot="primary-action">Gửi mã xác nhận</button></form>
@@ -62,7 +65,7 @@
 
             <section class="auth-shell__variant-panel" id="auth-reset-panel" role="tabpanel" aria-labelledby="auth-reset-tab" data-auth-variant-panel="reset" hidden>
                 <section class="auth-shell__content auth-shell__card" aria-labelledby="auth-reset-title">
-                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#dang-nhap">← Quay lại đăng nhập</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img src="../../assets/icons/logo.svg" alt=""><span>Edu Connect</span></a></div>
+                    <div class="auth-shell__top-row"><a class="auth-shell__back" href="#dang-nhap">← Quay lại đăng nhập</a><a class="auth-shell__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ"><img class="brand-logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000"></a></div>
                     <header class="auth-shell__heading"><h1 id="auth-reset-title">Đặt lại mật khẩu</h1><p>Vui lòng thiết lập mật khẩu mới an toàn.</p></header>
                     <form class="auth-shell__form" data-shell-slot="auth-form">
                         <div class="auth-shell__field"><label for="reset-password">Mật khẩu mới</label><input id="reset-password" name="password" type="password" autocomplete="new-password" placeholder="Nhập mật khẩu mới" required><span class="auth-shell__helper">Độ mạnh mật khẩu: <strong>Tốt (8/10)</strong></span></div>

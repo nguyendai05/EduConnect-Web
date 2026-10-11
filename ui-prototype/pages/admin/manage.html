@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
+    <title>Quản lý nền tảng | Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <!-- Component: AdminSidebar | Nguồn: components/layout/admin-sidebar.html; CSS: css/components/layout/admin-sidebar.css -->
+    <link rel="stylesheet" href="../../css/components/layout/admin-sidebar.css">
+    <!-- Component: AdminHeader | Nguồn: components/layout/admin-header.html; CSS: css/components/layout/admin-header.css -->
+    <link rel="stylesheet" href="../../css/components/layout/admin-header.css">
+    <!-- Component: Tabs/Pagination | Nguồn: css/components/navigation -->
+    <link rel="stylesheet" href="../../css/components/navigation/tabs.css">
+    <link rel="stylesheet" href="../../css/components/navigation/pagination.css">
+    <!-- Component: SearchInput/Select/Input/Textarea/FormField | Nguồn: css/components/form -->
+    <link rel="stylesheet" href="../../css/components/form/search-input.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+    <link rel="stylesheet" href="../../css/components/form/textarea.css">
+    <link rel="stylesheet" href="../../css/components/form/form-field.css">
+    <!-- Component: Button | Nguồn: css/components/action/button.css -->
+    <link rel="stylesheet" href="../../css/components/action/button.css">
+    <!-- Component: Table/Avatar/StatCard/InfoRow | Nguồn: css/components/data-display -->
+    <link rel="stylesheet" href="../../css/components/data-display/table.css">
+    <link rel="stylesheet" href="../../css/components/data-display/avatar.css">
+    <link rel="stylesheet" href="../../css/components/data-display/stat-card.css">
+    <link rel="stylesheet" href="../../css/components/data-display/info-row.css">
+    <!-- Component: Badge/Alert/EmptyState/Modal/Toast | Nguồn: css/components/feedback -->
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
+    <link rel="stylesheet" href="../../css/components/feedback/modal.css">
+    <link rel="stylesheet" href="../../css/components/feedback/toast.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/pages/admin/manage.css">
+</head>
+<body class="admin-manage-page">
+    <a class="admin-manage__skip-link" href="#admin-manage-main">Đến nội dung chính</a>
+    <div class="admin-shell" data-component="admin-shell" data-admin-manage>
+        <aside class="admin-sidebar admin-shell__sidebar" aria-label="Thanh điều hướng quản trị" data-component="admin-sidebar">
+        <div class="admin-sidebar__main">
+            <header class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="dashboard.html" aria-label="Edu Connect quản trị">
+                    <img class="admin-sidebar__brand-logo" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000">
+                </a>
+                <span class="admin-sidebar__role">Quản trị</span>
+            </header>
+
+            <p class="admin-sidebar__group-label">Điều hành</p>
+            <nav class="admin-sidebar__nav" aria-label="Các mục quản trị">
+                <a class="admin-sidebar__item" href="dashboard.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
+                </a>
+                <a class="admin-sidebar__item is-active" href="manage.html" aria-current="page">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/settings.svg" alt=""><span class="admin-sidebar__item-label">Quản lý nền tảng</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="tutor-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="tutors" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="job-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="jobs" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="reports.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="reports" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="payout-requests.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="payouts" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="audit-logs.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
+                </a>
+            </nav>
+        </div>
+        <footer class="admin-sidebar__footer">Edu Connect · Quản trị hệ thống</footer>
+    </aside>
+
+        <header class="admin-header" data-component="admin-header" data-has-unread="false">
+        <form class="admin-header__search" role="search" data-admin-search>
+            <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
+            <img class="admin-header__icon admin-header__search-icon" src="../../assets/icons/search.svg" alt="">
+            <input class="admin-header__search-input" id="admin-global-search" name="query" type="search" autocomplete="off" placeholder="Tìm kiếm theo mã tin, mã hồ sơ gia sư, mã yêu cầu rút tiền..." data-search-input>
+            <button class="admin-header__clear-search" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><img class="admin-header__icon" src="../../assets/icons/cancel.svg" alt=""></button>
+            <section class="admin-header__search-results" aria-label="Kết quả tìm kiếm nhanh" data-search-results hidden>
+                <div class="admin-header__popover-heading">
+                    <span>Kết quả khớp mã</span>
+                    <span>ESC để đóng</span>
+                </div>
+                <a class="admin-header__result" href="manage.html?tab=users">
+                    <span class="admin-header__result-type">NGƯỜI DÙNG</span>
+                    <span class="admin-header__result-copy"><strong>Quản lý người dùng demo</strong><span>Khóa/mở khóa/vô hiệu hóa tài khoản mẫu</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+                <a class="admin-header__result" href="manage.html?tab=offerings">
+                    <span class="admin-header__result-type admin-header__result-type--accent">DỊCH VỤ / LỚP</span>
+                    <span class="admin-header__result-copy"><strong>Duyệt, từ chối, đóng offering</strong><span>Cùng dữ liệu catalog với trang gia sư</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+                <a class="admin-header__result" href="manage.html?tab=orders">
+                    <span class="admin-header__result-type admin-header__result-type--neutral">ĐƠN ĐĂNG KÝ</span>
+                    <span class="admin-header__result-copy"><strong>Đơn đăng ký toàn nền tảng</strong><span>Trạng thái đơn, thanh toán, hoàn tiền</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+            </section>
+        </form>
+
+        <div class="admin-header__utilities">
+            <span class="admin-header__system-status"><span aria-hidden="true"></span>Hệ thống bình thường</span>
+            <div class="admin-header__popover-wrap" data-notification-wrap>
+                <button class="admin-header__icon-button" type="button" aria-label="Thông báo hệ thống" aria-expanded="false" aria-controls="admin-notification-popover" data-notification-trigger><img class="admin-header__icon" src="../../assets/icons/notification.svg" alt=""><span class="admin-header__notification-dot" aria-hidden="true"></span></button>
+                <section class="admin-header__notification-popover" id="admin-notification-popover" aria-label="Thông báo vận hành" data-notification-popover hidden>
+                    <div class="admin-header__notification-title"><strong>Thông báo vận hành</strong><span>3 mới</span></div>
+                    <a class="admin-header__notification" href="tutor-review-queue.html?status=pending"><img class="admin-header__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span><strong>Duyệt hồ sơ gia sư mới</strong><small>Trần Thị Mai Hương vừa tải chứng chỉ Sư phạm Toán.</small><time>4 phút trước</time></span></a>
+                    <a class="admin-header__notification" href="payout-requests.html?status=pending"><img class="admin-header__icon admin-header__notification-icon--accent" src="../../assets/icons/wallet.svg" alt=""><span><strong>Yêu cầu rút tiền: #HĐ-8910</strong><small>Số tiền 3.500.000đ từ gia sư Nguyễn Hữu Nam.</small><time>18 phút trước</time></span></a>
+                    <a class="admin-header__popover-link" href="audit-logs.html">Xem tất cả nhật ký thông báo</a>
+                </section>
+            </div>
+            <span class="admin-header__divider" aria-hidden="true"></span>
+            <div class="admin-header__popover-wrap" data-profile-wrap>
+                <button class="admin-header__profile-trigger" type="button" aria-expanded="false" aria-controls="admin-profile-popover" data-profile-trigger>
+                    <span class="admin-header__avatar" aria-hidden="true">QT</span>
+                    <span class="admin-header__profile-copy"><strong>Quản trị viên</strong><small>Admin</small></span>
+                    <img class="admin-header__chevron admin-header__icon" src="../../assets/icons/mui-ten-xuong.svg" alt="">
+                </button>
+                <section class="admin-header__profile-popover" id="admin-profile-popover" aria-label="Tài khoản quản trị" data-profile-popover hidden>
+                    <div class="admin-header__profile-summary"><strong>Nguyễn Xuân Đại</strong><span>admin@educonnect.vn</span><span class="admin-header__permission"><img class="admin-header__icon" src="../../assets/icons/shield-user.svg" alt="">Quyền hạn: Root Superadmin</span></div>
+                    <nav class="admin-header__profile-menu" aria-label="Tác vụ tài khoản quản trị">
+                        <a href="audit-logs.html"><img class="admin-header__icon" src="../../assets/icons/audit-log.svg" alt="">Nhật ký thao tác cá nhân</a>
+                        <a class="is-danger" href="../auth/login.html"><img class="admin-header__icon" src="../../assets/icons/dang-xuat.svg" alt="">Đăng xuất phiên quản trị</a>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </header>
+
+        <main class="admin-shell__workspace" id="admin-manage-main" tabindex="-1">
+            <div class="admin-shell__content admin-manage" data-admin-manage-content>
+                <header class="admin-shell__page-header admin-manage__header">
+                    <div>
+                        <h1>Quản lý nền tảng</h1>
+                        <p class="admin-manage__subtitle">Người dùng, dịch vụ/lớp và đơn đăng ký — cùng nguồn dữ liệu mẫu với catalog, trang gia sư và các trang hợp đồng.</p>
+                    </div>
+                    <span class="badge badge--info admin-manage__demo-badge">Bản xem trước · Thao tác mô phỏng</span>
+                </header>
+
+                <p class="alert alert--warning admin-manage__notice" id="am-persona-alert" role="alert" data-am-persona-alert hidden></p>
+                <p class="alert alert--error admin-manage__notice" id="am-tab-alert" role="alert" data-am-tab-alert hidden></p>
+
+                <section class="alert alert--contextual admin-manage__scope" aria-labelledby="am-scope-title">
+                    <span class="alert__icon alert__icon--shield-alert" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <h2 class="alert__title" id="am-scope-title">Phạm vi trang này</h2>
+                        <p class="alert__message">Hàng đợi duyệt hồ sơ gia sư và tin tìm gia sư giữ ở trang riêng: <a href="tutor-review-queue.html">Hồ sơ gia sư</a>, <a href="job-review-queue.html">Tin tìm gia sư</a>. Yêu cầu rút tiền (payout) KHÔNG nằm trong các tab dưới đây — xem tại <a href="payout-requests.html">Yêu cầu rút tiền</a>. Báo cáo của người dùng xử lý tại <a href="reports.html">Báo cáo &amp; tranh chấp</a>.</p>
+                    </div>
+                </section>
+
+                <div class="tabs tabs--contained admin-manage__tabs" data-tabs data-am-tabs>
+                    <div class="tabs__list" role="tablist" aria-label="Các mục quản lý nền tảng">
+                        <button class="tabs__tab" type="button" role="tab" id="am-tab-users" aria-selected="true" aria-controls="am-panel-users" data-am-tab="users">Người dùng</button>
+                        <button class="tabs__tab" type="button" role="tab" id="am-tab-offerings" aria-selected="false" aria-controls="am-panel-offerings" tabindex="-1" data-am-tab="offerings">Dịch vụ / Lớp</button>
+                        <button class="tabs__tab" type="button" role="tab" id="am-tab-orders" aria-selected="false" aria-controls="am-panel-orders" tabindex="-1" data-am-tab="orders">Đơn đăng ký</button>
+                    </div>
+
+                    <div class="tabs__panel admin-manage__panel" role="tabpanel" id="am-panel-users" aria-labelledby="am-tab-users" tabindex="0">
+                        <section class="alert alert--contextual admin-manage__panel-note" aria-labelledby="am-users-note-title">
+                            <span class="alert__icon" aria-hidden="true"></span>
+                            <div class="alert__content">
+                                <h2 class="alert__title" id="am-users-note-title">Giới hạn thao tác tài khoản (demo)</h2>
+                                <p class="alert__message">Trang này KHÔNG cho phép sửa role, đặt lại mật khẩu hay chỉnh sổ cái/ví của người dùng. Thao tác khả dụng duy nhất là đổi trạng thái tài khoản mẫu (khóa / mở khóa / vô hiệu hóa) qua hộp thoại xác nhận kèm lý do. Persona không phải admin vẫn xem được trang — chỉ là demo access, không phải phân quyền thật.</p>
+                            </div>
+                        </section>
+                        <div class="admin-manage__toolbar">
+                            <div class="search-input search-input--compact" data-search-input>
+                                <label class="sr-only" for="am-search-users">Tìm người dùng</label>
+                                <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                                <input id="am-search-users" type="search" placeholder="Tìm theo mã, tên, email…" autocomplete="off" maxlength="200" data-am-users-search>
+                                <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                            </div>
+                            <div class="select-field">
+                                <label class="sr-only" for="am-role-filter">Vai trò</label>
+                                <select class="select-control select-control--native" id="am-role-filter" data-am-users-role>
+                                    <option value="all">Vai trò: Tất cả</option>
+                                    <option value="learner">Học viên / Phụ huynh</option>
+                                    <option value="tutor">Gia sư</option>
+                                    <option value="admin">Quản trị</option>
+                                </select>
+                            </div>
+                            <div class="select-field">
+                                <label class="sr-only" for="am-state-filter">Trạng thái tài khoản</label>
+                                <select class="select-control select-control--native" id="am-state-filter" data-am-users-state>
+                                    <option value="all">Trạng thái: Tất cả</option>
+                                    <option value="active">Đang hoạt động</option>
+                                    <option value="locked">Đang khóa</option>
+                                    <option value="disabled">Vô hiệu hóa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="admin-manage__count" data-am-users-count aria-live="polite"></p>
+                        <div class="table-frame" data-am-users-table hidden>
+                            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách người dùng demo, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                                <table class="table table--review admin-manage__table">
+                                    <caption class="table__caption table__caption--sr-only">Người dùng demo với vai trò, liên kết gia sư/học viên và trạng thái tài khoản mẫu.</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Tài khoản</th>
+                                            <th scope="col">Email (demo)</th>
+                                            <th scope="col">Liên kết</th>
+                                            <th scope="col">Trạng thái</th>
+                                            <th scope="col" class="table__action-heading">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-am-users-list></tbody>
+                                </table>
+                            </div>
+                            <div class="admin-manage__table-footer table-footer">
+                                <nav class="pagination pagination--table" aria-label="Phân trang người dùng" data-component="pagination" data-pagination data-am-users-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1">
+                                    <p class="pagination__summary">Hiển thị <strong data-range-start>0</strong>–<strong data-range-end>0</strong> trong <strong data-total-count>0</strong> người dùng</p>
+                                    <div class="pagination__controls">
+                                        <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button>
+                                        <span class="pagination__controls" data-page-numbers><button class="pagination__button is-current" type="button" data-page="1" aria-current="page">1</button></span>
+                                        <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau" disabled><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="empty-state" data-am-users-empty hidden>
+                            <span class="empty-state__icon" aria-hidden="true"></span>
+                            <h2 class="empty-state__title">Không tìm thấy người dùng phù hợp</h2>
+                            <p class="empty-state__description">Thử đổi từ khóa hoặc bỏ lọc vai trò/trạng thái.</p>
+                        </div>
+                    </div>
+
+                    <div class="tabs__panel admin-manage__panel" role="tabpanel" id="am-panel-offerings" aria-labelledby="am-tab-offerings" tabindex="0" hidden>
+                        <section class="alert alert--contextual admin-manage__panel-note" aria-labelledby="am-offerings-note-title">
+                            <span class="alert__icon" aria-hidden="true"></span>
+                            <div class="alert__content">
+                                <h2 class="alert__title" id="am-offerings-note-title">Duyệt theo transition hợp lệ</h2>
+                                <p class="alert__message">Catalog dùng chung một tập offering với trang tìm kiếm và trang quản lý của gia sư. Nút thao tác sinh từ bảng <code>OFFERING_TRANSITIONS</code>: chỉ chuyển trạng thái hợp lệ mới khả dụng, không có nút đổi trạng thái tùy ý. Hồ sơ gia sư chưa được duyệt thì không thể công khai (UI gate demo).</p>
+                            </div>
+                        </section>
+                        <div class="admin-manage__toolbar">
+                            <div class="search-input search-input--compact" data-search-input>
+                                <label class="sr-only" for="am-search-offerings">Tìm dịch vụ / lớp</label>
+                                <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                                <input id="am-search-offerings" type="search" placeholder="Tìm theo mã, tiêu đề, gia sư, môn…" autocomplete="off" maxlength="200" data-am-offerings-search>
+                                <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                            </div>
+                            <div class="select-field">
+                                <label class="sr-only" for="am-type-filter">Loại</label>
+                                <select class="select-control select-control--native" id="am-type-filter" data-am-offerings-type>
+                                    <option value="all">Loại: Tất cả</option>
+                                    <option value="SERVICE">Dịch vụ</option>
+                                    <option value="GROUP_CLASS">Lớp nhóm</option>
+                                </select>
+                            </div>
+                            <div class="select-field">
+                                <label class="sr-only" for="am-offering-status-filter">Trạng thái</label>
+                                <select class="select-control select-control--native" id="am-offering-status-filter" data-am-offerings-status>
+                                    <option value="all">Trạng thái: Tất cả</option>
+                                    <option value="draft">Bản nháp</option>
+                                    <option value="in_review">Chờ duyệt</option>
+                                    <option value="published">Đang công khai</option>
+                                    <option value="rejected">Bị từ chối</option>
+                                    <option value="unpublished">Ngừng công khai</option>
+                                    <option value="closed">Đã đóng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="admin-manage__count" data-am-offerings-count aria-live="polite"></p>
+                        <div class="table-frame" data-am-offerings-table hidden>
+                            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách dịch vụ và lớp nhóm, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                                <table class="table table--review admin-manage__table">
+                                    <caption class="table__caption table__caption--sr-only">Toàn bộ dịch vụ (SERVICE) và lớp nhóm (GROUP_CLASS) trong catalog mẫu kèm trạng thái duyệt.</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Mã &amp; tiêu đề</th>
+                                            <th scope="col">Gia sư</th>
+                                            <th scope="col">Loại / Môn</th>
+                                            <th scope="col">Giá</th>
+                                            <th scope="col">Trạng thái</th>
+                                            <th scope="col" class="table__action-heading">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-am-offerings-list></tbody>
+                                </table>
+                            </div>
+                            <div class="admin-manage__table-footer table-footer">
+                                <nav class="pagination pagination--table" aria-label="Phân trang dịch vụ và lớp" data-component="pagination" data-pagination data-am-offerings-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1">
+                                    <p class="pagination__summary">Hiển thị <strong data-range-start>0</strong>–<strong data-range-end>0</strong> trong <strong data-total-count>0</strong> mục</p>
+                                    <div class="pagination__controls">
+                                        <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button>
+                                        <span class="pagination__controls" data-page-numbers><button class="pagination__button is-current" type="button" data-page="1" aria-current="page">1</button></span>
+                                        <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau" disabled><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="empty-state" data-am-offerings-empty hidden>
+                            <span class="empty-state__icon" aria-hidden="true"></span>
+                            <h2 class="empty-state__title">Không tìm thấy dịch vụ/lớp phù hợp</h2>
+                            <p class="empty-state__description">Thử đổi từ khóa, loại hoặc trạng thái lọc.</p>
+                        </div>
+                    </div>
+
+                    <div class="tabs__panel admin-manage__panel" role="tabpanel" id="am-panel-orders" aria-labelledby="am-tab-orders" tabindex="0" hidden>
+                        <section class="alert alert--contextual admin-manage__panel-note" aria-labelledby="am-orders-note-title">
+                            <span class="alert__icon" aria-hidden="true"></span>
+                            <div class="alert__content">
+                                <h2 class="alert__title" id="am-orders-note-title">Không có dropdown đổi trạng thái tùy ý</h2>
+                                <p class="alert__message">Trạng thái đơn/thanh toán/hoàn tiền chỉ thay đổi qua sự kiện nghiệp vụ có điều kiện (xác nhận hợp đồng, thanh toán, hủy đơn, hoàn tiền) được dùng chung trong store demo. Trang này chỉ liệt kê, lọc và xem chi tiết cùng liên kết hợp đồng.</p>
+                            </div>
+                        </section>
+                        <div class="admin-manage__toolbar">
+                            <div class="search-input search-input--compact" data-search-input>
+                                <label class="sr-only" for="am-search-orders">Tìm đơn đăng ký</label>
+                                <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                                <input id="am-search-orders" type="search" placeholder="Tìm theo mã đơn, học viên, gia sư…" autocomplete="off" maxlength="200" data-am-orders-search>
+                                <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                            </div>
+                            <div class="select-field">
+                                <label class="sr-only" for="am-order-status-filter">Trạng thái đơn</label>
+                                <select class="select-control select-control--native" id="am-order-status-filter" data-am-orders-status>
+                                    <option value="all">Trạng thái đơn: Tất cả</option>
+                                    <option value="created">Mới tạo</option>
+                                    <option value="awaiting_payment">Chờ thanh toán</option>
+                                    <option value="active">Đang thực hiện</option>
+                                    <option value="completed">Hoàn tất</option>
+                                    <option value="cancellation_pending">Đang chờ hủy</option>
+                                    <option value="cancelled">Đã hủy</option>
+                                </select>
+                            </div>
+                            <div class="select-field">
+                                <label class="sr-only" for="am-order-channel-filter">Kênh</label>
+                                <select class="select-control select-control--native" id="am-order-channel-filter" data-am-orders-channel>
+                                    <option value="all">Kênh: Tất cả</option>
+                                    <option value="INVITATION">Qua lời mời</option>
+                                    <option value="JOB">Qua tin tìm gia sư</option>
+                                    <option value="GROUP_CLASS">Qua lớp nhóm</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="admin-manage__count" data-am-orders-count aria-live="polite"></p>
+                        <div class="table-frame" data-am-orders-table hidden>
+                            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách đơn đăng ký toàn nền tảng, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                                <table class="table table--review admin-manage__table">
+                                    <caption class="table__caption table__caption--sr-only">Đơn đăng ký (OD-…) toàn nền tảng: học viên, gia sư, trạng thái đơn, trạng thái thanh toán, hoàn tiền và liên kết hợp đồng.</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Đơn &amp; kênh</th>
+                                            <th scope="col">Học viên / Gia sư</th>
+                                            <th scope="col">Nội dung (snapshot)</th>
+                                            <th scope="col">Tổng tiền</th>
+                                            <th scope="col">Trạng thái đơn</th>
+                                            <th scope="col">Thanh toán / Hoàn tiền</th>
+                                            <th scope="col">Hợp đồng</th>
+                                            <th scope="col" class="table__action-heading">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-am-orders-list></tbody>
+                                </table>
+                            </div>
+                            <div class="admin-manage__table-footer table-footer">
+                                <nav class="pagination pagination--table" aria-label="Phân trang đơn đăng ký" data-component="pagination" data-pagination data-am-orders-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1">
+                                    <p class="pagination__summary">Hiển thị <strong data-range-start>0</strong>–<strong data-range-end>0</strong> trong <strong data-total-count>0</strong> đơn</p>
+                                    <div class="pagination__controls">
+                                        <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button>
+                                        <span class="pagination__controls" data-page-numbers><button class="pagination__button is-current" type="button" data-page="1" aria-current="page">1</button></span>
+                                        <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau" disabled><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="empty-state" data-am-orders-empty hidden>
+                            <span class="empty-state__icon" aria-hidden="true"></span>
+                            <h2 class="empty-state__title">Không tìm thấy đơn phù hợp</h2>
+                            <p class="empty-state__description">Thử đổi từ khóa, trạng thái hoặc kênh lọc.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải danh sách người dùng, dịch vụ/lớp và đơn đăng ký.</p></noscript>
+            </div>
+        </main>
+
+        <template id="am-user-row-template">
+            <tr data-am-user-row>
+                <th scope="row">
+                    <div class="table__person">
+                        <span class="avatar avatar--small" aria-hidden="true" data-am-user-initials></span>
+                        <div>
+                            <strong data-am-user-name></strong>
+                            <small data-am-user-role></small>
+                        </div>
+                    </div>
+                    <span class="table__reference" data-am-user-id></span>
+                </th>
+                <td><span data-am-user-email></span><small data-am-user-label></small></td>
+                <td><span data-am-user-links></span><small data-am-user-links-note></small></td>
+                <td><span class="badge" data-am-user-state></span><small data-am-user-state-note></small></td>
+                <td class="table__action"><div class="admin-manage__row-actions" data-am-user-actions></div></td>
+            </tr>
+        </template>
+
+        <template id="am-offering-row-template">
+            <tr data-am-offering-row>
+                <th scope="row">
+                    <div class="table__primary" data-am-offering-title></div>
+                    <span class="table__reference" data-am-offering-id></span>
+                    <small data-am-offering-schedule></small>
+                </th>
+                <td><span data-am-offering-tutor></span><small data-am-offering-tutor-state></small></td>
+                <td><span data-am-offering-type></span><small data-am-offering-subject></small></td>
+                <td class="table__amount"><strong data-am-offering-price></strong><small data-am-offering-unit></small></td>
+                <td><span class="badge" data-am-offering-status></span><small data-am-offering-availability></small></td>
+                <td class="table__action"><div class="admin-manage__row-actions" data-am-offering-actions></div></td>
+            </tr>
+        </template>
+
+        <template id="am-order-row-template">
+            <tr data-am-order-row>
+                <th scope="row">
+                    <div class="table__primary" data-am-order-id></div>
+                    <span class="table__reference" data-am-order-channel></span>
+                    <small data-am-order-date></small>
+                </th>
+                <td><span data-am-order-learner></span><small data-am-order-tutor></small></td>
+                <td><span data-am-order-item></span><small data-am-order-snapshot></small></td>
+                <td class="table__amount"><strong data-am-order-total></strong><small data-am-order-terms></small></td>
+                <td><span class="badge" data-am-order-status></span><small data-am-order-cancellation></small></td>
+                <td><span class="badge" data-am-order-payment></span><small data-am-order-refund></small></td>
+                <td data-am-order-contract></td>
+                <td class="table__action"><div class="admin-manage__row-actions" data-am-order-actions></div></td>
+            </tr>
+        </template>
+    </div>
+
+    <dialog class="modal" id="am-user-detail-modal" aria-labelledby="am-user-detail-title" aria-describedby="am-user-detail-desc">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--info" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="am-user-detail-title">Chi tiết người dùng</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body">
+                <p id="am-user-detail-desc">Thông tin persona demo và các bản ghi liên kết. Không hiển thị mật khẩu hay thông tin nhạy cảm.</p>
+                <div class="admin-manage__detail" data-am-user-detail></div>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Đóng</button>
+                <button class="modal__button modal__button--primary" type="button" data-modal-confirm hidden>Xác nhận</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <dialog class="modal" id="am-state-modal" aria-labelledby="am-state-title" aria-describedby="am-state-desc">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--danger" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="am-state-title">Đổi trạng thái tài khoản</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body">
+                <p id="am-state-desc">Thao tác mẫu trên trạng thái tài khoản demo, có xác nhận và lý do. Không đổi role, mật khẩu hay sổ cái.</p>
+                <div class="admin-manage__form">
+                    <p class="admin-manage__form-target" data-am-state-target></p>
+                    <div class="textarea-field">
+                        <div class="textarea-field__label-row">
+                            <label class="textarea-field__label" for="am-state-reason">Lý do <span class="textarea-field__required" aria-hidden="true">*</span></label>
+                        </div>
+                        <textarea class="textarea-control" id="am-state-reason" data-am-state-reason minlength="5" maxlength="400" required aria-describedby="am-state-reason-help am-state-error"></textarea>
+                        <p class="textarea-field__help" id="am-state-reason-help">Từ 5 đến 400 ký tự, lưu kèm bản ghi trạng thái mẫu.</p>
+                        <p class="form-field__message--error" id="am-state-error" data-am-state-error hidden></p>
+                    </div>
+                </div>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
+                <button class="modal__button modal__button--danger" type="button" data-modal-confirm>Xác nhận</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <dialog class="modal" id="am-offering-detail-modal" aria-labelledby="am-offering-detail-title" aria-describedby="am-offering-detail-desc">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--info" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="am-offering-detail-title">Chi tiết dịch vụ / lớp</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body">
+                <p id="am-offering-detail-desc">Bản ghi offering trong catalog dùng chung — cùng dữ liệu với trang tìm kiếm và trang quản lý của gia sư.</p>
+                <div class="admin-manage__detail" data-am-offering-detail></div>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Đóng</button>
+                <button class="modal__button modal__button--primary" type="button" data-modal-confirm hidden>Xác nhận</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <dialog class="modal" id="am-transition-modal" aria-labelledby="am-transition-title" aria-describedby="am-transition-desc">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="am-transition-title">Quyết định duyệt</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body">
+                <p id="am-transition-desc" data-am-transition-desc></p>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
+                <button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <dialog class="modal" id="am-order-detail-modal" aria-labelledby="am-order-detail-title" aria-describedby="am-order-detail-desc">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--info" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="am-order-detail-title">Chi tiết đơn đăng ký</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body">
+                <p id="am-order-detail-desc">Đơn đăng ký, snapshot hạng mục, các phiên thanh toán, trạng thái hủy/hoàn tiền và liên kết hợp đồng.</p>
+                <div class="admin-manage__detail" data-am-order-detail></div>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Đóng</button>
+                <button class="modal__button modal__button--primary" type="button" data-modal-confirm hidden>Xác nhận</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
+    <script src="../../js/pages/admin/tutor-review-data.js" defer></script>
+    <script src="../../js/pages/admin/payout-data.js" defer></script>
+    <script src="../../js/core/admin-sidebar.js" defer></script>
+    <script src="../../js/core/admin-header.js" defer></script>
+    <script src="../../js/core/tabs.js" defer></script>
+    <script src="../../js/core/modal.js" defer></script>
+    <script src="../../js/core/toast.js" defer></script>
+    <script src="../../js/core/pagination.js" defer></script>
+    <script src="../../js/core/search-input.js" defer></script>
+    <script src="../../js/pages/admin/manage.js" defer></script>
+</body>
+</html>

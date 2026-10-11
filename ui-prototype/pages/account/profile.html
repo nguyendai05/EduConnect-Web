@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
+    <title>Hồ sơ cá nhân · Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/components/form/input.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/layout/user-header.css">
+    <link rel="stylesheet" href="../../css/components/layout/account-footer.css">
+    <link rel="stylesheet" href="../../css/components/layout/page-header.css">
+    <link rel="stylesheet" href="../../css/pages/account/profile.css">
+</head>
+<body class="profile-page">
+    <!-- UserHeader component instance · variant A: phụ huynh Mai Lan. -->
+    <header class="user-header" data-component="user-header" data-user-variant="A" data-active-nav="none">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="../../pages/chat/messages.html" aria-label="Tin nhắn" title="Tin nhắn">
+                <img src="../../assets/icons/message.svg" alt="">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="../../pages/account/profile.html" role="menuitem" data-menu-item="0">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="../../pages/wallet/overview.html" role="menuitem" data-menu-item="1">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                        <a class="user-header__menu-item" href="../../pages/wallet/overview.html#transactions" role="menuitem" data-menu-item="2">
+                            <img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt="">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="user-shell__main profile-page__main">
+        <div class="user-shell__content profile-page__content">
+
+            <header class="page-header account-page-heading"><div class="page-header__title-block"><h1 class="page-header__title">Hồ sơ cá nhân</h1></div></header>
+            <div class="profile-page__layout">
+                <aside class="profile-nav" aria-label="Điều hướng tài khoản">
+                    <a class="profile-nav__item is-active" href="#ho-so" aria-current="page">Hồ sơ cá nhân</a>
+                </aside>
+
+                <!-- Tạm thời: Card và InfoRow chưa có implementation; profile card dùng style page cho đến khi hai component này sẵn sàng. -->
+                <section class="profile-card" id="ho-so" aria-labelledby="profile-card-title">
+                    <div class="profile-card__top">
+                        <div>
+                            <h2 id="profile-card-title">Thông tin cơ bản</h2>
+
+                        </div>
+                        <!-- Tạm thời: Button component chưa có implementation; dùng action cấp trang cho Edit/Save/Cancel. -->
+                        <div class="profile-card__actions">
+                            <button class="profile-action profile-action--secondary" type="button" data-profile-edit>Chỉnh sửa</button>
+                            <button class="profile-action profile-action--secondary" type="button" data-profile-cancel hidden>Hủy</button>
+                            <button class="profile-action profile-action--primary" type="button" data-profile-save hidden>Lưu thay đổi</button>
+                        </div>
+                    </div>
+
+                    <section class="alert alert--success profile-status" role="status" aria-live="polite" hidden>
+                        <span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><p class="alert__message" data-profile-status></p></div>
+                    </section>
+
+                    <div class="profile-card__identity">
+                        <!-- Tạm thời: Avatar component chưa có implementation; dùng avatar initials cấp trang. -->
+                        <span class="profile-avatar" aria-hidden="true" data-profile-avatar>ML</span>
+                        <div><strong data-profile-display-name>Mai Lan</strong><span data-profile-display-role>Học viên / Phụ huynh</span></div>
+                    </div>
+
+                    <form class="profile-form" novalidate data-profile-form>
+                        <div class="profile-form__field">
+                            <label for="profile-name">Họ và tên</label>
+                            <div class="profile-value" data-profile-display="name">Mai Lan</div>
+                            <div class="input-control" data-profile-control="name" hidden><input class="input-control__input" id="profile-name" name="name" type="text" autocomplete="name" value="Mai Lan" aria-describedby="profile-name-error"></div>
+                            <p class="profile-form__error" id="profile-name-error" hidden></p>
+                        </div>
+                        <div class="profile-form__field">
+                            <label for="profile-email">Email</label>
+                            <div class="profile-value profile-value--locked" data-profile-display="email"><span data-profile-display-email>mai.lan@example.com</span><span>Email được dùng để đăng nhập.</span></div>
+                            <div class="input-control" data-profile-control="email" hidden><input class="input-control__input" id="profile-email" name="email" type="email" inputmode="email" autocomplete="email" value="mai.lan@example.com" aria-describedby="profile-email-error"></div>
+                            <p class="profile-form__error" id="profile-email-error" hidden></p>
+                        </div>
+                        <div class="profile-form__field">
+                            <label for="profile-phone">Số điện thoại</label>
+                            <div class="profile-value" data-profile-display="phone">0912 345 678</div>
+                            <div class="input-control" data-profile-control="phone" hidden><input class="input-control__input" id="profile-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" value="0912 345 678" aria-describedby="profile-phone-error"></div>
+                            <p class="profile-form__error" id="profile-phone-error" hidden></p>
+                        </div>
+                        <div class="profile-form__field">
+                            <label for="profile-bio">Giới thiệu</label>
+                            <div class="profile-value profile-value--empty" data-profile-display="bio">Chưa có giới thiệu. Hãy thêm vài dòng để mọi người hiểu hơn về bạn.</div>
+                            <textarea class="profile-form__textarea" id="profile-bio" name="bio" maxlength="300" placeholder="Viết vài dòng giới thiệu về bạn..." hidden></textarea>
+                            <p class="profile-form__hint" data-profile-bio-count hidden>0/300</p>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+    <footer class="account-footer" data-component="account-footer">
+        <div class="container">
+            <span>© 2026 Edu Connect</span>
+
+        </div>
+    </footer>
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
+    <script src="../../js/core/user-header.js" defer></script>
+    <script src="../../js/pages/account/profile.js" defer></script>
+</body>
+</html>

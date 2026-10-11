@@ -57,7 +57,7 @@
 .message-thread-item__time {
     flex: 0 0 auto;
     font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
 }
 .message-thread-item__bottom {
     margin-top: var(--space-1);

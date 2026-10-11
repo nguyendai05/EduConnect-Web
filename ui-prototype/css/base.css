@@ -7,11 +7,54 @@ body {
   line-height: var(--line-height-base);
 }
 
+/* State hooks must keep forms, loading panels and filtered records hidden. */
+[hidden] {
+  display: none !important;
+}
+
 h1,
 h2,
 h3,
 h4 {
   line-height: var(--line-height-tight);
+}
+
+/* Bù chiều cao header dính khi nhảy tới anchor hoặc dùng scrollIntoView. */
+[id] {
+  scroll-margin-top: var(--scroll-offset);
+}
+
+.admin-shell [id] {
+  scroll-margin-top: var(--admin-scroll-offset);
+}
+
+h1 {
+  font-family: var(--font-family-display);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+::selection {
+  background: var(--color-primary-focus);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.admin-shell h1 {
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+input,
+select,
+textarea,
+progress {
+  accent-color: var(--color-primary);
 }
 
 a {

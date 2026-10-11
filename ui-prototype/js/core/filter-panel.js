@@ -23,7 +23,7 @@ if (filterPanel) {
     const max = Number(range.max);
     const value = Number(range.value);
     const percent = ((value - min) / (max - min)) * 100;
-    range.style.background = `linear-gradient(to right, #1A6FD4 0 ${percent}%, #E2E8F0 ${percent}% 100%)`;
+    range.style.background = `linear-gradient(to right, var(--color-primary) 0 ${percent}%, var(--color-border) ${percent}% 100%)`;
     output.textContent = `≤ ${value.toLocaleString('vi-VN')} ₫`;
   };
 

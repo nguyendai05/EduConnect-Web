@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png" sizes="180x180">
+    <title>Trang chủ | Edu Connect</title>
+    <link rel="stylesheet" href="../css/tokens.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layouts.css">
+    <link rel="stylesheet" href="../css/components/action/button.css">
+    <link rel="stylesheet" href="../css/components/layout/user-header.css">
+    <link rel="stylesheet" href="../css/components/layout/user-footer.css">
+    <link rel="stylesheet" href="../css/components/data-display/card.css">
+    <link rel="stylesheet" href="../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../css/components/feedback/empty-state.css">
+    <link rel="stylesheet" href="../css/components/feedback/toast.css">
+    <link rel="stylesheet" href="../css/components/form/input.css">
+    <link rel="stylesheet" href="../css/pages/home.css">
+    <script src="../js/core/route.js" defer></script>
+    <script src="../js/data/fixtures.js" defer></script>
+    <script src="../js/data/store.js" defer></script>
+    <script src="../js/core/user-header.js" defer></script>
+    <script src="../js/core/toast.js" defer></script>
+    <script src="../js/pages/home.js" defer></script>
+</head>
+<body class="home-page">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
+<div class="user-shell" data-component="user-shell" data-home-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
+    <header class="user-header" data-component="user-header" data-user-variant="B" data-active-nav="home">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link is-active" data-nav-key="home" href="../pages/home.html" aria-current="page">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../pages/job/discover.html">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="../pages/chat/messages.html" aria-label="Tin nhắn" title="Tin nhắn">
+                <img src="../assets/icons/message.svg" alt="">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="../assets/icons/mui-ten-xuong.svg" data-icon-closed="../assets/icons/mui-ten-xuong.svg" data-icon-open="../assets/icons/mui-ten-len.svg" alt="">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>0 ₫</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="../pages/account/profile.html" role="menuitem" data-menu-item="0">
+                            <img class="user-header__menu-item-leading" src="../assets/icons/profile.svg" alt="" data-menu-icon="profile">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="../assets/icons/chevron-right.svg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="../assets/icons/dang-xuat.svg" alt="">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <main class="user-shell__main">
+        <div class="user-shell__content home-page__content">
+            <section class="home-hero" aria-labelledby="home-hero-title">
+                <h1 class="home-hero__title" id="home-hero-title">Tìm gia sư và lớp học phù hợp</h1>
+                <!-- Component: Input, Button | Nguồn: components/form/input.html; components/action/button.html -->
+                <form class="home-search" action="../pages/tutor/search.html" method="get" role="search">
+                    <label class="home-search__label" for="home-search-query">Tìm theo tên gia sư hoặc môn học</label>
+                    <span class="input-control home-search__control">
+                        <img class="input-control__icon" src="../assets/icons/search.svg" alt="">
+                        <input class="input-control__input input-control__input--with-leading" id="home-search-query" name="q" type="search" placeholder="Ví dụ: Toán, IELTS, Ngữ văn" autocomplete="off">
+                    </span>
+                    <button class="button button--primary button--medium" type="submit">Tìm gia sư</button>
+                </form>
+                <nav class="home-entries" aria-label="Lối vào chính">
+                    <a class="button button--secondary button--medium" href="../pages/tutor/search.html">Danh sách gia sư</a>
+                    <a class="button button--outline button--medium" href="../pages/job/discover.html">Tin tìm gia sư</a>
+                    <a class="button button--outline button--medium" href="../pages/cart/index.html">Giỏ đăng ký</a>
+                </nav>
+            </section>
+
+            <section class="home-latest" aria-labelledby="home-latest-title">
+                <header class="home-latest__header">
+                    <h2 id="home-latest-title">Mới công khai</h2>
+                    <p class="home-latest__meta" data-latest-meta></p>
+                </header>
+                <!-- Component: Card, Badge, Button | Nguồn: components/data-display/card.html; components/feedback/badge.html; components/action/button.html -->
+                <div class="home-latest__grid" data-latest-list></div>
+                <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                <section class="empty-state" data-latest-empty hidden aria-labelledby="home-latest-empty-title">
+                    <span class="empty-state__icon" aria-hidden="true"></span>
+                    <h3 class="empty-state__title" id="home-latest-empty-title">Chưa có dịch vụ / lớp mới công khai</h3>
+                    <p class="empty-state__description" data-latest-empty-description>Khi có dịch vụ hoặc lớp nhóm được công khai và còn mở đăng ký, danh sách sẽ hiển thị tại đây.</p>
+                </section>
+            </section>
+        </div>
+    </main>
+
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
+    <footer class="user-footer" data-component="user-footer">
+    <div class="user-footer__inner">
+        <a class="user-footer__brand-link" href="../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="user-footer__brand-mark" src="../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000"></a>
+        <nav class="user-footer__quick-links" aria-label="Liên kết cuối trang"><a href="../pages/tutor/search.html">Tìm gia sư</a><a href="../pages/job/discover.html">Tin tìm gia sư</a><a href="../pages/job/create.html">Đăng tin</a></nav>
+        <p class="user-footer__copyright">© 2026 Edu Connect</p>
+    </div>
+</footer>
+</div>
+</body>
+</html>

@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
     <title>User header</title>
     <link rel="stylesheet" href="../../css/tokens.css">
     <link rel="stylesheet" href="../../css/reset.css">
@@ -12,36 +15,29 @@
 <body>
 <header class="user-header" data-component="user-header" data-user-variant="STUDENT">
     <div class="user-header__inner">
-        <a class="user-header__brand" href="#trang-chu" aria-label="Edu Connect - Trang chủ">
-            <span class="user-header__brand-mark" aria-hidden="true">
-                <img src="../../assets/icons/logo.svg" alt="">
-            </span>
-            <span class="user-header__brand-name">Edu Connect</span>
+        <a class="user-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ">
+            <img class="user-header__logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000">
         </a>
 
         <nav class="user-header__nav" aria-label="Điều hướng chính">
-            <a class="user-header__nav-link is-active" data-nav-key="home" data-route="/app/dashboard" href="#trang-chu" aria-current="page">Trang chủ</a>
-            <a class="user-header__nav-link" data-nav-key="tutors" data-route="/app/tutors" href="#tim-gia-su">Tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="requests" data-route="/app/tutor-requests" href="#tin-tim-gia-su">Tin tìm gia sư</a>
-            <a class="user-header__nav-link" data-nav-key="groups" data-route="/app/group-classes" href="#lop-nhom">Lớp nhóm</a>
+            <a class="user-header__nav-link" data-nav-key="home" href="../../pages/home.html">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="../../pages/tutor/search.html">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="../../pages/job/discover.html">Tin tìm gia sư</a>
         </nav>
 
         <div class="user-header__actions">
-            <button class="user-header__icon-button" type="button" aria-label="Tin nhắn" title="Tin nhắn" data-user-action="messages">
+            <a class="user-header__icon-button" href="../../pages/chat/messages.html" aria-label="Tin nhắn" title="Tin nhắn">
                 <img src="../../assets/icons/message.svg" alt="">
-            </button>
-            <button class="user-header__icon-button" type="button" aria-label="Thông báo" title="Thông báo" data-user-action="notifications">
-                <img src="../../assets/icons/notification.svg" alt="">
-            </button>
+            </a>
 
             <span class="user-header__divider" aria-hidden="true"></span>
 
             <div class="user-header__account">
                 <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
-                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>LY</span>
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
                     <span class="user-header__profile-copy">
-                        <strong><span data-profile-name>Lê Hoàng Yến</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong>
-                        <span data-profile-role>Gia sư Chuyên Toán</span>
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="../../assets/icons/verified.svg" alt="Đã xác thực" hidden></strong>
+                        <span data-profile-role>Phụ huynh</span>
                     </span>
                     <img class="user-header__chevron" src="../../assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="">
                 </button>
@@ -50,7 +46,6 @@
                     <div class="user-header__menu-summary" data-menu-summary hidden>
                         <div class="user-header__menu-summary-heading">
                             <strong data-menu-summary-title>Tài khoản xác thực</strong>
-                            <span class="user-header__menu-badge" data-menu-summary-badge>Gia sư TOP 1%</span>
                         </div>
                         <div class="user-header__menu-balance">
                             <span>Ví thù lao:</span>
@@ -59,27 +54,17 @@
                     </div>
 
                     <div class="user-header__menu-section" data-menu-links>
-                        <a class="user-header__menu-item" href="#ho-so" role="menuitem" data-menu-item="0">
+                        <a class="user-header__menu-item" href="../../pages/account/profile.html" role="menuitem" data-menu-item="0">
                             <img class="user-header__menu-item-leading" src="../../assets/icons/profile.svg" alt="" data-menu-icon="profile">
                             <span data-menu-label>Hồ sơ cá nhân</span>
                             <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
                         </a>
-                        <a class="user-header__menu-item" href="#hop-dong" role="menuitem" data-menu-item="1">
-                            <img class="user-header__menu-item-leading" src="../../assets/icons/calendar.svg" alt="" data-menu-icon="calendar">
-                            <span data-menu-label>Hợp đồng của tôi</span>
-                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
-                        </a>
-                        <a class="user-header__menu-item" href="#vi-tri-thuc" role="menuitem" data-menu-item="2">
+                        <a class="user-header__menu-item" href="../../pages/wallet/overview.html" role="menuitem" data-menu-item="1">
                             <img class="user-header__menu-item-leading" src="../../assets/icons/wallet.svg" alt="" data-menu-icon="wallet">
-                            <span data-menu-label>Ví TriThức</span>
+                            <span data-menu-label>Ví Edu Connect</span>
                             <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
                         </a>
-                        <a class="user-header__menu-item" href="#bao-mat" role="menuitem" data-menu-item="3">
-                            <img class="user-header__menu-item-leading" src="../../assets/icons/shield.svg" alt="" data-menu-icon="shield">
-                            <span data-menu-label>Bảo mật tài khoản</span>
-                            <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
-                        </a>
-                        <a class="user-header__menu-item" href="#lich-su-giao-dich" role="menuitem" data-menu-item="4">
+                        <a class="user-header__menu-item" href="../../pages/wallet/overview.html#transactions" role="menuitem" data-menu-item="2">
                             <img class="user-header__menu-item-leading" src="../../assets/icons/receipt.svg" alt="" data-menu-icon="receipt">
                             <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
                             <img class="user-header__menu-item-chevron" src="../../assets/icons/chevron-right.svg" alt="">
@@ -89,7 +74,7 @@
                     <div class="user-header__menu-section user-header__menu-section--logout">
                         <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
                             <img class="user-header__menu-item-icon" src="../../assets/icons/dang-xuat.svg" alt="">
-                            <span data-menu-logout-label>Đăng xuất tài khoản</span>
+                            <span data-menu-logout-label>Đăng xuất</span>
                         </button>
                     </div>
                 </div>

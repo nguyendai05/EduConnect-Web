@@ -12,6 +12,16 @@
     const profileWrap = header.querySelector('[data-profile-wrap]');
     const profileTrigger = header.querySelector('[data-profile-trigger]');
     const profilePopover = header.querySelector('[data-profile-popover]');
+    const logoutLink = header.querySelector('a.is-danger');
+
+    logoutLink?.addEventListener('click', event => {
+      if (!window.EduStore) return;
+      const result = window.EduStore.logout();
+      if (!result.ok) {
+        event.preventDefault();
+        window.EduToast?.show({ type: 'error', title: 'Chưa thể đăng xuất', message: 'Không thể cập nhật phiên xem trước. Vui lòng thử lại.' });
+      }
+    });
 
     const closeSearch = () => {
       searchResults.hidden = true;
@@ -83,3 +93,26 @@
     });
   });
 })();
+
+/**
+ * "Hệ thống bình thường" là khẳng định chưa có kiểm tra thật — prototype không có health check
+ * hay backend để đối chiếu. Đổi nhãn một lần ở đây để cả 11 trang admin cùng trung thực,
+ * thay vì sửa markup inline trên từng trang.
+ */
+(() => {
+  const DEMO_LABEL = ' Bản xem trước · chưa kết nối backend ';
+
+  const relabel = () => {
+    document.querySelectorAll('.admin-header__system-status').forEach(node => {
+      const textNode = Array.from(node.childNodes).find(child => child.nodeType === 3 && child.textContent.trim())
+      if (textNode) textNode.textContent = DEMO_LABEL
+      node.setAttribute('title', 'Prototype chưa có health check thật; nhãn này không khẳng định trạng thái hệ thống.')
+    })
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', relabel, { once: true })
+  } else {
+    relabel()
+  }
+})()

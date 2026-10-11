@@ -3,48 +3,81 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Thanh toán qua payOS | Edu Connect</title>
+        <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any" />
+        <link
+            rel="apple-touch-icon"
+            href="../../assets/brand/apple-touch-icon.png"
+            sizes="180x180"
+        />
+        <title>Thanh toán qua payOS (DEMO) | Edu Connect</title>
+        <link rel="stylesheet" href="../../css/tokens.css" />
+        <link rel="stylesheet" href="../../css/base.css" />
+        <link rel="stylesheet" href="../../css/components/action/button.css" />
+        <link rel="stylesheet" href="../../css/components/feedback/modal.css" />
         <link rel="stylesheet" href="../../css/pages/payment/qr.css" />
+        <script src="../../js/core/route.js" defer></script>
+        <script src="../../js/data/fixtures.js" defer></script>
+        <script src="../../js/data/store.js" defer></script>
+        <script src="../../js/core/modal.js" defer></script>
         <script src="../../js/pages/payment/qr.js" defer></script>
     </head>
     <body>
         <header class="checkout-header">
-            <a class="merchant-brand" href="checkout.html" aria-label="Edu Connect">
-                <img src="../../assets/icons/logo.svg" alt="" />
-                <span>Edu Connect</span>
-            </a>
-            <span class="provider">payOS <small>Checkout</small></span>
+            <a
+                class="merchant-brand"
+                href="checkout.html"
+                aria-label="Edu Connect — quay lại bước thanh toán"
+                ><img
+                    class="brand-logo"
+                    src="../../assets/brand/logo-horizontal.svg"
+                    alt="Edu Connect"
+                    width="4562"
+                    height="1000"
+            /></a>
+            <span class="provider">payOS <small>Checkout · DEMO</small></span>
         </header>
         <main>
             <section class="checkout-card" aria-labelledby="checkout-title">
                 <h1 id="checkout-title">Thanh toán qua payOS</h1>
-                <p class="instructions">
-                    Mở ứng dụng ngân hàng để <strong>quét mã VietQR</strong> hoặc chuyển khoản đúng
-                    thông tin bên dưới.
+                <p class="demo-marker" id="demo-marker">
+                    Bản xem trước · Giao dịch mô phỏng — mã QR không chứa payload ngân hàng, không
+                    dùng để chuyển tiền.
+                </p>
+                <p class="instructions" id="instructions">
+                    Thông tin thanh toán mẫu đọc từ dữ liệu chung của prototype.
                 </p>
                 <div class="checkout-grid">
                     <div class="qr-panel">
-                        <div class="vietqr">Viet<span>QR</span> <small>PRO</small></div>
+                        <div class="qr-brand">Edu<span>QR</span> <small>DEMO</small></div>
                         <svg
                             id="qr-preview"
                             viewBox="0 0 33 33"
                             role="img"
-                            aria-label="Hình QR minh họa, không chứa thông tin chuyển tiền"
+                            aria-label="Hình QR minh họa DEMO, không chứa thông tin chuyển tiền"
                         ></svg>
-                        <p class="bank-network">napas 247 <span>MB</span></p>
+                        <p class="qr-network">mô phỏng <span>không phải mã ngân hàng</span></p>
                     </div>
                     <div class="bank-details">
                         <p class="bank-name">
-                            <span>Ngân hàng</span><strong>Ngân hàng TMCP Quân đội (MB)</strong>
+                            <span>Ngân hàng</span><strong>Ngân hàng DEMO (mô phỏng)</strong>
                         </p>
                         <dl>
                             <div>
-                                <dt>Chủ tài khoản</dt>
-                                <dd>eduConnext</dd>
+                                <dt>Hợp đồng</dt>
+                                <dd id="contract">—</dd>
                             </div>
                             <div>
-                                <dt>Số tài khoản minh họa</dt>
-                                <dd>DEMO-EDUCONNEXT</dd>
+                                <dt>Phiên thanh toán</dt>
+                                <dd id="payment-id">—</dd>
+                            </div>
+                            <div>
+                                <dt>Chủ tài khoản</dt>
+                                <dd>Edu Connect (DEMO)</dd>
+                            </div>
+                            <div>
+                                <dt>Số tài khoản</dt>
+                                <dd>DEMO-EDUCONNECT</dd>
                             </div>
                             <div class="copy-row">
                                 <dt>Số tiền</dt>
@@ -52,30 +85,79 @@
                                 <button type="button" data-copy="amount">Sao chép</button>
                             </div>
                             <div class="copy-row">
-                                <dt>Nội dung chuyển khoản</dt>
+                                <dt>Nội dung chuyển khoản (demo)</dt>
                                 <dd id="reference">—</dd>
                                 <button type="button" data-copy="reference">Sao chép</button>
                             </div>
                         </dl>
-                        <p class="notice">
-                            Giữ nguyên số tiền và nội dung chuyển khoản để giao dịch được đối soát
-                            đúng hợp đồng.
+                        <p class="notice" id="notice">
+                            Đây là nội dung mô phỏng: giữ nguyên số tiền và nội dung khi trình diễn
+                            để giao dịch được đối soát đúng hợp đồng trong dữ liệu mẫu.
+                        </p>
+                        <p class="session-note" id="cancel-note">
+                            Hủy ở trang này chỉ hủy PHIÊN QR (phiên thanh toán chuyển sang trạng
+                            thái "Đã hủy phiên QR"). Đơn đăng ký và hợp đồng KHÔNG bị hủy.
                         </p>
                     </div>
                 </div>
+                <p class="session-timer" id="session-timer" role="timer" hidden></p>
                 <div class="checkout-actions">
-                    <button type="button" id="cancel">Hủy thanh toán</button>
+                    <button type="button" id="cancel">Hủy phiên thanh toán</button>
+                    <a class="button button--secondary" id="reconcile" href="result.html"
+                        >Tôi đã chuyển khoản · kiểm tra đối soát</a
+                    >
                     <span id="status" role="status" aria-live="polite">Đang chờ thanh toán</span>
                 </div>
-                <details class="preview-controls">
-                    <summary>Điều khiển giả lập</summary>
-                    <p>Dùng để xem giao diện kết quả; không cập nhật ví hoặc hợp đồng thật.</p>
-                    <button type="button" id="simulate-success">
-                        Giả lập nhận thanh toán thành công
-                    </button>
-                </details>
-                <a id="restart" href="checkout.html" hidden>Quay lại thanh toán hợp đồng</a>
+
+                <a id="restart" class="button button--secondary" href="checkout.html" hidden
+                    >Quay lại thanh toán hợp đồng</a
+                >
             </section>
         </main>
+        <dialog
+            class="modal"
+            id="qr-modal"
+            aria-labelledby="qr-modal-title"
+            aria-describedby="qr-modal-description"
+        >
+            <div class="modal__surface">
+                <header class="modal__header">
+                    <span class="modal__icon modal__icon--danger" aria-hidden="true"></span>
+                    <div class="modal__heading">
+                        <h2 id="qr-modal-title">Hủy phiên thanh toán</h2>
+                    </div>
+                    <button
+                        class="modal__close"
+                        type="button"
+                        data-modal-close
+                        aria-label="Đóng hộp thoại"
+                    >
+                        <span class="modal__close-icon" aria-hidden="true"></span>
+                    </button>
+                </header>
+                <div class="modal__body">
+                    <p id="qr-modal-description">
+                        Chỉ hủy phiên QR; đơn và hợp đồng không bị hủy.
+                    </p>
+                </div>
+                <footer class="modal__footer">
+                    <button
+                        class="modal__button modal__button--secondary"
+                        type="button"
+                        data-modal-close
+                        autofocus
+                    >
+                        Giữ phiên
+                    </button>
+                    <button
+                        class="modal__button modal__button--danger"
+                        type="button"
+                        data-modal-confirm
+                    >
+                        Hủy phiên QR
+                    </button>
+                </footer>
+            </div>
+        </dialog>
     </body>
 </html>

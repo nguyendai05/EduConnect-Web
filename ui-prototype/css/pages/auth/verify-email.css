@@ -1,0 +1,125 @@
+/* Khối riêng của trang xác minh email.
+   Shell (page/header/main/card/footer) và ô nhập dùng chung css/pages/auth/login.css + component có sẵn. */
+
+.auth-verify-state {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.auth-verify-state__title {
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  line-height: 1.3333;
+}
+
+.auth-verify-state__text {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.auth-verify-badge {
+  margin: 0;
+}
+
+.auth-verify-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.auth-verify-token-value {
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.auth-verify-email,
+.auth-verify-tokens {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.auth-verify-email {
+  background: var(--color-surface-low);
+}
+
+.auth-verify-email__label {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.auth-verify-email__value {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  line-height: 1.4286;
+  overflow-wrap: anywhere;
+}
+
+.auth-verify-email__note,
+.auth-verify-tokens__hint {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+}
+
+.auth-verify-tokens__title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  line-height: 1.4286;
+}
+
+.auth-verify-tokens__list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.auth-verify-tokens__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.auth-verify-tokens__link {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.auth-verify-tokens__link:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+.auth-verify-tokens__link:focus-visible {
+  outline: 2px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 48rem) {
+  .auth-verify-tokens__link {
+    display: inline-flex;
+    min-height: var(--touch-target);
+    align-items: center;
+  }
+}

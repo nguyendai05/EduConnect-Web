@@ -1,8 +1,8 @@
 :root {
-  --file-upload-primary: #1a6fd4;
-  --file-upload-primary-soft: #eaf2fc;
-  --file-upload-border: #e2e8f0;
-  --file-upload-muted: #94a3b8;
+  --file-upload-primary: var(--color-primary);
+  --file-upload-primary-soft: var(--color-primary-container);
+  --file-upload-border: var(--color-border);
+  --file-upload-muted: var(--color-text-secondary);
 }
 
 .file-upload-preview {
@@ -75,7 +75,7 @@
 .file-upload-card__heading {
   padding-bottom: var(--space-2);
   margin-bottom: var(--space-4);
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--color-surface-low);
 }
 
 .file-upload-card__heading h2 {
@@ -101,14 +101,15 @@
 
 .file-dropzone {
   display: grid;
-  min-height: 13.5rem;
+  min-height: 10rem;
   align-content: center;
   justify-items: center;
   gap: var(--space-2);
   padding: var(--space-6);
   color: var(--color-text-secondary);
-  border: 2px dashed #cbd5e1;
-  border-radius: 0.75rem;
+  background: var(--color-paper);
+  border: 1px dashed var(--color-control-border);
+  border-radius: var(--radius-md);
   cursor: pointer;
   text-align: center;
 }
@@ -126,13 +127,13 @@
 
 .file-upload__cloud {
   display: grid;
-  width: 3.75rem;
-  height: 3.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin-bottom: var(--space-2);
   place-items: center;
-  color: var(--file-upload-primary);
-  background: var(--file-upload-primary-soft);
-  border-radius: 50%;
+  color: var(--color-primary-hover);
+  background: var(--color-primary-container);
+  border-radius: var(--radius-md);
 }
 
 .file-upload__cloud svg {
@@ -294,7 +295,7 @@
   padding: var(--space-2) var(--space-3);
   color: var(--color-text);
   background: var(--color-surface);
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--color-surface-high);
   border-radius: 0.75rem;
   box-shadow: 0 1px 2px rgb(15 23 42 / 6%);
   cursor: pointer;
@@ -332,8 +333,8 @@
   padding: var(--space-4);
   margin-top: var(--space-4);
   color: var(--color-danger);
-  background: #fff1f2;
-  border: 1px solid #fca5a5;
+  background: var(--color-danger-container);
+  border: 1px solid var(--color-danger);
   border-radius: 1rem;
   font-size: var(--font-size-sm);
   line-height: 1.45;

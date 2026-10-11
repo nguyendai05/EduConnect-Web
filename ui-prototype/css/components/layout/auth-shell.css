@@ -44,7 +44,7 @@
 .auth-shell__variant-tab.is-active,
 .auth-shell__variant-tab[aria-selected="true"] {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-on-primary);
   box-shadow: var(--shadow-sm);
 }
 
@@ -101,8 +101,8 @@
 }
 
 .auth-shell__brand img {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 10.5rem;
+  height: auto;
 }
 
 .auth-shell__heading {
@@ -129,7 +129,7 @@
 .auth-shell__feedback {
   padding: var(--space-3);
   border-radius: var(--radius-md);
-  background: #fee2e2;
+  background: var(--color-danger-container);
   color: var(--color-danger);
   font-size: var(--font-size-sm);
   line-height: 1.4286;
@@ -190,7 +190,7 @@
 }
 
 .auth-shell__field input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .auth-shell__field input:focus {
@@ -245,7 +245,7 @@
 }
 
 .auth-shell__role-options label:has(input:checked) {
-  border-color: var(--color-primary);
+  border-color: var(--color-border);
   background: var(--color-primary-container);
   color: var(--color-primary-hover);
   font-weight: 600;
@@ -259,7 +259,7 @@
 }
 
 .auth-shell__helper {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   line-height: 1.3333;
 }
@@ -274,7 +274,7 @@
   border: 1px solid var(--color-primary);
   border-radius: var(--radius-md);
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-on-primary);
   cursor: pointer;
   font-size: var(--font-size-sm);
   font-weight: 600;

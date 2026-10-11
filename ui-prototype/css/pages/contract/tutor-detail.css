@@ -1,15 +1,15 @@
 /* Tutor-specific styles. Shared layout is in contract-detail.css. */
 .tutor-attendance-note {
     margin-top: var(--space-3);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-xs);
 }
 .tutor-income {
-    color: var(--color-success);
+    color: var(--color-success-text);
     font-weight: 700;
 }
 .tutor-income--pending {
-    color: var(--color-warning);
+    color: var(--color-warning-text);
 }
 .attendance-options {
     display: grid;
@@ -25,7 +25,7 @@
     border-radius: var(--radius-md);
 }
 .attendance-options .radio-option--selected {
-    border-color: var(--color-primary);
+    border-color: var(--color-border);
     background: var(--color-primary-container);
 }
 .attendance-options .radio-option strong,

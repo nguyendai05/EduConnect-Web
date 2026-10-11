@@ -1,7 +1,7 @@
 :root {
-  --select-border: #e2e8f0;
-  --select-focus: #1a6fd4;
-  --select-selected: #eaf2fc;
+  --select-border: var(--color-control-border);
+  --select-focus: var(--color-primary);
+  --select-selected: var(--color-primary-container);
 }
 
 .select-preview {
@@ -52,42 +52,65 @@
 .select-field {
   position: relative;
   display: grid;
+  align-content: start;
   gap: var(--space-2);
 }
 
 .select-field__label {
   color: var(--color-text);
-  font-size: var(--font-size-xs);
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
 }
 
 .select-control {
   display: flex;
   width: 100%;
-  min-height: 3rem;
+  min-height: var(--control-height);
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
   padding: 0 0.875rem;
   color: var(--color-text);
   background: var(--color-surface);
-  border: 2px solid var(--select-focus);
-  border-radius: 0.375rem;
-  font-size: var(--font-size-sm);
+  border: 1px solid var(--select-border);
+  border-radius: var(--control-radius);
+  font-size: var(--control-font-size);
   font-weight: 500;
   text-align: left;
   cursor: pointer;
 }
 
 .select-control:focus-visible {
-  outline: 2px solid var(--color-primary-container);
+  outline: 2px solid var(--select-focus);
   outline-offset: 2px;
 }
+
+.select-control:hover:not(:disabled) { border-color: var(--color-text-secondary); }
+.select-control[aria-expanded="true"] { border-color: var(--select-focus); box-shadow: 0 0 0 3px var(--color-focus-ring); }
+.select-control:disabled { background: var(--color-surface-low); color: var(--color-text-secondary); cursor: not-allowed; }
 
 .select-control__chevron {
   width: 1rem;
   height: 1rem;
   flex: 0 0 auto;
+}
+
+/* Select native cho thanh lọc, giữ hỗ trợ bàn phím của trình duyệt. */
+.select-control--native {
+  display: block;
+  min-width: 0;
+  min-height: var(--control-height);
+  padding-right: 2.25rem;
+  appearance: none;
+  background: var(--color-surface) url("../../../assets/icons/mui-ten-xuong.svg") right 0.75rem center / 1rem no-repeat;
+  border: 1px solid var(--select-border);
+  border-radius: var(--radius-md);
+  font-weight: 400;
+}
+
+.select-control--native:focus-visible {
+  outline: 2px solid var(--select-focus);
+  outline-offset: 2px;
 }
 
 .select-options[hidden] {
@@ -101,17 +124,20 @@
   right: 0;
   left: 0;
   display: grid;
-  overflow: hidden;
+  max-height: min(18rem, 60vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--color-surface);
-  border: 1px solid var(--select-border);
-  border-radius: 0.375rem;
-  box-shadow: 0 4px 12px rgb(15 23 42 / 8%);
+  padding: var(--space-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
 }
 
 .select-option {
   display: flex;
   width: 100%;
-  min-height: 2rem;
+  min-height: 2.5rem;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
@@ -119,6 +145,7 @@
   color: var(--color-text);
   background: var(--color-surface);
   border: 0;
+  border-radius: var(--radius-sm);
   font: inherit;
   font-size: var(--font-size-sm);
   text-align: left;
@@ -133,7 +160,7 @@
 
 .select-option.is-selected,
 .select-option[aria-selected="true"] {
-  color: #00458d;
+  color: var(--color-primary-hover);
   background: var(--select-selected);
   font-weight: 700;
 }

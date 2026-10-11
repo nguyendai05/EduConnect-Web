@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
+    <title>Hàng đợi duyệt tin tìm gia sư | Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/layout/admin-sidebar.css">
+    <link rel="stylesheet" href="../../css/components/layout/admin-header.css">
+    <link rel="stylesheet" href="../../css/components/navigation/tabs.css">
+    <link rel="stylesheet" href="../../css/components/navigation/pagination.css">
+    <link rel="stylesheet" href="../../css/components/form/search-input.css">
+    <link rel="stylesheet" href="../../css/components/form/select.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
+    <link rel="stylesheet" href="../../css/components/data-display/table.css">
+    <link rel="stylesheet" href="../../css/components/data-display/avatar.css">
+    <link rel="stylesheet" href="../../css/components/data-display/stat-card.css">
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/feedback/loading.css">
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/pages/admin/job-review-queue.css">
+</head>
+<body class="job-review-queue-page">
+    <a class="job-review-queue__skip-link" href="#queue-main">Đến nội dung chính</a>
+    <div class="admin-shell" data-component="admin-shell" data-job-review-queue>
+        <aside class="admin-sidebar admin-shell__sidebar" aria-label="Thanh điều hướng quản trị" data-component="admin-sidebar">
+        <div class="admin-sidebar__main">
+            <header class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="dashboard.html" aria-label="Edu Connect quản trị">
+                    <img class="admin-sidebar__brand-logo" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000">
+                </a>
+                <span class="admin-sidebar__role">Quản trị</span>
+            </header>
+
+            <p class="admin-sidebar__group-label">Điều hành</p>
+            <nav class="admin-sidebar__nav" aria-label="Các mục quản trị">
+                <a class="admin-sidebar__item" href="dashboard.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="manage.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/settings.svg" alt=""><span class="admin-sidebar__item-label">Quản lý nền tảng</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="tutor-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="tutors" hidden></span>
+                </a>
+                <a class="admin-sidebar__item is-active" href="job-review-queue.html" aria-current="page">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="jobs" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="reports.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="reports" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="payout-requests.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="payouts" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="audit-logs.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
+                </a>
+            </nav>
+        </div>
+        <footer class="admin-sidebar__footer">Edu Connect · Quản trị hệ thống</footer>
+    </aside>
+        <header class="admin-header" data-component="admin-header" data-has-unread="false">
+        <form class="admin-header__search" role="search" data-admin-search>
+            <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
+            <img class="admin-header__icon admin-header__search-icon" src="../../assets/icons/search.svg" alt="">
+            <input class="admin-header__search-input" id="admin-global-search" name="query" type="search" autocomplete="off" placeholder="Tìm kiếm theo mã tin, mã hồ sơ gia sư, mã yêu cầu rút tiền..." data-search-input>
+            <button class="admin-header__clear-search" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><img class="admin-header__icon" src="../../assets/icons/cancel.svg" alt=""></button>
+            <section class="admin-header__search-results" aria-label="Kết quả tìm kiếm nhanh" data-search-results hidden>
+                <div class="admin-header__popover-heading">
+                    <span>Kết quả khớp mã</span>
+                    <span>ESC để đóng</span>
+                </div>
+                <a class="admin-header__result" href="job-review-detail.html?id=TT-8839">
+                    <span class="admin-header__result-type admin-header__result-type--neutral">TIN TÌM GIA SƯ</span>
+                    <span class="admin-header__result-copy"><strong>TT-8839 · Tìm gia sư Toán lớp 9 ôn thi vào 10</strong><span>Phụ huynh: Anh Tuấn An · Chờ duyệt</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+                <a class="admin-header__result" href="tutor-review-detail.html?id=HSGS-9041">
+                    <span class="admin-header__result-type">HỒ SƠ GIA SƯ</span>
+                    <span class="admin-header__result-copy"><strong>HSGS-9041 · Trần Minh Khoa</strong><span>Chờ xác minh chứng chỉ giảng dạy</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+                <a class="admin-header__result" href="payout-request-detail.html?id=PO-2026-0841">
+                    <span class="admin-header__result-type admin-header__result-type--accent">YÊU CẦU RÚT TIỀN</span>
+                    <span class="admin-header__result-copy"><strong>PO-2026-0841 · Nguyễn Minh Anh</strong><span>Chờ quản trị xử lý</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+            </section>
+        </form>
+
+        <div class="admin-header__utilities">
+            <span class="admin-header__system-status"><span aria-hidden="true"></span>Hệ thống bình thường</span>
+            <div class="admin-header__popover-wrap" data-notification-wrap>
+                <button class="admin-header__icon-button" type="button" aria-label="Thông báo hệ thống" aria-expanded="false" aria-controls="admin-notification-popover" data-notification-trigger><img class="admin-header__icon" src="../../assets/icons/notification.svg" alt=""><span class="admin-header__notification-dot" aria-hidden="true"></span></button>
+                <section class="admin-header__notification-popover" id="admin-notification-popover" aria-label="Thông báo vận hành" data-notification-popover hidden>
+                    <div class="admin-header__notification-title"><strong>Thông báo vận hành</strong><span>3 mới</span></div>
+                    <a class="admin-header__notification" href="tutor-review-queue.html"><img class="admin-header__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span><strong>Duyệt hồ sơ gia sư mới</strong><small>Trần Thị Mai Hương vừa tải chứng chỉ Sư phạm Toán.</small><time>4 phút trước</time></span></a>
+                    <a class="admin-header__notification" href="payout-requests.html"><img class="admin-header__icon admin-header__notification-icon--accent" src="../../assets/icons/wallet.svg" alt=""><span><strong>Yêu cầu rút tiền: #HĐ-8910</strong><small>Số tiền 3.500.000đ từ gia sư Nguyễn Hữu Nam.</small><time>18 phút trước</time></span></a>
+                    <a class="admin-header__popover-link" href="audit-logs.html">Xem tất cả nhật ký thông báo</a>
+                </section>
+            </div>
+            <span class="admin-header__divider" aria-hidden="true"></span>
+            <div class="admin-header__popover-wrap" data-profile-wrap>
+                <button class="admin-header__profile-trigger" type="button" aria-expanded="false" aria-controls="admin-profile-popover" data-profile-trigger>
+                    <span class="admin-header__avatar" aria-hidden="true">QT</span>
+                    <span class="admin-header__profile-copy"><strong>Quản trị viên</strong><small>Admin</small></span>
+                    <img class="admin-header__chevron admin-header__icon" src="../../assets/icons/mui-ten-xuong.svg" alt="">
+                </button>
+                <section class="admin-header__profile-popover" id="admin-profile-popover" aria-label="Tài khoản quản trị" data-profile-popover hidden>
+                    <div class="admin-header__profile-summary"><strong>Nguyễn Xuân Đại</strong><span>admin@educonnect.vn</span><span class="admin-header__permission"><img class="admin-header__icon" src="../../assets/icons/shield-user.svg" alt="">Quyền hạn: Root Superadmin</span></div>
+                    <nav class="admin-header__profile-menu" aria-label="Tác vụ tài khoản quản trị">
+                        <a href="audit-logs.html"><img class="admin-header__icon" src="../../assets/icons/audit-log.svg" alt="">Nhật ký thao tác cá nhân</a>
+                        <a class="is-danger" href="../auth/login.html"><img class="admin-header__icon" src="../../assets/icons/dang-xuat.svg" alt="">Đăng xuất phiên quản trị</a>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </header>
+        <main class="admin-shell__workspace" id="queue-main" tabindex="-1">
+            <div class="admin-shell__content job-review-queue">
+                <header class="admin-shell__page-header job-review-queue__header">
+                    <div>
+
+                        <h1>Hàng đợi duyệt tin tìm gia sư</h1>
+
+                    </div>
+                    <div class="job-review-queue__refresh">
+                        <button class="button button--secondary" type="button" data-queue-refresh><svg class="job-review-queue__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6.1 7a7 7 0 0 1 11.6-1L20 9M4 15l2.3 3A7 7 0 0 0 17.9 17"/></svg>Làm mới</button>
+                        <span class="job-review-queue__updated" data-queue-updated>Đang cập nhật…</span>
+                    </div>
+                </header>
+                <section class="alert alert--error" role="alert" data-store-error hidden>
+                    <span class="alert__icon" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <h2 class="alert__title">Không đọc được dữ liệu kiểm duyệt</h2>
+                        <p class="alert__message">Hàng đợi, số đếm và người đăng lấy từ <strong>EduStore</strong> (js/data/fixtures.js + js/data/store.js). Hai script chưa được nạp nên trang ẩn nội dung thay vì hiển thị bảng tin mẫu.</p>
+                    </div>
+                </section>
+                <section class="job-review-queue__summary" aria-label="Tổng quan kiểm duyệt" data-store-content>
+                    <article class="stat-card stat-card--compact job-review-queue__metric">
+                        <div class="stat-card__header"><h2 class="job-review-queue__metric-label">Hàng đợi</h2><span class="stat-card__icon"><img src="../../assets/icons/clock.svg" alt=""></span></div>
+                        <p class="job-review-queue__metric-value"><strong class="stat-card__value" data-queue-pending-count>—</strong><span class="stat-card__unit">tin chờ duyệt</span></p>
+                        <div class="job-review-queue__metric-footer"><span class="badge badge--info">Chờ quản trị duyệt</span><span data-queue-store-total>Đang đọc số đếm từ dữ liệu dùng chung…</span></div>
+                    </article>
+                    <article class="stat-card stat-card--compact stat-card--warning job-review-queue__metric">
+                        <div class="stat-card__header"><h2 class="job-review-queue__metric-label">Rà soát tự động</h2><span class="stat-card__icon"><img src="../../assets/icons/warning-triangle.svg" alt=""></span></div>
+                        <p class="job-review-queue__metric-value"><strong class="stat-card__value" data-queue-flagged-count>—</strong><span class="stat-card__unit">tin cần kiểm tra</span></p>
+                        <div class="job-review-queue__metric-footer"><span class="badge badge--warning">Cần kiểm tra</span><span>Phát hiện dấu hiệu liên hệ ngoài</span></div>
+                    </article>
+                    <article class="stat-card stat-card--compact stat-card--success job-review-queue__metric">
+                        <div class="stat-card__header"><h2 class="job-review-queue__metric-label">SLA kiểm duyệt</h2><span class="stat-card__icon"><img src="../../assets/icons/check-circle.svg" alt=""></span></div>
+                        <p class="job-review-queue__metric-value"><strong class="stat-card__value stat-card__value--neutral">&lt; 4h</strong><span class="stat-card__unit">giờ làm việc</span></p>
+                        <div class="job-review-queue__metric-footer"><span class="badge badge--success">Đảm bảo vận hành</span><span>Xử lý kịp thời, đúng quy chuẩn</span></div>
+                    </article>
+                </section>
+                <section class="job-review-queue__toolbar" aria-label="Tìm kiếm và lọc tin" data-store-content>
+                    <div class="job-review-queue__toolbar-heading">
+                        <div class="tabs tabs--contained" data-tabs data-queue-status-tabs>
+                            <div class="tabs__list" role="tablist" aria-label="Trạng thái tin">
+                                <button class="tabs__tab" type="button" role="tab" id="queue-tab-pending" aria-selected="true" aria-controls="queue-results" data-queue-status="pending">Chờ duyệt <span class="tabs__badge" data-status-count="pending">—</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="queue-tab-hiring" aria-selected="false" aria-controls="queue-results" tabindex="-1" data-queue-status="hiring">Đang tuyển <span class="tabs__badge" data-status-count="hiring">—</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="queue-tab-closed" aria-selected="false" aria-controls="queue-results" tabindex="-1" data-queue-status="closed">Đã đóng <span class="tabs__badge" data-status-count="closed">—</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="queue-tab-rejected" aria-selected="false" aria-controls="queue-results" tabindex="-1" data-queue-status="rejected">Bị từ chối <span class="tabs__badge" data-status-count="rejected">—</span></button>
+                            </div>
+                        </div>
+                        <p class="job-review-queue__priority"><img src="../../assets/icons/shield-alert.svg" alt="">Ưu tiên rà soát <strong data-queue-priority-count>— tin</strong> có tín hiệu cần kiểm tra</p>
+                    </div>
+                    <form class="job-review-queue__filters" role="search" data-queue-filters>
+                        <div class="search-input search-input--compact" data-search-input>
+                            <label class="sr-only" for="queue-search">Tìm kiếm tin</label>
+                            <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                            <input id="queue-search" type="search" name="query" placeholder="Tìm theo mã tin, tiêu đề, người đăng…" autocomplete="off" maxlength="200" data-queue-search>
+                            <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                        </div>
+                        <div class="select-field"><label class="sr-only" for="queue-signal">Rà soát hệ thống</label><select class="select-control select-control--native" id="queue-signal" name="signal"><option value="all">Rà soát: Tất cả</option><option value="flagged">Có tín hiệu cần kiểm tra</option><option value="normal">Rà soát bình thường</option></select></div>
+                        <div class="select-field"><label class="sr-only" for="queue-subject">Môn học</label><select class="select-control select-control--native" id="queue-subject" name="subject"><option value="all">Môn học: Tất cả</option><option value="toan">Toán học</option><option value="tieng-anh">Tiếng Anh</option><option value="vat-ly">Vật lý</option><option value="hoa-hoc">Hóa học</option><option value="ngu-van">Ngữ văn</option></select></div>
+                        <div class="select-field"><label class="sr-only" for="queue-sort">Sắp xếp tin</label><select class="select-control select-control--native" id="queue-sort" name="sort"><option value="priority">Ưu tiên kiểm tra</option><option value="oldest">Gửi sớm nhất</option><option value="newest">Mới nhất</option></select></div>
+                    </form>
+                    <div class="job-review-queue__results-heading"><p data-queue-result-summary aria-live="polite" aria-atomic="true">Đang đọc hàng đợi từ dữ liệu dùng chung…</p><button class="button button--ghost button--small" type="button" data-queue-reset hidden>Xóa bộ lọc</button></div>
+                </section>
+                <section id="queue-results" role="tabpanel" aria-labelledby="queue-tab-pending" aria-busy="true" tabindex="0" data-queue-results data-store-content>
+                    <div class="loading" role="status" data-component="loading" data-queue-loading><span class="loading__spinner" aria-hidden="true"></span><p class="loading__text">Đang tải danh sách tin tìm gia sư…</p></div>
+                    <div class="table-frame" data-queue-table hidden>
+                        <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách tin tìm gia sư, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                            <table class="table table--review">
+                                <caption class="table__caption table__caption--sr-only">Danh sách tin tìm gia sư theo trạng thái và bộ lọc</caption>
+                                <thead><tr><th scope="col">Tin tìm gia sư</th><th scope="col">Người đăng</th><th scope="col">Môn &amp; cấp lớp</th><th scope="col">Khu vực / hình thức</th><th scope="col">Thời gian gửi</th><th scope="col">Rà soát hệ thống</th><th scope="col">Trạng thái</th><th scope="col" class="table__action-heading">Thao tác</th></tr></thead>
+                                <tbody data-queue-list></tbody>
+                            </table>
+                        </div>
+                        <div class="job-review-queue__table-footer table-footer">
+                            <nav class="pagination pagination--table" aria-label="Phân trang danh sách tin" data-component="pagination" data-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1">
+                                <p class="pagination__summary">Hiển thị <strong data-range-start>0</strong>–<strong data-range-end>0</strong> trong <strong data-total-count>0</strong> tin</p>
+                                <div class="pagination__controls">
+                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button>
+                                    <span class="pagination__controls" data-page-numbers><button class="pagination__button is-current" type="button" data-page="1" aria-current="page">1</button></span>
+                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau" disabled><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+                                </div>
+                            </nav>
+                            <div class="job-review-queue__page-size table-footer__page-size"><label for="queue-page-size">Số tin mỗi trang</label><select class="select-control select-control--native" id="queue-page-size" data-queue-page-size><option value="3">3</option><option value="5" selected>5</option><option value="10">10</option></select></div>
+                        </div>
+                    </div>
+                    <div class="empty-state" data-component="empty-state" data-queue-empty hidden><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title">Không tìm thấy tin phù hợp</h2><p class="empty-state__description">Thử thay đổi từ khóa hoặc xóa bộ lọc để xem các tin trong trạng thái này.</p><button class="button button--outline" type="button" data-queue-reset>Xóa bộ lọc</button></div>
+                </section>
+
+                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải danh sách, tìm kiếm và lọc tin.</p></noscript>
+            </div>
+        </main>
+
+        <template id="queue-row-template">
+            <tr data-queue-row>
+                <th scope="row"><div class="table__primary" data-job-title></div><span class="table__reference" data-job-reference></span><small data-job-sessions></small><small data-job-applications></small></th>
+                <td><div class="table__person"><span class="avatar avatar--small" aria-hidden="true" data-job-avatar></span><div><strong data-job-poster></strong><small data-job-role></small></div></div></td>
+                <td><span class="badge badge--info" data-job-subject></span><small data-job-fee></small></td>
+                <td><span data-job-region></span><small data-job-format></small></td>
+                <td><time class="table__submitted" data-job-date></time><small data-job-time></small></td>
+                <td><span class="badge" data-job-signal></span><small class="table__review-note" data-job-signal-note></small></td>
+                <td><span class="badge" data-job-status></span></td>
+                <td class="table__action"><a href="job-review-detail.html" data-job-detail>Xem chi tiết</a></td>
+            </tr>
+        </template>
+    </div>
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
+    <script src="../../js/pages/admin/tutor-review-data.js" defer></script>
+    <script src="../../js/pages/admin/payout-data.js" defer></script>
+    <script src="../../js/core/admin-sidebar.js" defer></script>
+    <script src="../../js/core/admin-header.js" defer></script>
+    <script src="../../js/core/search-input.js" defer></script>
+    <script src="../../js/core/tabs.js" defer></script>
+    <script src="../../js/core/pagination.js" defer></script>
+    <script src="../../js/pages/admin/job-review-data.js" defer></script>
+    <script src="../../js/pages/admin/job-review-queue.js" defer></script>
+</body>
+</html>

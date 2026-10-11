@@ -5,7 +5,7 @@
 }
 .confirm-page [hidden],
 #confirm-modal [hidden],
-#report-modal [hidden] {
+#cancel-modal [hidden] {
     display: none;
 }
 .confirm-page > .breadcrumb,
@@ -21,12 +21,17 @@
 .confirm-main,
 .confirm-stack {
     display: grid;
+    /* Track ngầm định của grid có size = max-content, nên bảng 640px đẩy cột vượt
+       khỏi container 358px; min-width:0 trên container không đủ để track co lại. */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-5);
     min-width: 0;
 }
 .confirm-sidebar {
     position: sticky;
-    top: var(--space-6);
+    top: var(--scroll-offset);
+    max-height: calc(100dvh - var(--scroll-offset) - var(--space-4));
+    overflow-y: auto;
     min-width: 0;
 }
 .confirm-panel {
@@ -42,6 +47,11 @@
     align-items: start;
     gap: var(--space-3);
     font-size: var(--font-size-sm);
+}
+/* avatar--large chiếm 72px; cột chữ cần lấy hết chỗ còn lại */
+.confirm-party > div {
+    flex: 1 1 auto;
+    min-width: 0;
 }
 .confirm-party h3,
 .confirm-note h3,
@@ -69,9 +79,10 @@
     color: var(--color-primary);
     font-size: var(--font-size-xl);
 }
+/* Số ô theo chiều rộng thật của khối, không theo breakpoint cứng. */
 .confirm-fee-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
     gap: var(--space-3);
     margin-top: var(--space-4);
 }
@@ -151,12 +162,32 @@
     font-size: var(--font-size-2xl);
     margin-top: var(--space-2);
 }
-@media (max-width: 960px) {
+/* Ghi chú dưới mỗi ô trong bảng phí (JS sinh thêm <small>). */
+.confirm-fee-grid small {
+    display: block;
+    margin-top: var(--space-2);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+}
+/* Cảnh báo đối soát: tổng đơn ≠ tổng hạng mục ≠ tổng hợp đồng. */
+.confirm-reconcile-warning {
+    color: var(--color-warning-text);
+    font-weight: 600;
+}
+.confirm-error {
+    margin-top: var(--space-2);
+    color: var(--color-danger-text);
+    font-size: var(--font-size-sm);
+}
+@media (max-width: 64rem) {
     .confirm-layout {
-        grid-template-columns: 1fr;
+        /* 1fr = min-width:auto: cot khong he co khi bang 5-6 cay nam trong no. */
+        grid-template-columns: minmax(0, 1fr);
     }
     .confirm-sidebar {
         position: static;
+        max-height: none;
+        overflow: visible;
     }
 }
 @media (max-width: 560px) {
@@ -165,19 +196,11 @@
     }
     .confirm-two-columns,
     .confirm-fee-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 @media print {
-    .user-header,
-    .user-footer,
-    .confirm-sidebar,
-    .breadcrumb,
-    #consents,
-    dialog,
-    .toast-region {
-        display: none !important;
-    }
+
     .confirm-page {
         max-width: none;
         padding: 0;

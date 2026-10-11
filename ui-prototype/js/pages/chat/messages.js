@@ -2,8 +2,42 @@
  * No messages or attachments are uploaded; state is kept for this page session only.
  */
 (() => {
+  const Store = window.EduStore
+  /* Dải "hợp đồng liên kết" đọc từ EduStore — cùng bản ghi với trang chi tiết hợp đồng.
+     Bảng hard-code cũ ở đây mâu thuẫn số liệu thật (HD-20260905-019 ghi "Đang thực hiện"
+     trong khi hợp đồng đã hủy; HD-20260919-024 ghi 8 buổi/220.000 đ thay vì 24/210.000 đ). */
+  const MODE_LABEL = { online: 'Học trực tuyến', home: 'Học trực tiếp tại nhà', both: 'Học trực tiếp hoặc trực tuyến' }
+  const contractSummary = id => {
+    if (!Store) return null
+    const record = Store.contract(id)
+    if (!record) return null
+    const order = Store.order(record.orderId)
+    const item = order && Array.isArray(order.items) ? order.items[0] : null
+    const offering = item && item.offeringId ? Store.offering(item.offeringId) : null
+    const split = Store.splitRelease(record.unitPrice, Number(record.feeRate) || Store.DEMO_FEE_RATE)
+    const upcoming = Store.sessionsOf(record.id).find(entry => entry.no > Store.toInteger(record.completedSessions))
+    const parts = String((item && item.scheduleText) || '').split(',').map(part => part.trim()).filter(Boolean)
+    return {
+      course: (offering && offering.subjectLabel) || (item && item.offeringTitle) || 'Dịch vụ đã đặt',
+      status: Store.statusOf(Store.CONTRACT_STATUS, record.status).label,
+      progress: Store.toInteger(record.completedSessions),
+      sessions: Store.toInteger(record.sessions),
+      fee: Store.toInteger(record.unitPrice),
+      income: split.tutorNetReleased,
+      mode: (offering && MODE_LABEL[offering.mode]) || (item && item.offeringType === 'GROUP_CLASS' ? 'Lớp nhóm' : 'Chưa ghi rõ hình thức'),
+      next: upcoming
+        ? {
+          lesson: upcoming.no,
+          weekday: parts[0] || 'Chưa ghi lịch',
+          date: upcoming.date,
+          time: (parts[1] || '—') + (item ? ' · ' + item.durationMinutes + ' phút' : ''),
+          topic: 'Theo kế hoạch của gia sư (dữ liệu mẫu chưa ghi từng buổi)'
+        }
+        : null
+    }
+  }
   const conversations = [
-    { id: 'lan', name: 'Chị Mai Lan', initials: 'ML', student: 'Trần Gia Huy', course: 'Toán · Lớp 11', unread: 0, contract: true, messages: [
+    { id: 'lan', name: 'Chị Mai Lan', initials: 'ML', student: 'Trần Gia Huy', course: 'Toán · Lớp 11', mode: 'Học trực tiếp', unread: 0, contractId: 'HD-20260919-024', contractIds: ['HD-20260919-024', 'HD-20260926-025', 'HD-20260810-018', 'HD-20260715-012'], messages: [
       { text: 'Chào chị Lan, hôm nay Gia Huy học khá tốt phần hệ phương trình. Em đã giao thêm bài về nhà để luyện phần tham số m.', sent: true, time: '20:38' },
       { text: 'Vâng thầy. Phần nào cháu còn yếu nhất để tôi nhắc cháu ôn thêm ạ?', time: '20:41' },
       { text: 'Gia Huy làm tốt phần cơ bản, nhưng cần luyện thêm cách biện luận số nghiệm theo tham số. Chị nhắc em làm lại các bài đã chữa nhé.', sent: true, time: '20:44' },
@@ -11,27 +45,45 @@
       { text: 'Đúng chị nhé. Buổi 4 học ngày 09/10, từ 19:00 đến 20:30 tại nhà mình theo lịch đã thống nhất.', sent: true, time: '20:48' },
       { text: 'Vâng thầy, tôi sẽ nhắc Gia Huy hoàn thành bài tập trước buổi học.', time: '20:50' }
     ] },
-    { id: 'nam', name: 'Anh Hoàng Nam', initials: 'HN', student: 'Minh Khang', course: 'Toán · Lớp 10', unread: 2, messages: [
+    { id: 'nam', name: 'Anh Hoàng Nam', initials: 'HN', student: 'Minh Khang', course: 'Toán · Lớp 10', mode: 'Học trực tiếp', unread: 2, contractId: 'HD-20260928-027', contractIds: ['HD-20260928-027'], messages: [
       { text: 'Chào thầy, Minh Khang cần ôn thêm phần hàm số.', time: '18:20' },
       { text: 'Thầy gửi lại nội dung bài tập buổi trước giúp anh nhé.', time: '18:22' }
     ] },
-    { id: 'ha', name: 'Chị Thu Hà', initials: 'TH', student: 'Ngọc Anh', course: 'Toán · Lớp 9', unread: 0, messages: [
+    { id: 'ha', name: 'Chị Thu Hà', initials: 'TH', student: 'Ngọc Anh', course: 'Toán · Lớp 9', mode: 'Học trực tuyến', unread: 0, contractId: 'HD-20260905-019', contractIds: ['HD-20260905-019'], messages: [
       { text: 'Em đã gửi kế hoạch ôn tập cho Ngọc Anh, chị xem giúp em nhé.', sent: true, time: '16:10' },
       { text: 'Cảm ơn thầy.', time: '16:15' }
     ] },
-    { id: 'binh', name: 'Lê Thanh Bình', initials: 'TB', student: 'Lê Thanh Bình', course: 'Toán · Luyện thi đại học', unread: 0, messages: [
+    { id: 'binh', name: 'Lê Thanh Bình', initials: 'TB', student: 'Lê Thanh Bình', course: 'Toán · Luyện thi đại học', mode: 'Học trực tuyến', unread: 0, messages: [
       { text: 'Em đã xem lịch học mới rồi ạ.', time: '15:30' }
     ] }
   ]
   const byId = id => document.getElementById(id)
+  // Mỗi trang chi tiết chỉ hiển thị được các mã có trong dữ liệu của chính trang đó.
+  const detailPages = {
+    tutor: { href: '../contract/tutor-detail.html', ids: ['HD-20260905-019', 'HD-20260919-024', 'HD-20260926-025', 'HD-20260928-027'] },
+    student: { href: '../contract/student-detail.html', ids: ['HD-20260715-012', 'HD-20260810-018', 'HD-20260919-024', 'HD-20260926-025'] }
+  }
+  // Ưu tiên trang chi tiết phía gia sư; nếu trang đó không có mã này thì dùng trang hiển thị được mã.
+  const detailHref = id => {
+    if (!id) return null
+    const page = detailPages.tutor.ids.includes(id)
+      ? detailPages.tutor
+      : detailPages.student.ids.includes(id) ? detailPages.student : null
+    return page ? `${page.href}?id=${encodeURIComponent(id)}` : null
+  }
   const layout = byId('chat-layout')
   const input = byId('message-input')
   const history = byId('message-history')
   const drafts = new Map()
   const urls = new Set()
-  let active = conversations[0]
+  const requestedContract = new URLSearchParams(location.search).get('contract')
+  const threadFor = id => conversations.find(c => (c.contractIds || []).includes(id)) || null
+  const matchedThread = requestedContract ? threadFor(requestedContract) : null
+  let active = matchedThread || conversations[0]
+  let selectedContract = matchedThread && matchedThread.contractIds.includes(requestedContract) ? requestedContract : active.contractId || null
   let filter = 'all'
   let attachment = null
+  const money = value => new Intl.NumberFormat('vi-VN').format(value) + ' ₫'
   const normalize = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').toLowerCase()
   const node = (tag, className, text) => {
     const element = document.createElement(tag)
@@ -114,6 +166,39 @@
     }
   }
   const updateSend = () => { byId('send-button').disabled = !input.value.trim() && !attachment }
+  const renderLinked = () => {
+    const record = selectedContract ? contractSummary(selectedContract) : null
+    const href = detailHref(selectedContract)
+    for (const id of ['contract-link', 'linked-contract']) byId(id).hidden = !record
+    byId('linked-lesson').hidden = !record || !record.next
+    byId('student-mode').textContent = active.mode || 'Học trực tiếp'
+    if (!record) return
+    const bar = byId('contract-link')
+    bar.replaceChildren()
+    bar.append(`${record.course} · ${selectedContract} `)
+    if (href) { bar.append(node('span', null, 'Xem hợp đồng')); bar.href = href } else bar.removeAttribute('href')
+    byId('student-mode').textContent = record.mode
+    byId('linked-contract-eyebrow').textContent = `HỢP ĐỒNG ${record.status.toUpperCase()}`
+    byId('linked-contract-code').textContent = selectedContract
+    byId('chat-progress-label').textContent = `Tiến độ: ${record.progress} / ${record.sessions} buổi`
+    const progress = byId('chat-progress')
+    progress.max = String(record.sessions)
+    progress.value = String(record.progress)
+    progress.textContent = `${record.progress}/${record.sessions}`
+    byId('linked-fee').textContent = money(record.fee)
+    byId('linked-income').textContent = money(record.income)
+    const detailLink = byId('linked-contract-link')
+    detailLink.href = href || detailLink.getAttribute('href')
+    detailLink.hidden = !href
+    if (record.next) {
+      byId('linked-lesson-title').textContent = `Buổi ${record.next.lesson} · ${record.next.weekday}`
+      byId('linked-lesson-date').textContent = `${record.next.date} · ${record.next.time}`
+      byId('linked-lesson-topic').textContent = record.next.topic
+      const lessonLink = byId('linked-lesson-link')
+      lessonLink.href = href ? `${href}#next-lesson` : lessonLink.getAttribute('href')
+      lessonLink.hidden = !href
+    }
+  }
   const renderConversation = () => {
     byId('contact-name').textContent = active.name
     byId('contact-avatar').textContent = active.initials
@@ -121,7 +206,7 @@
     byId('student-name').textContent = active.student
     byId('student-course').textContent = active.course
     byId('guardian-name').textContent = active.name
-    for (const id of ['contract-link', 'linked-contract', 'linked-lesson']) byId(id).hidden = !active.contract
+    renderLinked()
     history.replaceChildren(node('p', 'chat-day', 'Thứ Hai, 05/10/2026'))
     let day = '2026-10-05'
     active.messages.forEach(message => {
@@ -141,6 +226,7 @@
     if (!button) return
     drafts.set(active.id, { text: input.value, attachment })
     active = conversations.find(c => c.id === button.dataset.conversationId)
+    selectedContract = active.contractId || null
     active.unread = 0
     layout.classList.add('chat-layout--conversation')
     renderThreads()
@@ -152,6 +238,7 @@
   document.querySelectorAll('[data-chat-filter]').forEach(button => button.addEventListener('click', () => { filter = button.dataset.chatFilter; renderThreads() }))
   byId('back-to-contacts').addEventListener('click', () => {
     layout.classList.remove('chat-layout--conversation', 'chat-layout--context')
+    byId('toggle-context').setAttribute('aria-expanded', 'false')
     byId('conversation-search').focus()
   })
   const closeContext = () => {
@@ -212,8 +299,17 @@
     updateSend()
   })
   window.addEventListener('pagehide', event => { if (!event.persisted) urls.forEach(url => URL.revokeObjectURL(url)) })
-  const wallet = document.querySelector('[data-menu-item="2"] [data-menu-label]')
-  if (wallet) wallet.textContent = 'Ví Edu Connect'
+  if (requestedContract && !matchedThread) {
+    const notice = byId('contract-notice')
+    notice.textContent = `Không tìm thấy cuộc trò chuyện nào liên quan tới hợp đồng ${requestedContract}.`
+    notice.hidden = false
+  }
+  if (matchedThread) {
+    matchedThread.unread = 0
+    layout.classList.add('chat-layout--conversation')
+    byId('chat-status').textContent = `Đang mở cuộc trò chuyện với ${matchedThread.name} về hợp đồng ${requestedContract}.`
+  }
+  // Mở pane trước khi đo chiều cao lịch sử; pane ẩn trên mobile chưa cuộn được.
   renderThreads()
   renderConversation()
 })()

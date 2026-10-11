@@ -1,0 +1,65 @@
+.job-review-detail { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); max-width: 92rem; margin-inline: auto; }
+.job-review-detail-page [hidden] { display: none !important; }
+.job-review-detail__header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: var(--space-4); }
+.job-review-detail__title-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.job-review-detail__header h1 { font-size: var(--font-size-2xl); line-height: 1.4; letter-spacing: -0.025em; }
+.job-review-detail__header p { max-width: 42rem; margin-top: var(--space-2); color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.job-review-detail__header > a { flex: 0 0 auto; }
+.job-review-detail__layout { display: grid; grid-template-columns: minmax(0, 1fr) 19.5rem; gap: var(--space-6); align-items: start; }
+.job-review-detail__sections { display: grid; min-width: 0; gap: var(--space-5); }
+.job-review-detail__section-heading { display: flex; align-items: center; gap: var(--space-3); }
+.job-review-detail__section-heading > img { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; }
+.job-review-detail__section-heading .card__title { color: var(--color-primary-hover); font-size: var(--font-size-base); line-height: 1.5; }
+.job-review-detail__poster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.job-review-detail__poster h3 { margin-bottom: var(--space-1); font-size: var(--font-size-base); }
+.job-review-detail__poster p { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.job-review-detail__poster > .badge { margin-left: auto; align-self: flex-start; }
+.job-review-detail__submitted { margin-top: var(--space-2); color: var(--color-text-secondary) !important; font-size: var(--font-size-xs) !important; }
+.job-review-detail__copy { display: grid; gap: var(--space-3); }
+.job-review-detail__copy h3 { font-size: var(--font-size-xl); line-height: 1.5; }
+.job-review-detail__copy p { color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: 1.9; white-space: pre-line; }
+.job-review-detail__label { color: var(--color-text-secondary); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.055em; text-transform: uppercase; }
+.job-review-detail__needs-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); margin: 0; }
+.job-review-detail__info { padding: var(--space-3); background: var(--color-surface-low); border-radius: var(--radius-md); }
+.job-review-detail__info dt { font-size: var(--font-size-xs); }
+.job-review-detail__budget { color: var(--color-primary-hover); }
+.job-review-detail__schedule { margin-top: var(--space-5); }
+.job-review-detail__schedule h3, .job-review-detail__tutor-note h3, .job-review-detail__inspection h3, .job-review-detail__checklist h3, .job-review-detail__reason-templates h3 { margin-bottom: var(--space-2); font-size: var(--font-size-xs); font-weight: 600; line-height: 1.6; }
+.job-review-detail__schedule ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; }
+.job-review-detail__schedule li { padding: var(--space-2) var(--space-3); border: 1px solid var(--color-primary-focus); border-radius: var(--radius-md); background: var(--color-primary-container); color: var(--color-primary-hover); font-size: var(--font-size-xs); }
+.job-review-detail__tutor-note { margin-top: var(--space-3); padding: var(--space-4); border-radius: var(--radius-md); background: var(--color-surface-low); }
+.job-review-detail__tutor-note p { color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: 1.8; }
+.job-review-detail__signal .alert__title { font-size: var(--font-size-base); }
+.job-review-detail__inspection { margin-top: var(--space-4); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+.job-review-detail__inspection blockquote { margin: 0; color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: 1.9; white-space: pre-line; overflow-wrap: anywhere; }
+.job-review-detail__actions { position: sticky; top: var(--admin-scroll-offset); max-height: calc(100dvh - var(--admin-scroll-offset) - var(--space-4)); overflow-y: auto; }
+.job-review-detail__actions .card__title { font-size: var(--font-size-base); }
+.job-review-detail__actions .card__description { font-size: var(--font-size-xs); }
+.job-review-detail__actions dl { margin: 0; }
+.job-review-detail__actions .info-row { align-items: center; padding-block: var(--space-2); }
+.job-review-detail__actions .info-row__label { flex-basis: 35%; }
+.job-review-detail__actions .info-row__value { font-weight: 500; }
+.job-review-detail__checklist { margin-block: var(--space-4); padding: var(--space-3); background: var(--color-surface-low); border-radius: var(--radius-md); }
+.job-review-detail__checklist ul { display: grid; gap: var(--space-2); padding-left: var(--space-4); color: var(--color-text-secondary); font-size: var(--font-size-xs); }
+.job-review-detail__actions .button { width: 100%; }
+.job-review-detail__actions .button > img { width: 1.125rem; height: 1.125rem; }
+.job-review-detail__actions .button--primary > img { filter: brightness(0) invert(1); }
+.job-review-detail__action-help { margin-block: var(--space-2) var(--space-4); color: var(--color-text-secondary); font-size: var(--font-size-xs); line-height: 1.8; }
+.job-review-detail__action-help:last-child { margin-bottom: 0; }
+.job-review-detail__reason-templates > div { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.job-review-detail__error { color: var(--color-danger); font-size: var(--font-size-xs); line-height: 1.7; }
+.job-review-detail__skip-link { position: fixed; top: var(--space-2); left: var(--space-2); z-index: 60; padding: var(--space-3); background: var(--color-surface); border: 2px solid var(--color-primary); border-radius: var(--radius-md); transform: translateY(-200%); }
+.job-review-detail__skip-link:focus { transform: translateY(0); }
+@media (max-width: 75rem) {
+  .job-review-detail__layout { grid-template-columns: minmax(0, 1fr); }
+  .job-review-detail__actions { position: static; max-height: none; overflow: visible; }
+}
+@media (max-width: 42rem) {
+  .job-review-detail__header h1 { font-size: var(--font-size-xl); }
+  .job-review-detail__needs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .job-review-detail__copy h3 { font-size: var(--font-size-base); }
+  .job-review-detail__poster > .badge { margin-left: 0; }
+}
+@media (max-width: 24rem) {
+  .job-review-detail__needs-grid { grid-template-columns: minmax(0, 1fr); }
+}

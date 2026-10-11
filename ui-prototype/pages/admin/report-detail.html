@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
+    <title>Xử lý báo cáo &amp; tranh chấp | Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <!-- Component: AdminSidebar | Nguồn: css/components/layout/admin-sidebar.css -->
+    <link rel="stylesheet" href="../../css/components/layout/admin-sidebar.css">
+    <!-- Component: AdminHeader | Nguồn: css/components/layout/admin-header.css -->
+    <link rel="stylesheet" href="../../css/components/layout/admin-header.css">
+    <!-- Component: Breadcrumb | Nguồn: css/components/navigation/breadcrumb.css -->
+    <link rel="stylesheet" href="../../css/components/navigation/breadcrumb.css">
+    <!-- Component: Button | Nguồn: css/components/action/button.css -->
+    <link rel="stylesheet" href="../../css/components/action/button.css">
+    <!-- Component: ComponentIcon | Nguồn: css/components/action/component-icon.css -->
+    <link rel="stylesheet" href="../../css/components/action/component-icon.css">
+    <!-- Component: Card | Nguồn: css/components/data-display/card.css -->
+    <link rel="stylesheet" href="../../css/components/data-display/card.css">
+    <!-- Component: Avatar | Nguồn: css/components/data-display/avatar.css -->
+    <link rel="stylesheet" href="../../css/components/data-display/avatar.css">
+    <!-- Component: InfoRow | Nguồn: css/components/data-display/info-row.css -->
+    <link rel="stylesheet" href="../../css/components/data-display/info-row.css">
+    <!-- Component: FileAttachmentItem | Nguồn: css/components/data-display/file-attachment-item.css -->
+    <link rel="stylesheet" href="../../css/components/data-display/file-attachment-item.css">
+    <!-- Component: Tag | Nguồn: css/components/data-display/tag.css -->
+    <link rel="stylesheet" href="../../css/components/data-display/tag.css">
+    <!-- Component: Textarea | Nguồn: css/components/form/textarea.css -->
+    <link rel="stylesheet" href="../../css/components/form/textarea.css">
+    <!-- Component: Radio | Nguồn: css/components/form/radio.css -->
+    <link rel="stylesheet" href="../../css/components/form/radio.css">
+    <!-- Component: Badge | Nguồn: css/components/feedback/badge.css -->
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <!-- Component: Alert | Nguồn: css/components/feedback/alert.css -->
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <!-- Component: Modal | Nguồn: css/components/feedback/modal.css -->
+    <link rel="stylesheet" href="../../css/components/feedback/modal.css">
+    <!-- Component: Toast | Nguồn: css/components/feedback/toast.css -->
+    <link rel="stylesheet" href="../../css/components/feedback/toast.css">
+    <!-- Component: EmptyState | Nguồn: css/components/feedback/empty-state.css -->
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
+    <link rel="stylesheet" href="../../css/layouts.css">
+    <link rel="stylesheet" href="../../css/pages/admin/report-detail.css">
+</head>
+<body class="report-detail-page">
+    <a class="report-detail__skip-link" href="#report-main">Đến nội dung chính</a>
+    <div class="admin-shell" data-component="admin-shell" data-report-detail>
+        <aside class="admin-sidebar admin-shell__sidebar" aria-label="Thanh điều hướng quản trị" data-component="admin-sidebar">
+        <div class="admin-sidebar__main">
+            <header class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="dashboard.html" aria-label="Edu Connect quản trị">
+                    <img class="admin-sidebar__brand-logo" src="../../assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000">
+                </a>
+                <span class="admin-sidebar__role">Quản trị</span>
+            </header>
+
+            <p class="admin-sidebar__group-label">Điều hành</p>
+            <nav class="admin-sidebar__nav" aria-label="Các mục quản trị">
+                <a class="admin-sidebar__item" href="dashboard.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dashboard.svg" alt=""><span class="admin-sidebar__item-label">Tổng quan</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="manage.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/settings.svg" alt=""><span class="admin-sidebar__item-label">Quản lý nền tảng</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="tutor-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="tutors" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="job-review-queue.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/tutor-search.svg" alt=""><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="jobs" hidden></span>
+                </a>
+                <a class="admin-sidebar__item is-active" href="reports.html" aria-current="page">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/dispute.svg" alt=""><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="reports" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="payout-requests.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/wallet.svg" alt=""><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="payouts" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="audit-logs.html">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="../../assets/icons/activity-log.svg" alt=""><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
+                </a>
+            </nav>
+        </div>
+        <footer class="admin-sidebar__footer">Edu Connect · Quản trị hệ thống</footer>
+    </aside>
+        <header class="admin-header" data-component="admin-header" data-has-unread="false">
+        <form class="admin-header__search" role="search" data-admin-search>
+            <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
+            <img class="admin-header__icon admin-header__search-icon" src="../../assets/icons/search.svg" alt="">
+            <input class="admin-header__search-input" id="admin-global-search" name="query" type="search" autocomplete="off" placeholder="Tìm kiếm theo mã tin, mã hồ sơ gia sư, mã yêu cầu rút tiền..." data-search-input>
+            <button class="admin-header__clear-search" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><img class="admin-header__icon" src="../../assets/icons/cancel.svg" alt=""></button>
+            <section class="admin-header__search-results" aria-label="Kết quả tìm kiếm nhanh" data-search-results hidden>
+                <div class="admin-header__popover-heading">
+                    <span>Kết quả khớp mã</span>
+                    <span>ESC để đóng</span>
+                </div>
+                <a class="admin-header__result" href="report-detail.html?id=BC-2026-041">
+                    <span class="admin-header__result-type">BÁO CÁO</span>
+                    <span class="admin-header__result-copy"><strong>BC-2026-041 · Phản ánh thời lượng Buổi 3</strong><span>Phụ huynh: Chị Mai Lan · Gia sư: Nguyễn Minh Anh</span></span>
+                    <span class="admin-header__result-status is-warning">Mới tiếp nhận</span>
+                </a>
+                <a class="admin-header__result" href="reports.html">
+                    <span class="admin-header__result-type admin-header__result-type--neutral">DANH SÁCH</span>
+                    <span class="admin-header__result-copy"><strong>Báo cáo &amp; tranh chấp</strong><span>Xem toàn bộ vụ việc theo trạng thái</span></span>
+                    <img class="admin-header__icon" src="../../assets/icons/chevron-right.svg" alt="">
+                </a>
+            </section>
+        </form>
+
+        <div class="admin-header__utilities">
+            <span class="admin-header__system-status"><span aria-hidden="true"></span>Hệ thống bình thường</span>
+            <div class="admin-header__popover-wrap" data-notification-wrap>
+                <button class="admin-header__icon-button" type="button" aria-label="Thông báo hệ thống" aria-expanded="false" aria-controls="admin-notification-popover" data-notification-trigger><img class="admin-header__icon" src="../../assets/icons/notification.svg" alt=""><span class="admin-header__notification-dot" aria-hidden="true"></span></button>
+                <section class="admin-header__notification-popover" id="admin-notification-popover" aria-label="Thông báo vận hành" data-notification-popover hidden>
+                    <div class="admin-header__notification-title"><strong>Thông báo vận hành</strong><span>3 mới</span></div>
+                    <a class="admin-header__notification" href="tutor-review-queue.html"><img class="admin-header__icon" src="../../assets/icons/tutor-verification.svg" alt=""><span><strong>Duyệt hồ sơ gia sư mới</strong><small>Trần Thị Mai Hương vừa tải chứng chỉ Sư phạm Toán.</small><time>4 phút trước</time></span></a>
+                    <a class="admin-header__notification" href="payout-requests.html"><img class="admin-header__icon admin-header__notification-icon--accent" src="../../assets/icons/wallet.svg" alt=""><span><strong>Yêu cầu rút tiền: #HĐ-8910</strong><small>Số tiền 3.500.000đ từ gia sư Nguyễn Hữu Nam.</small><time>18 phút trước</time></span></a>
+                    <a class="admin-header__popover-link" href="audit-logs.html">Xem tất cả nhật ký thông báo</a>
+                </section>
+            </div>
+            <span class="admin-header__divider" aria-hidden="true"></span>
+            <div class="admin-header__popover-wrap" data-profile-wrap>
+                <button class="admin-header__profile-trigger" type="button" aria-expanded="false" aria-controls="admin-profile-popover" data-profile-trigger>
+                    <span class="admin-header__avatar" aria-hidden="true">QT</span>
+                    <span class="admin-header__profile-copy"><strong>Quản trị viên</strong><small>Admin</small></span>
+                    <img class="admin-header__chevron admin-header__icon" src="../../assets/icons/mui-ten-xuong.svg" alt="">
+                </button>
+                <section class="admin-header__profile-popover" id="admin-profile-popover" aria-label="Tài khoản quản trị" data-profile-popover hidden>
+                    <div class="admin-header__profile-summary"><strong>Nguyễn Xuân Đại</strong><span>admin@educonnect.vn</span><span class="admin-header__permission"><img class="admin-header__icon" src="../../assets/icons/shield-user.svg" alt="">Quyền hạn: Root Superadmin</span></div>
+                    <nav class="admin-header__profile-menu" aria-label="Tác vụ tài khoản quản trị">
+                        <a href="audit-logs.html"><img class="admin-header__icon" src="../../assets/icons/audit-log.svg" alt="">Nhật ký thao tác cá nhân</a>
+                        <a class="is-danger" href="../auth/login.html"><img class="admin-header__icon" src="../../assets/icons/dang-xuat.svg" alt="">Đăng xuất phiên quản trị</a>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </header>
+        <main class="admin-shell__workspace" id="report-main" tabindex="-1">
+            <div class="admin-shell__content report-detail">
+                <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="reports.html">Báo cáo &amp; tranh chấp</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Xử lý báo cáo</span></li></ol></nav>
+                <header class="report-detail__header">
+                    <div>
+                        <div class="report-detail__title-row">
+                            <h1 data-detail-heading>Xử lý báo cáo</h1>
+                            <span class="badge badge--info" data-detail-status>Mới tiếp nhận</span>
+                            <span class="badge" data-detail-severity></span>
+                            <span class="badge badge--danger" data-detail-lock hidden>Khoản đang giữ</span>
+                        </div>
+                        <p><span data-detail-viewing>Đang xem vụ việc BC-2026-041.</span></p>
+                    </div>
+                    <a class="button button--secondary" href="reports.html"><span class="report-detail__back-arrow" aria-hidden="true">←</span>Quay lại danh sách</a>
+                </header>
+
+                <div class="empty-state" data-component="empty-state" data-detail-not-found hidden><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title">Không còn vụ việc nào để xử lý</h2><p class="empty-state__description">Quay lại danh sách báo cáo để chọn vụ việc.</p><a class="button button--outline" href="reports.html">Về danh sách báo cáo</a></div>
+                <section class="alert alert--warning" tabindex="-1" aria-live="polite" data-detail-fallback hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title">Mã vụ việc trong đường dẫn không hợp lệ</h2><p class="alert__message" data-fallback-message></p></div></section>
+                <section class="alert alert--contextual" tabindex="-1" aria-live="polite" data-detail-decision hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title" data-decision-title></h2><p class="alert__message" data-decision-description></p></div></section>
+
+                <div class="report-detail__layout" data-detail-content>
+                    <div class="report-detail__sections">
+                        <section class="card" aria-labelledby="report-overview-heading">
+                            <header class="card__header report-detail__section-heading">
+                                <span class="report-detail__section-icon" aria-hidden="true"><img src="../../assets/icons/receipt.svg" alt=""></span>
+                                <h2 class="card__title" id="report-overview-heading">1. Tổng quan báo cáo</h2>
+                                <span class="tag report-detail__section-pill" data-detail-code>BC-2026-041</span>
+                            </header>
+                            <div class="card__body">
+                                <dl class="report-detail__needs-grid">
+                                    <div class="info-row info-row--stacked report-detail__info"><dt class="info-row__label">Người báo cáo</dt><dd class="info-row__value" data-detail-reporter></dd></div>
+                                    <div class="info-row info-row--stacked report-detail__info"><dt class="info-row__label">Đối tượng liên quan</dt><dd class="info-row__value" data-detail-reported></dd></div>
+                                    <div class="info-row info-row--stacked report-detail__info"><dt class="info-row__label">Loại phản ánh</dt><dd class="info-row__value" data-detail-type></dd></div>
+                                    <div class="info-row info-row--stacked report-detail__info"><dt class="info-row__label">Phạm vi</dt><dd class="info-row__value" data-detail-scope></dd></div>
+                                    <div class="info-row info-row--stacked report-detail__info"><dt class="info-row__label" data-detail-reference-label>Hợp đồng liên quan</dt><dd class="info-row__value" data-detail-reference></dd></div>
+                                    <div class="info-row info-row--stacked report-detail__info"><dt class="info-row__label">Thời điểm tiếp nhận</dt><dd class="info-row__value"><time data-detail-created></time></dd></div>
+                                </dl>
+                                <figure class="report-detail__quote">
+                                    <figcaption class="report-detail__label">Nội dung người báo cáo cung cấp</figcaption>
+                                    <blockquote data-detail-description></blockquote>
+                                </figure>
+
+                            </div>
+                        </section>
+
+                        <section class="card" aria-labelledby="report-parties-heading">
+                            <header class="card__header report-detail__section-heading">
+                                <span class="report-detail__section-icon" aria-hidden="true"><img src="../../assets/icons/shield-user.svg" alt=""></span>
+                                <h2 class="card__title" id="report-parties-heading">2. Các bên liên quan</h2>
+                                <span class="tag report-detail__section-pill" data-detail-parties-count>0 bên</span>
+                            </header>
+                            <div class="card__body"><ul class="report-detail__parties" data-detail-parties></ul></div>
+                        </section>
+
+                        <section class="card" aria-labelledby="report-evidence-heading">
+                            <header class="card__header report-detail__section-heading">
+                                <span class="report-detail__section-icon" aria-hidden="true"><img src="../../assets/icons/chat-attachment.svg" alt=""></span>
+                                <h2 class="card__title" id="report-evidence-heading">3. Minh chứng (Evidence)</h2>
+                                <span class="tag report-detail__section-pill" data-detail-evidence-count>0 tệp</span>
+                            </header>
+                            <div class="card__body">
+                                <ol class="report-detail__evidence" data-detail-evidence></ol>
+
+                            </div>
+                        </section>
+
+                        <section class="card" aria-labelledby="report-thread-heading" data-detail-thread-card hidden>
+                            <header class="card__header report-detail__section-heading">
+                                <span class="report-detail__section-icon" aria-hidden="true"><img src="../../assets/icons/message.svg" alt=""></span>
+                                <h2 class="card__title" id="report-thread-heading">4. Trao đổi liên quan (trích xuất)</h2>
+                                <span class="tag report-detail__section-pill">Bản trích xuất minh họa</span>
+                            </header>
+                            <div class="card__body">
+                                <ol class="report-detail__thread" data-detail-thread></ol>
+
+                            </div>
+                        </section>
+
+                        <section class="card" aria-labelledby="report-timeline-heading">
+                            <header class="card__header report-detail__section-heading">
+                                <span class="report-detail__section-icon" aria-hidden="true"><img src="../../assets/icons/clock.svg" alt=""></span>
+                                <h2 class="card__title" id="report-timeline-heading">5. Lịch sử và trạng thái xử lý</h2>
+                                <span class="tag report-detail__section-pill" data-detail-timeline-state>Chưa có kết luận</span>
+                            </header>
+                            <div class="card__body">
+                                <ol class="report-detail__steps" aria-label="Các bước của vòng đời vụ việc" data-detail-steps></ol>
+                                <ol class="report-detail__timeline" data-detail-timeline></ol>
+
+                            </div>
+                        </section>
+                    </div>
+
+                    <aside class="card report-detail__actions" aria-labelledby="report-actions-heading">
+                        <header class="card__header">
+                            <p class="report-detail__label">Hành động quản trị</p>
+                            <h2 class="card__title" id="report-actions-heading">Quyết định giải quyết tranh chấp</h2>
+
+                        </header>
+                        <div class="card__body">
+                            <section class="report-detail__summary" aria-label="Tóm tắt vụ việc">
+                                <h3>Tóm tắt vụ việc</h3>
+                                <dl>
+                                    <div class="info-row info-row--compact"><dt class="info-row__label">Báo cáo</dt><dd class="info-row__value"><span class="badge" data-summary-status></span></dd></div>
+                                    <div class="info-row info-row--compact"><dt class="info-row__label">Mức độ</dt><dd class="info-row__value"><span class="badge" data-summary-severity></span></dd></div>
+                                    <div class="info-row info-row--compact"><dt class="info-row__label">Khoản đang giữ</dt><dd class="info-row__value" data-summary-money></dd></div>
+                                    <div class="info-row info-row--compact"><dt class="info-row__label">Người thụ lý</dt><dd class="info-row__value" data-summary-assignee></dd></div>
+                                </dl>
+                            </section>
+
+                            <fieldset class="radio-field report-detail__options">
+                                <legend class="report-detail__options-legend">Chọn phương án xử lý</legend>
+                                <div data-resolution-options></div>
+                            </fieldset>
+                            <p class="report-detail__option-detail" data-resolution-detail>Chọn một phương án để xem mô tả tác động.</p>
+
+                            <div class="textarea-field">
+                                <div class="textarea-field__label-row"><label class="textarea-field__label" for="report-decision-note">Kết luận xử lý <span class="textarea-field__required" aria-hidden="true">*</span></label><span class="textarea-field__counter" data-note-count>0/600</span></div>
+                                <textarea class="textarea-control" id="report-decision-note" rows="5" maxlength="600" minlength="10" required aria-describedby="report-note-help report-note-error" placeholder="Nhập căn cứ đối chiếu và kết luận của quản trị viên…" data-decision-note></textarea>
+                                <p class="textarea-field__help" id="report-note-help">Bắt buộc với thao tác kết luận, từ 10 đến 600 ký tự, dùng làm căn cứ lưu vết kiểm toán. Không ghi thông tin cá nhân nhạy cảm.</p>
+                                <p class="report-detail__error" role="alert" id="report-note-error" data-note-error hidden></p>
+                            </div>
+
+                            <button class="button button--secondary" type="button" data-action-investigate><img src="../../assets/icons/shield-alert.svg" alt="">Chuyển sang đang xác minh</button>
+                            <button class="button button--primary" type="button" data-action-resolve><img src="../../assets/icons/verified.svg" alt="">Xác nhận xử lý</button>
+                            <button class="button button--outline" type="button" data-action-dismiss><img src="../../assets/icons/cancel.svg" alt="">Bác báo cáo (không có căn cứ)</button>
+                            <p class="report-detail__action-help" data-action-help>Chọn phương án và nhập kết luận trước khi ghi nhận quyết định.</p>
+
+                            <section class="alert alert--warning report-detail__immutable" aria-label="Cảnh báo tính bất biến của quyết định">
+                                <span class="alert__icon" aria-hidden="true"></span>
+                                <div class="alert__content"><h3 class="alert__title">Cảnh báo bất biến</h3><p class="alert__message">Một vụ việc chỉ được kết luận một lần duy nhất. Sau khi xác nhận, trạng thái hiển thị không thể đảo ngược trong phiên làm việc này.</p></div>
+                            </section>
+                        </div>
+
+                    </aside>
+                </div>
+                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải đúng vụ việc và sử dụng các thao tác xử lý.</p></noscript>
+            </div>
+        </main>
+
+        <dialog class="modal" id="report-resolve-modal" aria-labelledby="resolve-modal-title" data-component="modal">
+            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="resolve-modal-title">Xác nhận xử lý vụ việc</h2></div><button class="modal__close" type="button" aria-label="Đóng xác nhận xử lý" data-modal-close>×</button></header>
+                <div class="modal__body"><p>Sau khi xác nhận, vụ việc chuyển sang Đã xử lý và không thể kết luận lần thứ hai.</p><dl><div class="info-row"><dt class="info-row__label">Mã vụ việc</dt><dd class="info-row__value" data-resolve-id></dd></div><div class="info-row"><dt class="info-row__label">Phương án đã chọn</dt><dd class="info-row__value" data-resolve-option></dd></div><div class="info-row"><dt class="info-row__label">Khoản đang giữ</dt><dd class="info-row__value" data-resolve-money></dd></div></dl><p class="modal__note" data-resolve-note></p><p class="report-detail__error" role="alert" data-modal-error="resolve" hidden></p></div>
+                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Chốt kết luận</button></footer>
+            </div>
+        </dialog>
+        <dialog class="modal" id="report-dismiss-modal" aria-labelledby="dismiss-modal-title" data-component="modal">
+            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--danger" aria-hidden="true"></span><div class="modal__heading"><h2 id="dismiss-modal-title">Bác báo cáo</h2></div><button class="modal__close" type="button" aria-label="Đóng xác nhận bác báo cáo" data-modal-close>×</button></header>
+                <div class="modal__body"><p>Vụ việc chuyển sang Đã bác bỏ và khoản đang giữ (nếu có) trở lại trạng thái bình thường.</p><dl><div class="info-row"><dt class="info-row__label">Mã vụ việc</dt><dd class="info-row__value" data-dismiss-id></dd></div><div class="info-row"><dt class="info-row__label">Người báo cáo</dt><dd class="info-row__value" data-dismiss-reporter></dd></div></dl><p class="modal__note" data-dismiss-note></p><p class="report-detail__error" role="alert" data-modal-error="dismiss" hidden></p></div>
+                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--danger" type="button" data-modal-confirm>Xác nhận bác bỏ</button></footer>
+            </div>
+        </dialog>
+        <dialog class="modal" id="report-investigate-modal" aria-labelledby="investigate-modal-title" data-component="modal">
+            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="investigate-modal-title">Chuyển hồ sơ sang đang xác minh</h2></div><button class="modal__close" type="button" aria-label="Đóng xác nhận chuyển trạng thái" data-modal-close>×</button></header>
+                <div class="modal__body"><p>Hồ sơ được gán cho quản trị viên và chuyển sang Đang xác minh. Chưa ghi nhận kết luận.</p><dl><div class="info-row"><dt class="info-row__label">Mã vụ việc</dt><dd class="info-row__value" data-investigate-id></dd></div><div class="info-row"><dt class="info-row__label">Mức độ</dt><dd class="info-row__value" data-investigate-severity></dd></div></dl><p class="report-detail__error" role="alert" data-modal-error="investigate" hidden></p></div>
+                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận chuyển</button></footer>
+            </div>
+        </dialog>
+        <dialog class="modal" id="report-evidence-modal" aria-labelledby="evidence-modal-title" data-component="modal">
+            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--info" aria-hidden="true"></span><div class="modal__heading"><h2 id="evidence-modal-title">Minh chứng đính kèm</h2></div><button class="modal__close" type="button" aria-label="Đóng cửa sổ minh chứng" data-modal-close>×</button></header>
+                <div class="modal__body"><p>Khung xem trước chỉ là phần tử giữ chỗ; bản mẫu không chứa tệp đính kèm thật.</p><div class="report-detail__preview" data-evidence-preview aria-hidden="true"><span class="component-icon component-icon--image" aria-hidden="true"></span></div><dl><div class="info-row"><dt class="info-row__label">Tên tệp</dt><dd class="info-row__value" data-evidence-name></dd></div><div class="info-row"><dt class="info-row__label">Loại minh chứng</dt><dd class="info-row__value" data-evidence-kind></dd></div><div class="info-row"><dt class="info-row__label">Thông tin</dt><dd class="info-row__value" data-evidence-meta></dd></div></dl></div>
+                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng cửa sổ</button></footer>
+            </div>
+        </dialog>
+    </div>
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
+    <script src="../../js/pages/admin/tutor-review-data.js" defer></script>
+    <script src="../../js/pages/admin/payout-data.js" defer></script>
+    <script src="../../js/core/admin-sidebar.js" defer></script>
+    <script src="../../js/core/admin-header.js" defer></script>
+    <script src="../../js/core/radio.js" defer></script>
+    <script src="../../js/core/modal.js" defer></script>
+    <script src="../../js/core/toast.js" defer></script>
+    <script src="../../js/pages/admin/report-data.js" defer></script>
+    <script src="../../js/pages/admin/report-detail.js" defer></script>
+</body>
+</html>

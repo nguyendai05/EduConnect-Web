@@ -1,0 +1,197 @@
+.admin-manage-page [hidden] {
+  display: none !important;
+}
+
+/* tabs.css ẩn mọi .tabs--contained .tabs__panel (specificity 0,2,0) và chỉ toggling `hidden`
+   mới là contract của tabs.js — cần selector đủ mạnh để panel đang mở hiện ra. */
+.admin-manage-page .tabs--contained .tabs__panel:not([hidden]) {
+  display: grid;
+}
+
+.admin-manage__skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -3rem;
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: top 160ms ease;
+}
+
+.admin-manage__skip-link:focus-visible {
+  top: var(--space-4);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.admin-manage {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.admin-manage__header {
+  align-items: flex-start;
+}
+
+.admin-manage__subtitle {
+  margin-top: var(--space-1);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.admin-manage__demo-badge {
+  flex: 0 0 auto;
+}
+
+.admin-manage__notice {
+  margin: 0;
+}
+
+.admin-manage__tabs {
+  min-width: 0;
+}
+
+.admin-manage__tabs .tabs__list {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.admin-manage__panel {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+  color: var(--color-text);
+}
+
+.admin-manage__panel-note code {
+  font-size: 0.85em;
+}
+
+.admin-manage__toolbar {
+  display: grid;
+  grid-template-columns: minmax(14rem, 2fr) repeat(2, minmax(10rem, 1fr));
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.admin-manage__count {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.admin-manage__table-footer {
+  flex-wrap: wrap;
+}
+
+.admin-manage__row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.admin-manage__row-actions .button {
+  min-height: 2.25rem;
+}
+
+.admin-manage__detail {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.admin-manage__detail-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.admin-manage__detail-meta {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.admin-manage__detail-meta dt {
+  color: var(--color-text-secondary);
+}
+
+.admin-manage__detail-meta dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.admin-manage__detail-heading {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+}
+
+.admin-manage__items {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-manage__items li {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.admin-manage__items li span {
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.admin-manage__detail-note {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  overflow-wrap: anywhere;
+}
+
+.admin-manage__form {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.admin-manage__form-target {
+  padding: var(--space-3);
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+@media (max-width: 64rem) {
+  .admin-manage__toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-manage__toolbar input,
+  .admin-manage__toolbar select,
+  .admin-manage__form textarea {
+    font-size: 1rem;
+  }
+
+  .admin-manage__row-actions .button {
+    min-height: var(--touch-target);
+    flex: 1 1 auto;
+  }
+}

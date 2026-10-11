@@ -1,8 +1,8 @@
 :root {
-  --input-height: 3rem;
+  --input-height: var(--control-height);
   --input-padding-inline: 0.875rem;
-  --input-border-color: #e2e8f0;
-  --input-focus-color: #1a6fd4;
+  --input-border-color: var(--color-control-border);
+  --input-focus-color: var(--color-primary);
 }
 
 .input-control {
@@ -16,7 +16,7 @@
   color: var(--color-text);
   background: var(--color-surface);
   border: 1px solid var(--input-border-color);
-  border-radius: 0.625rem;
+  border-radius: var(--control-radius);
   box-shadow: none;
   transition:
     border-color 160ms ease,
@@ -30,8 +30,8 @@
 
 .input-control:focus-within,
 .input-control.is-focused {
-  border: 2px solid var(--input-focus-color);
-  box-shadow: none;
+  border-color: var(--input-focus-color);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
 .input-control__input {
@@ -43,17 +43,17 @@
   background: transparent;
   border: 0;
   outline: 0;
-  font-size: var(--font-size-base);
+  font-size: var(--control-font-size);
   line-height: 1.5;
 }
 
 .input-control:focus-within .input-control__input,
 .input-control.is-focused .input-control__input {
-  min-height: calc(var(--input-height) - 4px);
+  min-height: calc(var(--input-height) - 2px);
 }
 
 .input-control__input::placeholder {
-  color: #94a3b8;
+  color: var(--color-text-secondary);
   opacity: 1;
 }
 
@@ -62,7 +62,7 @@
   left: var(--input-padding-inline);
   width: 1.125rem;
   height: 1.125rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   pointer-events: none;
 }
 
@@ -86,16 +86,16 @@
 }
 
 .input-control.is-error {
-  border: 2px solid var(--color-danger);
+  border-color: var(--color-danger);
   box-shadow: none;
 }
 
 .input-control.is-error:focus-within {
-  box-shadow: 0 0 0 0.1875rem rgb(185 28 28 / 12%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger), transparent 85%);
 }
 
 .input-control:has(.input-control__input:disabled) {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   background: var(--color-surface-low);
   border-color: var(--color-surface-medium);
   box-shadow: none;
@@ -103,10 +103,10 @@
 }
 
 .input-control__input:disabled {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   cursor: not-allowed;
   opacity: 1;
-  -webkit-text-fill-color: var(--color-text-muted);
+  -webkit-text-fill-color: var(--color-text-secondary);
 }
 
 /* Chỉ phục vụ trang minh họa Input. */
@@ -196,7 +196,7 @@
 
 .input-demo__note {
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   line-height: 1.45;
 }

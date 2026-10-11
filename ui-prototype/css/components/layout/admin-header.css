@@ -51,12 +51,12 @@
   background: var(--color-surface);
   box-shadow: var(--shadow-sm);
   color: var(--color-text);
-  font-size: var(--font-size-sm);
+  font-size: var(--control-font-size);
   line-height: 1.4286;
 }
 
 .admin-header__search-input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .admin-header__search-input:focus {
@@ -104,7 +104,8 @@
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-pill);
   background: var(--color-surface-medium);
-  color: var(--color-text-secondary);
+  /* --color-text-secondary trên --color-surface-medium chỉ đạt 4.42:1 ở cỡ chữ xs; dùng text-primary cho đủ 4.5:1. */
+  color: var(--color-text-primary);
   font-size: var(--font-size-xs);
   line-height: 1.3333;
   white-space: nowrap;
@@ -154,7 +155,7 @@
   height: 0.625rem;
   border: 2px solid var(--color-surface);
   border-radius: var(--radius-pill);
-  background: var(--color-secondary);
+  background: var(--color-primary);
 }
 
 .admin-header[data-has-unread="false"] .admin-header__notification-dot {
@@ -221,7 +222,7 @@
 }
 
 .admin-header__profile-copy small {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   line-height: 1.3333;
 }
@@ -266,7 +267,7 @@
 .admin-header__popover-heading {
   display: flex;
   justify-content: space-between;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -302,7 +303,7 @@
 
 .admin-header__result-type--accent {
   background: var(--color-secondary-container);
-  color: var(--color-secondary);
+  color: var(--color-secondary-text);
 }
 
 .admin-header__result-type--neutral {
@@ -336,8 +337,8 @@
   line-height: 1.3333;
 }
 
-.admin-header__result-status.is-success { background: #dcfce7; color: var(--color-success); }
-.admin-header__result-status.is-warning { background: #fef3c7; color: var(--color-warning); }
+.admin-header__result-status.is-success { background: var(--color-success-container); color: var(--color-success-text); }
+.admin-header__result-status.is-warning { background: var(--color-warning-container); color: var(--color-warning-text); }
 
 .admin-header__search-footer {
   display: flex;
@@ -375,7 +376,7 @@
 }
 
 .admin-header__notification-title strong { color: var(--color-text); font-size: var(--font-size-base); }
-.admin-header__notification-title span { padding: var(--space-1) var(--space-2); border-radius: var(--radius-pill); background: var(--color-secondary-container); color: var(--color-secondary); font-size: var(--font-size-xs); font-weight: 700; }
+.admin-header__notification-title span { padding: var(--space-1) var(--space-2); border-radius: var(--radius-pill); background: var(--color-secondary-container); color: var(--color-secondary-text); font-size: var(--font-size-xs); font-weight: 700; }
 
 .admin-header__notification {
   display: flex;
@@ -388,11 +389,11 @@
 }
 
 .admin-header__notification > .admin-header__icon { color: var(--color-primary); width: 1.125rem; height: 1.125rem; }
-.admin-header__notification > .admin-header__notification-icon--accent { color: var(--color-secondary); }
+.admin-header__notification > .admin-header__notification-icon--accent { color: var(--color-secondary-text); }
 .admin-header__notification > span:last-child { display: grid; gap: var(--space-1); min-width: 0; }
 .admin-header__notification strong { color: var(--color-text); font-size: var(--font-size-xs); font-weight: 600; line-height: 1.3333; }
 .admin-header__notification small, .admin-header__notification time { color: var(--color-text-secondary); font-size: var(--font-size-xs); line-height: 1.3333; }
-.admin-header__notification time { color: var(--color-text-muted); }
+.admin-header__notification time { color: var(--color-text-secondary); }
 
 .admin-header__popover-link { display: block; padding: var(--space-2); border-radius: 0.5rem; background: var(--color-surface-medium); text-align: center; font-size: var(--font-size-xs); line-height: 1.3333; }
 .admin-header__popover-link:hover { background: var(--color-surface-high); }
@@ -423,7 +424,7 @@
 .admin-header__profile-menu a:hover { background: var(--color-surface-low); }
 .admin-header__profile-menu .admin-header__icon { width: 1.125rem; height: 1.125rem; color: var(--color-text-secondary); }
 .admin-header__profile-menu a.is-danger { margin-top: var(--space-1); border-top: 1px solid var(--color-surface-high); color: var(--color-danger); font-weight: 600; }
-.admin-header__profile-menu a.is-danger:hover { background: #fee2e2; }
+.admin-header__profile-menu a.is-danger:hover { background: var(--color-danger-container); }
 .admin-header__profile-menu a.is-danger .admin-header__icon { color: inherit; }
 
 .admin-header__icon-button:focus-visible,
@@ -445,7 +446,7 @@
 }
 
 @media (max-width: 64rem) {
-  .admin-header { padding: 0 var(--space-4); }
+  .admin-header { left: 0; padding: 0 var(--space-4); }
   .admin-header__system-status { display: none; }
 }
 
@@ -455,4 +456,25 @@
   .admin-header__profile-copy, .admin-header__chevron { display: none; }
   .admin-header__utilities { gap: var(--space-2); }
   .admin-header__divider { display: none; }
+
+  /* Popover 20rem tràn ra mép trái trên màn hẹp; neo vào viewport để mọi mục đều với tới được. */
+  .admin-header__notification-popover,
+  .admin-header__profile-popover {
+    position: fixed;
+    top: calc(var(--admin-header-height) + var(--space-2));
+    right: var(--space-3);
+    left: var(--space-3);
+    width: auto;
+    max-height: calc(100dvh - var(--admin-header-height) - var(--space-6));
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 64rem) {
+  .admin-header__search-input { min-height: var(--touch-target); }
+  .admin-header__icon-button { width: var(--touch-target); height: var(--touch-target); }
+  .admin-header__clear-search { right: var(--space-1); width: var(--touch-target); height: var(--touch-target); }
+  .admin-header__profile-menu a,
+  .admin-header__notification,
+  .admin-header__result { min-height: var(--touch-target); }
 }

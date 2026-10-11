@@ -1,14 +1,4 @@
-.invitation-create-page .user-header {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  width: 100%;
-}
 
-.invitation-create-page .user-header__nav {
-  display: flex;
-  gap: clamp(var(--space-4), 3vw, 3.5rem);
-}
 
 .invitation-create-page .user-shell__main {
   padding-block: 0;
@@ -61,16 +51,6 @@
   font-size: var(--font-size-sm);
 }
 
-.invitation-create-heading__trust {
-  flex: 0 0 auto;
-  padding: var(--space-2) var(--space-4);
-}
-
-.invitation-create-heading__trust img {
-  width: 1.125rem;
-  height: 1.125rem;
-}
-
 .invitation-create-layout {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
@@ -86,17 +66,21 @@
   gap: var(--space-6);
 }
 
-.invitation-tutor,
-.invitation-section,
-.invitation-summary,
-.invitation-flow,
-.invitation-state-card {
-  border-color: transparent;
+/* Rail tóm tắt chỉ dính khi cột còn chỗ ở cả hai trục. Màn hẹp hoặc thấp:
+   rail trở về luồng thường, ngay trước/nút xác nhận gửi lời mời. */
+@media (min-width: 64.0625rem) and (min-height: 48rem) {
+  .invitation-create-sidebar {
+    position: sticky;
+    top: var(--scroll-offset);
+    max-height: calc(100vh - var(--scroll-offset) - var(--space-6));
+    overflow-y: auto;
+  }
 }
 
-.invitation-create-sidebar {
-  position: sticky;
-  top: calc(5rem + var(--space-4));
+.invitation-tutor,
+.invitation-section,
+.invitation-summary{
+  border-color: var(--color-border);
 }
 
 .invitation-tutor {
@@ -106,7 +90,12 @@
   padding: var(--space-5);
 }
 
+.invitation-tutor > .avatar {
+  flex: 0 0 auto;
+}
+
 .invitation-tutor__body {
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -159,9 +148,9 @@
   width: 1.75rem;
   height: 1.75rem;
   place-items: center;
-  border-radius: var(--radius-pill);
-  background: var(--color-primary-container);
-  color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-secondary-container);
+  color: var(--color-secondary-text);
   font-size: var(--font-size-xs);
 }
 
@@ -190,8 +179,9 @@
 .invitation-subject {
   position: relative;
   display: grid;
+  /* Chỉ giữ chiều cao tối thiểu; tên môn dài (VD "IELTS • Người đi làm") phải xuống dòng được
+     thay vì tràn ra ngoài thẻ khi cột ba rộng hẹp. */
   min-height: 8.625rem;
-  height: 8.625rem;
   align-content: start;
   gap: var(--space-1);
   padding: var(--space-4);
@@ -216,8 +206,8 @@
 }
 
 .invitation-subject.is-selected {
-  border-color: var(--color-primary-border);
-  background: var(--color-primary-container);
+  border-color: var(--color-border);
+  background: var(--color-paper);
 }
 
 .invitation-subject > strong {
@@ -299,7 +289,7 @@
 }
 
 .invitation-frequency__options button {
-  min-height: 2.5rem;
+  min-height: var(--control-height);
   padding: var(--space-1);
   border: 0;
   border-radius: var(--radius-sm);
@@ -316,6 +306,10 @@
   font-weight: 700;
 }
 
+.invitation-rate {
+  max-width: 28rem;
+}
+
 .invitation-timeline {
   width: fit-content;
   margin-top: 0;
@@ -328,10 +322,6 @@
   height: 1rem;
 }
 
-.invitation-rate {
-  max-width: 28rem;
-}
-
 .invitation-rate .input-control,
 .invitation-start-date .input-control {
   min-height: 2.75rem;
@@ -342,24 +332,10 @@
   min-height: calc(2.75rem - 2px);
 }
 
-.invitation-tip.alert {
-  margin-top: var(--space-4);
-  padding: var(--space-2);
-  border-left-width: 1px;
-  background: var(--color-primary-container);
-}
-
-.invitation-tip .alert__message {
-  font-size: 0.8125rem;
-  line-height: 1.4;
-}
-
 .invitation-warning .alert__message {
   font-size: var(--font-size-xs);
   line-height: 1.5;
 }
-
-.invitation-tip .alert__icon,
 .invitation-warning .alert__icon {
   flex-basis: 1.25rem;
   height: 1.25rem;
@@ -382,6 +358,9 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  /* Dòng công thức dùng hết khoảng trống thay vì gói ở bề rộng max-content. */
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .invitation-calculation img {
@@ -554,18 +533,6 @@
   gap: var(--space-3);
 }
 
-.textarea-field__help {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin: 0;
-}
-
-.textarea-field__help img {
-  width: 1rem;
-  height: 1rem;
-}
-
 .invitation-section .textarea-control {
   min-height: 8.0625rem;
 }
@@ -583,8 +550,7 @@
   filter: brightness(0) invert(1);
 }
 
-.invitation-summary,
-.invitation-flow {
+.invitation-summary{
   padding: var(--space-5);
 }
 
@@ -596,8 +562,7 @@
   margin-bottom: var(--space-4);
 }
 
-.invitation-summary h2,
-.invitation-flow h2 {
+.invitation-summary h2{
   margin: 0;
   font-size: var(--font-size-lg);
 }
@@ -606,13 +571,20 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3);
-  border-radius: var(--radius-md);
-  background: var(--color-surface-low);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+  background: transparent;
+}
+
+.invitation-summary__tutor > .avatar {
+  flex: 0 0 auto;
 }
 
 .invitation-summary__tutor p {
   display: grid;
+  /* Tên gia sư và nhãn xác minh dùng hết bề rộng rail thay vì gói ở ~138px. */
+  flex: 1 1 auto;
   min-width: 0;
   margin: 0;
 }
@@ -679,207 +651,18 @@
   margin-top: var(--space-4);
 }
 
-.invitation-flow h2 {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  color: var(--color-primary);
-  font-size: var(--font-size-base);
-}
-
-.invitation-flow > p,
-.invitation-flow footer {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-xs);
-}
-
-.invitation-flow > p {
-  margin: var(--space-2) 0 var(--space-4);
-}
-
-.invitation-flow ol {
-  display: grid;
-  gap: var(--space-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.invitation-flow li {
-  display: flex;
-  gap: var(--space-3);
-}
-
-.invitation-flow li > span {
-  display: grid;
-  width: 1.5rem;
-  height: 1.5rem;
-  flex: 0 0 1.5rem;
-  place-items: center;
-  border-radius: var(--radius-pill);
-  background: var(--color-primary-container);
-  color: var(--color-primary);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-}
-
-.invitation-flow li p,
-.invitation-flow li small {
-  display: grid;
-  margin: 0;
-}
-
-.invitation-flow li small {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-xs);
-}
-
-.invitation-flow footer {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-top: var(--space-4);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--color-border);
-}
-
-.invitation-flow footer img {
-  width: 1rem;
-  height: 1rem;
-}
-
-.invitation-state-showcase {
-  padding-block: var(--space-8);
-  background: var(--color-surface-low);
-}
-
-.invitation-state-showcase > .user-shell__content > header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin-bottom: var(--space-5);
-}
-
-.invitation-state-showcase header small {
-  color: var(--color-primary);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.invitation-state-showcase header h2 {
-  margin: var(--space-1) 0 0;
-  font-size: var(--font-size-xl);
-}
-
-.invitation-state-showcase header p {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-xs);
-}
-
-.invitation-state-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-6);
-}
-
-.invitation-state-card {
-  display: flex;
-  min-height: 25rem;
-  flex-direction: column;
-  padding: var(--space-6);
-}
-
-.invitation-state-card > div:first-child {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-
-.invitation-state-card__type {
-  color: var(--color-primary);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-}
-
-.invitation-state-card__type--success {
-  color: var(--color-success);
-}
-
-.invitation-state-card > img {
-  width: 3rem;
-  height: 3rem;
-  margin-top: var(--space-5);
-  padding: var(--space-3);
-  border-radius: var(--radius-md);
-  background: var(--color-primary-container);
-}
-
-.invitation-state-card h3 {
-  margin: var(--space-3) 0 var(--space-2);
-  font-size: var(--font-size-lg);
-}
-
-.invitation-state-card > p {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-}
-
-.invitation-state-card__details {
-  margin-top: var(--space-4);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-md);
-  background: var(--color-background);
-}
-
-.invitation-state-card__details .info-row {
-  padding: var(--space-1) 0;
-  border: 0;
-}
-
-.invitation-state-card__details .info-row__label {
-  flex: 0 0 42%;
-}
-
-.invitation-state-card__details .info-row__value {
-  text-align: right;
-}
-
-.invitation-state-card > .alert {
-  margin-top: var(--space-4);
-  padding: var(--space-3);
-  border-left-width: 1px;
-  background: var(--color-primary-container);
-}
-
-.invitation-state-card > footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--space-3);
-  margin-top: auto;
-  padding-top: var(--space-5);
-}
-
 .invitation-create-page :focus-visible {
   outline: 3px solid var(--color-primary-focus);
   outline-offset: 2px;
 }
 
 @media (max-width: 64rem) {
-  .invitation-create-page .user-header__nav {
-    display: none;
-  }
 
   .invitation-create-layout {
     grid-template-columns: 1fr;
   }
 
   .invitation-create-sidebar {
-    position: static;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -889,8 +672,7 @@
     width: min(100% - (2 * var(--space-4)), 72rem);
   }
 
-  .invitation-create-heading__row,
-  .invitation-state-showcase > .user-shell__content > header {
+  .invitation-create-heading__row{
     align-items: flex-start;
     flex-direction: column;
   }
@@ -899,20 +681,26 @@
     font-size: var(--font-size-2xl);
   }
 
-  .invitation-create-heading__trust {
-    width: fit-content;
-  }
-
   .invitation-subjects,
   .invitation-frequency,
   .invitation-formats,
-  .invitation-create-sidebar,
-  .invitation-state-grid {
+  .invitation-create-sidebar{
     grid-template-columns: 1fr;
   }
 
-  .invitation-state-card {
-    min-height: auto;
+  /* Màn cảm ứng: hàng chọn khung giờ và nút xoá đủ rộng để chạm. */
+  .invitation-slots article {
+    grid-template-columns: 2.25rem minmax(0, 1fr) var(--touch-target);
+  }
+
+  .invitation-slots button {
+    width: var(--touch-target);
+    height: var(--touch-target);
+  }
+
+  .invitation-frequency__options button,
+  .invitation-add-slot {
+    min-height: var(--touch-target);
   }
 }
 
@@ -922,9 +710,7 @@
   }
 
   .invitation-section,
-  .invitation-summary,
-  .invitation-flow,
-  .invitation-state-card {
+  .invitation-summary{
     padding: var(--space-4);
   }
 
@@ -964,15 +750,5 @@
 @media (max-width: 30rem) {
   .invitation-tutor {
     flex-direction: column;
-  }
-
-  .invitation-state-card > div:first-child,
-  .invitation-state-card > footer {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .invitation-state-card > footer .button {
-    width: 100%;
   }
 }

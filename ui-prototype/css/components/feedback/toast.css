@@ -1,7 +1,7 @@
 .toast-region {
   position: fixed;
   z-index: 1000;
-  top: var(--space-6);
+  bottom: var(--space-6);
   right: var(--space-6);
   display: flex;
   flex-direction: column;
@@ -20,11 +20,11 @@
   gap: var(--space-3);
   padding: var(--space-4);
   border: 1px solid var(--color-border);
-  border-left: 4px solid var(--toast-accent);
+
   border-radius: var(--radius-lg);
   background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-lg);
   pointer-events: auto;
   animation: toast-enter 160ms ease-out;
 }
@@ -36,7 +36,7 @@
 .toast__content { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .toast__title { margin: 0; font-size: var(--font-size-sm); font-weight: 700; }
 .toast__message { margin: var(--space-1) 0 0; color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: var(--line-height-base); }
-.toast__close { display: grid; flex: 0 0 2.75rem; height: 2.75rem; place-items: center; padding: 0; border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-text-muted); font: inherit; font-size: var(--font-size-xl); cursor: pointer; }
+.toast__close { display: grid; flex: 0 0 2.75rem; height: 2.75rem; place-items: center; padding: 0; border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-text-secondary); font: inherit; font-size: var(--font-size-xl); cursor: pointer; }
 .toast__close:hover { background: var(--color-surface-low); color: var(--color-text); }
 .toast__close:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 2px; }
 .toast__action { flex: 0 0 auto; min-height: 2.5rem; padding: var(--space-2); border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-primary); font: inherit; font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; }
@@ -46,7 +46,7 @@
 @keyframes toast-enter { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
 @media (max-width: 600px) {
-  .toast-region { top: var(--space-4); right: var(--space-4); max-height: calc(100dvh - 2rem); }
+  .toast-region { bottom: var(--space-4); right: var(--space-4); max-height: calc(100dvh - 2rem); }
 }
 /* SVG source files live in assets/icons; masks preserve design-token colors. */
 .toast { --toast-icon: url("../../../assets/icons/info-circle.svg"); }
@@ -94,7 +94,7 @@
 }
 
 .toast--warning .toast__icon {
-  color: var(--color-warning);
+  color: var(--color-warning-text);
   background: transparent;
   border: 2px solid currentColor;
   border-radius: var(--radius-pill);

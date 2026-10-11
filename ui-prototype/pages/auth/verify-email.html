@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../../assets/brand/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" sizes="180x180">
+    <title>Xác minh email · Edu Connect</title>
+    <link rel="stylesheet" href="../../css/tokens.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/components/action/button.css">
+    <link rel="stylesheet" href="../../css/components/feedback/alert.css">
+    <link rel="stylesheet" href="../../css/components/feedback/badge.css">
+    <link rel="stylesheet" href="../../css/components/feedback/empty-state.css">
+    <!-- Shell auth (header/card/footer) dùng chung với trang login để ba trang auth không lệch giao diện; CSS của trang này chỉ chứa khối riêng. -->
+    <link rel="stylesheet" href="../../css/pages/auth/login.css">
+    <link rel="stylesheet" href="../../css/pages/auth/verify-email.css">
+</head>
+<body class="auth-login-page auth-verify-page" data-verify-page>
+    <header class="auth-login-header">
+        <div class="container auth-login-header__content">
+            <a class="auth-login-header__back" href="../../pages/home.html">← Về trang chủ</a>
+            <a class="auth-login-header__brand" href="../../pages/home.html" aria-label="Edu Connect - Trang chủ"><img class="brand-logo" src="../../assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000"></a>
+            <span class="auth-login-header__spacer" aria-hidden="true"></span>
+        </div>
+    </header>
+
+    <main class="auth-login-main">
+        <section class="auth-login-card auth-verify-card" aria-labelledby="verify-title">
+            <header class="auth-login-card__heading">
+                <h1 id="verify-title">Xác minh email</h1>
+                <p>Kết quả của liên kết xác minh email. Đây là bản xem trước: không có email thật nào được gửi đi và không có tài khoản thật nào được tạo.</p>
+            </header>
+
+            <section class="auth-verify-state" data-verify-state="valid" aria-labelledby="verify-valid-title" hidden>
+                <p class="auth-verify-badge"><span class="badge badge--success">Token hợp lệ</span></p>
+                <h2 class="auth-verify-state__title" id="verify-valid-title">Xác minh email thành công</h2>
+                <p class="auth-verify-state__text">Email dưới đây đã được xác minh (mô phỏng). Bạn có thể đăng nhập để tiếp tục sử dụng Edu Connect.</p>
+                <div class="auth-verify-actions">
+                    <a class="button button--primary" href="login.html">Đi tới trang đăng nhập</a>
+                    <a class="button button--outline" href="register.html">Xem trang đăng ký</a>
+                </div>
+            </section>
+
+            <section class="auth-verify-state" data-verify-state="expired" aria-labelledby="verify-expired-title" hidden>
+                <p class="auth-verify-badge"><span class="badge badge--warning">Token hết hạn</span></p>
+                <h2 class="auth-verify-state__title" id="verify-expired-title">Liên kết xác minh đã hết hạn</h2>
+                <p class="auth-verify-state__text">Token này hết hạn lúc <strong data-verify-expires-at></strong>. Liên kết cũ không còn giá trị; hãy yêu cầu gửi lại email xác minh.</p>
+                <div class="auth-verify-actions">
+                    <button class="button button--primary" type="button" data-verify-resend>
+                        <span data-verify-resend-label>Gửi lại email xác minh</span>
+                        <span class="button__spinner" aria-hidden="true" data-verify-resend-spinner hidden></span>
+                    </button>
+                    <a class="button button--outline" href="login.html">Về trang đăng nhập</a>
+                </div>
+                <section class="alert alert--success" role="status" aria-live="polite" data-verify-resend-status hidden>
+                    <span class="alert__icon" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <p class="alert__title">Đã gửi lại email xác minh (mô phỏng)</p>
+                        <p class="alert__message">Prototype không gửi email thật và không gọi mạng; trạng thái này chỉ phục vụ kiểm tra giao diện. Token hết hạn ở trên vẫn không dùng lại được.</p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="auth-verify-state" data-verify-state="used" aria-labelledby="verify-used-title" hidden>
+                <p class="auth-verify-badge"><span class="badge badge--neutral">Token đã dùng</span></p>
+                <h2 class="auth-verify-state__title" id="verify-used-title">Liên kết xác minh đã được sử dụng</h2>
+                <p class="auth-verify-state__text">Token này đã được dùng lúc <strong data-verify-used-at></strong> cho chính email dưới đây. Mỗi liên kết xác minh chỉ có hiệu lực một lần.</p>
+                <div class="auth-verify-actions">
+                    <a class="button button--primary" href="login.html">Đi tới trang đăng nhập</a>
+                </div>
+            </section>
+
+            <section class="auth-verify-state" data-verify-state="unknown" aria-labelledby="verify-unknown-title" hidden>
+                <p class="auth-verify-badge"><span class="badge badge--danger">Token không hợp lệ</span></p>
+                <h2 class="auth-verify-state__title" id="verify-unknown-title">Không xác minh được token này</h2>
+                <p class="auth-verify-state__text">Token <strong class="auth-verify-token-value" data-verify-token-value></strong> không tồn tại hoặc không phải là token xác minh email trong dữ liệu mẫu. Trang không tự chuyển sang token hay tài khoản khác; hãy mở lại liên kết trong email của bạn.</p>
+                <div class="auth-verify-actions">
+                    <a class="button button--primary" href="login.html">Về trang đăng nhập</a>
+                </div>
+            </section>
+
+            <section class="auth-verify-state" data-verify-state="missing" aria-labelledby="verify-missing-title" hidden>
+                <div class="empty-state">
+                    <span class="empty-state__icon" aria-hidden="true"></span>
+                    <h2 class="empty-state__title" id="verify-missing-title">Không có token xác minh</h2>
+                    <p class="empty-state__description">Trang này cần mở từ liên kết xác minh email có kèm token. Prototype không gửi email thật nên bạn có thể dùng một token DEMO ở khối bên dưới.</p>
+                    <div class="auth-verify-actions">
+                        <a class="button button--primary" href="login.html">Về trang đăng nhập</a>
+                        <a class="button button--outline" href="register.html">Tạo tài khoản</a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="auth-verify-email" data-verify-email-block hidden>
+                <p class="auth-verify-email__label">Email đích của token</p>
+                <strong class="auth-verify-email__value" data-verify-email></strong>
+                <p class="auth-verify-email__note">Email tổng hợp dùng domain .test dành cho thử nghiệm. Không thể đổi sang tài khoản khác từ trang này.</p>
+            </div>
+
+            <section class="auth-verify-tokens" aria-labelledby="verify-tokens-title">
+                <h2 class="auth-verify-tokens__title" id="verify-tokens-title">Token DEMO để kiểm tra nhanh</h2>
+                <p class="auth-verify-tokens__hint">Khối dành cho QA của bản demo: mỗi liên kết mở đúng một trạng thái token từ dữ liệu mẫu, không phải liên kết xác minh thật.</p>
+                <ul class="auth-verify-tokens__list" data-verify-token-list></ul>
+            </section>
+        </section>
+    </main>
+
+    <footer class="auth-login-footer">
+        <div class="container"><span>© 2026 Edu Connect</span></div>
+    </footer>
+    <script src="../../js/core/route.js" defer></script>
+    <script src="../../js/data/fixtures.js" defer></script>
+    <script src="../../js/data/store.js" defer></script>
+    <script src="../../js/pages/auth/verify-email.js" defer></script>
+</body>
+</html>
