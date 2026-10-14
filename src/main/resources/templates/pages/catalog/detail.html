@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;tutors&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Chi tiết dịch vụ / lớp học | Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+<link rel="stylesheet" href="/css/components/navigation/breadcrumb.css" th:href="@{/css/components/navigation/breadcrumb.css}">
+<link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
+<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
+<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
+<link rel="stylesheet" href="/css/components/data-display/tag.css" th:href="@{/css/components/data-display/tag.css}">
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+<link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
+<link rel="stylesheet" href="/css/pages/catalog/detail.css" th:href="@{/css/pages/catalog/detail.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
+<script src="/js/pages/catalog/detail.js" defer th:src="@{/js/pages/catalog/detail.js}"></script>
+</th:block>
+<th:block th:fragment="scripts">
+
+</th:block>
+</head>
+<body class="catalog-detail-page" th:fragment="content">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
+<div class="user-shell" data-component="user-shell" data-catalog-detail-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
+    <th:block th:replace="~{fragments/header-user :: header(${active}, 'v2')}"></th:block>
+
+    <main class="user-shell__main">
+        <div class="user-shell__content catalog-detail-page__content">
+            <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
+            <nav class="breadcrumb" aria-label="Breadcrumb" data-detail-breadcrumb>
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="/home" th:href="@{/home}">Trang chủ</a></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="/tutor/search" th:href="@{/tutor/search}">Tìm gia sư</a></li>
+                    <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" data-crumb-title>Chi tiết dịch vụ / lớp học</span></li>
+                </ol>
+            </nav>
+
+            <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+            <section class="empty-state catalog-detail-missing" data-offering-missing hidden aria-labelledby="offering-missing-title">
+                <span class="empty-state__icon" aria-hidden="true"></span>
+                <h1 class="empty-state__title" id="offering-missing-title">Không tìm thấy dịch vụ / lớp học</h1>
+                <p class="empty-state__description" data-missing-description>Mã dịch vụ/lớp không tồn tại hoặc bản ghi đã bị gỡ.</p>
+                <div class="catalog-detail-missing__actions">
+                    <a class="button button--primary button--medium" href="/tutor/search" th:href="@{/tutor/search}">Tìm gia sư</a>
+                    <a class="button button--outline button--medium" href="/home" th:href="@{/home}">Về trang chủ</a>
+                </div>
+            </section>
+
+            <div class="catalog-detail-layout" data-offering-layout>
+                <div class="catalog-detail-main">
+                    <!-- Component: Card, Badge, Tag, Avatar | Nguồn: components/data-display/{card,tag,avatar}.html; components/feedback/badge.html -->
+                    <section class="card catalog-hero" aria-labelledby="offering-title">
+                        <div class="catalog-hero__badges">
+                            <span class="badge badge--info" data-offering-type>Dịch vụ</span>
+                            <span class="badge badge--neutral" data-offering-status>—</span>
+                            <span class="badge badge--neutral" data-offering-availability>—</span>
+                        </div>
+                        <h1 class="catalog-hero__title" id="offering-title" data-offering-title>Đang tải thông tin dịch vụ…</h1>
+                        <div class="catalog-hero__tags">
+                            <span class="tag" data-offering-subject>—</span>
+                            <span class="tag tag--neutral" data-offering-grade>—</span>
+                            <span class="tag tag--format" data-offering-mode>—</span>
+                        </div>
+                        <div class="catalog-hero__tutor">
+                            <span class="avatar avatar--medium" role="img" aria-label="Ảnh đại diện gia sư" data-tutor-avatar>—</span>
+                            <span class="catalog-hero__tutor-copy">
+                                <strong data-tutor-name>—</strong>
+                                <span data-tutor-id>—</span>
+                            </span>
+                            <a class="button button--outline button--medium" href="/tutor/search" data-tutor-link th:href="@{/tutor/search}">Xem hồ sơ gia sư</a>
+                        </div>
+                    </section>
+
+                    <section class="card catalog-section" aria-labelledby="offering-description-title">
+                        <h2 id="offering-description-title">Mô tả</h2>
+                        <p class="catalog-section__copy" data-offering-description>—</p>
+                    </section>
+
+                    <section class="card catalog-section" aria-labelledby="offering-info-title">
+                        <h2 id="offering-info-title">Thông tin khóa</h2>
+                        <!-- Component: InfoRow | Nguồn: components/data-display/info-row.html -->
+                        <dl class="catalog-section__info">
+                            <div class="info-row"><dt class="info-row__label">Mã dịch vụ / lớp</dt><dd class="info-row__value" data-info-id>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Gia sư</dt><dd class="info-row__value" data-info-tutor>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Môn học</dt><dd class="info-row__value" data-info-subject>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Cấp học</dt><dd class="info-row__value" data-info-grade>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Số buổi</dt><dd class="info-row__value" data-info-sessions>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Thời lượng mỗi buổi</dt><dd class="info-row__value" data-info-duration>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Học phí &amp; đơn vị</dt><dd class="info-row__value" data-info-price>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Hình thức</dt><dd class="info-row__value" data-info-mode>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Khu vực</dt><dd class="info-row__value" data-info-region>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Lịch học</dt><dd class="info-row__value" data-info-schedule>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Điều khoản</dt><dd class="info-row__value" data-info-terms>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Trạng thái công khai</dt><dd class="info-row__value" data-info-status>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Ngày công khai</dt><dd class="info-row__value" data-info-published>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Điều kiện đăng ký</dt><dd class="info-row__value" data-info-condition>—</dd></div>
+                        </dl>
+                    </section>
+
+                    <section class="card catalog-section" aria-labelledby="offering-group-title" data-group-section hidden>
+                        <h2 id="offering-group-title">Lịch học &amp; chỗ đăng ký</h2>
+                        <ul class="catalog-schedule" data-group-schedule></ul>
+                        <dl class="catalog-section__info">
+                            <div class="info-row"><dt class="info-row__label">Tổng số chỗ</dt><dd class="info-row__value" data-group-capacity>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Đã đăng ký</dt><dd class="info-row__value" data-group-enrolled>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Chỗ còn lại</dt><dd class="info-row__value" data-group-seats-left>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Khai giảng dự kiến</dt><dd class="info-row__value" data-group-start>—</dd></div>
+                        </dl>
+                        <p class="catalog-section__copy" data-group-condition>—</p>
+                    </section>
+                </div>
+
+                <aside class="catalog-detail-sidebar">
+                    <!-- Component: Card, Badge, Alert, Button, Radio, Input | Nguồn: components/data-display/card.html; components/feedback/{badge,alert}.html; components/action/button.html; components/form/{radio,input}.html -->
+                    <section class="card catalog-booking" aria-labelledby="booking-title">
+                        <h2 id="booking-title">Đăng ký học</h2>
+                        <span class="badge badge--neutral catalog-booking__demo">Bản xem trước · Giao dịch mô phỏng</span>
+                        <p class="catalog-booking__price"><strong data-booking-price>—</strong><span data-booking-unit>—</span></p>
+                        <p class="catalog-booking__estimate" data-booking-estimate>—</p>
+
+                        <div class="catalog-booking__options" data-booking-options hidden></div>
+
+                        <div class="catalog-seats" data-booking-seats hidden>
+                            <label class="catalog-seats__label" for="offering-seats">Số chỗ đăng ký</label>
+                            <div class="catalog-seats__row">
+                                <span class="input-control catalog-seats__control" data-seats-control>
+                                    <input class="input-control__input" id="offering-seats" type="number" min="1" step="1" value="1" inputmode="numeric" data-seats-input aria-describedby="offering-seats-hint offering-seats-error">
+                                </span>
+                                <span class="catalog-seats__hint" id="offering-seats-hint" data-seats-hint>—</span>
+                            </div>
+                            <p class="catalog-seats__error" id="offering-seats-error" data-seats-error hidden></p>
+                        </div>
+
+                        <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
+                        <div class="alert catalog-booking__alert" data-booking-alert hidden role="status">
+                            <span class="alert__icon" aria-hidden="true"></span>
+                            <div class="alert__content">
+                                <h3 class="alert__title" data-booking-alert-title>—</h3>
+                                <p class="alert__message" data-booking-alert-message>—</p>
+                            </div>
+                        </div>
+
+                        <div class="catalog-booking__actions" data-booking-actions>
+                            <a class="button button--primary button--medium" href="/tutor/search" data-invite-link hidden th:href="@{/tutor/search}">Mời gia sư</a>
+                            <button class="button button--secondary button--medium" type="button" data-add-cart>Thêm vào giỏ</button>
+                        </div>
+                        <p class="catalog-booking__note" data-booking-note>—</p>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
+    <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+</div>
+</body>
+</html>
