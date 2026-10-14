@@ -1,46 +1,55 @@
 # EduConnect Web
 
-EduConnect là ứng dụng kết nối học viên và phụ huynh với gia sư, được tổ chức theo kiến trúc nguyên khối có mô-đun (modular monolith). Kho mã nguồn hiện chỉ chứa bộ khung nền tảng của dự án trong Sprint 0.
+Nền Spring MVC + Thymeleaf cho 40 trang EduConnect. Đợt này chỉ render giao diện và dữ liệu demo trong JavaScript; chưa triển khai nghiệp vụ, xác thực hay phân quyền thực tế.
 
-## Công nghệ sử dụng
+## Chạy ngay sau khi clone
 
-- Nền tảng giao diện: HTML5, CSS3 và JavaScript thuần (Vanilla JavaScript)
-- Định hướng backend: Java 17, Spring Boot 3.x, Spring MVC, JSP/JSTL
-- Định hướng lưu trữ dữ liệu: Spring Data JPA, MySQL 8 và Flyway
-- Công cụ biên dịch và đóng gói: Maven
+Cần JDK 17+ (JDK 21 cũng được); bytecode được biên dịch với release 17. Maven Wrapper dùng Maven 3.9.16; lần đầu cần mạng để tải Maven/dependency. Không cần cài Maven riêng, Node hoặc MySQL để chạy ứng dụng.
 
-## Kiến trúc dự án
-
-Backend sử dụng kiến trúc nguyên khối có mô-đun và tổ chức package theo tính năng (package-by-feature). Các thành phần giao diện cơ bản dùng chung được phát triển tách biệt với tài nguyên riêng của từng trang, giúp chuyển bản mẫu HTML sang JSP sau này mà ít phải thay đổi cấu trúc.
-
-## Cấu trúc kho mã nguồn
-
-- `docs/`: tài liệu kiến trúc, kế hoạch giao diện, ghi chú cơ sở dữ liệu và quy ước của nhóm
-- `ui-prototype/`: các giá trị thiết kế dùng chung (design token), component dùng chung và bản mẫu trang, không phụ thuộc framework
-- `src/main/java/`: điểm khởi chạy Spring Boot và các package theo tính năng
-- `src/main/resources/static/`: nơi lưu CSS, JavaScript và hình ảnh cho ứng dụng chính thức sau này
-- `src/main/webapp/WEB-INF/views/`: nơi lưu các trang JSP và mảnh giao diện JSP (fragment) sau này
-- `scripts/`: các tập lệnh hỗ trợ dự án, chỉ bổ sung khi cần
-
-## Các giai đoạn phát triển
-
-1. Xây dựng HTML/CSS/JS và hệ thống component dùng chung
-2. Tích hợp JSP
-3. Tích hợp Spring MVC và tầng lưu trữ dữ liệu
-4. Tích hợp các tính năng nghiệp vụ
-
-## Bắt đầu
-
-Yêu cầu: JDK 17 trở lên và Maven 3.6.3 trở lên.
-
-```bash
-mvn clean compile
-mvn clean test
-mvn clean package
+```powershell
+.\mvnw.cmd spring-boot:run
 ```
 
-Ở giai đoạn này, ứng dụng mới chỉ có bộ khung; cấu hình cơ sở dữ liệu và bảo mật chưa được triển khai theo phạm vi đã xác định.
+Mở http://localhost:8080/ hoặc http://localhost:8080/home. Profile mặc định `ui-preview` loại auto-config datasource/JPA/Flyway. Các trang khác có trong [page map](docs/ui/page-map.md).
 
-## Quy trình làm việc với Git
+```powershell
+.\mvnw.cmd -B -ntp clean verify
+java -jar target\educonnect-web-0.0.1-SNAPSHOT.jar
+```
 
-Xem [quy trình làm việc với Git](docs/conventions/git-workflow.md) và [mục lục tài liệu dự án](docs/README.md).
+Linux/macOS dùng `./mvnw`. Maven Enforcer yêu cầu Java 17+, Maven 3.9+ và chặn dependency servlet cũ/layout dialect không dùng.
+
+## Kiểm tra
+
+```powershell
+node scripts/checks/template-check.mjs
+node scripts/checks/route-check.mjs
+node scripts/checks/static-check.mjs
+node scripts/checks/hook-check.mjs
+node scripts/checks/source-check.mjs
+node scripts/checks/store-check.mjs
+node scripts/checks/database-static-check.mjs
+```
+
+Node 22+ chỉ cần khi chạy Node checks. Java tests đọc 40 URL từ `src/test/resources/pages.csv`, asset oracle từ `page-assets.json`; kiểm view, UTF-8, link, asset, CSS/JS/head/body, preview và CSRF. Các test DBConnect cũ vẫn được giữ.
+
+## Profile
+
+- `ui-preview` mặc định: không kết nối DB; permitAll cho request, CSRF vẫn bật; persona/role là demo browser.
+- `db-dev`: phải cấp `EDUCONNECT_DB_URL`, `EDUCONNECT_DB_USERNAME`, `EDUCONNECT_DB_PASSWORD` qua môi trường. Spring không tự đọc `.env.local`; file này chỉ thuộc JDBC helper thủ công.
+
+```powershell
+java -jar target\educonnect-web-0.0.1-SNAPSHOT.jar --spring.profiles.active=db-dev
+```
+
+Không chạy profile DB vào schema đang có dữ liệu để thử giao diện. Flyway quản lý migration; không chạy drop/seed từ quy trình UI. Xem [tài liệu DB](docs/database/README.md).
+
+## Cấu trúc và bàn giao
+
+- `src/main/resources/templates/{layouts,fragments,pages}`: nguồn view chính.
+- `src/main/resources/static/{css,js,assets}`: nguồn asset chính; dữ liệu giả nằm trong `js/preview`.
+- `src/main/java/com/educonnect/<feature>/web`: controller GET theo tính năng và sở hữu.
+- `ui-prototype/`: tham chiếu đóng băng; không sửa để phát triển ứng dụng chính.
+- `database/`, `db/migration/`, `DBConnect.java`: nền DB được giữ nguyên.
+
+[Cấu trúc Thymeleaf và cách thêm trang](docs/architecture/thymeleaf-structure.md) · [Sở hữu](docs/architecture/ownership.md) · [Quy trình đóng góp](CONTRIBUTING.md) · [Tài liệu](docs/README.md).

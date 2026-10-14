@@ -1,3 +1,5 @@
+> Thư mục này là tham chiếu đóng băng; không sửa để phát triển ứng dụng. Nguồn chính nằm ở `src/main/resources/` (Thymeleaf và static).
+
 # Bản mẫu giao diện
 
 Thư mục bản mẫu là nơi xây dựng các thành phần giao diện có thể tái sử dụng, không phụ thuộc framework, trước khi tích hợp JSP.
