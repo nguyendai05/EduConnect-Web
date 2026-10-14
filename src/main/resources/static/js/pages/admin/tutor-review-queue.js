@@ -192,4 +192,3 @@
   window.addEventListener('pageshow', event => { if (event.persisted) loadProfiles(); });
   loadProfiles();
 })();
-
