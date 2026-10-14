@@ -2,7 +2,7 @@
   const page = document.querySelector('[data-tutor-review-queue]');
   if (!page) return;
 
-  // Dữ liệu mẫu của prototype; thay bằng dữ liệu server khi tích hợp JSP.
+  // Dữ liệu mẫu của prototype; thay bằng dữ liệu server khi nối backend.
   const store = window.EduTutorReview;
   const statuses = store.statuses;
   let profiles = store.list();
@@ -192,3 +192,4 @@
   window.addEventListener('pageshow', event => { if (event.persisted) loadProfiles(); });
   loadProfiles();
 })();
+

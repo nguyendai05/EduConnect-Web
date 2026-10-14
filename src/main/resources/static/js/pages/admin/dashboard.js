@@ -3,7 +3,7 @@
   const page = document.querySelector('[data-dashboard]');
   if (!page) return;
 
-  // Dữ liệu minh họa của bản mẫu; thay bằng dữ liệu server khi tích hợp JSP.
+  // Dữ liệu minh họa của bản mẫu; thay bằng dữ liệu server khi nối backend.
   /**
    * Số liệu tài chính lấy từ fixture dùng chung để mọi màn cùng reference khớp nhau.
    * Không hard-code: escrow tính từ ví học viên, giải ngân tính từ release event.
@@ -455,3 +455,4 @@
   window.addEventListener('pageshow', event => { if (event.persisted) load(); });
   load();
 })();
+

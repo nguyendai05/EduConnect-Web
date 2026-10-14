@@ -2,7 +2,7 @@
   const page = document.querySelector('[data-payout-requests]');
   if (!page) return;
 
-  // Dữ liệu mẫu của prototype; thay bằng dữ liệu server khi tích hợp JSP.
+  // Dữ liệu mẫu của prototype; thay bằng dữ liệu server khi nối backend.
   const store = window.EduPayout;
   const statuses = store.statuses;
   const filtersForm = page.querySelector('[data-payout-filters]');
@@ -217,3 +217,4 @@
   });
   loadRequests();
 })();
+

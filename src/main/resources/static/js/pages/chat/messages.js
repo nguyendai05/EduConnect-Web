@@ -1,4 +1,4 @@
-/* Page-local UI data. Replace with authenticated conversation APIs when integrating JSP.
+/* Page-local UI data. Replace with authenticated conversation APIs when integrating the backend.
  * No messages or attachments are uploaded; state is kept for this page session only.
  */
 (() => {
@@ -313,3 +313,4 @@
   renderThreads()
   renderConversation()
 })()
+

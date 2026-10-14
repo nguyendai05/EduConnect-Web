@@ -2,7 +2,7 @@
   const page = document.querySelector('[data-reports]');
   if (!page) return;
 
-  // Dữ liệu mẫu của prototype; thay bằng dữ liệu server khi tích hợp JSP.
+  // Dữ liệu mẫu của prototype; thay bằng dữ liệu server khi nối backend.
   let reports = window.EduReport.list();
   const { statuses, severities, types } = window.EduReport;
   const form = page.querySelector('[data-reports-filters]');
@@ -219,3 +219,4 @@
   window.addEventListener('pageshow', event => { if (event.persisted) loadReports(); });
   loadReports();
 })();
+
