@@ -1,0 +1,185 @@
+/* Biểu đồ dùng chung (bar + pie) — js/core/charts.js
+   Không hard-code palette thứ hai: dùng token từ css/tokens.css.
+   Viền neutral 1px đều các cạnh theo quy ước redesign. */
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-neutral-200, #e3ded2);
+  border-radius: var(--radius-md, 12px);
+  background: var(--color-surface, #fffdf8);
+  min-width: 0;
+}
+
+.chart__title {
+  margin: 0;
+  font-size: var(--font-size-md, 1rem);
+  font-weight: 600;
+  color: var(--color-text-primary, #24312c);
+}
+
+.chart__meta {
+  margin: 0;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-text-secondary, #5c6660);
+  overflow-wrap: anywhere;
+}
+
+.chart__error {
+  margin: 0;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-danger, #b4342a);
+}
+
+.chart__empty {
+  margin: 0;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-text-secondary, #5c6660);
+}
+
+.chart__plot {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  height: 168px;
+  min-width: 0;
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-neutral-200, #e3ded2);
+}
+
+.chart__column {
+  display: flex;
+  flex: 1 0 72px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  height: 100%;
+  min-width: 0;
+}
+
+.chart__bar {
+  width: 100%;
+  max-width: 44px;
+  min-height: 2px;
+  border-radius: var(--radius-sm, 6px) var(--radius-sm, 6px) 0 0;
+  background: var(--color-primary, #2c6e5f);
+}
+
+.chart__value,
+.chart__label {
+  max-width: 100%;
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-text-secondary, #5c6660);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chart__value {
+  color: var(--color-text-primary, #24312c);
+  font-weight: 600;
+}
+
+.chart__pie-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.chart__pie {
+  flex: 0 0 auto;
+  width: 168px;
+  height: 168px;
+}
+
+.chart__pie-track {
+  stroke: var(--color-neutral-200, #e3ded2);
+}
+
+.chart__pie-total {
+  font-size: 20px;
+  font-weight: 600;
+  fill: var(--color-text-primary, #24312c);
+}
+
+.chart__pie-caption {
+  font-size: 11px;
+  fill: var(--color-text-secondary, #5c6660);
+}
+
+.chart__legend {
+  display: flex;
+  flex: 1 1 200px;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.chart__legend-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm, 0.875rem);
+  min-width: 0;
+}
+
+.chart__swatch {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--color-neutral-300, #cfc9bb);
+  border-radius: 3px;
+}
+
+.chart__legend-label {
+  flex: 1 1 auto;
+  color: var(--color-text-primary, #24312c);
+  overflow-wrap: anywhere;
+}
+
+.chart__legend-value {
+  flex: 0 0 auto;
+  color: var(--color-text-secondary, #5c6660);
+  font-variant-numeric: tabular-nums;
+}
+
+.chart__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.chart__table caption {
+  padding-bottom: var(--space-2);
+  text-align: left;
+  color: var(--color-text-secondary, #5c6660);
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+.chart__table th,
+.chart__table td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-neutral-200, #e3ded2);
+  text-align: left;
+  font-weight: 400;
+}
+
+.chart__table thead th {
+  background: var(--color-neutral-100, #f4f1e9);
+  font-weight: 600;
+}
+
+/* Bảng số liệu luôn hiển thị: không chỉ dựa vào màu để phân biệt. */
+@media (max-width: 40rem) {
+  .chart__pie-body { flex-direction: column; align-items: stretch; }
+  .chart__pie { width: 100%; height: auto; aspect-ratio: 1 / 1; max-width: 220px; margin-inline: auto; }
+}

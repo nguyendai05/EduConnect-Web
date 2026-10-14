@@ -1,0 +1,257 @@
+:root {
+  --applicant-primary: var(--color-primary-hover);
+  --applicant-primary-soft: var(--color-primary-container);
+  --applicant-border: var(--color-border);
+}
+
+.applicant-card-preview {
+  padding: 1rem 0.5rem;
+}
+
+.applicant-card-demo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.applicant-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  align-content: start;
+  gap: var(--space-5);
+  min-width: 0;
+  min-height: 18.5rem;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--applicant-border);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+.applicant-card--selected {
+  background: var(--color-paper);
+  border-color: var(--color-border);
+}
+
+.applicant-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.applicant-card__identity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.applicant-card__avatar {
+  display: grid;
+  width: 3.75rem;
+  height: 3.75rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.applicant-card__avatar--pending {
+  color: var(--applicant-primary);
+  background: var(--color-primary-focus);
+  border: 1px solid var(--color-primary-border);
+}
+
+.applicant-card__avatar--selected {
+  color: var(--color-ink);
+  background: var(--color-primary-border);
+  border: 1px solid var(--color-primary-border);
+}
+
+.applicant-card__name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.applicant-card__name-row h1 {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.applicant-card__verified {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: 0 0 auto;
+  color: var(--applicant-primary);
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.applicant-card__details {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 0.125rem;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.applicant-card__rating {
+  color: var(--color-warning-text);
+  font-weight: 600;
+}
+
+.applicant-card__rating span {
+  font-size: var(--font-size-lg);
+}
+
+.applicant-card__status {
+  flex: 0 0 auto;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.applicant-card__status--pending {
+  color: var(--color-warning-text);
+  background: var(--color-warning-container);
+}
+
+.applicant-card__status--selected {
+  color: var(--color-success-text);
+  background: var(--color-success-container);
+}
+
+.applicant-card__proposal {
+  display: grid;
+  gap: 0.375rem;
+  margin-top: 0.5rem;
+  padding: var(--space-4);
+  color: var(--color-text-secondary);
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.applicant-card__proposal--selected {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.applicant-card__proposal > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.applicant-card__proposal strong {
+  color: var(--color-text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.applicant-card__proposal--selected strong {
+  color: var(--applicant-primary);
+}
+
+.applicant-card__proposal p {
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.applicant-card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+
+.applicant-card__actions--selected {
+  justify-content: space-between;
+}
+
+.applicant-card__button {
+  padding: 0.5rem 0.875rem;
+  min-height: var(--control-height);
+  border-radius: var(--control-radius);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.applicant-card__button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.applicant-card__button--outline {
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-high);
+}
+
+.applicant-card__button--primary {
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.applicant-card__button--neutral {
+  color: var(--color-text-secondary);
+  background: var(--color-surface-low);
+  border: 0;
+}
+
+.applicant-card__button:hover {
+  filter: brightness(0.97);
+}
+.applicant-card__button--primary:hover { color: var(--color-on-primary); }
+
+.applicant-card__contract {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--color-success-text);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.applicant-card__contract svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+@media (max-width: 54rem) {
+  .applicant-card-demo {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 34rem) {
+  .applicant-card__header,
+  .applicant-card__actions--selected {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .applicant-card__actions--selected {
+    gap: var(--space-3);
+  }
+}
