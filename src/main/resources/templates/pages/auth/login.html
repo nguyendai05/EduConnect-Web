@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/auth :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Đăng nhập · Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}">
+<link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" href="/css/components/form/password-input.css" th:href="@{/css/components/form/password-input.css}">
+<link rel="stylesheet" href="/css/components/form/checkbox.css" th:href="@{/css/components/form/checkbox.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/pages/auth/login.css" th:href="@{/css/pages/auth/login.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+
+</th:block>
+<th:block th:fragment="scripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<script src="/js/core/password-input.js" defer th:src="@{/js/core/password-input.js}"></script>
+<script src="/js/pages/auth/login.js" defer th:src="@{/js/pages/auth/login.js}"></script>
+</th:block>
+</head>
+<body class="auth-login-page" data-login-state="" th:fragment="content">
+    <th:block th:replace="~{fragments/header-auth :: header(${active}, 'v1')}"></th:block>
+
+    <main class="auth-login-main">
+
+        <section class="auth-login-card" aria-labelledby="login-title">
+            <header class="auth-login-card__heading">
+                <h1 id="login-title">Đăng nhập</h1>
+
+            </header>
+
+            <section class="alert alert--info" data-login-demo>
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content">
+                    <p class="alert__title">Bản xem trước — đây không phải xác thực thật</p>
+                    <p class="alert__message">Đăng nhập chỉ mô phỏng bằng dữ liệu demo: không kiểm tra mật khẩu thật, không tạo phiên thật, không gửi email và không có tài khoản nào được tạo. Nhập một email demo bên dưới với mật khẩu bất kỳ để xem giao diện theo vai trò.</p>
+                    <p class="alert__message" data-login-demo-emails></p>
+                    <div data-login-session hidden>
+                        <p class="alert__message" data-login-session-message></p>
+                        <p class="alert__message"><button class="button button--outline button--small" type="button" data-login-logout>Đăng xuất (demo)</button></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="alert alert--success" role="status" aria-live="polite" data-login-success hidden>
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content"><p class="alert__message" data-login-success-message></p></div>
+            </section>
+
+            <section class="alert alert--error auth-login-status" role="alert" aria-live="polite" hidden>
+                <span class="alert__icon" aria-hidden="true"></span>
+                <div class="alert__content"><p class="alert__message" data-login-status></p></div>
+            </section>
+
+            <form class="auth-login-form" novalidate data-login-form>
+                <div class="auth-login-form__field">
+                    <label for="login-email">Email</label>
+                    <div class="input-control" data-email-control>
+                        <img class="input-control__icon" src="/assets/icons/email.svg" alt="" th:src="@{/assets/icons/email.svg}">
+                        <input class="input-control__input input-control__input--with-leading" id="login-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" aria-describedby="login-email-error" required>
+                    </div>
+                    <p class="auth-login-form__error" id="login-email-error" hidden></p>
+                </div>
+
+                <div class="auth-login-form__field" data-component="password-input">
+                    <div class="auth-login-form__field-label"><label for="login-password">Mật khẩu</label><a href="/auth/forgot-password" th:href="@{/auth/forgot-password}">Quên mật khẩu?</a></div>
+                    <div class="password-control" data-password-control>
+                        <img class="auth-login-form__leading-icon" src="/assets/icons/lock.svg" alt="" th:src="@{/assets/icons/lock.svg}">
+                        <input class="password-control__input" id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" aria-describedby="login-password-error" required>
+                        <button class="password-control__toggle" type="button" aria-label="Hiện mật khẩu" aria-controls="login-password" aria-pressed="false" data-password-toggle>
+                            <img src="/assets/icons/mat.svg" data-icon-show="../../assets/icons/mat.svg" data-icon-hide="../../assets/icons/mat-tat.svg" alt="" th:src="@{/assets/icons/mat.svg}" th:attr="data-icon-show=@{/assets/icons/mat.svg}, data-icon-hide=@{/assets/icons/mat-tat.svg}">
+                        </button>
+                    </div>
+                    <p class="auth-login-form__error" id="login-password-error" hidden></p>
+                </div>
+
+                <label class="checkbox-option auth-login-form__remember">
+                    <span class="checkbox-hit-area"><input type="checkbox" name="remember"><span class="checkbox-box" aria-hidden="true"></span></span>
+                    <span class="checkbox-option__copy"><span class="checkbox-option__title">Ghi nhớ đăng nhập</span></span>
+                </label>
+                <!-- Tạm thời: Button component chưa có implementation, nên dùng nút cấp trang. Thay bằng Button chuẩn khi hỗ trợ loading state. -->
+                <button class="auth-login-form__submit" type="button" data-login-submit><span data-login-submit-label>Đăng nhập</span><span class="auth-login-form__spinner" aria-hidden="true" hidden></span></button>
+            </form>
+
+            <p class="auth-login-card__register">Chưa có tài khoản? <a href="/auth/register" th:href="@{/auth/register}">Đăng ký ngay</a></p>
+
+            <nav class="auth-login-card__register" aria-label="Liên kết demo của luồng tài khoản">
+                Liên kết demo: <a href="/auth/verify-email?token=DEMO-VERIFY-VALID" th:href="@{/auth/verify-email?token=DEMO-VERIFY-VALID}">Xác minh email</a>
+                · <a href="/auth/forgot-password" th:href="@{/auth/forgot-password}">Quên mật khẩu</a>
+                · <a href="/auth/reset-password?token=DEMO-RESET-VALID" th:href="@{/auth/reset-password?token=DEMO-RESET-VALID}">Đặt lại mật khẩu</a>
+            </nav>
+        </section>
+    </main>
+
+    <th:block th:replace="~{fragments/footer-auth :: footer(${active}, 'v1')}"></th:block>
+    <th:block th:replace="${scripts}"></th:block>
+</body>
+</html>

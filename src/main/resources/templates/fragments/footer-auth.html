@@ -1,0 +1,7 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"><th:block th:fragment="footer(active, variant)">
+<footer class="auth-login-footer" th:if="${variant == &#x27;v1&#x27;}">
+        <div class="container"><span>© 2026 Edu Connect</span></div>
+    </footer>
+<footer class="auth-register-footer" th:if="${variant == &#x27;v2&#x27;}"><div class="container"><span>© 2026 Edu Connect</span></div></footer>
+</th:block></html>

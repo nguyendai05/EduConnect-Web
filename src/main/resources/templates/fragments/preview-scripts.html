@@ -1,0 +1,6 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"><th:block th:fragment="scripts(name)">
+    <th:block th:if="${uiPreviewEnabled and preview}">
+        <script th:src="@{/js/preview/{file}(file=${name + '.js'})}" defer></script>
+    </th:block>
+</th:block></html>

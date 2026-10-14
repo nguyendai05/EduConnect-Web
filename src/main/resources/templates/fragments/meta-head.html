@@ -1,0 +1,12 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"><th:block th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" th:href="@{/assets/brand/favicon.ico}" type="image/x-icon">
+    <link rel="icon" th:href="@{/assets/brand/favicon.svg}" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" th:href="@{/assets/brand/apple-touch-icon.png}" sizes="180x180">
+    <meta name="app-base" th:content="@{/}">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <meta name="_csrf_parameter" th:content="${_csrf.parameterName}">
+</th:block></html>

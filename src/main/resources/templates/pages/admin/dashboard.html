@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: page(~{::title}, &#x27;/admin/dashboard&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Tổng quan quản trị | Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}">
+<link rel="stylesheet" href="/css/components/layout/admin-sidebar.css" th:href="@{/css/components/layout/admin-sidebar.css}">
+<link rel="stylesheet" href="/css/components/layout/admin-header.css" th:href="@{/css/components/layout/admin-header.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
+<link rel="stylesheet" href="/css/components/data-display/stat-card.css" th:href="@{/css/components/data-display/stat-card.css}">
+<link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
+<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" href="/css/components/feedback/loading.css" th:href="@{/css/components/feedback/loading.css}">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/components/data-display/chart.css" th:href="@{/css/components/data-display/chart.css}">
+<link rel="stylesheet" href="/css/pages/admin/dashboard.css" th:href="@{/css/pages/admin/dashboard.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+
+</th:block>
+<th:block th:fragment="scripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<script src="/js/core/charts.js" defer th:src="@{/js/core/charts.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('tutor-review-data')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('payout-data')}"></th:block>
+<script src="/js/core/admin-sidebar.js" defer th:src="@{/js/core/admin-sidebar.js}"></script>
+<script src="/js/core/admin-header.js" defer th:src="@{/js/core/admin-header.js}"></script>
+<script src="/js/pages/admin/dashboard.js" defer th:src="@{/js/pages/admin/dashboard.js}"></script>
+</th:block>
+</head>
+<body class="dashboard-page" th:fragment="content">
+    <a class="dashboard__skip-link" href="#dashboard-main">Đến nội dung chính</a>
+    <div class="admin-shell" data-component="admin-shell" data-dashboard>
+        <!-- Component: AdminSidebar | Nguồn: components/layout/admin-sidebar.html; CSS: css/components/layout/admin-sidebar.css -->
+        <th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
+
+        <!-- Component: AdminHeader | Nguồn: components/layout/admin-header.html; JS: js/core/admin-header.js -->
+        <th:block th:replace="~{fragments/header-admin :: header(${active}, 'v2')}"></th:block>
+
+        <main class="admin-shell__workspace" id="dashboard-main" tabindex="-1">
+            <div class="admin-shell__content dashboard">
+                <header class="admin-shell__page-header dashboard__header">
+                    <div>
+
+                        <h1>Tổng quan quản trị</h1>
+
+                    </div>
+                    <div class="dashboard__refresh">
+                        <button class="button button--secondary" type="button" data-dashboard-refresh><svg class="dashboard__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6.1 7a7 7 0 0 1 11.6-1L20 9M4 15l2.3 3A7 7 0 0 0 17.9 17"/></svg>Làm mới dữ liệu</button>
+                        <p class="dashboard__updated" aria-live="polite" data-dashboard-updated>Đang tải số liệu tổng quan…</p>
+                    </div>
+                </header>
+
+                <!-- Component: Loading | Nguồn: components/feedback/loading.html -->
+                <div class="loading dashboard__loading" role="status" data-dashboard-loading><span class="loading__spinner" aria-hidden="true"></span><p class="loading__text">Đang tải số liệu tổng quan vận hành…</p></div>
+
+                <div class="dashboard__content" data-dashboard-content aria-busy="true" hidden>
+                    <section class="dashboard__section" aria-labelledby="queue-title">
+                        <div class="dashboard__section-head">
+                            <div>
+                                <h2 class="dashboard__section-title" id="queue-title">Hàng đợi cần xử lý</h2>
+
+                            </div>
+                            <span class="badge badge--warning" data-dashboard-priority-total>Đang tải…</span>
+                        </div>
+                        <div class="card dashboard__queue">
+                            <ul class="dashboard__queue-list" data-dashboard-queue></ul>
+                            <div class="card__footer dashboard__queue-footer">
+                                <p class="dashboard__foot-note" data-dashboard-queue-updated>Đang kiểm tra hàng đợi…</p>
+                                <div class="dashboard__queue-actions">
+                                    <a class="dashboard__link" href="/admin/reports?status=open" th:href="@{/admin/reports?status=open}">Xem tất cả báo cáo đang mở<img class="dashboard__link-icon" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}"></a>
+                                    <a class="dashboard__link" href="/admin/audit-logs?module=tutor" th:href="@{/admin/audit-logs?module=tutor}">Xem nhật ký kiểm duyệt<img class="dashboard__link-icon" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="dashboard__section" aria-labelledby="ops-title">
+                        <div class="dashboard__section-head">
+                            <div>
+                                <h2 class="dashboard__section-title" id="ops-title">Chỉ số vận hành</h2>
+                                <p class="dashboard__section-note">30 ngày gần nhất.</p>
+                            </div>
+                            <a class="dashboard__link" href="/admin/audit-logs" th:href="@{/admin/audit-logs}">Xem nhật ký hệ thống<img class="dashboard__link-icon" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}"></a>
+                        </div>
+                        <!-- Component: StatCard, Badge, Button | Nguồn: components/data-display/stat-card.html; components/feedback/badge.html; components/action/button.html -->
+                        <div class="dashboard__metrics" data-dashboard-metrics></div>
+                    </section>
+
+                    <section class="dashboard__section" aria-labelledby="finance-title">
+                        <div class="dashboard__section-head">
+                            <div>
+                                <h2 class="dashboard__section-title" id="finance-title">Dòng tiền &amp; ký quỹ</h2>
+                                <p class="dashboard__section-note">Giá trị giao dịch, phí và tiền ký quỹ.</p>
+                            </div>
+                            <a class="dashboard__link" href="/admin/payout-requests" th:href="@{/admin/payout-requests}">Xem yêu cầu rút tiền<img class="dashboard__link-icon" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}"></a>
+                        </div>
+                        <div class="dashboard__metrics dashboard__metrics--finance" data-dashboard-finance></div>
+                    </section>
+
+                    <div class="dashboard__grid">
+                        <div class="dashboard__column">
+                            <section class="dashboard__section" aria-labelledby="chart-title">
+                                <div class="dashboard__section-head">
+                                    <div>
+                                        <h2 class="dashboard__section-title" id="chart-title">Biểu đồ tổng quan</h2>
+
+                                    </div>
+
+                                </div>
+                                <!-- Component: Card, Badge | Nguồn: components/data-display/card.html; components/feedback/badge.html -->
+                                <div class="dashboard__charts">
+                                    <article class="card dashboard__chart-card">
+                                        <div class="card__header dashboard__chart-head">
+                                            <div>
+                                                <h3 class="card__title">GMV theo tháng</h3>
+                                                <p class="card__description">Sáu tháng gần nhất: tổng giá trị giao dịch và phí nền tảng thu.</p>
+                                            </div>
+                                            <span class="badge badge--info">6 tháng</span>
+                                        </div>
+                                        <div class="card__body dashboard__chart-body">
+                                            <div class="dashboard__chart" role="img" aria-label="Biểu đồ cột GMV theo tháng" data-gmv-chart></div>
+                                            <ul class="dashboard__legend" aria-hidden="true">
+                                                <li class="dashboard__legend-item"><span class="dashboard__swatch dashboard__swatch--gmv" aria-hidden="true"></span>GMV đã thanh toán</li>
+                                                <li class="dashboard__legend-item"><span class="dashboard__swatch dashboard__swatch--fee" aria-hidden="true"></span>Phí nền tảng thu</li>
+                                            </ul>
+                                            <p class="dashboard__chart-summary" data-gmv-summary></p>
+                                        </div>
+
+                                    </article>
+
+                                    <article class="card dashboard__chart-card">
+                                        <div class="card__header dashboard__chart-head">
+                                            <div>
+                                                <h3 class="card__title">Cơ cấu dòng tiền ký quỹ</h3>
+                                                <p class="card__description">Tỷ trọng các trạng thái tiền trong 30 ngày gần nhất.</p>
+                                            </div>
+                                            <span class="badge badge--escrow">Escrow</span>
+                                        </div>
+                                        <div class="card__body dashboard__chart-body">
+                                            <div class="dashboard__stack" role="img" aria-label="Biểu đồ thanh tỷ trọng các trạng thái dòng tiền ký quỹ" data-escrow-chart></div>
+                                            <ul class="dashboard__mix-list" data-escrow-list></ul>
+                                            <p class="dashboard__chart-summary" data-escrow-summary></p>
+                                        </div>
+                                        <div class="card__footer dashboard__chart-caption">Tổng dòng tiền <strong data-escrow-total></strong>.</div>
+                                    </article>
+                                </div>
+                            </section>
+
+                            <section class="dashboard__section" aria-labelledby="activity-title">
+                                <div class="dashboard__section-head">
+                                    <div>
+                                        <h2 class="dashboard__section-title" id="activity-title">Hoạt động hệ thống gần đây</h2>
+                                        <p class="dashboard__section-note">Thời gian theo múi giờ Việt Nam.</p>
+                                    </div>
+                                    <a class="dashboard__link" href="/admin/audit-logs" th:href="@{/admin/audit-logs}">Xem toàn bộ nhật ký hệ thống<img class="dashboard__link-icon" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}"></a>
+                                </div>
+                                <!-- Component: Card, Avatar, Badge, InfoRow | Nguồn: components/data-display/{card,avatar,info-row}.html; components/feedback/badge.html -->
+                                <div class="card dashboard__activity-card">
+                                    <ol class="dashboard__activity" data-dashboard-activity></ol>
+                                </div>
+                            </section>
+                        </div>
+
+                        <aside class="dashboard__aside" aria-label="Tình trạng hệ thống">
+                            <section class="card dashboard__panel" aria-labelledby="integrity-title">
+                                <div class="card__header dashboard__panel-head">
+                                    <div>
+                                        <h2 class="card__title dashboard__panel-title" id="integrity-title">Tính toàn vẹn dòng tiền</h2>
+
+                                    </div>
+                                    <span class="badge badge--success" data-dashboard-integrity-score>Đang kiểm tra…</span>
+                                </div>
+                                <div class="card__body dashboard__panel-body" data-dashboard-checks></div>
+                                <div class="card__footer dashboard__panel-foot">
+                                    <p class="dashboard__foot-note" data-dashboard-integrity-time></p>
+                                    <p class="dashboard__foot-note">Không cho phép điều chỉnh số dư thủ công.</p>
+                                </div>
+                            </section>
+
+                            <section class="card dashboard__panel" aria-labelledby="service-title">
+                                <div class="card__header dashboard__panel-head">
+                                    <div>
+                                        <h2 class="card__title dashboard__panel-title" id="service-title">Dịch vụ nền</h2>
+
+                                    </div>
+                                </div>
+                                <div class="card__body dashboard__panel-body" data-dashboard-services></div>
+                            </section>
+
+                        </aside>
+                    </div>
+                </div>
+                <noscript><p class="dashboard__noscript">Vui lòng bật JavaScript để tải số liệu tổng quan, biểu đồ và các hàng đợi cần xử lý.</p></noscript>
+            </div>
+        </main>
+
+        <template id="dashboard-metric-template">
+            <article class="stat-card stat-card--compact dashboard__metric">
+                <div class="stat-card__header">
+                    <h3 class="stat-card__label dashboard__metric-label" data-metric-label></h3>
+                    <span class="stat-card__icon stat-card__icon--small" aria-hidden="true"><img src="/assets/icons/dashboard.svg" alt="" data-metric-icon th:src="@{/assets/icons/dashboard.svg}"></span>
+                </div>
+                <p class="dashboard__metric-value"><strong class="stat-card__value" data-metric-value></strong><span class="stat-card__unit" data-metric-unit></span></p>
+                <p class="stat-card__description dashboard__metric-note" data-metric-note></p>
+                <div class="dashboard__metric-footer">
+                    <span class="badge" data-metric-badge></span>
+                    <a class="dashboard__metric-link" data-metric-link href="/admin/audit-logs" th:href="@{/admin/audit-logs}"><span data-metric-link-label></span><img class="dashboard__link-icon" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}"></a>
+                </div>
+            </article>
+        </template>
+
+        <template id="dashboard-queue-template">
+            <li class="dashboard__queue-item">
+                <span class="dashboard__queue-icon" aria-hidden="true"><img src="/assets/icons/clock.svg" alt="" data-queue-icon th:src="@{/assets/icons/clock.svg}"></span>
+                <div class="dashboard__queue-main">
+                    <div class="dashboard__queue-heading">
+                        <h3 class="dashboard__queue-title" data-queue-title></h3>
+                        <span class="badge" data-queue-badge></span>
+                    </div>
+                    <p class="dashboard__queue-meta" data-queue-meta></p>
+                    <p class="dashboard__queue-reason" data-queue-reason></p>
+                </div>
+                <div class="dashboard__queue-side">
+                    <p class="dashboard__queue-count" data-queue-count></p>
+                    <a class="button button--outline button--small" data-queue-link href="/admin/tutor-review-queue?status=pending" th:href="@{/admin/tutor-review-queue?status=pending}"><span data-queue-link-label>Xem hàng đợi</span></a>
+                </div>
+            </li>
+        </template>
+
+        <template id="dashboard-activity-template">
+            <li class="dashboard__activity-item">
+                <span class="avatar avatar--small" aria-hidden="true" data-activity-avatar></span>
+                <div class="dashboard__activity-body">
+                    <div class="dashboard__activity-head">
+                        <span class="badge" data-activity-actor></span>
+                        <strong class="dashboard__activity-title" data-activity-title></strong>
+                        <time class="dashboard__activity-time" datetime="" data-activity-time></time>
+                    </div>
+                    <dl class="info-row info-row--compact"><dt class="info-row__label">Đối tượng</dt><dd class="info-row__value" data-activity-target></dd></dl>
+                    <dl class="info-row info-row--compact"><dt class="info-row__label">Kết quả</dt><dd class="info-row__value" data-activity-result></dd></dl>
+                    <a class="dashboard__link dashboard__activity-link" data-activity-link href="/admin/audit-logs" th:href="@{/admin/audit-logs}"><span data-activity-link-label>Xem bản ghi liên quan</span><img class="dashboard__link-icon" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}"></a>
+                </div>
+            </li>
+        </template>
+
+        <template id="dashboard-check-template">
+            <div class="dashboard__check">
+                <div class="dashboard__check-head">
+                    <h3 class="dashboard__check-title" data-check-title></h3>
+                    <span class="badge" data-check-badge></span>
+                </div>
+                <p class="dashboard__check-description" data-check-description></p>
+                <dl class="info-row info-row--compact"><dt class="info-row__label">Kết quả quét</dt><dd class="info-row__value" data-check-value></dd></dl>
+            </div>
+        </template>
+
+        <template id="dashboard-service-template">
+            <div class="dashboard__service">
+                <span class="dashboard__service-dot" aria-hidden="true" data-service-dot></span>
+                <p class="dashboard__service-label" data-service-label></p>
+                <span class="badge" data-service-badge></span>
+            </div>
+        </template>
+    </div>
+    <th:block th:replace="${scripts}"></th:block>
+</body>
+</html>

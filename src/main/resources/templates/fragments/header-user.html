@@ -1,0 +1,771 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"><th:block th:fragment="header(active, variant)">
+<header class="user-header" data-component="user-header" data-user-variant="A" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v1&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/account/profile" role="menuitem" data-menu-item="0" th:href="@{/account/profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview" role="menuitem" data-menu-item="1" th:href="@{/wallet/overview}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/wallet.svg" alt="" data-menu-icon="wallet" th:src="@{/assets/icons/wallet.svg}">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview#transactions" role="menuitem" data-menu-item="2" th:href="@{/wallet/overview#transactions}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/receipt.svg" alt="" data-menu-icon="receipt" th:src="@{/assets/icons/receipt.svg}">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header class="user-header" data-component="user-header" data-user-variant="B" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v2&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>0 ₫</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/account/profile" role="menuitem" data-menu-item="0" th:href="@{/account/profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header
+            class="user-header"
+            data-component="user-header"
+            data-user-variant="TUTOR"
+            data-profile-name="Nguyễn Minh Anh"
+            data-profile-initials="MA"
+            data-profile-role="Gia sư Toán"
+         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v3&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/tutor/my-profile" role="menuitem" data-menu-item="0" th:href="@{/tutor/my-profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ giảng dạy</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/tutor/my-profile#lich-ranh" role="menuitem" data-menu-item="1" th:href="@{/tutor/my-profile#lich-ranh}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/calendar.svg" alt="" data-menu-icon="calendar" th:src="@{/assets/icons/calendar.svg}">
+                            <span data-menu-label>Thiết lập lịch rảnh</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview" role="menuitem" data-menu-item="2" th:href="@{/wallet/overview}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/wallet.svg" alt="" data-menu-icon="wallet" th:src="@{/assets/icons/wallet.svg}">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header
+            class="user-header"
+            data-component="user-header"
+            data-user-variant="A"
+            data-profile-name="Chị Mai Lan"
+            data-profile-initials="ML"
+            data-profile-role="Phụ huynh"
+         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v4&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>—</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/account/profile" role="menuitem" data-menu-item="0" th:href="@{/account/profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview" role="menuitem" data-menu-item="1" th:href="@{/wallet/overview}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/wallet.svg" alt="" data-menu-icon="wallet" th:src="@{/assets/icons/wallet.svg}">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview#transactions" role="menuitem" data-menu-item="2" th:href="@{/wallet/overview#transactions}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/receipt.svg" alt="" data-menu-icon="receipt" th:src="@{/assets/icons/receipt.svg}">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header class="user-header" data-component="user-header" data-user-variant="B" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v5&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../assets/icons/mui-ten-xuong.svg" data-icon-open="../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>0 ₫</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/account/profile" role="menuitem" data-menu-item="0" th:href="@{/account/profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header class="user-header" data-component="user-header" data-user-variant="B" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v6&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/account/profile" role="menuitem" data-menu-item="0" th:href="@{/account/profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview" role="menuitem" data-menu-item="1" th:href="@{/wallet/overview}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/wallet.svg" alt="" data-menu-icon="wallet" th:src="@{/assets/icons/wallet.svg}">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview#transactions" role="menuitem" data-menu-item="2" th:href="@{/wallet/overview#transactions}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/receipt.svg" alt="" data-menu-icon="receipt" th:src="@{/assets/icons/receipt.svg}">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header
+            class="user-header"
+            data-component="user-header"
+            data-user-variant="A"
+            data-profile-name="Chị Mai Lan"
+            data-profile-initials="ML"
+            data-profile-role="Phụ huynh"
+         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v7&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/account/profile" role="menuitem" data-menu-item="0" th:href="@{/account/profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview" role="menuitem" data-menu-item="1" th:href="@{/wallet/overview}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/wallet.svg" alt="" data-menu-icon="wallet" th:src="@{/assets/icons/wallet.svg}">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview#transactions" role="menuitem" data-menu-item="2" th:href="@{/wallet/overview#transactions}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/receipt.svg" alt="" data-menu-icon="receipt" th:src="@{/assets/icons/receipt.svg}">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header class="user-header" data-component="user-header" data-user-variant="C" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v8&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/account/profile" role="menuitem" data-menu-item="0" th:href="@{/account/profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview" role="menuitem" data-menu-item="1" th:href="@{/wallet/overview}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/wallet.svg" alt="" data-menu-icon="wallet" th:src="@{/assets/icons/wallet.svg}">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview#transactions" role="menuitem" data-menu-item="2" th:href="@{/wallet/overview#transactions}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/receipt.svg" alt="" data-menu-icon="receipt" th:src="@{/assets/icons/receipt.svg}">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header class="user-header" data-component="user-header" data-user-variant="TUTOR" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v9&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/tutor/my-profile" role="menuitem" data-menu-item="0" th:href="@{/tutor/my-profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ giảng dạy</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/tutor/my-profile#lich-ranh" role="menuitem" data-menu-item="1" th:href="@{/tutor/my-profile#lich-ranh}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/calendar.svg" alt="" data-menu-icon="calendar" th:src="@{/assets/icons/calendar.svg}">
+                            <span data-menu-label>Thiết lập lịch rảnh</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview" role="menuitem" data-menu-item="2" th:href="@{/wallet/overview}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/wallet.svg" alt="" data-menu-icon="wallet" th:src="@{/assets/icons/wallet.svg}">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header
+            class="user-header user-shell__header"
+            data-component="user-header"
+            data-user-variant="A"
+         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v10&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>ML</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Chị Mai Lan</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Phụ huynh</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/account/profile" role="menuitem" data-menu-item="0" th:href="@{/account/profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ cá nhân</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview" role="menuitem" data-menu-item="1" th:href="@{/wallet/overview}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/wallet.svg" alt="" data-menu-icon="wallet" th:src="@{/assets/icons/wallet.svg}">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview#transactions" role="menuitem" data-menu-item="2" th:href="@{/wallet/overview#transactions}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/receipt.svg" alt="" data-menu-icon="receipt" th:src="@{/assets/icons/receipt.svg}">
+                            <span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header
+            class="user-header user-shell__header"
+            data-component="user-header"
+            data-user-variant="TUTOR"
+         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v11&#x27;}">
+    <div class="user-header__inner">
+        <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
+            <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
+        </a>
+
+        <nav class="user-header__nav" aria-label="Điều hướng chính">
+            <a class="user-header__nav-link" data-nav-key="home" href="/home" th:href="@{/home}" th:classappend="${active == &#x27;home&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;home&#x27; ? &#x27;page&#x27; : null}">Trang chủ</a>
+            <a class="user-header__nav-link" data-nav-key="tutors" href="/tutor/search" th:href="@{/tutor/search}" th:classappend="${active == &#x27;tutors&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;tutors&#x27; ? &#x27;page&#x27; : null}">Tìm gia sư</a>
+            <a class="user-header__nav-link" data-nav-key="requests" href="/job/discover" th:href="@{/job/discover}" th:classappend="${active == &#x27;requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;requests&#x27; ? &#x27;page&#x27; : null}">Tin tìm gia sư</a>
+        </nav>
+
+        <div class="user-header__actions">
+            <a class="user-header__icon-button" href="/chat/messages" aria-label="Tin nhắn" title="Tin nhắn" th:href="@{/chat/messages}">
+                <img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">
+            </a>
+
+            <span class="user-header__divider" aria-hidden="true"></span>
+
+            <div class="user-header__account">
+                <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="user-account-menu">
+                    <span class="user-header__avatar" aria-hidden="true" data-profile-initials>LY</span>
+                    <span class="user-header__profile-copy">
+                        <strong><span data-profile-name>Lê Hoàng Yến</span><img class="user-header__verified" data-profile-verified src="/assets/icons/verified.svg" alt="Đã xác thực" hidden th:src="@{/assets/icons/verified.svg}"></strong>
+                        <span data-profile-role>Gia sư Chuyên Toán</span>
+                    </span>
+                    <img class="user-header__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}, data-icon-open=@{/assets/icons/mui-ten-len.svg}">
+                </button>
+
+                <div class="user-header__menu" id="user-account-menu" role="menu" aria-label="Menu tài khoản" hidden>
+                    <div class="user-header__menu-summary" data-menu-summary hidden>
+                        <div class="user-header__menu-summary-heading">
+                            <strong data-menu-summary-title>Tài khoản xác thực</strong>
+                        </div>
+                        <div class="user-header__menu-balance">
+                            <span>Ví thù lao:</span>
+                            <strong data-menu-balance>4.850.000đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="user-header__menu-section" data-menu-links>
+                        <a class="user-header__menu-item" href="/tutor/my-profile" role="menuitem" data-menu-item="0" th:href="@{/tutor/my-profile}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/profile.svg" alt="" data-menu-icon="profile" th:src="@{/assets/icons/profile.svg}">
+                            <span data-menu-label>Hồ sơ giảng dạy</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/tutor/my-profile#lich-ranh" role="menuitem" data-menu-item="1" th:href="@{/tutor/my-profile#lich-ranh}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/calendar.svg" alt="" data-menu-icon="calendar" th:src="@{/assets/icons/calendar.svg}">
+                            <span data-menu-label>Thiết lập lịch rảnh</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                        <a class="user-header__menu-item" href="/wallet/overview" role="menuitem" data-menu-item="2" th:href="@{/wallet/overview}">
+                            <img class="user-header__menu-item-leading" src="/assets/icons/wallet.svg" alt="" data-menu-icon="wallet" th:src="@{/assets/icons/wallet.svg}">
+                            <span data-menu-label>Ví Edu Connect</span>
+                            <img class="user-header__menu-item-chevron" src="/assets/icons/chevron-right.svg" alt="" th:src="@{/assets/icons/chevron-right.svg}">
+                        </a>
+                    </div>
+
+                    <div class="user-header__menu-section user-header__menu-section--logout">
+                        <button class="user-header__menu-item user-header__menu-item--danger" type="button" role="menuitem" data-user-action="logout">
+                            <img class="user-header__menu-item-icon" src="/assets/icons/dang-xuat.svg" alt="" th:src="@{/assets/icons/dang-xuat.svg}">
+                            <span data-menu-logout-label>Đăng xuất tài khoản</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+</th:block></html>
