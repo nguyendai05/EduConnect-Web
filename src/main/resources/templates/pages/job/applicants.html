@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Ứng viên gia sư | Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}">
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+<link rel="stylesheet" href="/css/components/navigation/breadcrumb.css" th:href="@{/css/components/navigation/breadcrumb.css}">
+<link rel="stylesheet" href="/css/components/navigation/filter-chip.css" th:href="@{/css/components/navigation/filter-chip.css}">
+<link rel="stylesheet" href="/css/components/form/search-input.css" th:href="@{/css/components/form/search-input.css}">
+<link rel="stylesheet" href="/css/components/form/select.css" th:href="@{/css/components/form/select.css}">
+<link rel="stylesheet" href="/css/components/form/checkbox.css" th:href="@{/css/components/form/checkbox.css}">
+<link rel="stylesheet" href="/css/components/domain/job/applicant-card.css" th:href="@{/css/components/domain/job/applicant-card.css}">
+<link rel="stylesheet" href="/css/components/data-display/table.css" th:href="@{/css/components/data-display/table.css}">
+<link rel="stylesheet" href="/css/components/data-display/tag.css" th:href="@{/css/components/data-display/tag.css}">
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+<link rel="stylesheet" href="/css/components/feedback/modal.css" th:href="@{/css/components/feedback/modal.css}">
+<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+<link rel="stylesheet" href="/css/pages/job/applicants.css" th:href="@{/css/pages/job/applicants.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+<script src="/js/core/search-input.js" defer th:src="@{/js/core/search-input.js}"></script>
+<script src="/js/core/filter-chip.js" defer th:src="@{/js/core/filter-chip.js}"></script>
+<script src="/js/core/select.js" defer th:src="@{/js/core/select.js}"></script>
+<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
+<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
+<script src="/js/pages/job/applicants.js" defer th:src="@{/js/pages/job/applicants.js}"></script>
+</th:block>
+<th:block th:fragment="scripts">
+
+</th:block>
+</head>
+<body class="applicants-page" th:fragment="content">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
+<div class="user-shell" data-component="user-shell" data-applicants-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
+    <th:block th:replace="~{fragments/header-user :: header(${active}, 'v8')}"></th:block>
+
+    <main class="user-shell__main">
+        <div class="user-shell__content applicants-page__content">
+            <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
+            <nav class="breadcrumb applicants-page__breadcrumb" aria-label="Breadcrumb">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="/job/discover" th:href="@{/job/discover}">Tin tìm gia sư</a></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="/job/my-job" th:href="@{/job/my-job}">Tin của tôi</a></li>
+                    <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" data-render="breadcrumb">Ứng viên (Mã tin: —)</span></li>
+                </ol>
+            </nav>
+
+            <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
+            <header class="page-header applicants-page__header" data-applicants-content>
+                <div class="page-header__content">
+                    <div class="page-header__title-block">
+                        <div class="page-header__title-row"><h1 class="page-header__title" data-render="title">Đang đọc hồ sơ ứng tuyển</h1><span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span><span data-render="status">—</span></span></div>
+                        <p class="page-header__description">Chọn gia sư chưa phát sinh thanh toán.</p>
+                    </div>
+                    <div class="page-header__actions"><!-- Component: Button | Nguồn: components/action/button.html --><a class="button button--outline button--medium page-header__action" href="/job/detail" data-view-job th:href="@{/job/detail}"><img src="/assets/icons/mat.svg" alt="" th:src="@{/assets/icons/mat.svg}">Xem tin đăng</a><a class="button button--primary button--medium page-header__action" data-contract-handoff hidden><img src="/assets/icons/receipt.svg" alt="" th:src="@{/assets/icons/receipt.svg}"><span data-contract-handoff-label>Xem hợp đồng</span></a></div>
+                </div>
+            </header>
+
+            <section class="applicants-job" data-applicants-content aria-labelledby="applicants-job-title">
+                <div class="applicants-job__main">
+                    <div class="applicants-job__heading"><h2 id="applicants-job-title" data-render="job-title">—</h2><!-- Component: Tag | Nguồn: components/data-display/tag.html --><div class="applicants-job__tags" data-render="job-tags"></div></div>
+                    <div class="applicants-job__facts">
+                        <span><strong>Học phí dự kiến:</strong> <span data-render="job-fee">—</span></span><span><strong>Tần suất:</strong> <span data-render="job-frequency">—</span></span><span><strong>Thời lượng:</strong> <span data-render="job-duration">—</span></span><span><strong>Địa điểm:</strong> <span data-render="job-region">—</span></span><span><strong>Yêu cầu:</strong> <span data-render="job-experience">—</span></span>
+                    </div>
+                    <div class="applicants-job__note" data-contract-note hidden><img src="/assets/icons/receipt.svg" alt="" th:src="@{/assets/icons/receipt.svg}"><span data-contract-note-text>—</span></div>
+                </div>
+                <div class="applicants-job__goal"><strong>Mục tiêu học tập</strong><span data-render="job-goal">—</span></div>
+            </section>
+
+            <section class="empty-state applicants-job-missing" data-job-not-found hidden aria-labelledby="job-not-found-title">
+                <span class="empty-state__icon" aria-hidden="true"></span>
+                <h2 class="empty-state__title" id="job-not-found-title">Không tìm thấy tin</h2>
+                <p class="empty-state__description">Không có tin tìm gia sư nào mang mã <strong data-requested-job-id>—</strong> trong tài khoản của bạn.</p>
+                <a class="button button--primary button--medium" href="/job/my-job" th:href="@{/job/my-job}">Quay lại Tin của tôi</a>
+            </section>
+
+            <div class="applicants-page__workspace" data-applicants-content>
+                <section class="applicants-page__primary" aria-label="Danh sách gia sư ứng tuyển">
+                    <div class="applicants-toolbar">
+                        <!-- Component: SearchInput | Nguồn: components/form/search-input.html -->
+                        <div class="search-input search-input--compact applicants-toolbar__search" data-search-input>
+                            <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+                            <input type="search" placeholder="Tìm gia sư theo tên..." aria-label="Tìm gia sư theo tên" data-applicant-search>
+                            <button class="search-input__clear" type="button" data-clear-search aria-label="Xóa nội dung tìm kiếm" hidden><svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+                        </div>
+                        <!-- Component: FilterChip | Nguồn: components/navigation/filter-chip.html -->
+                        <div class="filter-chip-list applicants-toolbar__filters" aria-label="Lọc trạng thái">
+                            <button class="filter-chip filter-chip--selected" type="button" data-applicant-filter="all" aria-pressed="true">Tất cả (—)</button>
+                            <button class="filter-chip" type="button" data-applicant-filter="pending" aria-pressed="false">Đang chờ (—)</button>
+                            <button class="filter-chip" type="button" data-applicant-filter="selected" aria-pressed="false">Đã chọn (—)</button>
+                            <button class="filter-chip" type="button" data-applicant-filter="rejected" aria-pressed="false">Chưa được chọn (—)</button>
+                            <button class="filter-chip" type="button" data-applicant-filter="withdrawn" aria-pressed="false">Đã rút (—)</button>
+                        </div>
+                        <!-- Component: Select | Nguồn: components/form/select.html -->
+                        <section class="select-field applicants-toolbar__sort" data-component="select" data-initial-open="false" data-applicant-sort>
+                            <span class="select-field__label" id="applicant-sort-label">Sắp xếp</span>
+                            <button class="select-control" type="button" aria-labelledby="applicant-sort-label applicant-sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="applicant-sort-options" data-select-trigger><span id="applicant-sort-value" data-select-value>Mặc định</span><img class="select-control__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-open=@{/assets/icons/mui-ten-len.svg}, data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}"></button>
+                            <div class="select-options" id="applicant-sort-options" role="listbox" aria-labelledby="applicant-sort-label" data-select-options hidden>
+                                <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Mặc định" data-sort="default"><span>Mặc định</span><img src="/assets/icons/dau-tich.svg" alt="" th:src="@{/assets/icons/dau-tich.svg}"></button>
+                                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí thấp → cao" data-sort="fee-asc"><span>Học phí thấp → cao</span></button>
+                                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí cao → thấp" data-sort="fee-desc"><span>Học phí cao → thấp</span></button>
+                                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Kinh nghiệm nhiều hơn" data-sort="experience"><span>Kinh nghiệm nhiều hơn</span></button>
+                                <button class="select-option" type="button" role="option" aria-selected="false" data-value="Đánh giá cao hơn" data-sort="rating"><span>Đánh giá cao hơn</span></button>
+                            </div>
+                        </section>
+                    </div>
+
+                    <p class="applicants-page__result" aria-live="polite" data-result-count>Đang đọc hồ sơ ứng tuyển từ dữ liệu chung</p>
+                    <p class="applicants-page__result" data-session-note hidden></p>
+                    <!-- Component: ApplicantCard | Nguồn: components/domain/job/applicant-card.html -->
+                    <!-- Component con: Checkbox | Nguồn: components/form/checkbox.html -->
+                    <div class="applicants-list" data-applicants-list></div>
+                    <template data-applicant-card-template>
+                        <article class="applicant-card applicant-entry" data-applicant-card data-application-id="" data-job="" data-tutor-id="" data-name="" data-status="submitted" data-fee="0" data-rating="0" data-reviews="0" data-experience="0" data-credentials="" data-region="" data-schedule="" data-order="0">
+                            <div class="applicant-card__header"><div class="applicant-card__identity"><span class="applicant-card__avatar applicant-card__avatar--pending" data-card-avatar aria-hidden="true">—</span><div><div class="applicant-card__name-row"><h2 data-card-name>—</h2><img class="applicant-card__verified" data-card-verified src="/assets/icons/verified.svg" alt="Đã xác minh" hidden th:src="@{/assets/icons/verified.svg}"></div><p class="applicant-card__details"><span class="applicant-card__rating" data-card-rating>—</span><span data-card-reviews>—</span><span>·</span><span data-card-experience>—</span></p><p class="applicant-entry__meta" data-card-meta>—</p></div></div><span class="applicant-card__status applicant-card__status--pending" data-card-status>—</span></div>
+                            <div class="applicant-entry__proposal"><div><span>Học phí đề xuất</span><strong data-card-fee>—</strong><em data-card-fee-note>—</em></div><div><span>Lịch có thể dạy</span><strong data-card-slots>—</strong></div><blockquote data-card-message>—</blockquote><p class="applicant-entry__meta" data-card-created>—</p><p class="applicant-entry__meta" data-card-verification>—</p></div>
+                            <div class="applicant-entry__footer"><label class="checkbox-option applicant-entry__compare"><span class="checkbox-hit-area"><input type="checkbox" data-compare-checkbox><span class="checkbox-box"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">So sánh ứng viên này</span></span></label><div class="applicant-card__actions"><a class="applicant-card__button applicant-card__button--outline" href="/tutor/profile" data-view-profile th:href="@{/tutor/profile}">Xem hồ sơ</a><button class="applicant-card__button applicant-card__button--neutral" type="button" data-message>Nhắn tin</button><button class="applicant-card__button applicant-card__button--primary" type="button" data-select-tutor>Chọn gia sư</button></div></div>
+                        </article>
+                    </template>
+                    <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                    <section class="empty-state applicants-empty" data-applicants-empty hidden aria-labelledby="applicants-empty-title">
+                        <span class="empty-state__icon" aria-hidden="true"></span>
+                        <h2 class="empty-state__title" id="applicants-empty-title">Không tìm thấy ứng viên phù hợp</h2>
+                        <p class="empty-state__description">Hãy thử từ khóa hoặc bộ lọc khác.</p>
+                    </section>
+                </section>
+
+            </div>
+
+            <section class="applicants-compare-bar" data-applicants-content data-compare-bar aria-live="polite">
+                <div class="applicants-compare-bar__copy"><span class="applicants-compare-bar__icon" aria-hidden="true">⇄</span><div><strong data-compare-title>Đang chọn 0 gia sư để so sánh</strong><span data-compare-summary>—</span></div></div>
+                <div class="applicants-compare-bar__actions"><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--secondary button--medium" type="button" data-clear-compare>Xóa lựa chọn</button><button class="button button--primary button--medium applicants-compare-bar__primary" type="button" data-open-compare>So sánh ngay</button></div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
+    <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+</div>
+
+<!-- Component: Modal | Nguồn: components/feedback/modal.html -->
+<!-- Component con được tạo trong JS: Table | Nguồn: components/data-display/table.html -->
+<dialog class="modal applicants-modal applicants-modal--wide" id="applicants-compare-modal" aria-labelledby="compare-modal-title">
+    <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--info" aria-hidden="true"></span><div class="modal__heading"><h2 id="compare-modal-title">So sánh đối chiếu gia sư</h2><p>So sánh thông số và đề xuất giảng dạy chi tiết.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon"></span></button></header><div class="modal__body"><p>Thông tin các ứng viên đang được chọn để so sánh.</p><div class="applicants-comparison table-wrapper" data-comparison-content tabindex="0" aria-label="Bảng so sánh gia sư"></div></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng</button></footer></div>
+</dialog>
+
+<!-- Component: Modal | Nguồn: components/feedback/modal.html -->
+<dialog class="modal applicants-modal" id="applicants-confirm-modal" aria-labelledby="confirm-modal-title">
+    <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="confirm-modal-title">Xác nhận chọn gia sư?</h2><p data-render="modal-subject">Bạn sắp chọn một gia sư cho tin tìm gia sư này.</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng"><span class="modal__close-icon"></span></button></header><div class="modal__body"><p data-confirm-copy>Vui lòng kiểm tra thông tin trước khi tiếp tục.</p><p class="modal__note" data-confirm-error role="alert" hidden>—</p><div class="applicants-confirm-summary" data-confirm-summary></div><div class="modal__note">Tin đăng sẽ tự động đóng, các ứng viên khác được cập nhật trạng thái. Chưa phát sinh thanh toán hay phí giữ chỗ tại bước này.</div></div><footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Đồng ý &amp; tiếp tục</button></footer></div>
+</dialog>
+</body>
+</html>
