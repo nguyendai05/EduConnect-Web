@@ -1,0 +1,34 @@
+# Ánh xạ đủ 23 chức năng Educonnect
+
+Phạm vi database hỗ trợ, không khẳng định chức năng backend/JSP end-to-end đã triển khai. Policy đề xuất và DEMO ở DECISIONS.md. SQL truy vấn thực thi trong database/03_verify.sql; service phải bind parameters và scope bằng principal. Tên/mã fixture chỉ development.
+
+| Mã chức năng | Dữ liệu cần lưu | Bảng liên quan | Ràng buộc/truy vấn | Kịch bản seed |
+| --- | --- | --- | --- | --- |
+| BB01 | Account/role, verified timestamp, token digest/expiry/use | user_accounts,user_roles,learner_profiles,auth_tokens | UNIQUE email; tokenhash; service verify single-use và account activation | learner09 chưa verify; token1101valid,1102used |
+| BB02 | Password hash/status/verified/roles | user_accounts,user_roles | DelegatingPasswordEncoder; service chặn LOCKED/DISABLED/unverified; không query plaintext password | 17 hash thật; learner10LOCKED |
+| BB03 | Session invalidation và authentication stamp | user_accounts.authentication_version; không bảng session mới | HttpSession invalidate/logout CSRF; session store tùy deployment, không claim DB tự logout | Cơ sở stamp0; database không thực thi logout |
+| BB04 | Token reset và expiry/revocation | auth_tokens,user_accounts | Hash random token; service atomically consume + đổi password/stamp | token1103expired,1104revoked |
+| BB05 | Offering/currentterms/tutor/filter catalog/schedule | offerings,tutor_profiles,subjects,grade_levels,areas,delivery_modes,offering_time_slots | FK catalog; public gate service; không dùng giá query | 18offering SERVICE/GROUP_CLASS; PUBLISHED/DRAFT/CLOSED/IN_REVIEW/REJECTED |
+| BB06 | Cart owner/items/seats/version seen | carts,cart_items | UNIQUE owner/offering; service seat SERVICE=1, price recompute, stale version | learner01giỏ 2 mục,02giỏ full class,09giỏ rỗng |
+| BB07 | 3 nguồn, item price/terms snapshots, agreement/enrollment | invitations,job_posts,job_applications,job_selections,registration_sources,orders,order_items,contracts,enrollments,idempotency_records | Unique invitation/selection/source/item/creationkey; sum/consent/capacity trong transaction | 24 orders:8 INVITATION+8 JOB+8 CATALOG;18/20hai item |
+| BB08 | Intent/attempt/reference/signature flag/allocation/ledger | payments,payment_attempts,payment_webhook_events,payment_allocations,money_journals,ledger_entries,wallets,escrow_accounts | wallet+provider=total; UNIQUE event/key/ref; signature/amount/atomic post service | wallet-only/mixed/provider; success/pending/failed/cancelled giả lập, không PayOS thật |
+| BB09 | Own order/items/contract/payment history | orders,order_items,contracts,payments,refunds,order_status_history | Query orders WHERE learner_id=:principal ORDER BY created_at DESC,id DESC | learner301 có3 orders; learner309 empty |
+| BB10 | Posted release/time/gross/fee/net | releases,money_journals,contracts,v_tutor_revenue | RangeUTC[from,to); revenue chỉ journal release; timezone service chốt | May/June/July/September/October; August0 |
+| BB11 | Order statuses/denominator | orders; registration_sources nếu pie source khác được chốt | COUNT(order) theo status, không COUNT(item); zero denominator guard | COMPLETED 9; nămstatekhácmỗi 3; tổng24 |
+| BB12 | Accounts/offerings/orders moderation + audit | user_accounts,user_roles,tutor_profiles,offerings,orders,audit_logs | Soft lock/restrict FK; admin permission service; không delete history | admin1; locked/unverified; rejected tutor/offering |
+| BB13 | Tutor own offerings/lines/contracts/revenue | offerings,order_items,contracts,releases,v_tutor_revenue | Owner predicate tutor_id; không gán toàn bộ multi-tutor order cho tutor đầu | 6 tutors;4 approved,1 pending,1 rejected; tutor201net1530044 |
+| TC01 | Editable profile + version + evidence | user_accounts,learner_profiles,tutor_profiles,tutor_subjects,tutor_grade_levels,tutor_areas,tutor_delivery_modes,private_files,tutor_profile_evidence | CASversion; quyền/validation/reapproval service; private metadata | 6 evidence PDF giả; trườngbio/experience/filterdata |
+| TC02 | Allowed state transitions/current version/history/release | order_status_transitions,orders,order_status_history,contracts,contract_status_history,releases,money_journals,ledger_entries | FK history matrix; service current version/role + lockescrow/postrelease | 3 PAID,3 IN_PROGRESS,9 COMPLETED;11 release cơ bản |
+| TC03 | Cancel/refund rate/basis/destination/status/notice | orders,contracts,refunds,refund_status_history,money_journals,ledger_entries,notifications,enrollments | Pending UNIQUE; successful only posts; available escrow/party/status service | 14partial-release+refundprovider;22full-walletrefund;15processing16failed24requested;8unpaidcancel |
+| TC04 | Review transaction/user/rating/publicstatus | reviews,contracts,order_items,payments,payment_allocations,refunds | UNIQUE contract/ratingCHECK; paid/completed/buyer eligibility service | Reviews contracts 6001,6009,6017; nhiều completed chưa review |
+| TC05 | Report target/user/context/evidence/adminresolution | reports,report_evidence,private_files,audit_logs,notifications | FK target/evidence; terminal resolution fieldsCHECK; admin/owner service | 4reports OPEN/INVESTIGATING/RESOLVED/DISMISSED |
+| TC06 | Subject/grade/area/mode/price/type/state | offerings,subjects,grade_levels,areas,delivery_modes,tutor_profiles | Composite indexes; parameterized predicates;publicgate; capacity dưới lockcheckout | 5 subjects, 7 grades, 4 areas, 3 modes và 18 prices |
+| TC07 | Sorting parameters/newest/price/ID | offerings | Allowlist sort field server; bind values; tie-break id | 03_verify priceASC,idASC và newestDESC |
+| TC08 | Tutor public profile/name/expertise/region | user_accounts,tutor_profiles,tutor_subjects,tutor_grade_levels,tutor_areas,tutor_delivery_modes | LIKE case/accent-insensitive; không UNIQUE displayName; hide pending | Tên Nguyễn Minh Anh match minh; pending/rejected excluded |
+| TC09 | Offerings by tutor | offerings,tutor_profiles | WHERE tutor_id AND published/read eligible; not others | Tutor201 có OF01/07/13/17 public |
+| TC10 | First/current published timestamps | offerings | ORDER BY published_at DESC,id DESC LIMIT6 + publicgate; Q10unchốt | Newest: OF18,17,15,14,13,10 |
+
+Không ép mỗi chức năng một bảng. BB03 dùng session/security và stamp; BB10/BB11 aggregate dữ liệu tiền/đơn. Ba nguồn giao dịch đều có FK source theo item. BS01–BS09 không triển khai: không reschedule nâng cao, tự release từng buổi, waitlist/tự cấp chỗ, lịch sử negotiation multi-version, nhiều child profile, OTP attendance, anomaly detection, cảnh báo học tập hoặc thay tutor. Không chat/payout requests.
+
+Fulltext/search engine, realtime notifications, provider API/webhook handler, auth service và row-level permissions đều ngoài công việc database này. Các CHECK/FK/index cung cấp nền, không thay service transaction.
+

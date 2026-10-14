@@ -1,5 +1,13 @@
-# Nền tảng cơ sở dữ liệu
+# Database Educonnect
 
-MySQL 8 và Flyway là các công cụ dự kiến dùng cho cơ sở dữ liệu. Sau khi thống nhất mô hình nghiệp vụ, các tệp migration có phiên bản để quản lý thay đổi cơ sở dữ liệu sẽ được đặt trong `src/main/resources/db/migration/`.
+Bộ SQL dự thảo MySQL 8.0 để nhóm review đã có migration V1/V2/V3, seed development và kiểm tra. Policy production còn các Q01–Q10 cần chốt; chưa có entity/service/controller nghiệp vụ.
 
-Trong giai đoạn tạo bộ khung dự án, chưa định nghĩa lược đồ cơ sở dữ liệu (schema), bảng, entity, thông tin xác thực kết nối hay dữ liệu khởi tạo (seed data).
+- [Hướng dẫn MySQL Workbench, Navicat, Flyway và tài khoản DEMO](../../database/README.md)
+- [Schema, ERD và data dictionary](SCHEMA.md)
+- [Evidence và quyết định chưa chốt](DECISIONS.md)
+- [Ma trận 23 chức năng](FEATURE_MAPPING.md)
+- [Kết quả kiểm tra thực tế](TEST_RESULTS.md)
+
+DDL canonical ở `src/main/resources/db/migration/`; seed DEMO ở `database/02_seed_dev.sql`, ngoài Flyway để không tự nạp production. Đại điều phối version, Huy review tiền/giao dịch, Đạt dùng seed cho UI. Không sửa migration đã áp dụng hoặc để Hibernate create/update song song.
+
+Nhóm dùng cả Workbench và Navicat: cùng server/schema và cùng bộ SQL. Chỉ một người áp migration/seed mỗi lần; đổi client không phải khởi tạo lại database. Giới hạn GUI đã kiểm được ghi riêng trong TEST_RESULTS.md.
