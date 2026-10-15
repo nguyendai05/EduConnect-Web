@@ -1,9 +1,9 @@
 # Profile DB development; secret phải cung cấp qua môi trường, không commit giá trị thật.
 spring:
   datasource:
-    url: ${EDUCONNECT_DB_URL}
-    username: ${EDUCONNECT_DB_USERNAME}
-    password: ${EDUCONNECT_DB_PASSWORD}
+    url: ${EDUCONNECT_DB_URL:jdbc:mysql://127.0.0.1:3306/educonnect_dev?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true}
+    username: ${EDUCONNECT_DB_USERNAME:root}
+    password: ${EDUCONNECT_DB_PASSWORD:}
   jpa:
     open-in-view: false
     hibernate:
