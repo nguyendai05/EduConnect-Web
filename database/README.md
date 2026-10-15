@@ -4,6 +4,19 @@ Bộ SQL dự thảo đã thực thi trên **MySQL Server 8.0.45** cô lập. Ch
 
 ## 1. File và nguồn chuẩn
 
+### Quy trình schema tổng chạy thủ công cho thành viên
+
+Schema dùng chung là bộ canonical `V1 → V2 → V3`; không tạo một bản DDL thứ hai để tránh lệch với Flyway. Mỗi thành viên chạy thủ công bằng MySQL Workbench hoặc Navicat theo đúng thứ tự sau:
+
+1. Mở và chạy toàn bộ `database/00_create_database.sql` trên MySQL development server riêng. Kiểm tra database đúng là `educonnect_dev` và đang trống.
+2. Chạy toàn bộ `src/main/resources/db/migration/V1__educonnect_schema.sql` một lần.
+3. Chạy toàn bộ `src/main/resources/db/migration/V2__reference_data.sql` một lần.
+4. Chạy toàn bộ `src/main/resources/db/migration/V3__require_group_capacity_and_dates.sql` một lần.
+5. Nếu cần dữ liệu demo, chạy toàn bộ `database/02_seed_dev.sql`.
+6. Chạy `database/03_verify.sql`; các truy vấn đánh dấu `EXPECT_ZERO` phải trả về 0 dòng.
+
+Không chạy lại V1/V2/V3 trên database đã có schema hoặc Flyway history. Không chạy `database/00_drop_database_dev.sql` trong quy trình thông thường. Không chạy seed production. Sau khi database thủ công đã được review, không khởi động Flyway vào cùng database nếu chưa thực hiện quy trình baseline/compare được ghi ở phần 3.
+
 | File | Mục đích |
 | --- | --- |
 | database/00_create_database.sql | Kiểm phiên bản/cấu hình, tạo/chọn educonnect_dev; không tạo credential |
