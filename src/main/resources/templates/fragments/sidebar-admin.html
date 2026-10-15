@@ -1,0 +1,43 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"><th:block th:fragment="sidebar(active, variant)">
+<aside class="admin-sidebar admin-shell__sidebar" aria-label="Thanh điều hướng quản trị" data-component="admin-sidebar" th:if="${variant == &#x27;v1&#x27;}">
+        <div class="admin-sidebar__main">
+            <header class="admin-sidebar__header">
+                <a class="admin-sidebar__brand" href="/admin/dashboard" aria-label="Edu Connect quản trị" th:href="@{/admin/dashboard}">
+                    <img class="admin-sidebar__brand-logo" src="/assets/brand/logo-horizontal-white.svg" alt="" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal-white.svg}">
+                </a>
+                <span class="admin-sidebar__role">Quản trị</span>
+            </header>
+
+            <p class="admin-sidebar__group-label">Điều hành</p>
+            <nav class="admin-sidebar__nav" aria-label="Các mục quản trị">
+                <a class="admin-sidebar__item" href="/admin/dashboard" th:href="@{/admin/dashboard}" th:classappend="${active == &#x27;/admin/dashboard&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;/admin/dashboard&#x27; ? &#x27;page&#x27; : null}">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="/assets/icons/dashboard.svg" alt="" th:src="@{/assets/icons/dashboard.svg}"><span class="admin-sidebar__item-label">Tổng quan</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="/admin/manage" th:href="@{/admin/manage}" th:classappend="${active == &#x27;/admin/manage&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;/admin/manage&#x27; ? &#x27;page&#x27; : null}">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="/assets/icons/settings.svg" alt="" th:src="@{/assets/icons/settings.svg}"><span class="admin-sidebar__item-label">Quản lý nền tảng</span></span>
+                </a>
+                <a class="admin-sidebar__item" href="/admin/tutor-review-queue" th:href="@{/admin/tutor-review-queue}" th:classappend="${active == &#x27;/admin/tutor-review-queue&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;/admin/tutor-review-queue&#x27; ? &#x27;page&#x27; : null}">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="/assets/icons/tutor-verification.svg" alt="" th:src="@{/assets/icons/tutor-verification.svg}"><span class="admin-sidebar__item-label">Hồ sơ gia sư</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="tutors" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="/admin/job-review-queue" th:href="@{/admin/job-review-queue}" th:classappend="${active == &#x27;/admin/job-review-queue&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;/admin/job-review-queue&#x27; ? &#x27;page&#x27; : null}">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="/assets/icons/tutor-search.svg" alt="" th:src="@{/assets/icons/tutor-search.svg}"><span class="admin-sidebar__item-label">Tin tìm gia sư</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="jobs" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="/admin/reports" th:href="@{/admin/reports}" th:classappend="${active == &#x27;/admin/reports&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;/admin/reports&#x27; ? &#x27;page&#x27; : null}">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="/assets/icons/dispute.svg" alt="" th:src="@{/assets/icons/dispute.svg}"><span class="admin-sidebar__item-label">Báo cáo &amp; tranh chấp</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="reports" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="/admin/payout-requests" th:href="@{/admin/payout-requests}" th:classappend="${active == &#x27;/admin/payout-requests&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;/admin/payout-requests&#x27; ? &#x27;page&#x27; : null}">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="/assets/icons/wallet.svg" alt="" th:src="@{/assets/icons/wallet.svg}"><span class="admin-sidebar__item-label">Yêu cầu rút tiền</span></span>
+                    <span class="admin-sidebar__badge" data-admin-count="payouts" hidden></span>
+                </a>
+                <a class="admin-sidebar__item" href="/admin/audit-logs" th:href="@{/admin/audit-logs}" th:classappend="${active == &#x27;/admin/audit-logs&#x27; ? &#x27;is-active&#x27; : &#x27;&#x27;}" th:attr="aria-current=${active == &#x27;/admin/audit-logs&#x27; ? &#x27;page&#x27; : null}">
+                    <span class="admin-sidebar__item-copy"><img class="admin-sidebar__icon" src="/assets/icons/activity-log.svg" alt="" th:src="@{/assets/icons/activity-log.svg}"><span class="admin-sidebar__item-label">Nhật ký hệ thống</span></span>
+                </a>
+            </nav>
+        </div>
+        <footer class="admin-sidebar__footer">Edu Connect · Quản trị hệ thống</footer>
+    </aside>
+</th:block></html>

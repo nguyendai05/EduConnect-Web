@@ -1,4 +1,2 @@
-/**
- * Authentication and account access domain.
- */
+/** Auth domain and MVC page routes. */
 package com.educonnect.auth;

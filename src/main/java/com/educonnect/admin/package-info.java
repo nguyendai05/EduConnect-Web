@@ -1,4 +1,2 @@
-/**
- * Administrative moderation and platform operations domain.
- */
+/** Admin domain and MVC page routes. */
 package com.educonnect.admin;

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Hồ sơ cá nhân · Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+<link rel="stylesheet" href="/css/components/layout/account-footer.css" th:href="@{/css/components/layout/account-footer.css}">
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}">
+<link rel="stylesheet" href="/css/pages/account/profile.css" th:href="@{/css/pages/account/profile.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+
+</th:block>
+<th:block th:fragment="scripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+<script src="/js/pages/account/profile.js" defer th:src="@{/js/pages/account/profile.js}"></script>
+</th:block>
+</head>
+<body class="profile-page" th:fragment="content">
+    <!-- UserHeader component instance · variant A: phụ huynh Mai Lan. -->
+    <th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
+    <main class="user-shell__main profile-page__main">
+        <div class="user-shell__content profile-page__content">
+
+            <header class="page-header account-page-heading"><div class="page-header__title-block"><h1 class="page-header__title">Hồ sơ cá nhân</h1></div></header>
+            <div class="profile-page__layout">
+                <aside class="profile-nav" aria-label="Điều hướng tài khoản">
+                    <a class="profile-nav__item is-active" href="#ho-so" aria-current="page">Hồ sơ cá nhân</a>
+                </aside>
+
+                <!-- Tạm thời: Card và InfoRow chưa có implementation; profile card dùng style page cho đến khi hai component này sẵn sàng. -->
+                <section class="profile-card" id="ho-so" aria-labelledby="profile-card-title">
+                    <div class="profile-card__top">
+                        <div>
+                            <h2 id="profile-card-title">Thông tin cơ bản</h2>
+
+                        </div>
+                        <!-- Tạm thời: Button component chưa có implementation; dùng action cấp trang cho Edit/Save/Cancel. -->
+                        <div class="profile-card__actions">
+                            <button class="profile-action profile-action--secondary" type="button" data-profile-edit>Chỉnh sửa</button>
+                            <button class="profile-action profile-action--secondary" type="button" data-profile-cancel hidden>Hủy</button>
+                            <button class="profile-action profile-action--primary" type="button" data-profile-save hidden>Lưu thay đổi</button>
+                        </div>
+                    </div>
+
+                    <section class="alert alert--success profile-status" role="status" aria-live="polite" hidden>
+                        <span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><p class="alert__message" data-profile-status></p></div>
+                    </section>
+
+                    <div class="profile-card__identity">
+                        <!-- Tạm thời: Avatar component chưa có implementation; dùng avatar initials cấp trang. -->
+                        <span class="profile-avatar" aria-hidden="true" data-profile-avatar>ML</span>
+                        <div><strong data-profile-display-name>Mai Lan</strong><span data-profile-display-role>Học viên / Phụ huynh</span></div>
+                    </div>
+
+                    <form class="profile-form" novalidate data-profile-form>
+                        <div class="profile-form__field">
+                            <label for="profile-name">Họ và tên</label>
+                            <div class="profile-value" data-profile-display="name">Mai Lan</div>
+                            <div class="input-control" data-profile-control="name" hidden><input class="input-control__input" id="profile-name" name="name" type="text" autocomplete="name" value="Mai Lan" aria-describedby="profile-name-error"></div>
+                            <p class="profile-form__error" id="profile-name-error" hidden></p>
+                        </div>
+                        <div class="profile-form__field">
+                            <label for="profile-email">Email</label>
+                            <div class="profile-value profile-value--locked" data-profile-display="email"><span data-profile-display-email>mai.lan@example.com</span><span>Email được dùng để đăng nhập.</span></div>
+                            <div class="input-control" data-profile-control="email" hidden><input class="input-control__input" id="profile-email" name="email" type="email" inputmode="email" autocomplete="email" value="mai.lan@example.com" aria-describedby="profile-email-error"></div>
+                            <p class="profile-form__error" id="profile-email-error" hidden></p>
+                        </div>
+                        <div class="profile-form__field">
+                            <label for="profile-phone">Số điện thoại</label>
+                            <div class="profile-value" data-profile-display="phone">0912 345 678</div>
+                            <div class="input-control" data-profile-control="phone" hidden><input class="input-control__input" id="profile-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" value="0912 345 678" aria-describedby="profile-phone-error"></div>
+                            <p class="profile-form__error" id="profile-phone-error" hidden></p>
+                        </div>
+                        <div class="profile-form__field">
+                            <label for="profile-bio">Giới thiệu</label>
+                            <div class="profile-value profile-value--empty" data-profile-display="bio">Chưa có giới thiệu. Hãy thêm vài dòng để mọi người hiểu hơn về bạn.</div>
+                            <textarea class="profile-form__textarea" id="profile-bio" name="bio" maxlength="300" placeholder="Viết vài dòng giới thiệu về bạn..." hidden></textarea>
+                            <p class="profile-form__hint" data-profile-bio-count hidden>0/300</p>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+    <th:block th:replace="~{fragments/footer-account :: footer(${active}, 'v1')}"></th:block>
+    <th:block th:replace="${scripts}"></th:block>
+</body>
+</html>

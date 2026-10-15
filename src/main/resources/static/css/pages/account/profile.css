@@ -316,28 +316,3 @@
   }
 
 }
-/* P01 state copy; shared component styles stay in the common CSS bundle. */
-.profile-page-note,
-.profile-state {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  line-height: 1.5;
-}
-
-.profile-page-note {
-  margin: 0 0 var(--space-4);
-}
-
-.profile-action:disabled {
-  opacity: .6;
-  cursor: not-allowed;
-}
-
-.profile-form__textarea[aria-invalid="true"] {
-  border-color: var(--color-danger);
-}
-
-.profile-value[data-profile-display="bio"] {
-  white-space: pre-wrap;
-}
-

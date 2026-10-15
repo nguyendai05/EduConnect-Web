@@ -1,4 +1,2 @@
-/**
- * Tutoring job post and applicant domain.
- */
+/** Job domain and MVC page routes. */
 package com.educonnect.job;

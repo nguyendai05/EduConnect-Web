@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;home&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Trang chủ | Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+<link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" href="/css/pages/home.css" th:href="@{/css/pages/home.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
+<script src="/js/pages/home.js" defer th:src="@{/js/pages/home.js}"></script>
+</th:block>
+<th:block th:fragment="scripts">
+
+</th:block>
+</head>
+<body class="home-page" th:fragment="content">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
+<div class="user-shell" data-component="user-shell" data-home-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
+    <th:block th:replace="~{fragments/header-user :: header(${active}, 'v5')}"></th:block>
+
+    <main class="user-shell__main">
+        <div class="user-shell__content home-page__content">
+            <section class="home-hero" aria-labelledby="home-hero-title">
+                <h1 class="home-hero__title" id="home-hero-title">Tìm gia sư và lớp học phù hợp</h1>
+                <!-- Component: Input, Button | Nguồn: components/form/input.html; components/action/button.html -->
+                <form class="home-search" action="/tutor/search" method="get" role="search" th:attr="action=@{/tutor/search}">
+                    <label class="home-search__label" for="home-search-query">Tìm theo tên gia sư hoặc môn học</label>
+                    <span class="input-control home-search__control">
+                        <img class="input-control__icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
+                        <input class="input-control__input input-control__input--with-leading" id="home-search-query" name="q" type="search" placeholder="Ví dụ: Toán, IELTS, Ngữ văn" autocomplete="off">
+                    </span>
+                    <button class="button button--primary button--medium" type="submit">Tìm gia sư</button>
+                </form>
+                <nav class="home-entries" aria-label="Lối vào chính">
+                    <a class="button button--secondary button--medium" href="/tutor/search" th:href="@{/tutor/search}">Danh sách gia sư</a>
+                    <a class="button button--outline button--medium" href="/job/discover" th:href="@{/job/discover}">Tin tìm gia sư</a>
+                    <a class="button button--outline button--medium" href="/cart/index" th:href="@{/cart/index}">Giỏ đăng ký</a>
+                </nav>
+            </section>
+
+            <section class="home-latest" aria-labelledby="home-latest-title">
+                <header class="home-latest__header">
+                    <h2 id="home-latest-title">Mới công khai</h2>
+                    <p class="home-latest__meta" data-latest-meta></p>
+                </header>
+                <!-- Component: Card, Badge, Button | Nguồn: components/data-display/card.html; components/feedback/badge.html; components/action/button.html -->
+                <div class="home-latest__grid" data-latest-list></div>
+                <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                <section class="empty-state" data-latest-empty hidden aria-labelledby="home-latest-empty-title">
+                    <span class="empty-state__icon" aria-hidden="true"></span>
+                    <h3 class="empty-state__title" id="home-latest-empty-title">Chưa có dịch vụ / lớp mới công khai</h3>
+                    <p class="empty-state__description" data-latest-empty-description>Khi có dịch vụ hoặc lớp nhóm được công khai và còn mở đăng ký, danh sách sẽ hiển thị tại đây.</p>
+                </section>
+            </section>
+        </div>
+    </main>
+
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
+    <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+</div>
+</body>
+</html>

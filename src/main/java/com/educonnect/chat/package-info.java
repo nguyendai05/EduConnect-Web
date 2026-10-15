@@ -1,4 +1,2 @@
-/**
- * User conversation and messaging domain.
- */
+/** Chat domain and MVC page routes. */
 package com.educonnect.chat;

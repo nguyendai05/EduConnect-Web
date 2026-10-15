@@ -95,3 +95,50 @@ Bảng ánh xạ frontend → API đề xuất cho giai đoạn tích hợp nằ
 - `job/applicants.html` nhận cả `id` và `job` cũ. Search/filter/sort/page, report evidence/decision và payment result đã được rà lại bằng browser.
 - Kiểm thử: `node scripts/checks/static-check.mjs`, `store-check.mjs`, `hook-check.mjs`, `source-check.mjs` trong `scripts/checks/`.
 - Chi tiết phạm vi browser và giới hạn: [UI QA](qa/20261010-2340/02-UI-QA.md). Các API backend trong tài liệu bàn giao vẫn là đề xuất.
+
+## URL MVC hiện hành
+
+| Trang | URL | View name | Controller |
+|---|---|---|---|
+| account/profile.html | /account/profile | pages/account/profile | com.educonnect.user.web.AccountPageController |
+| admin/audit-logs.html | /admin/audit-logs | pages/admin/audit-logs | com.educonnect.admin.web.AuditLogsPageController |
+| admin/dashboard.html | /admin/dashboard | pages/admin/dashboard | com.educonnect.admin.web.DashboardPageController |
+| admin/job-review-detail.html | /admin/job-review-detail | pages/admin/job-review-detail | com.educonnect.admin.web.JobReviewPageController |
+| admin/job-review-queue.html | /admin/job-review-queue | pages/admin/job-review-queue | com.educonnect.admin.web.JobReviewPageController |
+| admin/manage.html | /admin/manage | pages/admin/manage | com.educonnect.admin.web.AdminManagePageController |
+| admin/payout-request-detail.html | /admin/payout-request-detail | pages/admin/payout-request-detail | com.educonnect.admin.web.PayoutPageController |
+| admin/payout-requests.html | /admin/payout-requests | pages/admin/payout-requests | com.educonnect.admin.web.PayoutPageController |
+| admin/report-detail.html | /admin/report-detail | pages/admin/report-detail | com.educonnect.admin.web.ReportPageController |
+| admin/reports.html | /admin/reports | pages/admin/reports | com.educonnect.admin.web.ReportPageController |
+| admin/tutor-review-detail.html | /admin/tutor-review-detail | pages/admin/tutor-review-detail | com.educonnect.admin.web.TutorReviewPageController |
+| admin/tutor-review-queue.html | /admin/tutor-review-queue | pages/admin/tutor-review-queue | com.educonnect.admin.web.TutorReviewPageController |
+| auth/forgot-password.html | /auth/forgot-password | pages/auth/forgot-password | com.educonnect.auth.web.AuthPageController |
+| auth/login.html | /auth/login | pages/auth/login | com.educonnect.auth.web.AuthPageController |
+| auth/register.html | /auth/register | pages/auth/register | com.educonnect.auth.web.AuthPageController |
+| auth/reset-password.html | /auth/reset-password | pages/auth/reset-password | com.educonnect.auth.web.AuthPageController |
+| auth/verify-email.html | /auth/verify-email | pages/auth/verify-email | com.educonnect.auth.web.AuthPageController |
+| cart/index.html | /cart/index | pages/cart/index | com.educonnect.order.web.CartPageController |
+| catalog/detail.html | /catalog/detail | pages/catalog/detail | com.educonnect.lesson.web.CatalogPageController |
+| chat/messages.html | /chat/messages | pages/chat/messages | com.educonnect.chat.web.ChatPageController |
+| contract/confirm.html | /contract/confirm | pages/contract/confirm | com.educonnect.contract.web.ContractPageController |
+| contract/student-detail.html | /contract/student-detail | pages/contract/student-detail | com.educonnect.contract.web.ContractPageController |
+| contract/tutor-detail.html | /contract/tutor-detail | pages/contract/tutor-detail | com.educonnect.contract.web.ContractPageController |
+| home.html | / và /home | pages/home | com.educonnect.web.HomePageController |
+| invitation/create.html | /invitation/create | pages/invitation/create | com.educonnect.invitation.web.InvitationPageController |
+| invitation/negotiation.html | /invitation/negotiation | pages/invitation/negotiation | com.educonnect.invitation.web.InvitationPageController |
+| job/applicants.html | /job/applicants | pages/job/applicants | com.educonnect.job.web.JobPageController |
+| job/create.html | /job/create | pages/job/create | com.educonnect.job.web.JobPageController |
+| job/detail.html | /job/detail | pages/job/detail | com.educonnect.job.web.JobPageController |
+| job/discover.html | /job/discover | pages/job/discover | com.educonnect.job.web.JobPageController |
+| job/my-job.html | /job/my-job | pages/job/my-job | com.educonnect.job.web.JobPageController |
+| order/history.html | /order/history | pages/order/history | com.educonnect.order.web.OrderPageController |
+| payment/checkout.html | /payment/checkout | pages/payment/checkout | com.educonnect.payment.web.PaymentPageController |
+| payment/qr.html | /payment/qr | pages/payment/qr | com.educonnect.payment.web.PaymentPageController |
+| payment/result.html | /payment/result | pages/payment/result | com.educonnect.payment.web.PaymentPageController |
+| tutor/manage.html | /tutor/manage | pages/tutor/manage | com.educonnect.tutor.web.TutorManagePageController |
+| tutor/my-profile.html | /tutor/my-profile | pages/tutor/my-profile | com.educonnect.tutor.web.TutorPageController |
+| tutor/profile.html | /tutor/profile | pages/tutor/profile | com.educonnect.tutor.web.TutorPageController |
+| tutor/search.html | /tutor/search | pages/tutor/search | com.educonnect.tutor.web.TutorPageController |
+| wallet/overview.html | /wallet/overview | pages/wallet/overview | com.educonnect.wallet.web.WalletPageController |
+
+URL/anchor/query được giữ, không hỗ trợ link prototype .html. Vai trò trong bảng prototype là mô phỏng, không phải authorization server.

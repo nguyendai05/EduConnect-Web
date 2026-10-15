@@ -1,0 +1,97 @@
+/* Trang: Chi tiết duyệt hồ sơ gia sư (thiết kế 33). CSS riêng chỉ tổ chức bố cục trang. */
+.tutor-review-detail { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); max-width: 96rem; margin-inline: auto; }
+.tutor-review-detail-page [hidden] { display: none !important; }
+.tutor-review-detail__header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: var(--space-4); }
+.tutor-review-detail__title-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.tutor-review-detail__header h1 { font-size: var(--font-size-2xl); line-height: 1.4; letter-spacing: -0.025em; }
+.tutor-review-detail__header p { max-width: 46rem; margin-top: var(--space-2); color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.tutor-review-detail__header > a { flex: 0 0 auto; }
+.tutor-review-detail__code { padding: 2px var(--space-2); border-radius: var(--radius-sm); background: var(--color-surface-low); font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.8125rem; }
+.tutor-review-detail__submitted { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); color: var(--color-text-secondary) !important; font-size: var(--font-size-xs) !important; }
+.tutor-review-detail__submitted img { width: 1rem; height: 1rem; }
+.tutor-review-detail__layout { display: grid; grid-template-columns: minmax(0, 1fr) 20.5rem; gap: var(--space-6); align-items: start; }
+.tutor-review-detail__sections { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; gap: var(--space-5); }
+.tutor-review-detail__sections > .card { min-width: 0; }
+.tutor-review-detail__section-heading { display: flex; align-items: flex-start; gap: var(--space-3); }
+.tutor-review-detail__section-heading > div { min-width: 0; flex: 1 1 auto; }
+.tutor-review-detail__section-heading .card__title { color: var(--color-primary-hover); font-size: var(--font-size-base); line-height: 1.5; }
+.tutor-review-detail__section-heading .card__description { font-size: var(--font-size-xs); }
+.tutor-review-detail__section-heading > img { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; }
+.tutor-review-detail__section-heading .tag { display: inline-flex; align-items: center; gap: var(--space-1); flex: 0 0 auto; }
+.tutor-review-detail__section-heading .tag img { width: 0.875rem; height: 0.875rem; }
+.tutor-review-detail__step { display: grid; width: 1.75rem; height: 1.75rem; flex: 0 0 auto; place-items: center; border: 1px solid var(--color-primary-border); border-radius: var(--radius-md); background: var(--color-primary-container); color: var(--color-primary-hover); font-size: var(--font-size-xs); font-weight: 700; }
+.tutor-review-detail__identity { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); }
+.tutor-review-detail__identity-main { min-width: 0; }
+.tutor-review-detail__identity-main h3 { margin-bottom: var(--space-2); font-size: var(--font-size-lg); }
+.tutor-review-detail__identity-tags, .tutor-review-detail__identity-status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.tutor-review-detail__identity-status { margin-top: var(--space-2); }
+.tutor-review-detail__contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); margin: var(--space-4) 0 0; }
+.tutor-review-detail__bio { margin-top: var(--space-4); }
+.tutor-review-detail__bio h4 { margin-bottom: var(--space-2); color: var(--color-text-secondary); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.055em; text-transform: uppercase; }
+.tutor-review-detail__bio blockquote { margin: 0; padding: var(--space-4);  border-radius: var(--radius-md); background: var(--color-surface-low); color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: 1.9; overflow-wrap: anywhere; }
+.tutor-review-detail__needs-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); margin: 0; }
+.tutor-review-detail__info { padding: var(--space-3); background: var(--color-surface-low); border-radius: var(--radius-md); }
+.tutor-review-detail__info dt { font-size: var(--font-size-xs); }
+.tutor-review-detail__info-note { display: block; margin-top: 2px; color: var(--color-text-secondary); font-size: 0.6875rem; line-height: 1.6; }
+.tutor-review-detail__schedule { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+.tutor-review-detail__schedule li { padding: var(--space-2) var(--space-3); border: 1px solid var(--color-primary-focus); border-radius: var(--radius-md); background: var(--color-primary-container); color: var(--color-primary-hover); font-size: var(--font-size-xs); }
+.tutor-review-detail__hint { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-2); margin-top: var(--space-4); color: var(--color-text-secondary); font-size: var(--font-size-xs); line-height: 1.8; }
+.tutor-review-detail__hint img { width: 1rem; height: 1rem; flex: 0 0 auto; margin-top: 0.2rem; }
+.tutor-review-detail__hint strong { color: var(--color-text-secondary); }
+.tutor-review-detail__privacy { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface-low); color: var(--color-text-secondary); font-size: var(--font-size-xs); line-height: 1.7; }
+.tutor-review-detail__privacy img { width: 1rem; height: 1rem; flex: 0 0 auto; }
+.tutor-review-detail__privacy span { color: var(--color-text-secondary); white-space: nowrap; margin-left: auto; }
+.tutor-review-detail__files { display: grid; gap: var(--space-3); list-style: none; margin: 0; padding: 0; }
+.tutor-review-detail__files .file-attachment-item { align-items: flex-start; }
+.tutor-review-detail__file-label { margin-top: var(--space-1); color: var(--color-text-secondary); font-size: var(--font-size-xs); line-height: 1.7; }
+.tutor-review-detail__files .empty-state { padding: var(--space-4); border: 1px dashed var(--color-border); border-radius: var(--radius-md); }
+.tutor-review-detail__signal .alert__title { font-size: var(--font-size-base); }
+.tutor-review-detail__panel { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); position: sticky; top: var(--admin-scroll-offset); max-height: calc(100dvh - var(--admin-scroll-offset) - var(--space-4)); overflow-y: auto; }
+.tutor-review-detail__panel > .card { min-width: 0; }
+.tutor-review-detail__panel .card__title { display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-base); }
+.tutor-review-detail__panel .card__title img { width: 1.125rem; height: 1.125rem; }
+.tutor-review-detail__panel .card__description { font-size: var(--font-size-xs); }
+.tutor-review-detail__panel dl { margin: 0; }
+.tutor-review-detail__panel .info-row { align-items: baseline; padding-block: var(--space-2); }
+.tutor-review-detail__panel .info-row__label { flex-basis: 45%; }
+.tutor-review-detail__panel .info-row__value { font-weight: 500; text-align: right; }
+.tutor-review-detail__checklist { display: grid; gap: var(--space-1); }
+.tutor-review-detail__checklist .checkbox-option { padding: var(--space-2); }
+.tutor-review-detail__checklist .checkbox-option__title { font-size: var(--font-size-xs); line-height: 1.6; }
+.tutor-review-detail__actions .button { width: 100%; }
+.tutor-review-detail__actions .button > img { width: 1.125rem; height: 1.125rem; }
+.tutor-review-detail__actions .button--primary > img { filter: brightness(0) invert(1); }
+.tutor-review-detail__transition { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1); font-size: var(--font-size-xs); font-weight: 600; }
+.tutor-review-detail__transition img { width: 1rem; height: 1rem; }
+.tutor-review-detail__transition.is-approve { color: var(--color-success-text); }
+.tutor-review-detail__transition.is-reject { color: var(--color-danger); }
+.tutor-review-detail__actions .card__body > .button { margin-top: var(--space-3); }
+.tutor-review-detail__action-help { margin-block: var(--space-2) var(--space-4); color: var(--color-text-secondary); font-size: var(--font-size-xs); line-height: 1.8; }
+.tutor-review-detail__action-help:last-child { margin-bottom: 0; }
+.tutor-review-detail__templates { margin-top: var(--space-4); }
+.tutor-review-detail__templates h3 { margin-bottom: var(--space-2); font-size: var(--font-size-xs); font-weight: 600; line-height: 1.6; }
+.tutor-review-detail__templates > div { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.tutor-review-detail__preview { display: grid; gap: var(--space-1); place-items: center; padding: var(--space-6) var(--space-4); border: 1px dashed var(--color-border); border-radius: var(--radius-md); background: var(--color-surface-low); text-align: center; }
+.tutor-review-detail__preview strong { font-size: var(--font-size-base); }
+.tutor-review-detail__preview span { color: var(--color-text-secondary); font-size: var(--font-size-xs); }
+.tutor-review-detail__preview small { color: var(--color-text-secondary); font-size: 0.6875rem; line-height: 1.6; }
+.tutor-review-detail__preview-badge { padding: 2px var(--space-2); border-radius: var(--radius-pill); background: var(--color-primary-container); color: var(--color-primary-hover); font-size: 0.625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.tutor-review-detail__error { color: var(--color-danger); font-size: var(--font-size-xs); line-height: 1.7; }
+.tutor-review-detail__skip-link { position: fixed; top: var(--space-2); left: var(--space-2); z-index: 60; padding: var(--space-3); background: var(--color-surface); border: 2px solid var(--color-primary); border-radius: var(--radius-md); transform: translateY(-200%); }
+.tutor-review-detail__skip-link:focus { transform: translateY(0); }
+@media (max-width: 80rem) {
+  .tutor-review-detail__layout { grid-template-columns: minmax(0, 1fr); }
+  .tutor-review-detail__panel { position: static; max-height: none; overflow: visible; }
+}
+@media (max-width: 60rem) {
+  .tutor-review-detail__contact-grid, .tutor-review-detail__needs-grid { grid-template-columns: minmax(0, 1fr); }
+  .tutor-review-detail__privacy span { margin-left: 0; }
+}
+@media (max-width: 36rem) {
+  .tutor-review-detail__header h1 { font-size: var(--font-size-xl); }
+  .tutor-review-detail__header > a { width: 100%; justify-content: center; }
+  .tutor-review-detail__identity { flex-direction: column; align-items: flex-start; }
+  .tutor-review-detail__files .file-attachment-item { flex-direction: column; }
+  .tutor-review-detail__files .file-attachment-item__actions { width: 100%; }
+  .tutor-review-detail__panel .info-row__value { text-align: left; }
+}

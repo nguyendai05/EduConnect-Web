@@ -1,0 +1,1635 @@
+{
+  "database": {
+    "files": 10,
+    "before": "89db33b50cfebb03ec9fab9a068e709bb1cda8bc63f1fac0544fff7d439d9350",
+    "after": "89db33b50cfebb03ec9fab9a068e709bb1cda8bc63f1fac0544fff7d439d9350",
+    "unchanged": true,
+    "individual": {
+      "database/00_create_database.sql": {
+        "before": "786d48c8f236006794a673db785ae439ce70dc9372ceaf0b2378efaa1278d843",
+        "after": "786d48c8f236006794a673db785ae439ce70dc9372ceaf0b2378efaa1278d843"
+      },
+      "database/00_drop_database_dev.sql": {
+        "before": "6e2b97a495b64847f361a7393d0b5c375c53d2d039bdda6fba1274935338114e",
+        "after": "6e2b97a495b64847f361a7393d0b5c375c53d2d039bdda6fba1274935338114e"
+      },
+      "database/02_seed_dev.sql": {
+        "before": "cf5e3b2b674a72d9c245a3748772883867bcb8b69014454a5fcb60aa7ca5596e",
+        "after": "cf5e3b2b674a72d9c245a3748772883867bcb8b69014454a5fcb60aa7ca5596e"
+      },
+      "database/03_verify.sql": {
+        "before": "f494d6c02154db6688627cb590bdcccf912008bd464316b6efb76cac72e6cbb5",
+        "after": "f494d6c02154db6688627cb590bdcccf912008bd464316b6efb76cac72e6cbb5"
+      },
+      "database/04_constraint_checks.sql": {
+        "before": "20323cbcfbbe2974b04e9a452622cc5e8af1b95d70e7b0e19e40bd05dd87fae1",
+        "after": "20323cbcfbbe2974b04e9a452622cc5e8af1b95d70e7b0e19e40bd05dd87fae1"
+      },
+      "database/CONNECT_LOCAL.md": {
+        "before": "0575f1f0796112d3469db2b5aadd02505049c1842d9797eb5ead8468207ef6db",
+        "after": "0575f1f0796112d3469db2b5aadd02505049c1842d9797eb5ead8468207ef6db"
+      },
+      "database/README.md": {
+        "before": "8dc40f2669375ac4ffe722b018ea6504c89525ae429e0498cc916d883cd4ea33",
+        "after": "8dc40f2669375ac4ffe722b018ea6504c89525ae429e0498cc916d883cd4ea33"
+      },
+      "database/tools/connect.ps1": {
+        "before": "f3d4046468c90e1e7aa019c81403bebcec06cfc76045b742a7ea722fbc62e9af",
+        "after": "f3d4046468c90e1e7aa019c81403bebcec06cfc76045b742a7ea722fbc62e9af"
+      },
+      "database/tools/DatabaseTool.java": {
+        "before": "bc750dbc93bebe816bd75338a636580c914d4d17ee41aac803ba52423e9d407a",
+        "after": "bc750dbc93bebe816bd75338a636580c914d4d17ee41aac803ba52423e9d407a"
+      },
+      "database/tools/run.ps1": {
+        "before": "ebf0f60cfac0dd9bb9342a21cb13dc8420c44b163d8109035861af5073ca0528",
+        "after": "ebf0f60cfac0dd9bb9342a21cb13dc8420c44b163d8109035861af5073ca0528"
+      }
+    }
+  },
+  "migrations": {
+    "files": 3,
+    "before": "cfd3d5c18ec075778ef73cdde20b5aae55ef0ccc9484b77ae1b3316aa3780583",
+    "after": "cfd3d5c18ec075778ef73cdde20b5aae55ef0ccc9484b77ae1b3316aa3780583",
+    "unchanged": true,
+    "individual": {
+      "src/main/resources/db/migration/V1__educonnect_schema.sql": {
+        "before": "168996bfaf809daf068ece992a3156d7efde47bd0dc2d9a2f2ddde32306de8b7",
+        "after": "168996bfaf809daf068ece992a3156d7efde47bd0dc2d9a2f2ddde32306de8b7"
+      },
+      "src/main/resources/db/migration/V2__reference_data.sql": {
+        "before": "d8aaf4832e40a32b9e50c75bdcb59178cfe34c55ce1a1be0da0395839d790261",
+        "after": "d8aaf4832e40a32b9e50c75bdcb59178cfe34c55ce1a1be0da0395839d790261"
+      },
+      "src/main/resources/db/migration/V3__require_group_capacity_and_dates.sql": {
+        "before": "83a86151a1d450a658832b6300d34988b76f42b9b4feab67d81dd54956f10c38",
+        "after": "83a86151a1d450a658832b6300d34988b76f42b9b4feab67d81dd54956f10c38"
+      }
+    }
+  },
+  "DBConnect": {
+    "files": 1,
+    "before": "3d0b232dfb0a25ef93111f4ef5b8c0bec8227191519f3274c59544ac12b9a12b",
+    "after": "3d0b232dfb0a25ef93111f4ef5b8c0bec8227191519f3274c59544ac12b9a12b",
+    "unchanged": true,
+    "individual": {
+      "src/main/java/com/educonnect/config/DBConnect.java": {
+        "before": "12786c2ce4c34d01f7c84b6d96e0b70b4e4e0ffd491a4016f565d97e42171ec7",
+        "after": "12786c2ce4c34d01f7c84b6d96e0b70b4e4e0ffd491a4016f565d97e42171ec7"
+      }
+    }
+  },
+  "prototype": {
+    "files": 373,
+    "before": "9a7e9938797c822ce4b36f9e919e8c0537d944a446397b52d3884b48ed80ab9c",
+    "after": "9a7e9938797c822ce4b36f9e919e8c0537d944a446397b52d3884b48ed80ab9c",
+    "unchanged": true,
+    "individual": {
+      "ui-prototype/README.md": {
+        "before": "4ee71500646f23d886cabc773437f695faaf6747e08b98b76183d7604ecfa66d",
+        "after": "11bf845c14b6ccd34f3f3284781091dbe99cea2f492a6c9766b8a649e9633769"
+      },
+      "ui-prototype/assets/brand/apple-touch-icon.png": {
+        "before": "00e06f1d2b5fa03c774bba5ccf9163fa4aa739e69078d1f6c45ad9ff50f00b35",
+        "after": "00e06f1d2b5fa03c774bba5ccf9163fa4aa739e69078d1f6c45ad9ff50f00b35"
+      },
+      "ui-prototype/assets/brand/favicon-32.png": {
+        "before": "986ae829dfff6c703ad3bcde71371b5fc6988e1620d1ee240d6d11033e52293a",
+        "after": "986ae829dfff6c703ad3bcde71371b5fc6988e1620d1ee240d6d11033e52293a"
+      },
+      "ui-prototype/assets/brand/favicon.ico": {
+        "before": "fe95d82adc61e85708de1e4fef9ba5962ed94a6b83b5acf69f1ec486c09fc0c8",
+        "after": "fe95d82adc61e85708de1e4fef9ba5962ed94a6b83b5acf69f1ec486c09fc0c8"
+      },
+      "ui-prototype/assets/brand/favicon.png": {
+        "before": "f5e8d7fc692e6c25f66c207774ddf459e5ab152c46cc0b60fc5184e5438f8edc",
+        "after": "f5e8d7fc692e6c25f66c207774ddf459e5ab152c46cc0b60fc5184e5438f8edc"
+      },
+      "ui-prototype/assets/brand/favicon.svg": {
+        "before": "cec19c60616c3c47af16912fe57b58200b979bf3dfe8c4870ce093e37ea14cea",
+        "after": "cec19c60616c3c47af16912fe57b58200b979bf3dfe8c4870ce093e37ea14cea"
+      },
+      "ui-prototype/assets/brand/logo-horizontal-mono.svg": {
+        "before": "d22535f9b26bed43eb2e624b43e08bcb343888ac31ac62cc7eeba5889012ca9a",
+        "after": "d22535f9b26bed43eb2e624b43e08bcb343888ac31ac62cc7eeba5889012ca9a"
+      },
+      "ui-prototype/assets/brand/logo-horizontal-white.png": {
+        "before": "7447e15054e630122b09ff405978ba2f80969b83a7a555d551d9b9166cb268ba",
+        "after": "7447e15054e630122b09ff405978ba2f80969b83a7a555d551d9b9166cb268ba"
+      },
+      "ui-prototype/assets/brand/logo-horizontal-white.svg": {
+        "before": "0855411c1fd438a5f05ae1a92602b67fdbed2dd825b480c487f3da5b0f50b6a3",
+        "after": "0855411c1fd438a5f05ae1a92602b67fdbed2dd825b480c487f3da5b0f50b6a3"
+      },
+      "ui-prototype/assets/brand/logo-horizontal.png": {
+        "before": "3c7ad1d8361762ab5fc15af0eb376a3d00c0be2784921bf948741e9df8549366",
+        "after": "3c7ad1d8361762ab5fc15af0eb376a3d00c0be2784921bf948741e9df8549366"
+      },
+      "ui-prototype/assets/brand/logo-horizontal.svg": {
+        "before": "146c276115bc48e2d676275f4fce758c8eaf710064214a81cfbecf85330d9c54",
+        "after": "146c276115bc48e2d676275f4fce758c8eaf710064214a81cfbecf85330d9c54"
+      },
+      "ui-prototype/assets/brand/logo-mark-mono.svg": {
+        "before": "e967ac16ce79c8e686ce733c7de2d1d6a10493258eee29a24ae07dcb05c1c134",
+        "after": "e967ac16ce79c8e686ce733c7de2d1d6a10493258eee29a24ae07dcb05c1c134"
+      },
+      "ui-prototype/assets/brand/logo-mark-white.png": {
+        "before": "a7d72208e501cefe89b44711ddfd637db96d1ca7e2ffd8bfe3a5a6a54232a5bc",
+        "after": "a7d72208e501cefe89b44711ddfd637db96d1ca7e2ffd8bfe3a5a6a54232a5bc"
+      },
+      "ui-prototype/assets/brand/logo-mark-white.svg": {
+        "before": "0c862aee9ca50a0881627cc0fb343e91bf996d0b7168da22d4d35fe819520730",
+        "after": "0c862aee9ca50a0881627cc0fb343e91bf996d0b7168da22d4d35fe819520730"
+      },
+      "ui-prototype/assets/brand/logo-mark.png": {
+        "before": "079f164268152ef45fa69f7eb250b04f20cae3581ef5249194198f23820f54f7",
+        "after": "079f164268152ef45fa69f7eb250b04f20cae3581ef5249194198f23820f54f7"
+      },
+      "ui-prototype/assets/brand/logo-mark.svg": {
+        "before": "f2a437f3ee406afbdce42660655eacd66e2f4138d076087dd59b7d2f3cb711f0",
+        "after": "f2a437f3ee406afbdce42660655eacd66e2f4138d076087dd59b7d2f3cb711f0"
+      },
+      "ui-prototype/assets/brand/README.md": {
+        "before": "a711181098e123adf22839ebae349d013e4727af915e9ac4448178585fec3c6f",
+        "after": "a711181098e123adf22839ebae349d013e4727af915e9ac4448178585fec3c6f"
+      },
+      "ui-prototype/assets/documents/component-certificate.txt": {
+        "before": "e02cca4f90a1dc76a4c7f4e9e899e4ef97c5b18490d1edabf76b0d1eab136286",
+        "after": "e02cca4f90a1dc76a4c7f4e9e899e4ef97c5b18490d1edabf76b0d1eab136286"
+      },
+      "ui-prototype/assets/icons/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/assets/icons/activity-log.svg": {
+        "before": "334230e963f67feab1b6a54988d192a194432eed6ec0ba57925ffdc6f1d9e5e1",
+        "after": "334230e963f67feab1b6a54988d192a194432eed6ec0ba57925ffdc6f1d9e5e1"
+      },
+      "ui-prototype/assets/icons/audit-log.svg": {
+        "before": "303b7a693475fd2f96f860aac30317a7478dd25c5a2855ae8787b46fa3396709",
+        "after": "303b7a693475fd2f96f860aac30317a7478dd25c5a2855ae8787b46fa3396709"
+      },
+      "ui-prototype/assets/icons/calendar.svg": {
+        "before": "6e76e97f10f57e66821866deac5aeaf80375f6188be5c925ab39b6de4ea69431",
+        "after": "6e76e97f10f57e66821866deac5aeaf80375f6188be5c925ab39b6de4ea69431"
+      },
+      "ui-prototype/assets/icons/cancel.svg": {
+        "before": "246616c5ce2c2eb61fa7d5fc24748574086c881bba93bac088b5e3a1e221de38",
+        "after": "246616c5ce2c2eb61fa7d5fc24748574086c881bba93bac088b5e3a1e221de38"
+      },
+      "ui-prototype/assets/icons/certificate.svg": {
+        "before": "9d6931c63c48483617adccb4ffe7e0b2e992407ec30d1dbd56bfd7ebf76376ee",
+        "after": "9d6931c63c48483617adccb4ffe7e0b2e992407ec30d1dbd56bfd7ebf76376ee"
+      },
+      "ui-prototype/assets/icons/chat-attachment.svg": {
+        "before": "6f4378d114e702a433f66ebbf1904e18d6bd2819bf60cdd444c4e9adbf2f38c5",
+        "after": "6f4378d114e702a433f66ebbf1904e18d6bd2819bf60cdd444c4e9adbf2f38c5"
+      },
+      "ui-prototype/assets/icons/chat-search.svg": {
+        "before": "a890ed5756967d552c9d570e2f43287734510c549d0f4ee56d6b3dd85f9c8aaa",
+        "after": "a890ed5756967d552c9d570e2f43287734510c549d0f4ee56d6b3dd85f9c8aaa"
+      },
+      "ui-prototype/assets/icons/chat-send.svg": {
+        "before": "8937f1e8b2d63e7891d09b84338bc2c47009dcdde82819833ac5c2a41f3edd77",
+        "after": "8937f1e8b2d63e7891d09b84338bc2c47009dcdde82819833ac5c2a41f3edd77"
+      },
+      "ui-prototype/assets/icons/check-circle.svg": {
+        "before": "dcdc2dbca2018552704b654fb30a947d7f9210449ee27049aff4fbea5b966a5d",
+        "after": "dcdc2dbca2018552704b654fb30a947d7f9210449ee27049aff4fbea5b966a5d"
+      },
+      "ui-prototype/assets/icons/check-double.svg": {
+        "before": "8adcbab63e54749ebcbe26f4a433c42a7bacb799a7cc57d205268390a333da80",
+        "after": "8adcbab63e54749ebcbe26f4a433c42a7bacb799a7cc57d205268390a333da80"
+      },
+      "ui-prototype/assets/icons/chevron-right.svg": {
+        "before": "9c5263af96f25f3dcf0815dc3c08eb5a0f41c5d8b4ad092c2174d5b685bfa20d",
+        "after": "9c5263af96f25f3dcf0815dc3c08eb5a0f41c5d8b4ad092c2174d5b685bfa20d"
+      },
+      "ui-prototype/assets/icons/clock.svg": {
+        "before": "48be88817a20f1fdcb186c56c42e2374fe1ee6ade2cec285292ce6c33b7fc332",
+        "after": "48be88817a20f1fdcb186c56c42e2374fe1ee6ade2cec285292ce6c33b7fc332"
+      },
+      "ui-prototype/assets/icons/close.svg": {
+        "before": "0b0a76f8e389cb54f36c5a2d87eb01b6b8380e3f75f3761c28b120ca09f1fe22",
+        "after": "0b0a76f8e389cb54f36c5a2d87eb01b6b8380e3f75f3761c28b120ca09f1fe22"
+      },
+      "ui-prototype/assets/icons/component-bookmark.svg": {
+        "before": "347e049dfaed50d1d551cdc9c45b30e52c22b06736582f9dd95b04f87719bed7",
+        "after": "347e049dfaed50d1d551cdc9c45b30e52c22b06736582f9dd95b04f87719bed7"
+      },
+      "ui-prototype/assets/icons/component-download.svg": {
+        "before": "45268d6a62de71ab945b6dfb05f91c6fdd4368dbde2c93ddb97e619b01502d65",
+        "after": "45268d6a62de71ab945b6dfb05f91c6fdd4368dbde2c93ddb97e619b01502d65"
+      },
+      "ui-prototype/assets/icons/copyright.svg": {
+        "before": "79856326dbab9f1064da316739a5a1a22daf11d488fbe9d15b22b9297cb0deba",
+        "after": "79856326dbab9f1064da316739a5a1a22daf11d488fbe9d15b22b9297cb0deba"
+      },
+      "ui-prototype/assets/icons/dang-xuat.svg": {
+        "before": "b1f62b1718e5ac9431b9ee682d0388c3b1df30bdf4c579df1de787ec98d02074",
+        "after": "b1f62b1718e5ac9431b9ee682d0388c3b1df30bdf4c579df1de787ec98d02074"
+      },
+      "ui-prototype/assets/icons/dashboard.svg": {
+        "before": "8caf818aed778d6078679636f5ae59cefb2cc19524d9d19acb2f2dfca775bbc1",
+        "after": "8caf818aed778d6078679636f5ae59cefb2cc19524d9d19acb2f2dfca775bbc1"
+      },
+      "ui-prototype/assets/icons/dau-tich.svg": {
+        "before": "07ab18c490da82fe21157e2a5601a004e524407da1f902030e1b892c0e0705c5",
+        "after": "07ab18c490da82fe21157e2a5601a004e524407da1f902030e1b892c0e0705c5"
+      },
+      "ui-prototype/assets/icons/dinh-vi.svg": {
+        "before": "e2ed025b17f2d919527dae6ae86bf49305e0e5e335c4dfdc8e5cac2c3f3cba49",
+        "after": "e2ed025b17f2d919527dae6ae86bf49305e0e5e335c4dfdc8e5cac2c3f3cba49"
+      },
+      "ui-prototype/assets/icons/dispute.svg": {
+        "before": "a61a967629bc4ba0ea40b50a4ede4192b54b2fa4a289aacecb92eff257f3e660",
+        "after": "a61a967629bc4ba0ea40b50a4ede4192b54b2fa4a289aacecb92eff257f3e660"
+      },
+      "ui-prototype/assets/icons/email.svg": {
+        "before": "d84f6f16d95b6a9da49a89b5084a94ddba9a8e4c733bfa9950d84fa46bd035aa",
+        "after": "d84f6f16d95b6a9da49a89b5084a94ddba9a8e4c733bfa9950d84fa46bd035aa"
+      },
+      "ui-prototype/assets/icons/empty-inbox.svg": {
+        "before": "fe9a7e575a20a520f240771d17793842d891164470cf27580e04d048237d9fdd",
+        "after": "fe9a7e575a20a520f240771d17793842d891164470cf27580e04d048237d9fdd"
+      },
+      "ui-prototype/assets/icons/error-circle.svg": {
+        "before": "12649c60501401628cdcff200e42374520905a6b4573b2dc09d8204f21f73309",
+        "after": "12649c60501401628cdcff200e42374520905a6b4573b2dc09d8204f21f73309"
+      },
+      "ui-prototype/assets/icons/footer-link-arrow.svg": {
+        "before": "3ec40ee0b61edf68cd2fc55b9d99cde24a67d9287e89806c92d9f4f8771c2e96",
+        "after": "3ec40ee0b61edf68cd2fc55b9d99cde24a67d9287e89806c92d9f4f8771c2e96"
+      },
+      "ui-prototype/assets/icons/info-circle.svg": {
+        "before": "9c77f37e5758372357e97f69f95c5adebff6e843a65b3edd32a7fa84e12505a6",
+        "after": "9c77f37e5758372357e97f69f95c5adebff6e843a65b3edd32a7fa84e12505a6"
+      },
+      "ui-prototype/assets/icons/library.svg": {
+        "before": "f4bb36e39ed3a0b3cce1084236511155fbfc52598e76ba5285fb42a6a5624d11",
+        "after": "f4bb36e39ed3a0b3cce1084236511155fbfc52598e76ba5285fb42a6a5624d11"
+      },
+      "ui-prototype/assets/icons/loading.svg": {
+        "before": "95ba16f5cc8f37f9cab27f24c75182bb32df1c1c793e83e5297123781bea7406",
+        "after": "95ba16f5cc8f37f9cab27f24c75182bb32df1c1c793e83e5297123781bea7406"
+      },
+      "ui-prototype/assets/icons/lock.svg": {
+        "before": "fbd5558594d8dc2dea4d46bb683ece77220e7c1272f5773c043cd062593c0131",
+        "after": "fbd5558594d8dc2dea4d46bb683ece77220e7c1272f5773c043cd062593c0131"
+      },
+      "ui-prototype/assets/icons/logo.svg": {
+        "before": "f2a437f3ee406afbdce42660655eacd66e2f4138d076087dd59b7d2f3cb711f0",
+        "after": "f2a437f3ee406afbdce42660655eacd66e2f4138d076087dd59b7d2f3cb711f0"
+      },
+      "ui-prototype/assets/icons/mat-tat.svg": {
+        "before": "1a7cd0f2a984d0ade6c63eaf3e33d9c6b75be0013582f4c9f10ffb54f80d313c",
+        "after": "1a7cd0f2a984d0ade6c63eaf3e33d9c6b75be0013582f4c9f10ffb54f80d313c"
+      },
+      "ui-prototype/assets/icons/mat.svg": {
+        "before": "10be02cce6e8c027686767c7da3810027bd73e0c0bcfb676d1290dec97b03efb",
+        "after": "10be02cce6e8c027686767c7da3810027bd73e0c0bcfb676d1290dec97b03efb"
+      },
+      "ui-prototype/assets/icons/message.svg": {
+        "before": "3f5d5b635088065277734663f4dbb1363f7e9f9411a4a23da51e39b9db11f5dc",
+        "after": "3f5d5b635088065277734663f4dbb1363f7e9f9411a4a23da51e39b9db11f5dc"
+      },
+      "ui-prototype/assets/icons/mui-ten-len.svg": {
+        "before": "7408ae1fd6b4558892743969081d8e9e3f5ff27be595655f5c5d40d38449ee1e",
+        "after": "7408ae1fd6b4558892743969081d8e9e3f5ff27be595655f5c5d40d38449ee1e"
+      },
+      "ui-prototype/assets/icons/mui-ten-xuong.svg": {
+        "before": "0f61a96d8947d12f8af2502862cb953506cf75a53d3d869c864628c4ef43ab3f",
+        "after": "0f61a96d8947d12f8af2502862cb953506cf75a53d3d869c864628c4ef43ab3f"
+      },
+      "ui-prototype/assets/icons/notification.svg": {
+        "before": "16a4c86202f6266da572add83cf66a3a77f5957c9ca0c9ffd773994dcee89af1",
+        "after": "16a4c86202f6266da572add83cf66a3a77f5957c9ca0c9ffd773994dcee89af1"
+      },
+      "ui-prototype/assets/icons/password.svg": {
+        "before": "8a794d8613291a8947cd51c58b88bc1cf2a328c9ab420ad74a03fa1f24c4f452",
+        "after": "8a794d8613291a8947cd51c58b88bc1cf2a328c9ab420ad74a03fa1f24c4f452"
+      },
+      "ui-prototype/assets/icons/payment-copy.svg": {
+        "before": "21244e8d78b954f652bcc20a3172c8051f5dd1ee915d3ef3331cf23e75c750bd",
+        "after": "21244e8d78b954f652bcc20a3172c8051f5dd1ee915d3ef3331cf23e75c750bd"
+      },
+      "ui-prototype/assets/icons/phone.svg": {
+        "before": "16a6677dfce39fc3499cf37c639fa70e32c344bcebc87de00171611a429cbb04",
+        "after": "16a6677dfce39fc3499cf37c639fa70e32c344bcebc87de00171611a429cbb04"
+      },
+      "ui-prototype/assets/icons/profile.svg": {
+        "before": "7bdec09f1e79521fbd016fcf672b00fad8bffaabab3998524dbc4e9361fafd4b",
+        "after": "7bdec09f1e79521fbd016fcf672b00fad8bffaabab3998524dbc4e9361fafd4b"
+      },
+      "ui-prototype/assets/icons/receipt.svg": {
+        "before": "65210dc99c84cdb303b7c574c2377ed5ee70281bc564aa1c9679f2b91694045a",
+        "after": "65210dc99c84cdb303b7c574c2377ed5ee70281bc564aa1c9679f2b91694045a"
+      },
+      "ui-prototype/assets/icons/search.svg": {
+        "before": "6a524dae8400bf1594ac97fe59fb2853740b887f71cca8fdadd6cf75efbac91f",
+        "after": "6a524dae8400bf1594ac97fe59fb2853740b887f71cca8fdadd6cf75efbac91f"
+      },
+      "ui-prototype/assets/icons/settings.svg": {
+        "before": "f9d975455c6c5fbaecab74a49e3d9a9d31988e412ef60ed6caa708112234258e",
+        "after": "f9d975455c6c5fbaecab74a49e3d9a9d31988e412ef60ed6caa708112234258e"
+      },
+      "ui-prototype/assets/icons/shield-alert.svg": {
+        "before": "7815c10ae04b2842731695cc89c778eddcc1495fa0390b09f5df69a6c6464837",
+        "after": "7815c10ae04b2842731695cc89c778eddcc1495fa0390b09f5df69a6c6464837"
+      },
+      "ui-prototype/assets/icons/shield-user.svg": {
+        "before": "06a94e0719bb955030fe1dbccc013bc0e79120065770ab3893b5b04a2b35834d",
+        "after": "06a94e0719bb955030fe1dbccc013bc0e79120065770ab3893b5b04a2b35834d"
+      },
+      "ui-prototype/assets/icons/shield.svg": {
+        "before": "8c7aa33dbb7e72dd7a82f645716e54c639c6ec8946a9064e23c2f1034a78968f",
+        "after": "8c7aa33dbb7e72dd7a82f645716e54c639c6ec8946a9064e23c2f1034a78968f"
+      },
+      "ui-prototype/assets/icons/star.svg": {
+        "before": "779f2011bacbd36b71728edeb78ad808655c078894947eb19ddf5b6a2309faca",
+        "after": "779f2011bacbd36b71728edeb78ad808655c078894947eb19ddf5b6a2309faca"
+      },
+      "ui-prototype/assets/icons/tutor-search.svg": {
+        "before": "58210de469a04f7e4922db6178c42f12cb234e9fab21a944dd1bf24d83fc79a6",
+        "after": "58210de469a04f7e4922db6178c42f12cb234e9fab21a944dd1bf24d83fc79a6"
+      },
+      "ui-prototype/assets/icons/tutor-verification.svg": {
+        "before": "423de5e3bb6cc38894fb80dad8b546833e8965c326fd0b52c1ec21866754eff4",
+        "after": "423de5e3bb6cc38894fb80dad8b546833e8965c326fd0b52c1ec21866754eff4"
+      },
+      "ui-prototype/assets/icons/verified.svg": {
+        "before": "0f851eec731ecb5922708427073a3c0aeb9e4b665e5437a456af232bd5e81af3",
+        "after": "0f851eec731ecb5922708427073a3c0aeb9e4b665e5437a456af232bd5e81af3"
+      },
+      "ui-prototype/assets/icons/wallet.svg": {
+        "before": "3bbc497dccbe53a872597a2748bdc89330f0c7ed11c706029931624b7e4fa3e6",
+        "after": "3bbc497dccbe53a872597a2748bdc89330f0c7ed11c706029931624b7e4fa3e6"
+      },
+      "ui-prototype/assets/icons/warning-triangle.svg": {
+        "before": "41d5490d6793d6e87d6385fdc95a18026c9707a648b9cb81c1f5bf8ccca45e12",
+        "after": "41d5490d6793d6e87d6385fdc95a18026c9707a648b9cb81c1f5bf8ccca45e12"
+      },
+      "ui-prototype/assets/images/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/index.html": {
+        "before": "e5cf8fb1d169ce7516ac700f02241b8f4799812ed52c1df8376524f866b063c1",
+        "after": "e5cf8fb1d169ce7516ac700f02241b8f4799812ed52c1df8376524f866b063c1"
+      },
+      "ui-prototype/components/README.md": {
+        "before": "b0544b1796f94799a369e29cad9177b64c2843e05848d61ff49e924a6c5fe54a",
+        "after": "b0544b1796f94799a369e29cad9177b64c2843e05848d61ff49e924a6c5fe54a"
+      },
+      "ui-prototype/components/action/button-group.html": {
+        "before": "f8eab655d22b8322f6c42024b53508e4a59ebcbddfd3f81b14c3544a6b7af352",
+        "after": "f8eab655d22b8322f6c42024b53508e4a59ebcbddfd3f81b14c3544a6b7af352"
+      },
+      "ui-prototype/components/action/button.html": {
+        "before": "9cada02c6d992e7c08cd40bc3e59d6e037a4ee3a491ecfc129dc60ee8a46cae8",
+        "after": "9cada02c6d992e7c08cd40bc3e59d6e037a4ee3a491ecfc129dc60ee8a46cae8"
+      },
+      "ui-prototype/components/action/icon-button.html": {
+        "before": "60c584c8cff8b7e099cf2b49b2c77bed87afe0acb887adcde3b5f05a1749383e",
+        "after": "60c584c8cff8b7e099cf2b49b2c77bed87afe0acb887adcde3b5f05a1749383e"
+      },
+      "ui-prototype/components/data-display/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/data-display/avatar.html": {
+        "before": "8b5ab128747c4f2a189ed76d552ce5a36633bfe004d62518e52730e75c1a8a51",
+        "after": "8b5ab128747c4f2a189ed76d552ce5a36633bfe004d62518e52730e75c1a8a51"
+      },
+      "ui-prototype/components/data-display/card.html": {
+        "before": "3c93319d91435d0e8b3afe5c9d109e79a4743027c9fc33c5dc00f2f57253980c",
+        "after": "3c93319d91435d0e8b3afe5c9d109e79a4743027c9fc33c5dc00f2f57253980c"
+      },
+      "ui-prototype/components/data-display/file-attachment-item.html": {
+        "before": "97ca0928e58e42a2b4e90069f839e93c3de761ebf3c98121a9a67a77f57a6a49",
+        "after": "97ca0928e58e42a2b4e90069f839e93c3de761ebf3c98121a9a67a77f57a6a49"
+      },
+      "ui-prototype/components/data-display/info-row.html": {
+        "before": "0ecfd6b9b9230a2394b6805274c67ded912f0f830bc1592ed9c8f4e145e03fac",
+        "after": "0ecfd6b9b9230a2394b6805274c67ded912f0f830bc1592ed9c8f4e145e03fac"
+      },
+      "ui-prototype/components/data-display/rating.html": {
+        "before": "46ccea2887ace74b67bc08cbdd00381b0f048fa08caa1816ebc48a63c84cc417",
+        "after": "46ccea2887ace74b67bc08cbdd00381b0f048fa08caa1816ebc48a63c84cc417"
+      },
+      "ui-prototype/components/data-display/stat-card.html": {
+        "before": "94d59cc67c9f517c75130e5c73649da302598b54e730ea6015c45f5de6e4c817",
+        "after": "94d59cc67c9f517c75130e5c73649da302598b54e730ea6015c45f5de6e4c817"
+      },
+      "ui-prototype/components/data-display/table.html": {
+        "before": "44fdf835e662aa8ee67b18a6ea482a9ec55631b161938e73d8aba354266da13b",
+        "after": "44fdf835e662aa8ee67b18a6ea482a9ec55631b161938e73d8aba354266da13b"
+      },
+      "ui-prototype/components/data-display/tag.html": {
+        "before": "4bd2da4bcf6a74f1e5775dae3a2557d4567ec38b2e4b38a673f737fa8ba3f88e",
+        "after": "4bd2da4bcf6a74f1e5775dae3a2557d4567ec38b2e4b38a673f737fa8ba3f88e"
+      },
+      "ui-prototype/components/domain/admin/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/domain/chat/message-thread-item.html": {
+        "before": "31f8765188f7622f8832fe960f70dc66e8f6432a80c37b3cc473a8df2cf09443",
+        "after": "31f8765188f7622f8832fe960f70dc66e8f6432a80c37b3cc473a8df2cf09443"
+      },
+      "ui-prototype/components/domain/contract/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/domain/job/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/domain/job/applicant-card.html": {
+        "before": "75c5061af1dce7a50f5210eafc5782dd54b4d34feb291bfe7e1f503943960049",
+        "after": "75c5061af1dce7a50f5210eafc5782dd54b4d34feb291bfe7e1f503943960049"
+      },
+      "ui-prototype/components/domain/job/job-card.html": {
+        "before": "057c37e5e1bb8ac0b5b2519514ec0fddf6d53d5a906e5e8b98aba208660cbb7f",
+        "after": "057c37e5e1bb8ac0b5b2519514ec0fddf6d53d5a906e5e8b98aba208660cbb7f"
+      },
+      "ui-prototype/components/domain/lesson/lesson-card.html": {
+        "before": "c4714b0ac3d9f8cd8cea15da7d79732599ddfe79fe7f353b77b5898c523b4848",
+        "after": "c4714b0ac3d9f8cd8cea15da7d79732599ddfe79fe7f353b77b5898c523b4848"
+      },
+      "ui-prototype/components/domain/payment/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/domain/tutor/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/domain/tutor/tutor-card.html": {
+        "before": "5a30c372edf9eb8441dc0108c11e46216266905299a62569a4e256092d8421c7",
+        "after": "5a30c372edf9eb8441dc0108c11e46216266905299a62569a4e256092d8421c7"
+      },
+      "ui-prototype/components/domain/tutor/tutor-summary.html": {
+        "before": "c4f7877a0db9dc2b54df0eeecc968e2985c685451e2a9402ec118aa716a51764",
+        "after": "c4f7877a0db9dc2b54df0eeecc968e2985c685451e2a9402ec118aa716a51764"
+      },
+      "ui-prototype/components/domain/tutor/tutor-verification-badge.html": {
+        "before": "1b75af6869144cbc5781e747ad8124c1f84b648002b79d8eee322ef4d47ea6c2",
+        "after": "1b75af6869144cbc5781e747ad8124c1f84b648002b79d8eee322ef4d47ea6c2"
+      },
+      "ui-prototype/components/domain/wallet/wallet-balance-card.html": {
+        "before": "dd222a50da26ff52fff4072bdbd1716a19d1dc209c6fc8451b2eadc57a5b9524",
+        "after": "dd222a50da26ff52fff4072bdbd1716a19d1dc209c6fc8451b2eadc57a5b9524"
+      },
+      "ui-prototype/components/feedback/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/feedback/alert.html": {
+        "before": "7775267b02f5ac6448e25011bf4c14ff97d3a5fc676083f83f6b9134c557377b",
+        "after": "7775267b02f5ac6448e25011bf4c14ff97d3a5fc676083f83f6b9134c557377b"
+      },
+      "ui-prototype/components/feedback/badge.html": {
+        "before": "4284c3e57048d190a82a47298aec69af5b52bc5ea847f2c00ef6d14edc0fb2af",
+        "after": "4284c3e57048d190a82a47298aec69af5b52bc5ea847f2c00ef6d14edc0fb2af"
+      },
+      "ui-prototype/components/feedback/empty-state.html": {
+        "before": "6e8a3ed2aaceb22d7925d77cea3755e99278cf5e8b66b6be693a6b70eb856b21",
+        "after": "6e8a3ed2aaceb22d7925d77cea3755e99278cf5e8b66b6be693a6b70eb856b21"
+      },
+      "ui-prototype/components/feedback/loading.html": {
+        "before": "d2beeb4cdeb8bba07401c4028b58b686e8674e320eec25f5d3444f7f53d72030",
+        "after": "d2beeb4cdeb8bba07401c4028b58b686e8674e320eec25f5d3444f7f53d72030"
+      },
+      "ui-prototype/components/feedback/modal.html": {
+        "before": "abe38ca7d7cdba6946a00428cb9d973546e779ff3db217217093cae07db92010",
+        "after": "abe38ca7d7cdba6946a00428cb9d973546e779ff3db217217093cae07db92010"
+      },
+      "ui-prototype/components/feedback/toast.html": {
+        "before": "98440983e1483987615a8a1967f187947e7334e38733437b684898af99877c86",
+        "after": "98440983e1483987615a8a1967f187947e7334e38733437b684898af99877c86"
+      },
+      "ui-prototype/components/form/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/form/checkbox.html": {
+        "before": "7f8026a5eeed013e04b3c4200cce809e8c7ec6e87514f1f331943408ec5ec769",
+        "after": "7f8026a5eeed013e04b3c4200cce809e8c7ec6e87514f1f331943408ec5ec769"
+      },
+      "ui-prototype/components/form/file-upload.html": {
+        "before": "d81b4b208d4f5a2e832d65623a1c191f94b7e274379822b611ebceb8661c37fa",
+        "after": "d81b4b208d4f5a2e832d65623a1c191f94b7e274379822b611ebceb8661c37fa"
+      },
+      "ui-prototype/components/form/form-field.html": {
+        "before": "e8cf8c043e0639d7df3edec6a91755ef343c1212cccb4242796c0c8e2f43e885",
+        "after": "e8cf8c043e0639d7df3edec6a91755ef343c1212cccb4242796c0c8e2f43e885"
+      },
+      "ui-prototype/components/form/input.html": {
+        "before": "ae5b70e0c9e368bdf801ca98271a5a893e60b55b1984fafbcff81ebb05270345",
+        "after": "ae5b70e0c9e368bdf801ca98271a5a893e60b55b1984fafbcff81ebb05270345"
+      },
+      "ui-prototype/components/form/password-input.html": {
+        "before": "fc13e7c5ec493973f24723378ab40084f36794c320ba86efc26896f2ecc4ded1",
+        "after": "fc13e7c5ec493973f24723378ab40084f36794c320ba86efc26896f2ecc4ded1"
+      },
+      "ui-prototype/components/form/radio.html": {
+        "before": "85a5216b85da8a07dfdc5697c96187e3b62f39ca19a9245192fb408e09ebf35c",
+        "after": "85a5216b85da8a07dfdc5697c96187e3b62f39ca19a9245192fb408e09ebf35c"
+      },
+      "ui-prototype/components/form/search-input.html": {
+        "before": "c8b601ef0016390d8701111907f1a24cdf6db8cc7fec360af4d4b94bae6ad031",
+        "after": "c8b601ef0016390d8701111907f1a24cdf6db8cc7fec360af4d4b94bae6ad031"
+      },
+      "ui-prototype/components/form/select.html": {
+        "before": "c1422ae07889802a0c6da46b79c7aa225ae2a674ea0b609809360178f9037410",
+        "after": "c1422ae07889802a0c6da46b79c7aa225ae2a674ea0b609809360178f9037410"
+      },
+      "ui-prototype/components/form/switch.html": {
+        "before": "6f352e5123e8059aabb99d8976c95abd8ddee800df09da3fe4365a618957a26d",
+        "after": "6f352e5123e8059aabb99d8976c95abd8ddee800df09da3fe4365a618957a26d"
+      },
+      "ui-prototype/components/form/textarea.html": {
+        "before": "632b627713f84c7ae2207370475d45cb45b0f28f3135fb1940a9e326dce75d9e",
+        "after": "632b627713f84c7ae2207370475d45cb45b0f28f3135fb1940a9e326dce75d9e"
+      },
+      "ui-prototype/components/layout/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/layout/account-footer.html": {
+        "before": "19987f675d3b094c7f68634a2ba71adfb8473dc59ccd5a7a6f38d960cab98f76",
+        "after": "19987f675d3b094c7f68634a2ba71adfb8473dc59ccd5a7a6f38d960cab98f76"
+      },
+      "ui-prototype/components/layout/admin-header.html": {
+        "before": "d5fa3d5caf78a2025989da3bbd9c2815b32376d73bfc6bca61b3ad94f9299a88",
+        "after": "d5fa3d5caf78a2025989da3bbd9c2815b32376d73bfc6bca61b3ad94f9299a88"
+      },
+      "ui-prototype/components/layout/admin-shell.html": {
+        "before": "82f6c680efb9f5a82e99cfb6956c5edf656342696f6819e4f00baf1ec20aa398",
+        "after": "82f6c680efb9f5a82e99cfb6956c5edf656342696f6819e4f00baf1ec20aa398"
+      },
+      "ui-prototype/components/layout/admin-sidebar.html": {
+        "before": "588821f318b2fced3e0b3aa6b53e386d0339753451cf0ca3a4bc1f85bdb311fe",
+        "after": "588821f318b2fced3e0b3aa6b53e386d0339753451cf0ca3a4bc1f85bdb311fe"
+      },
+      "ui-prototype/components/layout/auth-shell.html": {
+        "before": "58e8766e8af3c95033a36d7c00afc60bba09fe483a0d1407efa1919a18cc07fd",
+        "after": "58e8766e8af3c95033a36d7c00afc60bba09fe483a0d1407efa1919a18cc07fd"
+      },
+      "ui-prototype/components/layout/brand-masthead.html": {
+        "before": "53f78e00c1a03e39907479b0be1c1c6d8b26cb9a80e57b074d0fa457ea29f1f8",
+        "after": "53f78e00c1a03e39907479b0be1c1c6d8b26cb9a80e57b074d0fa457ea29f1f8"
+      },
+      "ui-prototype/components/layout/container.html": {
+        "before": "8f4993a259e968b23d1626df627b919d821dc4123d8b43b7ab838f02ea2a0084",
+        "after": "8f4993a259e968b23d1626df627b919d821dc4123d8b43b7ab838f02ea2a0084"
+      },
+      "ui-prototype/components/layout/page-header.html": {
+        "before": "ac266dae613f845d849bde009c1dddef1d0804ded64414ebbda770f939f8233b",
+        "after": "ac266dae613f845d849bde009c1dddef1d0804ded64414ebbda770f939f8233b"
+      },
+      "ui-prototype/components/layout/user-footer.html": {
+        "before": "7f02d417b477e18e13ea643a3292e5ba5848e26785b30e66131945d68bb6374d",
+        "after": "7f02d417b477e18e13ea643a3292e5ba5848e26785b30e66131945d68bb6374d"
+      },
+      "ui-prototype/components/layout/user-header.html": {
+        "before": "323998e2ed7bb2e06ce919cfb78411562f31007da8d69b428255811b611a7ac6",
+        "after": "323998e2ed7bb2e06ce919cfb78411562f31007da8d69b428255811b611a7ac6"
+      },
+      "ui-prototype/components/layout/user-shell.html": {
+        "before": "414cada4fc0ddd11298e1b1bc09ce24cc23b6bdefa66a0615ddc82242cbe115e",
+        "after": "414cada4fc0ddd11298e1b1bc09ce24cc23b6bdefa66a0615ddc82242cbe115e"
+      },
+      "ui-prototype/components/navigation/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/components/navigation/breadcrumb.html": {
+        "before": "cb99b91ca3df613fa7a5c755ba82b07e590a009aba9151b8193ee87853f00dfc",
+        "after": "cb99b91ca3df613fa7a5c755ba82b07e590a009aba9151b8193ee87853f00dfc"
+      },
+      "ui-prototype/components/navigation/filter-chip.html": {
+        "before": "1a0a20c8120e5e29d374f3fa88f0506c5f5a9264169b1c423c8c3e86d837cc3b",
+        "after": "1a0a20c8120e5e29d374f3fa88f0506c5f5a9264169b1c423c8c3e86d837cc3b"
+      },
+      "ui-prototype/components/navigation/filter-panel.html": {
+        "before": "0abb190a91e8977a94fd3eb5739f3b8fe2b221914e7b200e574caea3d7ba8ed6",
+        "after": "0abb190a91e8977a94fd3eb5739f3b8fe2b221914e7b200e574caea3d7ba8ed6"
+      },
+      "ui-prototype/components/navigation/pagination.html": {
+        "before": "4d20b32d39c665425d86a5756c8cf9a04047903de9d0f4190d81f1510d44bb39",
+        "after": "4d20b32d39c665425d86a5756c8cf9a04047903de9d0f4190d81f1510d44bb39"
+      },
+      "ui-prototype/components/navigation/tabs.html": {
+        "before": "1e4154ebb2e265c747a56576430d19dbed85ca2b7d78fb6eb0821f41b83d69c8",
+        "after": "1e4154ebb2e265c747a56576430d19dbed85ca2b7d78fb6eb0821f41b83d69c8"
+      },
+      "ui-prototype/css/base.css": {
+        "before": "3460f8247cec1884b9ca87b824f6f2984eb894137e063815671f1b72a0d27f2a",
+        "after": "3460f8247cec1884b9ca87b824f6f2984eb894137e063815671f1b72a0d27f2a"
+      },
+      "ui-prototype/css/layouts.css": {
+        "before": "26438a6283aa913495d1dc68991c70f42a35e54e12114b937740c40702ad686d",
+        "after": "26438a6283aa913495d1dc68991c70f42a35e54e12114b937740c40702ad686d"
+      },
+      "ui-prototype/css/reset.css": {
+        "before": "52af09549c98b1c64e51910fcbc855705c7036ae0d036a433b6e3db3530cc92a",
+        "after": "52af09549c98b1c64e51910fcbc855705c7036ae0d036a433b6e3db3530cc92a"
+      },
+      "ui-prototype/css/tokens.css": {
+        "before": "8d356af216ee9db765d7a132e9738f1e0a8d7c3d1d774c87372cc15c2fab601b",
+        "after": "8d356af216ee9db765d7a132e9738f1e0a8d7c3d1d774c87372cc15c2fab601b"
+      },
+      "ui-prototype/css/utilities.css": {
+        "before": "a973e05f0fb8ccadd87a3f595aad02cb4f72bf2af7119c08968c5f90cdda659c",
+        "after": "a973e05f0fb8ccadd87a3f595aad02cb4f72bf2af7119c08968c5f90cdda659c"
+      },
+      "ui-prototype/css/components/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/components/README.md": {
+        "before": "3657f541a147d50edafa3ddd489f35e2b98e82f817c11fc39008000ca612bd1a",
+        "after": "3657f541a147d50edafa3ddd489f35e2b98e82f817c11fc39008000ca612bd1a"
+      },
+      "ui-prototype/css/components/showcase.css": {
+        "before": "8585de92fffdf3bd1c534079b54fddc9c80dbbe2292c3d804b9a11df7152e3f8",
+        "after": "8585de92fffdf3bd1c534079b54fddc9c80dbbe2292c3d804b9a11df7152e3f8"
+      },
+      "ui-prototype/css/components/action/button-group.css": {
+        "before": "748963926dd20ee3d7820c745ee04f68682c2ca0f1ea7d913f03b3bc7653bf7d",
+        "after": "748963926dd20ee3d7820c745ee04f68682c2ca0f1ea7d913f03b3bc7653bf7d"
+      },
+      "ui-prototype/css/components/action/button.css": {
+        "before": "8e8644a8a270b08f2ef6b7cad067d6628432d5c53fbd6c149ad29c7b875f61c7",
+        "after": "8e8644a8a270b08f2ef6b7cad067d6628432d5c53fbd6c149ad29c7b875f61c7"
+      },
+      "ui-prototype/css/components/action/component-icon.css": {
+        "before": "9b841694357184e2fb2f742a44cbc6267d6fa56699a240642d4fff1f7575f881",
+        "after": "9b841694357184e2fb2f742a44cbc6267d6fa56699a240642d4fff1f7575f881"
+      },
+      "ui-prototype/css/components/action/icon-button.css": {
+        "before": "3be2150e39b961c98e82d4a59a07a2d45aedaae2728b24ce6ff4b2364c6723ac",
+        "after": "3be2150e39b961c98e82d4a59a07a2d45aedaae2728b24ce6ff4b2364c6723ac"
+      },
+      "ui-prototype/css/components/data-display/avatar.css": {
+        "before": "210dce438a7fd9c85e32f518fb397f497dff3cb19102341e8ae2f3ffd4061418",
+        "after": "210dce438a7fd9c85e32f518fb397f497dff3cb19102341e8ae2f3ffd4061418"
+      },
+      "ui-prototype/css/components/data-display/card.css": {
+        "before": "6eb8dcc0be1f5160beb75db2cdf21bdbe65504a9c7e6dc7db965a9ccd3760c75",
+        "after": "6eb8dcc0be1f5160beb75db2cdf21bdbe65504a9c7e6dc7db965a9ccd3760c75"
+      },
+      "ui-prototype/css/components/data-display/chart.css": {
+        "before": "d0990d6e46b399d9adeab4026f4a5e88f116a20a5730d52a0f8ab88a65689a05",
+        "after": "d0990d6e46b399d9adeab4026f4a5e88f116a20a5730d52a0f8ab88a65689a05"
+      },
+      "ui-prototype/css/components/data-display/file-attachment-item.css": {
+        "before": "be73f7b690bfd7501212545cac3f8782fe8e949d75f99ccdc34c2b3573f5930b",
+        "after": "be73f7b690bfd7501212545cac3f8782fe8e949d75f99ccdc34c2b3573f5930b"
+      },
+      "ui-prototype/css/components/data-display/info-row.css": {
+        "before": "1768836604bc9d7e3da6430e40e6ae0edb160f146001304e6d3acec140433b06",
+        "after": "1768836604bc9d7e3da6430e40e6ae0edb160f146001304e6d3acec140433b06"
+      },
+      "ui-prototype/css/components/data-display/rating.css": {
+        "before": "52bc6b1bbb0638efc1c64e057168e2c5c29f694b004dfca361d7d7fe57edb8a7",
+        "after": "52bc6b1bbb0638efc1c64e057168e2c5c29f694b004dfca361d7d7fe57edb8a7"
+      },
+      "ui-prototype/css/components/data-display/stat-card.css": {
+        "before": "9634306ec22113895a4fe53c2171e850cb2fc2454c7e5c7836b8a8e9f3d95094",
+        "after": "9634306ec22113895a4fe53c2171e850cb2fc2454c7e5c7836b8a8e9f3d95094"
+      },
+      "ui-prototype/css/components/data-display/table.css": {
+        "before": "5082b5afd451fb9f6a6f945f389411d0eb7dcf20de06bf1ded7b1e289156a152",
+        "after": "5082b5afd451fb9f6a6f945f389411d0eb7dcf20de06bf1ded7b1e289156a152"
+      },
+      "ui-prototype/css/components/data-display/tag.css": {
+        "before": "d87567be7f96de26994a6d72773e98cbd81d914850d726a13d658837c6dba02a",
+        "after": "d87567be7f96de26994a6d72773e98cbd81d914850d726a13d658837c6dba02a"
+      },
+      "ui-prototype/css/components/domain/chat/message-thread-item.css": {
+        "before": "7e59ad1df4fc7c03a6373a553897263e00f3feccf8e78691818a0531a1c0604b",
+        "after": "7e59ad1df4fc7c03a6373a553897263e00f3feccf8e78691818a0531a1c0604b"
+      },
+      "ui-prototype/css/components/domain/job/applicant-card.css": {
+        "before": "f47de47c3056fab5f784a2a69b845cafbd4c3b1fca7bcdf7ad45854ad774a98b",
+        "after": "f47de47c3056fab5f784a2a69b845cafbd4c3b1fca7bcdf7ad45854ad774a98b"
+      },
+      "ui-prototype/css/components/domain/job/job-card.css": {
+        "before": "a5587678ba1fc3549e4306023d55fd44f0832aae1d42291770cabe98330d7337",
+        "after": "a5587678ba1fc3549e4306023d55fd44f0832aae1d42291770cabe98330d7337"
+      },
+      "ui-prototype/css/components/domain/lesson/lesson-card.css": {
+        "before": "e41cc7359bd624146726dc49db0b90552dd26ca85f9b43c3ce443524795a7087",
+        "after": "e41cc7359bd624146726dc49db0b90552dd26ca85f9b43c3ce443524795a7087"
+      },
+      "ui-prototype/css/components/domain/tutor/tutor-card.css": {
+        "before": "e06984e52a45ad19562b6822fe49caec0bc70c96eef8891573f7f8c8f50cc35c",
+        "after": "e06984e52a45ad19562b6822fe49caec0bc70c96eef8891573f7f8c8f50cc35c"
+      },
+      "ui-prototype/css/components/domain/wallet/wallet-balance-card.css": {
+        "before": "b41806b8af0f02a7672b53dee0f1f8c2006553d164badefa8efdb85c5a21afc4",
+        "after": "b41806b8af0f02a7672b53dee0f1f8c2006553d164badefa8efdb85c5a21afc4"
+      },
+      "ui-prototype/css/components/feedback/alert.css": {
+        "before": "1cdb430d34ad1006b11eb1d7f7660d454034ac78efb43bb98b6f2b563811bc3a",
+        "after": "1cdb430d34ad1006b11eb1d7f7660d454034ac78efb43bb98b6f2b563811bc3a"
+      },
+      "ui-prototype/css/components/feedback/badge.css": {
+        "before": "53b151bdeaff138cc4ed2fb38623f819a44581874ea9fa4f8221b7ce4fa40a59",
+        "after": "53b151bdeaff138cc4ed2fb38623f819a44581874ea9fa4f8221b7ce4fa40a59"
+      },
+      "ui-prototype/css/components/feedback/empty-state.css": {
+        "before": "9fd9b46292cf79b979e4933c8f9bccb4b16b2e5439848be6c0e14d9c79660bd0",
+        "after": "9fd9b46292cf79b979e4933c8f9bccb4b16b2e5439848be6c0e14d9c79660bd0"
+      },
+      "ui-prototype/css/components/feedback/loading.css": {
+        "before": "f0ea879c5a8a0d37bf9a63d4e53a09c6d30ef3fbec302e8f177a9ccb3e25f95e",
+        "after": "f0ea879c5a8a0d37bf9a63d4e53a09c6d30ef3fbec302e8f177a9ccb3e25f95e"
+      },
+      "ui-prototype/css/components/feedback/modal.css": {
+        "before": "20545be31dedad74a6b2fcbbf2e4e5602fdb50713f13f5203f55712cf436b493",
+        "after": "20545be31dedad74a6b2fcbbf2e4e5602fdb50713f13f5203f55712cf436b493"
+      },
+      "ui-prototype/css/components/feedback/toast.css": {
+        "before": "3b0f3e8607937fca6163002c7f44c8df195acb08c610d01a45823b76bb70b870",
+        "after": "3b0f3e8607937fca6163002c7f44c8df195acb08c610d01a45823b76bb70b870"
+      },
+      "ui-prototype/css/components/form/checkbox.css": {
+        "before": "e70e9ebd29f1e68625223d6eb1c5a464824885bef7ea830c18204f5374d0c316",
+        "after": "e70e9ebd29f1e68625223d6eb1c5a464824885bef7ea830c18204f5374d0c316"
+      },
+      "ui-prototype/css/components/form/file-upload.css": {
+        "before": "3f8cff018d4d2b9390e83667adf21841c50ccd4022184a8a7eae3fbc59a005ac",
+        "after": "3f8cff018d4d2b9390e83667adf21841c50ccd4022184a8a7eae3fbc59a005ac"
+      },
+      "ui-prototype/css/components/form/form-field.css": {
+        "before": "e75ed1864461a0dde4db5edb946a88d77fc96105c0db5bf6748e8e75a63a9370",
+        "after": "e75ed1864461a0dde4db5edb946a88d77fc96105c0db5bf6748e8e75a63a9370"
+      },
+      "ui-prototype/css/components/form/input.css": {
+        "before": "6a90cd56edfc1431f1c394e89e7ece7f5b04b440edfe14da268e6b69017e919f",
+        "after": "6a90cd56edfc1431f1c394e89e7ece7f5b04b440edfe14da268e6b69017e919f"
+      },
+      "ui-prototype/css/components/form/password-input.css": {
+        "before": "cbbdf968971fc79eb088ce0eeaef3a388e80bb4d67b679cb0fc727c68649f6ce",
+        "after": "cbbdf968971fc79eb088ce0eeaef3a388e80bb4d67b679cb0fc727c68649f6ce"
+      },
+      "ui-prototype/css/components/form/radio.css": {
+        "before": "39a631b732119877275e340d953719c2f38ec8a1bb083d1c848a8d6aa7991822",
+        "after": "39a631b732119877275e340d953719c2f38ec8a1bb083d1c848a8d6aa7991822"
+      },
+      "ui-prototype/css/components/form/search-input.css": {
+        "before": "11b98bf82d640bf93de8b8126888a7cf45a14217e3261b144d86e839963ffbff",
+        "after": "11b98bf82d640bf93de8b8126888a7cf45a14217e3261b144d86e839963ffbff"
+      },
+      "ui-prototype/css/components/form/select.css": {
+        "before": "0b9d738ac1c9365dbfbfcab6e8e3cbfd2b3ce57bce139ea6bed2361243a77303",
+        "after": "0b9d738ac1c9365dbfbfcab6e8e3cbfd2b3ce57bce139ea6bed2361243a77303"
+      },
+      "ui-prototype/css/components/form/switch.css": {
+        "before": "3f78fde674608df90ac0457eba3a801aadf09862294a3f8bc0750d1a58f26afa",
+        "after": "3f78fde674608df90ac0457eba3a801aadf09862294a3f8bc0750d1a58f26afa"
+      },
+      "ui-prototype/css/components/form/textarea.css": {
+        "before": "5d0b6c175008c8bc4ecf75f6520842c9cf93929c1ab9324821134d1809947db9",
+        "after": "5d0b6c175008c8bc4ecf75f6520842c9cf93929c1ab9324821134d1809947db9"
+      },
+      "ui-prototype/css/components/layout/account-footer.css": {
+        "before": "9dfd3a714a51684a478874d7cc56ac25137374c1daa7498cb5844e39b1f9cac3",
+        "after": "9dfd3a714a51684a478874d7cc56ac25137374c1daa7498cb5844e39b1f9cac3"
+      },
+      "ui-prototype/css/components/layout/admin-header.css": {
+        "before": "3aa0eb83a706a33544081c644170a7880713ec13e1afc8b5ef605cba0675bb6a",
+        "after": "3aa0eb83a706a33544081c644170a7880713ec13e1afc8b5ef605cba0675bb6a"
+      },
+      "ui-prototype/css/components/layout/admin-sidebar.css": {
+        "before": "ce2de5433fc3e0dfd51df60cf968c88a2a6883d93270b723b58b702c081a97c9",
+        "after": "ce2de5433fc3e0dfd51df60cf968c88a2a6883d93270b723b58b702c081a97c9"
+      },
+      "ui-prototype/css/components/layout/auth-shell.css": {
+        "before": "a396ebacc50640b382afb0993328a23a97ce8efc955d56f8cbf3be68d4310294",
+        "after": "a396ebacc50640b382afb0993328a23a97ce8efc955d56f8cbf3be68d4310294"
+      },
+      "ui-prototype/css/components/layout/brand-masthead.css": {
+        "before": "f07ef09434b05fc7a839e126c3f2774cdd5ec8313c3f68cfe1c0b8e20cd83d56",
+        "after": "f07ef09434b05fc7a839e126c3f2774cdd5ec8313c3f68cfe1c0b8e20cd83d56"
+      },
+      "ui-prototype/css/components/layout/container.css": {
+        "before": "9f2012319b40fcceeda211b936abca3d905decfb4d0bda9e15b9195a47e63950",
+        "after": "9f2012319b40fcceeda211b936abca3d905decfb4d0bda9e15b9195a47e63950"
+      },
+      "ui-prototype/css/components/layout/page-header.css": {
+        "before": "e1c98ae141da635c41db65fa7e337520e235c2573c706b34e373f6d1c2fa5de4",
+        "after": "e1c98ae141da635c41db65fa7e337520e235c2573c706b34e373f6d1c2fa5de4"
+      },
+      "ui-prototype/css/components/layout/user-footer.css": {
+        "before": "0a2f27740ef6b6a2d5f68b611be83845ca336cba43830f7ba482b5e7aafb4ce4",
+        "after": "0a2f27740ef6b6a2d5f68b611be83845ca336cba43830f7ba482b5e7aafb4ce4"
+      },
+      "ui-prototype/css/components/layout/user-header.css": {
+        "before": "bdced28190d3ecf56ef2d94e5e7fe1d959e8be120b401f9b2ce2997b7b1d7e5f",
+        "after": "bdced28190d3ecf56ef2d94e5e7fe1d959e8be120b401f9b2ce2997b7b1d7e5f"
+      },
+      "ui-prototype/css/components/navigation/breadcrumb.css": {
+        "before": "6c20088e270d18ad3f5cb023b3585f431667fefefeafcda3d3f380f8d9413223",
+        "after": "6c20088e270d18ad3f5cb023b3585f431667fefefeafcda3d3f380f8d9413223"
+      },
+      "ui-prototype/css/components/navigation/filter-chip.css": {
+        "before": "ee0fe8f523d88b46b33a07dfdf6994276801f0459974d46a2970f821036b579f",
+        "after": "ee0fe8f523d88b46b33a07dfdf6994276801f0459974d46a2970f821036b579f"
+      },
+      "ui-prototype/css/components/navigation/filter-panel.css": {
+        "before": "f817abf86ea113ddd0417f6f3cb1348888644d3521c9d145f8ab08d4d29b8b57",
+        "after": "f817abf86ea113ddd0417f6f3cb1348888644d3521c9d145f8ab08d4d29b8b57"
+      },
+      "ui-prototype/css/components/navigation/pagination.css": {
+        "before": "c32321d96155ed4ec36bc50472be6d9d1f2312c8b16b2bac31c632d99071496b",
+        "after": "c32321d96155ed4ec36bc50472be6d9d1f2312c8b16b2bac31c632d99071496b"
+      },
+      "ui-prototype/css/components/navigation/tabs.css": {
+        "before": "1c9abf962ce3484295d357fb11e0a9e4161be595cb7012b0191773ec362d5b32",
+        "after": "1c9abf962ce3484295d357fb11e0a9e4161be595cb7012b0191773ec362d5b32"
+      },
+      "ui-prototype/css/pages/home.css": {
+        "before": "6cffb86e611433beaa7a70662726e260d4e4dc96f8ab82cfba8e51871c3a18cd",
+        "after": "6cffb86e611433beaa7a70662726e260d4e4dc96f8ab82cfba8e51871c3a18cd"
+      },
+      "ui-prototype/css/pages/account/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/account/profile.css": {
+        "before": "0154d1cfbb3d30418e14809359d0113db66f1d931c157f0ca57a5db04f0fec41",
+        "after": "0154d1cfbb3d30418e14809359d0113db66f1d931c157f0ca57a5db04f0fec41"
+      },
+      "ui-prototype/css/pages/admin/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/admin/audit-logs.css": {
+        "before": "2a129f29741179a2646872a8582d53f11df72355270fc0bfc0f5166deb287a98",
+        "after": "2a129f29741179a2646872a8582d53f11df72355270fc0bfc0f5166deb287a98"
+      },
+      "ui-prototype/css/pages/admin/dashboard.css": {
+        "before": "b11aebdce0b2fadfeef5f8027c447ffebe8f467c9cedaf45941fb0c2156481e3",
+        "after": "b11aebdce0b2fadfeef5f8027c447ffebe8f467c9cedaf45941fb0c2156481e3"
+      },
+      "ui-prototype/css/pages/admin/job-review-detail.css": {
+        "before": "570c0ff103891141e58686605db2a39cbaff88df4ed5faf96ff3058317cd0490",
+        "after": "570c0ff103891141e58686605db2a39cbaff88df4ed5faf96ff3058317cd0490"
+      },
+      "ui-prototype/css/pages/admin/job-review-queue.css": {
+        "before": "8417e27b9eaf08b23c4bd1a82fd3417e2ce104f7c5ceec21f57af2a065485e7f",
+        "after": "8417e27b9eaf08b23c4bd1a82fd3417e2ce104f7c5ceec21f57af2a065485e7f"
+      },
+      "ui-prototype/css/pages/admin/manage.css": {
+        "before": "14046fade2dfc9a48f46937aea722a5bdf58a35d519e3384683a1a02f0788043",
+        "after": "14046fade2dfc9a48f46937aea722a5bdf58a35d519e3384683a1a02f0788043"
+      },
+      "ui-prototype/css/pages/admin/payout-request-detail.css": {
+        "before": "1ccbb1257bfc1db1380f676c47b8980d7da7571d99d9dd0071b537a72557348d",
+        "after": "1ccbb1257bfc1db1380f676c47b8980d7da7571d99d9dd0071b537a72557348d"
+      },
+      "ui-prototype/css/pages/admin/payout-requests.css": {
+        "before": "8f45f5f2574b2070532810ebd301e4ebb0b974d91b8ba4c392452dfc1ecc071a",
+        "after": "8f45f5f2574b2070532810ebd301e4ebb0b974d91b8ba4c392452dfc1ecc071a"
+      },
+      "ui-prototype/css/pages/admin/report-detail.css": {
+        "before": "addc8e6c4a9fbb4fbe4e8fb00504d1c1dcaa91099abbe5fa043700254e15a1c4",
+        "after": "addc8e6c4a9fbb4fbe4e8fb00504d1c1dcaa91099abbe5fa043700254e15a1c4"
+      },
+      "ui-prototype/css/pages/admin/reports.css": {
+        "before": "4b4c694bb7e1aa23c00117d236e92aa1926b2774d058782fa48f63d61afc5c15",
+        "after": "4b4c694bb7e1aa23c00117d236e92aa1926b2774d058782fa48f63d61afc5c15"
+      },
+      "ui-prototype/css/pages/admin/tutor-review-detail.css": {
+        "before": "d92d6d613c8f8e8e6744cd967274de4233ef0bb6857acb0efa3ddc4b39524298",
+        "after": "d92d6d613c8f8e8e6744cd967274de4233ef0bb6857acb0efa3ddc4b39524298"
+      },
+      "ui-prototype/css/pages/admin/tutor-review-queue.css": {
+        "before": "ec5f602a5eb196ea414d57c1e422a19927a441210f4ba46cab2a6b39e0140955",
+        "after": "ec5f602a5eb196ea414d57c1e422a19927a441210f4ba46cab2a6b39e0140955"
+      },
+      "ui-prototype/css/pages/auth/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/auth/forgot-password.css": {
+        "before": "bef02b878d2ca6aa5e6fd5a4d6b715f027061f51a9b9d9a04d12753f57de86e8",
+        "after": "bef02b878d2ca6aa5e6fd5a4d6b715f027061f51a9b9d9a04d12753f57de86e8"
+      },
+      "ui-prototype/css/pages/auth/login.css": {
+        "before": "487bf6e4044c3c62bdf1b266361d650ef71473be46fefa5447b534c12894b513",
+        "after": "487bf6e4044c3c62bdf1b266361d650ef71473be46fefa5447b534c12894b513"
+      },
+      "ui-prototype/css/pages/auth/register.css": {
+        "before": "e48cbf28242ca7999a0693aead6be922cbe2cd5837392eaf72c7220eef1451e3",
+        "after": "e48cbf28242ca7999a0693aead6be922cbe2cd5837392eaf72c7220eef1451e3"
+      },
+      "ui-prototype/css/pages/auth/reset-password.css": {
+        "before": "ea6ce290374ede35426b6c9597b59b05e3e0a12ee524b478ff536cfdeca41b1e",
+        "after": "ea6ce290374ede35426b6c9597b59b05e3e0a12ee524b478ff536cfdeca41b1e"
+      },
+      "ui-prototype/css/pages/auth/verify-email.css": {
+        "before": "659d0f1cd6f05d53b99a3cd5992d969a0be65fdf71eab7447a8f9d9f1ac84f6e",
+        "after": "659d0f1cd6f05d53b99a3cd5992d969a0be65fdf71eab7447a8f9d9f1ac84f6e"
+      },
+      "ui-prototype/css/pages/cart/index.css": {
+        "before": "0470eaf6f37390da5779df5a3c8f8701edeb31301ce0e53921a0258a66d3b080",
+        "after": "0470eaf6f37390da5779df5a3c8f8701edeb31301ce0e53921a0258a66d3b080"
+      },
+      "ui-prototype/css/pages/catalog/detail.css": {
+        "before": "70a9d626324663f4e056ec5dd62582a40e593fddc5dd3919f12e1d58a592b84a",
+        "after": "70a9d626324663f4e056ec5dd62582a40e593fddc5dd3919f12e1d58a592b84a"
+      },
+      "ui-prototype/css/pages/chat/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/chat/messages.css": {
+        "before": "f21ce34945f07fdca8842b63b49fb5b2e884a49be472eb15c8b6dee730ddc66a",
+        "after": "f21ce34945f07fdca8842b63b49fb5b2e884a49be472eb15c8b6dee730ddc66a"
+      },
+      "ui-prototype/css/pages/contract/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/contract/confirm.css": {
+        "before": "5e9ba1bbbca279caae7ab4affec7f33782cc4475771904aabbb7c7498244354a",
+        "after": "5e9ba1bbbca279caae7ab4affec7f33782cc4475771904aabbb7c7498244354a"
+      },
+      "ui-prototype/css/pages/contract/contract-detail.css": {
+        "before": "53691f2371a442aa640df324c0207f7b38e72b310d732bb116916cff46be4978",
+        "after": "53691f2371a442aa640df324c0207f7b38e72b310d732bb116916cff46be4978"
+      },
+      "ui-prototype/css/pages/contract/student-detail.css": {
+        "before": "38412e03cc0020cca7709e8722abbf97f92a474e2537df787c2b2d72ee9a6e53",
+        "after": "38412e03cc0020cca7709e8722abbf97f92a474e2537df787c2b2d72ee9a6e53"
+      },
+      "ui-prototype/css/pages/contract/tutor-detail.css": {
+        "before": "ef4335f887010328c79c7507e7c2f842101f862b4c972a18150372c2e0908e1e",
+        "after": "ef4335f887010328c79c7507e7c2f842101f862b4c972a18150372c2e0908e1e"
+      },
+      "ui-prototype/css/pages/invitation/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/invitation/create.css": {
+        "before": "15e91590c0956632add2162a66f2c4c48495329809908671b5aefa12e868dabd",
+        "after": "15e91590c0956632add2162a66f2c4c48495329809908671b5aefa12e868dabd"
+      },
+      "ui-prototype/css/pages/invitation/negotiation.css": {
+        "before": "a15b1adfb28d1c7b7e200e742135f960ad3f7669538ba7c3cb56abe6c15dd8f5",
+        "after": "a15b1adfb28d1c7b7e200e742135f960ad3f7669538ba7c3cb56abe6c15dd8f5"
+      },
+      "ui-prototype/css/pages/job/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/job/applicants.css": {
+        "before": "76c273098e294d64d04cceb32db2f499996f9e2be462a6c2a95ff0b13ccf0cb8",
+        "after": "76c273098e294d64d04cceb32db2f499996f9e2be462a6c2a95ff0b13ccf0cb8"
+      },
+      "ui-prototype/css/pages/job/create.css": {
+        "before": "69197684d91237b6a2612155bc1ea512be61cc8aa817f7fe5288023cbfa50d44",
+        "after": "69197684d91237b6a2612155bc1ea512be61cc8aa817f7fe5288023cbfa50d44"
+      },
+      "ui-prototype/css/pages/job/detail.css": {
+        "before": "22a8f3b5d3e2d89fd0060c643e08b6a603f2b3081a8e24baf5c4c6fa4b238151",
+        "after": "22a8f3b5d3e2d89fd0060c643e08b6a603f2b3081a8e24baf5c4c6fa4b238151"
+      },
+      "ui-prototype/css/pages/job/discover.css": {
+        "before": "21a94962f5db1cf625d747ddbd636bfd8ba7f06cf654a249e4178b3864e001a5",
+        "after": "21a94962f5db1cf625d747ddbd636bfd8ba7f06cf654a249e4178b3864e001a5"
+      },
+      "ui-prototype/css/pages/job/my-job.css": {
+        "before": "fba993e6efa55677d86b59f0870b0359a5b6fc362da925f6236502c97a13be1a",
+        "after": "fba993e6efa55677d86b59f0870b0359a5b6fc362da925f6236502c97a13be1a"
+      },
+      "ui-prototype/css/pages/lesson/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/order/history.css": {
+        "before": "4e0738f30c760e3af758774c649145f74bb7a1bd39521219856626dcf24d3816",
+        "after": "4e0738f30c760e3af758774c649145f74bb7a1bd39521219856626dcf24d3816"
+      },
+      "ui-prototype/css/pages/payment/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/payment/checkout.css": {
+        "before": "6b89a8557a1a6f647caadc4a23ee0a7c34ff141ca8b9a3abc82660709e0d8eb2",
+        "after": "6b89a8557a1a6f647caadc4a23ee0a7c34ff141ca8b9a3abc82660709e0d8eb2"
+      },
+      "ui-prototype/css/pages/payment/qr.css": {
+        "before": "4550ae49f0930ef7e1753776b2d921fa6f348f16c0a5d05bcb3e08dc09da3666",
+        "after": "4550ae49f0930ef7e1753776b2d921fa6f348f16c0a5d05bcb3e08dc09da3666"
+      },
+      "ui-prototype/css/pages/payment/result.css": {
+        "before": "85efe43b47c93b956e826221ebeb0eeb595ea55c6d40c00506eb058aea771602",
+        "after": "85efe43b47c93b956e826221ebeb0eeb595ea55c6d40c00506eb058aea771602"
+      },
+      "ui-prototype/css/pages/tutor/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/tutor/manage.css": {
+        "before": "74ab74cbfbce80b05899a0cfb87285c5c7df9f6a930088ad7681546050c538cb",
+        "after": "74ab74cbfbce80b05899a0cfb87285c5c7df9f6a930088ad7681546050c538cb"
+      },
+      "ui-prototype/css/pages/tutor/my-profile.css": {
+        "before": "c45511524500b610a767348f428c8201e17b95d1f68b56a239de51571ecb6dde",
+        "after": "c45511524500b610a767348f428c8201e17b95d1f68b56a239de51571ecb6dde"
+      },
+      "ui-prototype/css/pages/tutor/profile.css": {
+        "before": "a3ed3092fce66f67be8f480c2f314cce698069057c45a4444ce56dfa53f77e48",
+        "after": "a3ed3092fce66f67be8f480c2f314cce698069057c45a4444ce56dfa53f77e48"
+      },
+      "ui-prototype/css/pages/tutor/search.css": {
+        "before": "7967e2d31ceb1b41a34dfe9ddf03dbb41853df725d411251b67a854c09f5f0a7",
+        "after": "7967e2d31ceb1b41a34dfe9ddf03dbb41853df725d411251b67a854c09f5f0a7"
+      },
+      "ui-prototype/css/pages/wallet/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/css/pages/wallet/overview.css": {
+        "before": "f0d8ab2c1e5bfc5c2c3c1493ce541dda3f67a306e108b38039e041dc778c01d4",
+        "after": "f0d8ab2c1e5bfc5c2c3c1493ce541dda3f67a306e108b38039e041dc778c01d4"
+      },
+      "ui-prototype/js/core/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/core/admin-header.js": {
+        "before": "cfdc572b61d33bf2583370be77010d8b17ad3d99213dd9ec0e623efe4d1a57f9",
+        "after": "cfdc572b61d33bf2583370be77010d8b17ad3d99213dd9ec0e623efe4d1a57f9"
+      },
+      "ui-prototype/js/core/admin-sidebar.js": {
+        "before": "e68c75f219aec210941b2afe18f632b1e41abb13a3500edde7a7f21a264b636d",
+        "after": "e68c75f219aec210941b2afe18f632b1e41abb13a3500edde7a7f21a264b636d"
+      },
+      "ui-prototype/js/core/auth-shell.js": {
+        "before": "da92fc9b18f2c598df23574c0dd824e93140da1e815397ab2666735d1bd20eae",
+        "after": "da92fc9b18f2c598df23574c0dd824e93140da1e815397ab2666735d1bd20eae"
+      },
+      "ui-prototype/js/core/charts.js": {
+        "before": "b1bec9b58480ffec034e2de3730b01ae69e587d6738b5a5a7460490b807e786f",
+        "after": "b1bec9b58480ffec034e2de3730b01ae69e587d6738b5a5a7460490b807e786f"
+      },
+      "ui-prototype/js/core/file-upload.js": {
+        "before": "66b0f72e75fee547c44047a3d18aa7b9fd1205afa309b8ca7423aafe3a1df3ff",
+        "after": "66b0f72e75fee547c44047a3d18aa7b9fd1205afa309b8ca7423aafe3a1df3ff"
+      },
+      "ui-prototype/js/core/filter-chip.js": {
+        "before": "5ed88b873bf73b8b2fe6d6bd2116b2edb9538816b2c5c38b98a56da1e4d9df01",
+        "after": "5ed88b873bf73b8b2fe6d6bd2116b2edb9538816b2c5c38b98a56da1e4d9df01"
+      },
+      "ui-prototype/js/core/filter-panel.js": {
+        "before": "39e4b79ee057013f4cafc1b11fef57779cd065942938e30d2d2c31272e78ad15",
+        "after": "39e4b79ee057013f4cafc1b11fef57779cd065942938e30d2d2c31272e78ad15"
+      },
+      "ui-prototype/js/core/modal.js": {
+        "before": "f958d217f382fff048ca7fcc7bc29a25fb3cd3c092e800c9f16260eb8b73b5fc",
+        "after": "f958d217f382fff048ca7fcc7bc29a25fb3cd3c092e800c9f16260eb8b73b5fc"
+      },
+      "ui-prototype/js/core/pagination.js": {
+        "before": "0c1e22670e820fb0a8e81d75f97eee9b765f5e9642008637136a10c30b0ee08b",
+        "after": "0c1e22670e820fb0a8e81d75f97eee9b765f5e9642008637136a10c30b0ee08b"
+      },
+      "ui-prototype/js/core/password-input.js": {
+        "before": "dea2b6e8b3f14082d1b0af37d357258d17877522a16a87a8c9bb426e9ec8eb8e",
+        "after": "dea2b6e8b3f14082d1b0af37d357258d17877522a16a87a8c9bb426e9ec8eb8e"
+      },
+      "ui-prototype/js/core/radio.js": {
+        "before": "70069ce37377ab6d0406f69b63d63b72a5184ac0848ec6ce21f713c3fc1bf8cf",
+        "after": "70069ce37377ab6d0406f69b63d63b72a5184ac0848ec6ce21f713c3fc1bf8cf"
+      },
+      "ui-prototype/js/core/README.md": {
+        "before": "ac9d9c37c23c5812f6ae7adaa50b646cd4042d6a20f6374e743a81405cf9eda3",
+        "after": "ac9d9c37c23c5812f6ae7adaa50b646cd4042d6a20f6374e743a81405cf9eda3"
+      },
+      "ui-prototype/js/core/route.js": {
+        "before": "0b54dc33133e5b26f59591eeced80f16fa0f83c46d48535973b45997b6d9f6a5",
+        "after": "0b54dc33133e5b26f59591eeced80f16fa0f83c46d48535973b45997b6d9f6a5"
+      },
+      "ui-prototype/js/core/search-filters.js": {
+        "before": "7c6728029d30f418bf2404ace02a5a46ea44ff1899163e3d8c22ffa6ef322d60",
+        "after": "7c6728029d30f418bf2404ace02a5a46ea44ff1899163e3d8c22ffa6ef322d60"
+      },
+      "ui-prototype/js/core/search-input.js": {
+        "before": "ed7981e36f2453f6e28ea25476c25b99cfc8e0dbbe929f290c973f8afa7f9e66",
+        "after": "ed7981e36f2453f6e28ea25476c25b99cfc8e0dbbe929f290c973f8afa7f9e66"
+      },
+      "ui-prototype/js/core/select.js": {
+        "before": "e457655eedfcc57bea6a75faa6a9a5b29898ac324635a0d32b7ac0860a234926",
+        "after": "e457655eedfcc57bea6a75faa6a9a5b29898ac324635a0d32b7ac0860a234926"
+      },
+      "ui-prototype/js/core/switch.js": {
+        "before": "21997be5815a7171e2b1e55b61537ac53be34c0372cae4bd9c6af986142eb754",
+        "after": "21997be5815a7171e2b1e55b61537ac53be34c0372cae4bd9c6af986142eb754"
+      },
+      "ui-prototype/js/core/tabs.js": {
+        "before": "5bac2d57969485df7daaad1238834b88b1a45e23e3cc5b4627935757241232c6",
+        "after": "5bac2d57969485df7daaad1238834b88b1a45e23e3cc5b4627935757241232c6"
+      },
+      "ui-prototype/js/core/toast.js": {
+        "before": "9b3bc3bf50cd7dde67aceefed7dc4d54411771b27965f9e55d1c18e46c613b10",
+        "after": "9b3bc3bf50cd7dde67aceefed7dc4d54411771b27965f9e55d1c18e46c613b10"
+      },
+      "ui-prototype/js/core/user-header.js": {
+        "before": "06f35194a23348b26a34b74b51fb24acc34c6a7c6d91fe2aaa0c4dafe569cb2b",
+        "after": "06f35194a23348b26a34b74b51fb24acc34c6a7c6d91fe2aaa0c4dafe569cb2b"
+      },
+      "ui-prototype/js/data/fixtures.js": {
+        "before": "f489d275db2443f64bf1bc510215e5255aae1244260afaee7a408c5471cc5be8",
+        "after": "f489d275db2443f64bf1bc510215e5255aae1244260afaee7a408c5471cc5be8"
+      },
+      "ui-prototype/js/data/store.js": {
+        "before": "5a57e243243ac38429cbcd5e5fe5c633b5cd61b79f9f865d169d1b37d6feb253",
+        "after": "5a57e243243ac38429cbcd5e5fe5c633b5cd61b79f9f865d169d1b37d6feb253"
+      },
+      "ui-prototype/js/pages/home.js": {
+        "before": "d3bfda3c0b7867529a09ea34a8df9c364723be509a9ddb97425057918042cb1e",
+        "after": "d3bfda3c0b7867529a09ea34a8df9c364723be509a9ddb97425057918042cb1e"
+      },
+      "ui-prototype/js/pages/account/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/account/profile.js": {
+        "before": "d15c256fcc5f06f8187764df6f477a4fe9d7ebb9b418b489faa797ada2899823",
+        "after": "d15c256fcc5f06f8187764df6f477a4fe9d7ebb9b418b489faa797ada2899823"
+      },
+      "ui-prototype/js/pages/admin/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/admin/audit-logs.js": {
+        "before": "a2b96462c32523072ee8e5447f8dcbe8e7c40468834ba280ae72a090690fbdb2",
+        "after": "a2b96462c32523072ee8e5447f8dcbe8e7c40468834ba280ae72a090690fbdb2"
+      },
+      "ui-prototype/js/pages/admin/dashboard.js": {
+        "before": "4abb121b072a27a8b5feb8b07c2d43f0e1c81c2c558fc3584759ca4f0ffcceaf",
+        "after": "4abb121b072a27a8b5feb8b07c2d43f0e1c81c2c558fc3584759ca4f0ffcceaf"
+      },
+      "ui-prototype/js/pages/admin/job-review-data.js": {
+        "before": "eee56816e3f0bae0970bb453649c0ec36b4b6740246db82629d93703deaf0d47",
+        "after": "eee56816e3f0bae0970bb453649c0ec36b4b6740246db82629d93703deaf0d47"
+      },
+      "ui-prototype/js/pages/admin/job-review-detail.js": {
+        "before": "f169ccbedd49700091234a6427140702c2e05439af1da3871921864c003b66b2",
+        "after": "f169ccbedd49700091234a6427140702c2e05439af1da3871921864c003b66b2"
+      },
+      "ui-prototype/js/pages/admin/job-review-queue.js": {
+        "before": "f092513cecf0f84c7067ab9aa6793dd1b17112d7e69dccdd9a1bbf4592e54971",
+        "after": "f092513cecf0f84c7067ab9aa6793dd1b17112d7e69dccdd9a1bbf4592e54971"
+      },
+      "ui-prototype/js/pages/admin/manage.js": {
+        "before": "31da4c89f3fa6496c48f82fde13b85593c84017afc8615ef6c1938923f6adc8a",
+        "after": "31da4c89f3fa6496c48f82fde13b85593c84017afc8615ef6c1938923f6adc8a"
+      },
+      "ui-prototype/js/pages/admin/payout-data.js": {
+        "before": "b8f3736eb2c064e338d9ce194b278a16f037834db282c715f8f048dd10b10d1c",
+        "after": "b8f3736eb2c064e338d9ce194b278a16f037834db282c715f8f048dd10b10d1c"
+      },
+      "ui-prototype/js/pages/admin/payout-request-detail.js": {
+        "before": "2b193bff7b9a624794b9b29c7efd56b34b5f3dd8692d5def9c7b870482cc9ffe",
+        "after": "2b193bff7b9a624794b9b29c7efd56b34b5f3dd8692d5def9c7b870482cc9ffe"
+      },
+      "ui-prototype/js/pages/admin/payout-requests.js": {
+        "before": "0bfaba225d88e4a81b1c4dd4c82375116827770f16e14a24344e0931a94628ae",
+        "after": "0bfaba225d88e4a81b1c4dd4c82375116827770f16e14a24344e0931a94628ae"
+      },
+      "ui-prototype/js/pages/admin/report-data.js": {
+        "before": "e6bf8cb7b1b95d94450f174db4210a828aaab42fff3f4ef4c71f17b340ed5f70",
+        "after": "e6bf8cb7b1b95d94450f174db4210a828aaab42fff3f4ef4c71f17b340ed5f70"
+      },
+      "ui-prototype/js/pages/admin/report-detail.js": {
+        "before": "f557ad0fbe8e60362595875d52d1d6e8901a23c5be0b2ba8839d1f7a3f6907c7",
+        "after": "f557ad0fbe8e60362595875d52d1d6e8901a23c5be0b2ba8839d1f7a3f6907c7"
+      },
+      "ui-prototype/js/pages/admin/reports.js": {
+        "before": "9ee69442286aad19a100c3b15460daad6b4a2e30381d8d1afdbed78d870046e8",
+        "after": "9ee69442286aad19a100c3b15460daad6b4a2e30381d8d1afdbed78d870046e8"
+      },
+      "ui-prototype/js/pages/admin/tutor-review-data.js": {
+        "before": "c572be0d20f5539b79c4782faaa529296f26bb2d5bbe1f784205d6c0437bb52a",
+        "after": "c572be0d20f5539b79c4782faaa529296f26bb2d5bbe1f784205d6c0437bb52a"
+      },
+      "ui-prototype/js/pages/admin/tutor-review-detail.js": {
+        "before": "61109ec51380d0710a503f22562bc343cc2328971754b6d93007e260887d9e83",
+        "after": "61109ec51380d0710a503f22562bc343cc2328971754b6d93007e260887d9e83"
+      },
+      "ui-prototype/js/pages/admin/tutor-review-queue.js": {
+        "before": "a78b8257aeae3d3e8cdffe3273d93c04f0aed8a26e7c804944a5a33275bace95",
+        "after": "a78b8257aeae3d3e8cdffe3273d93c04f0aed8a26e7c804944a5a33275bace95"
+      },
+      "ui-prototype/js/pages/auth/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/auth/forgot-password.js": {
+        "before": "219a79f00eac2d6869fff9832743dec2714ba22b729f8cd320de35b9ea5de904",
+        "after": "219a79f00eac2d6869fff9832743dec2714ba22b729f8cd320de35b9ea5de904"
+      },
+      "ui-prototype/js/pages/auth/login.js": {
+        "before": "dd09b3cdc243ec09eede0f199876ba6fe4d3d171665b44d72acb8725e887d50a",
+        "after": "dd09b3cdc243ec09eede0f199876ba6fe4d3d171665b44d72acb8725e887d50a"
+      },
+      "ui-prototype/js/pages/auth/register.js": {
+        "before": "520b032b9c76afc511a75b1c546998cf7b209681e1e30b3b4d097684ed944e09",
+        "after": "520b032b9c76afc511a75b1c546998cf7b209681e1e30b3b4d097684ed944e09"
+      },
+      "ui-prototype/js/pages/auth/reset-password.js": {
+        "before": "e0f481b5fbfe9c9066a1d869f6531bd89c82df4691789d3bd52af159726fa273",
+        "after": "e0f481b5fbfe9c9066a1d869f6531bd89c82df4691789d3bd52af159726fa273"
+      },
+      "ui-prototype/js/pages/auth/verify-email.js": {
+        "before": "e6760fa0534f8ac1564dad03f69b764ac69b1ab4e211989fccc7fd761465e54c",
+        "after": "e6760fa0534f8ac1564dad03f69b764ac69b1ab4e211989fccc7fd761465e54c"
+      },
+      "ui-prototype/js/pages/cart/index.js": {
+        "before": "fa09298abb0f33dedd11bdfbe61f187400037772d126b6da948e333996c0df55",
+        "after": "fa09298abb0f33dedd11bdfbe61f187400037772d126b6da948e333996c0df55"
+      },
+      "ui-prototype/js/pages/catalog/detail.js": {
+        "before": "81fe50049a0ddec71715b08473a7ff632016df7e595bb210992605caf572574f",
+        "after": "81fe50049a0ddec71715b08473a7ff632016df7e595bb210992605caf572574f"
+      },
+      "ui-prototype/js/pages/chat/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/chat/messages.js": {
+        "before": "01b5b4032a34473c9978c462c577699bf5c2870e1dbeedc8da9cfa1f4a8377f2",
+        "after": "01b5b4032a34473c9978c462c577699bf5c2870e1dbeedc8da9cfa1f4a8377f2"
+      },
+      "ui-prototype/js/pages/contract/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/contract/confirm.js": {
+        "before": "79e0b75d47c33d94ce87b3030f157b6f6d28b248b6aa98b39a5c85221f3c777e",
+        "after": "79e0b75d47c33d94ce87b3030f157b6f6d28b248b6aa98b39a5c85221f3c777e"
+      },
+      "ui-prototype/js/pages/contract/student-detail.js": {
+        "before": "3628616aa1bc45644308ac062b0bb7a6cc9d74a43603312062a57f6d16084cc1",
+        "after": "3628616aa1bc45644308ac062b0bb7a6cc9d74a43603312062a57f6d16084cc1"
+      },
+      "ui-prototype/js/pages/contract/tutor-detail.js": {
+        "before": "7dd81d37363b1518174e0074ca3fe8a707ce8356f1bd2df56ad0154f566de474",
+        "after": "7dd81d37363b1518174e0074ca3fe8a707ce8356f1bd2df56ad0154f566de474"
+      },
+      "ui-prototype/js/pages/invitation/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/invitation/create.js": {
+        "before": "f8294c37b1b7178db4c9f2a1597d954f09decdf284841064b281959edd3aaa2e",
+        "after": "f8294c37b1b7178db4c9f2a1597d954f09decdf284841064b281959edd3aaa2e"
+      },
+      "ui-prototype/js/pages/invitation/negotiation.js": {
+        "before": "53166ddef6a08a4d8a28ef848e207afc69e66753a9adbee486f99326909b2013",
+        "after": "53166ddef6a08a4d8a28ef848e207afc69e66753a9adbee486f99326909b2013"
+      },
+      "ui-prototype/js/pages/job/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/job/applicants.js": {
+        "before": "421f5c8b788c05afdf6faa04924a679e3cdbaaef993d49755e4c718dd8e8b890",
+        "after": "421f5c8b788c05afdf6faa04924a679e3cdbaaef993d49755e4c718dd8e8b890"
+      },
+      "ui-prototype/js/pages/job/create.js": {
+        "before": "81dbb9215af90c69f4943955b7f68ebcaa21a5099f8bd5d82f185eb3d262176d",
+        "after": "81dbb9215af90c69f4943955b7f68ebcaa21a5099f8bd5d82f185eb3d262176d"
+      },
+      "ui-prototype/js/pages/job/detail.js": {
+        "before": "8fa97d67f142c5a74cf5c37895869458e7ba28363b0ef987ef8c52f2a8cb2f46",
+        "after": "8fa97d67f142c5a74cf5c37895869458e7ba28363b0ef987ef8c52f2a8cb2f46"
+      },
+      "ui-prototype/js/pages/job/discover.js": {
+        "before": "376b8c1711ffd5a9ec16da4b5c1d0ef509dfa9fdb4b505623dda1ef11f0e7383",
+        "after": "376b8c1711ffd5a9ec16da4b5c1d0ef509dfa9fdb4b505623dda1ef11f0e7383"
+      },
+      "ui-prototype/js/pages/job/my-job.js": {
+        "before": "0c49ea4298f9c8c07f1bd7c53489ca5124f0778aa94ba7bae909ade7929573b0",
+        "after": "0c49ea4298f9c8c07f1bd7c53489ca5124f0778aa94ba7bae909ade7929573b0"
+      },
+      "ui-prototype/js/pages/lesson/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/order/history.js": {
+        "before": "d520e3c33e8d76cd253e47e4aceb90b421f7e58d5dbe11c3e1e1a72d75412ee8",
+        "after": "d520e3c33e8d76cd253e47e4aceb90b421f7e58d5dbe11c3e1e1a72d75412ee8"
+      },
+      "ui-prototype/js/pages/payment/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/payment/checkout.js": {
+        "before": "0b57774de27d4c982b46821bdb1c8bb0de57fb83bc7d1ac1f58dee6c8a0551ce",
+        "after": "0b57774de27d4c982b46821bdb1c8bb0de57fb83bc7d1ac1f58dee6c8a0551ce"
+      },
+      "ui-prototype/js/pages/payment/qr.js": {
+        "before": "8b7c805ff113359a5ced3c5cfd907886f28e96586e538018336d1bdaf42b0f8f",
+        "after": "8b7c805ff113359a5ced3c5cfd907886f28e96586e538018336d1bdaf42b0f8f"
+      },
+      "ui-prototype/js/pages/payment/result.js": {
+        "before": "83415592f0ae2dd0de0feebe1eaafade430f16566caa39562f2a6956eccbabc0",
+        "after": "83415592f0ae2dd0de0feebe1eaafade430f16566caa39562f2a6956eccbabc0"
+      },
+      "ui-prototype/js/pages/tutor/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/tutor/manage.js": {
+        "before": "ba5dcb819993171fcf97d740041677c06997b98f104d3a12ba8349394c1108b2",
+        "after": "ba5dcb819993171fcf97d740041677c06997b98f104d3a12ba8349394c1108b2"
+      },
+      "ui-prototype/js/pages/tutor/my-profile.js": {
+        "before": "fa466fe7786a2f99655ae053ff22ff1e63751c5e2485097238ca1e4bc59c5233",
+        "after": "fa466fe7786a2f99655ae053ff22ff1e63751c5e2485097238ca1e4bc59c5233"
+      },
+      "ui-prototype/js/pages/tutor/profile.js": {
+        "before": "5cc7a0680b061362227896d1819adf0a4beb9511e893ee8565ead519dde3ae2e",
+        "after": "5cc7a0680b061362227896d1819adf0a4beb9511e893ee8565ead519dde3ae2e"
+      },
+      "ui-prototype/js/pages/tutor/search.js": {
+        "before": "1c9f08422e6681c23aea7cc507947e103a6fbcc0a8d91b465eb2662f2e3fa3b6",
+        "after": "1c9f08422e6681c23aea7cc507947e103a6fbcc0a8d91b465eb2662f2e3fa3b6"
+      },
+      "ui-prototype/js/pages/wallet/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/js/pages/wallet/overview.js": {
+        "before": "f0448128fd69fe81c8224dec4156803ba38f5b1385a020bb95485d6b19b44268",
+        "after": "f0448128fd69fe81c8224dec4156803ba38f5b1385a020bb95485d6b19b44268"
+      },
+      "ui-prototype/pages/home.html": {
+        "before": "8477cc191600fd7d332fba5a872d0eec6378723139bda963ec1ebb746c7a0208",
+        "after": "8477cc191600fd7d332fba5a872d0eec6378723139bda963ec1ebb746c7a0208"
+      },
+      "ui-prototype/pages/account/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/account/profile.html": {
+        "before": "ab9f726fa2f746897c0343d226cd00dda63e55240723361ce110ab35bf186af1",
+        "after": "ab9f726fa2f746897c0343d226cd00dda63e55240723361ce110ab35bf186af1"
+      },
+      "ui-prototype/pages/admin/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/admin/audit-logs.html": {
+        "before": "cf821612276c1b6d17b0bf7d0e133cf179e1df08edc8f3d162c914850e2f157c",
+        "after": "cf821612276c1b6d17b0bf7d0e133cf179e1df08edc8f3d162c914850e2f157c"
+      },
+      "ui-prototype/pages/admin/dashboard.html": {
+        "before": "f40e1d67781c0f818475ff9c56a2ec56cf2f7ddc331c727ac4043297fab146d1",
+        "after": "f40e1d67781c0f818475ff9c56a2ec56cf2f7ddc331c727ac4043297fab146d1"
+      },
+      "ui-prototype/pages/admin/job-review-detail.html": {
+        "before": "2207e767447e420eb8e5c2eb72dc0b7f0d8a2f9ba0fd69da20ee19b033abcf06",
+        "after": "2207e767447e420eb8e5c2eb72dc0b7f0d8a2f9ba0fd69da20ee19b033abcf06"
+      },
+      "ui-prototype/pages/admin/job-review-queue.html": {
+        "before": "ae21cf1a61a74618f88980a81ab293264b0ef64d1a607247e19065481107f27d",
+        "after": "ae21cf1a61a74618f88980a81ab293264b0ef64d1a607247e19065481107f27d"
+      },
+      "ui-prototype/pages/admin/manage.html": {
+        "before": "49a3804f706ca04f845094a7e6d845aa04171b31971a3c7b676570db009f5324",
+        "after": "49a3804f706ca04f845094a7e6d845aa04171b31971a3c7b676570db009f5324"
+      },
+      "ui-prototype/pages/admin/payout-request-detail.html": {
+        "before": "c1f0ea82f19fdfa5432a98e8f37124b8d801050d4ad22d154e9b78f67b778f14",
+        "after": "c1f0ea82f19fdfa5432a98e8f37124b8d801050d4ad22d154e9b78f67b778f14"
+      },
+      "ui-prototype/pages/admin/payout-requests.html": {
+        "before": "76fba403cfe23bba7b539aae0686ffb03f0f93c6239025ae5070b5ba485f9399",
+        "after": "76fba403cfe23bba7b539aae0686ffb03f0f93c6239025ae5070b5ba485f9399"
+      },
+      "ui-prototype/pages/admin/report-detail.html": {
+        "before": "98f4eaf41cce3e20bd7c20532502089dfeac7715c7d1e08e3ebb2999fc2c169f",
+        "after": "98f4eaf41cce3e20bd7c20532502089dfeac7715c7d1e08e3ebb2999fc2c169f"
+      },
+      "ui-prototype/pages/admin/reports.html": {
+        "before": "49bef116ed2bef72458109edfbaf79603861505df336771ba66bec0ed7fd5b41",
+        "after": "49bef116ed2bef72458109edfbaf79603861505df336771ba66bec0ed7fd5b41"
+      },
+      "ui-prototype/pages/admin/tutor-review-detail.html": {
+        "before": "4bdfd0c1157d7aa74e14f6e11594ca04ac123e04731dcb3204154faee7684717",
+        "after": "4bdfd0c1157d7aa74e14f6e11594ca04ac123e04731dcb3204154faee7684717"
+      },
+      "ui-prototype/pages/admin/tutor-review-queue.html": {
+        "before": "dbc562c3fc3a0bb77261855f07b64be77d850da7dd71aba190a1309dfba29af7",
+        "after": "dbc562c3fc3a0bb77261855f07b64be77d850da7dd71aba190a1309dfba29af7"
+      },
+      "ui-prototype/pages/auth/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/auth/forgot-password.html": {
+        "before": "403ccb402a3fa2fcd0c074e7284db70b668bd242bc884d029de750a6ff4115a2",
+        "after": "403ccb402a3fa2fcd0c074e7284db70b668bd242bc884d029de750a6ff4115a2"
+      },
+      "ui-prototype/pages/auth/login.html": {
+        "before": "e3386224b6bddb4c9ae3b9b8f78bf09d05e6e71de951539336f744c8cbd43a61",
+        "after": "e3386224b6bddb4c9ae3b9b8f78bf09d05e6e71de951539336f744c8cbd43a61"
+      },
+      "ui-prototype/pages/auth/register.html": {
+        "before": "080788bde351a814ffb52bf55c44f020ec07450ae49cfda736d51d33e0f2dab3",
+        "after": "080788bde351a814ffb52bf55c44f020ec07450ae49cfda736d51d33e0f2dab3"
+      },
+      "ui-prototype/pages/auth/reset-password.html": {
+        "before": "86832abba273a0b61cd5ca29be4b309e9f697a2de44eed7c443bf14cf2eca56a",
+        "after": "86832abba273a0b61cd5ca29be4b309e9f697a2de44eed7c443bf14cf2eca56a"
+      },
+      "ui-prototype/pages/auth/verify-email.html": {
+        "before": "844fc76ff497b1116d5920709332121ccc43f8fc13679e24dc89aeb8c3e070dc",
+        "after": "844fc76ff497b1116d5920709332121ccc43f8fc13679e24dc89aeb8c3e070dc"
+      },
+      "ui-prototype/pages/cart/index.html": {
+        "before": "1c6049df715871babd71ff9174ce9e05f9cdb2404e077390be27c565e3f9844e",
+        "after": "1c6049df715871babd71ff9174ce9e05f9cdb2404e077390be27c565e3f9844e"
+      },
+      "ui-prototype/pages/catalog/detail.html": {
+        "before": "80a463b84a46a9b6213f3268d1cfc0a36ac19512e0a50a5f91ccbc74a40c5178",
+        "after": "80a463b84a46a9b6213f3268d1cfc0a36ac19512e0a50a5f91ccbc74a40c5178"
+      },
+      "ui-prototype/pages/chat/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/chat/messages.html": {
+        "before": "d0161f593d5239113e69537a4e429f4db4745bd1cb54363de011b6c8ff89c0e8",
+        "after": "d0161f593d5239113e69537a4e429f4db4745bd1cb54363de011b6c8ff89c0e8"
+      },
+      "ui-prototype/pages/contract/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/contract/confirm.html": {
+        "before": "cdc8d3a187c8b8dd48fcec6f9cebfa8a5eb534f0f87e8aa85e868fa73cfcf546",
+        "after": "cdc8d3a187c8b8dd48fcec6f9cebfa8a5eb534f0f87e8aa85e868fa73cfcf546"
+      },
+      "ui-prototype/pages/contract/student-detail.html": {
+        "before": "6dd2f48a076a8c1279a699987fa0b34df14090de8c9530d018867c06b2053ff1",
+        "after": "6dd2f48a076a8c1279a699987fa0b34df14090de8c9530d018867c06b2053ff1"
+      },
+      "ui-prototype/pages/contract/tutor-detail.html": {
+        "before": "8f2c9b7074f227cb0cd3fa7995da8db363a6a4601fcd1aee62883e0215f20f84",
+        "after": "8f2c9b7074f227cb0cd3fa7995da8db363a6a4601fcd1aee62883e0215f20f84"
+      },
+      "ui-prototype/pages/invitation/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/invitation/create.html": {
+        "before": "8d5c44cc62f40d44f5e464e7cfe6e2292fa8cf03ca06d5ce9dabc31e16bc2c35",
+        "after": "8d5c44cc62f40d44f5e464e7cfe6e2292fa8cf03ca06d5ce9dabc31e16bc2c35"
+      },
+      "ui-prototype/pages/invitation/negotiation.html": {
+        "before": "044343aa35d600fe7c61c4e2f54d18154fe666fa405aecc3c6e096852683ed9a",
+        "after": "044343aa35d600fe7c61c4e2f54d18154fe666fa405aecc3c6e096852683ed9a"
+      },
+      "ui-prototype/pages/job/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/job/applicants.html": {
+        "before": "de5f8fc4b0cf088260c80ba7c0fd106ce1acced05428dce87e86dcd80e0e68f5",
+        "after": "de5f8fc4b0cf088260c80ba7c0fd106ce1acced05428dce87e86dcd80e0e68f5"
+      },
+      "ui-prototype/pages/job/create.html": {
+        "before": "5b6335c124b00c558129014f73ac889653ba74341bf32167da5b18438e8ab283",
+        "after": "5b6335c124b00c558129014f73ac889653ba74341bf32167da5b18438e8ab283"
+      },
+      "ui-prototype/pages/job/detail.html": {
+        "before": "65be65055b99b11835d7d64bd5df3c3de53e55e7619f7bb80ee36fa1f0df7243",
+        "after": "65be65055b99b11835d7d64bd5df3c3de53e55e7619f7bb80ee36fa1f0df7243"
+      },
+      "ui-prototype/pages/job/discover.html": {
+        "before": "6139152c9c34355bb9ac75c6e30994301df7c637aa5b754694638af1b1282d81",
+        "after": "6139152c9c34355bb9ac75c6e30994301df7c637aa5b754694638af1b1282d81"
+      },
+      "ui-prototype/pages/job/my-job.html": {
+        "before": "6b82a4e0c7a532f630e322c94a37c3930d2b5e28f61df667bdb5754fbd479dcb",
+        "after": "6b82a4e0c7a532f630e322c94a37c3930d2b5e28f61df667bdb5754fbd479dcb"
+      },
+      "ui-prototype/pages/lesson/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/notification/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/order/history.html": {
+        "before": "cd31de3697ad8fbd189d1c6b22f265b4c24bd3b271ccbdde03e8373cb3be98fd",
+        "after": "cd31de3697ad8fbd189d1c6b22f265b4c24bd3b271ccbdde03e8373cb3be98fd"
+      },
+      "ui-prototype/pages/payment/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/payment/checkout.html": {
+        "before": "014f0a893084a86208299418c55234e629bc60de81958b6de8f55608bb379510",
+        "after": "014f0a893084a86208299418c55234e629bc60de81958b6de8f55608bb379510"
+      },
+      "ui-prototype/pages/payment/qr.html": {
+        "before": "d1c41e6628f65caaf9e2f69bf65706aafba4fa3c6d3d6769563e405ca292d8a4",
+        "after": "d1c41e6628f65caaf9e2f69bf65706aafba4fa3c6d3d6769563e405ca292d8a4"
+      },
+      "ui-prototype/pages/payment/result.html": {
+        "before": "1f4b6f6b1ac4f2a362fd3c87d4a8ccc3ee2784a2e7cc7a847f87e452c3f960f2",
+        "after": "1f4b6f6b1ac4f2a362fd3c87d4a8ccc3ee2784a2e7cc7a847f87e452c3f960f2"
+      },
+      "ui-prototype/pages/tutor/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/tutor/manage.html": {
+        "before": "73a4b622cf25e05f5640ce5397bcdbf1799b98ef1697b041592dc5c15353a688",
+        "after": "73a4b622cf25e05f5640ce5397bcdbf1799b98ef1697b041592dc5c15353a688"
+      },
+      "ui-prototype/pages/tutor/my-profile.html": {
+        "before": "ddbf8ca8a9d56112d1955bff55b72a34d493393a351703dd4a91cac3c504f54f",
+        "after": "ddbf8ca8a9d56112d1955bff55b72a34d493393a351703dd4a91cac3c504f54f"
+      },
+      "ui-prototype/pages/tutor/profile.html": {
+        "before": "dd454397885e204b8a7046e3cc356ec005dd812cd1b9fea722fb4eae353905b8",
+        "after": "dd454397885e204b8a7046e3cc356ec005dd812cd1b9fea722fb4eae353905b8"
+      },
+      "ui-prototype/pages/tutor/search.html": {
+        "before": "b43166071d83140de9b8aaa9b5c9a6894aec7df062c993917ebe7e457b31ddeb",
+        "after": "b43166071d83140de9b8aaa9b5c9a6894aec7df062c993917ebe7e457b31ddeb"
+      },
+      "ui-prototype/pages/wallet/.gitkeep": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ui-prototype/pages/wallet/overview.html": {
+        "before": "354ab8a01913899c0cfecef86473595f039cb9d539a6d753d71d8cedb6cf07bc",
+        "after": "354ab8a01913899c0cfecef86473595f039cb9d539a6d753d71d8cedb6cf07bc"
+      }
+    }
+  },
+  "db-config": {
+    "files": 1,
+    "before": "5ea8aeea3a64387a6fbb1c35291e03ae31941822f06753abe592adebe7e1015f",
+    "after": "5ea8aeea3a64387a6fbb1c35291e03ae31941822f06753abe592adebe7e1015f",
+    "unchanged": true,
+    "individual": {
+      "src/main/resources/application-db-dev.yml": {
+        "before": "7d2cbe5e80d3281b4de1b4daaa4d98ccb5ea395110d2730dc0e25a59805cfd15",
+        "after": "7d2cbe5e80d3281b4de1b4daaa4d98ccb5ea395110d2730dc0e25a59805cfd15"
+      }
+    }
+  },
+  "db-docs": {
+    "files": 6,
+    "before": "e4a691fc3f96aee33db93a9834a01923bfaedbbdde5e01c1bff9ffac5a75f9fe",
+    "after": "e4a691fc3f96aee33db93a9834a01923bfaedbbdde5e01c1bff9ffac5a75f9fe",
+    "unchanged": true,
+    "individual": {
+      "docs/database/DECISIONS.md": {
+        "before": "f8e6229fbbc0e932f9d4b1b62c66ffeabb92c9a5fd74a6c0fd0628f1500c2e39",
+        "after": "f8e6229fbbc0e932f9d4b1b62c66ffeabb92c9a5fd74a6c0fd0628f1500c2e39"
+      },
+      "docs/database/FEATURE_MAPPING.md": {
+        "before": "b2d6fcf0f0004b4a837eb510160165eac35456377e3438d9680a04831211b558",
+        "after": "b2d6fcf0f0004b4a837eb510160165eac35456377e3438d9680a04831211b558"
+      },
+      "docs/database/README.md": {
+        "before": "ca048a810b144d1cbfd0ef75c5518fb322efc21629ca86613f06079bbf43ac5d",
+        "after": "ca048a810b144d1cbfd0ef75c5518fb322efc21629ca86613f06079bbf43ac5d"
+      },
+      "docs/database/SCHEMA.md": {
+        "before": "ff6f82125fe7fa8e19fc36926af97d82a982ec6b54e1542704de2d9491bbd601",
+        "after": "ff6f82125fe7fa8e19fc36926af97d82a982ec6b54e1542704de2d9491bbd601"
+      },
+      "docs/database/TEST_RESULTS.md": {
+        "before": "377231b7822ca992edb0623164036af92c541610f58d3808ab88db756b0b97cd",
+        "after": "377231b7822ca992edb0623164036af92c541610f58d3808ab88db756b0b97cd"
+      },
+      "docs/database/inspection/20261012-215718.md": {
+        "before": "544119fb6501c9d180dfb6c5ff8665910ec03b92d6fb8b40b2869a26c95d4423",
+        "after": "544119fb6501c9d180dfb6c5ff8665910ec03b92d6fb8b40b2869a26c95d4423"
+      }
+    }
+  },
+  "prototypeReadmeException": {
+    "originalBodySha256": "4ee71500646f23d886cabc773437f695faaf6747e08b98b76183d7604ecfa66d",
+    "retainedBodySha256": "4ee71500646f23d886cabc773437f695faaf6747e08b98b76183d7604ecfa66d",
+    "singleParagraphAdded": true
+  }
+}

@@ -1,4 +1,2 @@
-/**
- * Security integration boundaries and shared security concerns.
- */
+/** Public preview security with CSRF protection retained. */
 package com.educonnect.security;

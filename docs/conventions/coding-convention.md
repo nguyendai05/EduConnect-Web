@@ -17,3 +17,12 @@
 - Không đặt logic nghiệp vụ trong controller.
 - Dùng hằng số có tên hoặc enum cho các trạng thái, tránh dùng chuỗi ký tự cố định rải rác trong mã.
 - Đặt mã của từng tính năng trong package tương ứng; không tạo các package theo tầng kỹ thuật ở cấp gốc của ứng dụng.
+
+## Thymeleaf và nền chạy
+
+- Dùng Spring MVC + Thymeleaf thuần, executable JAR/embedded Tomcat; Java release 17 và Maven Wrapper.
+- Template pages theo feature; th:replace/fragment có tham số; CSS/JS riêng trong static, không script/style inline.
+- Link dùng @{...}; JS dùng EduRoute và app-base, không đường dẫn .html hay sửa href/src bằng observer.
+- Controller preview chỉ GET trả view; không mock model nghiệp vụ, không service/repository/entity ở đợt này.
+- Giữ class/id/data-* và thứ tự/vị trí CSS/JS; preview data nằm trong js/preview có điều kiện.
+- Không sửa ui-prototype, database/**, DBConnect hoặc migration V1–V3. File chung theo ownership.

@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Quản lý giảng dạy — Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}">
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}">
+<link rel="stylesheet" href="/css/components/navigation/tabs.css" th:href="@{/css/components/navigation/tabs.css}">
+<link rel="stylesheet" href="/css/components/form/search-input.css" th:href="@{/css/components/form/search-input.css}">
+<link rel="stylesheet" href="/css/components/form/select.css" th:href="@{/css/components/form/select.css}">
+<link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}">
+<link rel="stylesheet" href="/css/components/form/form-field.css" th:href="@{/css/components/form/form-field.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/data-display/table.css" th:href="@{/css/components/data-display/table.css}">
+<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
+<link rel="stylesheet" href="/css/components/data-display/stat-card.css" th:href="@{/css/components/data-display/stat-card.css}">
+<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
+<link rel="stylesheet" href="/css/components/data-display/chart.css" th:href="@{/css/components/data-display/chart.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+<link rel="stylesheet" href="/css/components/feedback/modal.css" th:href="@{/css/components/feedback/modal.css}">
+<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/pages/tutor/manage.css" th:href="@{/css/pages/tutor/manage.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+
+</th:block>
+<th:block th:fragment="scripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<script src="/js/core/charts.js" defer th:src="@{/js/core/charts.js}"></script>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+<script src="/js/core/tabs.js" defer th:src="@{/js/core/tabs.js}"></script>
+<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
+<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
+<script src="/js/core/search-input.js" defer th:src="@{/js/core/search-input.js}"></script>
+<script src="/js/pages/tutor/manage.js" defer th:src="@{/js/pages/tutor/manage.js}"></script>
+</th:block>
+</head>
+<body class="tutor-manage-page" th:fragment="content">
+    <a class="tutor-manage__skip-link" href="#tutor-manage-main">Đến nội dung chính</a>
+    <div class="user-shell" data-component="user-shell">
+        <th:block th:replace="~{fragments/header-user :: header(${active}, 'v12')}"></th:block>
+
+        <main class="user-shell__main" id="tutor-manage-main" tabindex="-1">
+            <div class="user-shell__content tutor-manage" data-tutor-manage>
+                <header class="page-header tutor-manage__header">
+                    <div class="page-header__title-block">
+                        <h1 class="page-header__title">Quản lý giảng dạy</h1>
+                        <p class="page-header__description" data-tm-subtitle>Dịch vụ, lớp nhóm, đơn đăng ký và doanh thu của gia sư.</p>
+                    </div>
+                    <span class="badge badge--info tutor-manage__demo-badge">Bản xem trước · Giao dịch mô phỏng</span>
+                </header>
+
+                <p class="alert alert--warning tutor-manage__notice" id="tm-persona-alert" role="alert" data-tm-persona-alert hidden></p>
+                <p class="alert alert--warning tutor-manage__notice" id="tm-gate-alert" data-tm-gate-alert hidden></p>
+                <p class="alert alert--error tutor-manage__notice" id="tm-tab-alert" role="alert" data-tm-tab-alert hidden></p>
+
+                <div class="tabs tabs--contained tutor-manage__tabs" data-tabs data-tm-tabs>
+                    <div class="tabs__list" role="tablist" aria-label="Các mục quản lý của gia sư">
+                        <button class="tabs__tab" type="button" role="tab" id="tm-tab-services" aria-selected="true" aria-controls="tm-panel-services" data-tm-tab="services">Dịch vụ</button>
+                        <button class="tabs__tab" type="button" role="tab" id="tm-tab-classes" aria-selected="false" aria-controls="tm-panel-classes" tabindex="-1" data-tm-tab="classes">Lớp nhóm</button>
+                        <button class="tabs__tab" type="button" role="tab" id="tm-tab-orders" aria-selected="false" aria-controls="tm-panel-orders" tabindex="-1" data-tm-tab="orders">Đơn đăng ký</button>
+                        <button class="tabs__tab" type="button" role="tab" id="tm-tab-revenue" aria-selected="false" aria-controls="tm-panel-revenue" tabindex="-1" data-tm-tab="revenue">Doanh thu</button>
+                    </div>
+
+                    <div class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-services" aria-labelledby="tm-tab-services" tabindex="0">
+                        <div class="tutor-manage__toolbar">
+                            <div class="search-input search-input--compact" data-search-input>
+                                <label class="sr-only" for="tm-search-services">Tìm dịch vụ</label>
+                                <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                                <input id="tm-search-services" type="search" placeholder="Tìm theo mã, tiêu đề, môn…" autocomplete="off" maxlength="200" data-tm-search data-tm-type="SERVICE">
+                                <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                            </div>
+                            <div class="select-field">
+                                <label class="sr-only" for="tm-status-services">Trạng thái dịch vụ</label>
+                                <select class="select-control select-control--native" id="tm-status-services" data-tm-status data-tm-type="SERVICE">
+                                    <option value="all">Trạng thái: Tất cả</option>
+                                    <option value="draft">Bản nháp</option>
+                                    <option value="in_review">Chờ duyệt</option>
+                                    <option value="published">Đang công khai</option>
+                                    <option value="rejected">Bị từ chối</option>
+                                    <option value="unpublished">Ngừng công khai</option>
+                                    <option value="closed">Đã đóng</option>
+                                </select>
+                            </div>
+                            <button class="button button--primary" type="button" data-tm-create="SERVICE">Thêm dịch vụ</button>
+                        </div>
+                        <p class="tutor-manage__count" data-tm-services-count aria-live="polite"></p>
+                        <div class="table-frame" data-tm-services-table hidden>
+                            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách dịch vụ của gia sư, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                                <table class="table table--review tutor-manage__table">
+                                    <caption class="table__caption table__caption--sr-only">Dịch vụ (SERVICE) của gia sư đang đăng nhập, kèm trạng thái duyệt và thao tác chuyển trạng thái hợp lệ.</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Mã &amp; tiêu đề</th>
+                                            <th scope="col">Môn / Cấp</th>
+                                            <th scope="col">Buổi × thời lượng</th>
+                                            <th scope="col">Giá</th>
+                                            <th scope="col">Trạng thái</th>
+                                            <th scope="col">Điều khoản</th>
+                                            <th scope="col" class="table__action-heading">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-tm-services-list></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="empty-state" data-tm-services-empty hidden>
+                            <span class="empty-state__icon" aria-hidden="true"></span>
+                            <h2 class="empty-state__title">Chưa có dịch vụ phù hợp</h2>
+                            <p class="empty-state__description">Tạo dịch vụ mới hoặc đổi từ khóa/trạng thái lọc. Bản nháp cần gửi duyệt trước khi công khai.</p>
+                            <button class="button button--outline" type="button" data-tm-create="SERVICE">Thêm dịch vụ</button>
+                        </div>
+                    </div>
+
+                    <div class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-classes" aria-labelledby="tm-tab-classes" tabindex="0" hidden>
+                        <div class="tutor-manage__toolbar">
+                            <div class="search-input search-input--compact" data-search-input>
+                                <label class="sr-only" for="tm-search-classes">Tìm lớp nhóm</label>
+                                <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                                <input id="tm-search-classes" type="search" placeholder="Tìm theo mã, tiêu đề, môn…" autocomplete="off" maxlength="200" data-tm-search data-tm-type="GROUP_CLASS">
+                                <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                            </div>
+                            <div class="select-field">
+                                <label class="sr-only" for="tm-status-classes">Trạng thái lớp nhóm</label>
+                                <select class="select-control select-control--native" id="tm-status-classes" data-tm-status data-tm-type="GROUP_CLASS">
+                                    <option value="all">Trạng thái: Tất cả</option>
+                                    <option value="draft">Bản nháp</option>
+                                    <option value="in_review">Chờ duyệt</option>
+                                    <option value="published">Đang công khai</option>
+                                    <option value="rejected">Bị từ chối</option>
+                                    <option value="unpublished">Ngừng công khai</option>
+                                    <option value="closed">Đã đóng</option>
+                                </select>
+                            </div>
+                            <button class="button button--primary" type="button" data-tm-create="GROUP_CLASS">Thêm lớp nhóm</button>
+                        </div>
+                        <p class="tutor-manage__count" data-tm-classes-count aria-live="polite"></p>
+                        <div class="table-frame" data-tm-classes-table hidden>
+                            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách lớp nhóm của gia sư, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                                <table class="table table--review tutor-manage__table">
+                                    <caption class="table__caption table__caption--sr-only">Lớp nhóm (GROUP_CLASS) của gia sư đang đăng nhập, kèm sức chứa, trạng thái và thao tác hợp lệ.</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Mã &amp; tiêu đề</th>
+                                            <th scope="col">Môn / Cấp</th>
+                                            <th scope="col">Lịch</th>
+                                            <th scope="col">Sức chứa</th>
+                                            <th scope="col">Giá</th>
+                                            <th scope="col">Trạng thái</th>
+                                            <th scope="col" class="table__action-heading">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-tm-classes-list></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="empty-state" data-tm-classes-empty hidden>
+                            <span class="empty-state__icon" aria-hidden="true"></span>
+                            <h2 class="empty-state__title">Chưa có lớp nhóm phù hợp</h2>
+                            <p class="empty-state__description">Tạo lớp nhóm mới (cần sức chứa tối thiểu 2) hoặc đổi bộ lọc.</p>
+                            <button class="button button--outline" type="button" data-tm-create="GROUP_CLASS">Thêm lớp nhóm</button>
+                        </div>
+                    </div>
+
+                    <div class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-orders" aria-labelledby="tm-tab-orders" tabindex="0" hidden>
+                        <p class="tutor-manage__count" data-tm-orders-count aria-live="polite"></p>
+                        <div class="table-frame" data-tm-orders-table hidden>
+                            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách đơn đăng ký của gia sư, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                                <table class="table table--review tutor-manage__table">
+                                    <caption class="table__caption table__caption--sr-only">Đơn đăng ký (OD-…) có gia sư này, kèm trạng thái đơn, trạng thái thanh toán và liên kết hợp đồng nếu có.</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Đơn &amp; kênh</th>
+                                            <th scope="col">Học viên</th>
+                                            <th scope="col">Nội dung (snapshot)</th>
+                                            <th scope="col">Tổng tiền</th>
+                                            <th scope="col">Trạng thái đơn</th>
+                                            <th scope="col">Thanh toán</th>
+                                            <th scope="col">Hợp đồng</th>
+                                            <th scope="col" class="table__action-heading">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-tm-orders-list></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="empty-state" data-tm-orders-empty hidden>
+                            <span class="empty-state__icon" aria-hidden="true"></span>
+                            <h2 class="empty-state__title">Chưa có đơn đăng ký nào</h2>
+                            <p class="empty-state__description">Khi học viên đặt dịch vụ hoặc ghi danh lớp nhóm của bạn, đơn sẽ xuất hiện tại đây.</p>
+                        </div>
+                    </div>
+
+                    <div class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-revenue" aria-labelledby="tm-tab-revenue" tabindex="0" hidden>
+                        <section class="alert alert--contextual tutor-manage__revenue-note" aria-labelledby="tm-revenue-note-title">
+                            <span class="alert__icon" aria-hidden="true"></span>
+                            <div class="alert__content">
+                                <h2 class="alert__title" id="tm-revenue-note-title">Doanh thu chỉ tính các khoản đã giải ngân</h2>
+                                <p class="alert__message">Số liệu lấy từ các sự kiện release mẫu trong store. Tiền đang ký quỹ (held), dự kiến giải ngân (planned), hoàn tiền (refunded) và rút tiền về ngân hàng (withdrawal) là các khái niệm riêng, KHÔNG cộng vào doanh thu. Mức phí nền tảng hiển thị đọc từ <code>DEMO_FEE_RATE</code> của store — giả định demo chưa được nhóm chốt.</p>
+                            </div>
+                        </section>
+
+                        <div class="tutor-manage__revenue-grid" aria-label="Doanh thu đã giải ngân">
+                            <article class="stat-card stat-card--compact tutor-manage__metric">
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Tổng giải ngân (gross)</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-gross>0</strong><span class="stat-card__unit">VND</span></p>
+                                <p class="stat-card__description">grossReleased = tutorNetReleased + platformFeeReleased.</p>
+                            </article>
+                            <article class="stat-card stat-card--compact tutor-manage__metric">
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Thực nhận gia sư</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-net>0</strong><span class="stat-card__unit">VND</span></p>
+                                <p class="stat-card__description">Phần còn lại sau phí nền tảng của các kỳ giải ngân.</p>
+                            </article>
+                            <article class="stat-card stat-card--compact tutor-manage__metric">
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Phí nền tảng</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-fee>0</strong><span class="stat-card__unit">VND</span></p>
+                                <p class="stat-card__description">Theo feeRateSnapshot từng sự kiện, mức demo hiện tại <span data-tm-fee-rate></span>.</p>
+                            </article>
+                        </div>
+
+                        <div class="tutor-manage__revenue-grid tutor-manage__revenue-grid--other" aria-label="Các khoản không phải doanh thu">
+                            <article class="stat-card stat-card--compact tutor-manage__metric">
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Đang ký quỹ (held)</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-held>0</strong><span class="stat-card__unit">VND</span></p>
+                                <p class="stat-card__description">Escrow đang giữ — chưa phải doanh thu.</p>
+                            </article>
+                            <article class="stat-card stat-card--compact tutor-manage__metric">
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Dự kiến giải ngân (planned)</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-planned>0</strong><span class="stat-card__unit">VND</span></p>
+                                <p class="stat-card__description">Kỳ sau, chưa phát sinh — không tính vào doanh thu.</p>
+                            </article>
+                            <article class="stat-card stat-card--compact tutor-manage__metric">
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Hoàn tiền (refunded)</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-refunded>0</strong><span class="stat-card__unit">VND</span></p>
+                                <p class="stat-card__description">Trừ vào dòng tiền, không trừ lùi doanh thu đã giải ngân hợp lệ.</p>
+                            </article>
+                            <article class="stat-card stat-card--compact tutor-manage__metric">
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Số dư ví khả dụng</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-wallet>0</strong><span class="stat-card__unit">VND</span></p>
+                                <p class="stat-card__description">Rút tiền là chuyển số dư ra ngân hàng, không tạo doanh thu lần nữa. Xem <a href="/wallet/overview" th:href="@{/wallet/overview}">Ví Edu Connect</a>.</p>
+                            </article>
+                        </div>
+
+                        <div class="tutor-manage__charts">
+                            <article class="card tutor-manage__chart-card">
+                                <div class="card__header">
+                                    <div>
+                                        <h3 class="card__title">Giải ngân theo ngày</h3>
+                                        <p class="card__description">Chuỗi ngày tính từ sự kiện release mẫu; chọn chỉ số và khoảng ngày, ngày bắt đầu phải trước hoặc bằng ngày kết thúc.</p>
+                                    </div>
+                                </div>
+                                <div class="card__body">
+                                    <form class="tutor-manage__chart-controls" data-tm-chart-form>
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="tm-chart-from">Từ ngày</label>
+                                            <input class="select-control select-control--native" id="tm-chart-from" type="date" data-tm-chart-from>
+                                        </div>
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="tm-chart-to">Đến ngày</label>
+                                            <input class="select-control select-control--native" id="tm-chart-to" type="date" data-tm-chart-to>
+                                        </div>
+                                        <div class="form-field">
+                                            <label class="form-field__label" for="tm-chart-metric">Chỉ số</label>
+                                            <select class="select-control select-control--native" id="tm-chart-metric" data-tm-chart-metric>
+                                                <option value="tutorNetReleased" selected>Thực nhận gia sư (VND)</option>
+                                                <option value="platformFeeReleased">Phí nền tảng (VND)</option>
+                                                <option value="count">Số buổi giải ngân</option>
+                                            </select>
+                                        </div>
+                                        <button class="button button--secondary" type="submit">Xem biểu đồ</button>
+                                    </form>
+                                    <div data-tm-bar></div>
+                                </div>
+                            </article>
+                            <article class="card tutor-manage__chart-card">
+                                <div class="card__header">
+                                    <div>
+                                        <h3 class="card__title">Phân bố trạng thái đơn</h3>
+                                        <p class="card__description">Tính từ các đơn đăng ký có gia sư này trong store, theo bảng trạng thái đơn dùng chung.</p>
+                                    </div>
+                                </div>
+                                <div class="card__body">
+                                    <div data-tm-pie></div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để quản lý dịch vụ, lớp nhóm, đơn và doanh thu.</p></noscript>
+            </div>
+        </main>
+
+        <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v2')}"></th:block>
+    </div>
+
+    <template id="tm-service-row-template">
+        <tr data-tm-offering-row>
+            <th scope="row">
+                <div class="table__primary" data-tm-row-title></div>
+                <span class="table__reference" data-tm-row-id></span>
+                <small data-tm-row-mode></small>
+            </th>
+            <td><span data-tm-row-subject></span><small data-tm-row-grade></small></td>
+            <td><span data-tm-row-sessions></span><small data-tm-row-duration></small></td>
+            <td class="table__amount"><strong data-tm-row-price></strong><small data-tm-row-unit></small></td>
+            <td><span class="badge" data-tm-row-status></span><small data-tm-row-availability></small></td>
+            <td><span data-tm-row-terms></span><small data-tm-row-published></small></td>
+            <td class="table__action"><div class="tutor-manage__row-actions" data-tm-row-actions></div></td>
+        </tr>
+    </template>
+
+    <template id="tm-class-row-template">
+        <tr data-tm-offering-row>
+            <th scope="row">
+                <div class="table__primary" data-tm-row-title></div>
+                <span class="table__reference" data-tm-row-id></span>
+                <small data-tm-row-mode></small>
+            </th>
+            <td><span data-tm-row-subject></span><small data-tm-row-grade></small></td>
+            <td><span data-tm-row-schedule></span><small data-tm-row-start></small></td>
+            <td><span data-tm-row-capacity></span><small data-tm-row-seats></small></td>
+            <td class="table__amount"><strong data-tm-row-price></strong><small data-tm-row-unit></small></td>
+            <td><span class="badge" data-tm-row-status></span><small data-tm-row-availability></small></td>
+            <td class="table__action"><div class="tutor-manage__row-actions" data-tm-row-actions></div></td>
+        </tr>
+    </template>
+
+    <template id="tm-order-row-template">
+        <tr data-tm-order-row>
+            <th scope="row">
+                <div class="table__primary" data-tm-order-id></div>
+                <span class="table__reference" data-tm-order-channel></span>
+                <small data-tm-order-date></small>
+            </th>
+            <td><span data-tm-order-learner></span><small data-tm-order-learner-id></small></td>
+            <td><span data-tm-order-item></span><small data-tm-order-snapshot></small></td>
+            <td class="table__amount"><strong data-tm-order-total></strong><small data-tm-order-terms></small></td>
+            <td><span class="badge" data-tm-order-status></span><small data-tm-order-cancellation></small></td>
+            <td><span class="badge" data-tm-order-payment></span><small data-tm-order-refund></small></td>
+            <td data-tm-order-contract></td>
+            <td class="table__action"><div class="tutor-manage__row-actions" data-tm-order-actions></div></td>
+        </tr>
+    </template>
+
+    <dialog class="modal" id="tm-offering-modal" aria-labelledby="tm-offering-title" aria-describedby="tm-offering-desc">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="tm-offering-title">Thêm dịch vụ / lớp nhóm</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body">
+                <p id="tm-offering-desc">Đơn và hợp đồng đã tạo giữ snapshot giá/điều khoản cũ — thay đổi ở đây chỉ áp dụng cho đơn mới. Bản lưu mới ở trạng thái nháp; cần gửi duyệt và hồ sơ đã được duyệt mới công khai được (UI gate demo).</p>
+                <form class="tutor-manage__form" data-tm-offering-form novalidate>
+                    <div class="form-field">
+                        <label class="form-field__label" for="tm-off-title">Tiêu đề <span class="form-field__required" aria-hidden="true">*</span></label>
+                        <div class="input-control"><input class="input-control__input" id="tm-off-title" type="text" maxlength="120" required data-tm-field="title" aria-describedby="tm-err-title"></div>
+                        <p class="form-field__message--error" id="tm-err-title" hidden></p>
+                    </div>
+                    <div class="tutor-manage__form-grid">
+                        <div class="select-field">
+                            <label class="select-field__label" for="tm-off-subject">Môn học</label>
+                            <select class="select-control select-control--native" id="tm-off-subject" data-tm-field="subject">
+                                <option value="toan">Toán học</option>
+                                <option value="vat-ly">Vật lý</option>
+                                <option value="hoa-hoc">Hóa học</option>
+                                <option value="tieng-anh">Tiếng Anh</option>
+                                <option value="ngu-van">Ngữ văn</option>
+                            </select>
+                        </div>
+                        <div class="select-field">
+                            <label class="select-field__label" for="tm-off-grade">Cấp học</label>
+                            <select class="select-control select-control--native" id="tm-off-grade" data-tm-field="grade">
+                                <option value="tieu-hoc">Tiểu học</option>
+                                <option value="thcs">THCS (Lớp 6 – 9)</option>
+                                <option value="10" selected>THPT (Lớp 10 – 12)</option>
+                                <option value="luyen-thi">Luyện thi</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label class="form-field__label" for="tm-off-sessions">Số buổi <span class="form-field__required" aria-hidden="true">*</span></label>
+                            <div class="input-control"><input class="input-control__input" id="tm-off-sessions" type="number" min="1" max="200" step="1" required data-tm-field="sessions" aria-describedby="tm-help-sessions tm-err-sessions"></div>
+                            <p class="form-field__message" id="tm-help-sessions">Từ 1 đến 200 buổi.</p>
+                            <p class="form-field__message--error" id="tm-err-sessions" hidden></p>
+                        </div>
+                        <div class="select-field">
+                            <label class="select-field__label" for="tm-off-duration">Thời lượng mỗi buổi</label>
+                            <select class="select-control select-control--native" id="tm-off-duration" data-tm-field="durationMinutes">
+                                <option value="60">60 phút</option>
+                                <option value="90" selected>90 phút</option>
+                                <option value="120">120 phút</option>
+                                <option value="150">150 phút</option>
+                                <option value="180">180 phút</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label class="form-field__label" for="tm-off-price">Giá mỗi buổi (VND) <span class="form-field__required" aria-hidden="true">*</span></label>
+                            <div class="input-control"><input class="input-control__input" id="tm-off-price" type="number" min="50000" max="5000000" step="10000" required data-tm-field="price" aria-describedby="tm-help-price tm-err-price"><span class="input-control__suffix">₫ / buổi</span></div>
+                            <p class="form-field__message" id="tm-help-price">Từ 50.000đ đến 5.000.000đ.</p>
+                            <p class="form-field__message--error" id="tm-err-price" hidden></p>
+                        </div>
+                        <div class="select-field">
+                            <label class="select-field__label" for="tm-off-mode">Hình thức</label>
+                            <select class="select-control select-control--native" id="tm-off-mode" data-tm-field="mode">
+                                <option value="online">Trực tuyến</option>
+                                <option value="home">Tại nhà học viên</option>
+                                <option value="both" selected>Cả hai</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label class="form-field__label" for="tm-off-district">Khu vực <span class="form-field__required" aria-hidden="true">*</span></label>
+                            <div class="input-control"><input class="input-control__input" id="tm-off-district" type="text" maxlength="120" required data-tm-field="district" aria-describedby="tm-err-district"></div>
+                            <p class="form-field__message--error" id="tm-err-district" hidden></p>
+                        </div>
+                        <div class="form-field">
+                            <label class="form-field__label" for="tm-off-schedule">Lịch học</label>
+                            <div class="input-control"><input class="input-control__input" id="tm-off-schedule" type="text" maxlength="160" data-tm-field="scheduleText" placeholder="Ví dụ: Thứ 3 &amp; Thứ 5, 18:00 – 19:30"></div>
+                        </div>
+                        <div class="form-field" data-tm-capacity-field>
+                            <label class="form-field__label" for="tm-off-capacity">Sức chứa lớp (học viên) <span class="form-field__required" aria-hidden="true">*</span></label>
+                            <div class="input-control"><input class="input-control__input" id="tm-off-capacity" type="number" min="2" max="30" step="1" data-tm-field="capacity" aria-describedby="tm-help-capacity tm-err-capacity"></div>
+                            <p class="form-field__message" id="tm-help-capacity">Từ 2 đến 30; không thấp hơn số học viên đã ghi danh.</p>
+                            <p class="form-field__message--error" id="tm-err-capacity" hidden></p>
+                        </div>
+                    </div>
+                    <div class="textarea-field">
+                        <div class="textarea-field__label-row">
+                            <label class="textarea-field__label" for="tm-off-description">Mô tả</label>
+                        </div>
+                        <textarea class="textarea-control" id="tm-off-description" maxlength="600" data-tm-field="description"></textarea>
+                    </div>
+                    <p class="form-field__message--error" id="tm-offering-error" data-tm-offering-error hidden></p>
+                </form>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Hủy bỏ</button>
+                <button class="modal__button modal__button--primary" type="button" data-modal-confirm>Lưu</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <dialog class="modal" id="tm-transition-modal" aria-labelledby="tm-transition-title" aria-describedby="tm-transition-desc">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="tm-transition-title">Chuyển trạng thái</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body">
+                <p id="tm-transition-desc" data-tm-transition-desc></p>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
+                <button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <dialog class="modal" id="tm-offering-detail-modal" aria-labelledby="tm-offering-detail-title" aria-describedby="tm-offering-detail-desc">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--info" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="tm-offering-detail-title">Chi tiết dịch vụ / lớp</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body">
+                <p id="tm-offering-detail-desc">Thông tin đầy đủ của dịch vụ/lớp nhóm thuộc quyền quản lý của gia sư.</p>
+                <div class="tutor-manage__detail" data-tm-offering-detail></div>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Đóng</button>
+                <button class="modal__button modal__button--primary" type="button" data-modal-confirm hidden>Xác nhận</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <dialog class="modal" id="tm-order-detail-modal" aria-labelledby="tm-order-detail-title" aria-describedby="tm-order-detail-desc">
+        <div class="modal__surface">
+            <header class="modal__header">
+                <span class="modal__icon modal__icon--info" aria-hidden="true"></span>
+                <div class="modal__heading"><h2 id="tm-order-detail-title">Chi tiết đơn đăng ký</h2></div>
+                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+            </header>
+            <div class="modal__body">
+                <p id="tm-order-detail-desc">Snapshot giá/điều khoản của đơn không đổi khi gia sư sửa dịch vụ/lớp. Trạng thái đơn và trạng thái thanh toán là hai khái niệm riêng.</p>
+                <div class="tutor-manage__detail" data-tm-order-detail></div>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Đóng</button>
+                <button class="modal__button modal__button--primary" type="button" data-modal-confirm hidden>Xác nhận</button>
+            </footer>
+        </div>
+    </dialog>
+
+    <th:block th:replace="${scripts}"></th:block>
+</body>
+</html>
