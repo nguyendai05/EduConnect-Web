@@ -10,19 +10,19 @@ SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 SET time_zone = '+00:00';
 SET FOREIGN_KEY_CHECKS = 0;
 
-    INSERT INTO roles (code, label) VALUES
+    INSERT IGNORE INTO roles (code, label) VALUES
         ('ADMIN', 'Quản trị'),
         ('TUTOR', 'Gia sư'),
         ('LEARNER', 'Người học/phụ huynh');
 
-    INSERT INTO subjects (id, code, name) VALUES
+    INSERT IGNORE INTO subjects (id, code, name) VALUES
         (1, 'MATH', 'Toán'),
         (2, 'LITERATURE', 'Ngữ văn'),
         (3, 'ENGLISH', 'Tiếng Anh'),
         (4, 'PHYSICS', 'Vật lý'),
         (5, 'CHEMISTRY', 'Hóa học');
 
-    INSERT INTO grade_levels (id, code, name) VALUES
+    INSERT IGNORE INTO grade_levels (id, code, name) VALUES
         (1, 'GRADE_8', 'Lớp 8'),
         (2, 'GRADE_9', 'Lớp 9'),
         (3, 'GRADE_10', 'Lớp 10'),
@@ -31,18 +31,18 @@ SET FOREIGN_KEY_CHECKS = 0;
         (6, 'EXAM_PREP', 'Luyện thi'),
         (7, 'ADULT', 'Người đi làm');
 
-    INSERT INTO areas (id, code, name) VALUES
+    INSERT IGNORE INTO areas (id, code, name) VALUES
         (1, 'HCM_THU_DUC', 'Thủ Đức, TP. Hồ Chí Minh'),
         (2, 'HANOI_CAU_GIAY', 'Cầu Giấy, Hà Nội'),
         (3, 'DANANG_HAI_CHAU', 'Hải Châu, Đà Nẵng'),
         (4, 'NATIONWIDE', 'Toàn quốc');
 
-    INSERT INTO delivery_modes (id, code, name) VALUES
+    INSERT IGNORE INTO delivery_modes (id, code, name) VALUES
         (1, 'ONLINE', 'Trực tuyến'),
         (2, 'IN_PERSON', 'Trực tiếp'),
         (3, 'HYBRID', 'Kết hợp');
 
-    INSERT INTO order_status_transitions (from_status, to_status, actor_role_code) VALUES
+    INSERT IGNORE INTO order_status_transitions (from_status, to_status, actor_role_code) VALUES
         ('NEW', 'AWAITING_PAYMENT', 'LEARNER'),
         ('AWAITING_PAYMENT', 'PAID', 'ADMIN'),
         ('AWAITING_PAYMENT', 'CANCELLED', 'LEARNER'),
@@ -57,7 +57,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         ('IN_PROGRESS', 'CANCELLATION_PENDING', 'ADMIN'),
         ('CANCELLATION_PENDING', 'CANCELLED', 'ADMIN');
 
-    INSERT INTO user_accounts (id, public_code, email, password_hash, status, email_verified_at, display_name, phone, bio, authentication_version, version, created_at, updated_at) VALUES
+    INSERT IGNORE INTO user_accounts (id, public_code, email, password_hash, status, email_verified_at, display_name, phone, bio, authentication_version, version, created_at, updated_at) VALUES
         (100, 'DEMO-ADMIN-01', 'admin@example.test', '{bcrypt}$2a$10$ePV.PIkQem41lZn/IzGsceBz8ZF1hV4S.I3rTrmeRI4oNwIeI4ny2', 'ACTIVE', '2026-03-01 10:00:00.000000', 'Quản trị Educonnect', NULL, NULL, 0, 0, '2026-03-01 10:00:00.000000', '2026-03-01 10:00:00.000000'),
         (201, 'DEMO-TUTOR-01', 'tutor01@example.test', '{bcrypt}$2a$10$ePV.PIkQem41lZn/IzGsceBz8ZF1hV4S.I3rTrmeRI4oNwIeI4ny2', 'ACTIVE', '2026-03-01 10:00:00.000000', 'Nguyễn Minh Anh', NULL, 'Hồ sơ gia sư giả lập cho kiểm thử Educonnect.', 0, 0, '2026-03-01 10:00:00.000000', '2026-03-02 10:00:00.000000'),
         (202, 'DEMO-TUTOR-02', 'tutor02@example.test', '{bcrypt}$2a$10$ePV.PIkQem41lZn/IzGsceBz8ZF1hV4S.I3rTrmeRI4oNwIeI4ny2', 'ACTIVE', '2026-03-01 10:00:00.000000', 'Trần Quốc Huy', NULL, 'Hồ sơ gia sư giả lập cho kiểm thử Educonnect.', 0, 0, '2026-03-01 10:00:00.000000', '2026-03-02 10:00:00.000000'),
@@ -76,7 +76,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (309, 'DEMO-LEARNER-09', 'learner09@example.test', '{bcrypt}$2a$10$ePV.PIkQem41lZn/IzGsceBz8ZF1hV4S.I3rTrmeRI4oNwIeI4ny2', 'ACTIVE', NULL, 'Lê An Nhiên', NULL, 'Dữ liệu người học/phụ huynh giả lập.', 0, 0, '2026-03-01 10:00:00.000000', '2026-03-02 10:00:00.000000'),
         (310, 'DEMO-LEARNER-10', 'learner10@example.test', '{bcrypt}$2a$10$ePV.PIkQem41lZn/IzGsceBz8ZF1hV4S.I3rTrmeRI4oNwIeI4ny2', 'LOCKED', '2026-03-01 10:00:00.000000', 'Trần Gia Bảo', NULL, 'Dữ liệu người học/phụ huynh giả lập.', 0, 0, '2026-03-01 10:00:00.000000', '2026-03-02 10:00:00.000000');
 
-    INSERT INTO user_roles (user_id, role_code) VALUES
+    INSERT IGNORE INTO user_roles (user_id, role_code) VALUES
         (201, 'TUTOR'),
         (202, 'TUTOR'),
         (203, 'TUTOR'),
@@ -95,7 +95,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (309, 'LEARNER'),
         (310, 'LEARNER');
 
-    INSERT INTO learner_profiles (user_id, learner_kind, grade_level_id, area_id) VALUES
+    INSERT IGNORE INTO learner_profiles (user_id, learner_kind, grade_level_id, area_id) VALUES
         (301, 'PARENT', 1, 1),
         (302, 'SELF', 2, 2),
         (303, 'PARENT', 3, 3),
@@ -107,7 +107,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (309, 'PARENT', 2, 3),
         (310, 'SELF', 3, 1);
 
-    INSERT INTO tutor_profiles (user_id, review_status, headline, experience_years, reviewed_by, reviewed_at, review_note, version, updated_at) VALUES
+    INSERT IGNORE INTO tutor_profiles (user_id, review_status, headline, experience_years, reviewed_by, reviewed_at, review_note, version, updated_at) VALUES
         (201, 'APPROVED', 'Gia sư Toán THPT', 2, 100, '2026-03-02 10:00:00.000000', NULL, 0, '2026-03-02 10:00:00.000000'),
         (202, 'APPROVED', 'Gia sư Tiếng Anh', 3, 100, '2026-03-02 10:00:00.000000', NULL, 0, '2026-03-02 10:00:00.000000'),
         (203, 'APPROVED', 'Gia sư Ngữ văn', 4, 100, '2026-03-02 10:00:00.000000', NULL, 0, '2026-03-02 10:00:00.000000'),
@@ -115,7 +115,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (205, 'PENDING', 'Hồ sơ chờ duyệt', 6, NULL, NULL, NULL, 0, '2026-03-02 10:00:00.000000'),
         (206, 'REJECTED', 'Hồ sơ cần bổ sung', 7, 100, '2026-03-02 10:00:00.000000', 'DEMO: cần bổ sung minh chứng chuyên môn.', 0, '2026-03-02 10:00:00.000000');
 
-    INSERT INTO tutor_subjects (tutor_id, subject_id) VALUES
+    INSERT IGNORE INTO tutor_subjects (tutor_id, subject_id) VALUES
         (201, 1),
         (202, 2),
         (203, 3),
@@ -123,7 +123,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (205, 5),
         (206, 1);
 
-    INSERT INTO tutor_grade_levels (tutor_id, grade_level_id) VALUES
+    INSERT IGNORE INTO tutor_grade_levels (tutor_id, grade_level_id) VALUES
         (201, 1),
         (202, 2),
         (203, 3),
@@ -131,7 +131,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (205, 5),
         (206, 6);
 
-    INSERT INTO tutor_areas (tutor_id, area_id) VALUES
+    INSERT IGNORE INTO tutor_areas (tutor_id, area_id) VALUES
         (201, 1),
         (202, 2),
         (203, 3),
@@ -139,7 +139,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (205, 2),
         (206, 3);
 
-    INSERT INTO tutor_delivery_modes (tutor_id, delivery_mode_id) VALUES
+    INSERT IGNORE INTO tutor_delivery_modes (tutor_id, delivery_mode_id) VALUES
         (201, 1),
         (202, 2),
         (203, 3),
@@ -147,7 +147,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (205, 2),
         (206, 3);
 
-    INSERT INTO private_files (id, owner_user_id, storage_key, purpose, original_name, mime_type, byte_size, sha256, created_at) VALUES
+    INSERT IGNORE INTO private_files (id, owner_user_id, storage_key, purpose, original_name, mime_type, byte_size, sha256, created_at) VALUES
         (1001, 201, 'demo/private/tutor-201-evidence.pdf', 'TUTOR_EVIDENCE', 'Chung-chi-DEMO.pdf', 'application/pdf', 12000, UNHEX(SHA2('DEMO-FILE-TUTOR-201',256)), '2026-03-01 10:00:00.000000'),
         (1002, 202, 'demo/private/tutor-202-evidence.pdf', 'TUTOR_EVIDENCE', 'Chung-chi-DEMO.pdf', 'application/pdf', 12001, UNHEX(SHA2('DEMO-FILE-TUTOR-202',256)), '2026-03-01 10:00:00.000000'),
         (1003, 203, 'demo/private/tutor-203-evidence.pdf', 'TUTOR_EVIDENCE', 'Chung-chi-DEMO.pdf', 'application/pdf', 12002, UNHEX(SHA2('DEMO-FILE-TUTOR-203',256)), '2026-03-01 10:00:00.000000'),
@@ -159,7 +159,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (29003, 303, 'demo/private/report-28003-evidence.png', 'REPORT_EVIDENCE', 'Minh-chung-DEMO.png', 'image/png', 5003, UNHEX(SHA2('DEMO-FILE-REPORT-3',256)), '2026-10-14 10:00:00.000000'),
         (29004, 201, 'demo/private/report-28004-evidence.png', 'REPORT_EVIDENCE', 'Minh-chung-DEMO.png', 'image/png', 5004, UNHEX(SHA2('DEMO-FILE-REPORT-4',256)), '2026-10-14 10:00:00.000000');
 
-    INSERT INTO tutor_profile_evidence (tutor_id, file_id) VALUES
+    INSERT IGNORE INTO tutor_profile_evidence (tutor_id, file_id) VALUES
         (201, 1001),
         (202, 1002),
         (203, 1003),
@@ -167,13 +167,13 @@ SET FOREIGN_KEY_CHECKS = 0;
         (205, 1005),
         (206, 1006);
 
-    INSERT INTO auth_tokens (id, user_id, purpose, token_hash, created_at, expires_at, used_at, revoked_at) VALUES
+    INSERT IGNORE INTO auth_tokens (id, user_id, purpose, token_hash, created_at, expires_at, used_at, revoked_at) VALUES
         (1101, 309, 'VERIFY_EMAIL', UNHEX(SHA2('DEMO-TOKEN-VERIFY-PENDING',256)), '2026-10-14 10:00:00.000000', '2026-10-16 10:00:00.000000', NULL, NULL),
         (1102, 301, 'VERIFY_EMAIL', UNHEX(SHA2('DEMO-TOKEN-VERIFY-USED',256)), '2026-03-01 10:00:00.000000', '2026-03-03 10:00:00.000000', '2026-03-02 10:00:00.000000', NULL),
         (1103, 302, 'RESET_PASSWORD', UNHEX(SHA2('DEMO-TOKEN-RESET-EXPIRED',256)), '2026-09-01 10:00:00.000000', '2026-09-02 10:00:00.000000', NULL, NULL),
         (1104, 303, 'RESET_PASSWORD', UNHEX(SHA2('DEMO-TOKEN-RESET-REVOKED',256)), '2026-10-14 10:00:00.000000', '2026-10-16 10:00:00.000000', NULL, '2026-10-14 11:00:00.000000');
 
-    INSERT INTO offerings (id, public_code, tutor_id, offering_type, title, description, subject_id, grade_level_id, area_id, delivery_mode_id, unit_price, currency, session_count, duration_minutes, capacity, starts_on, ends_on, status, first_published_at, published_at, reviewed_by, reviewed_at, review_note, terms_version, terms_text, version, created_at, updated_at) VALUES
+    INSERT IGNORE INTO offerings (id, public_code, tutor_id, offering_type, title, description, subject_id, grade_level_id, area_id, delivery_mode_id, unit_price, currency, session_count, duration_minutes, capacity, starts_on, ends_on, status, first_published_at, published_at, reviewed_by, reviewed_at, review_note, terms_version, terms_text, version, created_at, updated_at) VALUES
         (2001, 'DEMO-OF-01', 201, 'SERVICE', 'Dịch vụ Toán 1', 'Gói học DEMO; không dùng như điều khoản production.', 1, 1, 1, 1, 160005, 'VND', 5, 90, NULL, NULL, NULL, 'PUBLISHED', '2026-03-06 10:00:00.000000', '2026-03-06 10:00:00.000000', 100, '2026-03-04 10:00:00.000000', NULL, 1, 'Điều khoản DEMO 1: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.', 0, '2026-03-03 10:00:00.000000', '2026-03-05 10:00:00.000000'),
         (2002, 'DEMO-OF-02', 202, 'SERVICE', 'Dịch vụ Ngữ văn 2', 'Gói học DEMO; không dùng như điều khoản production.', 2, 2, 2, 2, 170005, 'VND', 5, 90, NULL, NULL, NULL, 'PUBLISHED', '2026-03-07 10:00:00.000000', '2026-03-07 10:00:00.000000', 100, '2026-03-04 10:00:00.000000', NULL, 1, 'Điều khoản DEMO 2: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.', 0, '2026-03-03 10:00:00.000000', '2026-03-05 10:00:00.000000'),
         (2003, 'DEMO-OF-03', 203, 'SERVICE', 'Dịch vụ Tiếng Anh 3', 'Gói học DEMO; không dùng như điều khoản production.', 3, 3, 3, 3, 180005, 'VND', 5, 90, NULL, NULL, NULL, 'PUBLISHED', '2026-03-08 10:00:00.000000', '2026-03-08 10:00:00.000000', 100, '2026-03-04 10:00:00.000000', NULL, 1, 'Điều khoản DEMO 3: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.', 0, '2026-03-03 10:00:00.000000', '2026-03-05 10:00:00.000000'),
@@ -193,7 +193,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (2017, 'DEMO-OF-17', 201, 'GROUP_CLASS', 'Lớp nhóm Ngữ văn 17', 'Gói học DEMO; không dùng như điều khoản production.', 2, 3, 2, 2, 320005, 'VND', 5, 90, 8, '2026-10-01', '2026-10-31', 'PUBLISHED', '2026-03-22 10:00:00.000000', '2026-03-22 10:00:00.000000', 100, '2026-03-04 10:00:00.000000', NULL, 1, 'Điều khoản DEMO 17: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.', 0, '2026-03-03 10:00:00.000000', '2026-03-05 10:00:00.000000'),
         (2018, 'DEMO-OF-18', 202, 'GROUP_CLASS', 'Lớp nhóm Tiếng Anh 18', 'Gói học DEMO; không dùng như điều khoản production.', 3, 4, 3, 3, 330005, 'VND', 5, 90, 8, '2026-10-01', '2026-10-31', 'PUBLISHED', '2026-03-23 10:00:00.000000', '2026-03-23 10:00:00.000000', 100, '2026-03-04 10:00:00.000000', NULL, 1, 'Điều khoản DEMO 18: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.', 0, '2026-03-03 10:00:00.000000', '2026-03-05 10:00:00.000000');
 
-    INSERT INTO offering_time_slots (id, offering_id, weekday, start_time, end_time, time_zone) VALUES
+    INSERT IGNORE INTO offering_time_slots (id, offering_id, weekday, start_time, end_time, time_zone) VALUES
         (2101, 2001, 2, '18:00:00', '19:30:00', 'Asia/Ho_Chi_Minh'),
         (2102, 2002, 3, '18:00:00', '19:30:00', 'Asia/Ho_Chi_Minh'),
         (2103, 2003, 4, '18:00:00', '19:30:00', 'Asia/Ho_Chi_Minh'),
@@ -213,7 +213,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (2117, 2017, 4, '18:00:00', '19:30:00', 'Asia/Ho_Chi_Minh'),
         (2118, 2018, 5, '18:00:00', '19:30:00', 'Asia/Ho_Chi_Minh');
 
-    INSERT INTO invitations (id, public_code, learner_id, tutor_id, offering_id, subject_id, grade_level_id, area_id, delivery_mode_id, proposed_unit_price, session_count, terms_version, terms_text, status, accepted_at, version, created_at, expires_at) VALUES
+    INSERT IGNORE INTO invitations (id, public_code, learner_id, tutor_id, offering_id, subject_id, grade_level_id, area_id, delivery_mode_id, proposed_unit_price, session_count, terms_version, terms_text, status, accepted_at, version, created_at, expires_at) VALUES
         (12001, 'DEMO-INV-1', 301, 201, 2001, 1, 1, 1, 1, 130005, 5, 1, 'Điều khoản DEMO nguồn INVITATION 1: 5 buổi, 90 phút, hai bên đồng ý.', 'ACCEPTED', '2026-05-07 10:00:00.000000', 0, '2026-03-01 10:00:00.000000', '2026-10-30 10:00:00.000000'),
         (12002, 'DEMO-INV-2', 302, 202, 2002, 2, 2, 2, 2, 140005, 5, 1, 'Điều khoản DEMO nguồn INVITATION 2: 5 buổi, 90 phút, hai bên đồng ý.', 'ACCEPTED', '2026-06-09 10:00:00.000000', 0, '2026-03-01 10:00:00.000000', '2026-10-30 10:00:00.000000'),
         (12003, 'DEMO-INV-3', 303, 203, 2003, 3, 3, 3, 3, 150005, 5, 1, 'Điều khoản DEMO nguồn INVITATION 3: 5 buổi, 90 phút, hai bên đồng ý.', 'ACCEPTED', '2026-07-13 10:00:00.000000', 0, '2026-03-01 10:00:00.000000', '2026-10-30 10:00:00.000000'),
@@ -226,7 +226,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (12902, 'DEMO-INV-EXTRA-2', 301, 201, NULL, 1, 3, 1, 1, 200000, 5, 1, 'Điều khoản lời mời DEMO chưa tạo đơn.', 'DECLINED', NULL, 0, '2026-10-01 10:00:00.000000', '2026-10-20 10:00:00.000000'),
         (12903, 'DEMO-INV-EXTRA-3', 301, 201, NULL, 1, 3, 1, 1, 200000, 5, 1, 'Điều khoản lời mời DEMO chưa tạo đơn.', 'EXPIRED', NULL, 0, '2026-10-01 10:00:00.000000', '2026-10-02 10:00:00.000000');
 
-    INSERT INTO job_posts (id, public_code, learner_id, title, description, subject_id, grade_level_id, area_id, delivery_mode_id, budget_per_session, session_count, status, version, created_at) VALUES
+    INSERT IGNORE INTO job_posts (id, public_code, learner_id, title, description, subject_id, grade_level_id, area_id, delivery_mode_id, budget_per_session, session_count, status, version, created_at) VALUES
         (13009, 'DEMO-JOB-9', 301, 'Tin tìm gia sư DEMO 9', 'Tìm gia sư cho 5 buổi, dữ liệu giả lập.', 4, 2, 3, 3, 210005, 5, 'MATCHED', 0, '2026-03-01 10:00:00.000000'),
         (13010, 'DEMO-JOB-10', 302, 'Tin tìm gia sư DEMO 10', 'Tìm gia sư cho 5 buổi, dữ liệu giả lập.', 5, 3, 1, 1, 220005, 5, 'MATCHED', 0, '2026-03-01 10:00:00.000000'),
         (13011, 'DEMO-JOB-11', 303, 'Tin tìm gia sư DEMO 11', 'Tìm gia sư cho 5 buổi, dữ liệu giả lập.', 1, 4, 2, 2, 230005, 5, 'MATCHED', 0, '2026-03-01 10:00:00.000000'),
@@ -239,7 +239,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (13902, 'DEMO-JOB-EXTRA-2', 302, 'Tin DEMO chưa chọn gia sư 2', 'Dữ liệu kiểm tra không tự tạo order.', 3, 4, 2, 1, 220000, 5, 'PENDING', 0, '2026-10-01 10:00:00.000000'),
         (13903, 'DEMO-JOB-EXTRA-3', 302, 'Tin DEMO chưa chọn gia sư 3', 'Dữ liệu kiểm tra không tự tạo order.', 3, 4, 2, 1, 220000, 5, 'CLOSED', 0, '2026-10-01 10:00:00.000000');
 
-    INSERT INTO job_applications (id, job_id, tutor_id, proposed_unit_price, message, status, version, created_at) VALUES
+    INSERT IGNORE INTO job_applications (id, job_id, tutor_id, proposed_unit_price, message, status, version, created_at) VALUES
         (14009, 13009, 201, 210005, 'Gia sư đồng ý điều khoản DEMO.', 'SELECTED', 0, '2026-03-02 10:00:00.000000'),
         (14109, 13009, 202, 215005, 'Ứng viên khác chưa được chọn.', 'REJECTED', 0, '2026-03-02 10:00:00.000000'),
         (14010, 13010, 202, 220005, 'Gia sư đồng ý điều khoản DEMO.', 'SELECTED', 0, '2026-03-02 10:00:00.000000'),
@@ -258,7 +258,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (14116, 13016, 201, 285005, 'Ứng viên khác chưa được chọn.', 'REJECTED', 0, '2026-03-02 10:00:00.000000'),
         (14901, 13901, 202, 220000, 'Ứng tuyển DEMO chờ lựa chọn.', 'SUBMITTED', 0, '2026-10-02 10:00:00.000000');
 
-    INSERT INTO job_selections (job_id, application_id, tutor_id, selected_by, terms_version, terms_text, selected_at) VALUES
+    INSERT IGNORE INTO job_selections (job_id, application_id, tutor_id, selected_by, terms_version, terms_text, selected_at) VALUES
         (13009, 14009, 201, 301, 1, 'Điều khoản DEMO nguồn JOB_APPLICATION 9: 5 buổi, 90 phút, hai bên đồng ý.', '2026-09-08 10:00:00.000000'),
         (13010, 14010, 202, 302, 1, 'Điều khoản DEMO nguồn JOB_APPLICATION 10: 5 buổi, 90 phút, hai bên đồng ý.', '2026-09-30 10:00:00.000000'),
         (13011, 14011, 203, 303, 1, 'Điều khoản DEMO nguồn JOB_APPLICATION 11: 5 buổi, 90 phút, hai bên đồng ý.', '2026-10-03 10:00:00.000000'),
@@ -268,7 +268,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (13015, 14015, 203, 307, 1, 'Điều khoản DEMO nguồn JOB_APPLICATION 15: 5 buổi, 90 phút, hai bên đồng ý.', '2026-10-08 10:00:00.000000'),
         (13016, 14016, 204, 308, 1, 'Điều khoản DEMO nguồn JOB_APPLICATION 16: 5 buổi, 90 phút, hai bên đồng ý.', '2026-10-08 10:00:00.000000');
 
-    INSERT INTO registration_sources (id, source_kind, learner_id, tutor_id, invitation_id, job_id, application_id, offering_id, created_at) VALUES
+    INSERT IGNORE INTO registration_sources (id, source_kind, learner_id, tutor_id, invitation_id, job_id, application_id, offering_id, created_at) VALUES
         (4001, 'INVITATION', 301, 201, 12001, NULL, NULL, 2001, '2026-05-07 10:00:00.000000'),
         (4002, 'INVITATION', 302, 202, 12002, NULL, NULL, 2002, '2026-06-09 10:00:00.000000'),
         (4003, 'INVITATION', 303, 203, 12003, NULL, NULL, 2003, '2026-07-13 10:00:00.000000'),
@@ -296,7 +296,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (4025, 'CATALOG', 307, 201, NULL, NULL, NULL, 2001, '2026-10-08 10:00:00.000000'),
         (4026, 'CATALOG', 308, 201, NULL, NULL, NULL, 2017, '2026-10-08 10:00:00.000000');
 
-    INSERT INTO carts (id, learner_id, version, updated_at) VALUES
+    INSERT IGNORE INTO carts (id, learner_id, version, updated_at) VALUES
         (3001, 301, 0, '2026-10-15 00:00:00.000000'),
         (3002, 302, 0, '2026-10-15 00:00:00.000000'),
         (3003, 303, 0, '2026-10-15 00:00:00.000000'),
@@ -308,12 +308,12 @@ SET FOREIGN_KEY_CHECKS = 0;
         (3009, 309, 0, '2026-10-15 00:00:00.000000'),
         (3010, 310, 0, '2026-10-15 00:00:00.000000');
 
-    INSERT INTO cart_items (id, cart_id, offering_id, seat_count, offering_version_seen, created_at) VALUES
+    INSERT IGNORE INTO cart_items (id, cart_id, offering_id, seat_count, offering_version_seen, created_at) VALUES
         (3101, 3001, 2001, 1, 0, '2026-10-15 00:00:00.000000'),
         (3102, 3001, 2015, 2, 0, '2026-10-15 00:00:00.000000'),
         (3103, 3002, 2013, 1, 0, '2026-10-15 00:00:00.000000');
 
-    INSERT INTO orders (id, public_code, learner_id, status, total_amount, currency, creation_key, cancellation_reason, cancelled_at, version, created_at, updated_at) VALUES
+    INSERT IGNORE INTO orders (id, public_code, learner_id, status, total_amount, currency, creation_key, cancellation_reason, cancelled_at, version, created_at, updated_at) VALUES
         (9001, 'DEMO-ORDER-01', 301, 'COMPLETED', 650025, 'VND', 'DEMO-CREATE-ORDER-1', NULL, NULL, 3, '2026-05-07 10:00:00.000000', '2026-05-10 10:00:00.000000'),
         (9002, 'DEMO-ORDER-02', 302, 'COMPLETED', 700025, 'VND', 'DEMO-CREATE-ORDER-2', NULL, NULL, 3, '2026-06-09 10:00:00.000000', '2026-06-12 10:00:00.000000'),
         (9003, 'DEMO-ORDER-03', 303, 'COMPLETED', 750025, 'VND', 'DEMO-CREATE-ORDER-3', NULL, NULL, 3, '2026-07-13 10:00:00.000000', '2026-07-16 10:00:00.000000'),
@@ -339,7 +339,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (9023, 'DEMO-ORDER-23', 307, 'AWAITING_PAYMENT', 800025, 'VND', 'DEMO-CREATE-ORDER-23', NULL, NULL, 0, '2026-10-08 10:00:00.000000', '2026-10-12 10:00:00.000000'),
         (9024, 'DEMO-ORDER-24', 308, 'CANCELLATION_PENDING', 1600025, 'VND', 'DEMO-CREATE-ORDER-24', 'Người học yêu cầu hủy trong kịch bản DEMO.', NULL, 3, '2026-10-08 10:00:00.000000', '2026-10-12 10:00:00.000000');
 
-    INSERT INTO order_items (id, order_id, line_number, registration_source_id, tutor_id, title_snapshot, offering_type_snapshot, unit_price_snapshot, session_count_snapshot, seat_count, line_total, fee_rate_snapshot, fee_policy_version, terms_version_snapshot, terms_text_snapshot, terms_hash, created_at) VALUES
+    INSERT IGNORE INTO order_items (id, order_id, line_number, registration_source_id, tutor_id, title_snapshot, offering_type_snapshot, unit_price_snapshot, session_count_snapshot, seat_count, line_total, fee_rate_snapshot, fee_policy_version, terms_version_snapshot, terms_text_snapshot, terms_hash, created_at) VALUES
         (5001, 9001, 1, 4001, 201, 'Dịch vụ Toán 1', 'SERVICE', 130005, 5, 1, 650025, '0.100000', 'DEMO-FEE-10PCT-V1', 1, 'Điều khoản DEMO nguồn INVITATION 1: 5 buổi, 90 phút, hai bên đồng ý.', UNHEX(SHA2('Điều khoản DEMO nguồn INVITATION 1: 5 buổi, 90 phút, hai bên đồng ý.',256)), '2026-05-07 10:00:00.000000'),
         (5002, 9002, 1, 4002, 202, 'Dịch vụ Ngữ văn 2', 'SERVICE', 140005, 5, 1, 700025, '0.100000', 'DEMO-FEE-10PCT-V1', 1, 'Điều khoản DEMO nguồn INVITATION 2: 5 buổi, 90 phút, hai bên đồng ý.', UNHEX(SHA2('Điều khoản DEMO nguồn INVITATION 2: 5 buổi, 90 phút, hai bên đồng ý.',256)), '2026-06-09 10:00:00.000000'),
         (5003, 9003, 1, 4003, 203, 'Dịch vụ Tiếng Anh 3', 'SERVICE', 150005, 5, 1, 750025, '0.100000', 'DEMO-FEE-10PCT-V1', 1, 'Điều khoản DEMO nguồn INVITATION 3: 5 buổi, 90 phút, hai bên đồng ý.', UNHEX(SHA2('Điều khoản DEMO nguồn INVITATION 3: 5 buổi, 90 phút, hai bên đồng ý.',256)), '2026-07-13 10:00:00.000000'),
@@ -367,7 +367,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (5025, 9023, 1, 4025, 201, 'Dịch vụ Toán 1', 'SERVICE', 160005, 5, 1, 800025, '0.100000', 'DEMO-FEE-10PCT-V1', 1, 'Điều khoản DEMO 1: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.', UNHEX(SHA2('Điều khoản DEMO 1: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.',256)), '2026-10-08 10:00:00.000000'),
         (5026, 9024, 1, 4026, 201, 'Lớp nhóm Ngữ văn 17', 'GROUP_CLASS', 320005, 5, 1, 1600025, '0.100000', 'DEMO-FEE-10PCT-V1', 1, 'Điều khoản DEMO 17: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.', UNHEX(SHA2('Điều khoản DEMO 17: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.',256)), '2026-10-08 10:00:00.000000');
 
-    INSERT INTO contracts (id, public_code, order_item_id, learner_id, tutor_id, status, agreed_terms_text, agreed_terms_hash, learner_accepted_at, tutor_accepted_at, completed_at, version, created_at) VALUES
+    INSERT IGNORE INTO contracts (id, public_code, order_item_id, learner_id, tutor_id, status, agreed_terms_text, agreed_terms_hash, learner_accepted_at, tutor_accepted_at, completed_at, version, created_at) VALUES
         (6001, 'DEMO-CONTRACT-6001', 5001, 301, 201, 'COMPLETED', 'Điều khoản DEMO nguồn INVITATION 1: 5 buổi, 90 phút, hai bên đồng ý.', UNHEX(SHA2('Điều khoản DEMO nguồn INVITATION 1: 5 buổi, 90 phút, hai bên đồng ý.',256)), '2026-05-07 10:00:00.000000', '2026-05-07 10:00:00.000000', '2026-05-10 10:00:00.000000', 2, '2026-05-07 10:00:00.000000'),
         (6002, 'DEMO-CONTRACT-6002', 5002, 302, 202, 'COMPLETED', 'Điều khoản DEMO nguồn INVITATION 2: 5 buổi, 90 phút, hai bên đồng ý.', UNHEX(SHA2('Điều khoản DEMO nguồn INVITATION 2: 5 buổi, 90 phút, hai bên đồng ý.',256)), '2026-06-09 10:00:00.000000', '2026-06-09 10:00:00.000000', '2026-06-12 10:00:00.000000', 2, '2026-06-09 10:00:00.000000'),
         (6003, 'DEMO-CONTRACT-6003', 5003, 303, 203, 'COMPLETED', 'Điều khoản DEMO nguồn INVITATION 3: 5 buổi, 90 phút, hai bên đồng ý.', UNHEX(SHA2('Điều khoản DEMO nguồn INVITATION 3: 5 buổi, 90 phút, hai bên đồng ý.',256)), '2026-07-13 10:00:00.000000', '2026-07-13 10:00:00.000000', '2026-07-16 10:00:00.000000', 2, '2026-07-13 10:00:00.000000'),
@@ -395,7 +395,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (6025, 'DEMO-CONTRACT-6025', 5025, 307, 201, 'AWAITING_PAYMENT', 'Điều khoản DEMO 1: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.', UNHEX(SHA2('Điều khoản DEMO 1: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.',256)), '2026-10-08 10:00:00.000000', '2026-10-08 10:00:00.000000', NULL, 0, '2026-10-08 10:00:00.000000'),
         (6026, 'DEMO-CONTRACT-6026', 5026, 308, 201, 'CANCELLATION_PENDING', 'Điều khoản DEMO 17: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.', UNHEX(SHA2('Điều khoản DEMO 17: 5 buổi, 90 phút/buổi, giá được snapshot khi đặt.',256)), '2026-10-08 10:00:00.000000', '2026-10-08 10:00:00.000000', NULL, 2, '2026-10-08 10:00:00.000000');
 
-    INSERT INTO order_status_history (id, order_id, from_status, to_status, actor_user_id, reason, entity_version, changed_at, actor_role_code) VALUES
+    INSERT IGNORE INTO order_status_history (id, order_id, from_status, to_status, actor_user_id, reason, entity_version, changed_at, actor_role_code) VALUES
         (8001, 9001, 'NEW', 'AWAITING_PAYMENT', 301, 'Luồng DEMO cơ bản.', 0, '2026-05-07 10:00:00.000000', 'LEARNER'),
         (8002, 9001, 'AWAITING_PAYMENT', 'PAID', 100, 'Luồng DEMO cơ bản.', 1, '2026-05-07 11:00:00.000000', 'ADMIN'),
         (8003, 9001, 'PAID', 'IN_PROGRESS', 201, 'Luồng DEMO cơ bản.', 2, '2026-05-07 12:00:00.000000', 'TUTOR'),
@@ -474,7 +474,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (8076, 9024, 'PAID', 'IN_PROGRESS', 201, 'Luồng DEMO cơ bản.', 2, '2026-10-08 12:00:00.000000', 'TUTOR'),
         (8077, 9024, 'IN_PROGRESS', 'CANCELLATION_PENDING', 308, 'Luồng DEMO cơ bản.', 3, '2026-10-08 12:00:00.000000', 'LEARNER');
 
-    INSERT INTO contract_status_history (id, contract_id, from_status, to_status, actor_user_id, reason, entity_version, changed_at) VALUES
+    INSERT IGNORE INTO contract_status_history (id, contract_id, from_status, to_status, actor_user_id, reason, entity_version, changed_at) VALUES
         (8501, 6001, 'NEW', 'AWAITING_PAYMENT', 301, 'Chuyển trạng thái DEMO đã kiểm.', 0, '2026-05-07 10:00:00.000000'),
         (8502, 6001, 'AWAITING_PAYMENT', 'ACTIVE', 100, 'Chuyển trạng thái DEMO đã kiểm.', 1, '2026-05-07 11:00:00.000000'),
         (8503, 6001, 'ACTIVE', 'COMPLETED', 100, 'Chuyển trạng thái DEMO đã kiểm.', 2, '2026-05-10 10:00:00.000000'),
@@ -542,7 +542,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (8565, 6026, 'AWAITING_PAYMENT', 'ACTIVE', 100, 'Chuyển trạng thái DEMO đã kiểm.', 1, '2026-10-08 11:00:00.000000'),
         (8566, 6026, 'ACTIVE', 'CANCELLATION_PENDING', 100, 'Chuyển trạng thái DEMO đã kiểm.', 2, '2026-10-08 12:00:00.000000');
 
-    INSERT INTO enrollments (id, contract_id, offering_id, learner_id, seat_count, status, reserved_until, confirmed_at, version, created_at) VALUES
+    INSERT IGNORE INTO enrollments (id, contract_id, offering_id, learner_id, seat_count, status, reserved_until, confirmed_at, version, created_at) VALUES
         (7001, 6017, 2014, 301, 1, 'COMPLETED', NULL, '2026-10-04 11:00:00.000000', 0, '2026-10-04 10:00:00.000000'),
         (7002, 6020, 2013, 303, 1, 'CONFIRMED', NULL, '2026-10-08 11:00:00.000000', 0, '2026-10-08 10:00:00.000000'),
         (7003, 6021, 2013, 304, 1, 'CONFIRMED', NULL, '2026-10-08 11:00:00.000000', 0, '2026-10-08 10:00:00.000000'),
@@ -550,7 +550,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (7005, 6024, 2016, 306, 1, 'CANCELLED', NULL, '2026-10-08 11:00:00.000000', 0, '2026-10-08 10:00:00.000000'),
         (7006, 6026, 2017, 308, 1, 'CONFIRMED', NULL, '2026-10-08 11:00:00.000000', 0, '2026-10-08 10:00:00.000000');
 
-    INSERT INTO payments (id, public_code, order_id, amount, wallet_amount, provider_amount, status, funded_at, version, created_at) VALUES
+    INSERT IGNORE INTO payments (id, public_code, order_id, amount, wallet_amount, provider_amount, status, funded_at, version, created_at) VALUES
         (10001, 'DEMO-PAYMENT-1', 9001, 650025, 260010, 390015, 'FUNDED', '2026-05-07 11:00:00.000000', 0, '2026-05-07 10:00:00.000000'),
         (10002, 'DEMO-PAYMENT-2', 9002, 700025, 0, 700025, 'FUNDED', '2026-06-09 11:00:00.000000', 0, '2026-06-09 10:00:00.000000'),
         (10003, 'DEMO-PAYMENT-3', 9003, 750025, 750025, 0, 'FUNDED', '2026-07-13 11:00:00.000000', 0, '2026-07-13 10:00:00.000000'),
@@ -576,7 +576,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (10023, 'DEMO-PAYMENT-23', 9023, 800025, 0, 800025, 'FAILED', NULL, 0, '2026-10-08 10:00:00.000000'),
         (10024, 'DEMO-PAYMENT-24', 9024, 1600025, 1600025, 0, 'REFUND_PENDING', '2026-10-08 11:00:00.000000', 0, '2026-10-08 10:00:00.000000');
 
-    INSERT INTO payment_attempts (id, payment_id, attempt_number, provider, provider_order_code, provider_reference, request_key, amount, status, verified_at, failure_code, created_at, expires_at) VALUES
+    INSERT IGNORE INTO payment_attempts (id, payment_id, attempt_number, provider, provider_order_code, provider_reference, request_key, amount, status, verified_at, failure_code, created_at, expires_at) VALUES
         (15001, 10001, 1, 'PAYOS', 260000001, 'DEMO-PAYOS-REF-1', 'DEMO-PAYOS-REQUEST-1', 390015, 'SUCCEEDED', '2026-05-07 11:00:00.000000', NULL, '2026-05-07 10:00:00.000000', '2026-10-20 10:00:00.000000'),
         (15002, 10002, 1, 'PAYOS', 260000002, 'DEMO-PAYOS-REF-2', 'DEMO-PAYOS-REQUEST-2', 700025, 'SUCCEEDED', '2026-06-09 11:00:00.000000', NULL, '2026-06-09 10:00:00.000000', '2026-10-20 10:00:00.000000'),
         (15004, 10004, 1, 'PAYOS', 260000004, 'DEMO-PAYOS-REF-4', 'DEMO-PAYOS-REQUEST-4', 480015, 'SUCCEEDED', '2026-09-04 11:00:00.000000', NULL, '2026-09-04 10:00:00.000000', '2026-10-20 10:00:00.000000'),
@@ -594,7 +594,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (15022, 10022, 1, 'PAYOS', 260000022, 'DEMO-PAYOS-REF-22', 'DEMO-PAYOS-REQUEST-22', 930015, 'SUCCEEDED', '2026-10-08 11:00:00.000000', NULL, '2026-10-08 10:00:00.000000', '2026-10-20 10:00:00.000000'),
         (15023, 10023, 1, 'PAYOS', 260000023, NULL, 'DEMO-PAYOS-REQUEST-23', 800025, 'FAILED', NULL, 'DEMO_PROVIDER_REJECTED', '2026-10-08 10:00:00.000000', '2026-10-20 10:00:00.000000');
 
-    INSERT INTO payment_webhook_events (id, provider, event_key, payment_attempt_id, payload_hash, signature_verified, status, received_at, processed_at, error_code) VALUES
+    INSERT IGNORE INTO payment_webhook_events (id, provider, event_key, payment_attempt_id, payload_hash, signature_verified, status, received_at, processed_at, error_code) VALUES
         (16001, 'PAYOS', 'DEMO-WEBHOOK-1', 15001, UNHEX(SHA2('DEMO-EVENT-1',256)), 1, 'APPLIED', '2026-05-07 11:00:00.000000', '2026-05-07 11:00:00.000000', NULL),
         (16002, 'PAYOS', 'DEMO-WEBHOOK-2', 15002, UNHEX(SHA2('DEMO-EVENT-2',256)), 1, 'APPLIED', '2026-06-09 11:00:00.000000', '2026-06-09 11:00:00.000000', NULL),
         (16004, 'PAYOS', 'DEMO-WEBHOOK-4', 15004, UNHEX(SHA2('DEMO-EVENT-4',256)), 1, 'APPLIED', '2026-09-04 11:00:00.000000', '2026-09-04 11:00:00.000000', NULL),
@@ -609,7 +609,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (16020, 'PAYOS', 'DEMO-WEBHOOK-20', 15020, UNHEX(SHA2('DEMO-EVENT-20',256)), 1, 'APPLIED', '2026-10-08 11:00:00.000000', '2026-10-08 11:00:00.000000', NULL),
         (16022, 'PAYOS', 'DEMO-WEBHOOK-22', 15022, UNHEX(SHA2('DEMO-EVENT-22',256)), 1, 'APPLIED', '2026-10-08 11:00:00.000000', '2026-10-08 11:00:00.000000', NULL);
 
-    INSERT INTO payment_allocations (payment_id, contract_id, amount, wallet_amount, provider_amount) VALUES
+    INSERT IGNORE INTO payment_allocations (payment_id, contract_id, amount, wallet_amount, provider_amount) VALUES
         (10001, 6001, 650025, 260010, 390015),
         (10002, 6002, 700025, 0, 700025),
         (10003, 6003, 750025, 750025, 0),
@@ -637,7 +637,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (10023, 6025, 800025, 0, 800025),
         (10024, 6026, 1600025, 1600025, 0);
 
-    INSERT INTO ledger_accounts (id, account_code, account_kind, owner_user_id, currency, version) VALUES
+    INSERT IGNORE INTO ledger_accounts (id, account_code, account_kind, owner_user_id, currency, version) VALUES
         (1, 'PLATFORM-REVENUE-VND', 'PLATFORM_REVENUE', NULL, 'VND', 0),
         (2, 'PROVIDER-CLEARING-VND', 'PROVIDER_CLEARING', NULL, 'VND', 0),
         (201, 'WALLET-201-VND', 'USER_WALLET', 201, 'VND', 0),
@@ -683,7 +683,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (16025, 'ESCROW-6025-VND', 'ESCROW', NULL, 'VND', 0),
         (16026, 'ESCROW-6026-VND', 'ESCROW', NULL, 'VND', 0);
 
-    INSERT INTO wallets (user_id, ledger_account_id) VALUES
+    INSERT IGNORE INTO wallets (user_id, ledger_account_id) VALUES
         (201, 201),
         (202, 202),
         (203, 203),
@@ -701,7 +701,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (309, 309),
         (310, 310);
 
-    INSERT INTO escrow_accounts (contract_id, ledger_account_id) VALUES
+    INSERT IGNORE INTO escrow_accounts (contract_id, ledger_account_id) VALUES
         (6001, 16001),
         (6002, 16002),
         (6003, 16003),
@@ -729,7 +729,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (6025, 16025),
         (6026, 16026);
 
-    INSERT INTO releases (id, contract_id, release_key, reason_code, gross_amount, fee_rate_snapshot, fee_amount, tutor_net_amount, fee_policy_version, rounding_mode, approved_by, released_at) VALUES
+    INSERT IGNORE INTO releases (id, contract_id, release_key, reason_code, gross_amount, fee_rate_snapshot, fee_amount, tutor_net_amount, fee_policy_version, rounding_mode, approved_by, released_at) VALUES
         (28001, 6001, 'DEMO-RELEASE-6001', 'COMPLETION', 650025, '0.100000', 65003, 585022, 'DEMO-FEE-10PCT-V1', 'HALF_UP', 100, '2026-05-10 10:00:00.000000'),
         (28002, 6002, 'DEMO-RELEASE-6002', 'COMPLETION', 700025, '0.100000', 70003, 630022, 'DEMO-FEE-10PCT-V1', 'HALF_UP', 100, '2026-06-12 10:00:00.000000'),
         (28003, 6003, 'DEMO-RELEASE-6003', 'COMPLETION', 750025, '0.100000', 75003, 675022, 'DEMO-FEE-10PCT-V1', 'HALF_UP', 100, '2026-07-16 10:00:00.000000'),
@@ -742,14 +742,14 @@ SET FOREIGN_KEY_CHECKS = 0;
         (28018, 6018, 'DEMO-RELEASE-6018', 'COMPLETION', 850025, '0.100000', 85003, 765022, 'DEMO-FEE-10PCT-V1', 'HALF_UP', 100, '2026-10-10 10:00:00.000000'),
         (28019, 6019, 'DEMO-RELEASE-6019', 'COMPLETION', 900025, '0.100000', 90003, 810022, 'DEMO-FEE-10PCT-V1', 'HALF_UP', 100, '2026-10-10 10:00:00.000000');
 
-    INSERT INTO refunds (id, payment_id, contract_id, request_key, basis_amount_snapshot, refund_rate_snapshot, amount, policy_version, destination, status, requested_by, reason, provider_reference, failure_code, requested_at, processed_at, version) VALUES
+    INSERT IGNORE INTO refunds (id, payment_id, contract_id, request_key, basis_amount_snapshot, refund_rate_snapshot, amount, policy_version, destination, status, requested_by, reason, provider_reference, failure_code, requested_at, processed_at, version) VALUES
         (29014, 10014, 6014, 'DEMO-REFUND-6014', 780015, '1.000000', 780015, 'DEMO-REFUND-UNRELEASED-100-V1', 'ORIGINAL_PROVIDER', 'SUCCEEDED', 306, 'DEMO: hoàn 100% phần chưa giải ngân; hoàn ví có sự đồng ý giả lập.', 'DEMO-REFUND-PROVIDER-6014', NULL, '2026-10-08 12:00:00.000000', '2026-10-12 10:00:00.000000', 0),
         (29015, 10015, 6015, 'DEMO-REFUND-6015', 1350025, '1.000000', 1350025, 'DEMO-REFUND-UNRELEASED-100-V1', 'WALLET', 'PROCESSING', 307, 'DEMO: hoàn 100% phần chưa giải ngân; hoàn ví có sự đồng ý giả lập.', NULL, NULL, '2026-10-08 12:00:00.000000', NULL, 0),
         (29016, 10016, 6016, 'DEMO-REFUND-6016', 1400025, '1.000000', 1400025, 'DEMO-REFUND-UNRELEASED-100-V1', 'WALLET', 'FAILED', 308, 'DEMO: hoàn 100% phần chưa giải ngân; hoàn ví có sự đồng ý giả lập.', NULL, 'DEMO_REFUND_RETRY_REQUIRED', '2026-10-08 12:00:00.000000', '2026-10-12 10:00:00.000000', 0),
         (29024, 10022, 6024, 'DEMO-REFUND-6024', 1550025, '1.000000', 1550025, 'DEMO-REFUND-UNRELEASED-100-V1', 'WALLET', 'SUCCEEDED', 306, 'DEMO: hoàn 100% phần chưa giải ngân; hoàn ví có sự đồng ý giả lập.', NULL, NULL, '2026-10-08 12:00:00.000000', '2026-10-12 10:00:00.000000', 0),
         (29026, 10024, 6026, 'DEMO-REFUND-6026', 1600025, '1.000000', 1600025, 'DEMO-REFUND-UNRELEASED-100-V1', 'WALLET', 'REQUESTED', 308, 'DEMO: hoàn 100% phần chưa giải ngân; hoàn ví có sự đồng ý giả lập.', NULL, NULL, '2026-10-08 12:00:00.000000', NULL, 0);
 
-    INSERT INTO refund_status_history (id, refund_id, from_status, to_status, actor_user_id, reason, changed_at) VALUES
+    INSERT IGNORE INTO refund_status_history (id, refund_id, from_status, to_status, actor_user_id, reason, changed_at) VALUES
         (30014, 29014, NULL, 'REQUESTED', 306, 'Yêu cầu hoàn DEMO.', '2026-10-08 12:00:00.000000'),
         (31014, 29014, 'REQUESTED', 'SUCCEEDED', 100, 'Xử lý hoàn DEMO.', '2026-10-12 10:00:00.000000'),
         (30015, 29015, NULL, 'REQUESTED', 307, 'Yêu cầu hoàn DEMO.', '2026-10-08 12:00:00.000000'),
@@ -760,7 +760,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (31024, 29024, 'REQUESTED', 'SUCCEEDED', 100, 'Xử lý hoàn DEMO.', '2026-10-12 10:00:00.000000'),
         (30026, 29026, NULL, 'REQUESTED', 308, 'Yêu cầu hoàn DEMO.', '2026-10-08 12:00:00.000000');
 
-    INSERT INTO money_journals (id, business_key, journal_kind, payment_id, contract_id, release_id, refund_id, wallet_user_id, memo, posted_at) VALUES
+    INSERT IGNORE INTO money_journals (id, business_key, journal_kind, payment_id, contract_id, release_id, refund_id, wallet_user_id, memo, posted_at) VALUES
         (20001, 'DEMO-JOURNAL-20001', 'TOP_UP', NULL, NULL, NULL, NULL, 301, 'DEMO: số dư mở đầu giả lập, không gọi cổng nạp tiền.', '2026-03-01 09:00:00.000000'),
         (20002, 'DEMO-JOURNAL-20002', 'TOP_UP', NULL, NULL, NULL, NULL, 302, 'DEMO: số dư mở đầu giả lập, không gọi cổng nạp tiền.', '2026-03-01 09:00:00.000000'),
         (20003, 'DEMO-JOURNAL-20003', 'TOP_UP', NULL, NULL, NULL, NULL, 303, 'DEMO: số dư mở đầu giả lập, không gọi cổng nạp tiền.', '2026-03-01 09:00:00.000000'),
@@ -812,7 +812,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (20049, 'DEMO-JOURNAL-20049', 'REFUND', NULL, 6024, NULL, 29024, NULL, 'DEMO: hoàn tiền đã post; không gửi giao dịch thật.', '2026-10-12 10:00:00.000000'),
         (20050, 'DEMO-JOURNAL-20050', 'WALLET_PAYMENT', 10024, 6026, NULL, NULL, NULL, 'DEMO: tiền ví giữ cho hợp đồng.', '2026-10-08 11:00:00.000000');
 
-    INSERT INTO ledger_entries (id, journal_id, line_number, ledger_account_id, entry_side, amount) VALUES
+    INSERT IGNORE INTO ledger_entries (id, journal_id, line_number, ledger_account_id, entry_side, amount) VALUES
         (200011, 20001, 1, 2, 'DEBIT', 5000000),
         (200012, 20001, 2, 301, 'CREDIT', 5000000),
         (200021, 20002, 1, 2, 'DEBIT', 5000000),
@@ -925,7 +925,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (200501, 20050, 1, 308, 'DEBIT', 1600025),
         (200502, 20050, 2, 16026, 'CREDIT', 1600025);
 
-    INSERT INTO idempotency_records (id, scope, request_key, actor_user_id, request_hash, status, order_id, response_hash, created_at, expires_at) VALUES
+    INSERT IGNORE INTO idempotency_records (id, scope, request_key, actor_user_id, request_hash, status, order_id, response_hash, created_at, expires_at) VALUES
         (17001, 'CREATE_ORDER', 'DEMO-IDEMPOTENCY-1', 301, UNHEX(SHA2('DEMO-CREATE-BODY-1',256)), 'COMPLETED', 9001, UNHEX(SHA2('DEMO-CREATE-RESPONSE-1',256)), '2026-05-07 10:00:00.000000', '2026-12-01 10:00:00.000000'),
         (17002, 'CREATE_ORDER', 'DEMO-IDEMPOTENCY-2', 302, UNHEX(SHA2('DEMO-CREATE-BODY-2',256)), 'COMPLETED', 9002, UNHEX(SHA2('DEMO-CREATE-RESPONSE-2',256)), '2026-06-09 10:00:00.000000', '2026-12-01 10:00:00.000000'),
         (17003, 'CREATE_ORDER', 'DEMO-IDEMPOTENCY-3', 303, UNHEX(SHA2('DEMO-CREATE-BODY-3',256)), 'COMPLETED', 9003, UNHEX(SHA2('DEMO-CREATE-RESPONSE-3',256)), '2026-07-13 10:00:00.000000', '2026-12-01 10:00:00.000000'),
@@ -951,24 +951,24 @@ SET FOREIGN_KEY_CHECKS = 0;
         (17023, 'CREATE_ORDER', 'DEMO-IDEMPOTENCY-23', 307, UNHEX(SHA2('DEMO-CREATE-BODY-23',256)), 'COMPLETED', 9023, UNHEX(SHA2('DEMO-CREATE-RESPONSE-23',256)), '2026-10-08 10:00:00.000000', '2026-12-01 10:00:00.000000'),
         (17024, 'CREATE_ORDER', 'DEMO-IDEMPOTENCY-24', 308, UNHEX(SHA2('DEMO-CREATE-BODY-24',256)), 'COMPLETED', 9024, UNHEX(SHA2('DEMO-CREATE-RESPONSE-24',256)), '2026-10-08 10:00:00.000000', '2026-12-01 10:00:00.000000');
 
-    INSERT INTO reviews (id, contract_id, reviewer_user_id, rating, comment, status, created_at) VALUES
+    INSERT IGNORE INTO reviews (id, contract_id, reviewer_user_id, rating, comment, status, created_at) VALUES
         (27001, 6001, 301, 5, 'Đánh giá DEMO sau giao dịch đã hoàn thành và thanh toán.', 'PUBLISHED', '2026-05-10 10:00:00.000000'),
         (27009, 6009, 301, 4, 'Đánh giá DEMO sau giao dịch đã hoàn thành và thanh toán.', 'PUBLISHED', '2026-09-11 10:00:00.000000'),
         (27017, 6017, 301, 5, 'Đánh giá DEMO sau giao dịch đã hoàn thành và thanh toán.', 'PUBLISHED', '2026-10-07 10:00:00.000000');
 
-    INSERT INTO reports (id, public_code, reporter_user_id, target_user_id, related_contract_id, reason_code, description, status, assigned_admin_id, resolution, resolved_by, resolved_at, version, created_at) VALUES
+    INSERT IGNORE INTO reports (id, public_code, reporter_user_id, target_user_id, related_contract_id, reason_code, description, status, assigned_admin_id, resolution, resolved_by, resolved_at, version, created_at) VALUES
         (28001, 'DEMO-REPORT-1', 301, 201, 6001, 'CONTENT', 'Báo cáo DEMO phục vụ hàng đợi quản trị, không phải tranh chấp thật.', 'OPEN', NULL, NULL, NULL, NULL, 0, '2026-10-14 10:00:00.000000'),
         (28002, 'DEMO-REPORT-2', 302, 202, 6002, 'CONDUCT', 'Báo cáo DEMO phục vụ hàng đợi quản trị, không phải tranh chấp thật.', 'INVESTIGATING', 100, NULL, NULL, NULL, 0, '2026-10-14 10:00:00.000000'),
         (28003, 'DEMO-REPORT-3', 303, 203, 6003, 'CONTENT', 'Báo cáo DEMO phục vụ hàng đợi quản trị, không phải tranh chấp thật.', 'RESOLVED', 100, 'Kết luận DEMO: đã kiểm tra nội dung minh chứng giả lập.', 100, '2026-10-15 00:00:00.000000', 0, '2026-10-14 10:00:00.000000'),
         (28004, 'DEMO-REPORT-4', 201, 304, NULL, 'CONDUCT', 'Báo cáo DEMO phục vụ hàng đợi quản trị, không phải tranh chấp thật.', 'DISMISSED', 100, 'Kết luận DEMO: đã kiểm tra nội dung minh chứng giả lập.', 100, '2026-10-15 00:00:00.000000', 0, '2026-10-14 10:00:00.000000');
 
-    INSERT INTO report_evidence (report_id, file_id) VALUES
+    INSERT IGNORE INTO report_evidence (report_id, file_id) VALUES
         (28001, 29001),
         (28002, 29002),
         (28003, 29003),
         (28004, 29004);
 
-    INSERT INTO notifications (id, recipient_user_id, event_key, notification_type, title, body, order_id, refund_id, report_id, read_at, created_at) VALUES
+    INSERT IGNORE INTO notifications (id, recipient_user_id, event_key, notification_type, title, body, order_id, refund_id, report_id, read_at, created_at) VALUES
         (18001, 301, 'DEMO-ORDER-CREATED-1', 'ORDER_CREATED', 'Đơn đăng ký DEMO 1', 'Đơn và nguồn đăng ký đã được lưu trong dữ liệu thử.', 9001, NULL, NULL, NULL, '2026-05-07 10:00:00.000000'),
         (18002, 302, 'DEMO-ORDER-CREATED-2', 'ORDER_CREATED', 'Đơn đăng ký DEMO 2', 'Đơn và nguồn đăng ký đã được lưu trong dữ liệu thử.', 9002, NULL, NULL, NULL, '2026-06-09 10:00:00.000000'),
         (18003, 303, 'DEMO-ORDER-CREATED-3', 'ORDER_CREATED', 'Đơn đăng ký DEMO 3', 'Đơn và nguồn đăng ký đã được lưu trong dữ liệu thử.', 9003, NULL, NULL, NULL, '2026-07-13 10:00:00.000000'),
@@ -1003,7 +1003,7 @@ SET FOREIGN_KEY_CHECKS = 0;
         (30003, 303, 'DEMO-REPORT-NOTICE-3', 'REPORT_STATUS', 'Báo cáo DEMO 3', 'Trạng thái xử lý: RESOLVED', NULL, NULL, 28003, NULL, '2026-10-15 00:00:00.000000'),
         (30004, 201, 'DEMO-REPORT-NOTICE-4', 'REPORT_STATUS', 'Báo cáo DEMO 4', 'Trạng thái xử lý: DISMISSED', NULL, NULL, 28004, NULL, '2026-10-15 00:00:00.000000');
 
-    INSERT INTO audit_logs (id, actor_user_id, action_code, order_id, report_id, target_user_id, metadata, created_at) VALUES
+    INSERT IGNORE INTO audit_logs (id, actor_user_id, action_code, order_id, report_id, target_user_id, metadata, created_at) VALUES
         (19001, 301, 'ORDER_CREATED', 9001, NULL, NULL, JSON_OBJECT('fixture','educonnect-dev-v1','source','INVITATION'), '2026-05-07 10:00:00.000000'),
         (19002, 302, 'ORDER_CREATED', 9002, NULL, NULL, JSON_OBJECT('fixture','educonnect-dev-v1','source','INVITATION'), '2026-06-09 10:00:00.000000'),
         (19003, 303, 'ORDER_CREATED', 9003, NULL, NULL, JSON_OBJECT('fixture','educonnect-dev-v1','source','INVITATION'), '2026-07-13 10:00:00.000000'),
@@ -1034,11 +1034,11 @@ SET FOREIGN_KEY_CHECKS = 0;
         (31004, 100, 'REPORT_DECIDED', NULL, 28004, 304, JSON_OBJECT('fixture','educonnect-dev-v1','status','DISMISSED'), '2026-10-15 00:00:00.000000');
 
 -- Ghi nhận mốc seed để kiểm tra verify
-INSERT INTO dev_seed_runs (fixture_set, manifest_hash, applied_at)
+INSERT IGNORE INTO dev_seed_runs (fixture_set, manifest_hash, applied_at)
 VALUES ('educonnect-dev-v1', UNHEX('652b2b53e6302d610cc5b0f8ad3ef73c58fbb26e4326ab3ed6282c53cae52c12'), '2026-10-15 00:00:00.000000');
 
 -- Ghi nhận lịch sử Flyway (đảm bảo tương thích với ứng dụng Spring Boot)
-INSERT INTO `flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES
+INSERT IGNORE INTO `flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES
 (1, '1', 'educonnect schema', 'SQL', 'V1__educonnect_schema.sql', 20393133, 'root', CURRENT_TIMESTAMP, 100, 1),
 (2, '2', 'reference data', 'SQL', 'V2__reference_data.sql', 1949144099, 'root', CURRENT_TIMESTAMP, 50, 1),
 (3, '3', 'require group capacity and dates', 'SQL', 'V3__require_group_capacity_and_dates.sql', -614067934, 'root', CURRENT_TIMESTAMP, 50, 1);
