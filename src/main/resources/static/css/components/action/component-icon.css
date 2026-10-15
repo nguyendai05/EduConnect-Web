@@ -1,0 +1,52 @@
+.component-icon {
+    display: inline-block;
+    width: 1.125rem;
+    height: 1.125rem;
+    flex: 0 0 auto;
+    background: currentColor;
+    mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+}
+.component-icon--search {
+    mask-image: url("../../../assets/icons/search.svg");
+}
+.component-icon--close {
+    mask-image: url("../../../assets/icons/close.svg");
+}
+.component-icon--verified {
+    mask-image: url("../../../assets/icons/verified.svg");
+}
+.component-icon--wallet {
+    mask-image: url("../../../assets/icons/wallet.svg");
+}
+.component-icon--eye {
+    mask-image: url("../../../assets/icons/mat.svg");
+}
+.component-icon--file {
+    mask-image: url("../../../assets/icons/certificate.svg");
+}
+.component-icon--image {
+    mask-image: url("../../../assets/icons/library.svg");
+}
+.component-icon--profile {
+    mask-image: url("../../../assets/icons/profile.svg");
+}
+.component-icon--dispute {
+    mask-image: url("../../../assets/icons/dispute.svg");
+}
+.component-icon--clock {
+    mask-image: url("../../../assets/icons/clock.svg");
+}
+.component-icon--check {
+    mask-image: url("../../../assets/icons/dau-tich.svg");
+}
+.component-icon--arrow {
+    mask-image: url("../../../assets/icons/chevron-right.svg");
+}
+.component-icon--download {
+    mask-image: url("../../../assets/icons/component-download.svg");
+}
+.component-icon--bookmark {
+    mask-image: url("../../../assets/icons/component-bookmark.svg");
+}

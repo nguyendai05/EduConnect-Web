@@ -1,0 +1,23 @@
+# Profile DB development; secret phải cung cấp qua môi trường, không commit giá trị thật.
+spring:
+  datasource:
+    url: ${EDUCONNECT_DB_URL}
+    username: ${EDUCONNECT_DB_USERNAME}
+    password: ${EDUCONNECT_DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+    validate-on-migrate: true
+    clean-disabled: true
+  sql:
+    init:
+      mode: never

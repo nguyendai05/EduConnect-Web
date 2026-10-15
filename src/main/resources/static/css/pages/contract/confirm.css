@@ -1,0 +1,221 @@
+.confirm-page {
+    max-width: 1240px;
+    margin: auto;
+    padding: var(--space-6);
+}
+.confirm-page [hidden],
+#confirm-modal [hidden],
+#cancel-modal [hidden] {
+    display: none;
+}
+.confirm-page > .breadcrumb,
+.confirm-page > .alert {
+    margin-bottom: var(--space-6);
+}
+.confirm-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: var(--space-6);
+    align-items: start;
+}
+.confirm-main,
+.confirm-stack {
+    display: grid;
+    /* Track ngầm định của grid có size = max-content, nên bảng 640px đẩy cột vượt
+       khỏi container 358px; min-width:0 trên container không đủ để track co lại. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+    min-width: 0;
+}
+.confirm-sidebar {
+    position: sticky;
+    top: var(--scroll-offset);
+    max-height: calc(100dvh - var(--scroll-offset) - var(--space-4));
+    overflow-y: auto;
+    min-width: 0;
+}
+.confirm-panel {
+    padding: var(--space-5);
+}
+.confirm-two-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+.confirm-party {
+    display: flex;
+    align-items: start;
+    gap: var(--space-3);
+    font-size: var(--font-size-sm);
+}
+/* avatar--large chiếm 72px; cột chữ cần lấy hết chỗ còn lại */
+.confirm-party > div {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.confirm-party h3,
+.confirm-note h3,
+.confirm-signature h3 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-2);
+}
+.confirm-party .badge {
+    margin-bottom: var(--space-2);
+}
+.confirm-muted {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+.confirm-note {
+    margin-top: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-container);
+    font-size: var(--font-size-sm);
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+.confirm-total {
+    color: var(--color-primary);
+    font-size: var(--font-size-xl);
+}
+/* Số ô theo chiều rộng thật của khối, không theo breakpoint cứng. */
+.confirm-fee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+}
+.confirm-fee-grid > div {
+    padding: var(--space-3);
+    background: var(--color-surface-low);
+    border-radius: var(--radius-md);
+}
+.confirm-fee-grid p {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+}
+.confirm-fee-grid strong {
+    font-size: var(--font-size-base);
+}
+.confirm-steps {
+    padding-left: var(--space-5);
+    display: grid;
+    gap: var(--space-4);
+}
+.confirm-steps li::marker {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+.confirm-steps span {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+.confirm-rule {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-4);
+    font-size: var(--font-size-sm);
+}
+.confirm-rule summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+.confirm-rule summary:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+}
+.confirm-rule p {
+    margin-top: var(--space-3);
+    color: var(--color-text-secondary);
+}
+.confirm-signature {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+.confirm-signature p {
+    margin-top: var(--space-2);
+}
+.confirm-select-all {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-4);
+    font-size: var(--font-size-sm);
+}
+.confirm-price {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-container);
+}
+.confirm-price span {
+    font-size: var(--font-size-sm);
+}
+.confirm-price strong {
+    display: block;
+    color: var(--color-primary);
+    font-size: var(--font-size-2xl);
+    margin-top: var(--space-2);
+}
+/* Ghi chú dưới mỗi ô trong bảng phí (JS sinh thêm <small>). */
+.confirm-fee-grid small {
+    display: block;
+    margin-top: var(--space-2);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+}
+/* Cảnh báo đối soát: tổng đơn ≠ tổng hạng mục ≠ tổng hợp đồng. */
+.confirm-reconcile-warning {
+    color: var(--color-warning-text);
+    font-weight: 600;
+}
+.confirm-error {
+    margin-top: var(--space-2);
+    color: var(--color-danger-text);
+    font-size: var(--font-size-sm);
+}
+@media (max-width: 64rem) {
+    .confirm-layout {
+        /* 1fr = min-width:auto: cot khong he co khi bang 5-6 cay nam trong no. */
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .confirm-sidebar {
+        position: static;
+        max-height: none;
+        overflow: visible;
+    }
+}
+@media (max-width: 560px) {
+    .confirm-page {
+        padding: var(--space-4);
+    }
+    .confirm-two-columns,
+    .confirm-fee-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+@media print {
+
+    .confirm-page {
+        max-width: none;
+        padding: 0;
+    }
+    .confirm-layout {
+        display: block;
+    }
+    .confirm-main {
+        gap: 12px;
+    }
+    .confirm-page .card {
+        break-inside: avoid;
+        box-shadow: none;
+    }
+    .confirm-rule > * {
+        display: block;
+    }
+}

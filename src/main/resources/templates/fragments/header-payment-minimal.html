@@ -1,0 +1,17 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"><th:block th:fragment="header(active, variant)">
+<header class="checkout-header" th:if="${variant == &#x27;v1&#x27;}">
+            <a
+                class="merchant-brand"
+                href="/payment/checkout"
+                aria-label="Edu Connect — quay lại bước thanh toán"
+                 th:href="@{/payment/checkout}"><img
+                    class="brand-logo"
+                    src="/assets/brand/logo-horizontal.svg"
+                    alt="Edu Connect"
+                    width="4562"
+                    height="1000"
+             th:src="@{/assets/brand/logo-horizontal.svg}"/></a>
+            <span class="provider">payOS <small>Checkout · DEMO</small></span>
+        </header>
+</th:block></html>

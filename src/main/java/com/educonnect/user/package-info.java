@@ -1,4 +1,2 @@
-/**
- * User identity, profile, and account domain.
- */
+/** User domain and MVC page routes. */
 package com.educonnect.user;

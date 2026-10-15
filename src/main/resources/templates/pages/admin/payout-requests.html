@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: page(~{::title}, &#x27;/admin/payout-requests&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Danh sách yêu cầu rút tiền | Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}">
+<link rel="stylesheet" href="/css/components/layout/admin-sidebar.css" th:href="@{/css/components/layout/admin-sidebar.css}">
+<link rel="stylesheet" href="/css/components/layout/admin-header.css" th:href="@{/css/components/layout/admin-header.css}">
+<link rel="stylesheet" href="/css/components/navigation/breadcrumb.css" th:href="@{/css/components/navigation/breadcrumb.css}">
+<link rel="stylesheet" href="/css/components/navigation/tabs.css" th:href="@{/css/components/navigation/tabs.css}">
+<link rel="stylesheet" href="/css/components/navigation/pagination.css" th:href="@{/css/components/navigation/pagination.css}">
+<link rel="stylesheet" href="/css/components/form/search-input.css" th:href="@{/css/components/form/search-input.css}">
+<link rel="stylesheet" href="/css/components/form/select.css" th:href="@{/css/components/form/select.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/data-display/table.css" th:href="@{/css/components/data-display/table.css}">
+<link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
+<link rel="stylesheet" href="/css/components/data-display/stat-card.css" th:href="@{/css/components/data-display/stat-card.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/components/feedback/loading.css" th:href="@{/css/components/feedback/loading.css}">
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/pages/admin/payout-requests.css" th:href="@{/css/pages/admin/payout-requests.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+
+</th:block>
+<th:block th:fragment="scripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('tutor-review-data')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('payout-data')}"></th:block>
+<script src="/js/core/admin-sidebar.js" defer th:src="@{/js/core/admin-sidebar.js}"></script>
+<script src="/js/core/admin-header.js" defer th:src="@{/js/core/admin-header.js}"></script>
+<script src="/js/core/search-input.js" defer th:src="@{/js/core/search-input.js}"></script>
+<script src="/js/core/tabs.js" defer th:src="@{/js/core/tabs.js}"></script>
+<script src="/js/core/pagination.js" defer th:src="@{/js/core/pagination.js}"></script>
+<script src="/js/pages/admin/payout-requests.js" defer th:src="@{/js/pages/admin/payout-requests.js}"></script>
+</th:block>
+</head>
+<body class="payout-requests-page" th:fragment="content">
+    <a class="payout-requests__skip-link" href="#payout-main">Đến nội dung chính</a>
+    <div class="admin-shell" data-component="admin-shell" data-payout-requests>
+        <!-- Component: AdminSidebar | Nguồn: components/layout/admin-sidebar.html -->
+        <th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
+        <!-- Component: AdminHeader | Nguồn: components/layout/admin-header.html; JS: js/core/admin-header.js -->
+        <th:block th:replace="~{fragments/header-admin :: header(${active}, 'v6')}"></th:block>
+        <main class="admin-shell__workspace" id="payout-main" tabindex="-1">
+            <div class="admin-shell__content payout-requests">
+                <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
+                <header class="admin-shell__page-header payout-requests__header">
+                    <div>
+                        <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="/admin/dashboard" th:href="@{/admin/dashboard}">Tổng quan</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Yêu cầu rút tiền</span></li></ol></nav>
+                        <h1>Yêu cầu rút tiền</h1>
+
+                    </div>
+                    <div class="payout-requests__refresh">
+                        <button class="button button--secondary" type="button" data-payout-refresh><svg class="payout-requests__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6.1 7a7 7 0 0 1 11.6-1L20 9M4 15l2.3 3A7 7 0 0 0 17.9 17"/></svg>Làm mới</button>
+                        <span class="payout-requests__updated" data-payout-updated>Đang cập nhật…</span>
+                    </div>
+                </header>
+                <!-- Component: StatCard, Badge | Nguồn: components/data-display/stat-card.html; components/feedback/badge.html -->
+                <section class="payout-requests__summary" aria-label="Tổng quan dòng tiền rút">
+                    <article class="stat-card stat-card--compact stat-card--warning payout-requests__metric">
+                        <div class="stat-card__header"><h2 class="payout-requests__metric-label">Chờ xử lý</h2><span class="stat-card__icon"><img src="/assets/icons/clock.svg" alt="" th:src="@{/assets/icons/clock.svg}"></span></div>
+                        <p class="payout-requests__metric-value"><strong class="stat-card__value" data-payout-count="pending">0</strong><span class="stat-card__unit">yêu cầu cần duyệt</span></p>
+                        <div class="payout-requests__metric-footer"><span class="badge badge--warning">Chưa đối soát</span><span data-payout-total="pending">—</span></div>
+                    </article>
+                    <article class="stat-card stat-card--compact stat-card--info payout-requests__metric">
+                        <div class="stat-card__header"><h2 class="payout-requests__metric-label">Đang xử lý</h2><span class="stat-card__icon"><img src="/assets/icons/wallet.svg" alt="" th:src="@{/assets/icons/wallet.svg}"></span></div>
+                        <p class="payout-requests__metric-value"><strong class="stat-card__value" data-payout-count="processing">0</strong><span class="stat-card__unit">yêu cầu chờ chuyển tiền</span></p>
+                        <div class="payout-requests__metric-footer"><span class="badge badge--info">Đã duyệt, chưa có mã GD</span><span data-payout-total="processing">—</span></div>
+                    </article>
+                    <article class="stat-card stat-card--compact stat-card--success payout-requests__metric">
+                        <div class="stat-card__header"><h2 class="payout-requests__metric-label">Đã chuyển tiền</h2><span class="stat-card__icon"><img src="/assets/icons/check-double.svg" alt="" th:src="@{/assets/icons/check-double.svg}"></span></div>
+                        <p class="payout-requests__metric-value"><strong class="stat-card__value" data-payout-count="completed">0</strong><span class="stat-card__unit">yêu cầu hoàn tất</span></p>
+                        <div class="payout-requests__metric-footer"><span class="badge badge--success">Đã tất toán</span><span data-payout-total="completed">—</span></div>
+                    </article>
+                    <article class="stat-card stat-card--compact stat-card--danger payout-requests__metric">
+                        <div class="stat-card__header"><h2 class="payout-requests__metric-label">Từ chối</h2><span class="stat-card__icon"><img src="/assets/icons/cancel.svg" alt="" th:src="@{/assets/icons/cancel.svg}"></span></div>
+                        <p class="payout-requests__metric-value"><strong class="stat-card__value" data-payout-count="rejected">0</strong><span class="stat-card__unit">yêu cầu đã trả lại số dư</span></p>
+                        <div class="payout-requests__metric-footer"><span class="badge badge--danger">Đã đóng hồ sơ</span><span data-payout-total="rejected">—</span></div>
+                    </article>
+                </section>
+                <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
+                <section class="alert alert--contextual payout-requests__notice" aria-labelledby="payout-notice-title">
+                    <span class="alert__icon alert__icon--lock" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <h2 class="alert__title" id="payout-notice-title">Tiền của yêu cầu đang chờ xử lý đã được tách khỏi số dư khả dụng</h2>
+                        <p class="alert__message">Tiền của yêu cầu đang chờ xử lý nằm trong Số dư chờ rút. Mở chi tiết để duyệt, từ chối hoặc xác nhận chuyển khoản.</p>
+                    </div>
+                </section>
+                <!-- Component: Tabs, SearchInput, Select | Nguồn: components/navigation/tabs.html; components/form/{search-input,select}.html -->
+                <section class="payout-requests__toolbar" aria-label="Tìm kiếm và lọc yêu cầu rút tiền">
+                    <div class="payout-requests__toolbar-heading">
+                        <div class="tabs tabs--contained" data-tabs data-payout-status-tabs>
+                            <div class="tabs__list" role="tablist" aria-label="Trạng thái yêu cầu rút tiền">
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-all" aria-selected="true" aria-controls="payout-results" data-payout-status="all">Tất cả <span class="tabs__badge" data-status-count="all">0</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-pending" aria-selected="false" aria-controls="payout-results" tabindex="-1" data-payout-status="pending">Chờ xử lý <span class="tabs__badge" data-status-count="pending">0</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-processing" aria-selected="false" aria-controls="payout-results" tabindex="-1" data-payout-status="processing">Đang xử lý <span class="tabs__badge" data-status-count="processing">0</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-completed" aria-selected="false" aria-controls="payout-results" tabindex="-1" data-payout-status="completed">Đã chuyển tiền <span class="tabs__badge" data-status-count="completed">0</span></button>
+                                <button class="tabs__tab" type="button" role="tab" id="payout-tab-rejected" aria-selected="false" aria-controls="payout-results" tabindex="-1" data-payout-status="rejected">Từ chối <span class="tabs__badge" data-status-count="rejected">0</span></button>
+                            </div>
+                        </div>
+                        <p class="payout-requests__priority"><img src="/assets/icons/shield-alert.svg" alt="" th:src="@{/assets/icons/shield-alert.svg}">Cần đối soát trước khi duyệt: <strong data-payout-flagged-count>0 yêu cầu</strong></p>
+                    </div>
+                    <form class="payout-requests__filters" role="search" data-payout-filters>
+                        <div class="search-input search-input--compact" data-search-input>
+                            <label class="sr-only" for="payout-search">Tìm kiếm yêu cầu rút tiền</label>
+                            <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                            <input id="payout-search" type="search" name="query" placeholder="Tìm theo mã phiếu, tên gia sư, ngân hàng, số tài khoản…" autocomplete="off" maxlength="200" data-payout-search>
+                            <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                        </div>
+                        <div class="select-field"><label class="sr-only" for="payout-bank">Ngân hàng nhận</label><select class="select-control select-control--native" id="payout-bank" name="bank"><option value="all">Ngân hàng: Tất cả</option></select></div>
+                        <div class="select-field"><label class="sr-only" for="payout-period">Thời điểm tạo</label><select class="select-control select-control--native" id="payout-period" name="period"><option value="all">Thời gian: Tất cả</option><option value="today">Trong hôm nay</option><option value="7d">7 ngày qua</option><option value="30d">30 ngày qua</option><option value="stale">Quá 3 ngày chưa xử lý</option></select></div>
+                        <div class="select-field"><label class="sr-only" for="payout-sort">Sắp xếp yêu cầu</label><select class="select-control select-control--native" id="payout-sort" name="sort"><option value="newest">Sắp xếp: Mới nhất</option><option value="oldest">Sắp xếp: Cũ nhất</option><option value="amount">Sắp xếp: Số tiền cao nhất</option><option value="warning">Sắp xếp: Ưu tiên cảnh báo</option></select></div>
+                    </form>
+                    <div class="payout-requests__results-heading"><p data-payout-result-summary aria-live="polite" aria-atomic="true">Đang tải yêu cầu rút tiền…</p><button class="button button--ghost button--small" type="button" data-payout-reset hidden>Xóa bộ lọc</button></div>
+                </section>
+                <section id="payout-results" role="tabpanel" aria-labelledby="payout-tab-all" aria-busy="true" tabindex="0" data-payout-results>
+                    <!-- Component: Loading | Nguồn: components/feedback/loading.html -->
+                    <div class="loading" role="status" data-component="loading" data-payout-loading><span class="loading__spinner" aria-hidden="true"></span><p class="loading__text">Đang tải danh sách yêu cầu rút tiền…</p></div>
+                    <div class="table-frame" data-payout-table hidden>
+                        <!-- Component: Table | Nguồn: components/data-display/table.html -->
+                        <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách yêu cầu rút tiền, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                            <table class="table table--review">
+                                <caption class="table__caption table__caption--sr-only">Danh sách yêu cầu rút tiền theo trạng thái và bộ lọc</caption>
+                                <thead><tr><th scope="col">Mã yêu cầu &amp; gia sư</th><th scope="col">Số tiền rút</th><th scope="col">Ngân hàng nhận</th><th scope="col">Cảnh báo đối soát</th><th scope="col">Thời gian tạo</th><th scope="col">Trạng thái</th><th scope="col" class="table__action-heading">Thao tác</th></tr></thead>
+                                <tbody data-payout-list></tbody>
+                            </table>
+                        </div>
+                        <div class="payout-requests__table-footer table-footer">
+                            <!-- Component: Pagination | Nguồn: components/navigation/pagination.html; JS: js/core/pagination.js -->
+                            <nav class="pagination pagination--table" aria-label="Phân trang danh sách yêu cầu rút tiền" data-component="pagination" data-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1">
+                                <p class="pagination__summary">Hiển thị <strong data-range-start>0</strong>–<strong data-range-end>0</strong> trong <strong data-total-count>0</strong> yêu cầu</p>
+                                <div class="pagination__controls">
+                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button>
+                                    <span class="pagination__controls" data-page-numbers><button class="pagination__button is-current" type="button" data-page="1" aria-current="page">1</button></span>
+                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau" disabled><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+                                </div>
+                            </nav>
+                            <div class="payout-requests__page-size table-footer__page-size"><label for="payout-page-size">Số yêu cầu mỗi trang</label><select class="select-control select-control--native" id="payout-page-size" data-payout-page-size><option value="3">3</option><option value="5" selected>5</option><option value="10">10</option></select></div>
+                        </div>
+                    </div>
+                    <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                    <div class="empty-state" data-component="empty-state" data-payout-empty hidden><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title">Không tìm thấy yêu cầu rút tiền</h2><p class="empty-state__description">Thử thay đổi từ khóa, ngân hàng hoặc mốc thời gian để xem các yêu cầu trong trạng thái này.</p><button class="button button--outline" type="button" data-payout-reset>Xóa bộ lọc</button></div>
+                </section>
+
+                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải danh sách, tìm kiếm, lọc và phân trang yêu cầu rút tiền.</p></noscript>
+            </div>
+        </main>
+
+        <template id="payout-row-template">
+            <tr data-payout-row>
+                <th scope="row"><span class="table__reference" data-payout-code></span><div class="table__person"><span class="avatar avatar--small" aria-hidden="true" data-payout-avatar></span><div><strong data-payout-tutor></strong><small data-payout-tutor-meta></small></div></div></th>
+                <td><span class="payout-requests__amount" data-payout-amount></span><small data-payout-balance></small></td>
+                <td><span data-payout-bank></span><small class="payout-requests__account" data-payout-account></small><small data-payout-holder></small></td>
+                <td><span class="badge" data-payout-warning-badge></span><small class="table__review-note" data-payout-warning-note></small></td>
+                <td><time class="table__submitted" data-payout-date></time><small data-payout-time></small></td>
+                <td><span class="badge" data-payout-status></span><small data-payout-handler></small></td>
+                <td class="table__action"><a href="/admin/payout-request-detail" data-payout-detail th:href="@{/admin/payout-request-detail}">Xem &amp; xử lý</a></td>
+            </tr>
+        </template>
+    </div>
+    <th:block th:replace="${scripts}"></th:block>
+</body>
+</html>

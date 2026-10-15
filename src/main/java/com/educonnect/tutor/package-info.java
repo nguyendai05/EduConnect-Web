@@ -1,4 +1,2 @@
-/**
- * Tutor profile, availability, subject, and verification domain.
- */
+/** Tutor domain and MVC page routes. */
 package com.educonnect.tutor;

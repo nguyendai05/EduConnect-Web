@@ -1,4 +1,2 @@
-/**
- * Lesson schedule, attendance, and learning session domain.
- */
+/** Lesson domain and MVC page routes. */
 package com.educonnect.lesson;

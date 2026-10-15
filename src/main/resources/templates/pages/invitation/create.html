@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;tutors&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Mời gia sư dạy | Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/components/action/component-icon.css" th:href="@{/css/components/action/component-icon.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+<link rel="stylesheet" href="/css/components/navigation/breadcrumb.css" th:href="@{/css/components/navigation/breadcrumb.css}">
+<link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
+<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
+<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
+<link rel="stylesheet" href="/css/components/data-display/rating.css" th:href="@{/css/components/data-display/rating.css}">
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" href="/css/components/feedback/modal.css" th:href="@{/css/components/feedback/modal.css}">
+<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+<link rel="stylesheet" href="/css/components/form/form-field.css" th:href="@{/css/components/form/form-field.css}">
+<link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
+<link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}">
+<link rel="stylesheet" href="/css/pages/invitation/create.css" th:href="@{/css/pages/invitation/create.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+<script src="/js/core/radio.js" defer th:src="@{/js/core/radio.js}"></script>
+<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
+<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
+<script src="/js/pages/invitation/create.js" defer th:src="@{/js/pages/invitation/create.js}"></script>
+</th:block>
+<th:block th:fragment="scripts">
+
+</th:block>
+</head>
+<body class="invitation-create-page" th:fragment="content">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
+<div class="user-shell" data-component="user-shell" data-invitation-create-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
+    <th:block th:replace="~{fragments/header-user :: header(${active}, 'v6')}"></th:block>
+
+    <main class="user-shell__main">
+        <section class="invitation-create-heading">
+            <div class="user-shell__content">
+                <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
+                <nav class="breadcrumb" aria-label="Breadcrumb"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="/tutor/search" th:href="@{/tutor/search}">Tìm gia sư</a></li><li class="breadcrumb__item"><a class="breadcrumb__link" href="/tutor/profile" data-breadcrumb-tutor th:href="@{/tutor/profile}">Nguyễn Minh Anh</a></li><li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current">Mời dạy</span></li></ol></nav>
+                <div class="invitation-create-heading__row"><div><h1 data-create-heading>Mời gia sư dạy</h1></div></div>
+                <section class="alert alert--error invitation-create-not-found" data-invitation-not-found role="alert" hidden>
+                    <span class="alert__icon" aria-hidden="true"></span>
+                    <div class="alert__content">
+                        <h2 class="alert__title" data-not-found-title>Không tìm thấy gia sư</h2>
+                        <p class="alert__message" data-not-found-message>Đường dẫn tham chiếu tới gia sư hoặc dịch vụ không tồn tại trong dữ liệu mẫu.</p>
+                        <a class="button button--outline" href="/tutor/search" data-not-found-back th:href="@{/tutor/search}">Về trang tìm gia sư</a>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <div class="user-shell__content invitation-create-layout">
+            <form class="invitation-create-form" data-invitation-form novalidate>
+                <!-- Component: Card, Avatar, Badge, Rating | Nguồn: components/data-display/{card,avatar,rating}.html; components/feedback/badge.html -->
+                <section class="card invitation-tutor" aria-labelledby="invitation-tutor-name"><span class="avatar avatar--large" role="img" aria-label="Ảnh đại diện Nguyễn Minh Anh" data-create-avatar>MA</span><div class="invitation-tutor__body"><div class="invitation-tutor__title"><h2 id="invitation-tutor-name" data-create-name>Nguyễn Minh Anh</h2><span class="badge badge--verified"><span class="component-icon component-icon--verified" aria-hidden="true"></span>Đã xác minh</span></div><p><strong data-create-subjects>Toán · Vật lý</strong><span aria-hidden="true">•</span><span class="rating rating--compact"><span class="rating__stars" aria-hidden="true"><span class="rating__star"></span></span><span class="rating__score" data-create-rating>4,9</span><span class="rating__count" data-create-rating-count>(126 đánh giá)</span></span><span aria-hidden="true">•</span><span data-create-experience>5 năm kinh nghiệm</span><span aria-hidden="true">•</span><span data-create-classes>84 lớp đã dạy</span></p><p><img src="/assets/icons/dinh-vi.svg" alt="" th:src="@{/assets/icons/dinh-vi.svg}"><span data-create-location>Thủ Đức, TP. Hồ Chí Minh</span><span aria-hidden="true">•</span><span data-create-delivery>Dạy tại nhà &amp; trực tuyến</span></p></div></section>
+
+                <!-- Component: Card, Radio | Nguồn: components/data-display/card.html; components/form/radio.html; JS: js/core/radio.js -->
+                <section class="card invitation-section" aria-labelledby="subject-title"><header class="invitation-section__header"><div><h2 id="subject-title"><span>1</span>Môn học</h2></div><small>Bắt buộc</small></header><fieldset class="invitation-subjects" data-subject-group><legend class="sr-only">Chọn dịch vụ hoặc lớp của gia sư</legend></fieldset></section>
+
+                <template data-invitation-offering-template>
+                    <label class="card card--interactive invitation-subject" data-subject-card><input type="radio" name="subject" data-label="" data-rate="" data-offering-id="" data-tutor-id=""><span class="invitation-subject__check" aria-hidden="true">✓</span><strong data-offering-title>—</strong><b data-offering-price>—</b><small data-offering-meta>—</small></label>
+                </template>
+
+                <!-- Component: Card, Input, Button | Nguồn: components/data-display/card.html; components/form/input.html; components/action/button.html -->
+                <section class="card invitation-section" aria-labelledby="frequency-title"><header class="invitation-section__header"><div><h2 id="frequency-title"><span>2</span>Số buổi &amp; tần suất</h2></div></header><div class="invitation-frequency"><div class="form-field"><label class="form-field__label" for="total-sessions">Tổng số buổi</label><div class="invitation-stepper"><button class="button button--secondary" type="button" data-session-adjust="-1" aria-label="Giảm một buổi">−</button><label class="input-control"><input class="input-control__input" id="total-sessions" type="number" min="1" max="60" value="8"><span class="input-control__suffix">buổi</span></label><button class="button button--secondary" type="button" data-session-adjust="1" aria-label="Tăng một buổi">+</button></div></div><div class="form-field"><span class="form-field__label">Số buổi mỗi tuần</span><div class="invitation-frequency__options" role="group" aria-label="Số buổi mỗi tuần"><button type="button" data-frequency="1">1 buổi</button><button class="is-selected" type="button" data-frequency="2" aria-pressed="true">2 buổi</button><button type="button" data-frequency="3">3 buổi</button><button type="button" data-frequency="4">4 buổi</button></div><span class="badge badge--info invitation-timeline"><img src="/assets/icons/clock.svg" alt="" th:src="@{/assets/icons/clock.svg}"><span data-estimated-timeline>Thời lượng dự kiến: khoảng 4 tuần</span></span></div></div></section>
+
+                <!-- Component: Card, FormField, Input, Alert | Nguồn: components/data-display/card.html; components/form/{form-field,input}.html; components/feedback/alert.html -->
+                <section class="card invitation-section" aria-labelledby="rate-title"><header class="invitation-section__header"><div><h2 id="rate-title"><span>3</span>Học phí đề xuất</h2></div></header><div class="form-field invitation-rate"><label class="form-field__label" for="rate-input">Mức giá mỗi buổi</label><label class="input-control"><input class="input-control__input input-control__input--money" id="rate-input" inputmode="numeric" value="200.000"><span class="input-control__suffix">₫/buổi</span></label><p class="form-field__message">Giá niêm yết của gia sư cho <strong data-listed-subject>Toán · THPT</strong> là <span data-listed-rate>200.000 ₫</span> / buổi.</p></div><div class="invitation-calculation"><span><img src="/assets/icons/receipt.svg" alt="" th:src="@{/assets/icons/receipt.svg}">Công thức tính: <strong data-calculation>8 buổi × 200.000 ₫</strong></span><p>Tổng học phí dự kiến:<strong data-total-cost>1.600.000 ₫</strong></p></div></section>
+
+                <!-- Component: Card, Input, Alert, Button | Nguồn: components/data-display/card.html; components/form/input.html; components/feedback/alert.html; components/action/button.html -->
+                <section class="card invitation-section" aria-labelledby="schedule-title"><header class="invitation-section__header"><div><h2 id="schedule-title"><span>4</span>Lịch học mong muốn</h2></div></header><div class="invitation-availability"><img src="/assets/icons/calendar.svg" alt="" th:src="@{/assets/icons/calendar.svg}"><p><strong>Lịch rảnh của gia sư:</strong><span data-tutor-availability>Thứ 2 (18:00–21:00), Thứ 4 (18:00–21:00), Thứ 6 (18:30–21:00), Thứ 7 (08:00–11:30)</span></p></div><div class="form-field invitation-start-date"><label class="form-field__label" for="start-date">Ngày dự kiến bắt đầu</label><label class="input-control"><img class="input-control__icon" src="/assets/icons/calendar.svg" alt="" th:src="@{/assets/icons/calendar.svg}"><input class="input-control__input input-control__input--with-leading" id="start-date" type="text" value="28/09/2026"></label></div><div class="form-field"><span class="form-field__label">Khung giờ hàng tuần</span><div class="invitation-slots" data-slot-list><article data-slot data-day="Thứ 2" data-time="19:00–20:30"><span>T2</span><p><strong>Thứ 2</strong><small>19:00–20:30 (90 phút)</small></p><button type="button" data-remove-slot aria-label="Xóa khung giờ Thứ 2"><img src="/assets/icons/cancel.svg" alt="" th:src="@{/assets/icons/cancel.svg}"></button></article><article data-slot data-day="Thứ 4" data-time="19:00–20:30"><span>T4</span><p><strong>Thứ 4</strong><small>19:00–20:30 (90 phút)</small></p><button type="button" data-remove-slot aria-label="Xóa khung giờ Thứ 4"><img src="/assets/icons/cancel.svg" alt="" th:src="@{/assets/icons/cancel.svg}"></button></article></div><button class="button button--outline invitation-add-slot" type="button" data-add-slot>＋ Thêm khung giờ học khác</button></div><section class="alert alert--warning invitation-warning" role="status"><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><p class="alert__message"><strong>Thời gian này nằm ngoài lịch rảnh hiện tại của gia sư.</strong> Bạn vẫn có thể gửi đề xuất, gia sư sẽ quyết định và phản hồi sắp xếp lại khi nhận tin.</p></div></section></section>
+
+                <!-- Component: Card, Radio, Input | Nguồn: components/data-display/card.html; components/form/radio.html; components/form/input.html; JS: js/core/radio.js -->
+                <section class="card invitation-section" aria-labelledby="format-title"><header class="invitation-section__header"><div><h2 id="format-title"><span>5</span>Hình thức học</h2></div></header><fieldset class="invitation-formats"><legend class="sr-only">Chọn hình thức học</legend><label class="radio-option radio-option--selected invitation-format" data-format-card><span class="radio-hit-area"><input type="radio" name="learning-format" value="home" checked><span class="radio-circle"></span></span><span><strong>Tại nhà</strong><small>Gia sư tới địa chỉ học sinh</small></span><img src="/assets/icons/dinh-vi.svg" alt="" th:src="@{/assets/icons/dinh-vi.svg}"></label><label class="radio-option invitation-format" data-format-card><span class="radio-hit-area"><input type="radio" name="learning-format" value="online"><span class="radio-circle"></span></span><span><strong>Trực tuyến</strong><small>Học qua Google Meet / Zoom</small></span><img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}"></label></fieldset><div class="form-field" data-location-field><label class="form-field__label" for="location-input">Địa điểm học cụ thể</label><label class="input-control"><img class="input-control__icon" src="/assets/icons/dinh-vi.svg" alt="" th:src="@{/assets/icons/dinh-vi.svg}"><input class="input-control__input input-control__input--with-leading" id="location-input" value="Số 45, Đường 8, Phường Linh Trung, TP. Thủ Đức, TP. Hồ Chí Minh"></label><p class="form-field__message">Địa chỉ này chỉ được chia sẻ an toàn sau khi gia sư xác nhận lời mời.</p></div></section>
+
+                <!-- Component: Card, Textarea | Nguồn: components/data-display/card.html; components/form/textarea.html -->
+                <section class="card invitation-section" aria-labelledby="message-title"><header class="invitation-section__header"><div><h2 id="message-title"><span>6</span>Lời nhắn cho gia sư</h2></div></header><div class="textarea-field"><label class="sr-only" for="invitation-message">Nội dung lời nhắn</label><textarea class="textarea-control" id="invitation-message" maxlength="500" rows="4">Con tôi đang học lớp 11 và cần củng cố phần đại số trước kỳ kiểm tra giữa học kỳ. Mong thầy có thể tập trung vào các dạng bài còn yếu trong những buổi đầu.</textarea><div class="invitation-message-meta"><p class="textarea-field__help"><img src="/assets/icons/shield.svg" alt="" th:src="@{/assets/icons/shield.svg}">Không chia sẻ số điện thoại, email hoặc liên kết mạng xã hội trong lời nhắn.</p><span class="textarea-field__counter" data-message-counter>142 / 500</span></div></div></section>
+
+                <!-- Component: Button | Nguồn: components/action/button.html -->
+                <div class="invitation-form-actions"><a class="button button--secondary button--large" href="/tutor/profile" data-back-link th:href="@{/tutor/profile}">‹ Quay lại hồ sơ</a><button class="button button--primary button--large" type="button" data-open-confirm><img src="/assets/icons/message.svg" alt="" th:src="@{/assets/icons/message.svg}">Gửi lời mời</button></div>
+            </form>
+
+            <aside class="invitation-create-sidebar" aria-label="Tóm tắt lời mời">
+                <!-- Component: Card, Badge, Avatar, InfoRow, Alert, Button | Nguồn: components/data-display/{card,avatar,info-row}.html; components/feedback/{badge,alert}.html; components/action/button.html -->
+                <section class="card invitation-summary"><header><h2>Tóm tắt lời mời</h2><span class="badge badge--info">Bản nháp</span></header><div class="invitation-summary__tutor"><span class="avatar avatar--small" role="img" aria-label="Ảnh đại diện Nguyễn Minh Anh" data-summary-avatar>MA</span><p><strong data-summary-name>Nguyễn Minh Anh</strong><span><img src="/assets/icons/verified.svg" alt="" th:src="@{/assets/icons/verified.svg}">Đã xác minh bằng cấp</span></p></div><div class="invitation-summary__rows"><dl class="info-row info-row--compact"><dt class="info-row__label">Môn học:</dt><dd class="info-row__value" data-summary-subject>Toán • THPT</dd></dl><dl class="info-row info-row--compact"><dt class="info-row__label">Học phí:</dt><dd class="info-row__value" data-summary-rate>200.000 ₫ / buổi</dd></dl><dl class="info-row info-row--compact"><dt class="info-row__label">Tổng số buổi:</dt><dd class="info-row__value" data-summary-sessions>8 buổi</dd></dl><dl class="info-row info-row--compact"><dt class="info-row__label">Tần suất:</dt><dd class="info-row__value" data-summary-frequency>2 buổi / tuần</dd></dl><dl class="info-row info-row--compact"><dt class="info-row__label">Hình thức:</dt><dd class="info-row__value" data-summary-format>Tại nhà (Thủ Đức)</dd></dl><dl class="info-row info-row--compact"><dt class="info-row__label">Bắt đầu dự kiến:</dt><dd class="info-row__value" data-summary-start>28/09/2026</dd></dl><dl class="info-row info-row--compact"><dt class="info-row__label">Lịch đề xuất:</dt><dd class="info-row__value" data-summary-slots>Thứ 2 (19:00)<br>Thứ 4 (19:00)</dd></dl></div><div class="invitation-summary__total"><span>Tổng học phí dự kiến:</span><strong data-summary-total>1.600.000 ₫</strong></div><section class="alert invitation-summary__notice" role="status"><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><p class="alert__message"><strong>Lời mời có hiệu lực 7 ngày. Chưa thanh toán:</strong> Bạn chỉ đang gửi đề xuất. Việc ký quỹ được thực hiện sau khi hai bên thống nhất hoàn toàn các điều khoản.</p></div></section><button class="button button--primary" type="button" data-open-confirm>Xác nhận gửi đề xuất</button></section>
+
+                <!-- Component: Card | Nguồn: components/data-display/card.html -->
+
+            </aside>
+        </div>
+
+    </main>
+
+    <!-- Component: Modal | Nguồn: components/feedback/modal.html; JS: js/core/modal.js -->
+    <dialog class="modal" id="confirm-invitation-modal" aria-labelledby="confirm-invitation-title" aria-describedby="confirm-invitation-description"><div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="confirm-invitation-title">Gửi lời mời cho Nguyễn Minh Anh?</h2><p>Kiểm tra lại đề xuất trước khi gửi</p></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header><div class="modal__body"><p id="confirm-invitation-description">Bạn đang gửi đề xuất học cho gia sư theo các điều khoản đã chọn.</p><p class="modal__note">Bạn chưa phải thanh toán ngay. Việc ký quỹ chỉ diễn ra sau khi gia sư đồng ý.</p><p class="alert alert--error invitation-confirm-error" data-invitation-error role="alert" hidden></p></div><footer class="modal__footer"><button class="modal__button modal__button--ghost" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận gửi</button></footer></div></dialog>
+
+    <!-- Component: Toast | Nguồn: components/feedback/toast.html; JS: js/core/toast.js -->
+    <section class="toast-region" aria-label="Thông báo"></section>
+
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
+    <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+</div>
+</body>
+</html>

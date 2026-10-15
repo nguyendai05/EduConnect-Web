@@ -1,4 +1,2 @@
-/**
- * Tutoring agreement and contract lifecycle domain.
- */
+/** Contract domain and MVC page routes. */
 package com.educonnect.contract;

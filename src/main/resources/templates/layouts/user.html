@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="page(title, active, styles, content, scripts, headScripts, preview)">
+<head>
+    <th:block th:replace="~{fragments/meta-head :: head}"></th:block>
+    <th:block th:replace="${title}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/tokens.css}">
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <th:block th:replace="${styles}"></th:block>
+    <th:block th:replace="${headScripts}"></th:block>
+</head>
+<th:block th:replace="${content}"></th:block>
+</html>

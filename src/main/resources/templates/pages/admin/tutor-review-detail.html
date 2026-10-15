@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: page(~{::title}, &#x27;/admin/tutor-review-queue&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Chi tiết duyệt hồ sơ gia sư | Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}">
+<link rel="stylesheet" href="/css/components/layout/admin-sidebar.css" th:href="@{/css/components/layout/admin-sidebar.css}">
+<link rel="stylesheet" href="/css/components/layout/admin-header.css" th:href="@{/css/components/layout/admin-header.css}">
+<link rel="stylesheet" href="/css/components/navigation/breadcrumb.css" th:href="@{/css/components/navigation/breadcrumb.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/action/component-icon.css" th:href="@{/css/components/action/component-icon.css}">
+<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
+<link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
+<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
+<link rel="stylesheet" href="/css/components/data-display/table.css" th:href="@{/css/components/data-display/table.css}">
+<link rel="stylesheet" href="/css/components/data-display/tag.css" th:href="@{/css/components/data-display/tag.css}">
+<link rel="stylesheet" href="/css/components/data-display/file-attachment-item.css" th:href="@{/css/components/data-display/file-attachment-item.css}">
+<link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}">
+<link rel="stylesheet" href="/css/components/form/checkbox.css" th:href="@{/css/components/form/checkbox.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/components/feedback/modal.css" th:href="@{/css/components/feedback/modal.css}">
+<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/pages/admin/tutor-review-detail.css" th:href="@{/css/pages/admin/tutor-review-detail.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+
+</th:block>
+<th:block th:fragment="scripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('tutor-review-data')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('payout-data')}"></th:block>
+<script src="/js/core/admin-sidebar.js" defer th:src="@{/js/core/admin-sidebar.js}"></script>
+<script src="/js/core/admin-header.js" defer th:src="@{/js/core/admin-header.js}"></script>
+<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
+<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
+<script src="/js/pages/admin/tutor-review-detail.js" defer th:src="@{/js/pages/admin/tutor-review-detail.js}"></script>
+</th:block>
+</head>
+<body class="tutor-review-detail-page" th:fragment="content">
+    <a class="tutor-review-detail__skip-link" href="#review-main">Đến nội dung chính</a>
+    <div class="admin-shell" data-component="admin-shell" data-tutor-review-detail>
+        <th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
+        <th:block th:replace="~{fragments/header-admin :: header(${active}, 'v9')}"></th:block>
+        <main class="admin-shell__workspace" id="review-main" tabindex="-1">
+            <div class="admin-shell__content tutor-review-detail">
+                <!-- Component: Breadcrumb, Button, Badge | Nguồn: components/navigation/breadcrumb.html; components/action/button.html; components/feedback/badge.html -->
+                <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="/admin/dashboard" th:href="@{/admin/dashboard}">Tổng quan</a></li><li class="breadcrumb__item"><a class="breadcrumb__link" href="/admin/tutor-review-queue" th:href="@{/admin/tutor-review-queue}">Hồ sơ gia sư</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Chi tiết duyệt hồ sơ</span></li></ol></nav>
+                <header class="tutor-review-detail__header">
+                    <div>
+                        <div class="tutor-review-detail__title-row"><h1>Duyệt hồ sơ gia sư</h1><span class="badge badge--warning" data-detail-status>Chờ duyệt</span><span class="badge badge--warning" data-detail-flag hidden>Cần kiểm tra</span></div>
+                        <p><strong class="tutor-review-detail__code" data-detail-viewing-id>HSGS-9041</strong> · <strong data-detail-viewing-name>Trần Minh Khoa</strong></p>
+                        <p class="tutor-review-detail__submitted"><img src="/assets/icons/clock.svg" alt="" th:src="@{/assets/icons/clock.svg}">Gửi xác minh lúc <time data-detail-submitted></time></p>
+                    </div>
+                    <a class="button button--secondary" href="/admin/tutor-review-queue" th:href="@{/admin/tutor-review-queue}"><span aria-hidden="true">←</span>Quay lại hàng đợi</a>
+                </header>
+                <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                <div class="empty-state" data-detail-not-found hidden><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title">Không tìm thấy hồ sơ gia sư</h2><p class="empty-state__description">Mã hồ sơ trong đường dẫn không hợp lệ hoặc đã bị xóa. Quay lại hàng đợi để chọn hồ sơ cần xem.</p><a class="button button--outline" href="/admin/tutor-review-queue" th:href="@{/admin/tutor-review-queue}">Về hàng đợi</a></div>
+                <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
+                <section class="alert alert--contextual" tabindex="-1" aria-live="polite" aria-atomic="true" data-detail-decision hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title" data-decision-title></h2><p class="alert__message" data-decision-description></p></div></section>
+                <section class="alert alert--contextual alert--warning" tabindex="-1" aria-live="polite" data-detail-blocked hidden><span class="alert__icon alert__icon--shield-alert" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title">Chưa đủ căn cứ để xác minh</h2><p class="alert__message">Hồ sơ còn thiếu: <strong data-detail-blocked-list></strong>. Theo quy chuẩn kiểm duyệt, quản trị viên không được cấp dấu Đã duyệt khi thiếu chứng thực cơ bản; hãy từ chối hồ sơ kèm lý do để gia sư bổ sung.</p></div></section>
+                <div class="tutor-review-detail__layout" data-detail-content>
+                    <div class="tutor-review-detail__sections">
+                        <!-- Component: Card, Avatar, Badge, Tag, InfoRow | Nguồn: components/data-display/card.html; components/data-display/avatar.html; components/feedback/badge.html; components/data-display/tag.html; components/data-display/info-row.html -->
+                        <section class="card" aria-labelledby="detail-identity-heading">
+                            <header class="card__header tutor-review-detail__section-heading"><span class="tutor-review-detail__step" aria-hidden="true">1</span><div><h2 class="card__title" id="detail-identity-heading">Thông tin hồ sơ</h2></div><span class="tag tag--neutral"><img src="/assets/icons/lock.svg" alt="" th:src="@{/assets/icons/lock.svg}">Chỉ xem</span></header>
+                            <div class="card__body">
+                                <div class="tutor-review-detail__identity"><span class="avatar avatar--large" aria-hidden="true" data-detail-avatar>TMK</span><div class="tutor-review-detail__identity-main"><h3 data-detail-tutor>Trần Minh Khoa</h3><div class="tutor-review-detail__identity-tags"><span class="tag" data-detail-kind>Đăng ký lần đầu</span><span class="tag tag--neutral" data-detail-profile-tag>Gia sư tự do</span></div><div class="tutor-review-detail__identity-status"><span class="badge" data-detail-acceptance>Đang nhận lớp</span><span class="badge" data-detail-verified-note>Chưa được xác minh</span></div></div></div>
+                                <dl class="tutor-review-detail__contact-grid">
+                                    <div class="info-row info-row--stacked"><dt class="info-row__label">Khu vực hoạt động</dt><dd class="info-row__value" data-detail-region></dd></div>
+                                    <div class="info-row info-row--stacked"><dt class="info-row__label">Email (đã che)</dt><dd class="info-row__value" data-detail-email></dd></div>
+                                    <div class="info-row info-row--stacked"><dt class="info-row__label">Số điện thoại (đã che)</dt><dd class="info-row__value" data-detail-phone></dd></div>
+                                    <div class="info-row info-row--stacked"><dt class="info-row__label">Số định danh cá nhân</dt><dd class="info-row__value" data-detail-citizen-id></dd></div>
+                                </dl>
+                                <div class="tutor-review-detail__bio"><h4>Giới thiệu bản thân</h4><blockquote data-detail-intro></blockquote></div>
+                            </div>
+                        </section>
+                        <section class="card" aria-labelledby="detail-education-heading">
+                            <header class="card__header tutor-review-detail__section-heading"><span class="tutor-review-detail__step" aria-hidden="true">2</span><div><h2 class="card__title" id="detail-education-heading">Học vấn &amp; kinh nghiệm</h2></div><span class="tag tag--neutral"><img src="/assets/icons/certificate.svg" alt="" th:src="@{/assets/icons/certificate.svg}">Dữ liệu hồ sơ gốc</span></header>
+                            <div class="card__body"><dl class="tutor-review-detail__needs-grid">
+                                <div class="info-row info-row--stacked tutor-review-detail__info"><dt class="info-row__label">Trình độ cao nhất</dt><dd class="info-row__value"><span data-detail-education-level></span><small class="tutor-review-detail__info-note" data-detail-education-note></small></dd></div>
+                                <div class="info-row info-row--stacked tutor-review-detail__info"><dt class="info-row__label">Trường đào tạo</dt><dd class="info-row__value"><span data-detail-school></span><small class="tutor-review-detail__info-note" data-detail-school-years></small></dd></div>
+                                <div class="info-row info-row--stacked tutor-review-detail__info"><dt class="info-row__label">Chuyên ngành</dt><dd class="info-row__value"><span data-detail-major></span><small class="tutor-review-detail__info-note" data-detail-faculty></small></dd></div>
+                                <div class="info-row info-row--stacked tutor-review-detail__info"><dt class="info-row__label">Kinh nghiệm giảng dạy</dt><dd class="info-row__value"><span data-detail-experience></span><small class="tutor-review-detail__info-note" data-detail-experience-note></small></dd></div>
+                            </dl></div>
+                        </section>
+                        <!-- Component: Card, Table | Nguồn: components/data-display/card.html; components/data-display/table.html -->
+                        <section class="card" aria-labelledby="detail-subjects-heading">
+                            <header class="card__header tutor-review-detail__section-heading"><span class="tutor-review-detail__step" aria-hidden="true">3</span><div><h2 class="card__title" id="detail-subjects-heading">Môn dạy &amp; học phí đề xuất</h2></div><span class="badge badge--info" data-detail-subject-count>3 môn đăng ký</span></header>
+                                <div class="card__body">
+                                <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Bảng môn dạy và học phí, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
+                                    <table class="table">
+                                        <caption class="table__caption table__caption--sr-only">Môn dạy, cấp học, hình thức dạy và học phí đề xuất của hồ sơ gia sư</caption>
+                                        <thead><tr><th scope="col">Môn học</th><th scope="col">Cấp học</th><th scope="col">Hình thức dạy</th><th scope="col" class="table__amount">Mức học phí / buổi</th></tr></thead>
+                                        <tbody data-detail-subjects></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="card" aria-labelledby="detail-area-heading">
+                            <header class="card__header tutor-review-detail__section-heading"><span class="tutor-review-detail__step" aria-hidden="true">4</span><div><h2 class="card__title" id="detail-area-heading">Khu vực &amp; hình thức giảng dạy</h2></div></header>
+                            <div class="card__body"><dl class="tutor-review-detail__needs-grid">
+                                <div class="info-row info-row--stacked tutor-review-detail__info"><dt class="info-row__label">Khu vực nhận dạy</dt><dd class="info-row__value"><span data-detail-region-2></span><small class="tutor-review-detail__info-note" data-detail-area-detail></small></dd></div>
+                                <div class="info-row info-row--stacked tutor-review-detail__info"><dt class="info-row__label">Hình thức giảng dạy</dt><dd class="info-row__value"><span data-detail-formats></span><small class="tutor-review-detail__info-note">Khung hình thức gia sư đã đăng ký</small></dd></div>
+                                <div class="info-row info-row--stacked tutor-review-detail__info"><dt class="info-row__label">Tiếp nhận học viên mới</dt><dd class="info-row__value"><span data-detail-capacity></span><small class="tutor-review-detail__info-note" data-detail-capacity-note></small></dd></div>
+                            </dl></div>
+                        </section>
+                        <section class="card" aria-labelledby="detail-slots-heading">
+                            <header class="card__header tutor-review-detail__section-heading"><span class="tutor-review-detail__step" aria-hidden="true">5</span><div><h2 class="card__title" id="detail-slots-heading">Lịch rảnh định kỳ hàng tuần</h2></div><img src="/assets/icons/calendar.svg" alt="" th:src="@{/assets/icons/calendar.svg}"></header>
+                            <div class="card__body"><ul class="tutor-review-detail__schedule" data-detail-slots></ul><p class="tutor-review-detail__hint"><img src="/assets/icons/info-circle.svg" alt="" th:src="@{/assets/icons/info-circle.svg}">Lịch rảnh chỉ tham khảo phục vụ đối chiếu và cảnh báo trùng lịch, không phải khung giờ ép buộc duy nhất.</p></div>
+                        </section>
+                        <!-- Component: Card, FileAttachmentItem, Badge, Button, ComponentIcon | Nguồn: components/data-display/card.html; components/data-display/file-attachment-item.html; components/feedback/badge.html; components/action/button.html; components/action/component-icon.html -->
+                        <section class="card" aria-labelledby="detail-files-heading">
+                            <header class="card__header tutor-review-detail__section-heading"><span class="tutor-review-detail__step" aria-hidden="true">6</span><div><h2 class="card__title" id="detail-files-heading">Chứng chỉ &amp; bằng cấp tải lên</h2></div><span class="badge badge--warning" data-detail-files-count>3 tệp chờ duyệt</span></header>
+                            <div class="card__body">
+                                <p class="tutor-review-detail__privacy"><img src="/assets/icons/shield.svg" alt="" th:src="@{/assets/icons/shield.svg}">Tệp gốc chỉ hiển thị trong phạm vi được phép cho gia sư và quản trị viên.<span>PDF, JPG, PNG · Tối đa 5 MB/tệp</span></p>
+                                <ul class="tutor-review-detail__files" data-detail-files></ul>
+                                <div class="empty-state" data-detail-files-empty hidden><span class="empty-state__icon" aria-hidden="true"></span><h3 class="empty-state__title">Hồ sơ chưa có minh chứng</h3><p class="empty-state__description">Gia sư chưa tải bằng cấp hoặc chứng chỉ nào lên hệ thống.</p></div>
+                                <p class="tutor-review-detail__hint"><img src="/assets/icons/info-circle.svg" alt="" th:src="@{/assets/icons/info-circle.svg}">Trạng thái duyệt của từng tệp là độc lập với trạng thái xác minh chung của hồ sơ. Toàn bộ hồ sơ chỉ được đánh dấu <strong>Đã duyệt</strong> sau khi quản trị viên xác nhận ở khối Quyết định duyệt hồ sơ.</p></div>
+                        </section>
+                        <section class="alert alert--contextual alert--warning tutor-review-detail__signal" aria-labelledby="detail-signal-heading" data-detail-signal-card hidden>
+                            <span class="alert__icon alert__icon--shield-alert" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title" id="detail-signal-heading">Tín hiệu rà soát tự động</h2><p class="alert__message" data-detail-signal></p><p class="alert__message">Việc gắn cờ chưa khẳng định hồ sơ vi phạm. Hãy đối chiếu minh chứng thực tế trước khi xác minh hoặc từ chối.</p></div>
+                        </section>
+                    </div>
+                    <aside class="tutor-review-detail__panel">
+                        <!-- Component: Card, InfoRow, Badge | Nguồn: components/data-display/card.html; components/data-display/info-row.html; components/feedback/badge.html -->
+                        <section class="card" aria-labelledby="detail-summary-heading">
+                            <header class="card__header"><h2 class="card__title" id="detail-summary-heading">Trạng thái hồ sơ</h2></header>
+                            <div class="card__body"><dl>
+                                <div class="info-row info-row--compact"><dt class="info-row__label">Mã hồ sơ</dt><dd class="info-row__value" data-summary-id></dd></div>
+                                <div class="info-row info-row--compact"><dt class="info-row__label">Gia sư</dt><dd class="info-row__value" data-summary-tutor></dd></div>
+                                <div class="info-row info-row--compact"><dt class="info-row__label">Loại hồ sơ</dt><dd class="info-row__value" data-summary-kind></dd></div>
+                                <div class="info-row info-row--compact"><dt class="info-row__label">Trạng thái</dt><dd class="info-row__value"><span class="badge" data-summary-status></span></dd></div>
+                                <div class="info-row info-row--compact"><dt class="info-row__label">Ngày nộp duyệt</dt><dd class="info-row__value" data-summary-submitted></dd></div>
+                                <div class="info-row info-row--compact"><dt class="info-row__label">Cấu hình môn</dt><dd class="info-row__value" data-summary-subjects></dd></div>
+                                <div class="info-row info-row--compact"><dt class="info-row__label">Tệp chứng chỉ</dt><dd class="info-row__value" data-summary-files></dd></div>
+                            </dl></div>
+                        </section>
+                        <!-- Component: Card, Checkbox | Nguồn: components/data-display/card.html; components/form/checkbox.html -->
+                        <section class="card" aria-labelledby="detail-checklist-heading">
+                            <header class="card__header"><h2 class="card__title" id="detail-checklist-heading">Gợi ý kiểm tra</h2></header>
+                            <div class="card__body tutor-review-detail__checklist">
+                                <label class="checkbox-option"><span class="checkbox-hit-area"><input type="checkbox" name="check-education"><span class="checkbox-box" aria-hidden="true"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">Thông tin học vấn và bằng cấp khớp với tệp tải lên</span></span></label>
+                                <label class="checkbox-option"><span class="checkbox-hit-area"><input type="checkbox" name="check-major"><span class="checkbox-box" aria-hidden="true"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">Chuyên ngành đào tạo phù hợp môn đăng ký</span></span></label>
+                                <label class="checkbox-option"><span class="checkbox-hit-area"><input type="checkbox" name="check-experience"><span class="checkbox-box" aria-hidden="true"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">Kinh nghiệm giảng dạy và số năm công tác hợp lý</span></span></label>
+                                <label class="checkbox-option"><span class="checkbox-hit-area"><input type="checkbox" name="check-rates"><span class="checkbox-box" aria-hidden="true"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">Môn dạy và mức học phí đúng khung quy định</span></span></label>
+                                <label class="checkbox-option"><span class="checkbox-hit-area"><input type="checkbox" name="check-files"><span class="checkbox-box" aria-hidden="true"></span></span><span class="checkbox-option__copy"><span class="checkbox-option__title">Tính xác thực và độ rõ nét của tệp minh chứng</span></span></label>
+                            </div>
+                        </section>
+                        <!-- Component: Card, Button, Alert | Nguồn: components/data-display/card.html; components/action/button.html; components/feedback/alert.html -->
+                        <section class="card tutor-review-detail__actions" aria-labelledby="detail-decision-heading">
+                            <header class="card__header"><h2 class="card__title" id="detail-decision-heading"><img src="/assets/icons/receipt.svg" alt="" th:src="@{/assets/icons/receipt.svg}">Quyết định duyệt hồ sơ</h2></header>
+                            <div class="card__body">
+                                <p class="tutor-review-detail__transition is-approve"><img src="/assets/icons/check-circle.svg" alt="" th:src="@{/assets/icons/check-circle.svg}"><span>Xác minh: Chờ duyệt → Đã duyệt</span></p>
+                                <p class="tutor-review-detail__transition is-reject"><img src="/assets/icons/cancel.svg" alt="" th:src="@{/assets/icons/cancel.svg}"><span>Từ chối: Chờ duyệt → Bị từ chối</span></p>
+                                <button class="button button--primary" type="button" data-review-approve><img src="/assets/icons/verified.svg" alt="" th:src="@{/assets/icons/verified.svg}">Xác minh hồ sơ</button>
+                                <p class="tutor-review-detail__action-help" data-approve-help>Cấp dấu <strong>Đã duyệt</strong> để hồ sơ xuất hiện trong kết quả tìm gia sư.</p>
+                                <button class="button button--outline" type="button" data-review-reject><img src="/assets/icons/cancel.svg" alt="" th:src="@{/assets/icons/cancel.svg}">Từ chối hồ sơ</button>
+                                <p class="tutor-review-detail__action-help" data-reject-help>Nhập lý do cụ thể để gia sư bổ sung và gửi lại hồ sơ.</p>
+                            </div>
+
+                        </section>
+                    </aside>
+                </div>
+                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải đúng hồ sơ và sử dụng chức năng kiểm duyệt.</p></noscript>
+            </div>
+        </main>
+        <!-- Component: Modal, InfoRow, Alert | Nguồn: components/feedback/modal.html; components/data-display/info-row.html; components/feedback/alert.html -->
+        <dialog class="modal" id="review-approve-modal" aria-labelledby="approve-modal-title" data-component="modal">
+            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="approve-modal-title">Xác nhận duyệt hồ sơ gia sư</h2></div><button class="modal__close" type="button" aria-label="Đóng xác nhận duyệt hồ sơ" data-modal-close><span class="modal__close-icon" aria-hidden="true"></span></button></header>
+                <div class="modal__body"><p>Sau khi xác nhận, hồ sơ chuyển từ Chờ duyệt sang Đã duyệt và xuất hiện công khai trong danh sách tìm gia sư.</p><div class="alert alert--warning" data-approve-warning hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Hồ sơ có tín hiệu cần kiểm tra</h3><p class="alert__message" data-approve-signal></p></div></div><dl><div class="info-row"><dt class="info-row__label">Mã hồ sơ</dt><dd class="info-row__value" data-approve-id></dd></div><div class="info-row"><dt class="info-row__label">Gia sư</dt><dd class="info-row__value" data-approve-tutor></dd></div><div class="info-row"><dt class="info-row__label">Học vấn</dt><dd class="info-row__value" data-approve-education></dd></div><div class="info-row"><dt class="info-row__label">Minh chứng kèm theo</dt><dd class="info-row__value" data-approve-files></dd></div></dl><p class="tutor-review-detail__error" role="alert" data-review-error="approve" hidden></p></div>
+                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận duyệt</button></footer>
+            </div>
+        </dialog>
+        <dialog class="modal" id="review-reject-modal" aria-labelledby="reject-modal-title" data-component="modal">
+            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--danger" aria-hidden="true"></span><div class="modal__heading"><h2 id="reject-modal-title">Từ chối hồ sơ gia sư</h2></div><button class="modal__close" type="button" aria-label="Đóng lý do từ chối" data-modal-close><span class="modal__close-icon" aria-hidden="true"></span></button></header>
+                <div class="modal__body"><p>Nêu rõ nội dung gia sư cần bổ sung; lý do sẽ hiển thị trong hồ sơ và ở hàng đợi kiểm duyệt.</p><div class="textarea-field"><div class="textarea-field__label-row"><label class="textarea-field__label" for="review-reject-reason">Lý do từ chối <span class="textarea-field__required" aria-hidden="true">*</span></label><span class="textarea-field__counter" data-reason-count>0/1000</span></div><textarea class="textarea-control" id="review-reject-reason" rows="5" maxlength="1000" minlength="10" required aria-describedby="review-reason-help review-reason-error" placeholder="Nhập lý do từ chối và hướng dẫn gia sư bổ sung hồ sơ…" data-reject-reason></textarea><p class="textarea-field__help" id="review-reason-help">Nhập từ 10 đến 1000 ký tự. Không đưa thông tin cá nhân nhạy cảm vào lý do.</p><p class="tutor-review-detail__error" role="alert" id="review-reason-error" data-reason-error hidden></p></div><div class="tutor-review-detail__templates"><h3>Mẫu lý do thường gặp</h3><div><button class="button button--secondary button--small" type="button" data-reason-template="education">Học vấn chưa đủ căn cứ</button><button class="button button--secondary button--small" type="button" data-reason-template="files">Tệp minh chứng không hợp lệ</button><button class="button button--secondary button--small" type="button" data-reason-template="rates">Môn dạy &amp; học phí chưa rõ</button><button class="button button--secondary button--small" type="button" data-reason-template="contact">Chứa thông tin liên hệ ngoài</button></div></div><p class="tutor-review-detail__error" role="alert" data-review-error="reject" hidden></p></div>
+                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--danger" type="button" data-modal-confirm>Xác nhận từ chối</button></footer>
+            </div>
+        </dialog>
+        <dialog class="modal" id="review-file-modal" aria-labelledby="file-modal-title" data-component="modal">
+            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--info" aria-hidden="true"></span><div class="modal__heading"><h2 id="file-modal-title">Xem trước tệp minh chứng</h2></div><button class="modal__close" type="button" aria-label="Đóng khung xem trước tệp" data-modal-close><span class="modal__close-icon" aria-hidden="true"></span></button></header>
+                <div class="modal__body"><p>Tệp hiển thị trong phiên làm việc của quản trị viên; đường dẫn lưu trữ không được công khai.</p><div class="tutor-review-detail__preview" aria-hidden="true"><span class="tutor-review-detail__preview-badge">Chỉ duyệt nội bộ</span><strong data-preview-paper-title>Văn bản học tập</strong><span data-preview-paper-owner></span><small>Edu Connect · Bản mẫu giao diện, không phải văn bản pháp lý</small></div><dl><div class="info-row"><dt class="info-row__label">Tên tệp</dt><dd class="info-row__value" data-preview-name></dd></div><div class="info-row"><dt class="info-row__label">Định dạng &amp; dung lượng</dt><dd class="info-row__value" data-preview-meta></dd></div><div class="info-row"><dt class="info-row__label">Tải lên lúc</dt><dd class="info-row__value" data-preview-uploaded></dd></div><div class="info-row"><dt class="info-row__label">Mô tả của gia sư</dt><dd class="info-row__value" data-preview-label></dd></div><div class="info-row"><dt class="info-row__label">Trạng thái tệp</dt><dd class="info-row__value"><span class="badge" data-preview-status></span></dd></div></dl></div>
+                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng cửa sổ</button></footer>
+            </div>
+        </dialog>
+    </div>
+    <th:block th:replace="${scripts}"></th:block>
+</body>
+</html>

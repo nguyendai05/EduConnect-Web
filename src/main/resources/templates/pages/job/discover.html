@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;requests&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<head>
+<title>Tin tìm gia sư | Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}">
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+<link rel="stylesheet" href="/css/components/navigation/filter-panel.css" th:href="@{/css/components/navigation/filter-panel.css}">
+<link rel="stylesheet" href="/css/components/navigation/filter-chip.css" th:href="@{/css/components/navigation/filter-chip.css}">
+<link rel="stylesheet" href="/css/components/navigation/pagination.css" th:href="@{/css/components/navigation/pagination.css}">
+<link rel="stylesheet" href="/css/components/form/search-input.css" th:href="@{/css/components/form/search-input.css}">
+<link rel="stylesheet" href="/css/components/form/select.css" th:href="@{/css/components/form/select.css}">
+<link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
+<link rel="stylesheet" href="/css/components/domain/job/job-card.css" th:href="@{/css/components/domain/job/job-card.css}">
+<link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+<link rel="stylesheet" href="/css/pages/job/discover.css" th:href="@{/css/pages/job/discover.css}">
+<link rel="stylesheet" href="/css/components/layout/brand-masthead.css" th:href="@{/css/components/layout/brand-masthead.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
+<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+<script src="/js/core/search-input.js" defer th:src="@{/js/core/search-input.js}"></script>
+<script src="/js/core/filter-panel.js" defer th:src="@{/js/core/filter-panel.js}"></script>
+<script src="/js/core/filter-chip.js" defer th:src="@{/js/core/filter-chip.js}"></script>
+<script src="/js/core/select.js" defer th:src="@{/js/core/select.js}"></script>
+<script src="/js/core/pagination.js" defer th:src="@{/js/core/pagination.js}"></script>
+<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
+<script src="/js/pages/job/discover.js" defer th:src="@{/js/pages/job/discover.js}"></script>
+<script src="/js/core/search-filters.js" defer th:src="@{/js/core/search-filters.js}"></script>
+</th:block>
+<th:block th:fragment="scripts">
+
+</th:block>
+</head>
+<body class="discover-page" th:fragment="content">
+<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
+<div class="user-shell" data-component="user-shell" data-discover-page>
+    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
+    <th:block th:replace="~{fragments/header-user :: header(${active}, 'v10')}"></th:block>
+
+    <main class="user-shell__main">
+        <div class="user-shell__content discover-page__content">
+            <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
+            <!-- Component: BrandMasthead | Nguồn: components/layout/brand-masthead.html -->
+            <header class="page-header discover-page__header brand-masthead" data-component="brand-masthead">
+                <div class="brand-masthead__content">
+
+                    <h1 class="page-header__title" aria-label="Tin tìm gia sư">Tin tìm gia sư</h1>
+
+                    <div class="page-header__actions"><!-- Component: Button | Nguồn: components/action/button.html --><button class="button button--outline button--medium page-header__action page-header__action--secondary discover-page__applications-link" type="button" data-show-applied><img src="/assets/icons/receipt.svg" alt="" th:src="@{/assets/icons/receipt.svg}">Ứng tuyển của tôi <span data-applications-count>0</span></button></div>
+                </div>
+
+            </header>
+
+            <!-- Component: SearchInput | Nguồn: components/form/search-input.html -->
+            <form class="discover-search" data-discover-search-form>
+                <div class="search-input search-input--compact" data-search-input><svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" value="" placeholder="Tìm theo môn học, lớp, khu vực..." aria-label="Tìm tin gia sư" data-discover-search><button class="search-input__clear" type="button" data-clear-search aria-label="Xóa tìm kiếm"><svg viewBox="0 0 24 24" fill="none"><path d="m7 7 10 10M17 7 7 17"/></svg></button></div>
+                <!-- Component: Button | Nguồn: components/action/button.html -->
+                <button class="button button--primary button--medium discover-search__button" type="submit">Tìm kiếm</button>
+            </form>
+
+            <div class="discover-layout">
+                <details class="discover-sidebar search-filters" data-search-filters open>
+                    <summary class="search-filters__toggle">Bộ lọc tìm lớp <span aria-hidden="true">+</span></summary>
+                    <!-- Component: FilterPanel | Nguồn: components/navigation/filter-panel.html -->
+                    <form class="filter-panel discover-filter" data-filter-panel data-discover-filter>
+                        <div class="filter-panel__header"><h2><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16M8 4v4M16 10v4M10 16v4"/></svg>Bộ lọc tìm kiếm</h2><button class="filter-panel__reset" type="reset" data-reset-filter>Xóa bộ lọc</button></div>
+                        <div class="filter-panel__group"><label for="discover-subject">Môn học</label><div class="filter-panel__select-wrap"><select id="discover-subject" name="subject" data-filter-subject><option value="">Tất cả môn học</option><option>Toán học</option><option>Vật lý</option><option>Hóa học</option><option>Tiếng Anh</option><option>Ngữ văn</option></select><svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6"/></svg></div></div>
+                        <fieldset class="filter-panel__group"><legend>Cấp lớp</legend><div class="filter-panel__grade-grid"><label><input type="radio" name="grade" value="all"><span>Tất cả</span></label><label><input type="radio" name="grade" value="thcs"><span>THCS</span></label><label class="is-selected"><input type="radio" name="grade" value="10" checked><span>THPT</span></label><label><input type="radio" name="grade" value="exam"><span>Luyện thi</span></label></div></fieldset>
+                        <div class="filter-panel__group"><label for="discover-region">Khu vực</label><div class="filter-panel__select-wrap"><select id="discover-region" name="region" data-filter-region><option value="all">Tất cả khu vực</option><option value="thu-duc" selected>TP. Thủ Đức, TP.HCM</option><option value="binh-thanh">Quận Bình Thạnh, TP.HCM</option><option value="online">Trực tuyến toàn quốc</option></select><svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6"/></svg></div></div>
+                        <fieldset class="filter-panel__group discover-filter__choices"><legend>Hình thức học</legend><label><input type="radio" name="format" value="all"><span></span>Tất cả hình thức</label><label><input type="radio" name="format" value="home" checked><span></span>Dạy tại nhà học sinh</label><label><input type="radio" name="format" value="online"><span></span>Dạy trực tuyến</label></fieldset>
+                        <div class="filter-panel__group"><div class="filter-panel__range-heading"><label for="discover-fee">Học phí / buổi</label><output for="discover-fee" data-fee-output>≤ 300.000 ₫</output></div><input id="discover-fee" name="fee-range" class="filter-panel__range" type="range" min="100000" max="600000" step="10000" value="300000" data-filter-fee><div class="filter-panel__range-values"><span>100.000 ₫</span><span>600.000+ ₫</span></div></div>
+                        <fieldset class="filter-panel__group"><legend>Số buổi / tuần</legend><div class="discover-filter__button-grid"><button type="button" data-filter-sessions="all">Tất cả</button><button type="button" data-filter-sessions="1">1</button><button class="is-selected" type="button" data-filter-sessions="2">2</button><button type="button" data-filter-sessions="3">3</button><button type="button" data-filter-sessions="4">4+</button></div></fieldset>
+                        <div class="filter-panel__group"><label for="discover-experience">Yêu cầu kinh nghiệm</label><div class="filter-panel__select-wrap"><select id="discover-experience" name="experience" data-filter-experience><option value="0">Không yêu cầu</option><option value="1">Từ 1 năm</option><option value="2">Từ 2 năm</option><option value="3" selected>Từ 3 năm trở lên</option><option value="5">Từ 5 năm trở lên</option></select><svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6"/></svg></div></div>
+                        <fieldset class="filter-panel__group"><legend>Giới tính gia sư</legend><div class="discover-filter__button-grid discover-filter__button-grid--three"><button class="is-selected" type="button" data-filter-gender="all">Tất cả</button><button type="button" data-filter-gender="male">Nam</button><button type="button" data-filter-gender="female">Nữ</button></div></fieldset>
+                        <label class="filter-panel__check"><input type="checkbox" name="hiring-only" checked data-filter-hiring><span class="filter-panel__check-box"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6"/></svg></span><span>Chỉ hiện tin đang tuyển</span></label>
+                    </form>
+
+                </details>
+
+                <section class="discover-results" aria-label="Kết quả tin tìm gia sư">
+                    <!-- Component: Select | Nguồn: components/form/select.html -->
+                    <div class="discover-results__toolbar"><div><strong data-result-title>Tin tìm gia sư</strong><span>Cập nhật mới nhất cho hồ sơ của bạn</span></div><section class="select-field discover-results__sort" data-component="select" data-initial-open="false" data-discover-sort><span class="select-field__label" id="discover-sort-label">Sắp xếp</span><button class="select-control" type="button" aria-labelledby="discover-sort-label discover-sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="discover-sort-options" data-select-trigger><span id="discover-sort-value" data-select-value>Phù hợp nhất</span><img class="select-control__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-open=@{/assets/icons/mui-ten-len.svg}, data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}"></button><div class="select-options" id="discover-sort-options" role="listbox" data-select-options hidden><button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Phù hợp nhất" data-sort="default"><span>Phù hợp nhất</span><img src="/assets/icons/dau-tich.svg" alt="" th:src="@{/assets/icons/dau-tich.svg}"></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Mới nhất" data-sort="newest"><span>Mới nhất</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí cao nhất" data-sort="fee-desc"><span>Học phí cao nhất</span></button><button class="select-option" type="button" role="option" aria-selected="false" data-value="Ít ứng viên nhất" data-sort="applicants"><span>Ít ứng viên nhất</span></button></div></section></div>
+
+                    <!-- Component: FilterChip | Nguồn: components/navigation/filter-chip.html -->
+                    <div class="discover-results__chips" hidden></div>
+
+                    <!-- Component: JobCard | Nguồn: components/domain/job/job-card.html -->
+                    <!-- Danh sách do js/pages/job/discover.js render từ EduStore.jobBoard(); đây chỉ là mẫu thẻ, không chứa dữ liệu cứng -->
+                    <div class="discover-job-list" data-discover-list></div>
+
+                    <template data-discover-job-template>
+                        <article class="job-card discover-job" data-discover-job data-job-id="" data-order="" data-title="" data-subject="" data-grade="" data-region="" data-format="" data-fee="" data-sessions="" data-experience="" data-gender="" data-status="hiring" data-applicants="" data-created="">
+                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info" data-job-badge>Đang tuyển</span><span class="job-card__code" data-job-code></span></div><h2 data-job-title-node></h2></div><p class="job-card__price"><span data-job-fee-node></span><span>/ buổi</span></p></div>
+                            <div class="job-card__tags"><span data-job-tag-subject></span><span data-job-tag-grade></span><span data-job-tag-mode></span></div>
+                            <div class="discover-job__parameters"><p><small>Tần suất</small><strong data-job-frequency></strong></p><p><small>Địa điểm</small><strong data-job-district></strong></p><p><small>Yêu cầu</small><strong data-job-requirement></strong></p></div>
+                            <div class="discover-job__application-state" data-job-application hidden><img src="/assets/icons/receipt.svg" alt="" th:src="@{/assets/icons/receipt.svg}"><span>Đơn ứng tuyển: <strong data-job-application-status></strong></span><small data-job-application-rate></small></div>
+                            <p class="discover-job__description" data-job-description></p>
+                            <footer class="job-card__footer"><div class="job-card__stats"><span><strong data-job-applicants-node></strong> đã ứng tuyển</span><span data-job-deadline></span></div><div class="discover-job__actions"><button class="job-card__action" type="button" data-save-job>Lưu tin</button><a class="job-card__action job-card__action--primary" href="/job/detail" data-job-detail-link th:href="@{/job/detail}">Xem chi tiết để ứng tuyển</a><a class="job-card__action job-card__action--primary" href="/job/detail" data-view-application hidden th:href="@{/job/detail}">Xem ứng tuyển của bạn</a></div></footer>
+                        </article>
+                    </template>
+
+                    <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
+                    <section class="empty-state discover-empty" data-discover-empty hidden aria-labelledby="discover-empty-title"><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title" id="discover-empty-title">Không tìm thấy tin phù hợp</h2><p class="empty-state__description">Hãy thử thay đổi từ khóa hoặc bộ lọc tìm kiếm.</p></section>
+                    <!-- Component: Pagination | Nguồn: components/navigation/pagination.html -->
+                    <nav class="pagination" aria-label="Phân trang tin tìm gia sư" data-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1"><p class="pagination__summary">Hiển thị <strong data-range-start>0</strong> - <strong data-range-end>0</strong> trên tổng số <strong data-total-count>0</strong> tin tìm gia sư</p><div class="pagination__controls"><button class="pagination__button pagination__button--wide" type="button" data-page-action="previous"><svg viewBox="0 0 24 24" fill="none"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button><div data-page-numbers></div><button class="pagination__button pagination__button--wide" type="button" data-page-action="next"><span>Sau</span><svg viewBox="0 0 24 24" fill="none"><path d="m9 18 6-6-6-6"/></svg></button></div></nav>
+                </section>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
+    <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+</div>
+</body>
+</html>

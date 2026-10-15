@@ -1,0 +1,25 @@
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+mvnw text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.jar binary
+
+# Preserve exact bytes of the frozen prototype and database foundation.
+ui-prototype/** -text
+database/** -text
+docs/database/** -text
+src/main/java/com/educonnect/config/DBConnect.java -text
+src/main/resources/application-db-dev.yml -text
+src/main/resources/db/migration/*.sql -text

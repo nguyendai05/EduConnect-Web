@@ -1,0 +1,966 @@
+{
+  "header-user": [
+    {
+      "variant": "v1",
+      "pages": [
+        "pages/account/profile.html",
+        "pages/contract/student-detail.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v2",
+      "pages": [
+        "pages/cart/index.html",
+        "pages/catalog/detail.html"
+      ],
+      "elementCount": 37,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-user-variant"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": [
+        [
+          "a",
+          "user-header__menu-item"
+        ],
+        [
+          "img",
+          "user-header__menu-item-leading"
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "user-header__menu-item-chevron"
+        ],
+        [
+          "a",
+          "user-header__menu-item"
+        ],
+        [
+          "img",
+          "user-header__menu-item-leading"
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "user-header__menu-item-chevron"
+        ]
+      ]
+    },
+    {
+      "variant": "v3",
+      "pages": [
+        "pages/chat/messages.html",
+        "pages/contract/tutor-detail.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-menu-icon",
+        "data-profile-initials",
+        "data-profile-name",
+        "data-profile-role",
+        "data-user-variant",
+        "href",
+        "src",
+        "th:href",
+        "th:src"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v4",
+      "pages": [
+        "pages/contract/confirm.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-profile-initials",
+        "data-profile-name",
+        "data-profile-role"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v5",
+      "pages": [
+        "pages/home.html"
+      ],
+      "elementCount": 37,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-icon-closed",
+        "data-icon-open",
+        "data-user-variant"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": [
+        [
+          "a",
+          "user-header__menu-item"
+        ],
+        [
+          "img",
+          "user-header__menu-item-leading"
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "user-header__menu-item-chevron"
+        ],
+        [
+          "a",
+          "user-header__menu-item"
+        ],
+        [
+          "img",
+          "user-header__menu-item-leading"
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "user-header__menu-item-chevron"
+        ]
+      ]
+    },
+    {
+      "variant": "v6",
+      "pages": [
+        "pages/invitation/create.html",
+        "pages/tutor/profile.html",
+        "pages/tutor/search.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-user-variant"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v7",
+      "pages": [
+        "pages/invitation/negotiation.html",
+        "pages/payment/checkout.html",
+        "pages/payment/result.html",
+        "pages/wallet/overview.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-profile-initials",
+        "data-profile-name",
+        "data-profile-role"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v8",
+      "pages": [
+        "pages/job/applicants.html",
+        "pages/job/my-job.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-user-variant",
+        "th:attr"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v9",
+      "pages": [
+        "pages/job/create.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-user-variant",
+        "th:attr"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v10",
+      "pages": [
+        "pages/job/detail.html",
+        "pages/job/discover.html",
+        "pages/tutor/my-profile.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-menu-icon",
+        "data-user-variant",
+        "href",
+        "src",
+        "th:href",
+        "th:src"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v11",
+      "pages": [
+        "pages/order/history.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [
+        [
+          "header",
+          "user-header user-shell__header"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "header",
+          "user-header"
+        ]
+      ]
+    },
+    {
+      "variant": "v12",
+      "pages": [
+        "pages/tutor/manage.html"
+      ],
+      "elementCount": 45,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "data-menu-icon",
+        "href",
+        "src",
+        "th:href",
+        "th:src"
+      ],
+      "addedElementSignatures": [
+        [
+          "header",
+          "user-header user-shell__header"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "header",
+          "user-header"
+        ]
+      ]
+    }
+  ],
+  "footer-user": [
+    {
+      "variant": "v1",
+      "pages": [
+        "pages/cart/index.html",
+        "pages/catalog/detail.html",
+        "pages/chat/messages.html",
+        "pages/contract/confirm.html",
+        "pages/contract/student-detail.html",
+        "pages/contract/tutor-detail.html",
+        "pages/home.html",
+        "pages/invitation/create.html",
+        "pages/invitation/negotiation.html",
+        "pages/job/applicants.html",
+        "pages/job/create.html",
+        "pages/job/detail.html",
+        "pages/job/discover.html",
+        "pages/job/my-job.html",
+        "pages/payment/checkout.html",
+        "pages/payment/result.html",
+        "pages/tutor/profile.html",
+        "pages/tutor/search.html",
+        "pages/wallet/overview.html"
+      ],
+      "elementCount": 9,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v2",
+      "pages": [
+        "pages/order/history.html",
+        "pages/tutor/manage.html"
+      ],
+      "elementCount": 9,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [
+        [
+          "footer",
+          "user-footer user-shell__footer"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "footer",
+          "user-footer"
+        ]
+      ]
+    }
+  ],
+  "footer-account": [
+    {
+      "variant": "v1",
+      "pages": [
+        "pages/account/profile.html",
+        "pages/tutor/my-profile.html"
+      ],
+      "elementCount": 3,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    }
+  ],
+  "header-admin": [
+    {
+      "variant": "v1",
+      "pages": [
+        "pages/admin/audit-logs.html"
+      ],
+      "elementCount": 72,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v2",
+      "pages": [
+        "pages/admin/dashboard.html"
+      ],
+      "elementCount": 72,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "href",
+        "th:href"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v3",
+      "pages": [
+        "pages/admin/job-review-detail.html",
+        "pages/admin/job-review-queue.html"
+      ],
+      "elementCount": 72,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "href",
+        "th:href"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v4",
+      "pages": [
+        "pages/admin/manage.html"
+      ],
+      "elementCount": 72,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "href",
+        "th:href"
+      ],
+      "addedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--neutral"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--neutral"
+        ],
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ]
+      ]
+    },
+    {
+      "variant": "v5",
+      "pages": [
+        "pages/admin/payout-request-detail.html"
+      ],
+      "elementCount": 66,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "href",
+        "src",
+        "th:href",
+        "th:src"
+      ],
+      "addedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--accent"
+        ],
+        [
+          "span",
+          "admin-header__result-status is-warning"
+        ],
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--neutral"
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--neutral"
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "span",
+          "admin-header__result-type"
+        ],
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--accent"
+        ],
+        [
+          "img",
+          "admin-header__icon admin-header__notification-icon--accent"
+        ]
+      ]
+    },
+    {
+      "variant": "v6",
+      "pages": [
+        "pages/admin/payout-requests.html"
+      ],
+      "elementCount": 60,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "href",
+        "src",
+        "th:href",
+        "th:src"
+      ],
+      "addedElementSignatures": [
+        [
+          "img",
+          "admin-header__icon"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "span",
+          "admin-header__result-type"
+        ],
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--accent"
+        ],
+        [
+          "img",
+          "admin-header__icon admin-header__notification-icon--accent"
+        ]
+      ]
+    },
+    {
+      "variant": "v7",
+      "pages": [
+        "pages/admin/report-detail.html"
+      ],
+      "elementCount": 66,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "href",
+        "th:href"
+      ],
+      "addedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-status is-warning"
+        ],
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--neutral"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--neutral"
+        ],
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--accent"
+        ]
+      ]
+    },
+    {
+      "variant": "v8",
+      "pages": [
+        "pages/admin/reports.html"
+      ],
+      "elementCount": 72,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "href",
+        "th:href"
+      ],
+      "addedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-status is-warning"
+        ],
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "span",
+          "admin-header__result-status is-warning"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--neutral"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--neutral"
+        ],
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ]
+      ]
+    },
+    {
+      "variant": "v9",
+      "pages": [
+        "pages/admin/tutor-review-detail.html"
+      ],
+      "elementCount": 60,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "href",
+        "th:href"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "span",
+          "admin-header__result-type"
+        ],
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--accent"
+        ]
+      ]
+    },
+    {
+      "variant": "v10",
+      "pages": [
+        "pages/admin/tutor-review-queue.html"
+      ],
+      "elementCount": 60,
+      "changedAttributeNamesComparedWithFirstVariant": [
+        "href",
+        "src",
+        "th:href",
+        "th:src"
+      ],
+      "addedElementSignatures": [],
+      "removedElementSignatures": [
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "span",
+          "admin-header__result-type"
+        ],
+        [
+          "span",
+          "admin-header__result-copy"
+        ],
+        [
+          "strong",
+          ""
+        ],
+        [
+          "span",
+          ""
+        ],
+        [
+          "img",
+          "admin-header__icon"
+        ],
+        [
+          "a",
+          "admin-header__result"
+        ],
+        [
+          "span",
+          "admin-header__result-type admin-header__result-type--accent"
+        ]
+      ]
+    }
+  ],
+  "sidebar-admin": [
+    {
+      "variant": "v1",
+      "pages": [
+        "pages/admin/audit-logs.html",
+        "pages/admin/dashboard.html",
+        "pages/admin/job-review-detail.html",
+        "pages/admin/job-review-queue.html",
+        "pages/admin/manage.html",
+        "pages/admin/payout-request-detail.html",
+        "pages/admin/payout-requests.html",
+        "pages/admin/report-detail.html",
+        "pages/admin/reports.html",
+        "pages/admin/tutor-review-detail.html",
+        "pages/admin/tutor-review-queue.html"
+      ],
+      "elementCount": 41,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    }
+  ],
+  "header-auth": [
+    {
+      "variant": "v1",
+      "pages": [
+        "pages/auth/forgot-password.html",
+        "pages/auth/login.html",
+        "pages/auth/reset-password.html",
+        "pages/auth/verify-email.html"
+      ],
+      "elementCount": 6,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v2",
+      "pages": [
+        "pages/auth/register.html"
+      ],
+      "elementCount": 6,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [
+        [
+          "header",
+          "auth-register-header"
+        ],
+        [
+          "div",
+          "container auth-register-header__content"
+        ],
+        [
+          "a",
+          "auth-register-header__back"
+        ],
+        [
+          "a",
+          "auth-register-header__brand"
+        ],
+        [
+          "span",
+          "auth-register-header__spacer"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "header",
+          "auth-login-header"
+        ],
+        [
+          "div",
+          "container auth-login-header__content"
+        ],
+        [
+          "a",
+          "auth-login-header__back"
+        ],
+        [
+          "a",
+          "auth-login-header__brand"
+        ],
+        [
+          "span",
+          "auth-login-header__spacer"
+        ]
+      ]
+    }
+  ],
+  "footer-auth": [
+    {
+      "variant": "v1",
+      "pages": [
+        "pages/auth/forgot-password.html",
+        "pages/auth/login.html",
+        "pages/auth/reset-password.html",
+        "pages/auth/verify-email.html"
+      ],
+      "elementCount": 3,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    },
+    {
+      "variant": "v2",
+      "pages": [
+        "pages/auth/register.html"
+      ],
+      "elementCount": 3,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [
+        [
+          "footer",
+          "auth-register-footer"
+        ]
+      ],
+      "removedElementSignatures": [
+        [
+          "footer",
+          "auth-login-footer"
+        ]
+      ]
+    }
+  ],
+  "header-payment-minimal": [
+    {
+      "variant": "v1",
+      "pages": [
+        "pages/payment/qr.html"
+      ],
+      "elementCount": 5,
+      "changedAttributeNamesComparedWithFirstVariant": [],
+      "addedElementSignatures": [],
+      "removedElementSignatures": []
+    }
+  ]
+}

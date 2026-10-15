@@ -1,0 +1,43 @@
+.account-footer {
+  padding: var(--space-4) 0 var(--space-6);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+}
+
+.account-footer .container,
+.account-footer span:last-child {
+  display: flex;
+  align-items: center;
+}
+
+.account-footer .container {
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.account-footer span:last-child {
+  gap: var(--space-4);
+}
+
+.account-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.account-footer a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+.account-footer a:focus-visible {
+  outline: 2px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 48rem) {
+  .account-footer .container,
+  .account-footer span:last-child {
+    flex-direction: column;
+  }
+}

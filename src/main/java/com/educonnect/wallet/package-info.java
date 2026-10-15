@@ -1,4 +1,2 @@
-/**
- * Wallet balance and transaction ledger domain.
- */
+/** Wallet domain and MVC page routes. */
 package com.educonnect.wallet;
