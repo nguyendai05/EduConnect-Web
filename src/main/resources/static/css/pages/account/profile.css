@@ -1,0 +1,343 @@
+/* Profile page composition. Reuses UserHeader, Input, and Alert components. */
+.profile-page {
+  --profile-avatar-size: 4.5rem;
+
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background: var(--color-background);
+}
+
+.profile-page__main {
+  flex: 1 0 auto;
+}
+
+/* Page-specific account navigation; there is no AccountNav component yet. */
+.profile-page__layout {
+  display: grid;
+  /* Rail điều hướng giữ bản nhỏ để khối thông tin còn đủ chỗ cho hai cột form. */
+  grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.profile-nav {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-nav__item {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4286;
+  text-decoration: none;
+}
+
+.profile-nav__item:hover {
+  background: var(--color-surface-low);
+  color: var(--color-text);
+}
+
+.profile-nav__item.is-active,
+.profile-nav__item[aria-current="page"] {
+  background: var(--color-primary-container);
+  color: var(--color-primary-hover);
+}
+
+/* Temporary Card and InfoRow composition until those shared components are implemented. */
+.profile-card {
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.profile-card__top h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  line-height: 1.3333;
+}
+
+.profile-card__top p {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.4286;
+}
+
+.profile-card__actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Temporary Button variant until the shared Button supports primary and secondary actions. */
+.profile-action {
+  min-height: var(--control-height);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.profile-action--primary {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.profile-action--primary:hover {
+  border-color: var(--color-primary-hover);
+  background: var(--color-primary-hover);
+}
+
+.profile-action--secondary {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.profile-action--secondary:hover {
+  background: var(--color-primary-container);
+}
+
+.profile-status {
+  margin: 0;
+}
+
+.profile-status[hidden] {
+  display: none;
+}
+
+.profile-card__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Temporary Avatar initials until the shared Avatar component is implemented. */
+.profile-avatar {
+  display: grid;
+  width: var(--profile-avatar-size);
+  height: var(--profile-avatar-size);
+  place-items: center;
+  border: 2px solid var(--color-surface);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-container);
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-card__identity div {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.profile-card__identity strong {
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  line-height: 1.3333;
+}
+
+.profile-card__identity span:last-child {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.4286;
+}
+
+.profile-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5) var(--space-4);
+}
+
+.profile-form__field {
+  display: grid;
+  min-width: 0;
+  gap: var(--space-2);
+}
+
+.profile-form__field:last-child {
+  grid-column: 1 / -1;
+}
+
+.profile-form__field > label {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+/* Read-only InfoRow state for fields that are not being edited. */
+.profile-value {
+  display: grid;
+  min-height: var(--input-height);
+  align-content: center;
+  gap: var(--space-1);
+  padding: var(--space-2) 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.profile-value--locked span:last-child {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+}
+
+.profile-value--empty {
+  min-height: 5rem;
+  border-style: dashed;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.profile-form__textarea {
+  width: 100%;
+  min-height: 7rem;
+  resize: vertical;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+}
+
+.profile-form__textarea:focus {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 0;
+}
+
+.profile-form__error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+}
+
+.profile-form__error[hidden],
+.profile-form__hint[hidden] {
+  display: none;
+}
+
+.profile-form__hint {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.3333;
+  text-align: right;
+}
+
+.profile-page :focus-visible {
+  outline: 2px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 48rem) {
+  .profile-page__content {
+    padding-block: var(--space-6);
+  }
+
+  .profile-page__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .profile-nav__item {
+    text-align: center;
+  }
+}
+
+@media (max-width: 36rem) {
+  .profile-card {
+    padding: var(--space-4);
+  }
+
+  .profile-card__top {
+    flex-direction: column;
+  }
+
+  .profile-form,
+  .profile-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-nav__item {
+    text-align: left;
+  }
+
+  .profile-card__actions {
+    width: 100%;
+  }
+
+  .profile-action {
+    flex: 1 1 auto;
+  }
+
+}
+/* P01 state copy; shared component styles stay in the common CSS bundle. */
+.profile-page-note,
+.profile-state {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.profile-page-note {
+  margin: 0 0 var(--space-4);
+}
+
+.profile-action:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.profile-form__textarea[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.profile-value[data-profile-display="bio"] {
+  white-space: pre-wrap;
+}
+
