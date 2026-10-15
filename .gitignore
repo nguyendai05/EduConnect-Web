@@ -33,3 +33,7 @@ replay_pid*
 
 # Temporary files
 *.tmp
+
+# Local environment configuration
+.evn.local
+.env.local
