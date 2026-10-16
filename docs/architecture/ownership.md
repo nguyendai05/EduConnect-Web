@@ -1,5 +1,10 @@
 # Sở hữu file và quy tắc PR
 
+## Catalog Entity dùng chung v1
+
+Codex tạo toàn bộ nền ban đầu dưới điều phối Đại. Maintainer từng Entity/key/enum/repository được chốt theo [shared-entities.md](shared-entities.md): Đại giữ account/auth/reference/tutor/file/admin/review/notification; Huy giữ offering/enrollment/job/invitation/order/contract/payment/wallet. Đây là ownership backend; không thay ownership controller/page phía dưới. Đạt tiếp tục trang/controller/DTO integration, không nhận thêm backend Entity theo đề xuất audit cũ. Một mapping/repository chuẩn mỗi bảng; shared-file review qua maintainer, migration duy nhất Đại điều phối.
+
+
 ## Nền chung
 
 Nguyễn Xuân Đại giữ: pom/wrapper/cấu hình, SecurityConfig, PageModelAdvice, layouts/, fragments/, CSS nền và component dùng chung, js/core/route.js, js/preview/, db/migration/, test contracts/checks và CI. Người khác gửi PR/yêu cầu; chủ nền chung phải duyệt. Migration mới chỉ Đại tạo theo timestamp; không sửa V1–V3.

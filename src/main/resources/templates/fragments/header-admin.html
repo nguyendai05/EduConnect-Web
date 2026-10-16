@@ -1,6 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"><th:block th:fragment="header(active, variant)">
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v1&#x27;}">
+<th:block th:if="${authenticationEnabled}"><th:block th:replace="~{fragments/session-header :: admin}"></th:block></th:block>
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v1&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
@@ -57,7 +58,7 @@
             </div>
         </div>
     </header>
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v2&#x27;}">
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v2&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
@@ -114,7 +115,7 @@
             </div>
         </div>
     </header>
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v3&#x27;}">
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v3&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
@@ -171,7 +172,7 @@
             </div>
         </div>
     </header>
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v4&#x27;}">
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v4&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
@@ -228,7 +229,7 @@
             </div>
         </div>
     </header>
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v5&#x27;}">
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v5&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
@@ -280,7 +281,7 @@
             </div>
         </div>
     </header>
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v6&#x27;}">
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v6&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
@@ -327,7 +328,7 @@
             </div>
         </div>
     </header>
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v7&#x27;}">
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v7&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
@@ -379,7 +380,7 @@
             </div>
         </div>
     </header>
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v8&#x27;}">
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v8&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
@@ -436,7 +437,7 @@
             </div>
         </div>
     </header>
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v9&#x27;}">
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v9&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">
@@ -483,7 +484,7 @@
             </div>
         </div>
     </header>
-<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${variant == &#x27;v10&#x27;}">
+<header class="admin-header" data-component="admin-header" data-has-unread="false" th:if="${!authenticationEnabled and variant == &#x27;v10&#x27;}">
         <form class="admin-header__search" role="search" data-admin-search>
             <label class="sr-only" for="admin-global-search">Tìm kiếm dữ liệu quản trị</label>
             <img class="admin-header__icon admin-header__search-icon" src="/assets/icons/search.svg" alt="" th:src="@{/assets/icons/search.svg}">

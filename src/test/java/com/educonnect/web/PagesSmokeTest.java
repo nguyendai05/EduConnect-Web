@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
+@org.springframework.test.context.ActiveProfiles("ui-preview")
 @AutoConfigureMockMvc(print = MockMvcPrint.NONE)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PagesSmokeTest {
