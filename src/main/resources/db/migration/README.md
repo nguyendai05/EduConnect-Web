@@ -1,5 +1,10 @@
 # Migration Flyway Educonnect
 
+## Chuỗi hiện tại cho nền JPA
+
+V1 → V2 → V3 → `V4__pending_email_otp.sql` (pending registration/OTP). Không sửa migration đã áp, không tạo migration để bù mapping sai. Dùng Flyway trên schema trống cho validation; không dùng script setup thủ công có synthetic history. 51 Entity bỏ qua dev_seed_runs và 4 view; history thuộc Flyway. Xem `docs/architecture/shared-entities.md` và `entity-handoff.md`.
+
+
 - `V1__educonnect_schema.sql`: schema dự thảo MySQL 8.0.16+, nguồn DDL duy nhất.
 - `V2__reference_data.sql`: dữ liệu tham chiếu, không chứa account/transaction DEMO.
 - `V3__require_group_capacity_and_dates.sql`: siết CHECK nullable của GROUP_CLASS; giữ nguyên V1/V2 đã áp.

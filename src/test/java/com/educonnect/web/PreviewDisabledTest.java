@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(properties = "app.ui-preview.enabled=false")
+@org.springframework.test.context.ActiveProfiles("ui-preview")
 @AutoConfigureMockMvc(print = MockMvcPrint.NONE)
 class PreviewDisabledTest {
     @Autowired MockMvc mvc;

@@ -1,0 +1,37 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:fragment="user">
+    <header class="user-header">
+        <div class="user-header__inner">
+            <a class="user-header__brand" th:href="@{/home}" aria-label="Edu Connect - Trang chủ">
+                <img class="user-header__logo" th:src="@{/assets/brand/logo-horizontal.svg}" alt="Edu Connect" width="4562" height="1000">
+            </a>
+            <nav class="user-header__nav" aria-label="Điều hướng chính">
+                <a class="user-header__nav-link" th:href="@{/home}">Trang chủ</a>
+                <a class="user-header__nav-link" th:href="@{/tutor/search}">Tìm gia sư</a>
+                <a class="user-header__nav-link" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/manage}">Quản lý lớp</a>
+                <a class="user-header__nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}">Quản trị</a>
+            </nav>
+            <div class="user-header__actions" th:if="${currentUser != null}">
+                <a class="user-header__nav-link" th:href="@{/account/profile}" th:text="${currentUser.displayName}">Tài khoản</a>
+                <form method="post" th:action="@{/auth/logout}">
+                    <button class="user-header__profile" type="submit">Đăng xuất</button>
+                </form>
+            </div>
+            <div class="user-header__actions" th:if="${currentUser == null}">
+                <a class="user-header__nav-link" th:href="@{/auth/login}">Đăng nhập</a>
+                <a class="user-header__nav-link" th:href="@{/auth/register}">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+</th:block>
+<th:block th:fragment="admin">
+    <header class="admin-header">
+        <a class="admin-header__profile-trigger" th:href="@{/admin/dashboard}">Edu Connect · Quản trị</a>
+        <div class="admin-header__utilities" th:if="${currentUser != null}">
+            <span class="admin-header__profile-copy"><strong th:text="${currentUser.displayName}"></strong><small th:text="${currentUser.email}"></small></span>
+            <form method="post" th:action="@{/auth/logout}"><button class="admin-header__profile-trigger" type="submit">Đăng xuất</button></form>
+        </div>
+    </header>
+</th:block>
+</html>

@@ -1,5 +1,10 @@
 # Database development Educonnect
 
+## Nền JPA v1 — đường provision được hỗ trợ
+
+Validation và database mới phải dùng Flyway V1–V4 trên schema trống. Các script thủ công `01_create_tables.sql`, `02_insert_sample_data.sql`, `full_database_setup.sql` là bản lịch sử: CHECK GROUP_CLASS yếu hơn V3, thiếu V4 và tự ghi synthetic flyway_schema_history. Không dùng chúng để provision schema validation hoặc làm bằng chứng đã áp migration. Không tự sửa history hay chạy lại DDL trên database đang có; Đại điều phối đối chiếu/baseline/migration. Xem [bàn giao](../docs/architecture/entity-handoff.md). Hướng dẫn script thủ công phía dưới được giữ để nhận diện lịch sử, không là đường khuyến nghị hiện tại.
+
+
 Bộ SQL dự thảo đã thực thi trên **MySQL Server 8.0.45** cô lập. Chưa áp vào database nhóm/production. Có **51 bảng, 4 view, 17 tài khoản, 18 dịch vụ/lớp, 24 đơn/26 item/26 contract**. Xem SCHEMA/DECISIONS/FEATURE_MAPPING và TEST_RESULTS để phân biệt quy tắc đã có bằng chứng với đề xuất.
 
 ## 1. File và nguồn chuẩn
@@ -144,7 +149,7 @@ compare-schema đối chiếu columns/constraint/FK rules/enforced CHECK/index/v
 
 Để tự kiểm kết nối local bằng Java, xem [DBConnect và hướng dẫn chạy trong IDE/terminal](CONNECT_LOCAL.md). File `.env.local` ở root giữ credential trên máy, đã được Git bỏ qua; `.env.example` là mẫu chia sẻ. DBConnect đọc file local hoặc EDUCONNECT_DB_* và chỉ kiểm JDBC, không migrate/seed. Script `database/tools/connect.ps1` có thể nạp cấu hình vào terminal và kiểm bằng DatabaseTool connection; chỉ dùng `-LoadOnly` nếu muốn nạp env mà chưa kết nối.
 
-Không viết controller/service/entity trong công việc này. Khi nhóm cần boot với database:
+Đăng nhập/đăng ký hiện đã có service/controller dùng MySQL. Khi chạy với database:
 
 ```text
 SPRING_PROFILES_ACTIVE=db-dev
@@ -155,7 +160,7 @@ EDUCONNECT_DB_PASSWORD=<development-secret>
 
 application-db-dev.yml: Hibernate ddl-auto=validate, open-in-view=false; Flyway enabled/locations classpath:db/migration/validate-on-migrate, baseline-on-migrate=false, clean-disabled=true; SQL init=never. Không dùng ddl-auto=create/update song song Flyway. Seed nằm ngoài classpath migration và application không tự nạp. Production phải có profile/grants/secret riêng và giữ nguyên nguyên tắc này.
 
-Auth/session/PayOS vẫn chưa có backend thật. Việc schema/seed/driver chạy được không chứng minh17 account có thể login trong UI hiện tại; UI hiện vẫn dùng fixture JS riêng. Backend sau này cần dùng DelegatingPasswordEncoder hoặc decoder chấp nhận {bcrypt}; không lấy plain text DEMO password vào SQL comparison.
+Auth/session đã có backend thật với DelegatingPasswordEncoder hỗ trợ {bcrypt}; đăng ký/đăng nhập không phụ thuộc fixture JS. Xem [hướng dẫn xác thực](../docs/architecture/authentication.md). PayOS và các nghiệp vụ khác vẫn đang phát triển; không lấy plain text DEMO password vào SQL comparison.
 
 ## 5. Tài khoản và dữ liệu DEMO
 
