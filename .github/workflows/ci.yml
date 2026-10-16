@@ -36,3 +36,38 @@ jobs:
           node scripts/checks/source-check.mjs
           node scripts/checks/store-check.mjs
           node scripts/checks/database-static-check.mjs
+
+  mysql-foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      mysql:
+        image: mysql:8.0.45
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: educonnect_test_shared
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=12
+    env:
+      EDUCONNECT_JPA_TESTS: 'true'
+      EDUCONNECT_MYSQL_TESTS: 'true'
+      EDUCONNECT_JPA_TEST_URL: 'jdbc:mysql://127.0.0.1:3306/educonnect_test_shared?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true'
+      EDUCONNECT_DB_URL: 'jdbc:mysql://127.0.0.1:3306/educonnect_test_shared?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true'
+      EDUCONNECT_DB_USERNAME: root
+      EDUCONNECT_DB_PASSWORD: ''
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Flyway, Hibernate validation, JDBC auth and JPA contracts
+        run: ./mvnw -B -ntp verify

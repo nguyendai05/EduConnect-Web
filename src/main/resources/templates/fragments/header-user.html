@@ -1,6 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"><th:block th:fragment="header(active, variant)">
-<header class="user-header" data-component="user-header" data-user-variant="A" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v1&#x27;}">
+<th:block th:if="${authenticationEnabled}"><th:block th:replace="~{fragments/session-header :: user}"></th:block></th:block>
+<header class="user-header" data-component="user-header" data-user-variant="A" th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v1&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -69,7 +70,7 @@
         </div>
     </div>
 </header>
-<header class="user-header" data-component="user-header" data-user-variant="B" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v2&#x27;}">
+<header class="user-header" data-component="user-header" data-user-variant="B" th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v2&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -135,7 +136,7 @@
             data-profile-name="Nguyễn Minh Anh"
             data-profile-initials="MA"
             data-profile-role="Gia sư Toán"
-         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v3&#x27;}">
+         th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v3&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -211,7 +212,7 @@
             data-profile-name="Chị Mai Lan"
             data-profile-initials="ML"
             data-profile-role="Phụ huynh"
-         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v4&#x27;}">
+         th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v4&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -280,7 +281,7 @@
         </div>
     </div>
 </header>
-<header class="user-header" data-component="user-header" data-user-variant="B" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v5&#x27;}">
+<header class="user-header" data-component="user-header" data-user-variant="B" th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v5&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -339,7 +340,7 @@
         </div>
     </div>
 </header>
-<header class="user-header" data-component="user-header" data-user-variant="B" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v6&#x27;}">
+<header class="user-header" data-component="user-header" data-user-variant="B" th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v6&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -415,7 +416,7 @@
             data-profile-name="Chị Mai Lan"
             data-profile-initials="ML"
             data-profile-role="Phụ huynh"
-         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v7&#x27;}">
+         th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v7&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -484,7 +485,7 @@
         </div>
     </div>
 </header>
-<header class="user-header" data-component="user-header" data-user-variant="C" th:if="${variant == &#x27;v8&#x27;}">
+<header class="user-header" data-component="user-header" data-user-variant="C" th:if="${!authenticationEnabled and variant == &#x27;v8&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -553,7 +554,7 @@
         </div>
     </div>
 </header>
-<header class="user-header" data-component="user-header" data-user-variant="B" th:if="${variant == &#x27;v9&#x27;}">
+<header class="user-header" data-component="user-header" data-user-variant="B" th:if="${!authenticationEnabled and variant == &#x27;v9&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -622,7 +623,7 @@
         </div>
     </div>
 </header>
-<header class="user-header" data-component="user-header" data-user-variant="TUTOR" th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v10&#x27;}">
+<header class="user-header" data-component="user-header" data-user-variant="TUTOR" th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v10&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -695,7 +696,7 @@
             class="user-header user-shell__header"
             data-component="user-header"
             data-user-variant="A"
-         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v11&#x27;}">
+         th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v11&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">
@@ -768,7 +769,7 @@
             class="user-header user-shell__header"
             data-component="user-header"
             data-user-variant="TUTOR"
-         th:attr="data-active-nav=${active}" th:if="${variant == &#x27;v12&#x27;}">
+         th:attr="data-active-nav=${active}" th:if="${!authenticationEnabled and variant == &#x27;v12&#x27;}">
     <div class="user-header__inner">
         <a class="user-header__brand" href="/home" aria-label="Edu Connect - Trang chủ" th:href="@{/home}">
             <img class="user-header__logo" src="/assets/brand/logo-horizontal.svg" alt="Edu Connect" width="4562" height="1000" th:src="@{/assets/brand/logo-horizontal.svg}">

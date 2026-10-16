@@ -1,16 +1,18 @@
 # EduConnect Web
 
-Nền Spring MVC + Thymeleaf cho 40 trang EduConnect. Đợt này chỉ render giao diện và dữ liệu demo trong JavaScript; chưa triển khai nghiệp vụ, xác thực hay phân quyền thực tế.
+Ứng dụng Spring MVC + Thymeleaf cho 40 trang EduConnect. Đăng nhập, đăng ký qua OTP email, phiên đăng nhập, đăng xuất và phân quyền đã nối MySQL. Các nghiệp vụ khác vẫn đang dùng giao diện/dữ liệu preview.
 
 ## Chạy ngay sau khi clone
 
-Cần JDK 17+ (JDK 21 cũng được); bytecode được biên dịch với release 17. Maven Wrapper dùng Maven 3.9.16; lần đầu cần mạng để tải Maven/dependency. Không cần cài Maven riêng, Node hoặc MySQL để chạy ứng dụng.
+Cần JDK 17+ và MySQL 8.0.16+; bytecode được biên dịch với release 17. Maven Wrapper dùng Maven 3.9.16; lần đầu cần mạng để tải Maven/dependency. Không cần cài Maven riêng hoặc Node để chạy ứng dụng.
+
+Tạo `.env.local` từ `.env.example`, điền kết nối MySQL trên máy. Chạy từ thư mục gốc repo; `main()` đọc `.env.local`, ưu tiên system properties và biến môi trường đã có. Database development đã có V1–V3 và dữ liệu thì dùng tiếp, Flyway sẽ áp V4 cho đăng ký OTP; database mới cần tạo schema trống rồi để Flyway áp migration theo [hướng dẫn DB](database/README.md). Không chạy lại bộ SQL tạo bảng vào database đã có dữ liệu.
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-Mở http://localhost:8080/ hoặc http://localhost:8080/home. Profile mặc định `ui-preview` loại auto-config datasource/JPA/Flyway. Các trang khác có trong [page map](docs/ui/page-map.md).
+Mở http://localhost:8080/auth/register hoặc http://localhost:8080/auth/login. Profile mặc định là `db-dev`; ứng dụng kết nối MySQL và Flyway kiểm tra migration. Các trang khác có trong [page map](docs/ui/page-map.md).
 
 ```powershell
 .\mvnw.cmd -B -ntp clean verify
@@ -35,14 +37,28 @@ Node 22+ chỉ cần khi chạy Node checks. Java tests đọc 40 URL từ `src/
 
 ## Profile
 
-- `ui-preview` mặc định: không kết nối DB; permitAll cho request, CSRF vẫn bật; persona/role là demo browser.
-- `db-dev`: phải cấp `EDUCONNECT_DB_URL`, `EDUCONNECT_DB_USERNAME`, `EDUCONNECT_DB_PASSWORD` qua môi trường. Spring không tự đọc `.env.local`; file này chỉ thuộc JDBC helper thủ công.
+- `db-dev` mặc định: kết nối MySQL từ `EDUCONNECT_DB_URL`, `EDUCONNECT_DB_USERNAME`, `EDUCONNECT_DB_PASSWORD` hoặc `.env.local` khi chạy `main()`. Xác thực/kiểm quyền ở máy chủ; CSRF bật.
+- `ui-preview`: dùng riêng để xem giao diện không cần DB, permitAll và persona demo. Hai form đăng nhập/đăng ký bị vô hiệu hóa trong profile này để không báo thành công giả.
 
 ```powershell
 java -jar target\educonnect-web-0.0.1-SNAPSHOT.jar --spring.profiles.active=db-dev
+# Chỉ xem giao diện, không kết nối DB:
+java -jar target\educonnect-web-0.0.1-SNAPSHOT.jar --spring.profiles.active=ui-preview
 ```
 
 Không chạy profile DB vào schema đang có dữ liệu để thử giao diện. Flyway quản lý migration; không chạy drop/seed từ quy trình UI. Xem [tài liệu DB](docs/database/README.md).
+
+## Đăng nhập và đăng ký
+
+- Đăng ký học viên hoặc gia sư: lưu đăng ký tạm, gửi OTP 6 số qua Resend SMTP, chỉ tạo tài khoản/vai trò/hồ sơ khi xác minh thành công. OTP hạn 10 phút, tối đa 5 lần sai, chờ 60 giây giữa lần gửi, tối đa 5 lần gửi/email/giờ. Gia sư bắt đầu ở `DRAFT`, không được tự duyệt hay đăng ký admin.
+- Đăng nhập bằng email/mật khẩu từ DB. Học viên tới `/home`, gia sư tới `/tutor/manage`, admin tới `/admin/dashboard`. Menu dùng người đăng nhập thật; đăng xuất bằng POST `/auth/logout` có CSRF.
+- Phiên dùng cookie HttpOnly, SameSite=Lax, timeout 30 phút. Đổi trạng thái tài khoản/vai trò/`authentication_version` làm phiên cũ mất hiệu lực ở request tiếp theo.
+- Email chưa xác minh không được đăng nhập. Đăng ký lại cùng email đang chờ sẽ phát mã mới (theo giới hạn gửi), thay thông tin tạm và vô hiệu hóa lượt cũ. Email đã xác minh được hướng về đăng nhập. Quên mật khẩu và ghi nhớ đăng nhập dài hạn chưa được triển khai; trang reset vẫn là preview.
+- Nếu đã nạp seed development: dùng `learner01@example.test`, `tutor01@example.test` hoặc `admin@example.test`, mật khẩu demo công khai `EduconnectDemo!2026`.
+
+Resend SMTP mặc định `smtp.resend.com:465`, SSL, username `resend`. Điền `EDUCONNECT_MAIL_PASSWORD` bằng Resend API key và `EDUCONNECT_MAIL_FROM` bằng địa chỉ thuộc domain đã xác minh trong `.env.local`; không commit API key. Thiếu cấu hình hoặc gửi mail lỗi thì không báo đăng ký thành công.
+
+[Cách dùng currentUser, kiểm quyền và kiểm thử MySQL](docs/architecture/authentication.md).
 
 ## Cấu trúc và bàn giao
 

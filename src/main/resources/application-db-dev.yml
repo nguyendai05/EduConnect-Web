@@ -1,9 +1,22 @@
 # Profile DB development; secret phải cung cấp qua môi trường, không commit giá trị thật.
 spring:
+  mail:
+    host: ${EDUCONNECT_MAIL_HOST:smtp.resend.com}
+    port: ${EDUCONNECT_MAIL_PORT:465}
+    username: ${EDUCONNECT_MAIL_USERNAME:resend}
+    password: ${EDUCONNECT_MAIL_PASSWORD:}
+    default-encoding: UTF-8
+    properties:
+      "[mail.smtp.auth]": ${EDUCONNECT_MAIL_AUTH:true}
+      "[mail.smtp.ssl.enable]": ${EDUCONNECT_MAIL_SSL:true}
+      "[mail.smtp.ssl.checkserveridentity]": true
+      "[mail.smtp.connectiontimeout]": 5000
+      "[mail.smtp.timeout]": 5000
+      "[mail.smtp.writetimeout]": 5000
   datasource:
-    url: ${EDUCONNECT_DB_URL}
-    username: ${EDUCONNECT_DB_USERNAME}
-    password: ${EDUCONNECT_DB_PASSWORD}
+    url: ${EDUCONNECT_DB_URL:jdbc:mysql://127.0.0.1:3306/educonnect_dev?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true}
+    username: ${EDUCONNECT_DB_USERNAME:root}
+    password: ${EDUCONNECT_DB_PASSWORD:}
   jpa:
     open-in-view: false
     hibernate:
@@ -21,3 +34,12 @@ spring:
   sql:
     init:
       mode: never
+
+app:
+  mail:
+    from: ${EDUCONNECT_MAIL_FROM:}
+  email-verification:
+    ttl: 10m
+    resend-cooldown: 60s
+    max-attempts: 5
+    max-sends-per-hour: 5
