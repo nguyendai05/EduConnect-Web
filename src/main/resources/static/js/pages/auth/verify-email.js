@@ -1,88 +1,34 @@
 (() => {
   const page = document.querySelector('[data-verify-page]');
   if (!page) return;
-
-  const Route = window.EduRoute;
-  const FIX = window.EduFixtures;
-  const Store = window.EduStore;
-
-  const panels = {};
-  page.querySelectorAll('[data-verify-state]').forEach((panel) => { panels[panel.dataset.verifyState] = panel; });
-
-  const show = (key) => {
-    Object.keys(panels).forEach((name) => { panels[name].hidden = name !== key; });
+  const expiry = page.querySelector('[data-otp-expiry]');
+  const resend = page.querySelector('[data-otp-resend]');
+  const started = performance.now();
+  const expires = Number(expiry?.dataset.seconds || 0);
+  const cooldown = Number(resend?.dataset.seconds || 0);
+  const update = () => {
+    const elapsed = Math.floor((performance.now() - started) / 1000);
+    const remaining = Math.max(0, expires - elapsed);
+    const wait = Math.max(0, cooldown - elapsed);
+    const text = page.querySelector('[data-otp-countdown]');
+    if (text) text.textContent = remaining ? `${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')}` : 'Mã đã hết hạn';
+    if (resend && !resend.dataset.submitting) {
+      resend.querySelector('button').disabled = wait > 0;
+      resend.querySelector('[data-resend-countdown]').textContent = wait ? `(${wait}s)` : '';
+    }
   };
-
-  if (!Route || !FIX || !Store) {
-    show('missing');
-    return;
-  }
-
-  const STATE_LABELS = { valid: 'Token hợp lệ', expired: 'Token hết hạn', used: 'Token đã dùng' };
-  const STATE_BADGES = { valid: 'badge--success', expired: 'badge--warning', used: 'badge--neutral' };
-
-  const emailBlock = page.querySelector('[data-verify-email-block]');
-  const emailValue = page.querySelector('[data-verify-email]');
-  const expiresValue = page.querySelector('[data-verify-expires-at]');
-  const usedValue = page.querySelector('[data-verify-used-at]');
-  const tokenValue = page.querySelector('[data-verify-token-value]');
-  const resendButton = page.querySelector('[data-verify-resend]');
-  const resendLabel = page.querySelector('[data-verify-resend-label]');
-  const resendSpinner = page.querySelector('[data-verify-resend-spinner]');
-  const resendStatus = page.querySelector('[data-verify-resend-status]');
-  const tokenList = page.querySelector('[data-verify-token-list]');
-
-  const token = Route.param('token', 'verifyEmail', null);
-  const record = FIX.authTokens.find((item) => item.token === token && item.kind === 'verify-email') || null;
-  const state = !token ? 'missing' : (!record || !STATE_LABELS[record.state] ? 'unknown' : record.state);
-
-  Store.text(emailValue, record ? record.email : '');
-  Store.text(expiresValue, record && record.expiresAt ? Store.formatDate(record.expiresAt, true) : '');
-  Store.text(usedValue, record && record.usedAt ? Store.formatDate(record.usedAt, true) : '');
-  Store.text(tokenValue, token || '');
-  if (emailBlock) emailBlock.hidden = !record;
-  show(state);
-
-  let resendRequested = false;
-  const setResendLoading = (loading) => {
-    resendButton.disabled = loading;
-    resendButton.setAttribute('aria-busy', String(loading));
-    resendSpinner.hidden = !loading;
-    resendLabel.textContent = loading ? 'Đang gửi lại...' : 'Gửi lại email xác minh';
-  };
-
-  if (resendButton) {
-    resendButton.addEventListener('click', () => {
-      if (resendRequested) return;
-      resendRequested = true;
-      setResendLoading(true);
-      window.setTimeout(() => {
-        setResendLoading(false);
-        resendLabel.textContent = 'Đã gửi lại email xác minh';
-        resendButton.disabled = true;
-        resendStatus.hidden = false;
-      }, 800);
+  update();
+  window.setInterval(update, 1000);
+  page.querySelectorAll('form').forEach(form => form.addEventListener('submit', event => {
+    if (form.dataset.submitting) { event.preventDefault(); return; }
+    form.dataset.submitting = 'true';
+    form.querySelector('button[type="submit"]').disabled = true;
+  }));
+  window.addEventListener('pageshow', () => {
+    page.querySelectorAll('form').forEach(form => {
+      delete form.dataset.submitting;
+      form.querySelector('button[type="submit"]').disabled = false;
     });
-  }
-
-  if (!tokenList) return;
-
-  FIX.authTokens
-    .filter((item) => item.kind === 'verify-email')
-    .forEach((item) => {
-      const entry = document.createElement('li');
-      entry.className = 'auth-verify-tokens__item';
-
-      const link = document.createElement('a');
-      link.className = 'auth-verify-tokens__link';
-      link.href = Route.page('verifyEmail', { token: item.token });
-      link.textContent = item.token;
-
-      const badge = document.createElement('span');
-      badge.className = `badge ${STATE_BADGES[item.state] || 'badge--neutral'}`;
-      badge.textContent = STATE_LABELS[item.state] || item.state;
-
-      entry.append(link, badge);
-      tokenList.append(entry);
-    });
+    update();
+  });
 })();

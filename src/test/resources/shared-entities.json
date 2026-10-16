@@ -1,0 +1,359 @@
+[
+  {
+    "entity": "Role",
+    "table": "roles",
+    "feature": "user",
+    "idType": "String",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "Subject",
+    "table": "subjects",
+    "feature": "common.reference",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "GradeLevel",
+    "table": "grade_levels",
+    "feature": "common.reference",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "Area",
+    "table": "areas",
+    "feature": "common.reference",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "DeliveryMode",
+    "table": "delivery_modes",
+    "feature": "common.reference",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "UserAccount",
+    "table": "user_accounts",
+    "feature": "user",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "UserRole",
+    "table": "user_roles",
+    "feature": "user",
+    "idType": "UserRoleId",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "LearnerProfile",
+    "table": "learner_profiles",
+    "feature": "user",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "AuthToken",
+    "table": "auth_tokens",
+    "feature": "auth",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "PendingRegistration",
+    "table": "pending_registrations",
+    "feature": "auth",
+    "idType": "String",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "TutorProfile",
+    "table": "tutor_profiles",
+    "feature": "tutor",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "TutorSubject",
+    "table": "tutor_subjects",
+    "feature": "tutor",
+    "idType": "TutorSubjectId",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "TutorGradeLevel",
+    "table": "tutor_grade_levels",
+    "feature": "tutor",
+    "idType": "TutorGradeLevelId",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "TutorArea",
+    "table": "tutor_areas",
+    "feature": "tutor",
+    "idType": "TutorAreaId",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "TutorDeliveryMode",
+    "table": "tutor_delivery_modes",
+    "feature": "tutor",
+    "idType": "TutorDeliveryModeId",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "PrivateFile",
+    "table": "private_files",
+    "feature": "file",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "TutorProfileEvidence",
+    "table": "tutor_profile_evidence",
+    "feature": "tutor",
+    "idType": "TutorProfileEvidenceId",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "Offering",
+    "table": "offerings",
+    "feature": "lesson",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "OfferingTimeSlot",
+    "table": "offering_time_slots",
+    "feature": "lesson",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Enrollment",
+    "table": "enrollments",
+    "feature": "lesson",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Invitation",
+    "table": "invitations",
+    "feature": "invitation",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "JobPost",
+    "table": "job_posts",
+    "feature": "job",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "JobApplication",
+    "table": "job_applications",
+    "feature": "job",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "JobSelection",
+    "table": "job_selections",
+    "feature": "job",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "RegistrationSource",
+    "table": "registration_sources",
+    "feature": "order",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Cart",
+    "table": "carts",
+    "feature": "order",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "CartItem",
+    "table": "cart_items",
+    "feature": "order",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Order",
+    "table": "orders",
+    "feature": "order",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "OrderItem",
+    "table": "order_items",
+    "feature": "order",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Contract",
+    "table": "contracts",
+    "feature": "contract",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "OrderStatusTransition",
+    "table": "order_status_transitions",
+    "feature": "order",
+    "idType": "OrderStatusTransitionId",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "OrderStatusHistory",
+    "table": "order_status_history",
+    "feature": "order",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "ContractStatusHistory",
+    "table": "contract_status_history",
+    "feature": "contract",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "IdempotencyRecord",
+    "table": "idempotency_records",
+    "feature": "order",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Payment",
+    "table": "payments",
+    "feature": "payment",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "PaymentAttempt",
+    "table": "payment_attempts",
+    "feature": "payment",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "PaymentWebhookEvent",
+    "table": "payment_webhook_events",
+    "feature": "payment",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "PaymentAllocation",
+    "table": "payment_allocations",
+    "feature": "payment",
+    "idType": "PaymentAllocationId",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Refund",
+    "table": "refunds",
+    "feature": "payment",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "RefundStatusHistory",
+    "table": "refund_status_history",
+    "feature": "payment",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "LedgerAccount",
+    "table": "ledger_accounts",
+    "feature": "wallet",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Wallet",
+    "table": "wallets",
+    "feature": "wallet",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "EscrowAccount",
+    "table": "escrow_accounts",
+    "feature": "wallet",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Release",
+    "table": "releases",
+    "feature": "wallet",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "MoneyJournal",
+    "table": "money_journals",
+    "feature": "wallet",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "LedgerEntry",
+    "table": "ledger_entries",
+    "feature": "wallet",
+    "idType": "Long",
+    "maintainer": "Huy"
+  },
+  {
+    "entity": "Review",
+    "table": "reviews",
+    "feature": "lesson",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "Report",
+    "table": "reports",
+    "feature": "admin",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "ReportEvidence",
+    "table": "report_evidence",
+    "feature": "admin",
+    "idType": "ReportEvidenceId",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "Notification",
+    "table": "notifications",
+    "feature": "notification",
+    "idType": "Long",
+    "maintainer": "Đại"
+  },
+  {
+    "entity": "AuditLog",
+    "table": "audit_logs",
+    "feature": "admin",
+    "idType": "Long",
+    "maintainer": "Đại"
+  }
+]

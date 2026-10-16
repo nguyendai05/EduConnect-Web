@@ -16,7 +16,8 @@ foreach ($taskLine in [IO.File]::ReadAllLines($taskEnvPath)) {
     $taskSeparator = $taskLine.IndexOf('=')
     if ($taskSeparator -lt 1) { throw 'Dòng cấu hình local không đúng dạng KEY=VALUE.' }
     $taskKey = $taskLine.Substring(0,$taskSeparator).Trim()
-    if ($taskKey -notin $taskAllowedKeys) { throw 'File local chỉ nhận ba biến EDUCONNECT_DB_* đã quy định.' }
+    # File local may also contain SMTP configuration; this helper imports only DB keys.
+    if ($taskKey -notin $taskAllowedKeys) { continue }
     if ($taskSettings.ContainsKey($taskKey)) { throw 'File local có key trùng; hãy giữ mỗi biến một dòng.' }
     $taskValue = $taskLine.Substring($taskSeparator+1).Trim()
     if ($taskValue.Length -ge 2 -and (

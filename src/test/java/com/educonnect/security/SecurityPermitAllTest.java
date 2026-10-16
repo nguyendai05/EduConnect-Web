@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@org.springframework.test.context.ActiveProfiles("ui-preview")
 @AutoConfigureMockMvc(print = MockMvcPrint.NONE)
 class SecurityPermitAllTest {
     @Autowired MockMvc mvc;

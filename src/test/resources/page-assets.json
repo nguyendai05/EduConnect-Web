@@ -648,16 +648,12 @@
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/password-input.js",
       "/js/pages/auth/login.js"
     ],
     "headJs": [],
     "bodyJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/password-input.js",
       "/js/pages/auth/login.js"
     ]
@@ -675,16 +671,12 @@
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/password-input.js",
       "/js/pages/auth/register.js"
     ],
     "headJs": [],
     "bodyJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/password-input.js",
       "/js/pages/auth/register.js"
     ]
@@ -734,15 +726,11 @@
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/pages/auth/verify-email.js"
     ],
     "headJs": [],
     "bodyJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/pages/auth/verify-email.js"
     ]
   },

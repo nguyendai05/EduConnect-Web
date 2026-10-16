@@ -1,5 +1,10 @@
 # Quyết định thiết kế database Educonnect
 
+## Cập nhật nền shared Entities v1
+
+Các quan sát cũ bên dưới là ảnh chụp trước implementation, không là hiện trạng Java. Hiện packaging JAR, auth/OTP JDBC và 51 JPA Entity đã có source. Q01 về link/token verify 24 giờ là đề xuất lịch sử, không phải behavior hiện tại: đăng ký dùng pending_registrations/OTP với TTL cấu hình 10 phút. AuthToken chỉ được mapping riêng, reset password chưa triển khai. Q02–Q10 vẫn cần nhóm chốt; mapping không phê duyệt policy. Xem `../architecture/shared-entities.md` và `entity-handoff.md`.
+
+
 Ngày đối chiếu: 11/10/2026. Đại điều phối; Huy review giao dịch/tiền; Đạt kiểm seed/read DTO. Đây là SQL dự thảo cụ thể được yêu cầu tạo để review, không là bằng chứng các policy sản phẩm đã được giảng viên chốt.
 
 ## 1. Hiện trạng đã kiểm lại

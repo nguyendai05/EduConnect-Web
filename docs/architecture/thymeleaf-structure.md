@@ -151,7 +151,7 @@ JS/CSS phục vụ như tài nguyên tĩnh, không dùng Thymeleaf trong chúng;
 | Flyway không nhận MySQL | Giữ flyway-core + flyway-mysql, version do Boot quản lý |
 | Build trên JDK khác nhau | Wrapper 3.9.16, requireJavaVersion>=17, java.version=17/release 17 |
 | IDE không nhận wrapper | Reload Maven project; chọn Maven Wrapper và JDK17/21 trong IDE |
-| UI đòi DB | Profile mặc định phải là ui-preview; không kích hoạt db-dev để xem UI |
+| UI đòi DB | Mặc định db-dev để chạy xác thực thật; chọn ui-preview khi chỉ xem UI không cần DB |
 | 403 khi POST | CSRF vẫn bật; gửi token, không thay permitAll bằng tắt CSRF |
 | URL sai dưới context path | Dùng @{...}, app-base và EduRoute; không dùng ..//MutationObserver |
 | Preview script bị thiếu | Kiểm flag toàn cục/trang và fragment preview-scripts; không nạp fake data vô điều kiện |
