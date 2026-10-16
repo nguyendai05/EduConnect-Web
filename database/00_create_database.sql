@@ -10,3 +10,4 @@ SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 SET time_zone = '+00:00';
 -- Phải rỗng trước đường Workbench V1/V2; nếu có dữ liệu, dừng và đọc README.
 SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=DATABASE();
+]
