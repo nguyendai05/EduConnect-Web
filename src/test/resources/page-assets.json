@@ -623,15 +623,9 @@
       "/css/pages/auth/login.css",
       "/css/pages/auth/forgot-password.css"
     ],
-    "js": [
-      "/js/core/route.js",
-      "/js/pages/auth/forgot-password.js"
-    ],
+    "js": [],
     "headJs": [],
-    "bodyJs": [
-      "/js/core/route.js",
-      "/js/pages/auth/forgot-password.js"
-    ]
+    "bodyJs": []
   },
   "/auth/login": {
     "css": [
@@ -690,25 +684,15 @@
       "/css/components/action/button.css",
       "/css/components/form/password-input.css",
       "/css/components/feedback/alert.css",
-      "/css/components/feedback/badge.css",
-      "/css/components/feedback/empty-state.css",
       "/css/pages/auth/login.css",
       "/css/pages/auth/reset-password.css"
     ],
     "js": [
-      "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
-      "/js/core/password-input.js",
-      "/js/pages/auth/reset-password.js"
+      "/js/core/password-input.js"
     ],
     "headJs": [],
     "bodyJs": [
-      "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
-      "/js/core/password-input.js",
-      "/js/pages/auth/reset-password.js"
+      "/js/core/password-input.js"
     ]
   },
   "/auth/verify-email": {

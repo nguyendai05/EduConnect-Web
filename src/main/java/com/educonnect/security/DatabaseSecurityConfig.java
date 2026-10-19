@@ -27,9 +27,9 @@ public class DatabaseSecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/assets/**", "/favicon.ico", "/error", "/auth/**",
                                 "/", "/home", "/tutor/search", "/tutor/profile", "/catalog/detail", "/job/discover", "/job/detail").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/tutor/manage", "/tutor/my-profile", "/contract/tutor-detail", "/job/applicants")
+                        .requestMatchers("/tutor/manage", "/tutor/my-profile", "/contract/tutor-detail")
                             .hasRole("TUTOR")
-                        .requestMatchers("/cart/**", "/invitation/create", "/job/create", "/job/my-job", "/payment/**",
+                        .requestMatchers("/cart/**", "/invitation/create", "/job/create", "/job/my-job", "/job/applicants", "/payment/**",
                                 "/contract/student-detail", "/contract/confirm").hasRole("LEARNER")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/auth/login").loginProcessingUrl("/auth/login")
