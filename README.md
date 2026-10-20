@@ -1,6 +1,6 @@
 # EduConnect Web
 
-Ứng dụng Spring MVC + Thymeleaf cho 40 trang EduConnect. Đăng nhập, đăng ký qua OTP email, phiên đăng nhập, đăng xuất và phân quyền đã nối MySQL. Các nghiệp vụ khác vẫn đang dùng giao diện/dữ liệu preview.
+Ứng dụng Spring MVC + Thymeleaf cho 40 trang EduConnect. DAI-01: đăng ký/OTP, đăng nhập/đăng xuất, quên/đặt lại mật khẩu và phiên/quyền nối MySQL. Các nghiệp vụ khác vẫn đang dùng giao diện/dữ liệu preview.
 
 ## Chạy ngay sau khi clone
 
@@ -38,7 +38,7 @@ Node 22+ chỉ cần khi chạy Node checks. Java tests đọc 40 URL từ `src/
 ## Profile
 
 - `db-dev` mặc định: kết nối MySQL từ `EDUCONNECT_DB_URL`, `EDUCONNECT_DB_USERNAME`, `EDUCONNECT_DB_PASSWORD` hoặc `.env.local` khi chạy `main()`. Xác thực/kiểm quyền ở máy chủ; CSRF bật.
-- `ui-preview`: dùng riêng để xem giao diện không cần DB, permitAll và persona demo. Hai form đăng nhập/đăng ký bị vô hiệu hóa trong profile này để không báo thành công giả.
+- `ui-preview`: dùng riêng để xem giao diện không cần DB, permitAll và persona demo. Các form xác thực bị vô hiệu hóa trong profile này để không báo thành công giả.
 
 ```powershell
 java -jar target\educonnect-web-0.0.1-SNAPSHOT.jar --spring.profiles.active=db-dev
@@ -53,12 +53,12 @@ Không chạy profile DB vào schema đang có dữ liệu để thử giao di�
 - Đăng ký học viên hoặc gia sư: lưu đăng ký tạm, gửi OTP 6 số qua Resend SMTP, chỉ tạo tài khoản/vai trò/hồ sơ khi xác minh thành công. OTP hạn 10 phút, tối đa 5 lần sai, chờ 60 giây giữa lần gửi, tối đa 5 lần gửi/email/giờ. Gia sư bắt đầu ở `DRAFT`, không được tự duyệt hay đăng ký admin.
 - Đăng nhập bằng email/mật khẩu từ DB. Học viên tới `/home`, gia sư tới `/tutor/manage`, admin tới `/admin/dashboard`. Menu dùng người đăng nhập thật; đăng xuất bằng POST `/auth/logout` có CSRF.
 - Phiên dùng cookie HttpOnly, SameSite=Lax, timeout 30 phút. Đổi trạng thái tài khoản/vai trò/`authentication_version` làm phiên cũ mất hiệu lực ở request tiếp theo.
-- Email chưa xác minh không được đăng nhập. Đăng ký lại cùng email đang chờ sẽ phát mã mới (theo giới hạn gửi), thay thông tin tạm và vô hiệu hóa lượt cũ. Email đã xác minh được hướng về đăng nhập. Quên mật khẩu và ghi nhớ đăng nhập dài hạn chưa được triển khai; trang reset vẫn là preview.
+- Email chưa xác minh không được đăng nhập. Đăng ký lại cùng email đang chờ sẽ phát mã mới (theo giới hạn gửi), thay thông tin tạm và vô hiệu hóa lượt cũ. Email đã xác minh được hướng về đăng nhập. Quên mật khẩu gửi liên kết dùng một lần qua SMTP; reset lưu hash mật khẩu mới và thu hồi phiên cũ. Ghi nhớ đăng nhập dài hạn chưa triển khai.
 - Nếu đã nạp seed development: dùng `learner01@example.test`, `tutor01@example.test` hoặc `admin@example.test`, mật khẩu demo công khai `EduconnectDemo!2026`.
 
 Resend SMTP mặc định `smtp.resend.com:465`, SSL, username `resend`. Điền `EDUCONNECT_MAIL_PASSWORD` bằng Resend API key và `EDUCONNECT_MAIL_FROM` bằng địa chỉ thuộc domain đã xác minh trong `.env.local`; không commit API key. Thiếu cấu hình hoặc gửi mail lỗi thì không báo đăng ký thành công.
 
-[Cách dùng currentUser, kiểm quyền và kiểm thử MySQL](docs/architecture/authentication.md).
+[Bàn giao DAI-01/A01, cấu hình reset, kiểm quyền và kiểm thử MySQL](docs/architecture/authentication.md).
 
 ## Cấu trúc và bàn giao
 
