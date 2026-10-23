@@ -1,120 +1,174 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, 'none', ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
-<title>Giỏ đăng ký | Edu Connect</title>
-<th:block th:fragment="styles">
-<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
-<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
-<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
-<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
-<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}">
-<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
-<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
-<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
-<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
-<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
-<link rel="stylesheet" href="/css/components/feedback/modal.css" th:href="@{/css/components/feedback/modal.css}">
-<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
-<link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
-<link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
-<link rel="stylesheet" href="/css/pages/cart/index.css" th:href="@{/css/pages/cart/index.css}">
-</th:block>
-<th:block th:fragment="headScripts">
-<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
-<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
-<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
-<script src="/js/pages/cart/index.js" defer th:src="@{/js/pages/cart/index.js}"></script>
-</th:block>
-<th:block th:fragment="scripts">
-
-</th:block>
+    <title>Danh sách đăng ký | Edu Connect</title>
+    <th:block th:fragment="styles">
+        <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+        <link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+        <link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+        <link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+        <link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}">
+        <link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
+        <link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
+        <link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+        <link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+        <link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+        <link rel="stylesheet" href="/css/components/feedback/modal.css" th:href="@{/css/components/feedback/modal.css}">
+        <link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+        <link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+        <link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
+        <link rel="stylesheet" href="/css/pages/cart/index.css" th:href="@{/css/pages/cart/index.css}">
+    </th:block>
+    <th:block th:fragment="headScripts">
+        <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+        <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+        <script src="/js/pages/cart/index.js" defer th:src="@{/js/pages/cart/index.js}"></script>
+    </th:block>
+    <th:block th:fragment="scripts">
+    </th:block>
 </head>
 <body class="cart-page" th:fragment="content">
-<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
-<div class="user-shell" data-component="user-shell" data-cart-page>
-    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
-    <th:block th:replace="~{fragments/header-user :: header(${active}, 'v2')}"></th:block>
+    <div class="user-shell">
+        <th:block th:replace="~{fragments/header-user :: header(${active}, 'v2')}"></th:block>
+        <main class="user-shell__main">
+            <div class="user-shell__content cart-page__content">
+                <header class="page-header">
+                    <div class="page-header__title-block">
+                        <h1 class="page-header__title">Danh sách đăng ký</h1>
+                        <p class="page-header__description">Chọn một dịch vụ hoặc lớp học để xem thỏa thuận và xác nhận đăng ký.</p>
+                    </div>
+                </header>
+                <p class="alert alert--success" role="status" th:if="${message}" th:text="${message}"></p>
+                <p class="alert alert--error" role="alert" th:if="${error}" th:text="${error}"></p>
+                
+                <section class="empty-state cart-empty" th:if="${cart.empty}">
+                    <h2 class="empty-state__title">Bạn chưa chọn dịch vụ hoặc lớp học nào</h2>
+                    <div class="cart-empty__actions">
+                        <a class="button button--primary" th:href="@{/home}">Xem các khóa học trên trang chủ</a>
+                        <a class="button button--outline" th:href="@{/catalog/detail}">Xem chi tiết khóa học</a>
+                    </div>
+                </section>
 
-    <main class="user-shell__main">
-        <div class="user-shell__content cart-page__content">
-            <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
-            <header class="page-header">
-                <div class="page-header__title-block">
-                    <h1 class="page-header__title">Giỏ đăng ký</h1>
-                    <p class="page-header__description">Giả định demo: mỗi dòng mang “số chỗ” = số học viên đăng ký; dịch vụ 1 kèm 1 mặc định 1 chỗ, không dùng số lượng như hàng hóa.</p>
-                </div>
-            </header>
-
-            <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
-            <section class="empty-state cart-empty" data-cart-empty hidden aria-labelledby="cart-empty-title">
-                <span class="empty-state__icon" aria-hidden="true"></span>
-                <h2 class="empty-state__title" id="cart-empty-title">Giỏ đăng ký trống</h2>
-                <p class="empty-state__description">Thêm dịch vụ hoặc lớp nhóm từ trang chi tiết để bắt đầu đăng ký.</p>
-                <div class="cart-empty__actions">
-                    <a class="button button--primary button--medium" href="/tutor/search" th:href="@{/tutor/search}">Tìm gia sư</a>
-                    <a class="button button--outline button--medium" href="/home" th:href="@{/home}">Về trang chủ</a>
-                </div>
-            </section>
-
-            <div class="cart-layout" data-cart-layout>
-                <div class="cart-list" data-cart-list aria-label="Các dòng trong giỏ đăng ký"></div>
-
-                <aside class="cart-aside">
-                    <!-- Component: Card, InfoRow, Badge, Button, Alert | Nguồn: components/data-display/{card,info-row}.html; components/feedback/{badge,alert}.html; components/action/button.html -->
-                    <section class="card cart-summary" aria-labelledby="cart-summary-title">
-                        <h2 id="cart-summary-title">Tóm tắt đơn</h2>
-                        <span class="badge badge--neutral cart-summary__demo">Bản xem trước · Giao dịch mô phỏng</span>
-                        <dl class="cart-summary__info">
-                            <div class="info-row"><dt class="info-row__label">Số dòng</dt><dd class="info-row__value" data-cart-lines>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Tổng số chỗ / học viên</dt><dd class="info-row__value" data-cart-seats-count>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Tổng tạm tính</dt><dd class="info-row__value cart-summary__total" data-cart-total>—</dd></div>
-                            <div class="info-row" data-cart-learner-row><dt class="info-row__label">Học viên</dt><dd class="info-row__value" data-cart-learner>—</dd></div>
-                        </dl>
-
-                        <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
-                        <div class="alert cart-summary__alert" data-cart-learner-alert hidden role="status">
-                            <span class="alert__icon" aria-hidden="true"></span>
-                            <div class="alert__content">
-                                <h3 class="alert__title">Phiên demo không phải học viên</h3>
-                                <p class="alert__message">Đăng nhập bằng persona học viên để tiến hành đăng ký. <a href="/auth/login" data-learner-login-link th:href="@{/auth/login}">Tới trang đăng nhập</a></p>
+                <div class="cart-layout" th:unless="${cart.empty}">
+                    <div class="cart-list">
+                        <article class="card cart-item cart-item--selectable"
+                                 th:each="item, iterStat : ${cart.items}"
+                                 th:classappend="${iterStat.first} ? 'cart-item--selected' : ''"
+                                 th:data-id="${item.id}"
+                                 th:data-title="${item.title}"
+                                 th:data-price="${#numbers.formatDecimal(item.totalPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">
+                            
+                            <!-- Thanh chọn khóa học để lập hợp đồng -->
+                            <div class="cart-item__select-bar">
+                                <label class="cart-item__radio-label">
+                                    <input type="radio" name="selectedCourseRadio" class="cart-item-radio"
+                                           th:value="${item.id}"
+                                           th:checked="${iterStat.first}">
+                                    <span class="cart-item-radio-text"
+                                          th:text="${iterStat.first ? 'Khóa học đang chọn để lập hợp đồng' : 'Bấm để chọn khóa học này'}">
+                                        Chọn khóa này
+                                    </span>
+                                </label>
+                                <span class="badge badge--primary cart-item-badge"
+                                      th:hidden="${!iterStat.first}">Đang chọn</span>
                             </div>
-                        </div>
 
-                        <div class="cart-summary__actions">
-                            <button class="button button--primary button--medium" type="button" data-checkout>Tiến hành đăng ký</button>
-                            <a class="button button--outline button--medium" href="/tutor/search" th:href="@{/tutor/search}">Tiếp tục tìm dịch vụ</a>
-                            <button class="button button--ghost button--medium" type="button" data-clear-cart>Xóa toàn bộ giỏ</button>
-                        </div>
-                        <p class="cart-summary__note">Tổng tạm tính đọc từ giỏ trong store mẫu; giá và điều khoản chốt nằm ở hợp đồng sau khi tạo đơn.</p>
-                    </section>
+                            <div class="cart-item__body">
+                                <header class="cart-item__header">
+                                    <div>
+                                        <h2 class="cart-item__title" th:text="${item.title}">Tiêu đề khóa học</h2>
+                                        <p class="cart-item__meta" th:text="${item.offeringTypeLabel}">1 kèm 1</p>
+                                    </div>
+                                    <a class="cart-item__link" th:href="@{/catalog/detail(id=${item.offeringId})}">Xem chi tiết và lịch học</a>
+                                </header>
+                                <dl class="cart-item__info">
+                                    <div class="info-row">
+                                        <dt class="info-row__label">Gia sư</dt>
+                                        <dd class="info-row__value" th:text="${item.tutorName}">Tên gia sư</dd>
+                                    </div>
+                                    <div class="info-row">
+                                        <dt class="info-row__label">Số buổi × thời lượng</dt>
+                                        <dd class="info-row__value" th:text="|${item.sessionCount} buổi × ${item.durationMinutes} phút|"></dd>
+                                    </div>
+                                    <div class="info-row">
+                                        <dt class="info-row__label">Học phí mỗi buổi</dt>
+                                        <dd class="info-row__value" th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd>
+                                    </div>
+                                    <div class="info-row">
+                                        <dt class="info-row__label">Điều khoản</dt>
+                                        <dd class="info-row__value" th:text="${item.termsText}"></dd>
+                                    </div>
+                                </dl>
+                                <p class="alert alert--warning" th:if="${item.issue != null}" th:text="${item.issue}"></p>
+                                <p class="alert alert--warning" th:if="${item.changed}">Thông tin đã thay đổi — hãy xem học phí, lịch và điều khoản mới rồi bấm cập nhật để xác nhận</p>
+                                
+                                <!-- Form cập nhật số lượng chỗ -->
+                                <form class="cart-edit-form" method="post" th:action="@{/cart/update}">
+                                    <input type="hidden" name="itemId" th:value="${item.id}">
+                                    <input type="hidden" name="version" th:value="${item.version}">
+                                    <label class="cart-edit-form__label" th:for="|seats-${item.id}|" >Số chỗ đăng ký:</label>
+                                    <div class="cart-item__controls">
+                                        <input class="input cart-edit-form__seats" type="number" name="seats" min="1" max="100" required
+                                               th:id="|seats-${item.id}|" th:value="${item.seatCount}"
+                                              >
+                                        <button class="button button--outline cart-edit-form__submit" type="submit">Cập nhật</button>
+                                        <span class="cart-item__hint" th:if="${item.offeringType.name() == 'SERVICE'}">(Gói 1 kèm 1: 1 học viên)</span>
+                                        <span class="cart-item__hint" th:if="${item.offeringType.name() == 'GROUP_CLASS'}">(Lớp nhóm)</span>
+                                    </div>
+                                </form>
+                            </div>
+                            <footer class="cart-item__footer">
+                                <p class="cart-item__total">
+                                    Thành tiền: <strong th:text="${#numbers.formatDecimal(item.totalPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong>
+                                </p>
+                                <div class="cart-item__controls">
+                                    <form class="cart-item__action-form" method="post" th:action="@{/cart/remove}">
+                                        <input type="hidden" name="itemId" th:value="${item.id}">
+                                        <button class="button button--danger" type="submit">Xóa</button>
+                                    </form>
+                                    <a class="button button--primary cart-item__confirm-link" th:href="@{'/contract/confirm?cartItemId=' + ${item.id}}">Xem dự thảo hợp đồng</a>
+                                </div>
+                            </footer>
+                        </article>
+                    </div>
 
-                    <div class="cart-issues" data-checkout-issues role="region" aria-label="Vấn đề cần xử lý trước khi đăng ký" hidden></div>
-                </aside>
+                    <aside class="cart-aside">
+                        <section class="card cart-summary">
+                            <h2>Tóm tắt đăng ký</h2>
+                            
+                            <div class="cart-summary__selection">
+                                <span class="cart-summary__label">Khóa học đang chọn:</span>
+                                <strong class="cart-summary__title" id="summarySelectedTitle" th:text="${cart.items.empty ? '' : cart.items[0].title}">Tên khóa học</strong>
+                                <span class="cart-summary__label cart-summary__price-label">Học phí khóa này:</span>
+                                <strong class="cart-summary__price" id="summarySelectedPrice" th:text="${cart.items.empty ? '0 ₫' : #numbers.formatDecimal(cart.items[0].totalPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">0 ₫</strong>
+                            </div>
+
+                            <p class="cart-summary__hint">
+                                Tổng số khóa trong giỏ: <strong th:text="${cart.totalItems()}"></strong>
+                            </p>
+                            
+                            <p class="cart-summary__note">
+                                💡 Mỗi hợp đồng tương ứng với 1 khóa học được chọn. Bạn sẽ được xem toàn bộ điều khoản thỏa thuận trước khi xác nhận ký và nộp tiền ký quỹ.
+                            </p>
+
+                            <div class="cart-summary__actions">
+                                <form method="post" th:action="@{/cart/check}" id="cartConfirmForm">
+                                    <input type="hidden" name="cartItemId" id="summaryCartItemId" th:value="${cart.items.empty ? '' : cart.items[0].id}">
+                                    <button class="button button--primary button--large cart-summary__submit" type="submit">
+                                        Xem dự thảo hợp đồng
+                                    </button>
+                                </form>
+                                <a class="button button--outline" th:href="@{/home}">Chọn thêm khóa học khác</a>
+                                <form method="post" th:action="@{/cart/clear}">
+                                    <button class="button button--ghost cart-summary__clear" type="submit">Xóa toàn bộ giỏ hàng</button>
+                                </form>
+                            </div>
+                        </section>
+                    </aside>
+                </div>
             </div>
-        </div>
-    </main>
-
-    <!-- Component: Modal | Nguồn: components/feedback/modal.html; JS: js/core/modal.js -->
-    <dialog class="modal" id="clear-cart-modal" aria-labelledby="clear-cart-title" aria-describedby="clear-cart-description">
-        <div class="modal__surface">
-            <header class="modal__header">
-                <span class="modal__icon modal__icon--danger" aria-hidden="true"></span>
-                <div class="modal__heading"><h2 id="clear-cart-title">Xóa toàn bộ giỏ?</h2></div>
-                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
-            </header>
-            <div class="modal__body"><p id="clear-cart-description">Tất cả dòng trong giỏ đăng ký sẽ bị xóa và không khôi phục được trong phiên demo này.</p></div>
-            <footer class="modal__footer">
-                <button class="modal__button modal__button--ghost" type="button" data-modal-close>Giữ lại</button>
-                <button class="modal__button modal__button--danger" type="button" data-modal-confirm>Xóa tất cả</button>
-            </footer>
-        </div>
-    </dialog>
-
-    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
-    <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
-</div>
+        </main>
+        <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+    </div>
 </body>
 </html>

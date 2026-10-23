@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, 'tutors', ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<head>
+    <title>Dịch vụ và lớp học | Edu Connect</title>
+    <th:block th:fragment="styles">
+        <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+        <link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+        <link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+        <link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+        <link rel="stylesheet" href="/css/components/navigation/breadcrumb.css" th:href="@{/css/components/navigation/breadcrumb.css}">
+        <link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
+        <link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
+        <link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
+        <link rel="stylesheet" href="/css/components/data-display/tag.css" th:href="@{/css/components/data-display/tag.css}">
+        <link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+        <link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+        <link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+        <link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+        <link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+        <link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
+        <link rel="stylesheet" href="/css/pages/catalog/detail.css" th:href="@{/css/pages/catalog/detail.css}">
+    </th:block>
+    <th:block th:fragment="headScripts">
+        <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+        <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+        <script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
+    </th:block>
+    <th:block th:fragment="scripts">
+    </th:block>
+</head>
+<body th:fragment="content">
+    <div class="user-shell">
+        <th:block th:replace="~{fragments/header-user :: header(${active}, 'v2')}"></th:block>
+        <main class="user-shell__main">
+            <div class="user-shell__content catalog-detail-page__content">
+                <h1>Dịch vụ và lớp học</h1>
+                <a class="button button--outline" th:href="@{/cart/index}">Danh sách đăng ký</a>
+                <p th:if="${offerings.empty}">Chưa có dịch vụ hoặc lớp học công khai</p>
+                <div class="catalog-options">
+                    <article class="card catalog-section" th:each="offering : ${offerings.content}">
+                        <h2 th:text="${offering.title}"></h2>
+                        <p th:text="${offering.tutorReference.account.displayName}"></p>
+                        <p th:text="|${offering.sessionCount} buổi × ${offering.durationMinutes} phút|"></p>
+                        <p th:text="${#numbers.formatDecimal(offering.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫ / buổi'}"></p>
+                        <a class="button button--primary" th:href="@{/catalog/detail(id=${offering.id})}">Xem chi tiết và đăng ký</a>
+                    </article>
+                </div>
+                <nav class="catalog-pagination" aria-label="Phân trang dịch vụ">
+                    <a th:if="${offerings.hasPrevious()}" th:href="@{/catalog/detail(page=${offerings.number - 1})}">Trang trước</a>
+                    <span th:unless="${offerings.empty}" th:text="|Trang ${offerings.number + 1} / ${offerings.totalPages}|"></span>
+                    <a th:if="${offerings.hasNext()}" th:href="@{/catalog/detail(page=${offerings.number + 1})}">Trang sau</a>
+                </nav>
+            </div>
+        </main>
+        <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+    </div>
+</body>
+</html>

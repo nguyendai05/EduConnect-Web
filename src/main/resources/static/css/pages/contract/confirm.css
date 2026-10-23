@@ -1,3 +1,8 @@
+.confirm-page [hidden] { display: none !important; }
+.confirm-terms { white-space: pre-wrap; overflow-wrap: anywhere; }
+.confirm-consent { display: flex; align-items: flex-start; gap: var(--space-3); cursor: pointer; }
+.confirm-consent input { flex: 0 0 auto; margin-top: 0.2rem; accent-color: var(--color-primary); }
+
 .confirm-page {
     max-width: 1240px;
     margin: auto;

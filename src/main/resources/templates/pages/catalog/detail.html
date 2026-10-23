@@ -1,171 +1,147 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;tutors&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, 'tutors', ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
-<title>Chi tiết dịch vụ / lớp học | Edu Connect</title>
-<th:block th:fragment="styles">
-<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
-<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
-<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
-<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
-<link rel="stylesheet" href="/css/components/navigation/breadcrumb.css" th:href="@{/css/components/navigation/breadcrumb.css}">
-<link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
-<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
-<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
-<link rel="stylesheet" href="/css/components/data-display/tag.css" th:href="@{/css/components/data-display/tag.css}">
-<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
-<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
-<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
-<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
-<link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
-<link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
-<link rel="stylesheet" href="/css/pages/catalog/detail.css" th:href="@{/css/pages/catalog/detail.css}">
-</th:block>
-<th:block th:fragment="headScripts">
-<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
-<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
-<script src="/js/pages/catalog/detail.js" defer th:src="@{/js/pages/catalog/detail.js}"></script>
-</th:block>
-<th:block th:fragment="scripts">
-
-</th:block>
+    <title th:text="${offering != null ? offering.title + ' | Edu Connect' : 'Chi tiết khóa học | Edu Connect'}">Chi tiết dịch vụ / lớp học | Edu Connect</title>
+    <th:block th:fragment="styles">
+        <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+        <link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+        <link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
+        <link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+        <link rel="stylesheet" href="/css/components/navigation/breadcrumb.css" th:href="@{/css/components/navigation/breadcrumb.css}">
+        <link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
+        <link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}">
+        <link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}">
+        <link rel="stylesheet" href="/css/components/data-display/tag.css" th:href="@{/css/components/data-display/tag.css}">
+        <link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+        <link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+        <link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
+        <link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
+        <link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+        <link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
+        <link rel="stylesheet" href="/css/pages/catalog/detail.css" th:href="@{/css/pages/catalog/detail.css}">
+    </th:block>
+    <th:block th:fragment="headScripts">
+        <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+        <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+        <script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
+    </th:block>
+    <th:block th:fragment="scripts">
+    </th:block>
 </head>
 <body class="catalog-detail-page" th:fragment="content">
-<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
-<div class="user-shell" data-component="user-shell" data-catalog-detail-page>
-    <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
+<div class="user-shell" data-component="user-shell">
     <th:block th:replace="~{fragments/header-user :: header(${active}, 'v2')}"></th:block>
 
     <main class="user-shell__main">
         <div class="user-shell__content catalog-detail-page__content">
-            <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
-            <nav class="breadcrumb" aria-label="Breadcrumb" data-detail-breadcrumb>
+            <!-- Breadcrumb điều hướng -->
+            <nav class="breadcrumb" aria-label="Breadcrumb">
                 <ol class="breadcrumb__list">
                     <li class="breadcrumb__item"><a class="breadcrumb__link" href="/home" th:href="@{/home}">Trang chủ</a></li>
-                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="/tutor/search" th:href="@{/tutor/search}">Tìm gia sư</a></li>
-                    <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" data-crumb-title>Chi tiết dịch vụ / lớp học</span></li>
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" href="/tutor/search" th:href="@{/catalog/detail}">Chọn dịch vụ hoặc lớp học</a></li>
+                    <li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" th:text="${offering != null ? offering.title : 'Chi tiết khóa học'}">Chi tiết khóa học</span></li>
                 </ol>
             </nav>
 
-            <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
-            <section class="empty-state catalog-detail-missing" data-offering-missing hidden aria-labelledby="offering-missing-title">
+            <!-- Trạng thái không tìm thấy khóa học -->
+            <section class="empty-state catalog-detail-missing" th:if="${offering == null}" aria-labelledby="offering-missing-title">
                 <span class="empty-state__icon" aria-hidden="true"></span>
                 <h1 class="empty-state__title" id="offering-missing-title">Không tìm thấy dịch vụ / lớp học</h1>
-                <p class="empty-state__description" data-missing-description>Mã dịch vụ/lớp không tồn tại hoặc bản ghi đã bị gỡ.</p>
-                <div class="catalog-detail-missing__actions">
-                    <a class="button button--primary button--medium" href="/tutor/search" th:href="@{/tutor/search}">Tìm gia sư</a>
+                <p class="empty-state__description">Mã khóa học không tồn tại trong hệ thống hoặc đã ngừng nhận đăng ký.</p>
+                <div class="page-local-1 catalog-detail-missing__actions">
+                    <a class="button button--primary button--medium" href="/tutor/search" th:href="@{/catalog/detail}">Chọn dịch vụ khác</a>
                     <a class="button button--outline button--medium" href="/home" th:href="@{/home}">Về trang chủ</a>
                 </div>
             </section>
 
-            <div class="catalog-detail-layout" data-offering-layout>
+            <!-- Giao diện hiển thị chi tiết khi có khóa học -->
+            <div class="catalog-detail-layout" th:if="${offering != null}">
                 <div class="catalog-detail-main">
-                    <!-- Component: Card, Badge, Tag, Avatar | Nguồn: components/data-display/{card,tag,avatar}.html; components/feedback/badge.html -->
+                    <!-- Khối thông tin nổi bật (Hero) -->
                     <section class="card catalog-hero" aria-labelledby="offering-title">
                         <div class="catalog-hero__badges">
-                            <span class="badge badge--info" data-offering-type>Dịch vụ</span>
-                            <span class="badge badge--neutral" data-offering-status>—</span>
-                            <span class="badge badge--neutral" data-offering-availability>—</span>
+                            <span class="badge badge--info" th:text="${offering.offeringType == T(com.educonnect.lesson.domain.OfferingType).GROUP_CLASS ? 'Lớp nhóm' : 'Dịch vụ 1 kèm 1'}">Dịch vụ 1 kèm 1</span>
+                            <span class="badge badge--info" th:text="${issue == null ? 'Đang nhận đăng ký' : issue}"></span>
                         </div>
-                        <h1 class="catalog-hero__title" id="offering-title" data-offering-title>Đang tải thông tin dịch vụ…</h1>
+                        <h1 class="catalog-hero__title" id="offering-title" th:text="${offering.title}">Tên dịch vụ</h1>
                         <div class="catalog-hero__tags">
-                            <span class="tag" data-offering-subject>—</span>
-                            <span class="tag tag--neutral" data-offering-grade>—</span>
-                            <span class="tag tag--format" data-offering-mode>—</span>
+                            <span class="tag" th:text="${offering.subjectReference != null ? offering.subjectReference.name : 'Toán học'}">Môn học</span>
+                            <span class="tag tag--neutral" th:text="${offering.gradeLevelReference != null ? offering.gradeLevelReference.name : 'Lớp 12'}">Khối lớp</span>
+                            <span class="tag tag--format" th:text="${offering.deliveryModeReference != null ? offering.deliveryModeReference.name : 'Trực tuyến'}">Hình thức</span>
                         </div>
                         <div class="catalog-hero__tutor">
-                            <span class="avatar avatar--medium" role="img" aria-label="Ảnh đại diện gia sư" data-tutor-avatar>—</span>
+                            <span class="avatar avatar--medium" role="img" aria-label="Ảnh đại diện gia sư" th:text="${#strings.substring(offering.tutorReference != null and offering.tutorReference.account != null ? offering.tutorReference.account.displayName : 'GS', 0, 1)}">GS</span>
                             <span class="catalog-hero__tutor-copy">
-                                <strong data-tutor-name>—</strong>
-                                <span data-tutor-id>—</span>
+                                <strong th:text="${offering.tutorReference != null and offering.tutorReference.account != null ? offering.tutorReference.account.displayName : 'Gia sư EduConnect'}">Tên gia sư</strong>
+                                <span th:text="'Mã gia sư: GS' + ${offering.tutorId}">Mã gia sư: GS201</span>
                             </span>
-                            <a class="button button--outline button--medium" href="/tutor/search" data-tutor-link th:href="@{/tutor/search}">Xem hồ sơ gia sư</a>
+                            <a class="button button--outline button--medium" href="/tutor/search" th:href="@{/catalog/detail}">Chọn thêm dịch vụ hoặc lớp học</a>
                         </div>
                     </section>
 
+                    <!-- Khối mô tả khóa học -->
                     <section class="card catalog-section" aria-labelledby="offering-description-title">
-                        <h2 id="offering-description-title">Mô tả</h2>
-                        <p class="catalog-section__copy" data-offering-description>—</p>
+                        <h2 id="offering-description-title">Mô tả khóa học</h2>
+                        <p class="catalog-section__copy" th:text="${offering.description}">Mô tả chi tiết nội dung chương trình học.</p>
                     </section>
 
+                    <!-- Khối thông số chi tiết -->
                     <section class="card catalog-section" aria-labelledby="offering-info-title">
-                        <h2 id="offering-info-title">Thông tin khóa</h2>
-                        <!-- Component: InfoRow | Nguồn: components/data-display/info-row.html -->
+                        <h2 id="offering-info-title">Thông tin dịch vụ &amp; lịch học</h2>
                         <dl class="catalog-section__info">
-                            <div class="info-row"><dt class="info-row__label">Mã dịch vụ / lớp</dt><dd class="info-row__value" data-info-id>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Gia sư</dt><dd class="info-row__value" data-info-tutor>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Môn học</dt><dd class="info-row__value" data-info-subject>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Cấp học</dt><dd class="info-row__value" data-info-grade>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Số buổi</dt><dd class="info-row__value" data-info-sessions>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Thời lượng mỗi buổi</dt><dd class="info-row__value" data-info-duration>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Học phí &amp; đơn vị</dt><dd class="info-row__value" data-info-price>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Hình thức</dt><dd class="info-row__value" data-info-mode>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Khu vực</dt><dd class="info-row__value" data-info-region>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Lịch học</dt><dd class="info-row__value" data-info-schedule>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Điều khoản</dt><dd class="info-row__value" data-info-terms>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Trạng thái công khai</dt><dd class="info-row__value" data-info-status>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Ngày công khai</dt><dd class="info-row__value" data-info-published>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Điều kiện đăng ký</dt><dd class="info-row__value" data-info-condition>—</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Mã dịch vụ</dt><dd class="info-row__value" th:text="'OF' + ${offering.id}">OF2001</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Gia sư phụ trách</dt><dd class="info-row__value" th:text="${offering.tutorReference != null and offering.tutorReference.account != null ? offering.tutorReference.account.displayName : 'Gia sư EduConnect'}">Gia sư</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Môn học</dt><dd class="info-row__value" th:text="${offering.subjectReference != null ? offering.subjectReference.name : '—'}">Toán</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Cấp học</dt><dd class="info-row__value" th:text="${offering.gradeLevelReference != null ? offering.gradeLevelReference.name : '—'}">Lớp 12</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Số buổi học</dt><dd class="info-row__value" th:text="${offering.sessionCount + ' buổi'}">10 buổi</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Thời lượng</dt><dd class="info-row__value" th:text="${offering.durationMinutes + ' phút / buổi'}">90 phút / buổi</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Học phí mỗi buổi</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(offering.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">250.000 ₫</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Hình thức dạy</dt><dd class="info-row__value" th:text="${offering.deliveryModeReference != null ? offering.deliveryModeReference.name : 'Trực tuyến'}">Trực tuyến</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Khu vực</dt><dd class="info-row__value" th:text="${offering.areaReference != null ? offering.areaReference.name : 'Toàn quốc'}">Toàn quốc</dd></div>
+                            <div class="info-row">
+                                <dt class="info-row__label">Lịch học</dt>
+                                <dd class="info-row__value">
+                                    <span th:if="${timeSlots != null and !timeSlots.empty}">
+                                        <span th:each="slot, iter : ${timeSlots}" th:text="${(slot.weekday == 7 ? 'Chủ nhật' : 'Thứ ' + (slot.weekday + 1)) + ' (' + slot.startTime + ' - ' + slot.endTime + ') ' + slot.timeZone + (!iter.last ? ', ' : '')}"></span>
+                                    </span>
+                                    <span th:if="${timeSlots == null or timeSlots.empty}">Chưa công bố lịch học</span>
+                                </dd>
+                            </div>
+                            <div class="info-row"><dt class="info-row__label">Điều khoản cam kết</dt><dd class="info-row__value" th:text="${offering.termsText != null ? offering.termsText : 'Điều khoản tiêu chuẩn đảm bảo chất lượng giảng dạy.'}">Điều khoản</dd></div>
                         </dl>
-                    </section>
-
-                    <section class="card catalog-section" aria-labelledby="offering-group-title" data-group-section hidden>
-                        <h2 id="offering-group-title">Lịch học &amp; chỗ đăng ký</h2>
-                        <ul class="catalog-schedule" data-group-schedule></ul>
-                        <dl class="catalog-section__info">
-                            <div class="info-row"><dt class="info-row__label">Tổng số chỗ</dt><dd class="info-row__value" data-group-capacity>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Đã đăng ký</dt><dd class="info-row__value" data-group-enrolled>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Chỗ còn lại</dt><dd class="info-row__value" data-group-seats-left>—</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Khai giảng dự kiến</dt><dd class="info-row__value" data-group-start>—</dd></div>
-                        </dl>
-                        <p class="catalog-section__copy" data-group-condition>—</p>
                     </section>
                 </div>
 
+                <!-- Cột đặt khóa học (Sidebar) -->
                 <aside class="catalog-detail-sidebar">
-                    <!-- Component: Card, Badge, Alert, Button, Radio, Input | Nguồn: components/data-display/card.html; components/feedback/{badge,alert}.html; components/action/button.html; components/form/{radio,input}.html -->
                     <section class="card catalog-booking" aria-labelledby="booking-title">
                         <h2 id="booking-title">Đăng ký học</h2>
-                        <span class="badge badge--neutral catalog-booking__demo">Bản xem trước · Giao dịch mô phỏng</span>
-                        <p class="catalog-booking__price"><strong data-booking-price>—</strong><span data-booking-unit>—</span></p>
-                        <p class="catalog-booking__estimate" data-booking-estimate>—</p>
+                        <p class="catalog-booking__price">
+                            <strong th:text="${#numbers.formatDecimal(offering.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">250.000 ₫</strong>
+                            <span>/buổi</span>
+                        </p>
+                        <p class="catalog-booking__estimate">
+                            Tổng gói học: <strong th:text="${#numbers.formatDecimal(offering.unitPrice * offering.sessionCount, 0, 'POINT', 0, 'COMMA') + ' ₫'}">2.500.000 ₫</strong>
+                            <span th:text="'(' + ${offering.sessionCount} + ' buổi)'">(10 buổi)</span>
+                        </p>
 
-                        <div class="catalog-booking__options" data-booking-options hidden></div>
-
-                        <div class="catalog-seats" data-booking-seats hidden>
-                            <label class="catalog-seats__label" for="offering-seats">Số chỗ đăng ký</label>
-                            <div class="catalog-seats__row">
-                                <span class="input-control catalog-seats__control" data-seats-control>
-                                    <input class="input-control__input" id="offering-seats" type="number" min="1" step="1" value="1" inputmode="numeric" data-seats-input aria-describedby="offering-seats-hint offering-seats-error">
-                                </span>
-                                <span class="catalog-seats__hint" id="offering-seats-hint" data-seats-hint>—</span>
-                            </div>
-                            <p class="catalog-seats__error" id="offering-seats-error" data-seats-error hidden></p>
-                        </div>
-
-                        <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
-                        <div class="alert catalog-booking__alert" data-booking-alert hidden role="status">
-                            <span class="alert__icon" aria-hidden="true"></span>
-                            <div class="alert__content">
-                                <h3 class="alert__title" data-booking-alert-title>—</h3>
-                                <p class="alert__message" data-booking-alert-message>—</p>
-                            </div>
-                        </div>
-
-                        <div class="catalog-booking__actions" data-booking-actions>
-                            <a class="button button--primary button--medium" href="/tutor/search" data-invite-link hidden th:href="@{/tutor/search}">Mời gia sư</a>
-                            <button class="button button--secondary button--medium" type="button" data-add-cart>Thêm vào giỏ</button>
-                        </div>
-                        <p class="catalog-booking__note" data-booking-note>—</p>
+                        <form class="catalog-booking__actions" method="post" th:action="@{/cart/add}">
+                            <input type="hidden" name="offeringId" th:value="${offering.id}">
+                            <input type="hidden" name="version" th:value="${offering.version}">
+                            <label for="booking-seats">Số chỗ đăng ký</label>
+                            <input class="input" id="booking-seats" name="seats" type="number" min="1" value="1" required
+                                   th:max="${availableSeats}" th:readonly="${offering.offeringType.name() == 'SERVICE'}">
+                            <p th:if="${offering.offeringType.name() == 'GROUP_CLASS'}" th:text="|Còn ${availableSeats} chỗ|"></p>
+                            <button class="button button--primary button--large" type="submit" th:disabled="${issue != null}">Thêm vào danh sách đăng ký</button>
+                            <a class="button button--outline" th:href="@{/cart/index}">Xem danh sách đăng ký</a>
+                        </form>
+                        <p class="catalog-booking__note">Thêm vào danh sách chưa giữ chỗ hoặc thu tiền</p>
                     </section>
                 </aside>
             </div>
         </div>
     </main>
 
-    <!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
     <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
 </div>
 </body>
