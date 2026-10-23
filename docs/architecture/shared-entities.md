@@ -2,7 +2,7 @@
 
 Nguồn kỹ thuật: Flyway V1–V4 trong `src/main/resources/db/migration/`, gồm CHECK được V3 siết lại. Không thay migration đã áp dụng để ép mapping. Nền này có 51 Entity, 9 EmbeddedId, 31 enum và 51 JPA repository. Không có Entity cho `dev_seed_runs`, `flyway_schema_history` và bốn view.
 
-Codex tạo trọn bộ nền ban đầu dưới điều phối của Đại. Maintainer bên dưới chịu trách nhiệm thay đổi tiếp theo; ownership trang/controller hiện tại giữ nguyên. Đạt tiếp tục controller/page và tích hợp DTO, không được giao thêm backend Entity trong catalog này.
+Nền mapping đã có trên main qua PR #24. Maintainer cập nhật theo phân công giai đoạn 3 ngày 23/10/2026: Đại 22 Entity, Huy 23, Đạt 6; mỗi người triển khai trọn luồng, gồm query/Service và giao diện. Ownership trang/controller tại ownership.md.
 
 ## Quy ước và quyền ghi
 
@@ -42,13 +42,13 @@ Codex tạo trọn bộ nền ban đầu dưới điều phối của Đại. Ma
 | `tutor_delivery_modes` | `src/main/java/com/educonnect/tutor/domain/TutorDeliveryMode.java` | `TutorDeliveryModeId` | `src/main/java/com/educonnect/tutor/repository/TutorDeliveryModeJpaRepository.java` | Đại |
 | `private_files` | `src/main/java/com/educonnect/file/domain/PrivateFile.java` | `Long` | `src/main/java/com/educonnect/file/repository/PrivateFileJpaRepository.java` | Đại |
 | `tutor_profile_evidence` | `src/main/java/com/educonnect/tutor/domain/TutorProfileEvidence.java` | `TutorProfileEvidenceId` | `src/main/java/com/educonnect/tutor/repository/TutorProfileEvidenceJpaRepository.java` | Đại |
-| `offerings` | `src/main/java/com/educonnect/lesson/domain/Offering.java` | `Long` | `src/main/java/com/educonnect/lesson/repository/OfferingJpaRepository.java` | Huy |
-| `offering_time_slots` | `src/main/java/com/educonnect/lesson/domain/OfferingTimeSlot.java` | `Long` | `src/main/java/com/educonnect/lesson/repository/OfferingTimeSlotJpaRepository.java` | Huy |
+| `offerings` | `src/main/java/com/educonnect/lesson/domain/Offering.java` | `Long` | `src/main/java/com/educonnect/lesson/repository/OfferingJpaRepository.java` | Đạt |
+| `offering_time_slots` | `src/main/java/com/educonnect/lesson/domain/OfferingTimeSlot.java` | `Long` | `src/main/java/com/educonnect/lesson/repository/OfferingTimeSlotJpaRepository.java` | Đạt |
 | `enrollments` | `src/main/java/com/educonnect/lesson/domain/Enrollment.java` | `Long` | `src/main/java/com/educonnect/lesson/repository/EnrollmentJpaRepository.java` | Huy |
-| `invitations` | `src/main/java/com/educonnect/invitation/domain/Invitation.java` | `Long` | `src/main/java/com/educonnect/invitation/repository/InvitationJpaRepository.java` | Huy |
-| `job_posts` | `src/main/java/com/educonnect/job/domain/JobPost.java` | `Long` | `src/main/java/com/educonnect/job/repository/JobPostJpaRepository.java` | Huy |
-| `job_applications` | `src/main/java/com/educonnect/job/domain/JobApplication.java` | `Long` | `src/main/java/com/educonnect/job/repository/JobApplicationJpaRepository.java` | Huy |
-| `job_selections` | `src/main/java/com/educonnect/job/domain/JobSelection.java` | `Long` | `src/main/java/com/educonnect/job/repository/JobSelectionJpaRepository.java` | Huy |
+| `invitations` | `src/main/java/com/educonnect/invitation/domain/Invitation.java` | `Long` | `src/main/java/com/educonnect/invitation/repository/InvitationJpaRepository.java` | Đạt |
+| `job_posts` | `src/main/java/com/educonnect/job/domain/JobPost.java` | `Long` | `src/main/java/com/educonnect/job/repository/JobPostJpaRepository.java` | Đạt |
+| `job_applications` | `src/main/java/com/educonnect/job/domain/JobApplication.java` | `Long` | `src/main/java/com/educonnect/job/repository/JobApplicationJpaRepository.java` | Đạt |
+| `job_selections` | `src/main/java/com/educonnect/job/domain/JobSelection.java` | `Long` | `src/main/java/com/educonnect/job/repository/JobSelectionJpaRepository.java` | Đạt |
 | `registration_sources` | `src/main/java/com/educonnect/order/domain/RegistrationSource.java` | `Long` | `src/main/java/com/educonnect/order/repository/RegistrationSourceJpaRepository.java` | Huy |
 | `carts` | `src/main/java/com/educonnect/order/domain/Cart.java` | `Long` | `src/main/java/com/educonnect/order/repository/CartJpaRepository.java` | Huy |
 | `cart_items` | `src/main/java/com/educonnect/order/domain/CartItem.java` | `Long` | `src/main/java/com/educonnect/order/repository/CartItemJpaRepository.java` | Huy |

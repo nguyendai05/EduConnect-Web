@@ -7,7 +7,7 @@ import org.hibernate.type.SqlTypes;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-/** Mapping job_posts; maintainer: Huy. Không chứa logic nghiệp vụ. */
+/** Mapping job_posts; maintainer: Đạt. Không chứa logic nghiệp vụ. */
 @Entity
 @Table(name = "job_posts", uniqueConstraints = {@UniqueConstraint(name = "uq_jobs_code", columnNames = {"public_code"})})
 public class JobPost {

@@ -5,7 +5,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.Instant;
 
-/** Mapping job_selections; maintainer: Huy. Không chứa logic nghiệp vụ. */
+/** Mapping job_selections; maintainer: Đạt. Không chứa logic nghiệp vụ. */
 @Entity
 @Table(name = "job_selections", uniqueConstraints = {@UniqueConstraint(name = "uq_sel_app", columnNames = {"application_id"}), @UniqueConstraint(name = "uq_sel_source", columnNames = {"job_id", "application_id", "tutor_id"})})
 public class JobSelection {
