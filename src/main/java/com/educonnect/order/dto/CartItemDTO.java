@@ -1,49 +1,36 @@
 package com.educonnect.order.dto;
 
+import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.domain.OfferingType;
-
+import com.educonnect.order.domain.CartItem;
 import java.math.BigDecimal;
 
-/**
- * DTO đại diện cho một khóa học / lớp học trong giỏ hàng (Java Record).
- * Chứa sẵn các phương thức tính toán và hiển thị cho giao diện.
- */
-public record CartItemDTO(
-        Long id,
-        Long offeringId,
-        String title,
-        String tutorName,
-        OfferingType offeringType,
-        BigDecimal unitPrice,
-        Short sessionCount,
-        Short durationMinutes,
-        Integer seatCount,
-        String termsText
-) {
-    /**
-     * Tạm tính tiền cho dòng này: đơn giá × số chỗ đăng ký.
-     */
+public record CartItemDTO(Long id, Long offeringId, String title, String tutorName,
+                          OfferingType offeringType, BigDecimal unitPrice, Short sessionCount,
+                          Short durationMinutes, Integer seatCount, String termsText,
+                          Long version, boolean changed, String issue) {
+    public static CartItemDTO from(CartItem item, String issue) {
+        Offering offering = item.getOfferingReference();
+        return new CartItemDTO(item.getId(), offering.getId(), offering.getTitle(),
+                offering.getTutorReference().getAccount().getDisplayName(), offering.getOfferingType(),
+                offering.getUnitPrice(), offering.getSessionCount(), offering.getDurationMinutes(),
+                item.getSeatCount(), offering.getTermsText(), offering.getVersion(),
+                !offering.getVersion().equals(item.getOfferingVersionSeen()), issue);
+    }
+
     public BigDecimal totalPrice() {
-        if (unitPrice == null) return BigDecimal.ZERO;
-        // Đơn giá nhân với số chỗ (mặc định ít nhất 1 chỗ)
-        return unitPrice.multiply(BigDecimal.valueOf(seatCount != null ? seatCount : 1));
+        return unitPrice.multiply(BigDecimal.valueOf(sessionCount)).multiply(BigDecimal.valueOf(seatCount));
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice();
-    }
+    public BigDecimal getTotalPrice() { return totalPrice(); }
 
-    /**
-     * Nhãn loại hình học hiển thị tiếng Việt trên giao diện.
-     */
     public String getOfferingTypeLabel() {
         return offeringType == OfferingType.GROUP_CLASS ? "Lớp nhóm" : "1 kèm 1";
     }
 
-    /**
-     * Tóm tắt lịch học hiển thị trên thẻ khóa học.
-     */
-    public String getSchedule() {
-        return "Lịch thỏa thuận linh hoạt";
-    }
+    public Long getId() { return id; }
+    public Long getOfferingId() { return offeringId; }
+    public String getTitle() { return title; }
+    public Integer getSeatCount() { return seatCount; }
+    public Long getVersion() { return version; }
 }

@@ -62,7 +62,7 @@ public class ContractService {
     }
 
     /**
-     * Luồng chính: Tạo Đơn hàng và Hợp đồng từ một khóa học được chọn trong giỏ hàng (HUY-02).
+     * Luồng chính: Tạo Đơn hàng và Hợp đồng dự thảo từ một khóa học được chọn trong giỏ hàng (HUY-02).
      * 1 Khóa học = 1 Order = 1 Contract (thuận tiện ký quỹ Escrow và giải ngân sau này).
      */
     public Long createContractFromCartItem(Long learnerId, Long cartItemId) {
@@ -88,6 +88,19 @@ public class ContractService {
         // 3. Xóa đúng mục này khỏi giỏ hàng (các món khác vẫn giữ nguyên)
         cartItemRepo.deleteById(item.getId());
         return contract.getId();
+    }
+
+    /**
+     * Xác nhận ký hợp đồng từ phía học viên trước khi chuyển sang thanh toán ký quỹ (HUY-02 -> HUY-03).
+     */
+    public void signContract(Long learnerId, Long contractId) {
+        Contract contract = contractRepo.findById(contractId)
+                .orElseThrow(() -> new IllegalArgumentException("Hợp đồng không tồn tại"));
+        if (!contract.getLearnerId().equals(learnerId)) {
+            throw new IllegalArgumentException("Bạn không có quyền ký hợp đồng này");
+        }
+        contract.setLearnerAcceptedAt(Instant.now());
+        contractRepo.save(contract);
     }
 
     /**
@@ -148,7 +161,7 @@ public class ContractService {
         oi.setCreatedAt(Instant.now());
         oi = orderItemRepo.save(oi);
 
-        // Bảng 3: contracts (tạo hợp đồng thỏa thuận chờ thanh toán)
+        // Bảng 3: contracts (tạo hợp đồng thỏa thuận chờ ký & thanh toán)
         Contract c = Contract.create();
         c.setPublicCode("CTR-" + System.currentTimeMillis() + "-" + oi.getId());
         c.setOrderItemId(oi.getId());
@@ -157,7 +170,7 @@ public class ContractService {
         c.setStatus(ContractStatus.AWAITING_PAYMENT);
         c.setAgreedTermsText(oi.getTermsTextSnapshot());
         c.setAgreedTermsHash(oi.getTermsHash());
-        c.setLearnerAcceptedAt(Instant.now());
+        c.setLearnerAcceptedAt(Instant.now()); // Khởi tạo mốc tạo thỏa thuận
         c.setTutorAcceptedAt(Instant.now());
         c.setCreatedAt(Instant.now());
         return contractRepo.save(c);

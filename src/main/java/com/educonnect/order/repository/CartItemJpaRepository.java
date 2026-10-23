@@ -1,7 +1,6 @@
 package com.educonnect.order.repository;
 
 import com.educonnect.order.domain.CartItem;
-import com.educonnect.order.dto.CartItemDTO;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,20 +16,6 @@ import java.util.Optional;
 public interface CartItemJpaRepository extends JpaRepository<CartItem, Long> {
 
     /**
-     * Dùng JPA Constructor Expression (SELECT new ...) để query trực tiếp sang CartItemDTO.
-     */
-    @Query("SELECT new com.educonnect.order.dto.CartItemDTO(" +
-           "i.id, o.id, o.title, COALESCE(u.displayName, 'Gia sư EduConnect'), " +
-           "o.offeringType, o.unitPrice, o.sessionCount, o.durationMinutes, i.seatCount, o.termsText) " +
-           "FROM CartItem i " +
-           "JOIN i.offeringReference o " +
-           "JOIN i.cartReference c " +
-           "LEFT JOIN o.tutorReference t " +
-           "LEFT JOIN t.account u " +
-           "WHERE c.learnerId = :learnerId")
-    List<CartItemDTO> findCartItemDtosByLearnerId(@Param("learnerId") Long learnerId);
-
-    /**
      * Lấy các thực thể CartItem kèm Offering để chốt đơn tạo hợp đồng.
      */
     @Query("SELECT i FROM CartItem i JOIN FETCH i.offeringReference o WHERE i.cartId = :cartId")
@@ -41,6 +26,18 @@ public interface CartItemJpaRepository extends JpaRepository<CartItem, Long> {
      */
     @Query("SELECT i FROM CartItem i JOIN FETCH i.offeringReference o WHERE i.id = :id")
     Optional<CartItem> findByIdWithOffering(@Param("id") Long id);
+
+    @Query("""
+            select i from CartItem i
+            join fetch i.offeringReference o
+            join fetch o.tutorReference t
+            join fetch t.account
+            where i.cartReference.learnerId = :learnerId
+            order by i.createdAt, i.id
+            """)
+    List<CartItem> findItemsForLearner(@Param("learnerId") Long learnerId);
+
+    Optional<CartItem> findByIdAndCartReferenceLearnerId(Long id, Long learnerId);
 
     /** Tìm khóa học đã có trong giỏ để kiểm tra trùng lặp */
     Optional<CartItem> findByCartIdAndOfferingId(Long cartId, Long offeringId);

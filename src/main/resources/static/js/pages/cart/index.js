@@ -1,73 +1,65 @@
 /**
- * Script xử lý Giỏ hàng (HUY-01) bằng jQuery
+ * Script xử lý chọn 1 khóa học trong giỏ hàng để xem dự thảo hợp đồng (HUY-01 & HUY-02).
+ * Hỗ trợ highlight viền khi click, chọn radio và cập nhật form tóm tắt.
  */
-$(document).ready(function() {
-    const csrfToken = $('meta[name="_csrf"]').attr('content');
-    const csrfHeader = $('meta[name="_csrf_header"]').attr('content');
+document.addEventListener('DOMContentLoaded', function () {
+    const cartItems = document.querySelectorAll('.cart-item--selectable');
+    const hiddenInput = document.getElementById('summaryCartItemId');
+    const summaryTitle = document.getElementById('summarySelectedTitle');
+    const summaryPrice = document.getElementById('summarySelectedPrice');
 
-    function sendAjax(url, data, callback) {
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: data,
-            beforeSend: function(xhr) {
-                if (csrfHeader && csrfToken) {
-                    xhr.setRequestHeader(csrfHeader, csrfToken);
-                }
-            },
-            success: function(response) {
-                if (callback) callback(response);
-            },
-            error: function(xhr) {
-                let msg = 'Có lỗi xảy ra trong quá trình xử lý.';
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    msg = xhr.responseJSON.message;
-                }
-                alert(msg);
-            }
+    function selectItem(card) {
+        if (!card) return;
+        const itemId = card.dataset.id;
+        const title = card.dataset.title;
+        const price = card.dataset.price;
+
+        // Bỏ chọn tất cả các thẻ khác
+        cartItems.forEach(function (c) {
+            c.classList.remove('cart-item--selected');
+            const radio = c.querySelector('.cart-item-radio');
+            if (radio) radio.checked = false;
+            const badge = c.querySelector('.cart-item-badge');
+            if (badge) badge.style.display = 'none';
+            const labelText = c.querySelector('.cart-item-radio-text');
+            if (labelText) labelText.textContent = 'Bấm để chọn khóa học này';
         });
+
+        // Highlight thẻ được chọn
+        card.classList.add('cart-item--selected');
+        const activeRadio = card.querySelector('.cart-item-radio');
+        if (activeRadio) activeRadio.checked = true;
+        const activeBadge = card.querySelector('.cart-item-badge');
+        if (activeBadge) activeBadge.style.display = 'inline-block';
+        const activeLabel = card.querySelector('.cart-item-radio-text');
+        if (activeLabel) activeLabel.textContent = 'Khóa học đang chọn để lập hợp đồng';
+
+        // Đồng bộ dữ liệu sang cột Tóm tắt bên phải
+        if (hiddenInput) hiddenInput.value = itemId;
+        if (summaryTitle && title) summaryTitle.textContent = title;
+        if (summaryPrice && price) summaryPrice.textContent = price;
     }
 
-    // Thêm nhanh khóa học vào giỏ để kiểm thử
-    $(document).on('click', '.btn-quick-add', function() {
-        const offeringId = $(this).data('id');
-        if (!offeringId) return;
-
-        sendAjax('/cart/add', { offeringId: offeringId, seats: 1 }, function(res) {
-            if (res.success) {
-                window.location.reload();
-            } else {
-                alert(res.message || 'Chưa thể thêm vào giỏ.');
+    cartItems.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+            // Không can thiệp nếu người dùng đang thao tác với input số lượng, nút submit cập nhật/xóa, hoặc liên kết
+            if (e.target.closest('input:not(.cart-item-radio)') || e.target.closest('button') || e.target.closest('a')) {
+                return;
             }
+            selectItem(card);
         });
-    });
 
-    // Xóa từng khóa học khỏi giỏ
-    $(document).on('click', '.btn-remove-item', function() {
-        const itemId = $(this).data('id');
-        if (!itemId) return;
-
-        if (confirm('Bạn có chắc chắn muốn xóa khóa học này khỏi giỏ?')) {
-            sendAjax('/cart/remove', { itemId: itemId }, function(res) {
-                if (res.success) {
-                    window.location.reload();
-                } else {
-                    alert(res.message || 'Không thể xóa sản phẩm này.');
-                }
+        const radio = card.querySelector('.cart-item-radio');
+        if (radio) {
+            radio.addEventListener('change', function () {
+                selectItem(card);
             });
         }
     });
 
-    // Xóa toàn bộ giỏ
-    $(document).on('click', '.btn-clear-cart', function() {
-        if (confirm('Bạn có chắc chắn muốn xóa toàn bộ khóa học trong giỏ đăng ký?')) {
-            sendAjax('/cart/clear', {}, function(res) {
-                if (res.success) {
-                    window.location.reload();
-                } else {
-                    alert(res.message || 'Không thể xóa giỏ hàng.');
-                }
-            });
-        }
-    });
+    // Nếu ban đầu đã có thẻ được chọn thì đồng bộ ngay
+    const initialSelected = document.querySelector('.cart-item--selectable.cart-item--selected') || cartItems[0];
+    if (initialSelected) {
+        selectItem(initialSelected);
+    }
 });
