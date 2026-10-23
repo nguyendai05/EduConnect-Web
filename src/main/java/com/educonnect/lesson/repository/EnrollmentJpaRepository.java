@@ -4,6 +4,8 @@ import com.educonnect.lesson.domain.Enrollment;
 import com.educonnect.lesson.domain.EnrollmentStatus;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.time.Instant;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @Profile("db-dev")
 public interface EnrollmentJpaRepository extends JpaRepository<Enrollment, Long> {
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    List<Enrollment> findLockedByOfferingId(Long offeringId);
     @Query("""
             select coalesce(sum(e.seatCount), 0) from Enrollment e
             where e.offeringId = :id

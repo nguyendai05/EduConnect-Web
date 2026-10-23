@@ -23,247 +23,79 @@
 <link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}"/>
 <link rel="stylesheet" href="/css/pages/contract/confirm.css" th:href="@{/css/pages/contract/confirm.css}"/>
 </th:block>
-<th:block th:fragment="headScripts">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
-<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
-<script src="/js/pages/contract/confirm.js" defer th:src="@{/js/pages/contract/confirm.js}"></script>
-</th:block>
+<th:block th:fragment="headScripts"></th:block>
 <th:block th:fragment="scripts">
+<script defer th:src="@{/js/core/route.js}"></script>
+<script defer th:src="@{/js/core/user-header.js}"></script>
+<script defer th:src="@{/js/pages/contract/confirm.js}"></script>
 </th:block>
 </head>
 <body th:fragment="content">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v4')}"></th:block>
 <main class="confirm-page">
-    <nav class="breadcrumb" aria-label="Đường dẫn">
-        <ol class="breadcrumb__list">
-            <li class="breadcrumb__item">
-                <a class="breadcrumb__link" href="/cart/index" th:href="@{/cart/index}">Giỏ đăng ký</a>
-            </li>
-            <li class="breadcrumb__item">
-                <span class="breadcrumb__current" aria-current="page">Dự thảo hợp đồng</span>
-            </li>
-        </ol>
-    </nav>
-
-    <header class="page-header">
-        <div class="page-header__title-block">
-            <div class="page-header__title-row">
-                <h1 class="page-header__title">Dự thảo hợp đồng dạy – học</h1>
-                <span class="badge badge--warning">Chờ ký &amp; Ký quỹ</span>
-            </div>
-            <p class="confirm-muted">Xem lại toàn bộ thỏa thuận, số buổi và học phí trước khi xác nhận ký hợp đồng và tiến hành thanh toán ký quỹ.</p>
+    <nav class="breadcrumb" aria-label="Đường dẫn"><ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/cart/index}">Giỏ đăng ký</a></li>
+        <li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Xác nhận hợp đồng</span></li>
+    </ol></nav>
+    <header class="page-header"><div class="page-header__title-block">
+        <h1 class="page-header__title">Xác nhận hợp đồng dạy – học</h1>
+        <p class="confirm-muted">Kiểm tra dịch vụ, học phí và điều khoản trước khi xác nhận. Xem dự thảo chưa tạo đơn hay giữ chỗ.</p>
+    </div></header>
+    <p class="alert alert--error" role="alert" th:if="${error != null}" th:text="${error}"></p>
+    <section class="card" th:if="${confirmation == null}"><div class="card__body confirm-stack">
+        <h2 class="card__title">Chưa có hợp đồng được chọn</h2>
+        <p class="confirm-muted">Chọn một dịch vụ hoặc lớp học trong giỏ đăng ký để xem thỏa thuận.</p>
+        <a class="button button--primary" th:href="@{/cart/index}">Về giỏ đăng ký</a>
+    </div></section>
+    <div class="confirm-layout" th:if="${confirmation != null}">
+        <div class="confirm-main">
+            <section class="card" aria-labelledby="contract-title">
+                <header class="card__header"><h2 class="card__title" id="contract-title">Thông tin thỏa thuận</h2></header>
+                <div class="card__body confirm-stack">
+                    <dl class="info-row"><dt class="info-row__label">Học viên / Phụ huynh</dt><dd class="info-row__value" th:text="${confirmation.learnerName}"></dd></dl>
+                    <dl class="info-row"><dt class="info-row__label">Gia sư</dt><dd class="info-row__value" th:text="${confirmation.tutorName}"></dd></dl>
+                    <dl class="info-row"><dt class="info-row__label">Mã đơn</dt><dd class="info-row__value" th:text="${confirmation.orderCode}"></dd></dl>
+                    <dl class="info-row"><dt class="info-row__label">Mã hợp đồng</dt><dd class="info-row__value" th:text="${confirmation.publicCode}"></dd></dl>
+                </div>
+            </section>
+            <section class="card" aria-labelledby="offering-title">
+                <header class="card__header"><h2 class="card__title" id="offering-title" th:text="${confirmation.title}"></h2></header>
+                <div class="card__body confirm-stack">
+                    <dl class="info-row"><dt class="info-row__label">Loại</dt><dd class="info-row__value" th:text="${confirmation.typeLabel}"></dd></dl>
+                    <dl class="info-row"><dt class="info-row__label">Số buổi</dt><dd class="info-row__value" th:text="${confirmation.sessionCount}"></dd></dl>
+                    <dl class="info-row"><dt class="info-row__label">Số chỗ</dt><dd class="info-row__value" th:text="${confirmation.seatCount}"></dd></dl>
+                    <dl class="info-row"><dt class="info-row__label">Đơn giá mỗi buổi</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(confirmation.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
+                </div>
+            </section>
+            <section class="card" aria-labelledby="terms-title">
+                <header class="card__header"><h2 class="card__title" id="terms-title">Điều khoản giảng dạy</h2></header>
+                <div class="card__body"><p class="confirm-terms" th:text="${confirmation.terms}"></p></div>
+            </section>
+            <section class="card" th:if="${confirmation.draft}" aria-labelledby="consent-title">
+                <header class="card__header"><h2 class="card__title" id="consent-title">Xác nhận của học viên</h2></header>
+                <div class="card__body confirm-stack">
+                    <label class="confirm-consent"><input class="confirm-consent-checkbox" type="checkbox" name="acceptTerms" value="true" form="signContractForm" required><span>Tôi đã đọc và đồng ý với nội dung, số buổi và điều khoản giảng dạy trên.</span></label>
+                    <label class="confirm-consent"><input class="confirm-consent-checkbox" type="checkbox" name="acceptPayment" value="true" form="signContractForm" required><span>Tôi đã kiểm tra học phí và số chỗ đăng ký.</span></label>
+                    <label class="confirm-consent"><input class="confirm-consent-checkbox" type="checkbox" name="acceptCancellation" value="true" form="signContractForm" required><span>Tôi đã đọc các điều khoản hủy và hoàn tiền trong thỏa thuận.</span></label>
+                </div>
+            </section>
         </div>
-    </header>
-
-    <p class="alert alert--error" role="alert" th:if="${error}" th:text="${error}"></p>
-
-    <!-- Trường hợp không tìm thấy hợp đồng -->
-    <section class="card" th:if="${contract == null}">
-        <div class="card__body confirm-stack">
-            <h2 class="card__title">Không tìm thấy hợp đồng</h2>
-            <p class="confirm-muted">Vui lòng chọn dịch vụ từ giỏ hàng hoặc xem lại danh sách đơn hàng của bạn.</p>
-            <div style="display: flex; gap: 1rem;">
-                <a class="button button--primary" href="/cart/index" th:href="@{/cart/index}">Về giỏ đăng ký</a>
-                <a class="button button--outline" href="/order/history" th:href="@{/order/history}">Xem lịch sử đơn</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Nội dung hợp đồng đọc trực tiếp từ Entity -->
-    <div id="confirm-content" th:if="${contract != null}">
-        <div class="confirm-layout">
-            <div class="confirm-main">
-                <!-- Mục 1: Thông tin hợp đồng & các bên -->
-                <section class="card" aria-labelledby="contract-title">
-                    <header class="card__header">
-                        <h2 class="card__title" id="contract-title">1. Hợp đồng &amp; các bên tham gia</h2>
-                        <p class="card__description">Thông tin pháp lý giữa Học viên / Phụ huynh và Gia sư phụ trách.</p>
-                    </header>
-                    <div class="card__body confirm-stack">
-                        <dl class="info-row">
-                            <dt class="info-row__label">Mã hợp đồng</dt>
-                            <dd class="info-row__value"><strong th:text="${contract.publicCode}">CTR-123456</strong></dd>
-                        </dl>
-                        <dl class="info-row">
-                            <dt class="info-row__label">Trạng thái hiện tại</dt>
-                            <dd class="info-row__value"><span class="badge badge--warning">Chờ xác nhận ký &amp; Ký quỹ</span></dd>
-                        </dl>
-                        <dl class="info-row">
-                            <dt class="info-row__label">Thời điểm lập dự thảo</dt>
-                            <dd class="info-row__value" th:text="${contract.createdAt != null ? #temporals.format(contract.createdAt, 'dd/MM/yyyy HH:mm') : 'Hôm nay'}">23/10/2026</dd>
-                        </dl>
-                        <div class="confirm-two-columns">
-                            <article class="confirm-party">
-                                <span class="avatar avatar--large" role="img" aria-label="Học viên">HV</span>
-                                <div>
-                                    <p class="confirm-muted">Bên học viên / Phụ huynh</p>
-                                    <h3 th:text="${contract.learnerReference?.account?.displayName ?: 'Học viên'}">Tạ Văn Huy</h3>
-                                    <p class="confirm-muted" th:text="${(contract.learnerReference?.account?.email ?: '') + ' · ' + (contract.learnerReference?.account?.phone ?: 'Chưa cập nhật')}">email@test</p>
-                                </div>
-                            </article>
-                            <article class="confirm-party">
-                                <span class="avatar avatar--large" role="img" aria-label="Gia sư">GS</span>
-                                <div>
-                                    <p class="confirm-muted">Bên gia sư phụ trách</p>
-                                    <h3 th:text="${contract.tutorReference?.account?.displayName ?: 'Gia sư EduConnect'}">Gia sư EduConnect</h3>
-                                    <p class="confirm-muted" th:text="${(contract.tutorReference?.account?.email ?: '') + ' · ' + (contract.tutorReference?.account?.phone ?: 'Chưa cập nhật')}">email@test</p>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Mục 2: Đơn đăng ký & Hạng mục -->
-                <section class="card" aria-labelledby="order-title">
-                    <header class="card__header">
-                        <h2 class="card__title" id="order-title">2. Chi tiết hạng mục giảng dạy</h2>
-                        <p class="card__description">Snapshot nội dung được lưu vết bất biến tại thời điểm lập hợp đồng.</p>
-                    </header>
-                    <div class="card__body confirm-stack">
-                        <div class="confirm-two-columns">
-                            <dl class="info-row">
-                                <dt class="info-row__label">Mã đơn hàng</dt>
-                                <dd class="info-row__value" th:text="${contract.orderItemReference?.orderReference?.publicCode ?: 'ORD-001'}">ORD-123456</dd>
-                            </dl>
-                            <dl class="info-row">
-                                <dt class="info-row__label">Kênh đăng ký</dt>
-                                <dd class="info-row__value">Dịch vụ (Catalog)</dd>
-                            </dl>
-                        </div>
-                        <div class="table-frame">
-                            <table class="table">
-                                <caption class="table__caption">Hạng mục trong đơn đăng ký</caption>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Dịch vụ / Khóa học</th>
-                                        <th scope="col">Đơn giá / buổi</th>
-                                        <th scope="col">Số buổi</th>
-                                        <th scope="col">Số chỗ</th>
-                                        <th scope="col">Thành tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <strong th:text="${contract.orderItemReference?.titleSnapshot ?: 'Khóa học'}">Tên khóa học</strong>
-                                            <br>
-                                            <small class="confirm-muted" th:text="${contract.orderItemReference?.offeringTypeSnapshot}">1 kèm 1</small>
-                                        </td>
-                                        <td th:text="${#numbers.formatDecimal(contract.orderItemReference?.unitPriceSnapshot ?: 0, 0, 'POINT', 0, 'COMMA') + ' ₫'}">200.000 ₫</td>
-                                        <td th:text="${(contract.orderItemReference?.sessionCountSnapshot ?: 1) + ' buổi'}">8 buổi</td>
-                                        <td th:text="${(contract.orderItemReference?.seatCount ?: 1) + ' học viên'}">1 học viên</td>
-                                        <td><strong th:text="${#numbers.formatDecimal(contract.orderItemReference?.lineTotal ?: 0, 0, 'POINT', 0, 'COMMA') + ' ₫'}">1.600.000 ₫</strong></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Mục 3: Học phí & Phí sàn -->
-                <section class="card" aria-labelledby="fees-title">
-                    <header class="card__header">
-                        <h2 class="card__title" id="fees-title">3. Cơ cấu học phí &amp; phân bổ</h2>
-                    </header>
-                    <div class="card__body confirm-stack">
-                        <dl class="info-row">
-                            <dt class="info-row__label">Tổng giá trị cần ký quỹ</dt>
-                            <dd class="info-row__value confirm-total" th:text="${#numbers.formatDecimal(contract.orderItemReference?.lineTotal ?: 0, 0, 'POINT', 0, 'COMMA') + ' ₫'}">1.600.000 ₫</dd>
-                        </dl>
-                        <div class="confirm-fee-grid" id="fee-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-                            <div class="card" style="padding: 1rem; background: var(--color-surface, #f8f9fa);">
-                                <span class="confirm-muted">Thù lao gia sư nhận (90%)</span>
-                                <h3 th:text="${#numbers.formatDecimal((contract.orderItemReference?.lineTotal ?: 0) * 0.90, 0, 'POINT', 0, 'COMMA') + ' ₫'}">1.440.000 ₫</h3>
-                            </div>
-                            <div class="card" style="padding: 1rem; background: var(--color-surface, #f8f9fa);">
-                                <span class="confirm-muted">Phí nền tảng EduConnect (10%)</span>
-                                <h3 th:text="${#numbers.formatDecimal((contract.orderItemReference?.lineTotal ?: 0) * 0.10, 0, 'POINT', 0, 'COMMA') + ' ₫'}">160.000 ₫</h3>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Mục 4: Điều khoản cam kết -->
-                <section class="card" aria-labelledby="terms-title">
-                    <header class="card__header">
-                        <h2 class="card__title" id="terms-title">4. Điều khoản thỏa thuận</h2>
-                    </header>
-                    <div class="card__body confirm-stack">
-                        <div style="background: var(--color-surface, #f8f9fa); padding: 1.25rem; border-radius: 8px; line-height: 1.6;">
-                            <p th:text="${contract.agreedTermsText ?: 'Quy định học tập tiêu chuẩn EduConnect'}">Điều khoản cam kết của khóa học...</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Mục 5: Cam kết pháp lý & Điều khoản dịch vụ -->
-                <section class="card" aria-labelledby="consent-title">
-                    <header class="card__header">
-                        <h2 class="card__title" id="consent-title">5. Cam kết pháp lý &amp; Xác nhận</h2>
-                        <p class="card__description">Vui lòng đọc kỹ và tích chọn đủ 3 cam kết bên dưới trước khi xác nhận ký hợp đồng.</p>
-                    </header>
-                    <div class="card__body confirm-stack">
-                        <div style="display: grid; gap: 0.85rem;">
-                            <label style="display: flex; gap: 0.75rem; align-items: flex-start; cursor: pointer;">
-                                <input type="checkbox" id="consent-1" class="confirm-consent-checkbox" style="width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; accent-color: #4f46e5;" checked>
-                                <span>Tôi đã kiểm tra kỹ thông tin hai bên, môn học, lịch dạy, số buổi và mức học phí nêu trên.</span>
-                            </label>
-                            <label style="display: flex; gap: 0.75rem; align-items: flex-start; cursor: pointer;">
-                                <input type="checkbox" id="consent-2" class="confirm-consent-checkbox" style="width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; accent-color: #4f46e5;" checked>
-                                <span>Tôi hiểu học phí được ký quỹ (Escrow) an toàn trên EduConnect và chỉ giải ngân cho gia sư sau khi từng buổi học được xác nhận hoàn thành.</span>
-                            </label>
-                            <label style="display: flex; gap: 0.75rem; align-items: flex-start; cursor: pointer;">
-                                <input type="checkbox" id="consent-3" class="confirm-consent-checkbox" style="width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; accent-color: #4f46e5;" checked>
-                                <span>Tôi đồng ý với quy định đổi lịch, chính sách hoàn tiền và cơ chế giải quyết tranh chấp của sàn EduConnect.</span>
-                            </label>
-                        </div>
-                        
-                        <div id="consent-warning" class="alert alert--warning" style="display: none; margin-top: 0.5rem;">
-                            Vui lòng tích chọn đầy đủ cả 3 cam kết trên trước khi xác nhận ký hợp đồng.
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Cột tóm tắt bên phải (Sidebar) -->
-            <aside class="confirm-sidebar" aria-label="Tóm tắt và xác nhận">
-                <section class="card confirm-panel confirm-stack">
-                    <h2 class="card__title">Tóm tắt hợp đồng</h2>
-                    <span class="badge badge--warning">Chờ ký &amp; Ký quỹ</span>
-                    <dl class="info-row">
-                        <dt class="info-row__label">Mã hợp đồng</dt>
-                        <dd class="info-row__value" th:text="${contract.publicCode}">CTR-123456</dd>
-                    </dl>
-                    <div class="confirm-price">
-                        <span>Tổng cần ký quỹ</span>
-                        <strong th:text="${#numbers.formatDecimal(contract.orderItemReference?.lineTotal ?: 0, 0, 'POINT', 0, 'COMMA') + ' ₫'}">1.600.000 ₫</strong>
-                    </div>
-
-                    <!-- Nút hành động chính: Ký hợp đồng & Chuyển sang thanh toán ký quỹ (HUY-03) -->
-                    <div class="confirm-stack" style="margin-top: 1.5rem;">
-                        <form method="post" th:action="@{/contract/sign}" id="signContractForm">
-                            <input type="hidden" name="contractId" th:value="${contract.id}">
-                            <button type="submit" id="btnSignContract" class="button button--primary button--large"
-                                    style="width: 100%; text-align: center; font-weight: bold; padding: 0.85rem;">
-                                Xác nhận ký &amp; Thanh toán ký quỹ
-                            </button>
-                        </form>
-                        <a class="button button--outline button--medium"
-                           href="/cart/index" th:href="@{/cart/index}"
-                           style="text-align: center; text-decoration: none; display: block;">
-                            Quay lại giỏ đăng ký
-                        </a>
-                    </div>
-                    <p class="confirm-muted" style="margin-top: 1rem; font-size: 0.85rem;">
-                        💡 Bằng việc bấm xác nhận, bạn chính thức giao kết hợp đồng điện tử và chuyển sang bước nộp học phí vào tài khoản ký quỹ an toàn (Escrow) được đảm bảo bởi EduConnect.
-                    </p>
-                </section>
-            </aside>
-        </div>
+        <aside class="confirm-sidebar" aria-label="Tóm tắt đăng ký"><section class="card confirm-panel confirm-stack">
+            <h2 class="card__title">Tóm tắt đăng ký</h2>
+            <span class="badge badge--warning" th:text="${confirmation.statusLabel}"></span>
+            <div class="confirm-price"><span>Tổng học phí</span><strong th:text="${#numbers.formatDecimal(confirmation.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></div>
+            <form th:if="${confirmation.draft}" method="post" th:action="@{/contract/sign}" id="signContractForm" class="confirm-stack">
+                <input type="hidden" name="cartItemId" th:value="${confirmation.cartItemId}">
+                <input type="hidden" name="version" th:value="${confirmation.version}">
+                <button class="button button--primary button--large" type="submit">Xác nhận đăng ký</button>
+            </form>
+            <a class="button button--primary" th:if="${confirmation.payable}" th:href="@{/payment/checkout(contract=${confirmation.id})}">Tiếp tục thanh toán</a>
+            <p class="confirm-muted" th:if="${confirmation.payable}">Đơn đã được tạo và đang chờ thanh toán. Xác nhận đăng ký không có nghĩa là đã thanh toán.</p>
+            <a class="button button--outline" th:href="@{/cart/index}">Về giỏ đăng ký</a>
+        </section></aside>
     </div>
 </main>
 <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+<th:block th:replace="${scripts}"></th:block>
 </body>
 </html>

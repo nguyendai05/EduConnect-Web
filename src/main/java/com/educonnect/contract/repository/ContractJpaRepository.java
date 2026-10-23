@@ -14,6 +14,7 @@ import java.util.Optional;
  */
 @Profile("db-dev")
 public interface ContractJpaRepository extends JpaRepository<Contract, Long> {
+    Optional<Contract> findByLearnerIdAndOrderItemReferenceOrderReferenceCreationKey(Long learnerId, String creationKey);
 
     /**
      * Nạp hợp đồng kèm toàn bộ thông tin liên quan (OrderItem, Order, Học viên, Gia sư) trong 1 query.
@@ -25,8 +26,8 @@ public interface ContractJpaRepository extends JpaRepository<Contract, Long> {
            "LEFT JOIN FETCH l.account la " +
            "LEFT JOIN FETCH c.tutorReference t " +
            "LEFT JOIN FETCH t.account ta " +
-           "WHERE c.id = :id")
-    Optional<Contract> findByIdWithDetails(@Param("id") Long id);
+           "WHERE c.id = :id AND c.learnerId = :learnerId")
+    Optional<Contract> findByIdWithDetails(@Param("id") Long id, @Param("learnerId") Long learnerId);
 
     /**
      * Tìm danh sách hợp đồng mới nhất của học viên theo thứ tự giảm dần.

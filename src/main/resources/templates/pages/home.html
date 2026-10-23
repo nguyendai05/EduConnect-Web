@@ -15,11 +15,9 @@
 <link rel="stylesheet" href="/css/pages/home.css" th:href="@{/css/pages/home.css}">
 </th:block>
 <th:block th:fragment="headScripts">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
 <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
 <script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
-<script src="/js/pages/home.js" defer th:src="@{/js/pages/home.js}"></script>
 </th:block>
 <th:block th:fragment="scripts">
 </th:block>
@@ -73,8 +71,8 @@
                         </p>
                         <p class="home-offer-card__seats" th:if="${item.sessionCount != null}" th:text="'Khóa ' + ${item.sessionCount} + ' buổi · ' + ${item.durationMinutes} + ' phút/buổi'">Khóa 10 buổi · 90 phút/buổi</p>
                         
-                        <div class="home-offer-card__actions" style="margin-top: auto;">
-                            <a class="button button--primary button--medium home-offer-card__link" th:href="@{'/catalog/detail?id=' + ${item.id}}" style="width: 100%; text-align: center; text-decoration: none; display: block;">Xem chi tiết</a>
+                        <div class="home-offer-card__actions">
+                            <a class="button button--primary button--medium home-offer-card__link" th:href="@{/catalog/detail(id=${item.id})}">Xem chi tiết</a>
                         </div>
                     </article>
                 </div>

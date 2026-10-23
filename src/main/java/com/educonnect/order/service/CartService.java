@@ -51,7 +51,7 @@ public class CartService {
 
     public void add(AccountPrincipal user, Long offeringId, int seats, Long version) {
         Long learnerId = lockLearner(user);
-        Offering offering = checkedOffering(offeringId, seats, version);
+        Offering offering = checkedOffering(learnerId, offeringId, seats, version);
         Cart cart = carts.findByLearnerId(learnerId).orElseGet(() -> {
             Cart created = Cart.create();
             created.setLearnerId(learnerId);
@@ -74,7 +74,7 @@ public class CartService {
         Long learnerId = lockLearner(user);
         CartItem item = items.findByIdAndCartReferenceLearnerId(itemId, learnerId)
                 .orElseThrow(() -> new IllegalArgumentException("Lựa chọn không còn trong danh sách của bạn"));
-        Offering offering = checkedOffering(item.getOfferingId(), seats, version);
+        Offering offering = checkedOffering(learnerId, item.getOfferingId(), seats, version);
         item.setSeatCount(seats);
         item.setOfferingVersionSeen(offering.getVersion());
         item.getCartReference().setUpdatedAt(Instant.now());
@@ -121,9 +121,10 @@ public class CartService {
         if (item.changed()) throw new IllegalArgumentException("Vui lòng xác nhận thông tin mới của " + item.title());
     }
 
-    private Offering checkedOffering(Long id, int seats, Long version) {
+    private Offering checkedOffering(Long learnerId, Long id, int seats, Long version) {
         Offering offering = catalog.getPublicOffering(id);
-        if (version != null && !offering.getVersion().equals(version)) {
+        if (learnerId.equals(offering.getTutorId())) throw new IllegalArgumentException("Không thể đăng ký dịch vụ của chính mình");
+        if (version == null || !offering.getVersion().equals(version)) {
             throw new IllegalArgumentException("Thông tin dịch vụ đã thay đổi, vui lòng mở lại chi tiết");
         }
         String issue = catalog.registrationIssue(offering, seats);

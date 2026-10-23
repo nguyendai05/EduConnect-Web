@@ -7,4 +7,4 @@ public record CartSelectionForm(
         @NotNull(message = "Số chỗ không được để trống")
         @Positive(message = "Số chỗ phải lớn hơn 0")
         Integer seats,
-        Long version) {}
+        @NotNull(message = "Vui lòng tải lại thông tin dịch vụ") Long version) {}

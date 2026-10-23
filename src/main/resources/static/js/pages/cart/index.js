@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const radio = c.querySelector('.cart-item-radio');
             if (radio) radio.checked = false;
             const badge = c.querySelector('.cart-item-badge');
-            if (badge) badge.style.display = 'none';
+            if (badge) badge.hidden = true;
             const labelText = c.querySelector('.cart-item-radio-text');
             if (labelText) labelText.textContent = 'Bấm để chọn khóa học này';
         });
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const activeRadio = card.querySelector('.cart-item-radio');
         if (activeRadio) activeRadio.checked = true;
         const activeBadge = card.querySelector('.cart-item-badge');
-        if (activeBadge) activeBadge.style.display = 'inline-block';
+        if (activeBadge) activeBadge.hidden = false;
         const activeLabel = card.querySelector('.cart-item-radio-text');
         if (activeLabel) activeLabel.textContent = 'Khóa học đang chọn để lập hợp đồng';
 

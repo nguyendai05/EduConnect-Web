@@ -45,7 +45,8 @@ public interface OfferingJpaRepository extends JpaRepository<Offering, Long> {
            "WHERE o.status = :status ORDER BY o.id ASC")
     List<Offering> findByStatusWithDetails(@Param("status") OfferingStatus status);
 
-    @EntityGraph(attributePaths = {"tutorReference", "tutorReference.account"})
+    @EntityGraph(attributePaths = {"tutorReference", "tutorReference.account", "subjectReference",
+            "gradeLevelReference", "areaReference", "deliveryModeReference"})
     Page<Offering> findByStatusAndTutorReferenceReviewStatusAndTutorReferenceAccountStatus(
             OfferingStatus status, TutorReviewStatus reviewStatus, AccountStatus accountStatus, Pageable pageable);
 }

@@ -72,12 +72,12 @@ public class CartPageController {
             service().checkItem(user, cartItemId);
             return "redirect:/contract/confirm?cartItemId=" + cartItemId;
         }
-        service().check(user);
         CartDTO cart = service().getCartDTO(user);
         if (!cart.isEmpty()) {
+            service().checkItem(user, cart.items().get(0).id());
             return "redirect:/contract/confirm?cartItemId=" + cart.items().get(0).id();
         }
-        return "redirect:/contract/confirm";
+        throw new IllegalArgumentException("Danh sách đăng ký đang trống");
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

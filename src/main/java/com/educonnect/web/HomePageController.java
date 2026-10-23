@@ -2,6 +2,10 @@ package com.educonnect.web;
 
 import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.domain.OfferingStatus;
+import com.educonnect.tutor.domain.TutorReviewStatus;
+import com.educonnect.user.domain.AccountStatus;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import com.educonnect.lesson.repository.OfferingJpaRepository;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Controller;
@@ -33,7 +37,9 @@ public class HomePageController {
         List<Offering> offerings = Collections.emptyList();
         if (offeringRepo != null) {
             // Lấy các khóa học đã được duyệt & công khai
-            offerings = offeringRepo.findByStatusWithDetails(OfferingStatus.PUBLISHED);
+            offerings = offeringRepo.findByStatusAndTutorReferenceReviewStatusAndTutorReferenceAccountStatus(
+                    OfferingStatus.PUBLISHED, TutorReviewStatus.APPROVED, AccountStatus.ACTIVE,
+                    PageRequest.of(0, 6, Sort.by("id").descending())).getContent();
         }
         model.addAttribute("offerings", offerings);
         return "pages/home";

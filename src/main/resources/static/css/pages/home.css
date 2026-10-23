@@ -161,3 +161,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.home-offer-card__actions { margin-top: auto; }
+.home-offer-card__link { width: 100%; }
