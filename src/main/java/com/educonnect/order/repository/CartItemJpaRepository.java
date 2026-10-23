@@ -17,10 +17,7 @@ import java.util.Optional;
 public interface CartItemJpaRepository extends JpaRepository<CartItem, Long> {
 
     /**
-     * Dùng JPA Constructor Expression (SELECT new ...) để:
-     * 1. Query xuyên bảng: từ CartItem -> Cart -> lấy theo learnerId.
-     * 2. Join lấy thông tin khóa học (Offering) và tên gia sư (UserAccount).
-     * 3. Database tự động đóng gói thẳng vào CartItemDTO trong 1 câu SQL duy nhất.
+     * Dùng JPA Constructor Expression (SELECT new ...) để query trực tiếp sang CartItemDTO.
      */
     @Query("SELECT new com.educonnect.order.dto.CartItemDTO(" +
            "i.id, o.id, o.title, COALESCE(u.displayName, 'Gia sư EduConnect'), " +
@@ -32,6 +29,12 @@ public interface CartItemJpaRepository extends JpaRepository<CartItem, Long> {
            "LEFT JOIN t.account u " +
            "WHERE c.learnerId = :learnerId")
     List<CartItemDTO> findCartItemDtosByLearnerId(@Param("learnerId") Long learnerId);
+
+    /**
+     * Lấy các thực thể CartItem kèm Offering để chốt đơn tạo hợp đồng.
+     */
+    @Query("SELECT i FROM CartItem i JOIN FETCH i.offeringReference o WHERE i.cartId = :cartId")
+    List<CartItem> findByCartIdWithOffering(@Param("cartId") Long cartId);
 
     /** Tìm khóa học đã có trong giỏ để kiểm tra trùng lặp */
     Optional<CartItem> findByCartIdAndOfferingId(Long cartId, Long offeringId);
