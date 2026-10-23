@@ -30,6 +30,7 @@ public class ContractPageController {
      */
     @GetMapping("/contract/confirm")
     public String confirm(@RequestParam(value = "contract", required = false) Long contractId,
+                          @RequestParam(value = "cartItemId", required = false) Long cartItemId,
                           @AuthenticationPrincipal AccountPrincipal user,
                           Model model) {
         ContractService contractService = contractServiceProvider.getIfAvailable();
@@ -44,14 +45,14 @@ public class ContractPageController {
             return "pages/contract/confirm";
         }
 
-        // 2. Nếu không có ID: tự động chốt từ giỏ hàng hiện tại
+        // 2. Tạo hợp đồng cho đúng khóa học được chọn trong giỏ (HUY-02)
         try {
-            Long newContractId = contractService.createContractFromCart(user.getId());
+            Long newContractId = contractService.createContractFromCartItem(user.getId(), cartItemId);
             if (newContractId != null) {
                 return "redirect:/contract/confirm?contract=" + newContractId;
             }
         } catch (Exception ignored) {
-            // Giỏ trống thì tìm hợp đồng gần nhất
+            // Giỏ trống hoặc lỗi thì tìm hợp đồng gần nhất
         }
 
         // 3. Tìm hợp đồng gần nhất của người dùng

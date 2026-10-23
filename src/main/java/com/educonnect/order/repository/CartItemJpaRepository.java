@@ -36,6 +36,12 @@ public interface CartItemJpaRepository extends JpaRepository<CartItem, Long> {
     @Query("SELECT i FROM CartItem i JOIN FETCH i.offeringReference o WHERE i.cartId = :cartId")
     List<CartItem> findByCartIdWithOffering(@Param("cartId") Long cartId);
 
+    /**
+     * Lấy 1 dòng CartItem cụ thể kèm Offering để tạo hợp đồng đơn lẻ (HUY-02).
+     */
+    @Query("SELECT i FROM CartItem i JOIN FETCH i.offeringReference o WHERE i.id = :id")
+    Optional<CartItem> findByIdWithOffering(@Param("id") Long id);
+
     /** Tìm khóa học đã có trong giỏ để kiểm tra trùng lặp */
     Optional<CartItem> findByCartIdAndOfferingId(Long cartId, Long offeringId);
 

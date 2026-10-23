@@ -62,41 +62,47 @@ public class ContractService {
     }
 
     /**
-     * Luồng chính: Tạo Đơn hàng và Hợp đồng từ giỏ hàng.
-     * Chạy theo chuỗi hàm: Tạo Order -> Tạo từng Contract -> Xóa giỏ.
+     * Luồng chính: Tạo Đơn hàng và Hợp đồng từ một khóa học được chọn trong giỏ hàng (HUY-02).
+     * 1 Khóa học = 1 Order = 1 Contract (thuận tiện ký quỹ Escrow và giải ngân sau này).
      */
-    public Long createContractFromCart(Long learnerId) {
-        Cart cart = cartRepo.findByLearnerId(learnerId)
-                .orElseThrow(() -> new IllegalArgumentException("Giỏ hàng không tồn tại"));
-        List<CartItem> items = cartItemRepo.findByCartIdWithOffering(cart.getId());
-        if (items.isEmpty()) throw new IllegalStateException("Giỏ hàng đang trống");
-
-        // 1. Tạo Đơn hàng cha
-        Order order = saveOrder(learnerId, items);
-
-        // 2. Chuyển từng món trong giỏ thành chuỗi: Source -> OrderItem -> Contract
-        Contract firstContract = null;
-        int line = 1;
-        for (CartItem item : items) {
-            Contract contract = createContractForItem(order.getId(), learnerId, item, line++);
-            if (firstContract == null) firstContract = contract;
+    public Long createContractFromCartItem(Long learnerId, Long cartItemId) {
+        CartItem item;
+        if (cartItemId != null) {
+            item = cartItemRepo.findByIdWithOffering(cartItemId)
+                    .orElseThrow(() -> new IllegalArgumentException("Khóa học không tồn tại trong giỏ"));
+        } else {
+            Cart cart = cartRepo.findByLearnerId(learnerId)
+                    .orElseThrow(() -> new IllegalArgumentException("Giỏ hàng không tồn tại"));
+            List<CartItem> items = cartItemRepo.findByCartIdWithOffering(cart.getId());
+            if (items.isEmpty()) throw new IllegalStateException("Giỏ hàng đang trống");
+            item = items.get(0);
         }
 
-        // 3. Xóa sạch giỏ hàng
-        cartItemRepo.deleteByCartId(cart.getId());
-        return firstContract.getId();
+        // 1. Tạo Đơn hàng cho đúng khóa học này (tổng tiền = thành tiền của khóa học)
+        BigDecimal total = calculateLineTotal(item);
+        Order order = saveOrder(learnerId, total);
+
+        // 2. Tạo Hợp đồng duy nhất cho khóa học này
+        Contract contract = createContractForItem(order.getId(), learnerId, item, 1);
+
+        // 3. Xóa đúng mục này khỏi giỏ hàng (các món khác vẫn giữ nguyên)
+        cartItemRepo.deleteById(item.getId());
+        return contract.getId();
+    }
+
+    /**
+     * Tương thích ngược: Nếu gọi từ trang cũ thì lấy món đầu tiên trong giỏ.
+     */
+    public Long createContractFromCart(Long learnerId) {
+        return createContractFromCartItem(learnerId, null);
     }
 
     // =========================================================================
     // CÁC HÀM CON THAO TÁC TỪNG BẢNG (NGẮN GỌN & TÁI SỬ DỤNG)
     // =========================================================================
 
-    /** Thao tác bảng orders: tính tổng tiền và lưu đơn hàng */
-    private Order saveOrder(Long learnerId, List<CartItem> items) {
-        BigDecimal total = BigDecimal.ZERO;
-        for (CartItem i : items) {
-            total = total.add(calculateLineTotal(i));
-        }
+    /** Thao tác bảng orders: lưu đơn hàng */
+    private Order saveOrder(Long learnerId, BigDecimal total) {
         Order order = Order.create();
         order.setPublicCode("ORD-" + System.currentTimeMillis());
         order.setLearnerId(learnerId);

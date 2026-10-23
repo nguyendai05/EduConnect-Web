@@ -50,8 +50,8 @@
                 <p class="empty-state__description">Bạn chưa có khóa học hoặc lớp nhóm nào trong giỏ.</p>
                 <div class="cart-empty__actions" style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
                     <a class="button button--primary button--medium" href="/tutor/search" th:href="@{/tutor/search}">Tìm gia sư</a>
-                    <button type="button" class="button button--secondary button--medium btn-quick-add" data-id="1">+ Thêm thử Khóa học 1</button>
-                    <button type="button" class="button button--secondary button--medium btn-quick-add" data-id="2">+ Thêm thử Khóa học 2</button>
+                    <button type="button" class="button button--secondary button--medium btn-quick-add" data-id="2001">+ Thêm thử Khóa Toán (2001)</button>
+                    <button type="button" class="button button--secondary button--medium btn-quick-add" data-id="2002">+ Thêm thử Khóa Văn (2002)</button>
                     <a class="button button--outline button--medium" href="/home" th:href="@{/home}">Về trang chủ</a>
                 </div>
             </section>
@@ -81,9 +81,12 @@
                                 <div class="info-row" th:if="${item.termsText != null and !item.termsText.empty}"><dt class="info-row__label">Điều khoản</dt><dd class="info-row__value" th:text="${item.termsText}">Điều khoản</dd></div>
                             </dl>
                         </div>
-                        <footer class="cart-item__footer">
-                            <p class="cart-item__total">Tạm tính <strong th:text="${#numbers.formatDecimal(item.totalPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">200.000 ₫</strong></p>
-                            <button class="button button--ghost button--medium btn-remove-item" type="button" th:data-id="${item.id}">Xóa khỏi giỏ</button>
+                        <footer class="cart-item__footer" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                            <p class="cart-item__total" style="margin: 0;">Tạm tính <strong th:text="${#numbers.formatDecimal(item.totalPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">200.000 ₫</strong></p>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <button class="button button--ghost button--medium btn-remove-item" type="button" th:data-id="${item.id}">Xóa khỏi giỏ</button>
+                                <a class="button button--primary button--medium" th:href="@{'/contract/confirm?cartItemId=' + ${item.id}}">Đăng ký khóa này</a>
+                            </div>
                         </footer>
                     </article>
                 </div>
@@ -92,18 +95,21 @@
                     <section class="card cart-summary" aria-labelledby="cart-summary-title">
                         <h2 id="cart-summary-title">Tóm tắt đơn</h2>
                         <dl class="cart-summary__info">
-                            <div class="info-row"><dt class="info-row__label">Số khóa học</dt><dd class="info-row__value" th:text="${cart.totalItems}">1</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Số khóa học trong giỏ</dt><dd class="info-row__value" th:text="${cart.totalItems}">1</dd></div>
                             <div class="info-row"><dt class="info-row__label">Tổng số chỗ</dt><dd class="info-row__value" th:text="${cart.totalSeats}">1</dd></div>
                             <div class="info-row"><dt class="info-row__label">Tổng tạm tính</dt><dd class="info-row__value cart-summary__total" th:text="${#numbers.formatDecimal(cart.totalAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}">200.000 ₫</dd></div>
                         </dl>
 
                         <div class="cart-summary__actions">
-                            <a class="button button--primary button--medium" th:href="@{/contract/confirm}" style="text-align: center; display: block; text-decoration: none;">Tiến hành đăng ký</a>
+                            <p style="font-size: 0.85rem; color: #4b5563; margin-bottom: 0.5rem; line-height: 1.4;">
+                                <em>Vui lòng chọn <strong>"Đăng ký khóa này"</strong> tại từng khóa để tiến hành ký hợp đồng và quản lý ký quỹ độc lập.</em>
+                            </p>
+                            <a class="button button--primary button--medium" th:if="${cart.items != null and !cart.items.empty}" th:href="@{'/contract/confirm?cartItemId=' + ${cart.items[0].id}}" style="text-align: center; display: block; text-decoration: none;">Đăng ký khóa đầu tiên</a>
                             <a class="button button--outline button--medium" href="/tutor/search" th:href="@{/tutor/search}" style="text-align: center; display: block; text-decoration: none;">Tiếp tục tìm dịch vụ</a>
-                            <button class="button button--secondary button--medium btn-quick-add" type="button" data-id="2" style="width: 100%;">+ Thêm thử Khóa học 2</button>
+                            <button class="button button--secondary button--medium btn-quick-add" type="button" data-id="2003" style="width: 100%;">+ Thêm thử Tiếng Anh (2003)</button>
                             <button class="button button--ghost button--medium btn-clear-cart" type="button">Xóa toàn bộ giỏ</button>
                         </div>
-                        <p class="cart-summary__note">Giá và điều khoản chính thức sẽ được chốt tại hợp đồng khi bạn bấm Tiến hành đăng ký.</p>
+                        <p class="cart-summary__note">Mỗi khóa học được ký hợp đồng riêng để đảm bảo quản lý tiến độ và quyền lợi ký quỹ an toàn.</p>
                     </section>
                 </aside>
             </div>
