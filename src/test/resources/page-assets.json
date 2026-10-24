@@ -1516,8 +1516,6 @@
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/charts.js",
       "/js/core/user-header.js",
       "/js/core/tabs.js",
@@ -1529,8 +1527,6 @@
     "headJs": [],
     "bodyJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/charts.js",
       "/js/core/user-header.js",
       "/js/core/tabs.js",
