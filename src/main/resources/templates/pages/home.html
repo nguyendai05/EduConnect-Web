@@ -42,7 +42,7 @@
                 <nav class="home-entries" aria-label="Lối vào chính">
                     <a class="button button--secondary button--medium" href="/tutor/search" th:href="@{/tutor/search}">Danh sách gia sư</a>
                     <a class="button button--outline button--medium" href="/job/discover" th:href="@{/job/discover}">Tin tìm gia sư</a>
-                    <a class="button button--outline button--medium" href="/cart/index" th:href="@{/cart/index}">Giỏ đăng ký</a>
+                    <a class="button button--outline button--medium" href="/cart/index" th:href="@{/cart/index}">Danh sách đăng ký</a>
                 </nav>
             </section>
 
@@ -58,7 +58,7 @@
                     <article class="card home-offer-card" th:each="item : ${offerings}">
                         <header class="home-offer-card__header">
                             <span class="badge badge--info" th:text="${item.offeringType == T(com.educonnect.lesson.domain.OfferingType).GROUP_CLASS ? 'Lớp nhóm' : 'Dịch vụ 1 kèm 1'}">Dịch vụ 1 kèm 1</span>
-                            <span class="home-offer-card__id" th:text="'Mã: OF' + ${item.id}">Mã: OF2001</span>
+                            <span class="home-offer-card__id" th:text="${item.publicCode}">Mã: OF2001</span>
                         </header>
                         <h3 class="home-offer-card__title" th:text="${item.title}">Toán 12 - Luyện thi THPT</h3>
                         <p class="home-offer-card__tutor">

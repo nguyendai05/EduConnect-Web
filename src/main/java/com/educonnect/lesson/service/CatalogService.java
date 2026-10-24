@@ -17,7 +17,6 @@ import java.time.Instant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -36,9 +35,13 @@ public class CatalogService {
     }
 
     public Page<Offering> list(int page) {
+        return list(page, 12);
+    }
+
+    public Page<Offering> list(int page, int size) {
         return offerings.findByStatusAndTutorReferenceReviewStatusAndTutorReferenceAccountStatus(
                 OfferingStatus.PUBLISHED, TutorReviewStatus.APPROVED, AccountStatus.ACTIVE,
-                PageRequest.of(Math.max(0, page), 12, Sort.by("id").descending()));
+                PageRequest.of(Math.max(0, page), size, Sort.by("id").descending()));
     }
 
     public Offering getPublicOffering(Long id) {
@@ -57,9 +60,7 @@ public class CatalogService {
     }
 
     public List<OfferingTimeSlot> getSchedule(Long id) {
-        return slots.findByOfferingId(id).stream()
-                .sorted(Comparator.comparing(OfferingTimeSlot::getWeekday)
-                        .thenComparing(OfferingTimeSlot::getStartTime)).toList();
+        return slots.findByOfferingIdOrderByWeekdayAscStartTimeAsc(id);
     }
 
     public long availableSeats(Offering offering) {

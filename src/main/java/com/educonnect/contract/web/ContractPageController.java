@@ -10,13 +10,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ContractPageController {
-    private final ObjectProvider<ContractService> services;
+    private ObjectProvider<ContractService> services;
 
     public ContractPageController(ObjectProvider<ContractService> services) { this.services = services; }
 
@@ -24,7 +27,7 @@ public class ContractPageController {
     public String confirm(@RequestParam(value = "contract", required = false) Long contractId,
                           @RequestParam(required = false) Long cartItemId,
                           @AuthenticationPrincipal AccountPrincipal user, Model model) {
-        var service = services.getIfAvailable();
+        ContractService service = services.getIfAvailable();
         if (service != null) {
             if (contractId != null) model.addAttribute("confirmation", service.getContract(user, contractId));
             else if (cartItemId != null) {
@@ -48,10 +51,10 @@ public class ContractPageController {
     public String sign(@Valid @ModelAttribute ContractConfirmationForm form, BindingResult errors,
                        @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
         if (errors.hasErrors()) {
-            redirect.addFlashAttribute("error", "Vui lòng chọn dịch vụ và xác nhận đầy đủ ba cam kết.");
+            redirect.addFlashAttribute("error", "Vui lòng chọn dịch vụ và xác nhận đầy đủ ba cam kết");
             return "redirect:/cart/index";
         }
-        var service = services.getIfAvailable();
+        ContractService service = services.getIfAvailable();
         if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
         try {
             Long id = service.confirm(user, form);

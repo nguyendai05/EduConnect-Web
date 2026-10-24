@@ -6,11 +6,23 @@ import com.educonnect.contract.domain.Contract;
 import com.educonnect.contract.domain.ContractStatus;
 import com.educonnect.contract.dto.ContractConfirmationDTO;
 import com.educonnect.contract.repository.ContractJpaRepository;
-import com.educonnect.lesson.domain.*;
+import com.educonnect.lesson.domain.Offering;
+import com.educonnect.lesson.domain.OfferingType;
+import com.educonnect.lesson.domain.Enrollment;
+import com.educonnect.lesson.domain.EnrollmentStatus;
 import com.educonnect.lesson.repository.EnrollmentJpaRepository;
 import com.educonnect.lesson.service.CatalogService;
-import com.educonnect.order.domain.*;
-import com.educonnect.order.repository.*;
+import com.educonnect.order.domain.CartItem;
+import com.educonnect.order.domain.Order;
+import com.educonnect.order.domain.OrderStatus;
+import com.educonnect.order.domain.OrderItem;
+import com.educonnect.order.domain.OrderItemType;
+import com.educonnect.order.domain.RegistrationSource;
+import com.educonnect.order.domain.RegistrationSourceKind;
+import com.educonnect.order.repository.CartItemJpaRepository;
+import com.educonnect.order.repository.OrderJpaRepository;
+import com.educonnect.order.repository.OrderItemJpaRepository;
+import com.educonnect.order.repository.RegistrationSourceJpaRepository;
 import com.educonnect.security.AccountPrincipal;
 import com.educonnect.user.domain.LearnerProfile;
 import jakarta.persistence.EntityManager;
@@ -27,6 +39,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Optional;
 import java.security.NoSuchAlgorithmException;
 import java.time.Clock;
 import java.time.Instant;
@@ -39,16 +52,16 @@ import java.util.UUID;
 @Validated
 @Transactional
 public class ContractService {
-    private final CartItemJpaRepository cartItems;
-    private final OrderJpaRepository orders;
-    private final OrderItemJpaRepository orderItems;
-    private final ContractJpaRepository contracts;
-    private final RegistrationSourceJpaRepository sources;
-    private final EnrollmentJpaRepository enrollments;
-    private final CatalogService catalog;
-    private final EntityManager entityManager;
-    private final CheckoutProperties properties;
-    private final Clock clock;
+    private CartItemJpaRepository cartItems;
+    private OrderJpaRepository orders;
+    private OrderItemJpaRepository orderItems;
+    private ContractJpaRepository contracts;
+    private RegistrationSourceJpaRepository sources;
+    private EnrollmentJpaRepository enrollments;
+    private CatalogService catalog;
+    private EntityManager entityManager;
+    private CheckoutProperties properties;
+    private Clock clock;
 
     public ContractService(CartItemJpaRepository cartItems, OrderJpaRepository orders,
                            OrderItemJpaRepository orderItems, ContractJpaRepository contracts,
@@ -73,11 +86,7 @@ public class ContractService {
         CartItem item = ownItem(learnerId, cartItemId);
         Offering offering = item.getOfferingReference();
         validateOffering(learnerId, item, offering, item.getOfferingVersionSeen());
-        return new ContractConfirmationDTO(null, item.getId(), offering.getVersion(), "Chưa tạo", "Chưa tạo",
-                null, user.getDisplayName(), offering.getTutorReference().getAccount().getDisplayName(),
-                offering.getTitle(), typeLabel(offering.getOfferingType()), offering.getUnitPrice(),
-                offering.getSessionCount(), item.getSeatCount(), total(item, offering), offering.getTermsText(),
-                "Chưa xác nhận", false);
+        return ContractConfirmationDTO.draft(item, user.getDisplayName());
     }
 
     @Transactional(readOnly = true)
@@ -85,20 +94,7 @@ public class ContractService {
         Long learnerId = learnerId(user);
         Contract contract = contracts.findByIdWithDetails(id, learnerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy hợp đồng"));
-        OrderItem item = contract.getOrderItemReference();
-        return new ContractConfirmationDTO(contract.getId(), null, contract.getVersion(), contract.getPublicCode(),
-                item.getOrderReference().getPublicCode(), contract.getCreatedAt(), user.getDisplayName(),
-                contract.getTutorReference().getAccount().getDisplayName(), item.getTitleSnapshot(),
-                item.getOfferingTypeSnapshot() == OrderItemType.GROUP_CLASS ? "Lớp nhóm" : "Dịch vụ 1 kèm 1",
-                item.getUnitPriceSnapshot(), item.getSessionCountSnapshot(), item.getSeatCount(),
-                item.getLineTotal(), contract.getAgreedTermsText(), switch (contract.getStatus()) {
-                    case AWAITING_PAYMENT -> "Chờ thanh toán";
-                    case ACTIVE -> "Đang thực hiện";
-                    case COMPLETED -> "Đã hoàn thành";
-                    case CANCELLATION_PENDING -> "Đang yêu cầu hủy";
-                    case CANCELLED -> "Đã hủy";
-                }, contract.getStatus() == ContractStatus.AWAITING_PAYMENT
-                        && item.getOrderReference().getStatus() == OrderStatus.AWAITING_PAYMENT);
+        return ContractConfirmationDTO.from(contract, user.getDisplayName());
     }
 
     public Long confirm(AccountPrincipal user, @Valid ContractConfirmationForm form) {
@@ -108,7 +104,7 @@ public class ContractService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         String creationKey = "CART-ITEM-" + form.cartItemId();
-        var existing = contracts.findByLearnerIdAndOrderItemReferenceOrderReferenceCreationKey(learnerId, creationKey);
+        Optional<Contract> existing = contracts.findByLearnerIdAndOrderItemReferenceOrderReferenceCreationKey(learnerId, creationKey);
         if (existing.isPresent()) return existing.get().getId();
 
         CartItem item = ownItem(learnerId, form.cartItemId());
@@ -127,6 +123,18 @@ public class ContractService {
             }
         }
 
+        Order order = createOrder(learnerId, item, offering, creationKey, now);
+        RegistrationSource source = createSource(learnerId, offering, now);
+        OrderItem snapshot = createSnapshot(order, source, item, offering, now);
+        Contract contract = createContract(learnerId, offering, snapshot, now);
+        reserve(contract, item, now);
+        item.getCartReference().setUpdatedAt(now);
+        cartItems.delete(item);
+        contracts.flush();
+        return contract.getId();
+    }
+
+    private Order createOrder(Long learnerId, CartItem item, Offering offering, String creationKey, Instant now) {
         Order order = Order.create();
         order.setPublicCode("ORD-" + UUID.randomUUID());
         order.setLearnerId(learnerId);
@@ -136,16 +144,20 @@ public class ContractService {
         order.setCreationKey(creationKey);
         order.setCreatedAt(now);
         order.setUpdatedAt(now);
-        orders.save(order);
+        return orders.save(order);
+    }
 
+    private RegistrationSource createSource(Long learnerId, Offering offering, Instant now) {
         RegistrationSource source = RegistrationSource.create();
         source.setSourceKind(RegistrationSourceKind.CATALOG);
         source.setLearnerId(learnerId);
         source.setTutorId(offering.getTutorId());
         source.setOfferingId(offering.getId());
         source.setCreatedAt(now);
-        sources.save(source);
+        return sources.save(source);
+    }
 
+    private OrderItem createSnapshot(Order order, RegistrationSource source, CartItem item, Offering offering, Instant now) {
         OrderItem snapshot = OrderItem.create();
         snapshot.setOrderId(order.getId());
         snapshot.setLineNumber(1);
@@ -163,8 +175,10 @@ public class ContractService {
         snapshot.setTermsTextSnapshot(offering.getTermsText());
         snapshot.setTermsHash(sha256(offering.getTermsText()));
         snapshot.setCreatedAt(now);
-        orderItems.save(snapshot);
+        return orderItems.save(snapshot);
+    }
 
+    private Contract createContract(Long learnerId, Offering offering, OrderItem snapshot, Instant now) {
         Contract contract = Contract.create();
         contract.setPublicCode("CTR-" + UUID.randomUUID());
         contract.setOrderItemId(snapshot.getId());
@@ -177,21 +191,19 @@ public class ContractService {
         // Catalog is the tutor's published standing offer, not a new tutor signature at learner checkout.
         contract.setTutorAcceptedAt(offering.getPublishedAt());
         contract.setCreatedAt(now);
-        contracts.save(contract);
+        return contracts.save(contract);
+    }
 
+    private void reserve(Contract contract, CartItem item, Instant now) {
         Enrollment reservation = Enrollment.create();
         reservation.setContractId(contract.getId());
-        reservation.setOfferingId(offering.getId());
-        reservation.setLearnerId(learnerId);
+        reservation.setOfferingId(item.getOfferingId());
+        reservation.setLearnerId(contract.getLearnerId());
         reservation.setSeatCount(item.getSeatCount());
         reservation.setStatus(EnrollmentStatus.RESERVED);
         reservation.setReservedUntil(now.plus(properties.reservationTtl()));
         reservation.setCreatedAt(now);
         enrollments.save(reservation);
-        item.getCartReference().setUpdatedAt(now);
-        cartItems.delete(item);
-        contracts.flush();
-        return contract.getId();
     }
 
     private CartItem ownItem(Long learnerId, Long id) {
@@ -203,7 +215,7 @@ public class ContractService {
     private void validateOffering(Long learnerId, CartItem item, Offering offering, Long version) {
         if (!Objects.equals(offering.getVersion(), version)
                 || !Objects.equals(offering.getVersion(), item.getOfferingVersionSeen())) {
-            throw new IllegalArgumentException("Thông tin dịch vụ đã thay đổi. Vui lòng cập nhật lại lựa chọn trong giỏ.");
+            throw new IllegalArgumentException("Thông tin dịch vụ đã thay đổi, vui lòng cập nhật lại lựa chọn trong giỏ");
         }
         if (learnerId.equals(offering.getTutorId())) throw new IllegalArgumentException("Không thể đăng ký dịch vụ của chính mình");
         String issue = catalog.registrationIssue(offering, item.getSeatCount());
@@ -223,10 +235,6 @@ public class ContractService {
     private static BigDecimal total(CartItem item, Offering offering) {
         return offering.getUnitPrice().multiply(BigDecimal.valueOf(offering.getSessionCount()))
                 .multiply(BigDecimal.valueOf(item.getSeatCount()));
-    }
-
-    private static String typeLabel(OfferingType type) {
-        return type == OfferingType.GROUP_CLASS ? "Lớp nhóm" : "Dịch vụ 1 kèm 1";
     }
 
     private static byte[] sha256(String text) {

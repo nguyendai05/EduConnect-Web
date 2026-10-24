@@ -61,7 +61,7 @@
                             <!-- Thanh chọn khóa học để lập hợp đồng -->
                             <div class="cart-item__select-bar">
                                 <label class="cart-item__radio-label">
-                                    <input type="radio" name="selectedCourseRadio" class="cart-item-radio"
+                                    <input type="radio" name="cartItemId" form="cartConfirmForm" required class="cart-item-radio"
                                            th:value="${item.id}"
                                            th:checked="${iterStat.first}">
                                     <span class="cart-item-radio-text"
@@ -126,7 +126,7 @@
                                         <input type="hidden" name="itemId" th:value="${item.id}">
                                         <button class="button button--danger" type="submit">Xóa</button>
                                     </form>
-                                    <a class="button button--primary cart-item__confirm-link" th:href="@{'/contract/confirm?cartItemId=' + ${item.id}}">Xem dự thảo hợp đồng</a>
+                                    <a class="button button--primary cart-item__confirm-link" th:href="@{/contract/confirm(cartItemId=${item.id})}">Xem dự thảo hợp đồng</a>
                                 </div>
                             </footer>
                         </article>
@@ -153,7 +153,6 @@
 
                             <div class="cart-summary__actions">
                                 <form method="post" th:action="@{/cart/check}" id="cartConfirmForm">
-                                    <input type="hidden" name="cartItemId" id="summaryCartItemId" th:value="${cart.items.empty ? '' : cart.items[0].id}">
                                     <button class="button button--primary button--large cart-summary__submit" type="submit">
                                         Xem dự thảo hợp đồng
                                     </button>

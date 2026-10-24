@@ -19,30 +19,14 @@ import java.util.Optional;
 @Profile("db-dev")
 public interface OfferingJpaRepository extends JpaRepository<Offering, Long> {
 
-    /**
-     * Nạp khóa học kèm toàn bộ quan hệ (Gia sư, Tài khoản, Môn học, Khối lớp, Khu vực, Hình thức) trong 1 query.
-     */
-    @Query("SELECT o FROM Offering o " +
-           "LEFT JOIN FETCH o.tutorReference t " +
-           "LEFT JOIN FETCH t.account ta " +
-           "LEFT JOIN FETCH o.subjectReference " +
-           "LEFT JOIN FETCH o.gradeLevelReference " +
-           "LEFT JOIN FETCH o.areaReference " +
-           "LEFT JOIN FETCH o.deliveryModeReference " +
-           "WHERE o.id = :id")
+    @EntityGraph(attributePaths = {"tutorReference.account", "subjectReference",
+            "gradeLevelReference", "areaReference", "deliveryModeReference"})
+    @Query("select o from Offering o where o.id = :id")
     Optional<Offering> findByIdWithDetails(@Param("id") Long id);
 
-    /**
-     * Lấy danh sách khóa học theo trạng thái kèm thông tin chi tiết để hiển thị lên Trang chủ.
-     */
-    @Query("SELECT o FROM Offering o " +
-           "LEFT JOIN FETCH o.tutorReference t " +
-           "LEFT JOIN FETCH t.account ta " +
-           "LEFT JOIN FETCH o.subjectReference " +
-           "LEFT JOIN FETCH o.gradeLevelReference " +
-           "LEFT JOIN FETCH o.areaReference " +
-           "LEFT JOIN FETCH o.deliveryModeReference " +
-           "WHERE o.status = :status ORDER BY o.id ASC")
+    @EntityGraph(attributePaths = {"tutorReference.account", "subjectReference",
+            "gradeLevelReference", "areaReference", "deliveryModeReference"})
+    @Query("select o from Offering o where o.status = :status order by o.id")
     List<Offering> findByStatusWithDetails(@Param("status") OfferingStatus status);
 
     @EntityGraph(attributePaths = {"tutorReference", "tutorReference.account", "subjectReference",

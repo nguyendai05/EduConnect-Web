@@ -3,6 +3,7 @@ package com.educonnect.order.repository;
 import com.educonnect.order.domain.CartItem;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -27,16 +28,11 @@ public interface CartItemJpaRepository extends JpaRepository<CartItem, Long> {
     @Query("SELECT i FROM CartItem i JOIN FETCH i.offeringReference o WHERE i.id = :id")
     Optional<CartItem> findByIdWithOffering(@Param("id") Long id);
 
-    @Query("""
-            select i from CartItem i
-            join fetch i.offeringReference o
-            join fetch o.tutorReference t
-            join fetch t.account
-            where i.cartReference.learnerId = :learnerId
-            order by i.createdAt, i.id
-            """)
+    @EntityGraph(attributePaths = {"offeringReference.tutorReference.account"})
+    @Query("select i from CartItem i where i.cartReference.learnerId = :learnerId order by i.createdAt, i.id")
     List<CartItem> findItemsForLearner(@Param("learnerId") Long learnerId);
 
+    @EntityGraph(attributePaths = {"cartReference", "offeringReference.tutorReference.account"})
     Optional<CartItem> findByIdAndCartReferenceLearnerId(Long id, Long learnerId);
 
     /** Tìm khóa học đã có trong giỏ để kiểm tra trùng lặp */

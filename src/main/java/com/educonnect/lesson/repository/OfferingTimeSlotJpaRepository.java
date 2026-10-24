@@ -9,5 +9,7 @@ import java.util.List;
 /** Repository JPA chuẩn; giữ riêng đường ghi JDBC auth. */
 @Profile("db-dev")
 public interface OfferingTimeSlotJpaRepository extends JpaRepository<OfferingTimeSlot, Long> {
+    List<OfferingTimeSlot> findByOfferingIdOrderByWeekdayAscStartTimeAsc(Long offeringId);
+
     List<OfferingTimeSlot> findByOfferingId(Long offeringId);
 }
