@@ -623,15 +623,9 @@
       "/css/pages/auth/login.css",
       "/css/pages/auth/forgot-password.css"
     ],
-    "js": [
-      "/js/core/route.js",
-      "/js/pages/auth/forgot-password.js"
-    ],
+    "js": [],
     "headJs": [],
-    "bodyJs": [
-      "/js/core/route.js",
-      "/js/pages/auth/forgot-password.js"
-    ]
+    "bodyJs": []
   },
   "/auth/login": {
     "css": [
@@ -690,25 +684,15 @@
       "/css/components/action/button.css",
       "/css/components/form/password-input.css",
       "/css/components/feedback/alert.css",
-      "/css/components/feedback/badge.css",
-      "/css/components/feedback/empty-state.css",
       "/css/pages/auth/login.css",
       "/css/pages/auth/reset-password.css"
     ],
     "js": [
-      "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
-      "/js/core/password-input.js",
-      "/js/pages/auth/reset-password.js"
+      "/js/core/password-input.js"
     ],
     "headJs": [],
     "bodyJs": [
-      "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
-      "/js/core/password-input.js",
-      "/js/pages/auth/reset-password.js"
+      "/js/core/password-input.js"
     ]
   },
   "/auth/verify-email": {
@@ -757,20 +741,12 @@
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/cart/index.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/cart/index.js"
     ],
     "bodyJs": []
@@ -799,19 +775,13 @@
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/toast.js",
-      "/js/pages/catalog/detail.js"
+      "/js/core/toast.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/toast.js",
-      "/js/pages/catalog/detail.js"
+      "/js/core/toast.js"
     ],
     "bodyJs": []
   },
@@ -877,23 +847,15 @@
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/contract/confirm.js"
     ],
-    "headJs": [
+    "headJs": [],
+    "bodyJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/contract/confirm.js"
-    ],
-    "bodyJs": []
+    ]
   },
   "/contract/student-detail": {
     "css": [
@@ -992,19 +954,13 @@
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/toast.js",
-      "/js/pages/home.js"
+      "/js/core/toast.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/toast.js",
-      "/js/pages/home.js"
+      "/js/core/toast.js"
     ],
     "bodyJs": []
   },
@@ -1715,6 +1671,34 @@
       "/js/core/modal.js",
       "/js/core/toast.js",
       "/js/pages/wallet/overview.js"
+    ],
+    "bodyJs": []
+  },
+  "/home": {
+    "css": [
+      "/css/tokens.css",
+      "/css/reset.css",
+      "/css/base.css",
+      "/css/layouts.css",
+      "/css/components/action/button.css",
+      "/css/components/layout/user-header.css",
+      "/css/components/layout/user-footer.css",
+      "/css/components/data-display/card.css",
+      "/css/components/feedback/badge.css",
+      "/css/components/feedback/empty-state.css",
+      "/css/components/feedback/toast.css",
+      "/css/components/form/input.css",
+      "/css/pages/home.css"
+    ],
+    "js": [
+      "/js/core/route.js",
+      "/js/core/user-header.js",
+      "/js/core/toast.js"
+    ],
+    "headJs": [
+      "/js/core/route.js",
+      "/js/core/user-header.js",
+      "/js/core/toast.js"
     ],
     "bodyJs": []
   }

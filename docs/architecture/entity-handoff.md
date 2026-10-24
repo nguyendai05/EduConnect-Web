@@ -1,6 +1,6 @@
 # Bàn giao nền Entity dùng chung
 
-Nhánh tích hợp: `origin/feat/shared-entities-v1`; remote đã xác minh `https://github.com/nguyendai05/EduConnect-Web.git`, default branch `main`. Xem catalog đầy đủ trong [shared-entities.md](shared-entities.md). Trạng thái kiểm chứng/commit cuối ghi ở [shared-entities-validation.md](shared-entities-validation.md); chỉ dùng làm nền feature khi trạng thái READY.
+Nền đã merge qua PR #24 trên `origin/main` (7b7a42d); nhánh tích hợp lịch sử: `origin/feat/shared-entities-v1`; remote đã xác minh `https://github.com/nguyendai05/EduConnect-Web.git`, default branch `main`. Xem catalog đầy đủ trong [shared-entities.md](shared-entities.md). Trạng thái kiểm chứng/commit cuối ghi ở [shared-entities-validation.md](shared-entities-validation.md); chỉ dùng làm nền feature khi trạng thái READY.
 
 ## Thiết lập an toàn
 
@@ -42,21 +42,21 @@ markEmailVerified trả affected rows, tăng `version` và `authentication_versi
 
 ## Cách bắt đầu cho ba thành viên
 
-Chạy từ checkout sạch hoặc worktree mới, không pull/checkout đè working tree đang sửa. Lấy SHA bằng `git rev-parse origin/feat/shared-entities-v1` sau fetch và đối chiếu SHA trong báo cáo phát hành; chỉ tạo nhánh khi trùng commit chung đã xác minh.
+Chạy từ checkout sạch hoặc worktree mới, không pull/checkout đè working tree đang sửa. Lấy SHA bằng `git rev-parse origin/main` sau fetch và đối chiếu SHA trong báo cáo phát hành; chỉ tạo nhánh khi trùng commit chung đã xác minh.
 
 ```powershell
 git fetch origin
 # Đại: nền/account/auth/profile/file/admin; giữ điều phối migration
-git switch -c feature/dai-shared-foundation origin/feat/shared-entities-v1
+git switch -c feature/dai-shared-foundation origin/main
 # Huy: chạy trong checkout/worktree riêng cho nghiệp vụ giao dịch
-git switch -c feature/huy-shared-features origin/feat/shared-entities-v1
-# Đạt: chạy trong checkout/worktree riêng cho controller/page và DTO
-git switch -c feature/dat-dto-integration origin/feat/shared-entities-v1
+git switch -c feature/huy-shared-features origin/main
+# Đạt: luồng khám phá/dịch vụ/lời mời/tin, gồm backend và giao diện
+git switch -c feature/dat-dto-integration origin/main
 ```
 
 Ba lệnh switch là ba lựa chọn cho ba checkout, không chạy tuần tự trong cùng working tree có thay đổi. Trước merge PR có thể base từ integration branch đã verified. Sau merge, fetch, kiểm commit merge/default branch mới; trên nhánh feature đã commit sạch dùng `git merge origin/main` để cập nhật. Với thay đổi chưa commit, commit chọn file vào nhánh riêng hoặc tạo worktree riêng trước; không reset/clean/stash bắt buộc và không force-push nhánh chung.
 
-Một Entity/repository chuẩn mỗi bảng. Key/enum cùng maintainer Entity. Query/DTO có file/owner riêng; đề nghị thay shared file qua maintainer review. Đạt không tạo bản sao Order/Offering/UserAccount để phục vụ view. Ownership trang/controller giữ nguyên trong ownership.md. View ledger/revenue sẽ dùng DTO/query read-only, không repository ghi.
+Một Entity/repository chuẩn mỗi bảng. Key/enum cùng maintainer Entity. Query/DTO có file/owner riêng; đề nghị thay shared file qua maintainer review. Đạt không tạo bản sao Order/Offering/UserAccount để phục vụ view. Ownership trang/controller và Entity theo phân công giai đoạn 3 trong ownership.md (Đại 22, Huy 23, Đạt 6 Entity). View ledger/revenue sẽ dùng DTO/query read-only, không repository ghi.
 
 ## Giới hạn
 

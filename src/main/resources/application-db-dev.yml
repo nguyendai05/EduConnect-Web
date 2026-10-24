@@ -36,6 +36,11 @@ spring:
       mode: never
 
 app:
+  password-reset:
+    base-url: ${EDUCONNECT_PUBLIC_BASE_URL:http://localhost:8080}
+    ttl: ${EDUCONNECT_RESET_TTL:30m}
+    resend-cooldown: ${EDUCONNECT_RESET_COOLDOWN:60s}
+    max-sends-per-hour: ${EDUCONNECT_RESET_MAX_SENDS:5}
   mail:
     from: ${EDUCONNECT_MAIL_FROM:}
   email-verification:

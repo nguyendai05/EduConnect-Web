@@ -3,7 +3,7 @@ package com.educonnect.lesson.domain;
 import jakarta.persistence.*;
 import java.time.LocalTime;
 
-/** Mapping offering_time_slots; maintainer: Huy. Không chứa logic nghiệp vụ. */
+/** Mapping offering_time_slots; maintainer: Đạt. Không chứa logic nghiệp vụ. */
 @Entity
 @Table(name = "offering_time_slots", uniqueConstraints = {@UniqueConstraint(name = "uq_ots_slot", columnNames = {"offering_id", "weekday", "start_time"})})
 public class OfferingTimeSlot {

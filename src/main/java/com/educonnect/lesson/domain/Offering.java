@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 
-/** Mapping offerings; maintainer: Huy. Không chứa logic nghiệp vụ. */
+/** Mapping offerings; maintainer: Đạt. Không chứa logic nghiệp vụ. */
 @Entity
 @Table(name = "offerings", uniqueConstraints = {@UniqueConstraint(name = "uq_off_code", columnNames = {"public_code"}), @UniqueConstraint(name = "uq_off_owner", columnNames = {"id", "tutor_id"})})
 public class Offering {

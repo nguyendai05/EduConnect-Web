@@ -252,3 +252,28 @@
     width: 100%;
   }
 }
+
+.page-local-1 {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.catalog-booking__actions {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+}
+
+.catalog-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: var(--space-4);
+}
+
+.catalog-pagination {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+}
