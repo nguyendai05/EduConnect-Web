@@ -204,47 +204,47 @@
                             <span class="alert__icon" aria-hidden="true"></span>
                             <div class="alert__content">
                                 <h2 class="alert__title" id="tm-revenue-note-title">Doanh thu chỉ tính các khoản đã giải ngân</h2>
-                                <p class="alert__message">Số liệu lấy từ các sự kiện release mẫu trong store. Tiền đang ký quỹ (held), dự kiến giải ngân (planned), hoàn tiền (refunded) và rút tiền về ngân hàng (withdrawal) là các khái niệm riêng, KHÔNG cộng vào doanh thu. Mức phí nền tảng hiển thị đọc từ <code>DEMO_FEE_RATE</code> của store — giả định demo chưa được nhóm chốt.</p>
+                                <p class="alert__message">Chỉ các khoản đã giải ngân được tính vào doanh thu. Tiền đang ký quỹ, dự kiến giải ngân, hoàn tiền và rút tiền về ngân hàng được thống kê riêng.</p>
                             </div>
                         </section>
 
                         <div class="tutor-manage__revenue-grid" aria-label="Doanh thu đã giải ngân">
                             <article class="stat-card stat-card--compact tutor-manage__metric">
-                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Tổng giải ngân (gross)</h3></div>
-                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-gross>0</strong><span class="stat-card__unit">VND</span></p>
-                                <p class="stat-card__description">grossReleased = tutorNetReleased + platformFeeReleased.</p>
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Tổng giải ngân</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-gross>0 ₫</strong></p>
+                                <p class="stat-card__description">Bao gồm thực nhận của gia sư và phí nền tảng.</p>
                             </article>
                             <article class="stat-card stat-card--compact tutor-manage__metric">
                                 <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Thực nhận gia sư</h3></div>
-                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-net>0</strong><span class="stat-card__unit">VND</span></p>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-net>0 ₫</strong></p>
                                 <p class="stat-card__description">Phần còn lại sau phí nền tảng của các kỳ giải ngân.</p>
                             </article>
                             <article class="stat-card stat-card--compact tutor-manage__metric">
                                 <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Phí nền tảng</h3></div>
-                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-fee>0</strong><span class="stat-card__unit">VND</span></p>
-                                <p class="stat-card__description">Theo feeRateSnapshot từng sự kiện, mức demo hiện tại <span data-tm-fee-rate></span>.</p>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-fee>0 ₫</strong></p>
+                                <p class="stat-card__description">Phí tính theo từng khoản giải ngân. Mức tham khảo <span data-tm-fee-rate></span>.</p>
                             </article>
                         </div>
 
                         <div class="tutor-manage__revenue-grid tutor-manage__revenue-grid--other" aria-label="Các khoản không phải doanh thu">
                             <article class="stat-card stat-card--compact tutor-manage__metric">
-                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Đang ký quỹ (held)</h3></div>
-                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-held>0</strong><span class="stat-card__unit">VND</span></p>
-                                <p class="stat-card__description">Escrow đang giữ — chưa phải doanh thu.</p>
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Đang ký quỹ</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-held>0 ₫</strong></p>
+                                <p class="stat-card__description">Tiền đang được giữ, chưa tính vào doanh thu.</p>
                             </article>
                             <article class="stat-card stat-card--compact tutor-manage__metric">
-                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Dự kiến giải ngân (planned)</h3></div>
-                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-planned>0</strong><span class="stat-card__unit">VND</span></p>
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Dự kiến giải ngân</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-planned>0 ₫</strong></p>
                                 <p class="stat-card__description">Kỳ sau, chưa phát sinh — không tính vào doanh thu.</p>
                             </article>
                             <article class="stat-card stat-card--compact tutor-manage__metric">
-                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Hoàn tiền (refunded)</h3></div>
-                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-refunded>0</strong><span class="stat-card__unit">VND</span></p>
+                                <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Hoàn tiền</h3></div>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-refunded>0 ₫</strong></p>
                                 <p class="stat-card__description">Trừ vào dòng tiền, không trừ lùi doanh thu đã giải ngân hợp lệ.</p>
                             </article>
                             <article class="stat-card stat-card--compact tutor-manage__metric">
                                 <div class="stat-card__header"><h3 class="tutor-manage__metric-label">Số dư ví khả dụng</h3></div>
-                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-wallet>0</strong><span class="stat-card__unit">VND</span></p>
+                                <p class="tutor-manage__metric-value"><strong class="stat-card__value" data-tm-rev-wallet>0 ₫</strong></p>
                                 <p class="stat-card__description">Rút tiền là chuyển số dư ra ngân hàng, không tạo doanh thu lần nữa. Xem <a href="/wallet/overview" th:href="@{/wallet/overview}">Ví Edu Connect</a>.</p>
                             </article>
                         </div>

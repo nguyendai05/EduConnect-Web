@@ -6,7 +6,7 @@ import java.time.Clock;
 
 @Configuration
 @Profile("db-dev")
-@EnableConfigurationProperties(OtpProperties.class)
+@EnableConfigurationProperties({OtpProperties.class, PasswordResetProperties.class})
 public class OtpConfiguration {
     @Bean Clock verificationClock() { return Clock.systemUTC(); }
 }

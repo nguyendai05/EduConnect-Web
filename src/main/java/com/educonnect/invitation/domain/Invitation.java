@@ -7,7 +7,7 @@ import org.hibernate.type.SqlTypes;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-/** Mapping invitations; maintainer: Huy. Không chứa logic nghiệp vụ. */
+/** Mapping invitations; maintainer: Đạt. Không chứa logic nghiệp vụ. */
 @Entity
 @Table(name = "invitations", uniqueConstraints = {@UniqueConstraint(name = "uq_inv_code", columnNames = {"public_code"}), @UniqueConstraint(name = "uq_inv_parties", columnNames = {"id", "learner_id", "tutor_id"})})
 public class Invitation {

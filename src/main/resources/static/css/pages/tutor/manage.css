@@ -2,10 +2,9 @@
   display: none !important;
 }
 
-/* tabs.css ẩn mọi .tabs--contained .tabs__panel (specificity 0,2,0) trong khi tabs.js chỉ
-   bật/tắt thuộc tính `hidden` — cần selector đủ mạnh để panel đang mở hiện ra. */
+/* Giữ grid/gap của panel khi tabs.js gỡ thuộc tính hidden. */
 .tutor-manage-page .tabs--contained .tabs__panel:not([hidden]) {
-  display: block;
+  display: grid;
 }
 
 .tutor-manage__skip-link {
@@ -114,6 +113,7 @@
 
 .tutor-manage__metric-value {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: var(--space-2);
   margin: var(--space-2) 0;

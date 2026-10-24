@@ -40,7 +40,7 @@
                 </header>
                 <p class="alert alert--success" role="status" th:if="${message}" th:text="${message}"></p>
                 <p class="alert alert--error" role="alert" th:if="${error}" th:text="${error}"></p>
-                
+
                 <section class="empty-state cart-empty" th:if="${cart.empty}">
                     <h2 class="empty-state__title">Bạn chưa chọn dịch vụ hoặc lớp học nào</h2>
                     <div class="cart-empty__actions">
@@ -57,7 +57,7 @@
                                  th:data-id="${item.id}"
                                  th:data-title="${item.title}"
                                  th:data-price="${#numbers.formatDecimal(item.totalPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">
-                            
+
                             <!-- Thanh chọn khóa học để lập hợp đồng -->
                             <div class="cart-item__select-bar">
                                 <label class="cart-item__radio-label">
@@ -101,7 +101,7 @@
                                 </dl>
                                 <p class="alert alert--warning" th:if="${item.issue != null}" th:text="${item.issue}"></p>
                                 <p class="alert alert--warning" th:if="${item.changed}">Thông tin đã thay đổi — hãy xem học phí, lịch và điều khoản mới rồi bấm cập nhật để xác nhận</p>
-                                
+
                                 <!-- Form cập nhật số lượng chỗ -->
                                 <form class="cart-edit-form" method="post" th:action="@{/cart/update}">
                                     <input type="hidden" name="itemId" th:value="${item.id}">
@@ -135,7 +135,7 @@
                     <aside class="cart-aside">
                         <section class="card cart-summary">
                             <h2>Tóm tắt đăng ký</h2>
-                            
+
                             <div class="cart-summary__selection">
                                 <span class="cart-summary__label">Khóa học đang chọn:</span>
                                 <strong class="cart-summary__title" id="summarySelectedTitle" th:text="${cart.items.empty ? '' : cart.items[0].title}">Tên khóa học</strong>
@@ -146,7 +146,7 @@
                             <p class="cart-summary__hint">
                                 Tổng số khóa trong giỏ: <strong th:text="${cart.totalItems()}"></strong>
                             </p>
-                            
+
                             <p class="cart-summary__note">
                                 💡 Mỗi hợp đồng tương ứng với 1 khóa học được chọn. Bạn sẽ được xem toàn bộ điều khoản thỏa thuận trước khi xác nhận ký và nộp tiền ký quỹ.
                             </p>

@@ -8,6 +8,9 @@ import com.educonnect.security.AccountUserDetailsService;
 import com.educonnect.security.SessionAccountFilter;
 import com.educonnect.user.UserAccount;
 import com.educonnect.user.UserAccountRepository;
+import com.educonnect.web.HomePageController;
+import com.educonnect.web.PageModelAdvice;
+import com.educonnect.job.web.JobPageController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +35,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
 
-@WebMvcTest({AuthPageController.class, RegistrationController.class, EmailVerificationController.class})
+@WebMvcTest({AuthPageController.class, RegistrationController.class, EmailVerificationController.class,
+        HomePageController.class, JobPageController.class})
 @ActiveProfiles("db-dev")
 @Import({DatabaseSecurityConfig.class, AccountUserDetailsService.class, RegistrationService.class})
 class AuthFlowTest {
@@ -83,6 +87,20 @@ class AuthFlowTest {
         mvc.perform(get("/account/profile")).andExpect(redirectedUrl("http://localhost/auth/login"));
         mvc.perform(get("/admin/dashboard").with(user("learner").roles("LEARNER"))).andExpect(status().isForbidden());
         mvc.perform(get("/tutor/manage").with(user("learner").roles("LEARNER"))).andExpect(status().isForbidden());
+        mvc.perform(get("/job/applicants").with(user("learner").roles("LEARNER"))).andExpect(status().isOk());
+        mvc.perform(get("/job/applicants").with(user("tutor").roles("TUTOR"))).andExpect(status().isForbidden());
+    }
+
+    @Test void a01ExposesOnlyTheFourAgreedCurrentUserFieldsAndNullForGuest() throws Exception {
+        mvc.perform(get("/home")).andExpect(status().isOk()).andExpect(model().attributeDoesNotExist("currentUser"));
+        var login = mvc.perform(post("/auth/login").with(csrf()).param("email", learner.email())
+                .param("password", "Password!123")).andReturn();
+        mvc.perform(get("/home").session((MockHttpSession) login.getRequest().getSession(false)))
+                .andExpect(status().isOk()).andExpect(model().attribute("currentUser",
+                        new PageModelAdvice.CurrentUser(learner.id(), learner.email(), learner.displayName(), "/home")));
+        org.junit.jupiter.api.Assertions.assertEquals(Set.of("id", "email", "displayName", "homeUrl"),
+                java.util.Arrays.stream(PageModelAdvice.CurrentUser.class.getRecordComponents())
+                        .map(java.lang.reflect.RecordComponent::getName).collect(java.util.stream.Collectors.toSet()));
     }
 
     @Test void registrationStartsEmailVerificationWithoutCreatingAnAccount() throws Exception {
