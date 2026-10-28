@@ -1,331 +1,67 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
-<title>Ví & Lịch sử giao dịch — Edu Connect</title>
+<title>Ví Edu Connect — Edu Connect</title>
 <th:block th:fragment="styles">
-<link rel="stylesheet" href="/css/components/layout/user-header.css"  th:href="@{/css/components/layout/user-header.css}"/>
-<link rel="stylesheet" href="/css/components/layout/user-footer.css"  th:href="@{/css/components/layout/user-footer.css}"/>
-<link rel="stylesheet" href="/css/components/layout/page-header.css"  th:href="@{/css/components/layout/page-header.css}"/>
-<link rel="stylesheet" href="/css/components/navigation/breadcrumb.css"  th:href="@{/css/components/navigation/breadcrumb.css}"/>
-<link rel="stylesheet" href="/css/components/navigation/tabs.css"  th:href="@{/css/components/navigation/tabs.css}"/>
-<link rel="stylesheet" href="/css/components/domain/wallet/wallet-balance-card.css"  th:href="@{/css/components/domain/wallet/wallet-balance-card.css}"/>
-<link rel="stylesheet" href="/css/components/data-display/table.css"  th:href="@{/css/components/data-display/table.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/modal.css"  th:href="@{/css/components/feedback/modal.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/toast.css"  th:href="@{/css/components/feedback/toast.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/empty-state.css"  th:href="@{/css/components/feedback/empty-state.css}"/>
-<link rel="stylesheet" href="/css/pages/wallet/overview.css"  th:href="@{/css/pages/wallet/overview.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/table.css" th:href="@{/css/components/data-display/table.css}"/>
+<link rel="stylesheet" href="/css/components/navigation/pagination.css" th:href="@{/css/components/navigation/pagination.css}"/>
+<link rel="stylesheet" href="/css/pages/contract/confirm.css" th:href="@{/css/pages/contract/confirm.css}"/>
+<link rel="stylesheet" href="/css/pages/wallet/overview.css" th:href="@{/css/pages/wallet/overview.css}"/>
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
 <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/core/tabs.js" defer th:src="@{/js/core/tabs.js}"></script>
-<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
-<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
-<script src="/js/pages/wallet/overview.js" defer th:src="@{/js/pages/wallet/overview.js}"></script>
 </th:block>
 <th:block th:fragment="scripts">
-
+<script src="/js/pages/wallet/overview.js" defer th:src="@{/js/pages/wallet/overview.js}"></script>
 </th:block>
 </head>
 <body th:fragment="content">
-        <th:block th:replace="~{fragments/header-user :: header(${active}, 'v7')}"></th:block>
-
-        <main class="wallet-page" id="wallet">
-            <nav class="breadcrumb" aria-label="Đường dẫn">
-                <ol class="breadcrumb__list">
-                    <li class="breadcrumb__item">
-                        <a class="breadcrumb__link" href="/order/history" id="crumb-parent"
-                             th:href="@{/order/history}">Đơn đăng ký của tôi</a
-                        >
-                    </li>
-                    <li class="breadcrumb__item" aria-current="page">
-                        <span class="breadcrumb__current">Ví Edu Connect</span>
-                    </li>
-                </ol>
-            </nav>
-            <header class="page-header">
-                <div class="page-header__title-block">
-                    <h1 class="page-header__title">Ví &amp; Lịch sử giao dịch</h1>
-                    <p class="page-header__description" id="wallet-owner-line">
-                        Số dư và sao kê đọc theo tài khoản của phiên demo hiện tại.
-                    </p>
-                </div>
-            </header>
-            <!-- Persona chưa có chủ ví: không mượn số dư của tài khoản khác -->
-            <section class="wallet-panel" id="wallet-missing" hidden>
-                <div class="wallet-section-heading">
-                    <h2>Tài khoản demo này chưa có ví</h2>
-                </div>
-                <p class="wallet-note">
-                    Trang chỉ hiển thị số dư của học viên hoặc gia sư mà phiên demo đang dùng. Persona
-                    hiện tại không có bản ghi ví nên trang không hiển thị số liệu mẫu của tài khoản khác.
-                </p>
-                <div class="wallet-missing-actions">
-                    <a class="wallet-button wallet-button--secondary" href="/order/history"
-                         th:href="@{/order/history}">Xem lịch sử đơn</a
-                    ><a class="wallet-button wallet-button--secondary" href="/auth/login"
-                         th:href="@{/auth/login}">Đổi tài khoản demo</a
-                    >
-                </div>
-            </section>
-            <div id="wallet-content">
-            <div class="wallet-layout">
-                <div class="wallet-main">
-                    <section class="wallet-panel" aria-label="Số dư ví">
-                        <div class="wallet-balances" id="wallet-balances"></div>
-                        <p class="wallet-note" id="balances-note"></p>
-                    </section>
-                    <section class="wallet-panel" id="escrow">
-                        <div class="wallet-section-heading">
-                            <h2>Hợp đồng liên quan đến ví</h2>
-                            <span class="wallet-pill">Theo bản ghi hợp đồng trong dữ liệu mẫu</span>
-                        </div>
-                        <div class="wallet-contracts" id="wallet-contracts"></div>
-                        <p class="wallet-note" id="escrow-empty">
-                            Tài khoản này chưa có hợp đồng nào trong dữ liệu mẫu.
-                        </p>
-                    </section>
-                    <!-- Persona gia sư: JS bỏ hidden và điền breakdown từ sự kiện release -->
-                    <section class="wallet-panel" id="wallet-revenue" hidden>
-                        <div class="wallet-section-heading">
-                            <h2>Doanh thu gia sư</h2>
-                            <span class="wallet-pill">Chỉ tính từ sự kiện giải ngân</span>
-                        </div>
-                        <h3 class="wallet-subheading">Bản ghi giải ngân (release)</h3>
-                        <dl class="wallet-breakdown" id="revenue-breakdown"></dl>
-                        <p class="wallet-note" id="revenue-invariant" role="status"></p>
-                        <h3 class="wallet-subheading">Các khoản không phải doanh thu</h3>
-                        <dl class="wallet-breakdown" id="non-revenue-breakdown"></dl>
-                    </section>
-                    <section class="wallet-panel" id="transactions">
-                        <div class="wallet-section-heading">
-                            <div>
-                                <h2>Lịch sử giao dịch</h2>
-
-                            </div>
-                            <button
-                                class="wallet-button wallet-button--secondary"
-                                type="button"
-                                id="export-statement"
-                            >
-                                Xuất sao kê CSV
-                            </button>
-                        </div>
-                        <div class="wallet-filters">
-                            <label
-                                >Từ ngày<input
-                                    type="date"
-                                    id="date-from" /></label
-                            ><label
-                                >Đến ngày<input
-                                    type="date"
-                                    id="date-to" /></label
-                            ><button
-                                class="wallet-button wallet-button--secondary"
-                                id="reset-dates"
-                                type="button"
-                            >
-                                Tất cả thời gian
-                            </button>
-                        </div>
-                        <p class="wallet-error" id="filter-error" role="alert" hidden></p>
-                        <div class="tabs" data-tabs id="transaction-tabs">
-                            <div class="tabs__list" role="tablist" aria-label="Loại giao dịch">
-                                <button
-                                    class="tabs__tab"
-                                    type="button"
-                                    role="tab"
-                                    id="tab-all"
-                                    aria-controls="panel-all"
-                                    aria-selected="true"
-                                    tabindex="0"
-                                >
-                                    Tất cả</button
-                                ><button
-                                    class="tabs__tab"
-                                    type="button"
-                                    role="tab"
-                                    id="tab-withdrawal"
-                                    aria-controls="panel-withdrawal"
-                                    aria-selected="false"
-                                    tabindex="-1"
-                                >
-                                    Rút tiền</button
-                                ><button
-                                    class="tabs__tab"
-                                    type="button"
-                                    role="tab"
-                                    id="tab-escrow"
-                                    aria-controls="panel-escrow"
-                                    aria-selected="false"
-                                    tabindex="-1"
-                                >
-                                    Ký quỹ</button
-                                ><button
-                                    class="tabs__tab"
-                                    type="button"
-                                    role="tab"
-                                    id="tab-release"
-                                    aria-controls="panel-release"
-                                    aria-selected="false"
-                                    tabindex="-1"
-                                >
-                                    Giải ngân</button
-                                ><button
-                                    class="tabs__tab"
-                                    type="button"
-                                    role="tab"
-                                    id="tab-refund"
-                                    aria-controls="panel-refund"
-                                    aria-selected="false"
-                                    tabindex="-1"
-                                >
-                                    Hoàn tiền
-                                </button>
-                            </div>
-                            <div
-                                class="tabs__panel"
-                                role="tabpanel"
-                                id="panel-all"
-                                aria-labelledby="tab-all"
-                                tabindex="0"
-                            ></div>
-                            <div
-                                class="tabs__panel"
-                                role="tabpanel"
-                                id="panel-withdrawal"
-                                aria-labelledby="tab-withdrawal"
-                                tabindex="0"
-                                hidden
-                            ></div>
-                            <div
-                                class="tabs__panel"
-                                role="tabpanel"
-                                id="panel-escrow"
-                                aria-labelledby="tab-escrow"
-                                tabindex="0"
-                                hidden
-                            ></div>
-                            <div
-                                class="tabs__panel"
-                                role="tabpanel"
-                                id="panel-release"
-                                aria-labelledby="tab-release"
-                                tabindex="0"
-                                hidden
-                            ></div>
-                            <div
-                                class="tabs__panel"
-                                role="tabpanel"
-                                id="panel-refund"
-                                aria-labelledby="tab-refund"
-                                tabindex="0"
-                                hidden
-                            ></div>
-                        </div>
-                        <div class="wallet-pagination">
-                            <p id="transaction-count" role="status"></p>
-                            <div>
-                                <button
-                                    class="wallet-button wallet-button--secondary"
-                                    type="button"
-                                    id="previous-page"
-                                    aria-label="Trang trước"
-                                >
-                                    Trước</button
-                                ><span id="page-number"></span
-                                ><button
-                                    class="wallet-button wallet-button--secondary"
-                                    type="button"
-                                    id="next-page"
-                                    aria-label="Trang sau"
-                                >
-                                    Sau
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <aside class="wallet-sidebar" aria-label="Thông tin ví">
-                    <section class="wallet-panel">
-                        <div class="wallet-owner">
-                            <span id="owner-initials">—</span>
-                            <div>
-                                <h2 id="owner-name">—</h2>
-                                <p id="owner-role">—</p>
-                            </div>
-                        </div>
-                        <p class="wallet-note" id="balances-persona">
-                            Phiên demo chưa chọn persona.
-                        </p>
-                        <a
-                            class="wallet-button wallet-button--secondary"
-                            href="/order/history"
-                            id="sidebar-primary-link"
-                             th:href="@{/order/history}">Đơn đăng ký của tôi</a
-                        ><button
-                            class="wallet-button wallet-button--secondary"
-                            type="button"
-                            id="wallet-policy"
-                        >
-                            Chính sách số dư & rút tiền
-                        </button>
-                        <p class="wallet-note wallet-demo">
-                            Số dư, bút toán và thao tác rút tiền trên trang này là dữ liệu demo trong
-                            sessionStorage của tab; chưa có ngân hàng hay backend nào được kết nối.
-                        </p>
-                    </section>
-
-                </aside>
+<th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
+<main class="confirm-page">
+    <header class="page-header"><div class="page-header__title-block">
+        <h1 class="page-header__title">Ví Edu Connect</h1>
+        <p class="confirm-muted">Số dư và lịch sử tiền vào, tiền ra của bạn.</p>
+    </div></header>
+    <section class="card" th:if="${wallet != null}"><div class="card__body confirm-stack">
+        <div class="confirm-price"><span>Số dư hiện tại</span><strong th:text="${#numbers.formatDecimal(wallet.balance, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></div>
+    </div></section>
+    <section class="card" th:if="${wallet != null and wallet.entries.empty}"><div class="card__body">
+        <p class="confirm-muted">Chưa có giao dịch nào trong ví.</p>
+    </div></section>
+    <section class="card" th:if="${wallet != null and !wallet.entries.empty}"><div class="card__body confirm-stack">
+        <h2 class="card__title">Lịch sử giao dịch</h2>
+        <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Lịch sử giao dịch ví" tabindex="0">
+            <table class="table">
+                <thead><tr><th scope="col">Thời gian</th><th scope="col">Loại</th><th scope="col">Nội dung</th><th scope="col">Số tiền</th></tr></thead>
+                <tbody>
+                    <tr th:each="e : ${wallet.entries.content}">
+                        <td th:text="${#temporals.format(e.postedAt, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td th:text="${e.kindLabel}"></td>
+                        <td th:text="${e.memo}"></td>
+                        <td class="table__amount" th:text="${(e.amount.signum() > 0 ? '+' : '') + #numbers.formatDecimal(e.amount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <nav class="pagination pagination--table" aria-label="Phân trang lịch sử ví" th:if="${wallet.entries.totalPages > 1}">
+            <p class="pagination__summary">Trang <strong th:text="${wallet.entries.number + 1}"></strong> / <strong th:text="${wallet.entries.totalPages}"></strong></p>
+            <div class="pagination__controls">
+                <a class="pagination__button pagination__button--wide" th:if="${wallet.entries.hasPrevious()}" th:href="@{/wallet/overview(page=${wallet.entries.number - 1})}">Trước</a>
+                <a class="pagination__button pagination__button--wide" th:if="${wallet.entries.hasNext()}" th:href="@{/wallet/overview(page=${wallet.entries.number + 1})}">Sau</a>
             </div>
-            </div>
-            <noscript>Vui lòng bật JavaScript để xem lịch sử giao dịch.</noscript>
-        </main>
-        <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
-        <dialog
-            class="modal"
-            id="shared-modal"
-            aria-labelledby="shared-modal-title"
-            aria-describedby="shared-modal-description"
-        >
-            <div class="modal__surface">
-                <header class="modal__header">
-                    <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
-                    <div class="modal__heading">
-                        <h2 id="shared-modal-title">Xác nhận thao tác</h2>
-                    </div>
-                    <button
-                        class="modal__close"
-                        type="button"
-                        data-modal-close
-                        aria-label="Đóng hộp thoại"
-                    >
-                        <span class="modal__close-icon" aria-hidden="true"></span>
-                    </button>
-                </header>
-                <div class="modal__body">
-                    <p id="shared-modal-description">Bạn có chắc muốn thực hiện thao tác này?</p>
-                </div>
-                <footer class="modal__footer">
-                    <button
-                        class="modal__button modal__button--secondary"
-                        type="button"
-                        data-modal-close
-                        autofocus
-                    >
-                        Quay lại
-                    </button>
-                    <button
-                        class="modal__button modal__button--primary"
-                        type="button"
-                        data-modal-confirm
-                    >
-                        Xác nhận
-                    </button>
-                </footer>
-            </div>
-        </dialog>
-    </body>
+        </nav>
+    </div></section>
+</main>
+<th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+<th:block th:replace="${scripts}"></th:block>
+</body>
 </html>
