@@ -1,5 +1,7 @@
 package com.educonnect.payment.repository;
 
+import com.educonnect.payment.domain.PaymentAttemptStatus;
+import java.util.List;
 import java.util.Optional;
 import com.educonnect.payment.domain.PaymentAttempt;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +16,6 @@ public interface PaymentAttemptJpaRepository extends JpaRepository<PaymentAttemp
     Optional<PaymentAttempt> findByProviderOrderCode(Long providerOrderCode);
 
     long countByPaymentId(Long paymentId);
+
+    List<PaymentAttempt> findByPaymentIdAndStatus(Long paymentId, PaymentAttemptStatus status);
 }

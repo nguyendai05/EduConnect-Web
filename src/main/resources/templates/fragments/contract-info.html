@@ -34,6 +34,16 @@
                 <h2 id="terms-title">Điều khoản đã đồng ý</h2>
                 <p class="contract-muted" th:text="${c.terms}"></p>
             </section>
+            <section class="contract-panel" th:if="${c.canCancel}" aria-labelledby="cancel-title">
+                <h2 id="cancel-title">Hủy hợp đồng</h2>
+                <p class="contract-muted" th:text="${c.payable} ? 'Hợp đồng chưa thanh toán nên được hủy ngay.' : 'Hợp đồng đã thanh toán: yêu cầu hủy sẽ chuyển quản trị duyệt, tiền hoàn vào ví Edu Connect của bạn.'"></p>
+                <form method="post" th:action="@{/contract/cancel}">
+                    <input type="hidden" name="contract" th:value="${c.id}">
+                    <label for="cancel-reason">Lý do hủy</label>
+                    <textarea id="cancel-reason" name="reason" rows="3" minlength="5" maxlength="400" required></textarea>
+                    <button class="contract-button contract-button--secondary" type="submit">Hủy hợp đồng</button>
+                </form>
+            </section>
             <div class="contract-actions">
                 <form method="post" th:action="@{/contract/complete}" th:if="${c.canComplete}">
                     <input type="hidden" name="contract" th:value="${c.id}">

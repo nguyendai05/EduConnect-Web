@@ -129,6 +129,35 @@ public class ContractPageController {
         return "redirect:/contract/tutor-detail?contract=" + contractId;
     }
 
+    /** Học viên hủy hợp đồng: hủy ngay nếu chưa trả tiền, hoặc gửi yêu cầu hoàn tiền nếu đã trả. */
+    @PostMapping("/contract/cancel")
+    public String cancel(@RequestParam("contract") Long contractId, @RequestParam(defaultValue = "") String reason,
+                         @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
+        ContractLifecycleService service = lifecycle.getIfAvailable();
+        if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
+        try {
+            redirect.addFlashAttribute("message", service.cancel(user, contractId, reason));
+        } catch (IllegalArgumentException error) {
+            redirect.addFlashAttribute("error", error.getMessage());
+        }
+        return "redirect:/contract/student-detail?contract=" + contractId;
+    }
+
+    /** Quản trị duyệt yêu cầu hủy và hoàn tiền (nút trên trang quản trị do Đại gắn). */
+    @PostMapping("/contract/cancel/approve")
+    public String approveCancel(@RequestParam("contract") Long contractId, @AuthenticationPrincipal AccountPrincipal admin,
+                                RedirectAttributes redirect) {
+        ContractLifecycleService service = lifecycle.getIfAvailable();
+        if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
+        try {
+            service.approveCancel(admin, contractId);
+            redirect.addFlashAttribute("message", "Đã duyệt hủy và hoàn tiền");
+        } catch (IllegalArgumentException error) {
+            redirect.addFlashAttribute("error", error.getMessage());
+        }
+        return "redirect:/admin/dashboard";
+    }
+
     /** Chi tiết hợp đồng của học viên. */
     @GetMapping("/contract/student-detail")
     public String studentDetail(@RequestParam(value = "contract", required = false) Long contractId,
