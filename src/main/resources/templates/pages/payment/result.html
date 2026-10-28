@@ -1,213 +1,51 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Kết quả thanh toán — Edu Connect</title>
 <th:block th:fragment="styles">
-<link rel="stylesheet" href="/css/components/layout/user-header.css"  th:href="@{/css/components/layout/user-header.css}"/>
-<link rel="stylesheet" href="/css/components/layout/user-footer.css"  th:href="@{/css/components/layout/user-footer.css}"/>
-<link rel="stylesheet" href="/css/components/navigation/breadcrumb.css"  th:href="@{/css/components/navigation/breadcrumb.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/alert.css"  th:href="@{/css/components/feedback/alert.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/modal.css"  th:href="@{/css/components/feedback/modal.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/toast.css"  th:href="@{/css/components/feedback/toast.css}"/>
-<link rel="stylesheet" href="/css/pages/payment/result.css"  th:href="@{/css/pages/payment/result.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}"/>
+<link rel="stylesheet" href="/css/pages/contract/confirm.css" th:href="@{/css/pages/contract/confirm.css}"/>
+<link rel="stylesheet" href="/css/pages/payment/result.css" th:href="@{/css/pages/payment/result.css}"/>
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
 <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
-<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
-<script src="/js/pages/payment/result.js" defer th:src="@{/js/pages/payment/result.js}"></script>
 </th:block>
 <th:block th:fragment="scripts">
-
+<script src="/js/pages/payment/result.js" defer th:src="@{/js/pages/payment/result.js}"></script>
 </th:block>
 </head>
 <body th:fragment="content">
-        <th:block th:replace="~{fragments/header-user :: header(${active}, 'v7')}"></th:block>
-
-        <main class="result-page">
-            <nav class="breadcrumb" aria-label="Đường dẫn">
-                <ol class="breadcrumb__list">
-                    <li class="breadcrumb__item">
-                        <a class="breadcrumb__link" id="breadcrumb-checkout" href="/payment/checkout"
-                             th:href="@{/payment/checkout}">Thanh toán ký quỹ</a
-                        >
-                    </li>
-                    <li class="breadcrumb__item" aria-current="page">
-                        <span class="breadcrumb__current">Kết quả thanh toán</span>
-                    </li>
-                </ol>
-            </nav>
-            <article class="result-card" id="payment-result" data-state="pending">
-                <header class="result-heading">
-                    <span class="result-icon" id="result-icon" aria-hidden="true"></span>
-                    <h1 id="result-title">Đang chờ xác nhận thanh toán</h1>
-                    <p id="result-description">
-                        Giao dịch đang được đối soát. Vui lòng không thanh toán lại trong lúc chờ
-                        kết quả.
-                    </p>
-                    <span class="result-badge" id="result-badge">Chờ đối soát</span>
-                </header>
-                <section class="result-money" aria-labelledby="money-title" id="money-section">
-                    <h2 id="money-title">
-                        <img src="/assets/icons/lock.svg" alt=""  th:src="@{/assets/icons/lock.svg}"/>Chi tiết ký quỹ hợp đồng
-                    </h2>
-                    <dl>
-                        <div>
-                            <dt id="scale-label">Học phí cần ký quỹ · 8 buổi</dt>
-                            <dd id="money-total">1.760.000 ₫</dd>
-                        </div>
-                        <div>
-                            <dt id="wallet-label">Dự kiến dùng từ ví Edu Connect</dt>
-                            <dd id="money-wallet">340.000 ₫</dd>
-                        </div>
-                        <div>
-                            <dt id="payos-label">Số tiền thanh toán qua PayOS</dt>
-                            <dd id="money-payos">1.420.000 ₫</dd>
-                        </div>
-                        <div class="result-total">
-                            <dt id="total-label">
-                                Tổng ký quỹ sau khi hoàn tất<small id="total-note"
-                                    >220.000 ₫ × 8 buổi học</small
-                                >
-                            </dt>
-                            <dd id="money-grand-total">1.760.000 ₫</dd>
-                        </div>
-                    </dl>
-                    <p class="result-note" id="money-note">
-                        Số dư và trạng thái ký quỹ chỉ được cập nhật sau khi giao dịch được xác
-                        nhận.
-                    </p>
-                </section>
-                <section class="result-details" aria-labelledby="details-title" id="details-section">
-                    <h2 id="details-title">
-                        <img src="/assets/icons/shield.svg" alt=""  th:src="@{/assets/icons/shield.svg}"/>Thông tin đối soát
-                    </h2>
-                    <dl>
-                        <div>
-                            <dt>Mã hợp đồng</dt>
-                            <dd id="contract-code">HD-20260926-025</dd>
-                        </div>
-                        <div>
-                            <dt>Chương trình & học viên</dt>
-                            <dd id="contract-learner">Toán lớp 11 · Trần Gia Huy</dd>
-                        </div>
-                        <div>
-                            <dt>Gia sư phụ trách</dt>
-                            <dd id="contract-tutor">Nguyễn Minh Anh</dd>
-                        </div>
-                        <div>
-                            <dt>Mã tham chiếu</dt>
-                            <dd>
-                                <span id="transaction-reference">PAY-20260926-025</span
-                                ><button
-                                    class="result-copy"
-                                    id="copy-reference"
-                                    type="button"
-                                    aria-label="Sao chép mã tham chiếu"
-                                >
-                                    <img src="/assets/icons/payment-copy.svg" alt=""  th:src="@{/assets/icons/payment-copy.svg}"/>
-                                </button>
-                            </dd>
-                        </div>
-                        <div>
-                            <dt>Thời điểm xác nhận</dt>
-                            <dd id="confirmation-time">Chưa xác nhận</dd>
-                        </div>
-                        <div>
-                            <dt>Trạng thái hợp đồng</dt>
-                            <dd id="contract-status">Chờ ký quỹ</dd>
-                        </div>
-                    </dl>
-                </section>
-                <section class="alert" aria-labelledby="guidance-title">
-                    <span class="alert__icon" aria-hidden="true"></span>
-                    <div class="alert__content">
-                        <h2 class="alert__title" id="guidance-title">Theo dõi giao dịch</h2>
-                        <p class="alert__message" id="guidance-description">
-                            Nếu tài khoản ngân hàng đã bị trừ tiền, hãy giữ mã tham chiếu để đối
-                            chiếu và không tạo thêm thanh toán cho cùng hợp đồng.
-                        </p>
-                    </div>
-                </section>
-                <section class="alert alert--warning" id="contract-not-found" hidden>
-                    <span class="alert__icon" aria-hidden="true"></span>
-                    <div class="alert__content">
-                        <h2 class="alert__title" id="not-found-title">
-                            Không tìm thấy hợp đồng cần đối soát
-                        </h2>
-                        <p class="alert__message" id="not-found-message">
-                            Mã hợp đồng trong liên kết không thuộc danh sách ký quỹ của bạn.
-                        </p>
-                    </div>
-                </section>
-                <div class="result-actions">
-                    <a class="result-button" id="result-action" hidden>Quay lại thanh toán</a
-                    ><button class="result-button" id="result-primary" type="button">
-                        Kiểm tra trạng thái</button
-                    ><a
-                        class="result-button result-button--secondary"
-                        id="result-contract"
-                        href="/contract/student-detail"
-                        hidden
-                         th:href="@{/contract/student-detail}">Xem chi tiết hợp đồng</a
-                    ><a
-                        class="result-button result-button--secondary"
-                        href="/wallet/overview"
-                         th:href="@{/wallet/overview}">Về ví Edu Connect</a
-                    >
-                </div>
-                <p class="result-help" id="result-feedback" role="status"></p>
-                <noscript
-                    >Vui lòng bật JavaScript để xem trạng thái và thao tác với giao dịch.</noscript
-                >
-            </article>
-        </main>
-        <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
-        <dialog
-            class="modal"
-            id="shared-modal"
-            aria-labelledby="shared-modal-title"
-            aria-describedby="shared-modal-description"
-        >
-            <div class="modal__surface">
-                <header class="modal__header">
-                    <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
-                    <div class="modal__heading">
-                        <h2 id="shared-modal-title">Xác nhận thao tác</h2>
-                    </div>
-                    <button
-                        class="modal__close"
-                        type="button"
-                        data-modal-close
-                        aria-label="Đóng hộp thoại"
-                    >
-                        <span class="modal__close-icon" aria-hidden="true"></span>
-                    </button>
-                </header>
-                <div class="modal__body">
-                    <p id="shared-modal-description">Bạn có chắc muốn thực hiện thao tác này?</p>
-                </div>
-                <footer class="modal__footer">
-                    <button
-                        class="modal__button modal__button--secondary"
-                        type="button"
-                        data-modal-close
-                        autofocus
-                    >
-                        Quay lại
-                    </button>
-                    <button
-                        class="modal__button modal__button--primary"
-                        type="button"
-                        data-modal-confirm
-                    >
-                        Xác nhận
-                    </button>
-                </footer>
-            </div>
-        </dialog>
-    </body>
+<th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
+<main class="confirm-page">
+    <header class="page-header"><div class="page-header__title-block">
+        <h1 class="page-header__title">Kết quả thanh toán</h1>
+    </div></header>
+    <section class="card" th:if="${payment == null}"><div class="card__body confirm-stack">
+        <h2 class="card__title">Chưa chọn hợp đồng</h2>
+        <p class="confirm-muted">Mở thanh toán từ lịch sử đơn đăng ký.</p>
+        <a class="button button--primary" th:href="@{/order/history}">Về lịch sử đơn</a>
+    </div></section>
+    <section class="card" th:if="${payment != null}"><div class="card__body confirm-stack">
+        <span class="badge" th:classappend="${payment.paid} ? 'badge--success' : 'badge--warning'" th:text="${payment.statusLabel}"></span>
+                <dl class="info-row"><dt class="info-row__label">Hợp đồng</dt><dd class="info-row__value" th:text="${payment.contractCode + ' · ' + payment.title}"></dd></dl>
+                <dl class="info-row"><dt class="info-row__label">Tổng tiền</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(payment.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
+                <dl class="info-row"><dt class="info-row__label">Trả từ ví</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(payment.walletAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
+                <dl class="info-row"><dt class="info-row__label">Còn thiếu (thanh toán qua PayOS)</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(payment.providerAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
+        <p class="confirm-muted" th:if="${payment.paid}">Thanh toán thành công. Hợp đồng đã được kích hoạt.</p>
+        <a class="button button--primary" th:if="${payment.paid}" th:href="@{/contract/student-detail(contract=${payment.contractId})}">Xem hợp đồng</a>
+        <a class="button button--primary" th:if="${!payment.paid and payment.canPay}" th:href="@{/payment/checkout(contract=${payment.contractId})}">Thử thanh toán lại</a>
+        <a class="button button--outline" th:href="@{/order/history}">Về lịch sử đơn</a>
+    </div></section>
+</main>
+<th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+<th:block th:replace="${scripts}"></th:block>
+</body>
 </html>

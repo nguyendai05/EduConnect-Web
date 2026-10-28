@@ -40,4 +40,6 @@ public interface ContractJpaRepository extends JpaRepository<Contract, Long> {
     @EntityGraph(attributePaths = {"orderItemReference.orderReference", "tutorReference.account", "learnerReference.account"})
     @Query("select c from Contract c where c.id = :id and (c.learnerId = :userId or c.tutorId = :userId)")
     Optional<Contract> findForParticipant(@Param("id") Long id, @Param("userId") Long userId);
+
+    Optional<Contract> findByOrderItemReferenceOrderReferenceId(Long orderId);
 }
