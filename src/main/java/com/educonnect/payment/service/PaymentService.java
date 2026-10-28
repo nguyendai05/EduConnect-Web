@@ -3,6 +3,7 @@ package com.educonnect.payment.service;
 import com.educonnect.contract.domain.Contract;
 import com.educonnect.contract.domain.ContractStatus;
 import com.educonnect.contract.repository.ContractJpaRepository;
+import com.educonnect.contract.service.ContractSessionService;
 import com.educonnect.contract.service.StatusRecorder;
 import com.educonnect.lesson.domain.EnrollmentStatus;
 import com.educonnect.lesson.repository.EnrollmentJpaRepository;
@@ -69,6 +70,7 @@ public class PaymentService {
     private EnrollmentJpaRepository enrollments;
     private LedgerService ledger;
     private StatusRecorder status;
+    private ContractSessionService sessionService;
     private EntityManager entityManager;
     private Clock clock;
 
@@ -76,7 +78,7 @@ public class PaymentService {
                           PaymentAttemptJpaRepository attempts, PaymentWebhookEventJpaRepository webhooks,
                           PayosClient payos, PayosProperties properties, ObjectMapper json,
                           ContractJpaRepository contracts, EnrollmentJpaRepository enrollments, LedgerService ledger,
-                          StatusRecorder status, EntityManager entityManager, Clock clock) {
+                          StatusRecorder status, ContractSessionService sessionService, EntityManager entityManager, Clock clock) {
         this.payments = payments;
         this.allocations = allocations;
         this.attempts = attempts;
@@ -88,6 +90,7 @@ public class PaymentService {
         this.enrollments = enrollments;
         this.ledger = ledger;
         this.status = status;
+        this.sessionService = sessionService;
         this.entityManager = entityManager;
         this.clock = clock;
     }
@@ -323,6 +326,7 @@ public class PaymentService {
         payment.setFundedAt(now);
         status.order(order, OrderStatus.PAID, contract.getLearnerId(), null, "Thanh toán thành công", now);
         status.contract(contract, ContractStatus.ACTIVE, contract.getLearnerId(), "Thanh toán thành công", now);
+        sessionService.create(contract);
         enrollments.findByContractId(contract.getId()).ifPresent(e -> {
             e.setStatus(EnrollmentStatus.CONFIRMED);
             e.setConfirmedAt(now);

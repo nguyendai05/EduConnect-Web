@@ -34,9 +34,33 @@
                 <h2 id="terms-title">Điều khoản đã đồng ý</h2>
                 <p class="contract-muted" th:text="${c.terms}"></p>
             </section>
+            <section class="contract-panel" th:if="${!c.sessions.empty}" aria-labelledby="sessions-title">
+                <h2 id="sessions-title">Các buổi học</h2>
+                <p class="contract-muted">Gia sư điểm danh sau mỗi buổi, học viên xác nhận thì tiền của buổi đó mới chuyển cho gia sư. Quá hạn không phản hồi, hệ thống tự xác nhận.</p>
+                <table class="table">
+                    <thead><tr><th scope="col">Buổi</th><th scope="col">Số tiền</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead>
+                    <tbody>
+                        <tr th:each="s : ${c.sessions}">
+                            <th scope="row" th:text="${'Buổi ' + s.number}"></th>
+                            <td th:text="${#numbers.formatDecimal(s.amount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></td>
+                            <td th:text="${s.statusLabel}"></td>
+                            <td>
+                                <form method="post" th:action="@{/contract/session/attend}" th:if="${s.canAttend}">
+                                    <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${s.id}">
+                                    <button class="contract-button" type="submit">Điểm danh</button>
+                                </form>
+                                <form method="post" th:action="@{/contract/session/confirm}" th:if="${s.canConfirm}">
+                                    <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${s.id}">
+                                    <button class="contract-button" type="submit">Xác nhận đã học</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
             <section class="contract-panel" th:if="${c.canCancel}" aria-labelledby="cancel-title">
                 <h2 id="cancel-title">Hủy hợp đồng</h2>
-                <p class="contract-muted" th:text="${c.payable} ? 'Hợp đồng chưa thanh toán nên được hủy ngay.' : 'Hợp đồng đã thanh toán: yêu cầu hủy sẽ chuyển quản trị duyệt, tiền hoàn vào ví Edu Connect của bạn.'"></p>
+                <p class="contract-muted" th:text="'Hợp đồng chưa thanh toán nên được hủy ngay. Nếu đã thanh toán, hãy liên hệ quản trị để được hỗ trợ.'"></p>
                 <form method="post" th:action="@{/contract/cancel}">
                     <input type="hidden" name="contract" th:value="${c.id}">
                     <label for="cancel-reason">Lý do hủy</label>
@@ -45,10 +69,6 @@
                 </form>
             </section>
             <div class="contract-actions">
-                <form method="post" th:action="@{/contract/complete}" th:if="${c.canComplete}">
-                    <input type="hidden" name="contract" th:value="${c.id}">
-                    <button class="contract-button" type="submit">Hoàn thành hợp đồng</button>
-                </form>
                 <a class="contract-button" th:if="${c.payable and canPay}" th:href="@{/payment/checkout(contract=${c.id})}">Tiếp tục thanh toán</a>
                 <a class="contract-button contract-button--secondary" th:href="@{${backUrl}}" th:text="${backLabel}"></a>
             </div>

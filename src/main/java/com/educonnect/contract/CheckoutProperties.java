@@ -14,7 +14,8 @@ public record CheckoutProperties(
         @DefaultValue("0.10") @DecimalMin("0") @DecimalMax("1") @Digits(integer = 1, fraction = 6) BigDecimal platformFeeRate,
         @DefaultValue("DEV-PROPOSAL") @NotBlank @Size(max = 64) String feePolicyVersion,
         @DefaultValue("30m") @NotNull Duration reservationTtl,
-        @DefaultValue("1") @DecimalMin("0.000001") @DecimalMax("1") @Digits(integer = 1, fraction = 6) BigDecimal refundRate) {
+        @DefaultValue("1") @DecimalMin("0.000001") @DecimalMax("1") @Digits(integer = 1, fraction = 6) BigDecimal refundRate,
+        @DefaultValue("48h") @NotNull Duration autoConfirmAfter) {
     @AssertTrue public boolean isReservationTtlPositive() {
         return reservationTtl != null && !reservationTtl.isZero() && !reservationTtl.isNegative();
     }

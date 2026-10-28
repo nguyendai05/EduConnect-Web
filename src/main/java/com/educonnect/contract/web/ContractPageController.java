@@ -5,6 +5,7 @@ import com.educonnect.contract.InvitationContractForm;
 import com.educonnect.contract.JobContractForm;
 import com.educonnect.contract.service.ContractLifecycleService;
 import com.educonnect.contract.service.ContractService;
+import com.educonnect.contract.service.ContractSessionService;
 import com.educonnect.security.AccountPrincipal;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.ObjectProvider;
@@ -24,10 +25,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ContractPageController {
     private ObjectProvider<ContractService> services;
     private ObjectProvider<ContractLifecycleService> lifecycle;
+    private ObjectProvider<ContractSessionService> sessions;
 
-    public ContractPageController(ObjectProvider<ContractService> services, ObjectProvider<ContractLifecycleService> lifecycle) {
+    public ContractPageController(ObjectProvider<ContractService> services, ObjectProvider<ContractLifecycleService> lifecycle,
+                                  ObjectProvider<ContractSessionService> sessions) {
         this.services = services;
         this.lifecycle = lifecycle;
+        this.sessions = sessions;
     }
 
     @GetMapping("/contract/confirm")
@@ -114,44 +118,60 @@ public class ContractPageController {
         }
     }
 
-    /** Gia sư (hoặc admin) hoàn thành hợp đồng; tiền ký quỹ được giải ngân cho gia sư. */
-    @PostMapping("/contract/complete")
-    public String complete(@RequestParam("contract") Long contractId, @AuthenticationPrincipal AccountPrincipal user,
-                           RedirectAttributes redirect) {
-        ContractLifecycleService service = lifecycle.getIfAvailable();
+    /** Gia sư điểm danh một buổi đã dạy. */
+    @PostMapping("/contract/session/attend")
+    public String attend(@RequestParam("contract") Long contractId, @RequestParam("session") Long sessionId,
+                         @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
+        ContractSessionService service = sessions.getIfAvailable();
         if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
         try {
-            service.complete(user, contractId);
-            redirect.addFlashAttribute("message", "Đã hoàn thành hợp đồng và chuyển tiền cho gia sư");
+            service.attend(user, sessionId);
+            redirect.addFlashAttribute("message", "Đã điểm danh buổi học, chờ học viên xác nhận");
         } catch (IllegalArgumentException error) {
             redirect.addFlashAttribute("error", error.getMessage());
         }
         return "redirect:/contract/tutor-detail?contract=" + contractId;
     }
 
-    /** Học viên hủy hợp đồng: hủy ngay nếu chưa trả tiền, hoặc gửi yêu cầu hoàn tiền nếu đã trả. */
-    @PostMapping("/contract/cancel")
-    public String cancel(@RequestParam("contract") Long contractId, @RequestParam(defaultValue = "") String reason,
-                         @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
-        ContractLifecycleService service = lifecycle.getIfAvailable();
+    /** Học viên xác nhận buổi đã học; tiền của buổi đó được giải ngân cho gia sư. */
+    @PostMapping("/contract/session/confirm")
+    public String confirmSession(@RequestParam("contract") Long contractId, @RequestParam("session") Long sessionId,
+                                 @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
+        ContractSessionService service = sessions.getIfAvailable();
         if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
         try {
-            redirect.addFlashAttribute("message", service.cancel(user, contractId, reason));
+            service.confirm(user, sessionId);
+            redirect.addFlashAttribute("message", "Đã xác nhận buổi học và chuyển tiền cho gia sư");
         } catch (IllegalArgumentException error) {
             redirect.addFlashAttribute("error", error.getMessage());
         }
         return "redirect:/contract/student-detail?contract=" + contractId;
     }
 
-    /** Quản trị duyệt yêu cầu hủy và hoàn tiền (nút trên trang quản trị do Đại gắn). */
-    @PostMapping("/contract/cancel/approve")
-    public String approveCancel(@RequestParam("contract") Long contractId, @AuthenticationPrincipal AccountPrincipal admin,
-                                RedirectAttributes redirect) {
+    /** Học viên hủy hợp đồng chưa thanh toán. */
+    @PostMapping("/contract/cancel")
+    public String cancel(@RequestParam("contract") Long contractId, @RequestParam(defaultValue = "") String reason,
+                         @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
         ContractLifecycleService service = lifecycle.getIfAvailable();
         if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
         try {
-            service.approveCancel(admin, contractId);
-            redirect.addFlashAttribute("message", "Đã duyệt hủy và hoàn tiền");
+            service.cancel(user, contractId, reason);
+            redirect.addFlashAttribute("message", "Đã hủy hợp đồng");
+        } catch (IllegalArgumentException error) {
+            redirect.addFlashAttribute("error", error.getMessage());
+        }
+        return "redirect:/contract/student-detail?contract=" + contractId;
+    }
+
+    /** Quản trị hoàn tiền phần chưa giải ngân cho học viên (nút trên trang quản trị do Đại gắn). */
+    @PostMapping("/contract/refund")
+    public String refund(@RequestParam("contract") Long contractId, @RequestParam(defaultValue = "") String reason,
+                         @AuthenticationPrincipal AccountPrincipal admin, RedirectAttributes redirect) {
+        ContractLifecycleService service = lifecycle.getIfAvailable();
+        if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
+        try {
+            service.refund(admin, contractId, reason);
+            redirect.addFlashAttribute("message", "Đã hoàn tiền cho học viên và hủy hợp đồng");
         } catch (IllegalArgumentException error) {
             redirect.addFlashAttribute("error", error.getMessage());
         }

@@ -9,6 +9,7 @@ import com.educonnect.contract.domain.ContractStatus;
 import com.educonnect.contract.dto.ContractConfirmationDTO;
 import com.educonnect.contract.dto.ContractDetailDTO;
 import com.educonnect.contract.repository.ContractJpaRepository;
+import com.educonnect.contract.repository.ContractSessionJpaRepository;
 import com.educonnect.invitation.domain.Invitation;
 import com.educonnect.invitation.dto.InvitationSourceResponse;
 import com.educonnect.invitation.service.InvitationService;
@@ -74,6 +75,7 @@ public class ContractService {
     private Clock clock;
     private InvitationService invitations;
     private JobService jobs;
+    private ContractSessionJpaRepository sessionRepo;
 
     /** Dữ liệu chung của một giao dịch, dù nguồn là giỏ hàng hay lời mời. */
     private record Deal(Long tutorId, String currency, String title, OrderItemType type, BigDecimal unitPrice,
@@ -85,7 +87,8 @@ public class ContractService {
                            OrderItemJpaRepository orderItems, ContractJpaRepository contracts,
                            RegistrationSourceJpaRepository sources, EnrollmentJpaRepository enrollments,
                            CatalogService catalog, EntityManager entityManager,
-                           CheckoutProperties properties, Clock clock, InvitationService invitations, JobService jobs) {
+                           CheckoutProperties properties, Clock clock, InvitationService invitations, JobService jobs,
+                           ContractSessionJpaRepository sessionRepo) {
         this.cartItems = cartItems;
         this.orders = orders;
         this.orderItems = orderItems;
@@ -98,6 +101,7 @@ public class ContractService {
         this.clock = clock;
         this.invitations = invitations;
         this.jobs = jobs;
+        this.sessionRepo = sessionRepo;
     }
 
     @Transactional(readOnly = true)
@@ -161,7 +165,7 @@ public class ContractService {
     /** Chi tiết hợp đồng cho học viên hoặc gia sư của hợp đồng; người khác nhận 404. */
     @Transactional(readOnly = true)
     public ContractDetailDTO detail(AccountPrincipal user, Long id) {
-        return contracts.findForParticipant(id, user.getId()).map(c -> ContractDetailDTO.from(c, user.getId()))
+        return contracts.findForParticipant(id, user.getId()).map(c -> ContractDetailDTO.from(c, user.getId(), sessionRepo.findByContractIdOrderBySessionNumber(c.getId())))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy hợp đồng"));
     }
 
