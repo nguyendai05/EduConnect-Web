@@ -2,6 +2,7 @@ package com.educonnect.contract.web;
 
 import com.educonnect.contract.ContractConfirmationForm;
 import com.educonnect.contract.InvitationContractForm;
+import com.educonnect.contract.JobContractForm;
 import com.educonnect.contract.service.ContractService;
 import com.educonnect.security.AccountPrincipal;
 import jakarta.validation.Valid;
@@ -28,14 +29,16 @@ public class ContractPageController {
     public String confirm(@RequestParam(value = "contract", required = false) Long contractId,
                           @RequestParam(required = false) Long cartItemId,
                           @RequestParam(required = false) Long invitationId,
+                          @RequestParam(required = false) Long applicationId,
                           @AuthenticationPrincipal AccountPrincipal user, Model model) {
         ContractService service = services.getIfAvailable();
         if (service != null) {
             if (contractId != null) model.addAttribute("confirmation", service.getContract(user, contractId));
-            else if (cartItemId != null || invitationId != null) {
+            else if (cartItemId != null || invitationId != null || applicationId != null) {
                 try {
-                    model.addAttribute("confirmation", cartItemId != null
-                            ? service.draft(user, cartItemId) : service.draftInvitation(user, invitationId));
+                    model.addAttribute("confirmation", cartItemId != null ? service.draft(user, cartItemId)
+                            : invitationId != null ? service.draftInvitation(user, invitationId)
+                            : service.draftJob(user, applicationId));
                 } catch (IllegalArgumentException error) {
                     model.addAttribute("error", error.getMessage());
                 }
@@ -81,6 +84,25 @@ public class ContractPageController {
         }
         try {
             return "redirect:/contract/confirm?contract=" + service.confirmInvitation(user, form);
+        } catch (IllegalArgumentException | ResponseStatusException error) {
+            redirect.addFlashAttribute("error", error instanceof ResponseStatusException r ? r.getReason() : error.getMessage());
+            return back;
+        }
+    }
+
+    /** Xác nhận hợp đồng từ gia sư đã được chọn cho tin. */
+    @PostMapping("/contract/sign-job")
+    public String signJob(@Valid @ModelAttribute JobContractForm form, BindingResult errors,
+                          @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
+        ContractService service = services.getIfAvailable();
+        if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
+        String back = "redirect:/contract/confirm?applicationId=" + form.applicationId();
+        if (errors.hasErrors()) {
+            redirect.addFlashAttribute("error", "Vui lòng xác nhận đầy đủ ba cam kết");
+            return back;
+        }
+        try {
+            return "redirect:/contract/confirm?contract=" + service.confirmJob(user, form);
         } catch (IllegalArgumentException | ResponseStatusException error) {
             redirect.addFlashAttribute("error", error instanceof ResponseStatusException r ? r.getReason() : error.getMessage());
             return back;

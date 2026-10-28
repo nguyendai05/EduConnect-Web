@@ -3,6 +3,7 @@ package com.educonnect.contract.service;
 import com.educonnect.contract.CheckoutProperties;
 import com.educonnect.contract.ContractConfirmationForm;
 import com.educonnect.contract.InvitationContractForm;
+import com.educonnect.contract.JobContractForm;
 import com.educonnect.contract.domain.Contract;
 import com.educonnect.contract.domain.ContractStatus;
 import com.educonnect.contract.dto.ContractConfirmationDTO;
@@ -10,6 +11,10 @@ import com.educonnect.contract.repository.ContractJpaRepository;
 import com.educonnect.invitation.domain.Invitation;
 import com.educonnect.invitation.dto.InvitationSourceResponse;
 import com.educonnect.invitation.service.InvitationService;
+import com.educonnect.job.domain.JobApplication;
+import com.educonnect.job.domain.JobPost;
+import com.educonnect.job.dto.JobSourceResponse;
+import com.educonnect.job.service.JobService;
 import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.domain.OfferingType;
 import com.educonnect.lesson.domain.Enrollment;
@@ -50,7 +55,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
-/** Tạo đơn + hợp đồng từ giỏ (CATALOG) hoặc lời mời đã chấp thuận (INVITATION). Xem dự thảo không tạo giao dịch. */
+/** Tạo đơn + hợp đồng từ giỏ (CATALOG), lời mời đã chấp thuận (INVITATION) hoặc gia sư được chọn cho tin (JOB). Xem dự thảo không tạo giao dịch. */
 @Service
 @Profile("db-dev")
 @Validated
@@ -67,6 +72,7 @@ public class ContractService {
     private CheckoutProperties properties;
     private Clock clock;
     private InvitationService invitations;
+    private JobService jobs;
 
     /** Dữ liệu chung của một giao dịch, dù nguồn là giỏ hàng hay lời mời. */
     private record Deal(Long tutorId, String currency, String title, OrderItemType type, BigDecimal unitPrice,
@@ -78,7 +84,7 @@ public class ContractService {
                            OrderItemJpaRepository orderItems, ContractJpaRepository contracts,
                            RegistrationSourceJpaRepository sources, EnrollmentJpaRepository enrollments,
                            CatalogService catalog, EntityManager entityManager,
-                           CheckoutProperties properties, Clock clock, InvitationService invitations) {
+                           CheckoutProperties properties, Clock clock, InvitationService invitations, JobService jobs) {
         this.cartItems = cartItems;
         this.orders = orders;
         this.orderItems = orderItems;
@@ -90,6 +96,7 @@ public class ContractService {
         this.properties = properties;
         this.clock = clock;
         this.invitations = invitations;
+        this.jobs = jobs;
     }
 
     @Transactional(readOnly = true)
@@ -183,6 +190,47 @@ public class ContractService {
         source.setSourceKind(RegistrationSourceKind.INVITATION);
         source.setInvitationId(src.sourceId());
         source.setOfferingId(src.offeringId()); // chỉ để tham khảo, không giữ chỗ
+        Contract contract = book(learnerId, source, deal, creationKey, clock.instant());
+        contracts.flush();
+        return contract.getId();
+    }
+
+    /** Xem dự thảo hợp đồng từ gia sư đã được chọn cho tin; không tạo đơn. */
+    public ContractConfirmationDTO draftJob(AccountPrincipal user, Long applicationId) {
+        Long learnerId = learnerId(user);
+        JobApplication application = entityManager.find(JobApplication.class, applicationId);
+        if (application == null || !application.getJobReference().getLearnerId().equals(learnerId)) {
+            throw new IllegalArgumentException("Không tìm thấy ứng tuyển");
+        }
+        JobPost job = application.getJobReference();
+        JobSourceResponse source = jobs.lockSelectedSource(user, job.getId(), job.getVersion(), application.getVersion());
+        return ContractConfirmationDTO.draftJob(source, job.getTitle(), user.getDisplayName(),
+                application.getTutorReference().getAccount().getDisplayName());
+    }
+
+    /** Tạo đơn + hợp đồng từ gia sư đã được chọn. Gọi lại cùng tin trả về hợp đồng cũ. */
+    public Long confirmJob(AccountPrincipal user, @Valid JobContractForm form) {
+        Long learnerId = learnerId(user);
+        // Cùng thứ tự khóa với các luồng khác: học viên trước.
+        if (entityManager.find(LearnerProfile.class, learnerId, LockModeType.PESSIMISTIC_WRITE) == null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        String creationKey = "JOB-" + form.jobId();
+        Optional<Contract> existing = contracts.findByLearnerIdAndOrderItemReferenceOrderReferenceCreationKey(learnerId, creationKey);
+        if (existing.isPresent()) return existing.get().getId();
+
+        // Kiểm lại và khóa nguồn tại thời điểm tạo giao dịch.
+        JobSourceResponse src = jobs.lockSelectedSource(user, form.jobId(), form.jobVersion(), form.applicationVersion());
+        if (!src.applicationId().equals(form.applicationId())) {
+            throw new IllegalArgumentException("Gia sư được chọn đã thay đổi, vui lòng kiểm tra lại");
+        }
+        JobPost job = entityManager.find(JobPost.class, src.sourceId());
+        Deal deal = new Deal(src.tutorId(), "VND", job.getTitle(), OrderItemType.DIRECT, src.unitPrice(),
+                src.sessionCount(), 1, src.termsVersion(), src.termsText(), src.tutorAcceptedAt());
+        RegistrationSource source = RegistrationSource.create();
+        source.setSourceKind(RegistrationSourceKind.JOB_APPLICATION);
+        source.setJobId(src.sourceId());
+        source.setApplicationId(src.applicationId());
         Contract contract = book(learnerId, source, deal, creationKey, clock.instant());
         contracts.flush();
         return contract.getId();
