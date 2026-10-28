@@ -277,3 +277,13 @@
     justify-content: center;
     gap: var(--space-4);
 }
+
+.catalog-section__copy,
+.catalog-detail-terms {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.catalog-booking__alert {
+    margin-block: var(--space-3);
+}

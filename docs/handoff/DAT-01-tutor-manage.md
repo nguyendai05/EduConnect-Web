@@ -47,6 +47,9 @@ Service kiểm lại tài khoản ACTIVE, email đã xác minh, role TUTOR, auth
 - Bỏ `publishedEdit` khỏi DTO đầu vào. Cờ này là thuộc tính model do controller lấy từ service; không nhận quyền, chủ sở hữu, trạng thái duyệt hoặc cờ hiển thị từ form.
 - Inject service trực tiếp qua constructor. Theo yêu cầu tiếp theo của Đạt, đã xóa controller preview để chỉ học và phát triển một luồng `db-dev`.
 - Giữ kiểm tra nghiệp vụ tại service: tài khoản/chủ sở hữu, lịch, danh mục, phiên bản, duyệt lại và bảo vệ kế hoạch học đã có đăng ký. Service vẫn kiểm tra các annotation của DTO khi gọi trực tiếp hoặc gửi duyệt dữ liệu đã lưu trong DB.
+- Service tách riêng từng thao tác: `createDraft` tạo nháp, `update` cập nhật, `submitForReview` gửi duyệt và `close` đóng dịch vụ/lớp. Mỗi thao tác ghi có `@Transactional` riêng, giữ thứ tự khóa hồ sơ gia sư rồi dịch vụ/lớp; không còn `save` hoặc `transition` gộp nhiều thao tác trong service.
+- `checkAccess` chỉ kiểm tra quyền; controller dùng hàm này trước khi xử lý form tạo, thay cho việc gọi `options` rồi bỏ kết quả. `requireTutor` không còn tham số cờ khóa bản ghi.
+- Các bước dùng chung được tách thành hàm kiểm tra form, kiểm tra lịch, kiểm tra danh mục, chép dữ liệu form, thay lịch, xóa thông tin duyệt cũ và chuyển dữ liệu đã nạp thành form sửa. Controller giữ nguyên URL, DTO và các thuộc tính model của giao diện.
 - Mã controller/service/DTO viết từng câu lệnh, nhánh `if/else` rõ ràng; dùng vòng lặp cho các bước xử lý danh sách/lịch.
 
 Thứ tự đọc: `OfferingFilterRequest` → `OfferingRequest` → `OfferingStatusRequest` → `TutorManagePageController` → `TutorOfferingService` → repository → template. `OfferingResponse` chỉ phục vụ hiển thị danh sách, không phải đối tượng nhận form.

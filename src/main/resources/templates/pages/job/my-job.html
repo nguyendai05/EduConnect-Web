@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;requests&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;requests&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Tin tìm gia sư của tôi | Edu Connect</title>
 <th:block th:fragment="styles">
@@ -17,142 +17,42 @@
 <link rel="stylesheet" href="/css/components/feedback/modal.css" th:href="@{/css/components/feedback/modal.css}">
 <link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
 <link rel="stylesheet" href="/css/pages/job/my-job.css" th:href="@{/css/pages/job/my-job.css}">
+<link rel="stylesheet" th:href="@{/css/components/data-display/card.css}">
+<link rel="stylesheet" th:href="@{/css/pages/job/live.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/select.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
 <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/core/tabs.js" defer th:src="@{/js/core/tabs.js}"></script>
-<script src="/js/core/search-input.js" defer th:src="@{/js/core/search-input.js}"></script>
-<script src="/js/core/select.js" defer th:src="@{/js/core/select.js}"></script>
-<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
-<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
 <script src="/js/pages/job/my-job.js" defer th:src="@{/js/pages/job/my-job.js}"></script>
 </th:block>
 <th:block th:fragment="scripts">
 
 </th:block>
 </head>
-<body class="my-job-page" th:fragment="content">
-<!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
-<div class="user-shell" data-component="user-shell" data-my-job-page>
-<!-- Component: UserHeader | Nguồn: components/layout/user-header.html -->
-<th:block th:replace="~{fragments/header-user :: header(${active}, 'v8')}"></th:block>
-<main class="user-shell__main">
-<div class="user-shell__content">
-    <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
-    <header class="page-header">
-        <div class="page-header__content">
-            <div class="page-header__title-block">
-                <div class="page-header__title-row">
-                    <h1 class="page-header__title">Tin tìm gia sư của tôi</h1>
-                    <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span><span data-header-job-summary>Tin đang tuyển: — / —</span></span>
-                </div>
-
-            </div>
-            <div class="page-header__actions">
-                <!-- Component: Button | Nguồn: components/action/button.html -->
-                <a class="button button--primary button--large page-header__action page-header__action--primary" href="/job/create" th:href="@{/job/create}">+ Đăng tin tìm gia sư</a>
-            </div>
-        </div>
-    </header>
-
-    <div class="user-shell__grid my-job-page__grid">
-        <section class="my-job-page__primary" aria-label="Danh sách tin tìm gia sư">
-            <!-- Component: Tabs | Nguồn: components/navigation/tabs.html -->
-            <section class="tabs my-job-page__tabs" data-tabs data-job-tabs>
-                <div class="tabs__list" role="tablist" aria-label="Trạng thái tin đăng">
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-all" aria-controls="job-panel-all" aria-selected="true" tabindex="0" data-status="all">Tất cả</button>
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-recruiting" aria-controls="job-panel-recruiting" aria-selected="false" tabindex="-1" data-status="open">Đang tuyển</button>
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-pending" aria-controls="job-panel-pending" aria-selected="false" tabindex="-1" data-status="pending">Chờ duyệt</button>
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-closed" aria-controls="job-panel-closed" aria-selected="false" tabindex="-1" data-status="closed">Đã đóng</button>
-                    <button class="tabs__tab" type="button" role="tab" id="job-tab-rejected" aria-controls="job-panel-rejected" aria-selected="false" tabindex="-1" data-status="rejected">Bị từ chối</button>
-                </div>
-
-                <div class="my-job-page__toolbar">
-                    <!-- Component: SearchInput | Nguồn: components/form/search-input.html -->
-                    <div class="search-input search-input--standard" data-search-input>
-                        <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
-                        <input type="search" placeholder="Tìm trong tin của tôi (môn, lớp, khu vực)..." aria-label="Tìm trong tin của tôi" data-job-search>
-                        <button class="search-input__clear" type="button" data-clear-search aria-label="Xóa nội dung tìm kiếm" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
-                    </div>
-                    <!-- Component: Select | Nguồn: components/form/select.html -->
-                    <section class="select-field" data-component="select" data-initial-open="false" data-job-sort>
-                        <span class="select-field__label" id="sort-label">Sắp xếp</span>
-                        <button class="select-control" type="button" aria-labelledby="sort-label sort-value" aria-haspopup="listbox" aria-expanded="false" aria-controls="sort-options" data-select-trigger>
-                            <span id="sort-value" data-select-value>Mới nhất</span>
-                            <img class="select-control__chevron" src="/assets/icons/mui-ten-xuong.svg" data-icon-open="../../assets/icons/mui-ten-len.svg" data-icon-closed="../../assets/icons/mui-ten-xuong.svg" alt="" th:src="@{/assets/icons/mui-ten-xuong.svg}" th:attr="data-icon-open=@{/assets/icons/mui-ten-len.svg}, data-icon-closed=@{/assets/icons/mui-ten-xuong.svg}">
-                        </button>
-                        <div class="select-options" id="sort-options" role="listbox" aria-labelledby="sort-label" data-select-options hidden>
-                            <button class="select-option is-selected" type="button" role="option" aria-selected="true" data-value="Mới nhất"><span>Mới nhất</span><img src="/assets/icons/dau-tich.svg" alt="" th:src="@{/assets/icons/dau-tich.svg}"></button>
-                            <button class="select-option" type="button" role="option" aria-selected="false" data-value="Nhiều ứng viên nhất"><span>Nhiều ứng viên nhất</span></button>
-                            <button class="select-option" type="button" role="option" aria-selected="false" data-value="Học phí cao đến thấp"><span>Học phí cao đến thấp</span></button>
-                        </div>
-                    </section>
-                </div>
-
-                <div class="tabs__panel" role="tabpanel" id="job-panel-all" aria-labelledby="job-tab-all" tabindex="0">
-                    <!-- Danh sách do js/pages/job/my-job.js render từ EduStore.jobsByLearner(sessionLearnerId()); không còn thẻ hard-code -->
-                    <div class="my-job-page__jobs" data-job-list>
-                        <!-- Component: EmptyState | Nguồn: components/feedback/empty-state.html -->
-                        <section class="empty-state my-job-page__empty" data-job-empty hidden aria-labelledby="my-job-empty-title">
-                            <span class="empty-state__icon" aria-hidden="true"></span>
-                            <h2 class="empty-state__title" id="my-job-empty-title">Không có tin phù hợp</h2>
-                            <p class="empty-state__description" data-job-empty-description>Không có tin nào phù hợp với bộ lọc hiện tại.</p>
-                        </section>
-                    </div>
-
-                    <!-- Component: JobCard | Nguồn: components/domain/job/job-card.html — mẫu thẻ, JS clone và điền dữ liệu store -->
-                    <template data-job-card-template>
-                        <article class="job-card" data-job-card data-job-id="" data-job-status="open" data-applicants="" data-fee="" data-created="">
-                            <div class="job-card__top"><div class="job-card__heading"><div class="job-card__meta"><span class="job-card__badge job-card__badge--info" data-card-badge>Đang tuyển</span><span class="job-card__code" data-card-code></span></div><h2 data-card-title></h2></div><p class="job-card__price"><span data-card-fee></span><span>/buổi</span></p></div>
-                            <div class="job-card__tags"><span data-card-tag-subject></span><span data-card-tag-mode></span><span data-card-tag-district></span></div>
-                            <section class="alert alert--warning" role="status" data-card-pending hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Đang kiểm duyệt bảo mật</h3><p class="alert__message">Tin đang được kiểm tra trước khi hiển thị công khai và chưa nhận hồ sơ ứng tuyển.</p></div></section>
-                            <div class="my-job-page__specs"><p><strong>Tần suất:</strong> <span data-card-sessions></span></p><p><strong>Thời lượng:</strong> <span data-card-duration></span></p><p><strong>Yêu cầu:</strong> <span data-card-experience></span></p><p><strong>Mô tả:</strong> <span data-card-description></span></p></div>
-                            <footer class="job-card__footer"><div class="job-card__stats"><span class="job-card__applicants" data-card-applicants></span><span data-card-created-label></span></div><div><a class="job-card__action job-card__action--primary" href="/job/applicants" data-card-applicants-link th:href="@{/job/applicants}">Xem ứng viên</a> <button type="button" class="job-card__action" data-close-job data-modal-open="close-job-modal" hidden>Đóng tin</button></div></footer>
-                        </article>
-                    </template>
-                </div>
-                <div class="tabs__panel" role="tabpanel" id="job-panel-recruiting" aria-labelledby="job-tab-recruiting" tabindex="0" hidden></div>
-                <div class="tabs__panel" role="tabpanel" id="job-panel-pending" aria-labelledby="job-tab-pending" tabindex="0" hidden></div>
-                <div class="tabs__panel" role="tabpanel" id="job-panel-closed" aria-labelledby="job-tab-closed" tabindex="0" hidden></div>
-                <div class="tabs__panel" role="tabpanel" id="job-panel-rejected" aria-labelledby="job-tab-rejected" tabindex="0" hidden></div>
-            </section>
-        </section>
-
-        <aside class="my-job-page__sidebar" aria-label="Thông tin hỗ trợ" data-my-job-sidebar>
-            <section class="my-job-sidebar-card">
-                <header class="my-job-sidebar-card__header"><h2>Ứng viên cần xem</h2><span class="my-job-sidebar-card__count" data-sidebar-count>—</span></header>
-                <p class="page-header__description" data-sidebar-job>Chọn một tin để xem hồ sơ ứng tuyển.</p>
-                <!-- Danh sách hồ sơ do js/pages/job/my-job.js render từ EduStore.applicationsOfJob(); đây chỉ là mẫu -->
-                <div data-sidebar-applicants></div>
-                <!-- Component: ApplicantCard | Nguồn: components/domain/job/applicant-card.html -->
-                <template data-sidebar-applicant-template>
-                    <article class="applicant-card applicant-card--compact"><header class="applicant-card__header"><div class="applicant-card__identity"><div class="applicant-card__avatar" data-sidebar-avatar>—</div><div><div class="applicant-card__name-row"><h3 data-sidebar-name>—</h3></div><p class="applicant-card__details"><span data-sidebar-detail>—</span></p></div></div></header></article>
-                </template>
-                <!-- Component: Button | Nguồn: components/action/button.html -->
-                <a class="button button--primary button--medium my-job-sidebar-card__action" href="/job/applicants" data-sidebar-action th:href="@{/job/applicants}">Xem hồ sơ ứng tuyển</a>
-            </section>
-
-            <!-- Component: Alert | Nguồn: components/feedback/alert.html -->
-
-        </aside>
-    </div>
-
-</div>
-</main>
-<!-- Component: UserFooter | Nguồn: components/layout/user-footer.html -->
+<body th:fragment="content"><div class="user-shell">
+<th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
+<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1>Tin tìm gia sư của tôi</h1>
+<form class="card job-live-panel" method="get" th:action="@{/job/my-job}" th:if="${search != null}">
+  <div class="job-live-grid"><label class="form-field">Từ khóa<span class="input-control"><input class="input-control__input" name="q" th:value="${search.q}" maxlength="200"></span></label>
+  <label class="form-field">Trạng thái<select class="select-control select-control--native" name="status"><option value="">Tất cả</option><option value="DRAFT" th:selected="${selectedStatus != null and selectedStatus.name() == 'DRAFT'}">Bản nháp</option><option value="PENDING" th:selected="${selectedStatus != null and selectedStatus.name() == 'PENDING'}">Chờ duyệt</option><option value="OPEN" th:selected="${selectedStatus != null and selectedStatus.name() == 'OPEN'}">Đang nhận ứng tuyển</option><option value="MATCHED" th:selected="${selectedStatus != null and selectedStatus.name() == 'MATCHED'}">Đã chọn gia sư</option><option value="CLOSED" th:selected="${selectedStatus != null and selectedStatus.name() == 'CLOSED'}">Đã đóng</option><option value="REJECTED" th:selected="${selectedStatus != null and selectedStatus.name() == 'REJECTED'}">Bị từ chối</option></select></label></div>
+  <button class="button button--primary" type="submit">Lọc tin</button>
+</form><p class="card job-live-panel" th:if="${jobs != null and jobs.empty}">Chưa có tin phù hợp.</p>
+    <div class="job-live-list" th:if="${jobs != null}">
+      <article class="card job-live-panel" th:each="item : ${jobs.content}">
+        <div class="job-live-heading"><span class="badge badge--info" th:text="${item.statusLabel}"></span><small th:text="${item.publicCode}"></small></div>
+        <h2><a th:href="@{/job/detail(id=${item.id})}" th:text="${item.title}"></a></h2>
+        <p th:text="|${item.subject} · ${item.grade} · ${item.area} · ${item.deliveryMode}|"></p>
+        <p><strong th:text="${#numbers.formatDecimal(item.budgetPerSession, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><span th:text="| · ${item.sessionCount} buổi|"></span></p>
+        <p class="job-live-muted" th:text="|${item.learnerName} · ${item.createdAtLabel} (UTC+7)|"></p>
+        <a class="button button--outline" th:href="@{/job/detail(id=${item.id})}">Xem chi tiết</a>
+      </article>
+    </div><nav class="job-live-nav" th:if="${jobs != null}" aria-label="Phân trang">
+      <a class="button button--outline" th:if="${jobs.hasPrevious()}" th:href="@{/job/my-job(page=${jobs.number - 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size},status=${selectedStatus})}">Trang trước</a>
+      <span th:unless="${jobs.empty}" th:text="|Trang ${jobs.number + 1} / ${jobs.totalPages} · ${jobs.totalElements} tin|"></span>
+      <a class="button button--outline" th:if="${jobs.hasNext()}" th:href="@{/job/my-job(page=${jobs.number + 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size},status=${selectedStatus})}">Trang sau</a>
+    </nav></div></main>
 <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
-</div>
-
-<!-- Component: Modal | Nguồn: components/feedback/modal.html -->
-<dialog class="modal" id="close-job-modal" aria-labelledby="close-job-title" aria-describedby="close-job-description">
-    <div class="modal__surface">
-        <header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="close-job-title">Xác nhận đóng tin tuyển?</h2></div><button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button></header>
-        <div class="modal__body"><p id="close-job-description">Gia sư sẽ không thể gửi thêm hồ sơ ứng tuyển mới. Bạn vẫn có thể xem các hồ sơ đã nhận trước đó.</p></div>
-        <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Hủy</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Đồng ý đóng tin</button></footer>
-    </div>
-</dialog>
-</body>
-</html>
+</div></body></html>

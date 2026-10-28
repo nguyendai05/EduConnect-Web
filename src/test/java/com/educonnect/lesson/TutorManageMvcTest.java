@@ -45,7 +45,8 @@ class TutorManageMvcTest {
         var option = List.of(new OfferingOptionResponse(1L, "Toán"));
         when(service.options(any())).thenReturn(new OfferingOptionsResponse(option, option, option, option));
         when(service.list(any(), any(), any(), anyString())).thenReturn(List.of());
-        when(service.save(any(), nullable(Long.class), any())).thenReturn(42L);
+        when(service.createDraft(any(), any())).thenReturn(42L);
+        when(service.update(any(), anyLong(), any())).thenReturn(42L);
     }
     org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder validPost() {
         return post("/tutor/manage/offerings").with(user(tutor)).with(csrf())
@@ -82,25 +83,28 @@ class TutorManageMvcTest {
         mvc.perform(get("/tutor/manage")).andExpect(status().is3xxRedirection());
         mvc.perform(get("/tutor/manage").with(user("learner").roles("LEARNER"))).andExpect(status().isForbidden());
         mvc.perform(post("/tutor/manage/offerings").with(user(tutor))).andExpect(status().isForbidden());
-        verify(service, never()).save(any(), any(), any());
+        verify(service, never()).createDraft(any(), any());
+        verify(service, never()).update(any(), any(), any());
     }
     @Test void validPostUsesPrincipalAndIgnoresForgedOwnerAndStatus() throws Exception {
         mvc.perform(validPost().param("tutorId", "999").param("status", "PUBLISHED").param("reviewedBy", "1"))
                 .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/tutor/manage"));
-        verify(service).save(argThat(p -> p.getId().equals(10L)), isNull(), argThat(f -> f.getTitle().equals("Toán lớp 10")));
+        verify(service).createDraft(argThat(p -> p.getId().equals(10L)), argThat(f -> f.getTitle().equals("Toán lớp 10")));
+        verify(service, never()).update(any(), any(), any());
     }
     @Test void invalidFormReturnsErrorsAndPreservesInput() throws Exception {
         mvc.perform(validPost().with(request -> { request.setParameter("title", ""); request.setParameter("unitPrice", "-1"); return request; }))
                 .andExpect(status().isBadRequest()).andExpect(model().attributeHasFieldErrors("offeringRequest", "title", "unitPrice"))
                 .andExpect(content().string(containsString("Chưa lưu được")));
-        verify(service, never()).save(any(), any(), any());
+        verify(service, never()).createDraft(any(), any());
+        verify(service, never()).update(any(), any(), any());
     }
     @Test void wrongOwnerAndStaleVersionRenderUsefulErrors() throws Exception {
         when(service.edit(any(), eq(99L))).thenThrow(new OfferingProblem(HttpStatus.NOT_FOUND, "Không tìm thấy dịch vụ/lớp thuộc tài khoản của bạn."));
         mvc.perform(get("/tutor/manage").param("edit", "99").with(user(tutor)))
                 .andExpect(status().isNotFound()).andExpect(content().string(containsString("Không tìm thấy dịch vụ/lớp")));
         doThrow(new OfferingProblem(HttpStatus.CONFLICT, "Dữ liệu đã thay đổi ở phiên khác."))
-                .when(service).transition(any(), eq(42L), eq(0L), eq("close"));
+                .when(service).close(any(), eq(42L), eq(0L));
         mvc.perform(post("/tutor/manage/offerings/42/status").with(user(tutor)).with(csrf()).param("version", "0").param("action", "close"))
                 .andExpect(status().isConflict()).andExpect(content().string(containsString("Dữ liệu đã thay đổi")));
     }
@@ -120,7 +124,8 @@ class TutorManageMvcTest {
         mvc.perform(validPost().param("slots[100000].weekday", "1"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(containsString("Dữ liệu chưa hợp lệ")));
-        verify(service, never()).save(any(), any(), any());
+        verify(service, never()).createDraft(any(), any());
+        verify(service, never()).update(any(), any(), any());
     }
 
     @Test void publishedEditExplainsReReviewAndServerDeterminesTheSuccessMessage() throws Exception {
@@ -136,7 +141,8 @@ class TutorManageMvcTest {
                 }))
                 .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/tutor/manage"))
                 .andExpect(flash().attribute("success", containsString("gửi duyệt lại")));
-        verify(service).save(any(), eq(42L), argThat(input -> input.getVersion().equals(3L)));
+        verify(service).update(any(), eq(42L), argThat(input -> input.getVersion().equals(3L)));
+        verify(service, never()).createDraft(any(), any());
     }
 
     @Test void filterDtoReceivesQueryTypeAndStatus() throws Exception {
@@ -169,16 +175,28 @@ class TutorManageMvcTest {
                 .andExpect(model().attributeHasFieldErrors("statusRequest", "action"))
                 .andExpect(content().string(containsString("Thao tác không được hỗ trợ")));
 
-        verify(service, never()).transition(any(), any(), any(), any());
+        verify(service, never()).submitForReview(any(), any(), any());
+        verify(service, never()).close(any(), any(), any());
     }
 
-    @Test void statusDtoPassesValidActionToService() throws Exception {
+    @Test void submitActionUsesReviewService() throws Exception {
         mvc.perform(post("/tutor/manage/offerings/42/status").with(user(tutor)).with(csrf())
                         .param("version", "3").param("action", "submit"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/tutor/manage"));
 
-        verify(service).transition(any(), eq(42L), eq(3L), eq("submit"));
+        verify(service).submitForReview(any(), eq(42L), eq(3L));
+        verify(service, never()).close(any(), any(), any());
+    }
+
+    @Test void closeActionUsesCloseService() throws Exception {
+        mvc.perform(post("/tutor/manage/offerings/42/status").with(user(tutor)).with(csrf())
+                        .param("version", "3").param("action", "close"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/tutor/manage"));
+
+        verify(service).close(any(), eq(42L), eq(3L));
+        verify(service, never()).submitForReview(any(), any(), any());
     }
 
     @Test void invalidNumberStaysInFormAndDoesNotReachService() throws Exception {
@@ -189,7 +207,8 @@ class TutorManageMvcTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(model().attributeHasFieldErrors("offeringRequest", "unitPrice"));
 
-        verify(service, never()).save(any(), any(), any());
+        verify(service, never()).createDraft(any(), any());
+        verify(service, never()).update(any(), any(), any());
     }
 
     @Test void groupAndNestedScheduleValidationCannotBeOverriddenByRequest() throws Exception {
@@ -205,6 +224,7 @@ class TutorManageMvcTest {
                         "offeringRequest", "groupDatesValid", "slots[0].timeRangeValid"
                 ));
 
-        verify(service, never()).save(any(), any(), any());
+        verify(service, never()).createDraft(any(), any());
+        verify(service, never()).update(any(), any(), any());
     }
 }

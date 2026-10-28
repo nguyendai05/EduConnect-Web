@@ -50,10 +50,10 @@ public class TutorManagePageController {
 
     @GetMapping
     public String manage(
-            @AuthenticationPrincipal AccountPrincipal principal,
-            Model model,
-            @RequestParam(required = false) Long edit,
-            @ModelAttribute("filterRequest") OfferingFilterRequest filter
+        @AuthenticationPrincipal AccountPrincipal principal,
+        Model model,
+        @RequestParam(required = false) Long edit,
+        @ModelAttribute("filterRequest") OfferingFilterRequest filter
     ) {
         var form = edit != null ? service.edit(principal, edit) : freshForm();
 
@@ -66,18 +66,18 @@ public class TutorManagePageController {
 
     @PostMapping({"/offerings", "/offerings/{id}"})
     public String save(
-            @AuthenticationPrincipal AccountPrincipal principal,
-            @PathVariable(required = false) Long id,
-            @Valid @ModelAttribute("offeringRequest") OfferingRequest form,
-            BindingResult errors,
-            Model model,
-            HttpServletResponse response,
-            RedirectAttributes redirect
+        @AuthenticationPrincipal AccountPrincipal principal,
+        @PathVariable(required = false) Long id,
+        @Valid @ModelAttribute("offeringRequest") OfferingRequest form,
+        BindingResult errors,
+        Model model,
+        HttpServletResponse response,
+        RedirectAttributes redirect
     ) {
         // Cờ hiển thị lấy từ database, không nhận từ DTO của người dùng.
         boolean publishedEdit = false;
         if (id == null) {
-            service.options(principal);
+            service.checkAccess(principal);
         } else {
             publishedEdit = service.isPublished(principal, id);
         }
@@ -91,7 +91,11 @@ public class TutorManagePageController {
         }
 
         try {
-            service.save(principal, id, form);
+            if (id == null) {
+                service.createDraft(principal, form);
+            } else {
+                service.update(principal, id, form);
+            }
 
             String message;
             if (id == null) {
@@ -119,13 +123,13 @@ public class TutorManagePageController {
 
     @PostMapping("/offerings/{id}/status")
     public String transition(
-            @AuthenticationPrincipal AccountPrincipal principal,
-            @PathVariable Long id,
-            @Valid @ModelAttribute("statusRequest") OfferingStatusRequest form,
-            BindingResult errors,
-            Model model,
-            HttpServletResponse response,
-            RedirectAttributes redirect
+        @AuthenticationPrincipal AccountPrincipal principal,
+        @PathVariable Long id,
+        @Valid @ModelAttribute("statusRequest") OfferingStatusRequest form,
+        BindingResult errors,
+        Model model,
+        HttpServletResponse response,
+        RedirectAttributes redirect
     ) {
         if (errors.hasErrors()) {
             response.setStatus(400);
@@ -134,23 +138,23 @@ public class TutorManagePageController {
             return VIEW;
         }
 
-        service.transition(principal, id, form.getVersion(), form.getAction());
-        redirect.addFlashAttribute(
-                "success",
-                "submit".equals(form.getAction())
-                        ? "Đã gửi duyệt. Dịch vụ chưa được công khai."
-                        : "Đã đóng dịch vụ/lớp. Các giao dịch cũ được giữ nguyên."
-        );
+        if ("submit".equals(form.getAction())) {
+            service.submitForReview(principal, id, form.getVersion());
+            redirect.addFlashAttribute("success", "Đã gửi duyệt. Dịch vụ chưa được công khai.");
+        } else {
+            service.close(principal, id, form.getVersion());
+            redirect.addFlashAttribute("success", "Đã đóng dịch vụ/lớp. Các giao dịch cũ được giữ nguyên.");
+        }
 
         return "redirect:/tutor/manage";
     }
 
     @ExceptionHandler(OfferingProblem.class)
     String problem(
-            OfferingProblem problem,
-            Model model,
-            HttpServletResponse response,
-            @AuthenticationPrincipal AccountPrincipal principal
+        OfferingProblem problem,
+        Model model,
+        HttpServletResponse response,
+        @AuthenticationPrincipal AccountPrincipal principal
     ) {
         response.setStatus(problem.getStatus().value());
         empty(model, principal);
@@ -160,34 +164,35 @@ public class TutorManagePageController {
     }
 
     @ExceptionHandler({
-            DataAccessException.class,
-            ConstraintViolationException.class,
-            InvalidPropertyException.class
+        DataAccessException.class,
+        ConstraintViolationException.class,
+        InvalidPropertyException.class
     })
     String unavailable(
-            Exception problem,
-            Model model,
-            HttpServletResponse response,
-            @AuthenticationPrincipal AccountPrincipal principal
+        Exception problem,
+        Model model,
+        HttpServletResponse response,
+        @AuthenticationPrincipal AccountPrincipal principal
     ) {
         boolean invalid = problem instanceof ConstraintViolationException
-                || problem instanceof InvalidPropertyException;
+            || problem instanceof InvalidPropertyException;
 
         response.setStatus(invalid ? 400 : 503);
         empty(model, principal);
         model.addAttribute(
-                "pageError",
-                invalid
-                        ? "Dữ liệu chưa hợp lệ. Hãy kiểm tra lại form."
-                        : "Chưa thể đọc hoặc lưu dữ liệu. Hãy tải lại trang và kiểm tra kết quả trước khi thử lại."
+            "pageError",
+            invalid
+                ? "Dữ liệu chưa hợp lệ. Hãy kiểm tra lại form."
+                : "Chưa thể đọc hoặc lưu dữ liệu. Hãy tải lại trang và kiểm tra kết quả trước khi thử lại."
         );
 
         return VIEW;
     }
+
     private void populate(
-            AccountPrincipal principal,
-            Model model,
-            OfferingFilterRequest filter
+        AccountPrincipal principal,
+        Model model,
+        OfferingFilterRequest filter
     ) {
         if (filter.getQ().length() > 200) {
             throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Từ khóa tối đa 200 ký tự.");
@@ -196,10 +201,10 @@ public class TutorManagePageController {
         model.addAttribute("dbReady", true);
         model.addAttribute("filterRequest", filter);
         model.addAttribute("offerings", service.list(
-                principal,
-                filter.getType(),
-                filter.getStatus(),
-                filter.getQ()
+            principal,
+            filter.getType(),
+            filter.getStatus(),
+            filter.getQ()
         ));
         model.addAttribute("options", service.options(principal));
     }
@@ -213,15 +218,15 @@ public class TutorManagePageController {
         model.addAttribute("uiPreviewEnabled", false);
 
         model.addAttribute(
-                "currentUser",
-                principal == null
-                        ? null
-                        : new PageModelAdvice.CurrentUser(
-                                principal.getId(),
-                                principal.getUsername(),
-                                principal.getDisplayName(),
-                                principal.getHomeUrl()
-                        )
+            "currentUser",
+            principal == null
+                ? null
+                : new PageModelAdvice.CurrentUser(
+                principal.getId(),
+                principal.getUsername(),
+                principal.getDisplayName(),
+                principal.getHomeUrl()
+            )
         );
     }
 

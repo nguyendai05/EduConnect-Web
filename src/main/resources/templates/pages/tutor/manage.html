@@ -53,6 +53,7 @@
           <h1 class="page-header__title">Quản lý giảng dạy</h1>
           <p class="page-header__description">Quản lý dịch vụ, lớp nhóm và lịch giảng dạy của bạn.</p>
         </div>
+        <a class="button button--outline" th:href="@{/invitation/negotiation}">Lời mời nhận</a>
         <a class="button button--primary" th:if="${dbReady}" th:href="@{/tutor/manage} + '#tm-editor'">Thêm dịch vụ / lớp</a>
       </header>
       <p class="alert alert--success" role="status" th:if="${success}" th:text="${success}"></p>

@@ -85,16 +85,16 @@ public class TutorOfferingService {
      * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}).</p>
      */
     public TutorOfferingService(
-            OfferingJpaRepository offerings,
-            OfferingTimeSlotJpaRepository slots,
-            UserAccountRepository accounts,
-            TutorProfileJpaRepository tutors,
-            SubjectJpaRepository subjects,
-            GradeLevelJpaRepository grades,
-            AreaJpaRepository areas,
-            DeliveryModeJpaRepository modes,
-            EntityManager em,
-            Validator validator
+        OfferingJpaRepository offerings,
+        OfferingTimeSlotJpaRepository slots,
+        UserAccountRepository accounts,
+        TutorProfileJpaRepository tutors,
+        SubjectJpaRepository subjects,
+        GradeLevelJpaRepository grades,
+        AreaJpaRepository areas,
+        DeliveryModeJpaRepository modes,
+        EntityManager em,
+        Validator validator
     ) {
         this.offerings = offerings;
         this.slots = slots;
@@ -115,17 +115,16 @@ public class TutorOfferingService {
      * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}).</p>
      */
     public List<OfferingResponse> list(
-            AccountPrincipal principal,
-            OfferingType type,
-            OfferingStatus status,
-            String query
+        AccountPrincipal principal,
+        OfferingType type,
+        OfferingStatus status,
+        String query
     ) {
-        TutorProfile tutor = requireTutor(principal, false);
-        List<Offering> all = offerings.findByTutorIdOrderByUpdatedAtDescIdDesc(tutor.getUserId());
+        TutorProfile tutor = requireTutor(principal);
+        List<Offering> all = offerings.findByTutorIdOrderByUpdatedAtDescIdDesc(tutor.getUserId()); // lấy ds dịch vụ/lớp của gia sư
         if (all.isEmpty()) {
             return List.of();
         }
-
         List<Long> offeringIds = new ArrayList<>();
         for (Offering offering : all) {
             offeringIds.add(offering.getId());
@@ -139,7 +138,7 @@ public class TutorOfferingService {
             timetable.get(slot.getOfferingId()).add(slot);
         }
 
-        String text = query == null ? "" : query.strip().toLowerCase(Locale.ROOT);
+        String text = query == null ? "" : query.strip().toLowerCase(Locale.ROOT); //có query thì bỏ khoảng trắng đầu và cuối chuỗi rồi ép in thường
         List<OfferingResponse> result = new ArrayList<>();
         for (Offering offering : all) {
             if (type != null && offering.getOfferingType() != type) {
@@ -150,8 +149,8 @@ public class TutorOfferingService {
             }
 
             OfferingResponse item = OfferingResponse.from(
-                    offering,
-                    timetable.getOrDefault(offering.getId(), List.of())
+                offering,
+                timetable.getOrDefault(offering.getId(), List.of())
             );
             String searchableText = item.publicCode() + " " + item.title() + " " + item.subject();
             if (searchableText.toLowerCase(Locale.ROOT).contains(text)) {
@@ -169,7 +168,7 @@ public class TutorOfferingService {
      * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}).</p>
      */
     public OfferingOptionsResponse options(AccountPrincipal principal) {
-        requireTutor(principal, false);
+        requireTutor(principal);
         Sort sort = Sort.by("name");
         List<OfferingOptionResponse> subjectOptions = new ArrayList<>(); // các môn học
         List<OfferingOptionResponse> gradeOptions = new ArrayList<>();//các cấp học
@@ -199,39 +198,11 @@ public class TutorOfferingService {
      * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), form chỉnh sửa.</p>
      */
     public OfferingRequest edit(AccountPrincipal principal, Long id) {
-        requireTutor(principal, false);
+        requireTutor(principal);
         var offering = offerings.findByIdAndTutorId(id, principal.getId()).orElseThrow(this::missing); //missing được gọi khi offering rỗng
         requireEditable(offering);
-        var form = new OfferingRequest();
-        form.setRequestKey(UUID.randomUUID().toString()); //tạo chống trùng dịch vụ khi gửi 1 form
-        form.setVersion(offering.getVersion());
-        form.setOfferingType(offering.getOfferingType());
-        form.setTitle(offering.getTitle());
-        form.setDescription(offering.getDescription());
-        form.setSubjectId(offering.getSubjectId());
-        form.setGradeLevelId(offering.getGradeLevelId());
-        form.setAreaId(offering.getAreaId());
-        form.setDeliveryModeId(offering.getDeliveryModeId());
-        form.setUnitPrice(offering.getUnitPrice());
-        form.setSessionCount(offering.getSessionCount());
-        form.setDurationMinutes(offering.getDurationMinutes());
-        form.setCapacity(offering.getCapacity());
-        form.setStartsOn(offering.getStartsOn());
-        form.setEndsOn(offering.getEndsOn());
-        form.setTermsText(offering.getTermsText());
-        for (OfferingTimeSlot slot : slots.findByOfferingIdOrderByWeekdayAscStartTimeAsc(id)) {
-            OfferingTimeSlotRequest input = new OfferingTimeSlotRequest();
-            input.setWeekday(slot.getWeekday());
-            input.setStartTime(slot.getStartTime());
-            input.setEndTime(slot.getEndTime());
-            input.setTimeZone(slot.getTimeZone());
-            form.getSlots().add(input);
-        }
-        if (form.getSlots().isEmpty()) {
-            form.getSlots().add(new OfferingTimeSlotRequest());
-        }
-
-        return form;
+        List<OfferingTimeSlot> schedule = slots.findByOfferingIdOrderByWeekdayAscStartTimeAsc(id);
+        return toEditForm(offering, schedule);
     }
 
     /**
@@ -241,70 +212,221 @@ public class TutorOfferingService {
      * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), form chỉnh sửa.</p>
      */
     public boolean isPublished(AccountPrincipal principal, Long id) {
-        requireTutor(principal, false);
+        requireTutor(principal);
         Offering offering = offerings.findByIdAndTutorId(id, principal.getId())
-                .orElseThrow(this::missing);
+            .orElseThrow(this::missing);
         requireEditable(offering);
         return offering.getStatus() == OfferingStatus.PUBLISHED;
     }
 
     /**
      * Tác giả: Trường Đạt.
-     * <p>Chức năng: Tạo bản nháp hoặc lưu sửa dịch vụ/lớp cùng lịch học trong một giao dịch;
-     * kiểm tra quyền, dữ liệu, danh mục và phiên bản, chống tạo trùng khi gửi lại form.
-     * Bản đang công khai được chuyển sang chờ duyệt lại; bản đã có đăng ký phải giữ kế hoạch học.</p>
-     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), form tạo/sửa.</p>
+     * <p>Chức năng: Kiểm tra quyền quản lý dịch vụ/lớp mà không đọc danh mục form.</p>
+     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}).</p>
+     */
+    public void checkAccess(AccountPrincipal principal) {
+        requireTutor(principal);
+    }
+
+    /**
+     * Tác giả: Trường Đạt.
+     * <p>Chức năng: Tạo bản nháp cùng lịch học trong một giao dịch;
+     * dùng mã yêu cầu ổn định để gửi lại form không tạo hai bản ghi.</p>
+     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), form tạo.</p>
      */
     @Transactional
-    public Long save(AccountPrincipal principal, Long id, OfferingRequest form) {
-        var tutor = requireTutor(principal, true);
-        validate(form);
-        Offering offering;
-        boolean creating = id == null;
-        boolean reReview = false;
-        boolean keepSchedule = false;
+    public Long createDraft(AccountPrincipal principal, OfferingRequest form) {
+        var tutor = requireTutor(principal);
+        em.lock(tutor, LockModeType.PESSIMISTIC_WRITE);
+        validateForm(form);
+        validateSchedule(form.getSlots());
 
-        if (creating) {
-            // Khóa gia sư và dùng mã ổn định để gửi lại form không tạo hai bản ghi.
-            String code = "OFF-" + form.getRequestKey().toLowerCase(Locale.ROOT);
-            var previous = offerings.findCodeForUpdate(code);
-            if (previous.isPresent()) {
-                if (!previous.get().getTutorId().equals(tutor.getUserId())) {
-                    throw missing();
-                }
-                return previous.get().getId();
+        String code = "OFF-" + form.getRequestKey().toLowerCase(Locale.ROOT);
+        var previous = offerings.findCodeForUpdate(code);
+        if (previous.isPresent()) {
+            if (!previous.get().getTutorId().equals(tutor.getUserId())) {
+                throw missing();
             }
-
-            offering = Offering.create();
-            offering.setPublicCode(code);
-            offering.setTutorId(tutor.getUserId());
-            offering.setStatus(OfferingStatus.DRAFT);
-            offering.setTermsVersion(1);
-            offering.setCreatedAt(Instant.now());
-        } else {
-            offering = offerings.findOwnedForUpdate(id, tutor.getUserId()).orElseThrow(this::missing);
-            requireVersion(offering, form.getVersion());
-            requireEditable(offering);
-
-            if (offering.getOfferingType() != form.getOfferingType()) {
-                throw conflict("Không thể đổi loại của dịch vụ/lớp đã tạo.");
-            }
-
-            reReview = offering.getStatus() == OfferingStatus.PUBLISHED;
-            keepSchedule = offerings.countEnrollments(id) > 0;
-            if (keepSchedule) {
-                requireUnchangedTeachingPlan(offering, form);
-            }
+            return previous.get().getId();
         }
 
+        validateReferences(form);
+        Offering offering = Offering.create();
+        offering.setPublicCode(code);
+        offering.setTutorId(tutor.getUserId());
+        offering.setStatus(OfferingStatus.DRAFT);
+        offering.setTermsVersion(1);
+        offering.setCreatedAt(Instant.now());
+        applyForm(offering, form);
+        offering.setUpdatedAt(Instant.now());
+        offering = offerings.saveAndFlush(offering);
+        replaceSchedule(offering.getId(), form.getSlots());
+        return offering.getId();
+    }
+
+    /**
+     * Tác giả: Trường Đạt.
+     * <p>Chức năng: Cập nhật dịch vụ/lớp đã có; bản công khai chuyển sang chờ duyệt lại,
+     * bản có đăng ký giữ nguyên kế hoạch học.</p>
+     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), form sửa.</p>
+     */
+    @Transactional
+    public Long update(AccountPrincipal principal, Long id, OfferingRequest form) {
+        var tutor = requireTutor(principal);
+        em.lock(tutor, LockModeType.PESSIMISTIC_WRITE);
+        validateForm(form);
+        validateSchedule(form.getSlots());
+        Offering offering = offerings.findOwnedForUpdate(id, tutor.getUserId()).orElseThrow(this::missing);
+        requireVersion(offering, form.getVersion());
+        requireEditable(offering);
+        if (offering.getOfferingType() != form.getOfferingType()) {
+            throw conflict("Không thể đổi loại của dịch vụ/lớp đã tạo.");
+        }
+
+        boolean reReview = offering.getStatus() == OfferingStatus.PUBLISHED;
+        boolean keepSchedule = offerings.countEnrollments(id) > 0;
+        if (keepSchedule) {
+            requireUnchangedTeachingPlan(offering, form);
+        }
+        validateReferences(form);
+
+        offering.setTermsVersion(Math.addExact(offering.getTermsVersion(), 1));
+        applyForm(offering, form);
+        // Sửa bản công khai thì chờ duyệt lại; giữ ngày công khai cũ làm lịch sử.
+        offering.setStatus(reReview ? OfferingStatus.IN_REVIEW : OfferingStatus.DRAFT);
+        clearReview(offering);
+        offering.setUpdatedAt(Instant.now());
+        offering = offerings.saveAndFlush(offering);
+        if (!keepSchedule) {
+            replaceSchedule(offering.getId(), form.getSlots());
+        }
+        return offering.getId();
+    }
+
+    /**
+     * Tác giả: Trường Đạt.
+     * <p>Chức năng: Gửi bản nháp/bản bị từ chối sang chờ duyệt sau khi kiểm lại dữ liệu đã lưu.</p>
+     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), nút Gửi duyệt.</p>
+     */
+    @Transactional
+    public void submitForReview(AccountPrincipal principal, Long id, Long version) {
+        var tutor = requireTutor(principal);
+        em.lock(tutor, LockModeType.PESSIMISTIC_WRITE);
+        var offering = offerings.findOwnedForUpdate(id, tutor.getUserId()).orElseThrow(this::missing);
+        if (offering.getStatus() == OfferingStatus.IN_REVIEW) {
+            return;
+        }
+
+        requireVersion(offering, version);
+        if (offering.getStatus() != OfferingStatus.DRAFT && offering.getStatus() != OfferingStatus.REJECTED) {
+            throw conflict("Chỉ gửi duyệt bản nháp hoặc bản bị từ chối.");
+        }
+        List<OfferingTimeSlot> schedule = slots.findByOfferingIdOrderByWeekdayAscStartTimeAsc(id);
+        OfferingRequest form = toEditForm(offering, schedule);
+        validateForm(form);
+        validateSchedule(form.getSlots());
+        offering.setStatus(OfferingStatus.IN_REVIEW);
+        offering.setUpdatedAt(Instant.now());
+        offerings.saveAndFlush(offering);
+    }
+
+    /**
+     * Tác giả: Trường Đạt.
+     * <p>Chức năng: Đóng dịch vụ/lớp thuộc gia sư sau khi kiểm tra phiên bản hiện tại.</p>
+     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), nút Đóng.</p>
+     */
+    @Transactional
+    public void close(AccountPrincipal principal, Long id, Long version) {
+        var tutor = requireTutor(principal);
+        em.lock(tutor, LockModeType.PESSIMISTIC_WRITE);
+        var offering = offerings.findOwnedForUpdate(id, tutor.getUserId()).orElseThrow(this::missing);
+        if (offering.getStatus() == OfferingStatus.CLOSED) {
+            return;
+        }
+
+        requireVersion(offering, version);
+        offering.setStatus(OfferingStatus.CLOSED);
+        offering.setUpdatedAt(Instant.now());
+        offerings.saveAndFlush(offering);
+    }
+
+    /**
+     * Tác giả: Trường Đạt.
+     * <p>Chức năng: Kiểm tra tài khoản còn hoạt động, email đã xác minh, vai trò gia sư,
+     * phiên xác thực còn hợp lệ và hồ sơ gia sư tồn tại.</p>
+     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), kiểm tra quyền dùng chung.</p>
+     */
+    private TutorProfile requireTutor(AccountPrincipal principal) {
+        if (principal == null) {
+            throw new OfferingProblem(HttpStatus.FORBIDDEN, "Bạn cần đăng nhập bằng tài khoản gia sư.");
+        }
+
+        var account = accounts.findById(principal.getId()).orElseThrow(() -> new OfferingProblem(
+            HttpStatus.FORBIDDEN,
+            "Tài khoản không còn khả dụng."
+        ));
+        if (!"ACTIVE".equals(account.status()) || !account.emailVerified() || !account.roles().contains("TUTOR")
+            || account.authenticationVersion() != principal.getAuthenticationVersion()) {
+            throw new OfferingProblem(HttpStatus.FORBIDDEN, "Tài khoản không có quyền quản lý dịch vụ gia sư.");
+        }
+        var tutor = tutors.findById(principal.getId()).orElseThrow(() -> new OfferingProblem(
+            HttpStatus.FORBIDDEN,
+            "Chưa có hồ sơ gia sư."
+        ));
+        return tutor;
+    }
+
+    /**
+     * Tác giả: Trường Đạt.
+     * <p>Chức năng: Kiểm tra các ràng buộc Bean Validation trên DTO đầu vào.</p>
+     * kiểm tra dữ liệu trong form có đáp ứng các ràng buộc được khai báo trong OfferingRequest hay không.
+     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), tạo/sửa và gửi duyệt.</p>
+     */
+    private void validateForm(OfferingRequest form) {
+        // Kiểm lại khi service được gọi trực tiếp hoặc gửi duyệt dữ liệu đã lưu trong DB.
+        var violations = validator.validate(form);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
+    }
+
+    /**
+     * Kiểm tra các khung lịch dùng cùng múi giờ và không trùng giờ trong cùng ngày.
+     */
+    private void validateSchedule(List<OfferingTimeSlotRequest> schedule) {
+        String zone = schedule.get(0).getTimeZone();
+        for (int i = 0; i < schedule.size(); i++) {
+            OfferingTimeSlotRequest current = schedule.get(i);
+            if (!zone.equals(current.getTimeZone())) {
+                throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Các khung lịch phải dùng cùng múi giờ.");
+            }
+
+            for (int j = i + 1; j < schedule.size(); j++) {
+                OfferingTimeSlotRequest other = schedule.get(j);
+                boolean sameDay = current.getWeekday().equals(other.getWeekday());
+                boolean overlapping = current.getStartTime().isBefore(other.getEndTime())
+                    && other.getStartTime().isBefore(current.getEndTime());
+                if (sameDay && overlapping) {
+                    throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Các khung lịch trong cùng ngày không được trùng nhau.");
+                }
+            }
+        }
+    }
+
+    /**
+     * Kiểm tra các ID danh mục trong form có tồn tại.
+     */
+    private void validateReferences(OfferingRequest form) {
         if (!subjects.existsById(form.getSubjectId()) || !grades.existsById(form.getGradeLevelId())
-                || !areas.existsById(form.getAreaId()) || !modes.existsById(form.getDeliveryModeId())) {
+            || !areas.existsById(form.getAreaId()) || !modes.existsById(form.getDeliveryModeId())) {
             throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Môn, cấp học, khu vực hoặc hình thức học không tồn tại. Hãy chọn lại.");
         }
-        if (!creating) {
-            offering.setTermsVersion(Math.addExact(offering.getTermsVersion(), 1));
-        }
+    }
 
+    /**
+     * Chép các trường được phép nhận từ form vào dịch vụ/lớp.
+     */
+    private void applyForm(Offering offering, OfferingRequest form) {
         offering.setTitle(form.getTitle().strip());
         offering.setDescription(form.getDescription().strip());
         offering.setOfferingType(form.getOfferingType());
@@ -321,24 +443,15 @@ public class TutorOfferingService {
         offering.setStartsOn(group ? form.getStartsOn() : null);
         offering.setEndsOn(group ? form.getEndsOn() : null);
         offering.setTermsText(form.getTermsText().strip());
+    }
 
-        // Theo yêu cầu của Đạt: sửa bản công khai thì chờ duyệt lại.
-        // Giữ ngày công khai cũ làm lịch sử.
-        offering.setStatus(reReview ? OfferingStatus.IN_REVIEW : OfferingStatus.DRAFT);
-        offering.setReviewedBy(null);
-        offering.setReviewedAt(null);
-        offering.setReviewNote(null);
-        offering.setUpdatedAt(Instant.now());
-        offering = offerings.saveAndFlush(offering);
-
-        if (keepSchedule) {
-            return offering.getId();
-        }
-
-        slots.deleteSlots(offering.getId());
-        Long offeringId = offering.getId();
+    /**
+     * Thay toàn bộ lịch học của một dịch vụ/lớp trong giao dịch hiện tại.
+     */
+    private void replaceSchedule(Long offeringId, List<OfferingTimeSlotRequest> inputs) {
+        slots.deleteSlots(offeringId);
         List<OfferingTimeSlot> rows = new ArrayList<>();
-        for (OfferingTimeSlotRequest input : form.getSlots()) {
+        for (OfferingTimeSlotRequest input : inputs) {
             OfferingTimeSlot row = OfferingTimeSlot.create();
             row.setOfferingId(offeringId);
             row.setWeekday(input.getWeekday());
@@ -347,104 +460,52 @@ public class TutorOfferingService {
             row.setTimeZone(input.getTimeZone());
             rows.add(row);
         }
-
         slots.saveAll(rows);
         slots.flush();
-        return offeringId;
     }
 
     /**
-     * Tác giả: Trường Đạt.
-     * <p>Chức năng: Gửi bản nháp/bản bị từ chối sang chờ duyệt với thao tác submit,
-     * hoặc đóng dịch vụ/lớp với thao tác close; kiểm tra quyền và phiên bản trước khi đổi trạng thái.</p>
-     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), nút Gửi duyệt/Đóng.</p>
+     * Xóa thông tin xét duyệt của phiên bản cũ.
      */
-    @Transactional
-    public void transition(AccountPrincipal principal, Long id, Long version, String action) {
-        var tutor = requireTutor(principal, true);
-        var offering = offerings.findOwnedForUpdate(id, tutor.getUserId()).orElseThrow(this::missing);
-        OfferingStatus target = switch (action) {
-            case "submit" -> OfferingStatus.IN_REVIEW;
-            case "close" -> OfferingStatus.CLOSED;
-            default -> throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Thao tác không được hỗ trợ.");
-        };
-        if (offering.getStatus() == target) {
-            return;
-        }
-
-        requireVersion(offering, version);
-        if (target == OfferingStatus.IN_REVIEW) {
-            if (offering.getStatus() != OfferingStatus.DRAFT && offering.getStatus() != OfferingStatus.REJECTED) {
-                throw conflict("Chỉ gửi duyệt bản nháp hoặc bản bị từ chối.");
-            }
-            validate(edit(principal, id));
-        }
-        offering.setStatus(target);
-        offering.setUpdatedAt(Instant.now());
-        offerings.saveAndFlush(offering);
+    private void clearReview(Offering offering) {
+        offering.setReviewedBy(null);
+        offering.setReviewedAt(null);
+        offering.setReviewNote(null);
     }
 
     /**
-     * Tác giả: Trường Đạt.
-     * <p>Chức năng: Kiểm tra tài khoản còn hoạt động, email đã xác minh, vai trò gia sư,
-     * phiên xác thực còn hợp lệ và hồ sơ gia sư tồn tại; khóa hồ sơ khi chuẩn bị ghi dữ liệu.</p>
-     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), kiểm tra quyền dùng chung.</p>
+     * Chuyển dữ liệu dịch vụ/lớp và lịch đã nạp thành form chỉnh sửa.
      */
-    private TutorProfile requireTutor(AccountPrincipal principal, boolean lock) {
-        if (principal == null) {
-            throw new OfferingProblem(HttpStatus.FORBIDDEN, "Bạn cần đăng nhập bằng tài khoản gia sư.");
+    private OfferingRequest toEditForm(Offering offering, List<OfferingTimeSlot> schedule) {
+        var form = new OfferingRequest();
+        form.setRequestKey(UUID.randomUUID().toString());
+        form.setVersion(offering.getVersion());
+        form.setOfferingType(offering.getOfferingType());
+        form.setTitle(offering.getTitle());
+        form.setDescription(offering.getDescription());
+        form.setSubjectId(offering.getSubjectId());
+        form.setGradeLevelId(offering.getGradeLevelId());
+        form.setAreaId(offering.getAreaId());
+        form.setDeliveryModeId(offering.getDeliveryModeId());
+        form.setUnitPrice(offering.getUnitPrice());
+        form.setSessionCount(offering.getSessionCount());
+        form.setDurationMinutes(offering.getDurationMinutes());
+        form.setCapacity(offering.getCapacity());
+        form.setStartsOn(offering.getStartsOn());
+        form.setEndsOn(offering.getEndsOn());
+        form.setTermsText(offering.getTermsText());
+        for (OfferingTimeSlot slot : schedule) {
+            OfferingTimeSlotRequest input = new OfferingTimeSlotRequest();
+            input.setWeekday(slot.getWeekday());
+            input.setStartTime(slot.getStartTime());
+            input.setEndTime(slot.getEndTime());
+            input.setTimeZone(slot.getTimeZone());
+            form.getSlots().add(input);
         }
-
-        var account = accounts.findById(principal.getId()).orElseThrow(() -> new OfferingProblem(
-                HttpStatus.FORBIDDEN,
-                "Tài khoản không còn khả dụng."
-        ));
-        if (!"ACTIVE".equals(account.status()) || !account.emailVerified() || !account.roles().contains("TUTOR")
-                || account.authenticationVersion() != principal.getAuthenticationVersion()) {
-            throw new OfferingProblem(HttpStatus.FORBIDDEN, "Tài khoản không có quyền quản lý dịch vụ gia sư.");
+        if (form.getSlots().isEmpty()) {
+            form.getSlots().add(new OfferingTimeSlotRequest());
         }
-        var tutor = tutors.findById(principal.getId()).orElseThrow(() -> new OfferingProblem(
-                HttpStatus.FORBIDDEN,
-                "Chưa có hồ sơ gia sư."
-        ));
-        if (lock) {
-            em.lock(tutor, LockModeType.PESSIMISTIC_WRITE);
-        }
-
-        return tutor;
-    }
-
-    /**
-     * Tác giả: Trường Đạt.
-     * <p>Chức năng: Kiểm tra các ràng buộc trên form và lịch học; yêu cầu các khung lịch
-     * dùng cùng múi giờ và không trùng giờ trong cùng ngày trước khi lưu hoặc gửi duyệt.</p>
-     * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), tạo/sửa và gửi duyệt.</p>
-     */
-    private void validate(OfferingRequest form) {
-        // Kiểm lại khi service được gọi trực tiếp hoặc gửi duyệt dữ liệu đã lưu trong DB.
-        var violations = validator.validate(form);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
-        }
-
-        List<OfferingTimeSlotRequest> schedule = form.getSlots();
-        String zone = schedule.get(0).getTimeZone();
-        for (int i = 0; i < schedule.size(); i++) {
-            OfferingTimeSlotRequest current = schedule.get(i);
-            if (!zone.equals(current.getTimeZone())) {
-                throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Các khung lịch phải dùng cùng múi giờ.");
-            }
-
-            for (int j = i + 1; j < schedule.size(); j++) {
-                OfferingTimeSlotRequest other = schedule.get(j);
-                boolean sameDay = current.getWeekday().equals(other.getWeekday());
-                boolean overlapping = current.getStartTime().isBefore(other.getEndTime())
-                        && other.getStartTime().isBefore(current.getEndTime());
-                if (sameDay && overlapping) {
-                    throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Các khung lịch trong cùng ngày không được trùng nhau.");
-                }
-            }
-        }
+        return form;
     }
 
     /**
@@ -455,7 +516,7 @@ public class TutorOfferingService {
      */
     private void requireEditable(Offering offering) {
         if (offering.getStatus() != OfferingStatus.DRAFT && offering.getStatus() != OfferingStatus.REJECTED
-                && offering.getStatus() != OfferingStatus.PUBLISHED) {
+            && offering.getStatus() != OfferingStatus.PUBLISHED) {
             throw conflict("Chỉ sửa bản nháp, bản bị từ chối hoặc dịch vụ đang công khai. Bản đang chờ duyệt hoặc đã đóng không được sửa.");
         }
     }
@@ -468,15 +529,15 @@ public class TutorOfferingService {
      */
     private void requireUnchangedTeachingPlan(Offering offering, OfferingRequest form) {
         boolean unchanged = Objects.equals(offering.getSubjectId(), form.getSubjectId())
-                && Objects.equals(offering.getGradeLevelId(), form.getGradeLevelId())
-                && Objects.equals(offering.getAreaId(), form.getAreaId())
-                && Objects.equals(offering.getDeliveryModeId(), form.getDeliveryModeId())
-                && Objects.equals(offering.getSessionCount(), form.getSessionCount())
-                && Objects.equals(offering.getDurationMinutes(), form.getDurationMinutes())
-                && Objects.equals(offering.getCapacity(), form.getOfferingType() == OfferingType.GROUP_CLASS ? form.getCapacity() : null)
-                && Objects.equals(offering.getStartsOn(), form.getOfferingType() == OfferingType.GROUP_CLASS ? form.getStartsOn() : null)
-                && Objects.equals(offering.getEndsOn(), form.getOfferingType() == OfferingType.GROUP_CLASS ? form.getEndsOn() : null)
-                && hasSameSchedule(offering.getId(), form.getSlots());
+            && Objects.equals(offering.getGradeLevelId(), form.getGradeLevelId())
+            && Objects.equals(offering.getAreaId(), form.getAreaId())
+            && Objects.equals(offering.getDeliveryModeId(), form.getDeliveryModeId())
+            && Objects.equals(offering.getSessionCount(), form.getSessionCount())
+            && Objects.equals(offering.getDurationMinutes(), form.getDurationMinutes())
+            && Objects.equals(offering.getCapacity(), form.getOfferingType() == OfferingType.GROUP_CLASS ? form.getCapacity() : null)
+            && Objects.equals(offering.getStartsOn(), form.getOfferingType() == OfferingType.GROUP_CLASS ? form.getStartsOn() : null)
+            && Objects.equals(offering.getEndsOn(), form.getOfferingType() == OfferingType.GROUP_CLASS ? form.getEndsOn() : null)
+            && hasSameSchedule(offering.getId(), form.getSlots());
         if (!unchanged) {
             throw conflict("Dịch vụ đã có đăng ký: có thể sửa tiêu đề, mô tả, giá và điều khoản cho đăng ký mới. Việc đổi lịch, sức chứa hoặc kế hoạch học còn chờ thống nhất với luồng giao dịch.");
         }
@@ -498,9 +559,9 @@ public class TutorOfferingService {
             boolean found = false;
             for (OfferingTimeSlotRequest input : inputs) {
                 if (Objects.equals(slot.getWeekday(), input.getWeekday())
-                        && Objects.equals(slot.getStartTime(), input.getStartTime())
-                        && Objects.equals(slot.getEndTime(), input.getEndTime())
-                        && Objects.equals(slot.getTimeZone(), input.getTimeZone())) {
+                    && Objects.equals(slot.getStartTime(), input.getStartTime())
+                    && Objects.equals(slot.getEndTime(), input.getEndTime())
+                    && Objects.equals(slot.getTimeZone(), input.getTimeZone())) {
                     found = true;
                     break;
                 }

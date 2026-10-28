@@ -57,26 +57,26 @@ class TutorOfferingMySqlTest {
 
     @Test void createRetryReloadUpdateSubmitAndCloseUseExistingSchema() {
         var principal = tutor(); var input = TutorOfferingServiceTest.form();
-        Long id = service.save(principal, null, input);
-        assertEquals(id, service.save(principal, null, input));
+        Long id = service.createDraft(principal, input);
+        assertEquals(id, service.createDraft(principal, input));
         em.flush(); em.clear();
         assertEquals(1, offerings.findByTutorIdOrderByUpdatedAtDescIdDesc(principal.getId()).size());
         assertEquals(1, slots.findByOfferingIdOrderByWeekdayAscStartTimeAsc(id).size());
         assertEquals("Toán lớp 10", service.list(principal, null, null, "").get(0).title());
         var edit = service.edit(principal, id); edit.setTitle("Toán đã sửa");
-        service.save(principal, id, edit); em.flush(); em.clear();
+        service.update(principal, id, edit); em.flush(); em.clear();
         var stored = offerings.findById(id).orElseThrow();
         assertEquals(2, stored.getTermsVersion()); assertEquals("Toán đã sửa", stored.getTitle());
         assertEquals(1, slots.findByOfferingIdOrderByWeekdayAscStartTimeAsc(id).size());
-        service.transition(principal, id, stored.getVersion(), "submit"); em.flush(); em.clear();
+        service.submitForReview(principal, id, stored.getVersion()); em.flush(); em.clear();
         stored = offerings.findById(id).orElseThrow(); assertEquals(OfferingStatus.IN_REVIEW, stored.getStatus());
         assertNull(stored.getPublishedAt());
-        service.transition(principal, id, stored.getVersion(), "close"); em.flush(); em.clear();
+        service.close(principal, id, stored.getVersion()); em.flush(); em.clear();
         assertEquals(OfferingStatus.CLOSED, offerings.findById(id).orElseThrow().getStatus());
     }
 
     @Test void anotherTutorCannotReadOrMutateTheRecord() {
-        var owner = tutor(); Long id = service.save(owner, null, TutorOfferingServiceTest.form());
+        var owner = tutor(); Long id = service.createDraft(owner, TutorOfferingServiceTest.form());
         var other = tutor(); em.flush();
         assertTrue(service.list(other, null, null, "").isEmpty());
         assertThrows(OfferingProblem.class, () -> service.edit(other, id));
@@ -85,14 +85,14 @@ class TutorOfferingMySqlTest {
     @Test void publishedRevisionRequiresANewApprovalAndPreservesPublicationHistory() {
         var owner = tutor(); var reviewer = tutor();
         var adminRole = UserRole.create(); adminRole.setId(new UserRoleId(reviewer.getId(), "ADMIN")); em.persist(adminRole);
-        Long id = service.save(owner, null, TutorOfferingServiceTest.form());
+        Long id = service.createDraft(owner, TutorOfferingServiceTest.form());
         var o = offerings.findById(id).orElseThrow();
         Instant firstPublication = Instant.parse("2026-10-01T00:00:00Z");
         o.setStatus(OfferingStatus.PUBLISHED); o.setFirstPublishedAt(firstPublication); o.setPublishedAt(firstPublication);
         o.setReviewedBy(reviewer.getId()); o.setReviewedAt(firstPublication); o.setReviewNote("Bản đầu đã được duyệt");
         offerings.saveAndFlush(o); em.clear();
         var edit = service.edit(owner, id); assertTrue(service.isPublished(owner, id));
-        edit.setUnitPrice(new java.math.BigDecimal("200000")); service.save(owner, id, edit); em.flush(); em.clear();
+        edit.setUnitPrice(new java.math.BigDecimal("200000")); service.update(owner, id, edit); em.flush(); em.clear();
         o = offerings.findById(id).orElseThrow();
         assertEquals(OfferingStatus.IN_REVIEW, o.getStatus()); assertEquals(2, o.getTermsVersion());
         assertNull(o.getReviewedBy()); assertNull(o.getReviewedAt()); assertNull(o.getReviewNote());

@@ -66,4 +66,17 @@ public interface OfferingJpaRepository extends JpaRepository<Offering, Long> {
             "gradeLevelReference", "areaReference", "deliveryModeReference"})
     Page<Offering> findByStatusAndTutorReferenceReviewStatusAndTutorReferenceAccountStatus(
             OfferingStatus status, TutorReviewStatus reviewStatus, AccountStatus accountStatus, Pageable pageable);
+
+    /** Danh sách catalog chỉ nhận dịch vụ công khai của gia sư và tài khoản đủ điều kiện. */
+    @EntityGraph(attributePaths = {"tutorReference", "tutorReference.account", "subjectReference",
+            "gradeLevelReference", "areaReference", "deliveryModeReference"})
+    @Query("""
+            select o from Offering o join o.tutorReference t join t.account a
+            where o.status = :status and t.reviewStatus = :reviewStatus
+              and a.status = :accountStatus and a.emailVerifiedAt is not null
+            """)
+    Page<Offering> findPublicPage(@Param("status") OfferingStatus status,
+                                  @Param("reviewStatus") TutorReviewStatus reviewStatus,
+                                  @Param("accountStatus") AccountStatus accountStatus,
+                                  Pageable pageable);
 }

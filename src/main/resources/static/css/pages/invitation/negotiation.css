@@ -1,3 +1,33 @@
+.invitation-live-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block: var(--space-5);
+}
+.invitation-live-list {
+    display: grid;
+    gap: var(--space-4);
+}
+.invitation-live-terms {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    margin-top: var(--space-4);
+}
+.invitation-live-consent {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+}
+.invitation-live-consent input {
+    flex: 0 0 auto;
+    margin-top: var(--space-1);
+}
+.negotiation-actions form .button { width: 100%; }
+.negotiation-terms dt { color: var(--color-text-secondary); }
+.negotiation-terms dd { margin: var(--space-1) 0 var(--space-3); }
 .negotiation-page {
     max-width: 1240px;
     margin: auto;
@@ -8,6 +38,10 @@
 }
 .negotiation-page > .alert {
     margin-bottom: var(--space-6);
+}
+.negotiation-page .alert {
+    flex-direction: column;
+    align-items: flex-start;
 }
 .negotiation-layout {
     display: grid;
