@@ -109,9 +109,23 @@ public class ContractPageController {
         }
     }
 
+    /** Chi tiết hợp đồng của học viên. */
     @GetMapping("/contract/student-detail")
-    public String studentDetail() { return "pages/contract/student-detail"; }
+    public String studentDetail(@RequestParam(value = "contract", required = false) Long contractId,
+                                @AuthenticationPrincipal AccountPrincipal user, Model model) {
+        return detail(contractId, user, model, "pages/contract/student-detail");
+    }
 
+    /** Chi tiết hợp đồng của gia sư. */
     @GetMapping("/contract/tutor-detail")
-    public String tutorDetail() { return "pages/contract/tutor-detail"; }
+    public String tutorDetail(@RequestParam(value = "contract", required = false) Long contractId,
+                              @AuthenticationPrincipal AccountPrincipal user, Model model) {
+        return detail(contractId, user, model, "pages/contract/tutor-detail");
+    }
+
+    private String detail(Long contractId, AccountPrincipal user, Model model, String view) {
+        ContractService service = services.getIfAvailable();
+        if (service != null && contractId != null) model.addAttribute("contract", service.detail(user, contractId));
+        return view;
+    }
 }

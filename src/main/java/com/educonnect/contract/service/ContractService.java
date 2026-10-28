@@ -7,6 +7,7 @@ import com.educonnect.contract.JobContractForm;
 import com.educonnect.contract.domain.Contract;
 import com.educonnect.contract.domain.ContractStatus;
 import com.educonnect.contract.dto.ContractConfirmationDTO;
+import com.educonnect.contract.dto.ContractDetailDTO;
 import com.educonnect.contract.repository.ContractJpaRepository;
 import com.educonnect.invitation.domain.Invitation;
 import com.educonnect.invitation.dto.InvitationSourceResponse;
@@ -155,6 +156,13 @@ public class ContractService {
         cartItems.delete(item);
         contracts.flush();
         return contract.getId();
+    }
+
+    /** Chi tiết hợp đồng cho học viên hoặc gia sư của hợp đồng; người khác nhận 404. */
+    @Transactional(readOnly = true)
+    public ContractDetailDTO detail(AccountPrincipal user, Long id) {
+        return contracts.findForParticipant(id, user.getId()).map(ContractDetailDTO::from)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy hợp đồng"));
     }
 
     /** Xem dự thảo hợp đồng từ lời mời đã được hai bên chấp thuận; không tạo đơn. */

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="info(c, backUrl, backLabel, canPay)">
+    <header class="page-header">
+        <div class="page-header__content"><div class="page-header__title-block">
+            <div class="page-header__title-row">
+                <h1 class="page-header__title" th:text="${c.title}"></h1>
+                <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span><span th:text="${c.statusLabel}"></span></span>
+            </div>
+            <p class="page-header__description" th:text="${c.publicCode + ' · Đơn ' + c.orderCode}"></p>
+        </div></div>
+    </header>
+    <div class="contract-columns">
+        <div class="contract-main">
+            <section class="contract-panel" aria-labelledby="overview-title">
+                <h2 id="overview-title">Thông tin hợp đồng</h2>
+                <dl class="contract-facts">
+                    <div><dt>Học viên</dt><dd th:text="${c.learnerName}"></dd></div>
+                    <div><dt>Gia sư</dt><dd th:text="${c.tutorName}"></dd></div>
+                    <div><dt>Loại</dt><dd th:text="${c.typeLabel}"></dd></div>
+                    <div><dt>Số buổi</dt><dd th:text="${c.sessionCount}"></dd></div>
+                    <div><dt>Số chỗ</dt><dd th:text="${c.seatCount}"></dd></div>
+                    <div><dt>Đơn giá mỗi buổi</dt><dd th:text="${#numbers.formatDecimal(c.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div><dt>Ngày tạo</dt><dd th:text="${#temporals.format(c.createdAt, 'dd/MM/yyyy HH:mm')}"></dd></div>
+                    <div><dt>Học viên đồng ý lúc</dt><dd th:text="${#temporals.format(c.learnerAcceptedAt, 'dd/MM/yyyy HH:mm')}"></dd></div>
+                    <div><dt>Gia sư đồng ý lúc</dt><dd th:text="${#temporals.format(c.tutorAcceptedAt, 'dd/MM/yyyy HH:mm')}"></dd></div>
+                </dl>
+                <div class="contract-total"><span>Tổng giá trị hợp đồng</span><strong th:text="${#numbers.formatDecimal(c.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></div>
+            </section>
+            <section class="contract-panel" aria-labelledby="terms-title">
+                <h2 id="terms-title">Điều khoản đã đồng ý</h2>
+                <p class="contract-muted" th:text="${c.terms}"></p>
+            </section>
+            <div class="contract-actions">
+                <a class="contract-button" th:if="${c.payable and canPay}" th:href="@{/payment/checkout(contract=${c.id})}">Tiếp tục thanh toán</a>
+                <a class="contract-button contract-button--secondary" th:href="@{${backUrl}}" th:text="${backLabel}"></a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

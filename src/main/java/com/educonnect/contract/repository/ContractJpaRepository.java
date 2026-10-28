@@ -35,4 +35,9 @@ public interface ContractJpaRepository extends JpaRepository<Contract, Long> {
             countQuery = "select count(c) from Contract c where c.learnerId = :learnerId"
             + " and (:status is null or c.orderItemReference.orderReference.status = :status)")
     Page<Contract> findHistory(@Param("learnerId") Long learnerId, @Param("status") OrderStatus status, Pageable pageable);
+
+    /** Hợp đồng mà người dùng là học viên hoặc gia sư; người khác không đọc được. */
+    @EntityGraph(attributePaths = {"orderItemReference.orderReference", "tutorReference.account", "learnerReference.account"})
+    @Query("select c from Contract c where c.id = :id and (c.learnerId = :userId or c.tutorId = :userId)")
+    Optional<Contract> findForParticipant(@Param("id") Long id, @Param("userId") Long userId);
 }
