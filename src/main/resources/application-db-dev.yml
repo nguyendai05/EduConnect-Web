@@ -48,3 +48,9 @@ app:
     resend-cooldown: 60s
     max-attempts: 5
     max-sends-per-hour: 5
+  payos:
+    client-id: ${EDUCONNECT_PAYOS_CLIENT_ID:}
+    api-key: ${EDUCONNECT_PAYOS_API_KEY:}
+    checksum-key: ${EDUCONNECT_PAYOS_CHECKSUM_KEY:}
+    public-base-url: ${EDUCONNECT_PUBLIC_BASE_URL:http://localhost:8080}
+    link-ttl: ${EDUCONNECT_PAYOS_LINK_TTL:15m}

@@ -1,146 +1,54 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/payment-minimal :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
-<title>Thanh toán qua payOS (DEMO) | Edu Connect</title>
+<title>Thanh toán qua PayOS — Edu Connect</title>
 <th:block th:fragment="styles">
-<link rel="stylesheet" href="/css/components/action/button.css"  th:href="@{/css/components/action/button.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/modal.css"  th:href="@{/css/components/feedback/modal.css}"/>
-<link rel="stylesheet" href="/css/pages/payment/qr.css"  th:href="@{/css/pages/payment/qr.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}"/>
+<link rel="stylesheet" href="/css/pages/contract/confirm.css" th:href="@{/css/pages/contract/confirm.css}"/>
+<link rel="stylesheet" href="/css/pages/payment/qr.css" th:href="@{/css/pages/payment/qr.css}"/>
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
-<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
-<script src="/js/pages/payment/qr.js" defer th:src="@{/js/pages/payment/qr.js}"></script>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
 </th:block>
 <th:block th:fragment="scripts">
-
+<script src="/js/pages/payment/qr.js" defer th:src="@{/js/pages/payment/qr.js}"></script>
 </th:block>
 </head>
 <body th:fragment="content">
-        <th:block th:replace="~{fragments/header-payment-minimal :: header(${active}, 'v1')}"></th:block>
-        <main>
-            <section class="checkout-card" aria-labelledby="checkout-title">
-                <h1 id="checkout-title">Thanh toán qua payOS</h1>
-                <p class="demo-marker" id="demo-marker">
-                    Bản xem trước · Giao dịch mô phỏng — mã QR không chứa payload ngân hàng, không
-                    dùng để chuyển tiền.
-                </p>
-                <p class="instructions" id="instructions">
-                    Thông tin thanh toán mẫu đọc từ dữ liệu chung của prototype.
-                </p>
-                <div class="checkout-grid">
-                    <div class="qr-panel">
-                        <div class="qr-brand">Edu<span>QR</span> <small>DEMO</small></div>
-                        <svg
-                            id="qr-preview"
-                            viewBox="0 0 33 33"
-                            role="img"
-                            aria-label="Hình QR minh họa DEMO, không chứa thông tin chuyển tiền"
-                        ></svg>
-                        <p class="qr-network">mô phỏng <span>không phải mã ngân hàng</span></p>
-                    </div>
-                    <div class="bank-details">
-                        <p class="bank-name">
-                            <span>Ngân hàng</span><strong>Ngân hàng DEMO (mô phỏng)</strong>
-                        </p>
-                        <dl>
-                            <div>
-                                <dt>Hợp đồng</dt>
-                                <dd id="contract">—</dd>
-                            </div>
-                            <div>
-                                <dt>Phiên thanh toán</dt>
-                                <dd id="payment-id">—</dd>
-                            </div>
-                            <div>
-                                <dt>Chủ tài khoản</dt>
-                                <dd>Edu Connect (DEMO)</dd>
-                            </div>
-                            <div>
-                                <dt>Số tài khoản</dt>
-                                <dd>DEMO-EDUCONNECT</dd>
-                            </div>
-                            <div class="copy-row">
-                                <dt>Số tiền</dt>
-                                <dd id="amount">—</dd>
-                                <button type="button" data-copy="amount">Sao chép</button>
-                            </div>
-                            <div class="copy-row">
-                                <dt>Nội dung chuyển khoản (demo)</dt>
-                                <dd id="reference">—</dd>
-                                <button type="button" data-copy="reference">Sao chép</button>
-                            </div>
-                        </dl>
-                        <p class="notice" id="notice">
-                            Đây là nội dung mô phỏng: giữ nguyên số tiền và nội dung khi trình diễn
-                            để giao dịch được đối soát đúng hợp đồng trong dữ liệu mẫu.
-                        </p>
-                        <p class="session-note" id="cancel-note">
-                            Hủy ở trang này chỉ hủy PHIÊN QR (phiên thanh toán chuyển sang trạng
-                            thái "Đã hủy phiên QR"). Đơn đăng ký và hợp đồng KHÔNG bị hủy.
-                        </p>
-                    </div>
-                </div>
-                <p class="session-timer" id="session-timer" role="timer" hidden></p>
-                <div class="checkout-actions">
-                    <button type="button" id="cancel">Hủy phiên thanh toán</button>
-                    <a class="button button--secondary" id="reconcile" href="/payment/result"
-                         th:href="@{/payment/result}">Tôi đã chuyển khoản · kiểm tra đối soát</a
-                    >
-                    <span id="status" role="status" aria-live="polite">Đang chờ thanh toán</span>
-                </div>
-
-                <a id="restart" class="button button--secondary" href="/payment/checkout" hidden
-                     th:href="@{/payment/checkout}">Quay lại thanh toán hợp đồng</a
-                >
-            </section>
-        </main>
-        <dialog
-            class="modal"
-            id="qr-modal"
-            aria-labelledby="qr-modal-title"
-            aria-describedby="qr-modal-description"
-        >
-            <div class="modal__surface">
-                <header class="modal__header">
-                    <span class="modal__icon modal__icon--danger" aria-hidden="true"></span>
-                    <div class="modal__heading">
-                        <h2 id="qr-modal-title">Hủy phiên thanh toán</h2>
-                    </div>
-                    <button
-                        class="modal__close"
-                        type="button"
-                        data-modal-close
-                        aria-label="Đóng hộp thoại"
-                    >
-                        <span class="modal__close-icon" aria-hidden="true"></span>
-                    </button>
-                </header>
-                <div class="modal__body">
-                    <p id="qr-modal-description">
-                        Chỉ hủy phiên QR; đơn và hợp đồng không bị hủy.
-                    </p>
-                </div>
-                <footer class="modal__footer">
-                    <button
-                        class="modal__button modal__button--secondary"
-                        type="button"
-                        data-modal-close
-                        autofocus
-                    >
-                        Giữ phiên
-                    </button>
-                    <button
-                        class="modal__button modal__button--danger"
-                        type="button"
-                        data-modal-confirm
-                    >
-                        Hủy phiên QR
-                    </button>
-                </footer>
-            </div>
-        </dialog>
-    </body>
+<th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
+<main class="confirm-page">
+    <header class="page-header"><div class="page-header__title-block">
+        <h1 class="page-header__title">Thanh toán qua PayOS</h1>
+        <p class="confirm-muted">Quét mã QR trên trang PayOS để trả phần còn thiếu. Trang này tự chuyển khi thanh toán xong.</p>
+    </div></header>
+    <section class="card" th:if="${payment == null}"><div class="card__body confirm-stack">
+        <h2 class="card__title">Chưa chọn thanh toán</h2>
+        <a class="button button--primary" th:href="@{/order/history}">Về lịch sử đơn</a>
+    </div></section>
+    <section class="card" th:if="${payment != null}"
+             th:attr="data-payment-poll=${payment.payUrl != null},data-status-url=@{/payment/status(payment=${payment.paymentId})},data-result-url=@{/payment/result(payment=${payment.paymentId})}">
+        <div class="card__body confirm-stack">
+            <span class="badge badge--warning" th:text="${payment.statusLabel}"></span>
+            <dl class="info-row"><dt class="info-row__label">Hợp đồng</dt><dd class="info-row__value" th:text="${payment.contractCode + ' · ' + payment.title}"></dd></dl>
+            <dl class="info-row"><dt class="info-row__label">Số tiền cần trả qua PayOS</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(payment.providerAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
+            <dl class="info-row" th:if="${payment.expiresAt != null}"><dt class="info-row__label">Hết hạn lúc</dt><dd class="info-row__value" th:text="${#temporals.format(payment.expiresAt, 'dd/MM/yyyy HH:mm')}"></dd></dl>
+            <a class="button button--primary button--large" th:if="${payment.payUrl != null}" th:href="${payment.payUrl}" target="_blank" rel="noopener">Mở trang thanh toán PayOS</a>
+            <p class="confirm-muted" th:if="${payment.payUrl != null}">Sau khi trả tiền, hệ thống tự cập nhật trạng thái trong vài giây. Không cần tải lại trang.</p>
+            <p class="alert alert--warning" th:if="${payment.payUrl == null}">Phiên thanh toán đã hết hạn hoặc chưa tạo. Vui lòng thử lại.</p>
+            <a class="button button--outline" th:if="${payment.payUrl == null}" th:href="@{/payment/checkout(contract=${payment.contractId})}">Thử lại</a>
+            <a class="button button--outline" th:href="@{/order/history}">Về lịch sử đơn</a>
+        </div>
+    </section>
+</main>
+<th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+<th:block th:replace="${scripts}"></th:block>
+</body>
 </html>

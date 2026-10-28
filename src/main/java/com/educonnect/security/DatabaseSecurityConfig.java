@@ -22,10 +22,12 @@ public class DatabaseSecurityConfig {
         var provider = new DaoAuthenticationProvider(users);
         provider.setPasswordEncoder(encoder);
         return http.authenticationProvider(provider)
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/payment/webhook")) // webhook PayOS tự bảo vệ bằng chữ ký
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.ERROR, DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/css/**", "/js/**", "/assets/**", "/favicon.ico", "/error", "/auth/**",
                                 "/", "/home", "/tutor/search", "/tutor/profile", "/catalog/detail", "/job/discover", "/job/detail").permitAll()
+                        .requestMatchers("/payment/webhook").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/tutor/manage", "/tutor/my-profile", "/contract/tutor-detail")
                             .hasRole("TUTOR")
