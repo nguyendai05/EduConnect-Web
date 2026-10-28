@@ -33,7 +33,7 @@ public class DatabaseSecurityConfig {
                             .hasRole("TUTOR")
                         .requestMatchers("/contract/session/attend").hasRole("TUTOR")
                         .requestMatchers("/contract/refund").hasRole("ADMIN")
-                        .requestMatchers("/cart/**", "/order/history", "/invitation/create", "/job/create", "/job/my-job", "/job/applicants", "/payment/**",
+                        .requestMatchers("/cart/**", "/chat/with", "/order/history", "/invitation/create", "/job/create", "/job/my-job", "/job/applicants", "/payment/**",
                                 "/contract/student-detail", "/contract/confirm", "/contract/create", "/contract/sign", "/contract/sign-invitation", "/contract/sign-job", "/contract/cancel", "/contract/session/confirm").hasRole("LEARNER")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/auth/login").loginProcessingUrl("/auth/login")

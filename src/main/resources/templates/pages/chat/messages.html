@@ -1,230 +1,65 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Tin nhắn — Edu Connect</title>
 <th:block th:fragment="styles">
-<link rel="stylesheet" href="/css/components/layout/user-header.css"  th:href="@{/css/components/layout/user-header.css}"/>
-<link rel="stylesheet" href="/css/components/layout/user-footer.css"  th:href="@{/css/components/layout/user-footer.css}"/>
-<link rel="stylesheet" href="/css/components/form/search-input.css"  th:href="@{/css/components/form/search-input.css}"/>
-<link rel="stylesheet" href="/css/components/form/textarea.css"  th:href="@{/css/components/form/textarea.css}"/>
-<link rel="stylesheet" href="/css/components/navigation/filter-chip.css"  th:href="@{/css/components/navigation/filter-chip.css}"/>
-<link rel="stylesheet" href="/css/components/domain/chat/message-thread-item.css"  th:href="@{/css/components/domain/chat/message-thread-item.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/empty-state.css"  th:href="@{/css/components/feedback/empty-state.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/toast.css"  th:href="@{/css/components/feedback/toast.css}"/>
-<link rel="stylesheet" href="/css/pages/chat/messages.css"  th:href="@{/css/pages/chat/messages.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}"/>
+<link rel="stylesheet" href="/css/pages/chat/messages.css" th:href="@{/css/pages/chat/messages.css}"/>
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
 <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/core/search-input.js" defer th:src="@{/js/core/search-input.js}"></script>
-<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
-<script src="/js/pages/chat/messages.js" defer th:src="@{/js/pages/chat/messages.js}"></script>
 </th:block>
 <th:block th:fragment="scripts">
-
+<script src="/js/pages/chat/messages.js" defer th:src="@{/js/pages/chat/messages.js}"></script>
 </th:block>
 </head>
 <body th:fragment="content">
-        <th:block th:replace="~{fragments/header-user :: header(${active}, 'v3')}"></th:block>
-
-        <main class="chat-page">
-            <h1 class="chat-sr-only">Tin nhắn</h1>
-            <div class="chat-layout" id="chat-layout">
-                <aside class="chat-contacts" aria-label="Danh sách cuộc trò chuyện">
-                    <div class="chat-contacts__tools">
-                        <h2>
-                            Cuộc trò chuyện <span id="unread-total" class="chat-counter">2</span>
-                        </h2>
-                        <div class="search-input search-input--compact" data-search-input>
-                            <img
-                                class="search-input__icon"
-                                src="/assets/icons/chat-search.svg"
-                                alt=""
-                             th:src="@{/assets/icons/chat-search.svg}"/>
-                            <input
-                                id="conversation-search"
-                                type="search"
-                                placeholder="Tìm cuộc trò chuyện..."
-                                aria-label="Tìm cuộc trò chuyện"
-                            />
-                            <button
-                                class="search-input__clear"
-                                type="button"
-                                data-clear-search
-                                aria-label="Xóa tìm kiếm"
-                                hidden
-                            >
-                                <img src="/assets/icons/close.svg" alt=""  th:src="@{/assets/icons/close.svg}"/>
-                            </button>
-                        </div>
-                        <div class="filter-chip-list" role="group" aria-label="Lọc cuộc trò chuyện">
-                            <button
-                                class="filter-chip filter-chip--selected"
-                                type="button"
-                                data-chat-filter="all"
-                                aria-pressed="true"
-                            >
-                                Tất cả
-                            </button>
-                            <button
-                                class="filter-chip"
-                                type="button"
-                                data-chat-filter="unread"
-                                aria-pressed="false"
-                            >
-                                Chưa đọc
-                            </button>
-                        </div>
-                    </div>
-                    <div class="chat-threads" id="thread-list"></div>
-                    <section class="empty-state" id="thread-empty" hidden>
-                        <span class="empty-state__icon" aria-hidden="true"></span>
-                        <h3 class="empty-state__title">Không tìm thấy cuộc trò chuyện</h3>
-                        <p class="empty-state__description">
-                            Thử tên khác hoặc chọn bộ lọc Tất cả.
-                        </p>
-                    </section>
-                    <p class="chat-contact-count" id="contact-count"></p>
-                    <p class="chat-error" id="contract-notice" role="status" hidden></p>
-                </aside>
-                <section class="chat-conversation" aria-label="Nội dung cuộc trò chuyện">
-                    <header class="chat-conversation__header">
-                        <button
-                            class="chat-icon-button chat-back"
-                            id="back-to-contacts"
-                            aria-label="Về danh sách cuộc trò chuyện"
-                            type="button"
-                        >
-                            <img src="/assets/icons/chevron-right.svg" alt=""  th:src="@{/assets/icons/chevron-right.svg}"/>
-                        </button>
-                        <span class="chat-avatar" id="contact-avatar">ML</span>
-                        <div class="chat-person">
-                            <h2 id="contact-name">Chị Mai Lan</h2>
-                            <p id="contact-description">Phụ huynh · Gia Huy</p>
-                        </div>
-                        <button
-                            class="chat-icon-button"
-                            id="toggle-context"
-                            type="button"
-                            aria-label="Thông tin liên quan"
-                            aria-controls="chat-context"
-                            aria-expanded="false"
-                        >
-                            <img src="/assets/icons/info-circle.svg" alt=""  th:src="@{/assets/icons/info-circle.svg}"/>
-                        </button>
-                    </header>
-                    <a
-                        class="chat-contract-link"
-                        id="contract-link"
-                        href="/contract/tutor-detail"
-                         th:href="@{/contract/tutor-detail}">Toán lớp 11 · HD-20260919-024 <span>Xem hợp đồng</span></a
-                    >
-                    <div
-                        class="chat-history"
-                        id="message-history"
-                        role="log"
-                        aria-label="Lịch sử tin nhắn"
-                        aria-live="polite"
-                        aria-relevant="additions"
-                    ></div>
-                    <form class="chat-composer" id="message-form">
-                        <div id="attachment-preview" class="chat-attachment-preview" hidden></div>
-                        <label class="chat-sr-only" for="message-input">Nội dung tin nhắn</label>
-                        <textarea
-                            class="textarea-control chat-composer__input"
-                            id="message-input"
-                            rows="1"
-                            maxlength="4000"
-                            placeholder="Nhập tin nhắn trao đổi việc học..."
-                        ></textarea>
-                        <div class="chat-composer__actions">
-                            <button
-                                class="chat-icon-button"
-                                id="attach-button"
-                                type="button"
-                                aria-label="Đính kèm tệp"
-                            >
-                                <img src="/assets/icons/chat-attachment.svg" alt=""  th:src="@{/assets/icons/chat-attachment.svg}"/>
-                            </button>
-                            <input
-                                id="attachment-input"
-                                type="file"
-                                accept="image/png,image/jpeg,image/webp,application/pdf,.txt"
-                                hidden
-                            />
-                            <span class="chat-composer__hint"
-                                >Enter để gửi · Shift + Enter xuống dòng</span
-                            >
-                            <button class="chat-send" id="send-button" type="submit" disabled>
-                                Gửi <img src="/assets/icons/chat-send.svg" alt=""  th:src="@{/assets/icons/chat-send.svg}"/>
-                            </button>
-                        </div>
-                        <p class="chat-error" id="composer-error" role="alert" hidden></p>
-                    </form>
-                </section>
-                <aside class="chat-context" id="chat-context" aria-label="Thông tin liên quan">
-                    <div class="chat-context__heading">
-                        <h2>Hồ sơ liên kết</h2>
-                        <button
-                            class="chat-icon-button chat-context-close"
-                            id="close-context"
-                            type="button"
-                            aria-label="Đóng thông tin"
-                        >
-                            <img src="/assets/icons/close.svg" alt=""  th:src="@{/assets/icons/close.svg}"/>
-                        </button>
-                    </div>
-                    <section class="chat-context-card">
-                        <p class="chat-eyebrow">HỌC VIÊN</p>
-                        <h3 id="student-name">Trần Gia Huy</h3>
-                        <p id="student-course">Toán · Lớp 11</p>
-                        <dl>
-                            <div>
-                                <dt>Người liên hệ</dt>
-                                <dd id="guardian-name">Chị Mai Lan</dd>
-                            </div>
-                            <div>
-                                <dt>Hình thức</dt>
-                                <dd id="student-mode">Học trực tiếp</dd>
-                            </div>
-                        </dl>
-                    </section>
-                    <section class="chat-context-card" id="linked-contract">
-                        <p class="chat-eyebrow" id="linked-contract-eyebrow">HỢP ĐỒNG ĐANG THỰC HIỆN</p>
-                        <h3 id="linked-contract-code">HD-20260919-024</h3>
-                        <label for="chat-progress" id="chat-progress-label">Tiến độ: 3 / 8 buổi</label
-                        ><progress id="chat-progress" value="3" max="8">3/8</progress>
-                        <dl>
-                            <div>
-                                <dt>Học phí mỗi buổi</dt>
-                                <dd id="linked-fee">220.000 ₫</dd>
-                            </div>
-                            <div>
-                                <dt>Gia sư thực nhận</dt>
-                                <dd id="linked-income">198.000 ₫</dd>
-                            </div>
-                        </dl>
-                        <a id="linked-contract-link" href="/contract/tutor-detail"
-                             th:href="@{/contract/tutor-detail}">Xem chi tiết hợp đồng</a
-                        >
-                    </section>
-                    <section class="chat-context-card" id="linked-lesson">
-                        <p class="chat-eyebrow">BUỔI DẠY KẾ TIẾP</p>
-                        <h3 id="linked-lesson-title">Buổi 4 · Thứ Sáu</h3>
-                        <p id="linked-lesson-date">09/10/2026 · 19:00–20:30</p>
-                        <p id="linked-lesson-topic">Phương trình lượng giác nâng cao</p>
-                        <a id="linked-lesson-link" href="/contract/tutor-detail#next-lesson"
-                             th:href="@{/contract/tutor-detail#next-lesson}">Xem kế hoạch buổi dạy</a
-                        >
-                    </section>
-
-                </aside>
+<th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
+<main class="chat-page">
+    <header class="page-header"><div class="page-header__title-block">
+        <h1 class="page-header__title">Tin nhắn</h1>
+        <p class="chat-muted">Trao đổi giá, lịch học với gia sư trước khi gửi lời mời và chốt hợp đồng.</p>
+    </div></header>
+    <p class="alert alert--error" role="alert" th:if="${error != null}" th:text="${error}"></p>
+    <section class="empty-state" th:if="${conversations == null or conversations.empty}">
+        <h2 class="empty-state__title">Chưa có cuộc trò chuyện nào</h2>
+        <p class="empty-state__description">Học viên có thể bắt đầu từ hồ sơ của gia sư (nút "Nhắn tin").</p>
+    </section>
+    <div class="chat-layout" th:if="${conversations != null and !conversations.empty}">
+        <nav class="chat-list" aria-label="Cuộc trò chuyện">
+            <a class="chat-list__item" th:each="c : ${conversations}"
+               th:classappend="${current != null and current.id == c.id} ? 'is-active'"
+               th:href="@{/chat/messages(conversation=${c.id})}" th:text="${c.otherName}"></a>
+        </nav>
+        <section class="chat-thread" th:if="${current != null}"
+                 th:attr="data-chat-poll=@{/chat/poll(conversation=${current.id})},data-last-id=${chatMessages.empty ? 0 : chatMessages[chatMessages.size() - 1].id}">
+            <header class="chat-thread__header">
+                <h2 th:text="${current.otherName}"></h2>
+                <a class="button button--primary button--small" th:if="${current.viewerIsLearner}"
+                   th:href="@{/invitation/create(tutorId=${current.tutorId})}">Gửi lời mời</a>
+            </header>
+            <div class="chat-thread__messages" data-chat-messages>
+                <p class="chat-muted" th:if="${chatMessages.empty}" data-chat-empty>Hãy gửi tin nhắn đầu tiên.</p>
+                <div class="chat-msg" th:each="m : ${chatMessages}" th:classappend="${m.mine} ? 'chat-msg--mine'">
+                    <p class="chat-msg__body" th:text="${m.body}"></p>
+                    <time class="chat-msg__time" th:text="${#temporals.format(m.sentAt, 'dd/MM HH:mm')}"></time>
+                </div>
             </div>
-            <p class="chat-sr-only" id="chat-status" role="status"></p>
-            <noscript>Vui lòng bật JavaScript để xem danh sách cuộc trò chuyện.</noscript>
-        </main>
-        <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
-    </body>
+            <form class="chat-thread__form" method="post" th:action="@{/chat/send}">
+                <input type="hidden" name="conversation" th:value="${current.id}">
+                <textarea name="body" rows="2" maxlength="1000" required placeholder="Nhập tin nhắn…" aria-label="Nội dung tin nhắn"></textarea>
+                <button class="button button--primary" type="submit">Gửi</button>
+            </form>
+        </section>
+    </div>
+</main>
+<th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+<th:block th:replace="${scripts}"></th:block>
+</body>
 </html>
