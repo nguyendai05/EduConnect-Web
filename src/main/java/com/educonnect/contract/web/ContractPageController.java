@@ -3,6 +3,7 @@ package com.educonnect.contract.web;
 import com.educonnect.contract.ContractConfirmationForm;
 import com.educonnect.contract.InvitationContractForm;
 import com.educonnect.contract.JobContractForm;
+import com.educonnect.contract.service.ContractLifecycleService;
 import com.educonnect.contract.service.ContractService;
 import com.educonnect.security.AccountPrincipal;
 import jakarta.validation.Valid;
@@ -22,8 +23,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class ContractPageController {
     private ObjectProvider<ContractService> services;
+    private ObjectProvider<ContractLifecycleService> lifecycle;
 
-    public ContractPageController(ObjectProvider<ContractService> services) { this.services = services; }
+    public ContractPageController(ObjectProvider<ContractService> services, ObjectProvider<ContractLifecycleService> lifecycle) {
+        this.services = services;
+        this.lifecycle = lifecycle;
+    }
 
     @GetMapping("/contract/confirm")
     public String confirm(@RequestParam(value = "contract", required = false) Long contractId,
@@ -107,6 +112,21 @@ public class ContractPageController {
             redirect.addFlashAttribute("error", error instanceof ResponseStatusException r ? r.getReason() : error.getMessage());
             return back;
         }
+    }
+
+    /** Gia sư (hoặc admin) hoàn thành hợp đồng; tiền ký quỹ được giải ngân cho gia sư. */
+    @PostMapping("/contract/complete")
+    public String complete(@RequestParam("contract") Long contractId, @AuthenticationPrincipal AccountPrincipal user,
+                           RedirectAttributes redirect) {
+        ContractLifecycleService service = lifecycle.getIfAvailable();
+        if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
+        try {
+            service.complete(user, contractId);
+            redirect.addFlashAttribute("message", "Đã hoàn thành hợp đồng và chuyển tiền cho gia sư");
+        } catch (IllegalArgumentException error) {
+            redirect.addFlashAttribute("error", error.getMessage());
+        }
+        return "redirect:/contract/tutor-detail?contract=" + contractId;
     }
 
     /** Chi tiết hợp đồng của học viên. */

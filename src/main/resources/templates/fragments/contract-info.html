@@ -2,6 +2,8 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <body>
 <th:block th:fragment="info(c, backUrl, backLabel, canPay)">
+    <p class="alert alert--error" role="alert" th:if="${error != null}" th:text="${error}"></p>
+    <p class="alert" role="status" th:if="${message != null}" th:text="${message}"></p>
     <header class="page-header">
         <div class="page-header__content"><div class="page-header__title-block">
             <div class="page-header__title-row">
@@ -33,6 +35,10 @@
                 <p class="contract-muted" th:text="${c.terms}"></p>
             </section>
             <div class="contract-actions">
+                <form method="post" th:action="@{/contract/complete}" th:if="${c.canComplete}">
+                    <input type="hidden" name="contract" th:value="${c.id}">
+                    <button class="contract-button" type="submit">Hoàn thành hợp đồng</button>
+                </form>
                 <a class="contract-button" th:if="${c.payable and canPay}" th:href="@{/payment/checkout(contract=${c.id})}">Tiếp tục thanh toán</a>
                 <a class="contract-button contract-button--secondary" th:href="@{${backUrl}}" th:text="${backLabel}"></a>
             </div>

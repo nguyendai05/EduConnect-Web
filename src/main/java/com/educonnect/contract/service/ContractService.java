@@ -161,7 +161,7 @@ public class ContractService {
     /** Chi tiết hợp đồng cho học viên hoặc gia sư của hợp đồng; người khác nhận 404. */
     @Transactional(readOnly = true)
     public ContractDetailDTO detail(AccountPrincipal user, Long id) {
-        return contracts.findForParticipant(id, user.getId()).map(ContractDetailDTO::from)
+        return contracts.findForParticipant(id, user.getId()).map(c -> ContractDetailDTO.from(c, user.getId()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy hợp đồng"));
     }
 

@@ -12,9 +12,10 @@ import java.time.Instant;
 public record ContractDetailDTO(Long id, String publicCode, String orderCode, String title, String learnerName,
         String tutorName, String typeLabel, BigDecimal unitPrice, short sessionCount, int seatCount, BigDecimal total,
         String terms, String statusLabel, Instant createdAt, Instant learnerAcceptedAt, Instant tutorAcceptedAt,
-        boolean payable) {
+        boolean payable, boolean canComplete) {
 
-    public static ContractDetailDTO from(Contract contract) {
+    /** viewerId là người đang xem; chỉ gia sư của hợp đồng đang thực hiện mới thấy nút hoàn thành. */
+    public static ContractDetailDTO from(Contract contract, Long viewerId) {
         OrderItem item = contract.getOrderItemReference();
         String status = switch (contract.getStatus()) {
             case AWAITING_PAYMENT -> "Chờ thanh toán";
@@ -30,6 +31,7 @@ public record ContractDetailDTO(Long id, String publicCode, String orderCode, St
                 item.getUnitPriceSnapshot(), item.getSessionCountSnapshot(), item.getSeatCount(), item.getLineTotal(),
                 contract.getAgreedTermsText(), status, contract.getCreatedAt(), contract.getLearnerAcceptedAt(),
                 contract.getTutorAcceptedAt(), contract.getStatus() == ContractStatus.AWAITING_PAYMENT
-                        && item.getOrderReference().getStatus() == OrderStatus.AWAITING_PAYMENT);
+                        && item.getOrderReference().getStatus() == OrderStatus.AWAITING_PAYMENT,
+                contract.getStatus() == ContractStatus.ACTIVE && contract.getTutorId().equals(viewerId));
     }
 }
