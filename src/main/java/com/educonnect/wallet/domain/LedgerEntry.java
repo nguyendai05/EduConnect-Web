@@ -34,11 +34,11 @@ public class LedgerEntry {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "journal_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.wallet.domain.MoneyJournal journalReference;
+    private MoneyJournal journalReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ledger_account_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.wallet.domain.LedgerAccount ledgerAccountReference;
+    private LedgerAccount ledgerAccountReference;
 
     protected LedgerEntry() {}
 
@@ -61,7 +61,7 @@ public class LedgerEntry {
     public BigDecimal getAmount() { return amount; }
     public void setAmount(BigDecimal amount) { this.amount = amount; }
 
-    public com.educonnect.wallet.domain.MoneyJournal getJournalReference() { return journalReference; }
+    public MoneyJournal getJournalReference() { return journalReference; }
 
-    public com.educonnect.wallet.domain.LedgerAccount getLedgerAccountReference() { return ledgerAccountReference; }
+    public LedgerAccount getLedgerAccountReference() { return ledgerAccountReference; }
 }

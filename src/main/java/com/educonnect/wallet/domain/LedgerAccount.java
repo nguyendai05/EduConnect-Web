@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import com.educonnect.user.domain.UserAccount;
 
 /** Mapping ledger_accounts; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -38,7 +39,7 @@ public class LedgerAccount {
 
     @OneToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false)
-    private com.educonnect.user.domain.UserAccount ownerUserReference;
+    private UserAccount ownerUserReference;
 
     protected LedgerAccount() {}
 
@@ -60,5 +61,5 @@ public class LedgerAccount {
 
     public Long getVersion() { return version; }
 
-    public com.educonnect.user.domain.UserAccount getOwnerUserReference() { return ownerUserReference; }
+    public UserAccount getOwnerUserReference() { return ownerUserReference; }
 }

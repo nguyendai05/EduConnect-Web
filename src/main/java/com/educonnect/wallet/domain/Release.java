@@ -5,6 +5,8 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.math.BigDecimal;
 import java.time.Instant;
+import com.educonnect.contract.domain.Contract;
+import com.educonnect.user.domain.UserAccount;
 
 /** Mapping releases; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -56,11 +58,11 @@ public class Release {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "contract_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.contract.domain.Contract contractReference;
+    private Contract contractReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "approved_by", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.user.domain.UserAccount approvedByReference;
+    private UserAccount approvedByReference;
 
     protected Release() {}
 
@@ -101,7 +103,7 @@ public class Release {
     public Instant getReleasedAt() { return releasedAt; }
     public void setReleasedAt(Instant releasedAt) { this.releasedAt = releasedAt; }
 
-    public com.educonnect.contract.domain.Contract getContractReference() { return contractReference; }
+    public Contract getContractReference() { return contractReference; }
 
-    public com.educonnect.user.domain.UserAccount getApprovedByReference() { return approvedByReference; }
+    public UserAccount getApprovedByReference() { return approvedByReference; }
 }

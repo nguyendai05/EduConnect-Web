@@ -1,6 +1,7 @@
 package com.educonnect.order.domain;
 
 import jakarta.persistence.*;
+import com.educonnect.user.domain.Role;
 
 /** Mapping order_status_transitions; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -12,7 +13,7 @@ public class OrderStatusTransition {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "actor_role_code", referencedColumnName = "code", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.user.domain.Role actorRoleReference;
+    private Role actorRoleReference;
 
     protected OrderStatusTransition() {}
 
@@ -21,5 +22,5 @@ public class OrderStatusTransition {
     public OrderStatusTransitionId getId() { return id; }
     public void setId(OrderStatusTransitionId id) { this.id = id; }
 
-    public com.educonnect.user.domain.Role getActorRoleReference() { return actorRoleReference; }
+    public Role getActorRoleReference() { return actorRoleReference; }
 }
