@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: page(~{::title}, &#x27;/admin/job-review-queue&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: page(~{::title}, &#x27;/admin/job-review-queue&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Hàng đợi duyệt tin tìm gia sư | Edu Connect</title>
 <th:block th:fragment="styles">
@@ -20,134 +20,40 @@
 <link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
 <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
 <link rel="stylesheet" href="/css/pages/admin/job-review-queue.css" th:href="@{/css/pages/admin/job-review-queue.css}">
+<link rel="stylesheet" th:href="@{/css/components/data-display/card.css}">
+<link rel="stylesheet" th:href="@{/css/pages/job/live.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/select.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 
 </th:block>
 <th:block th:fragment="scripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('tutor-review-data')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('payout-data')}"></th:block>
 <script src="/js/core/admin-sidebar.js" defer th:src="@{/js/core/admin-sidebar.js}"></script>
 <script src="/js/core/admin-header.js" defer th:src="@{/js/core/admin-header.js}"></script>
-<script src="/js/core/search-input.js" defer th:src="@{/js/core/search-input.js}"></script>
-<script src="/js/core/tabs.js" defer th:src="@{/js/core/tabs.js}"></script>
-<script src="/js/core/pagination.js" defer th:src="@{/js/core/pagination.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('job-review-data')}"></th:block>
 <script src="/js/pages/admin/job-review-queue.js" defer th:src="@{/js/pages/admin/job-review-queue.js}"></script>
 </th:block>
 </head>
-<body class="job-review-queue-page" th:fragment="content">
-    <a class="job-review-queue__skip-link" href="#queue-main">Đến nội dung chính</a>
-    <div class="admin-shell" data-component="admin-shell" data-job-review-queue>
-        <th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
-        <th:block th:replace="~{fragments/header-admin :: header(${active}, 'v3')}"></th:block>
-        <main class="admin-shell__workspace" id="queue-main" tabindex="-1">
-            <div class="admin-shell__content job-review-queue">
-                <header class="admin-shell__page-header job-review-queue__header">
-                    <div>
-
-                        <h1>Hàng đợi duyệt tin tìm gia sư</h1>
-
-                    </div>
-                    <div class="job-review-queue__refresh">
-                        <button class="button button--secondary" type="button" data-queue-refresh><svg class="job-review-queue__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6.1 7a7 7 0 0 1 11.6-1L20 9M4 15l2.3 3A7 7 0 0 0 17.9 17"/></svg>Làm mới</button>
-                        <span class="job-review-queue__updated" data-queue-updated>Đang cập nhật…</span>
-                    </div>
-                </header>
-                <section class="alert alert--error" role="alert" data-store-error hidden>
-                    <span class="alert__icon" aria-hidden="true"></span>
-                    <div class="alert__content">
-                        <h2 class="alert__title">Không đọc được dữ liệu kiểm duyệt</h2>
-                        <p class="alert__message">Hàng đợi, số đếm và người đăng lấy từ <strong>EduStore</strong> (js/data/fixtures.js + js/data/store.js). Hai script chưa được nạp nên trang ẩn nội dung thay vì hiển thị bảng tin mẫu.</p>
-                    </div>
-                </section>
-                <section class="job-review-queue__summary" aria-label="Tổng quan kiểm duyệt" data-store-content>
-                    <article class="stat-card stat-card--compact job-review-queue__metric">
-                        <div class="stat-card__header"><h2 class="job-review-queue__metric-label">Hàng đợi</h2><span class="stat-card__icon"><img src="/assets/icons/clock.svg" alt="" th:src="@{/assets/icons/clock.svg}"></span></div>
-                        <p class="job-review-queue__metric-value"><strong class="stat-card__value" data-queue-pending-count>—</strong><span class="stat-card__unit">tin chờ duyệt</span></p>
-                        <div class="job-review-queue__metric-footer"><span class="badge badge--info">Chờ quản trị duyệt</span><span data-queue-store-total>Đang đọc số đếm từ dữ liệu dùng chung…</span></div>
-                    </article>
-                    <article class="stat-card stat-card--compact stat-card--warning job-review-queue__metric">
-                        <div class="stat-card__header"><h2 class="job-review-queue__metric-label">Rà soát tự động</h2><span class="stat-card__icon"><img src="/assets/icons/warning-triangle.svg" alt="" th:src="@{/assets/icons/warning-triangle.svg}"></span></div>
-                        <p class="job-review-queue__metric-value"><strong class="stat-card__value" data-queue-flagged-count>—</strong><span class="stat-card__unit">tin cần kiểm tra</span></p>
-                        <div class="job-review-queue__metric-footer"><span class="badge badge--warning">Cần kiểm tra</span><span>Phát hiện dấu hiệu liên hệ ngoài</span></div>
-                    </article>
-                    <article class="stat-card stat-card--compact stat-card--success job-review-queue__metric">
-                        <div class="stat-card__header"><h2 class="job-review-queue__metric-label">SLA kiểm duyệt</h2><span class="stat-card__icon"><img src="/assets/icons/check-circle.svg" alt="" th:src="@{/assets/icons/check-circle.svg}"></span></div>
-                        <p class="job-review-queue__metric-value"><strong class="stat-card__value stat-card__value--neutral">&lt; 4h</strong><span class="stat-card__unit">giờ làm việc</span></p>
-                        <div class="job-review-queue__metric-footer"><span class="badge badge--success">Đảm bảo vận hành</span><span>Xử lý kịp thời, đúng quy chuẩn</span></div>
-                    </article>
-                </section>
-                <section class="job-review-queue__toolbar" aria-label="Tìm kiếm và lọc tin" data-store-content>
-                    <div class="job-review-queue__toolbar-heading">
-                        <div class="tabs tabs--contained" data-tabs data-queue-status-tabs>
-                            <div class="tabs__list" role="tablist" aria-label="Trạng thái tin">
-                                <button class="tabs__tab" type="button" role="tab" id="queue-tab-pending" aria-selected="true" aria-controls="queue-results" data-queue-status="pending">Chờ duyệt <span class="tabs__badge" data-status-count="pending">—</span></button>
-                                <button class="tabs__tab" type="button" role="tab" id="queue-tab-hiring" aria-selected="false" aria-controls="queue-results" tabindex="-1" data-queue-status="hiring">Đang tuyển <span class="tabs__badge" data-status-count="hiring">—</span></button>
-                                <button class="tabs__tab" type="button" role="tab" id="queue-tab-closed" aria-selected="false" aria-controls="queue-results" tabindex="-1" data-queue-status="closed">Đã đóng <span class="tabs__badge" data-status-count="closed">—</span></button>
-                                <button class="tabs__tab" type="button" role="tab" id="queue-tab-rejected" aria-selected="false" aria-controls="queue-results" tabindex="-1" data-queue-status="rejected">Bị từ chối <span class="tabs__badge" data-status-count="rejected">—</span></button>
-                            </div>
-                        </div>
-                        <p class="job-review-queue__priority"><img src="/assets/icons/shield-alert.svg" alt="" th:src="@{/assets/icons/shield-alert.svg}">Ưu tiên rà soát <strong data-queue-priority-count>— tin</strong> có tín hiệu cần kiểm tra</p>
-                    </div>
-                    <form class="job-review-queue__filters" role="search" data-queue-filters>
-                        <div class="search-input search-input--compact" data-search-input>
-                            <label class="sr-only" for="queue-search">Tìm kiếm tin</label>
-                            <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
-                            <input id="queue-search" type="search" name="query" placeholder="Tìm theo mã tin, tiêu đề, người đăng…" autocomplete="off" maxlength="200" data-queue-search>
-                            <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-                        </div>
-                        <div class="select-field"><label class="sr-only" for="queue-signal">Rà soát hệ thống</label><select class="select-control select-control--native" id="queue-signal" name="signal"><option value="all">Rà soát: Tất cả</option><option value="flagged">Có tín hiệu cần kiểm tra</option><option value="normal">Rà soát bình thường</option></select></div>
-                        <div class="select-field"><label class="sr-only" for="queue-subject">Môn học</label><select class="select-control select-control--native" id="queue-subject" name="subject"><option value="all">Môn học: Tất cả</option><option value="toan">Toán học</option><option value="tieng-anh">Tiếng Anh</option><option value="vat-ly">Vật lý</option><option value="hoa-hoc">Hóa học</option><option value="ngu-van">Ngữ văn</option></select></div>
-                        <div class="select-field"><label class="sr-only" for="queue-sort">Sắp xếp tin</label><select class="select-control select-control--native" id="queue-sort" name="sort"><option value="priority">Ưu tiên kiểm tra</option><option value="oldest">Gửi sớm nhất</option><option value="newest">Mới nhất</option></select></div>
-                    </form>
-                    <div class="job-review-queue__results-heading"><p data-queue-result-summary aria-live="polite" aria-atomic="true">Đang đọc hàng đợi từ dữ liệu dùng chung…</p><button class="button button--ghost button--small" type="button" data-queue-reset hidden>Xóa bộ lọc</button></div>
-                </section>
-                <section id="queue-results" role="tabpanel" aria-labelledby="queue-tab-pending" aria-busy="true" tabindex="0" data-queue-results data-store-content>
-                    <div class="loading" role="status" data-component="loading" data-queue-loading><span class="loading__spinner" aria-hidden="true"></span><p class="loading__text">Đang tải danh sách tin tìm gia sư…</p></div>
-                    <div class="table-frame" data-queue-table hidden>
-                        <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách tin tìm gia sư, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
-                            <table class="table table--review">
-                                <caption class="table__caption table__caption--sr-only">Danh sách tin tìm gia sư theo trạng thái và bộ lọc</caption>
-                                <thead><tr><th scope="col">Tin tìm gia sư</th><th scope="col">Người đăng</th><th scope="col">Môn &amp; cấp lớp</th><th scope="col">Khu vực / hình thức</th><th scope="col">Thời gian gửi</th><th scope="col">Rà soát hệ thống</th><th scope="col">Trạng thái</th><th scope="col" class="table__action-heading">Thao tác</th></tr></thead>
-                                <tbody data-queue-list></tbody>
-                            </table>
-                        </div>
-                        <div class="job-review-queue__table-footer table-footer">
-                            <nav class="pagination pagination--table" aria-label="Phân trang danh sách tin" data-component="pagination" data-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1">
-                                <p class="pagination__summary">Hiển thị <strong data-range-start>0</strong>–<strong data-range-end>0</strong> trong <strong data-total-count>0</strong> tin</p>
-                                <div class="pagination__controls">
-                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button>
-                                    <span class="pagination__controls" data-page-numbers><button class="pagination__button is-current" type="button" data-page="1" aria-current="page">1</button></span>
-                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau" disabled><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
-                                </div>
-                            </nav>
-                            <div class="job-review-queue__page-size table-footer__page-size"><label for="queue-page-size">Số tin mỗi trang</label><select class="select-control select-control--native" id="queue-page-size" data-queue-page-size><option value="3">3</option><option value="5" selected>5</option><option value="10">10</option></select></div>
-                        </div>
-                    </div>
-                    <div class="empty-state" data-component="empty-state" data-queue-empty hidden><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title">Không tìm thấy tin phù hợp</h2><p class="empty-state__description">Thử thay đổi từ khóa hoặc xóa bộ lọc để xem các tin trong trạng thái này.</p><button class="button button--outline" type="button" data-queue-reset>Xóa bộ lọc</button></div>
-                </section>
-
-                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải danh sách, tìm kiếm và lọc tin.</p></noscript>
-            </div>
-        </main>
-
-        <template id="queue-row-template">
-            <tr data-queue-row>
-                <th scope="row"><div class="table__primary" data-job-title></div><span class="table__reference" data-job-reference></span><small data-job-sessions></small><small data-job-applications></small></th>
-                <td><div class="table__person"><span class="avatar avatar--small" aria-hidden="true" data-job-avatar></span><div><strong data-job-poster></strong><small data-job-role></small></div></div></td>
-                <td><span class="badge badge--info" data-job-subject></span><small data-job-fee></small></td>
-                <td><span data-job-region></span><small data-job-format></small></td>
-                <td><time class="table__submitted" data-job-date></time><small data-job-time></small></td>
-                <td><span class="badge" data-job-signal></span><small class="table__review-note" data-job-signal-note></small></td>
-                <td><span class="badge" data-job-status></span></td>
-                <td class="table__action"><a href="/admin/job-review-detail" data-job-detail th:href="@{/admin/job-review-detail}">Xem chi tiết</a></td>
-            </tr>
-        </template>
-    </div>
-    <th:block th:replace="${scripts}"></th:block>
-</body>
-</html>
+<body th:fragment="content"><div class="admin-shell">
+<th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
+<th:block th:replace="~{fragments/header-admin :: header(${active}, 'v3')}"></th:block>
+<main class="admin-shell__workspace"><div class="admin-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1>Hàng đợi duyệt tin tìm gia sư</h1>
+<form method="get" class="card job-live-panel" th:action="@{/admin/job-review-queue}" th:if="${search != null}"><div class="job-live-grid">
+  <label class="form-field">Từ khóa<span class="input-control"><input class="input-control__input" name="q" th:value="${search.q}" maxlength="200"></span></label>
+  <label class="form-field">Trạng thái<select class="select-control select-control--native" name="status"><option value="PENDING" th:selected="${selectedStatus != null and selectedStatus.name() == 'PENDING'}">Chờ duyệt</option><option value="OPEN" th:selected="${selectedStatus != null and selectedStatus.name() == 'OPEN'}">Đang công khai</option><option value="REJECTED" th:selected="${selectedStatus != null and selectedStatus.name() == 'REJECTED'}">Đã từ chối</option><option value="CLOSED" th:selected="${selectedStatus != null and selectedStatus.name() == 'CLOSED'}">Đã đóng</option><option value="MATCHED" th:selected="${selectedStatus != null and selectedStatus.name() == 'MATCHED'}">Đã chọn gia sư</option><option value="DRAFT" th:selected="${selectedStatus != null and selectedStatus.name() == 'DRAFT'}">Bản nháp</option></select></label></div><button class="button button--primary" type="submit">Lọc tin</button></form><p class="card job-live-panel" th:if="${jobs != null and jobs.empty}">Chưa có tin phù hợp.</p>
+    <div class="job-live-list" th:if="${jobs != null}">
+      <article class="card job-live-panel" th:each="item : ${jobs.content}">
+        <div class="job-live-heading"><span class="badge badge--info" th:text="${item.statusLabel}"></span><small th:text="${item.publicCode}"></small></div>
+        <h2><a th:href="@{/admin/job-review-detail(id=${item.id})}" th:text="${item.title}"></a></h2>
+        <p th:text="|${item.subject} · ${item.grade} · ${item.area} · ${item.deliveryMode}|"></p>
+        <p><strong th:text="${#numbers.formatDecimal(item.budgetPerSession, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><span th:text="| · ${item.sessionCount} buổi|"></span></p>
+        <p class="job-live-muted" th:text="|${item.learnerName} · ${item.createdAtLabel} (UTC+7)|"></p>
+        <a class="button button--outline" th:href="@{/admin/job-review-detail(id=${item.id})}">Xem và duyệt tin</a>
+      </article>
+    </div><nav class="job-live-nav" th:if="${jobs != null}" aria-label="Phân trang">
+      <a class="button button--outline" th:if="${jobs.hasPrevious()}" th:href="@{/admin/job-review-queue(page=${jobs.number - 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size},status=${selectedStatus})}">Trang trước</a>
+      <span th:unless="${jobs.empty}" th:text="|Trang ${jobs.number + 1} / ${jobs.totalPages} · ${jobs.totalElements} tin|"></span>
+      <a class="button button--outline" th:if="${jobs.hasNext()}" th:href="@{/admin/job-review-queue(page=${jobs.number + 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size},status=${selectedStatus})}">Trang sau</a>
+    </nav></div></main></div></body></html>

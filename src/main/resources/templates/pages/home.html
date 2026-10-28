@@ -42,15 +42,14 @@
                 <nav class="home-entries" aria-label="Lối vào chính">
                     <a class="button button--secondary button--medium" href="/tutor/search" th:href="@{/tutor/search}">Danh sách gia sư</a>
                     <a class="button button--outline button--medium" href="/job/discover" th:href="@{/job/discover}">Tin tìm gia sư</a>
-                    <a class="button button--outline button--medium" href="/cart/index" th:href="@{/cart/index}">Danh sách đăng ký</a>
+                    <a class="button button--outline button--medium" href="/cart/index" th:href="@{/cart/index}">Giỏ đăng ký</a>
                 </nav>
             </section>
 
-            <!-- Danh sách khóa học mới công khai từ MySQL -->
+            <!-- DAT-02: danh sách DTO từ Service; tiêu chí mới nhất chờ Q10. -->
             <section class="home-latest" aria-labelledby="home-latest-title">
                 <header class="home-latest__header">
-                    <h2 id="home-latest-title">Khóa học &amp; Lớp mới công khai</h2>
-                    <a class="button button--outline button--medium" href="/catalog/detail" th:href="@{/catalog/detail}">Xem tất cả khóa học</a>
+                    <h2 id="home-latest-title">Dịch vụ &amp; lớp đang nhận đăng ký</h2>
                     <p class="home-latest__meta" th:if="${offerings != null and !offerings.empty}" th:text="${offerings.size() + ' khóa học đang mở đăng ký'}">18 khóa học đang mở đăng ký</p>
                 </header>
 
@@ -59,13 +58,13 @@
                     <article class="card home-offer-card" th:each="item : ${offerings}">
                         <header class="home-offer-card__header">
                             <span class="badge badge--info" th:text="${item.offeringType == T(com.educonnect.lesson.domain.OfferingType).GROUP_CLASS ? 'Lớp nhóm' : 'Dịch vụ 1 kèm 1'}">Dịch vụ 1 kèm 1</span>
-                            <span class="home-offer-card__id" th:text="${item.publicCode}">Mã: OF2001</span>
+                            <span class="home-offer-card__id" th:text="|Mã: ${item.publicCode}|"></span>
                         </header>
                         <h3 class="home-offer-card__title" th:text="${item.title}">Toán 12 - Luyện thi THPT</h3>
                         <p class="home-offer-card__tutor">
-                            Gia sư: <strong th:text="${item.tutorReference != null and item.tutorReference.account != null ? item.tutorReference.account.displayName : 'Gia sư EduConnect'}">Nguyễn Minh Anh</strong>
+                            Gia sư: <a th:href="@{/tutor/profile(id=${item.tutorId})}" th:text="${item.tutorName}">Gia sư</a>
                         </p>
-                        <p class="home-offer-card__subject" th:text="${(item.subjectReference != null ? item.subjectReference.name : 'Môn học') + ' · ' + (item.gradeLevelReference != null ? item.gradeLevelReference.name : 'Khối lớp')}">Toán · Lớp 12</p>
+                        <p class="home-offer-card__subject" th:text="|${item.subject} · ${item.grade}|"></p>
                         <p class="home-offer-card__price">
                             <strong th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">160.005 ₫</strong>
                             <span>/buổi</span>
@@ -79,10 +78,15 @@
                 </div>
 
                 <!-- Trạng thái trống nếu chưa có khóa học -->
-                <section class="empty-state" th:if="${offerings == null or offerings.empty}" aria-labelledby="home-latest-empty-title">
+                <section class="empty-state" th:if="${pageError == null and (offerings == null or offerings.empty)}" aria-labelledby="home-latest-empty-title">
                     <span class="empty-state__icon" aria-hidden="true"></span>
-                    <h3 class="empty-state__title" id="home-latest-empty-title">Chưa có dịch vụ / lớp mới công khai</h3>
-                    <p class="empty-state__description">Hiện tại chưa có khóa học nào được xuất bản. Vui lòng quay lại sau.</p>
+                    <h3 class="empty-state__title" id="home-latest-empty-title">Chưa có dịch vụ / lớp đang nhận đăng ký</h3>
+                    <p class="empty-state__description">Hiện chưa có dịch vụ phù hợp. Vui lòng quay lại sau.</p>
+                </section>
+                <section class="empty-state" th:if="${pageError != null}" aria-labelledby="home-error-title" role="alert">
+                    <h3 class="empty-state__title" id="home-error-title">Chưa thể tải danh sách</h3>
+                    <p class="empty-state__description" th:text="${pageError}"></p>
+                    <a class="button button--outline" th:href="@{/home}">Tải lại</a>
                 </section>
             </section>
         </div>

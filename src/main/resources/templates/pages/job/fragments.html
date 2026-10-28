@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
+<nav th:fragment="navigation" class="job-live-nav" aria-label="Tin tìm gia sư">
+  <a class="button button--outline" th:href="@{/job/discover}">Khám phá tin</a>
+  <a class="button button--outline" th:if="${canPostJob}" th:href="@{/job/my-job}">Tin của tôi</a>
+  <a class="button button--primary" th:if="${canPostJob}" th:href="@{/job/create}">Đăng tin</a>
+</nav>
+<section th:fragment="messages" class="job-live-messages">
+  <div class="alert alert--success" th:if="${success != null}" role="status"><p th:text="${success}"></p></div>
+  <div class="alert alert--error" th:if="${pageError != null}" role="alert"><p th:text="${pageError}"></p><p>Hãy tải lại trang hoặc quay về danh sách để kiểm tra trạng thái mới nhất.</p></div>
+</section>
+<article th:fragment="summary(job)" class="card job-live-panel">
+  <div class="job-live-heading"><h1 th:text="${job.title}"></h1><span class="badge badge--info" th:text="${job.statusLabel}"></span></div>
+  <p class="job-live-muted" th:text="|${job.publicCode} · ${job.learnerName} · ${job.createdAtLabel} (UTC+7)|"></p>
+  <dl class="job-live-grid job-live-facts">
+    <div><dt>Môn học</dt><dd th:text="${job.subject}"></dd></div>
+    <div><dt>Cấp học</dt><dd th:text="${job.grade}"></dd></div>
+    <div><dt>Khu vực</dt><dd th:text="${job.area}"></dd></div>
+    <div><dt>Hình thức</dt><dd th:text="${job.deliveryMode}"></dd></div>
+    <div><dt>Ngân sách mỗi buổi</dt><dd th:text="${#numbers.formatDecimal(job.budgetPerSession, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+    <div><dt>Số buổi dự kiến</dt><dd th:text="${job.sessionCount}"></dd></div>
+  </dl>
+  <h2>Nhu cầu, lịch học và điều kiện</h2>
+  <p class="job-live-copy" th:text="${job.description}"></p>
+</article>
+<section th:fragment="selection(job)" class="card job-live-panel" th:if="${job.selection != null}">
+  <h2>Thỏa thuận đã chốt</h2>
+  <p><strong th:text="${job.selection.tutorName}"></strong><span th:text="${' · ' + #numbers.formatDecimal(job.selection.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></span></p>
+  <p class="job-live-copy" th:text="${job.selection.termsText}"></p>
+  <p class="alert" th:if="${!job.selection.sourceUsed}">Đã chọn gia sư và chốt đề xuất. Chưa tạo đơn hoặc thu tiền.</p>
+  <p class="alert" th:if="${job.selection.sourceUsed}">Thỏa thuận này đã được sử dụng làm nguồn giao dịch.</p>
+</section>
+</body></html>

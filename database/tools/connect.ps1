@@ -1,4 +1,4 @@
-param(
+﻿param(
     [switch]$LoadOnly,
     [switch]$NoPrompt,
     [string]$EnvFile = '.env.local'

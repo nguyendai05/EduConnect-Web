@@ -221,6 +221,65 @@
   overflow-wrap: anywhere;
 }
 
+/* DAT-01: controls scoped to the server-rendered management page. */
+.tutor-manage .tm-control {
+  width: 100%;
+  min-height: var(--control-height, 2.75rem);
+  padding: var(--space-3);
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.tutor-manage .tm-control:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.tutor-manage .tm-invalid { border-color: var(--color-danger); }
+.tutor-manage .tm-muted {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  overflow-wrap: anywhere;
+}
+
+.tutor-manage__filters {
+  display: grid;
+  grid-template-columns: minmax(12rem, 2fr) repeat(2, minmax(9rem, 1fr)) auto;
+  align-items: end;
+  gap: var(--space-3);
+}
+
+.tutor-manage .tm-schedule,
+.tutor-manage .tm-group-fields {
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.tutor-manage .tm-slot {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(6rem, 1fr)) minmax(10rem, 2fr) auto;
+  align-items: end;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+}
+
+.tutor-manage #tm-editor { scroll-margin-top: calc(5rem + var(--space-6)); }
+.tutor-manage .tm-details { margin-top: var(--space-3); }
+.tutor-manage .tm-description { white-space: pre-wrap; margin-block: var(--space-2); }
+.tutor-manage .tutor-manage__row-actions form { margin: 0; }
+
+@media (max-width: 64rem) {
+  .tutor-manage__filters,
+  .tutor-manage .tm-slot { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 64rem) {
   .tutor-manage__toolbar,
   .tutor-manage__chart-controls {

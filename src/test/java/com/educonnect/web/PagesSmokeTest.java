@@ -87,9 +87,19 @@ class PagesSmokeTest {
                 .map(t -> t.attributes().get("src")).toList();
     }
 
+    static boolean requiresDatabase(String url) {
+        return url.split("\\?", 2)[0].equals("/tutor/manage");
+    }
+
     @ParameterizedTest(name = "{0}")
     @MethodSource("pages")
     void pageAndInternalResourcesRender(Page page) throws Exception {
+        // Trang quản lý của Đạt chỉ đăng ký controller trong db-dev.
+        if (requiresDatabase(page.url())) {
+            mvc.perform(get(page.url())).andExpect(status().isNotFound());
+            return;
+        }
+
         var result = mvc.perform(get(page.url())).andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(view().name(page.view())).andReturn();
@@ -118,7 +128,13 @@ class PagesSmokeTest {
             assertFalse(url.contains(".html"), "Legacy URL attribute");
             if (!url.startsWith("/") || url.startsWith("//")) continue;
             var target = url.split("#", 2)[0];
-            if (checkedUrls.add(target)) mvc.perform(get(target)).andExpect(status().isOk());
+            if (checkedUrls.add(target)) {
+                if (requiresDatabase(target)) {
+                    mvc.perform(get(target)).andExpect(status().isNotFound());
+                } else {
+                    mvc.perform(get(target)).andExpect(status().isOk());
+                }
+            }
         }
     }
 
