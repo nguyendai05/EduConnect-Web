@@ -50,6 +50,7 @@
             <section class="home-latest" aria-labelledby="home-latest-title">
                 <header class="home-latest__header">
                     <h2 id="home-latest-title">Khóa học &amp; Lớp mới công khai</h2>
+                    <a class="button button--outline button--medium" href="/catalog/detail" th:href="@{/catalog/detail}">Xem tất cả khóa học</a>
                     <p class="home-latest__meta" th:if="${offerings != null and !offerings.empty}" th:text="${offerings.size() + ' khóa học đang mở đăng ký'}">18 khóa học đang mở đăng ký</p>
                 </header>
 
