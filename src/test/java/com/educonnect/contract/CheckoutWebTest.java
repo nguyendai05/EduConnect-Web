@@ -49,7 +49,7 @@ class CheckoutWebTest {
     }
 
     @Test void getOnlyReadsDraftAndIncludesUncheckedConsentsWithContextPathAndCsrf() throws Exception {
-        when(contracts.draft(any(), eq(4L))).thenReturn(new ContractConfirmationDTO(null, 4L, 0L, "Chưa tạo", "Chưa tạo", null,
+        when(contracts.draft(any(), eq(4L))).thenReturn(new ContractConfirmationDTO(null, 4L, null, 0L, "Chưa tạo", "Chưa tạo", null,
                 "Học viên", "Gia sư", "Toán", "1 kèm 1", BigDecimal.TEN, (short) 2, 1, BigDecimal.valueOf(20), "Điều khoản", "Chưa xác nhận", false));
         mvc.perform(get("/edu/contract/confirm").contextPath("/edu").param("cartItemId", "4").with(learner()))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("action=\"/edu/contract/sign\"")))

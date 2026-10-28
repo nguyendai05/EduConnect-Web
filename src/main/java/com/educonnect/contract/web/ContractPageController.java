@@ -1,6 +1,7 @@
 package com.educonnect.contract.web;
 
 import com.educonnect.contract.ContractConfirmationForm;
+import com.educonnect.contract.InvitationContractForm;
 import com.educonnect.contract.service.ContractService;
 import com.educonnect.security.AccountPrincipal;
 import jakarta.validation.Valid;
@@ -26,13 +27,15 @@ public class ContractPageController {
     @GetMapping("/contract/confirm")
     public String confirm(@RequestParam(value = "contract", required = false) Long contractId,
                           @RequestParam(required = false) Long cartItemId,
+                          @RequestParam(required = false) Long invitationId,
                           @AuthenticationPrincipal AccountPrincipal user, Model model) {
         ContractService service = services.getIfAvailable();
         if (service != null) {
             if (contractId != null) model.addAttribute("confirmation", service.getContract(user, contractId));
-            else if (cartItemId != null) {
+            else if (cartItemId != null || invitationId != null) {
                 try {
-                    model.addAttribute("confirmation", service.draft(user, cartItemId));
+                    model.addAttribute("confirmation", cartItemId != null
+                            ? service.draft(user, cartItemId) : service.draftInvitation(user, invitationId));
                 } catch (IllegalArgumentException error) {
                     model.addAttribute("error", error.getMessage());
                 }
@@ -62,6 +65,25 @@ public class ContractPageController {
         } catch (IllegalArgumentException error) {
             redirect.addFlashAttribute("error", error.getMessage());
             return "redirect:/cart/index";
+        }
+    }
+
+    /** Xác nhận hợp đồng từ lời mời đã chấp thuận. */
+    @PostMapping("/contract/sign-invitation")
+    public String signInvitation(@Valid @ModelAttribute InvitationContractForm form, BindingResult errors,
+                                 @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
+        ContractService service = services.getIfAvailable();
+        if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
+        String back = "redirect:/contract/confirm?invitationId=" + form.invitationId();
+        if (errors.hasErrors()) {
+            redirect.addFlashAttribute("error", "Vui lòng xác nhận đầy đủ ba cam kết");
+            return back;
+        }
+        try {
+            return "redirect:/contract/confirm?contract=" + service.confirmInvitation(user, form);
+        } catch (IllegalArgumentException | ResponseStatusException error) {
+            redirect.addFlashAttribute("error", error instanceof ResponseStatusException r ? r.getReason() : error.getMessage());
+            return back;
         }
     }
 

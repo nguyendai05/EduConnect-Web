@@ -30,7 +30,7 @@ public class DatabaseSecurityConfig {
                         .requestMatchers("/tutor/manage", "/tutor/my-profile", "/contract/tutor-detail")
                             .hasRole("TUTOR")
                         .requestMatchers("/cart/**", "/invitation/create", "/job/create", "/job/my-job", "/job/applicants", "/payment/**",
-                                "/contract/student-detail", "/contract/confirm", "/contract/create", "/contract/sign").hasRole("LEARNER")
+                                "/contract/student-detail", "/contract/confirm", "/contract/create", "/contract/sign", "/contract/sign-invitation").hasRole("LEARNER")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/auth/login").loginProcessingUrl("/auth/login")
                         .usernameParameter("email").failureUrl("/auth/login?error")

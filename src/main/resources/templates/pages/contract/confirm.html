@@ -84,8 +84,9 @@
             <h2 class="card__title">Tóm tắt đăng ký</h2>
             <span class="badge badge--warning" th:text="${confirmation.statusLabel}"></span>
             <div class="confirm-price"><span>Tổng học phí</span><strong th:text="${#numbers.formatDecimal(confirmation.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></div>
-            <form th:if="${confirmation.draft}" method="post" th:action="@{/contract/sign}" id="signContractForm" class="confirm-stack">
-                <input type="hidden" name="cartItemId" th:value="${confirmation.cartItemId}">
+            <form th:if="${confirmation.draft}" method="post" th:action="${confirmation.invitationId != null} ? @{/contract/sign-invitation} : @{/contract/sign}" id="signContractForm" class="confirm-stack">
+                <input type="hidden" name="cartItemId" th:if="${confirmation.cartItemId != null}" th:value="${confirmation.cartItemId}">
+                <input type="hidden" name="invitationId" th:if="${confirmation.invitationId != null}" th:value="${confirmation.invitationId}">
                 <input type="hidden" name="version" th:value="${confirmation.version}">
                 <button class="button button--primary button--large" type="submit">Xác nhận đăng ký</button>
             </form>

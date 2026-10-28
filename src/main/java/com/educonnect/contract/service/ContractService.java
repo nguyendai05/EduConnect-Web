@@ -2,10 +2,14 @@ package com.educonnect.contract.service;
 
 import com.educonnect.contract.CheckoutProperties;
 import com.educonnect.contract.ContractConfirmationForm;
+import com.educonnect.contract.InvitationContractForm;
 import com.educonnect.contract.domain.Contract;
 import com.educonnect.contract.domain.ContractStatus;
 import com.educonnect.contract.dto.ContractConfirmationDTO;
 import com.educonnect.contract.repository.ContractJpaRepository;
+import com.educonnect.invitation.domain.Invitation;
+import com.educonnect.invitation.dto.InvitationSourceResponse;
+import com.educonnect.invitation.service.InvitationService;
 import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.domain.OfferingType;
 import com.educonnect.lesson.domain.Enrollment;
@@ -46,7 +50,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
-/** Catalog checkout only. Drafts are read-only; explicit consent creates the transaction. */
+/** Tạo đơn + hợp đồng từ giỏ (CATALOG) hoặc lời mời đã chấp thuận (INVITATION). Xem dự thảo không tạo giao dịch. */
 @Service
 @Profile("db-dev")
 @Validated
@@ -62,12 +66,19 @@ public class ContractService {
     private EntityManager entityManager;
     private CheckoutProperties properties;
     private Clock clock;
+    private InvitationService invitations;
+
+    /** Dữ liệu chung của một giao dịch, dù nguồn là giỏ hàng hay lời mời. */
+    private record Deal(Long tutorId, String currency, String title, OrderItemType type, BigDecimal unitPrice,
+                        short sessions, int seats, int termsVersion, String terms, Instant tutorAcceptedAt) {
+        BigDecimal total() { return unitPrice.multiply(BigDecimal.valueOf(sessions)).multiply(BigDecimal.valueOf(seats)); }
+    }
 
     public ContractService(CartItemJpaRepository cartItems, OrderJpaRepository orders,
                            OrderItemJpaRepository orderItems, ContractJpaRepository contracts,
                            RegistrationSourceJpaRepository sources, EnrollmentJpaRepository enrollments,
                            CatalogService catalog, EntityManager entityManager,
-                           CheckoutProperties properties, Clock clock) {
+                           CheckoutProperties properties, Clock clock, InvitationService invitations) {
         this.cartItems = cartItems;
         this.orders = orders;
         this.orderItems = orderItems;
@@ -78,6 +89,7 @@ public class ContractService {
         this.entityManager = entityManager;
         this.properties = properties;
         this.clock = clock;
+        this.invitations = invitations;
     }
 
     @Transactional(readOnly = true)
@@ -123,83 +135,126 @@ public class ContractService {
             }
         }
 
-        Order order = createOrder(learnerId, item, offering, creationKey, now);
-        RegistrationSource source = createSource(learnerId, offering, now);
-        OrderItem snapshot = createSnapshot(order, source, item, offering, now);
-        Contract contract = createContract(learnerId, offering, snapshot, now);
-        reserve(contract, item, now);
+        Deal deal = new Deal(offering.getTutorId(), offering.getCurrency(), offering.getTitle(),
+                OrderItemType.valueOf(offering.getOfferingType().name()), offering.getUnitPrice(),
+                offering.getSessionCount(), item.getSeatCount(), offering.getTermsVersion(),
+                offering.getTermsText(), offering.getPublishedAt()); // catalog = lời đề nghị công khai của gia sư
+        RegistrationSource source = RegistrationSource.create();
+        source.setSourceKind(RegistrationSourceKind.CATALOG);
+        source.setOfferingId(offering.getId());
+        Contract contract = book(learnerId, source, deal, creationKey, now);
+        reserve(contract, item.getOfferingId(), item.getSeatCount(), now);
         item.getCartReference().setUpdatedAt(now);
         cartItems.delete(item);
         contracts.flush();
         return contract.getId();
     }
 
-    private Order createOrder(Long learnerId, CartItem item, Offering offering, String creationKey, Instant now) {
+    /** Xem dự thảo hợp đồng từ lời mời đã được hai bên chấp thuận; không tạo đơn. */
+    public ContractConfirmationDTO draftInvitation(AccountPrincipal user, Long invitationId) {
+        Long learnerId = learnerId(user);
+        Invitation invitation = entityManager.find(Invitation.class, invitationId);
+        if (invitation == null || !invitation.getLearnerId().equals(learnerId)) {
+            throw new IllegalArgumentException("Không tìm thấy lời mời");
+        }
+        InvitationSourceResponse source = invitations.lockAcceptedSource(user, invitationId, invitation.getVersion());
+        return ContractConfirmationDTO.draftInvitation(source, invitation.getSubjectReference().getName(),
+                user.getDisplayName(), invitation.getTutorReference().getAccount().getDisplayName());
+    }
+
+    /** Tạo đơn + hợp đồng từ lời mời đã chấp thuận. Gọi lại cùng lời mời trả về hợp đồng cũ. */
+    public Long confirmInvitation(AccountPrincipal user, @Valid InvitationContractForm form) {
+        Long learnerId = learnerId(user);
+        // Cùng thứ tự khóa với luồng giỏ hàng: học viên trước.
+        if (entityManager.find(LearnerProfile.class, learnerId, LockModeType.PESSIMISTIC_WRITE) == null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        String creationKey = "INVITATION-" + form.invitationId();
+        Optional<Contract> existing = contracts.findByLearnerIdAndOrderItemReferenceOrderReferenceCreationKey(learnerId, creationKey);
+        if (existing.isPresent()) return existing.get().getId();
+
+        // Kiểm lại và khóa nguồn tại thời điểm tạo giao dịch.
+        InvitationSourceResponse src = invitations.lockAcceptedSource(user, form.invitationId(), form.version());
+        Invitation invitation = entityManager.find(Invitation.class, src.sourceId());
+        Deal deal = new Deal(src.tutorId(), "VND", "Lời mời học " + invitation.getSubjectReference().getName(),
+                OrderItemType.DIRECT, src.unitPrice(), src.sessionCount(), 1, src.termsVersion(),
+                src.termsText(), src.tutorAcceptedAt());
+        RegistrationSource source = RegistrationSource.create();
+        source.setSourceKind(RegistrationSourceKind.INVITATION);
+        source.setInvitationId(src.sourceId());
+        source.setOfferingId(src.offeringId()); // chỉ để tham khảo, không giữ chỗ
+        Contract contract = book(learnerId, source, deal, creationKey, clock.instant());
+        contracts.flush();
+        return contract.getId();
+    }
+
+    /** Ghi đơn, nguồn, snapshot và hợp đồng cho một giao dịch. */
+    private Contract book(Long learnerId, RegistrationSource source, Deal deal, String creationKey, Instant now) {
+        Order order = createOrder(learnerId, deal, creationKey, now);
+        source.setLearnerId(learnerId);
+        source.setTutorId(deal.tutorId());
+        source.setCreatedAt(now);
+        sources.save(source);
+        OrderItem snapshot = createSnapshot(order, source, deal, now);
+        return createContract(learnerId, deal, snapshot, now);
+    }
+
+    private Order createOrder(Long learnerId, Deal deal, String creationKey, Instant now) {
         Order order = Order.create();
         order.setPublicCode("ORD-" + UUID.randomUUID());
         order.setLearnerId(learnerId);
         order.setStatus(OrderStatus.AWAITING_PAYMENT);
-        order.setTotalAmount(total(item, offering));
-        order.setCurrency(offering.getCurrency());
+        order.setTotalAmount(deal.total());
+        order.setCurrency(deal.currency());
         order.setCreationKey(creationKey);
         order.setCreatedAt(now);
         order.setUpdatedAt(now);
         return orders.save(order);
     }
 
-    private RegistrationSource createSource(Long learnerId, Offering offering, Instant now) {
-        RegistrationSource source = RegistrationSource.create();
-        source.setSourceKind(RegistrationSourceKind.CATALOG);
-        source.setLearnerId(learnerId);
-        source.setTutorId(offering.getTutorId());
-        source.setOfferingId(offering.getId());
-        source.setCreatedAt(now);
-        return sources.save(source);
-    }
-
-    private OrderItem createSnapshot(Order order, RegistrationSource source, CartItem item, Offering offering, Instant now) {
+    private OrderItem createSnapshot(Order order, RegistrationSource source, Deal deal, Instant now) {
         OrderItem snapshot = OrderItem.create();
         snapshot.setOrderId(order.getId());
         snapshot.setLineNumber(1);
         snapshot.setRegistrationSourceId(source.getId());
-        snapshot.setTutorId(offering.getTutorId());
-        snapshot.setTitleSnapshot(offering.getTitle());
-        snapshot.setOfferingTypeSnapshot(OrderItemType.valueOf(offering.getOfferingType().name()));
-        snapshot.setUnitPriceSnapshot(offering.getUnitPrice());
-        snapshot.setSessionCountSnapshot(offering.getSessionCount());
-        snapshot.setSeatCount(item.getSeatCount());
-        snapshot.setLineTotal(order.getTotalAmount());
+        snapshot.setTutorId(deal.tutorId());
+        snapshot.setTitleSnapshot(deal.title());
+        snapshot.setOfferingTypeSnapshot(deal.type());
+        snapshot.setUnitPriceSnapshot(deal.unitPrice());
+        snapshot.setSessionCountSnapshot(deal.sessions());
+        snapshot.setSeatCount(deal.seats());
+        snapshot.setLineTotal(deal.total());
         snapshot.setFeeRateSnapshot(properties.platformFeeRate());
         snapshot.setFeePolicyVersion(properties.feePolicyVersion());
-        snapshot.setTermsVersionSnapshot(offering.getTermsVersion());
-        snapshot.setTermsTextSnapshot(offering.getTermsText());
-        snapshot.setTermsHash(sha256(offering.getTermsText()));
+        snapshot.setTermsVersionSnapshot(deal.termsVersion());
+        snapshot.setTermsTextSnapshot(deal.terms());
+        snapshot.setTermsHash(sha256(deal.terms()));
         snapshot.setCreatedAt(now);
         return orderItems.save(snapshot);
     }
 
-    private Contract createContract(Long learnerId, Offering offering, OrderItem snapshot, Instant now) {
+    private Contract createContract(Long learnerId, Deal deal, OrderItem snapshot, Instant now) {
         Contract contract = Contract.create();
         contract.setPublicCode("CTR-" + UUID.randomUUID());
         contract.setOrderItemId(snapshot.getId());
         contract.setLearnerId(learnerId);
-        contract.setTutorId(offering.getTutorId());
+        contract.setTutorId(deal.tutorId());
         contract.setStatus(ContractStatus.AWAITING_PAYMENT);
         contract.setAgreedTermsText(snapshot.getTermsTextSnapshot());
         contract.setAgreedTermsHash(snapshot.getTermsHash());
         contract.setLearnerAcceptedAt(now);
-        // Catalog is the tutor's published standing offer, not a new tutor signature at learner checkout.
-        contract.setTutorAcceptedAt(offering.getPublishedAt());
+        contract.setTutorAcceptedAt(deal.tutorAcceptedAt());
         contract.setCreatedAt(now);
         return contracts.save(contract);
     }
 
-    private void reserve(Contract contract, CartItem item, Instant now) {
+    /** Giữ chỗ tạm cho dịch vụ/lớp trong danh mục. */
+    private void reserve(Contract contract, Long offeringId, int seats, Instant now) {
         Enrollment reservation = Enrollment.create();
         reservation.setContractId(contract.getId());
-        reservation.setOfferingId(item.getOfferingId());
+        reservation.setOfferingId(offeringId);
         reservation.setLearnerId(contract.getLearnerId());
-        reservation.setSeatCount(item.getSeatCount());
+        reservation.setSeatCount(seats);
         reservation.setStatus(EnrollmentStatus.RESERVED);
         reservation.setReservedUntil(now.plus(properties.reservationTtl()));
         reservation.setCreatedAt(now);
@@ -230,11 +285,6 @@ public class ContractService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         return user.getId();
-    }
-
-    private static BigDecimal total(CartItem item, Offering offering) {
-        return offering.getUnitPrice().multiply(BigDecimal.valueOf(offering.getSessionCount()))
-                .multiply(BigDecimal.valueOf(item.getSeatCount()));
     }
 
     private static byte[] sha256(String text) {
