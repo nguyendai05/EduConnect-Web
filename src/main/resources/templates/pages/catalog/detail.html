@@ -47,7 +47,7 @@
             <section class="empty-state catalog-detail-missing" th:if="${offering == null}" aria-labelledby="offering-missing-title">
                 <span class="empty-state__icon" aria-hidden="true"></span>
                 <h1 class="empty-state__title" id="offering-missing-title">Không tìm thấy dịch vụ / lớp học</h1>
-                <p class="empty-state__description">Mã khóa học không tồn tại trong hệ thống hoặc đã ngừng nhận đăng ký.</p>
+                <p class="empty-state__description" th:text="${error ?: 'Mã dịch vụ không tồn tại hoặc chưa được công khai.'}">Mã dịch vụ không tồn tại hoặc chưa được công khai.</p>
                 <div class="page-local-1 catalog-detail-missing__actions">
                     <a class="button button--primary button--medium" href="/tutor/search" th:href="@{/catalog/detail}">Chọn dịch vụ khác</a>
                     <a class="button button--outline button--medium" href="/home" th:href="@{/home}">Về trang chủ</a>
@@ -65,49 +65,51 @@
                         </div>
                         <h1 class="catalog-hero__title" id="offering-title" th:text="${offering.title}">Tên dịch vụ</h1>
                         <div class="catalog-hero__tags">
-                            <span class="tag" th:text="${offering.subjectReference != null ? offering.subjectReference.name : 'Toán học'}">Môn học</span>
-                            <span class="tag tag--neutral" th:text="${offering.gradeLevelReference != null ? offering.gradeLevelReference.name : 'Lớp 12'}">Khối lớp</span>
-                            <span class="tag tag--format" th:text="${offering.deliveryModeReference != null ? offering.deliveryModeReference.name : 'Trực tuyến'}">Hình thức</span>
+                            <span class="tag" th:text="${offering.subject}">Môn học</span>
+                            <span class="tag tag--neutral" th:text="${offering.grade}">Cấp học</span>
+                            <span class="tag tag--format" th:text="${offering.deliveryMode}">Hình thức</span>
                         </div>
                         <div class="catalog-hero__tutor">
-                            <span class="avatar avatar--medium" role="img" aria-label="Ảnh đại diện gia sư" th:text="${#strings.substring(offering.tutorReference != null and offering.tutorReference.account != null ? offering.tutorReference.account.displayName : 'GS', 0, 1)}">GS</span>
+                            <span class="avatar avatar--medium" aria-hidden="true" th:text="${#strings.isEmpty(offering.tutorName) ? 'GS' : #strings.substring(offering.tutorName, 0, 1)}">GS</span>
                             <span class="catalog-hero__tutor-copy">
-                                <strong th:text="${offering.tutorReference != null and offering.tutorReference.account != null ? offering.tutorReference.account.displayName : 'Gia sư EduConnect'}">Tên gia sư</strong>
-                                <span th:text="'Mã gia sư: GS' + ${offering.tutorId}">Mã gia sư: GS201</span>
+                                <strong th:text="${offering.tutorName}">Tên gia sư</strong>
+                                <span th:text="${offering.tutorHeadline}">Giới thiệu gia sư</span>
                             </span>
-                            <a class="button button--outline button--medium" href="/tutor/search" th:href="@{/catalog/detail}">Chọn thêm dịch vụ hoặc lớp học</a>
+                            <a class="button button--outline button--medium" th:href="@{/tutor/profile(id=${offering.tutorId})}">Xem hồ sơ gia sư</a>
                         </div>
                     </section>
 
                     <!-- Khối mô tả khóa học -->
                     <section class="card catalog-section" aria-labelledby="offering-description-title">
                         <h2 id="offering-description-title">Mô tả khóa học</h2>
-                        <p class="catalog-section__copy" th:text="${offering.description}">Mô tả chi tiết nội dung chương trình học.</p>
+                        <p class="catalog-section__copy" th:text="${detail.description}">Mô tả chi tiết nội dung chương trình học.</p>
                     </section>
 
                     <!-- Khối thông số chi tiết -->
                     <section class="card catalog-section" aria-labelledby="offering-info-title">
                         <h2 id="offering-info-title">Thông tin dịch vụ &amp; lịch học</h2>
                         <dl class="catalog-section__info">
-                            <div class="info-row"><dt class="info-row__label">Mã dịch vụ</dt><dd class="info-row__value" th:text="'OF' + ${offering.id}">OF2001</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Gia sư phụ trách</dt><dd class="info-row__value" th:text="${offering.tutorReference != null and offering.tutorReference.account != null ? offering.tutorReference.account.displayName : 'Gia sư EduConnect'}">Gia sư</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Môn học</dt><dd class="info-row__value" th:text="${offering.subjectReference != null ? offering.subjectReference.name : '—'}">Toán</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Cấp học</dt><dd class="info-row__value" th:text="${offering.gradeLevelReference != null ? offering.gradeLevelReference.name : '—'}">Lớp 12</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Mã dịch vụ</dt><dd class="info-row__value" th:text="${offering.publicCode}">Mã dịch vụ</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Gia sư phụ trách</dt><dd class="info-row__value" th:text="${offering.tutorName}">Gia sư</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Môn học</dt><dd class="info-row__value" th:text="${offering.subject}">Môn học</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Cấp học</dt><dd class="info-row__value" th:text="${offering.grade}">Cấp học</dd></div>
                             <div class="info-row"><dt class="info-row__label">Số buổi học</dt><dd class="info-row__value" th:text="${offering.sessionCount + ' buổi'}">10 buổi</dd></div>
                             <div class="info-row"><dt class="info-row__label">Thời lượng</dt><dd class="info-row__value" th:text="${offering.durationMinutes + ' phút / buổi'}">90 phút / buổi</dd></div>
                             <div class="info-row"><dt class="info-row__label">Học phí mỗi buổi</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(offering.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">250.000 ₫</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Hình thức dạy</dt><dd class="info-row__value" th:text="${offering.deliveryModeReference != null ? offering.deliveryModeReference.name : 'Trực tuyến'}">Trực tuyến</dd></div>
-                            <div class="info-row"><dt class="info-row__label">Khu vực</dt><dd class="info-row__value" th:text="${offering.areaReference != null ? offering.areaReference.name : 'Toàn quốc'}">Toàn quốc</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Hình thức dạy</dt><dd class="info-row__value" th:text="${offering.deliveryMode}">Hình thức</dd></div>
+                            <div class="info-row"><dt class="info-row__label">Khu vực</dt><dd class="info-row__value" th:text="${offering.area}">Khu vực</dd></div>
+                            <div class="info-row" th:if="${offering.groupClass}"><dt class="info-row__label">Sức chứa</dt><dd class="info-row__value" th:text="|${detail.capacity} học viên|"></dd></div>
+                            <div class="info-row" th:if="${offering.groupClass}"><dt class="info-row__label">Thời gian lớp học</dt><dd class="info-row__value" th:text="|${#temporals.format(detail.startsOn, 'dd/MM/yyyy')} – ${#temporals.format(detail.endsOn, 'dd/MM/yyyy')}|"></dd></div>
                             <div class="info-row">
                                 <dt class="info-row__label">Lịch học</dt>
                                 <dd class="info-row__value">
                                     <span th:if="${timeSlots != null and !timeSlots.empty}">
-                                        <span th:each="slot, iter : ${timeSlots}" th:text="${(slot.weekday == 7 ? 'Chủ nhật' : 'Thứ ' + (slot.weekday + 1)) + ' (' + slot.startTime + ' - ' + slot.endTime + ') ' + slot.timeZone + (!iter.last ? ', ' : '')}"></span>
+                                        <span th:each="slot, iter : ${timeSlots}" th:text="${slot.dayLabel + ' (' + slot.startTime + ' - ' + slot.endTime + ') ' + slot.timeZone + (!iter.last ? ', ' : '')}"></span>
                                     </span>
                                     <span th:if="${timeSlots == null or timeSlots.empty}">Chưa công bố lịch học</span>
                                 </dd>
                             </div>
-                            <div class="info-row"><dt class="info-row__label">Điều khoản cam kết</dt><dd class="info-row__value" th:text="${offering.termsText != null ? offering.termsText : 'Điều khoản tiêu chuẩn đảm bảo chất lượng giảng dạy.'}">Điều khoản</dd></div>
+                            <div class="info-row"><dt class="info-row__label" th:text="|Điều khoản (phiên bản ${detail.termsVersion})|">Điều khoản</dt><dd class="info-row__value catalog-detail-terms" th:text="${detail.termsText}">Điều khoản</dd></div>
                         </dl>
                     </section>
                 </div>
@@ -121,20 +123,26 @@
                             <span>/buổi</span>
                         </p>
                         <p class="catalog-booking__estimate">
-                            Tổng gói học: <strong th:text="${#numbers.formatDecimal(offering.unitPrice * offering.sessionCount, 0, 'POINT', 0, 'COMMA') + ' ₫'}">2.500.000 ₫</strong>
+                            Tổng gói mỗi học viên: <strong th:text="${#numbers.formatDecimal(offering.packagePrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">Tổng giá gói</strong>
                             <span th:text="'(' + ${offering.sessionCount} + ' buổi)'">(10 buổi)</span>
                         </p>
 
-                        <form class="catalog-booking__actions" method="post" th:action="@{/cart/add}">
+                        <section class="alert catalog-booking__alert" role="status" th:if="${issue != null}"><p class="alert__message" th:text="${issue}"></p></section>
+                        <form class="catalog-booking__actions" method="post" th:action="@{/cart/add}" th:if="${canRegister and issue == null}">
                             <input type="hidden" name="offeringId" th:value="${offering.id}">
                             <input type="hidden" name="version" th:value="${offering.version}">
-                            <label for="booking-seats">Số chỗ đăng ký</label>
-                            <input class="input" id="booking-seats" name="seats" type="number" min="1" value="1" required
-                                   th:max="${availableSeats}" th:readonly="${offering.offeringType.name() == 'SERVICE'}">
-                            <p th:if="${offering.offeringType.name() == 'GROUP_CLASS'}" th:text="|Còn ${availableSeats} chỗ|"></p>
-                            <button class="button button--primary button--large" type="submit" th:disabled="${issue != null}">Thêm vào danh sách đăng ký</button>
+                            <label class="catalog-seats__label" for="booking-seats">Số chỗ đăng ký</label>
+                            <span class="input-control catalog-seats__control">
+                                <input class="input-control__input" id="booking-seats" name="seats" type="number" min="1" value="1" required
+                                       th:max="${availableSeats}" th:readonly="${!offering.groupClass}">
+                            </span>
+                            <button class="button button--primary button--large" type="submit">Thêm vào danh sách đăng ký</button>
                             <a class="button button--outline" th:href="@{/cart/index}">Xem danh sách đăng ký</a>
                         </form>
+                        <div class="catalog-booking__actions" th:if="${currentUser == null and issue == null}"><a class="button button--primary" th:href="@{/auth/login}">Đăng nhập để đăng ký</a></div>
+                        <p class="catalog-booking__note" th:if="${currentUser != null and !canRegister and issue == null}">Đăng ký học dành cho tài khoản học viên/phụ huynh.</p>
+                        <p class="catalog-booking__note" th:if="${offering.groupClass}" th:text="|Số chỗ còn lại: ${availableSeats} / ${detail.capacity}|"></p>
+                        <a class="button button--outline" th:if="${issue == null and (canRegister or currentUser == null)}" th:href="@{/invitation/create(tutorId=${offering.tutorId},offeringId=${offering.id})}">Gửi lời mời gia sư</a>
                         <p class="catalog-booking__note">Thêm vào danh sách chưa giữ chỗ hoặc thu tiền</p>
                     </section>
                 </aside>

@@ -1,47 +1,41 @@
 package com.educonnect.web;
 
-import com.educonnect.lesson.domain.Offering;
-import com.educonnect.lesson.domain.OfferingStatus;
-import com.educonnect.tutor.domain.TutorReviewStatus;
-import com.educonnect.user.domain.AccountStatus;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import com.educonnect.lesson.repository.OfferingJpaRepository;
-import org.springframework.beans.factory.ObjectProvider;
+import com.educonnect.tutor.service.TutorDiscoveryService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
- * Controller hiển thị trang chủ (HomePage - Đạt).
- * Lấy danh sách khóa học thật từ CSDL để hiển thị và cho phép thêm vào giỏ.
+ * Tác giả: Trường Đạt. DAT-02: trang chủ hiển thị dịch vụ công khai từ DB qua Service.
  */
 @Controller
+@Profile("db-dev")
 public class HomePageController {
 
-    private ObjectProvider<OfferingJpaRepository> offeringRepoProvider;
+    private final TutorDiscoveryService service;
 
-    public HomePageController(ObjectProvider<OfferingJpaRepository> offeringRepoProvider) {
-        this.offeringRepoProvider = offeringRepoProvider;
+    public HomePageController(TutorDiscoveryService service) {
+        this.service = service;
     }
 
     /**
-     * GET / hoặc /home: Hiển thị trang chủ kèm các khóa học mới công khai từ MySQL.
+     * GET / hoặc /home: Hiển thị tối đa 6 dịch vụ/lớp đang nhận đăng ký.
      */
     @GetMapping({"/", "/home"})
-    public String home(Model model) {
-        OfferingJpaRepository offeringRepo = offeringRepoProvider.getIfAvailable();
-        List<Offering> offerings = Collections.emptyList();
-        if (offeringRepo != null) {
-            // Lấy các khóa học đã được duyệt & công khai
-            offerings = offeringRepo.findByStatusAndTutorReferenceReviewStatusAndTutorReferenceAccountStatus(
-                    OfferingStatus.PUBLISHED, TutorReviewStatus.APPROVED, AccountStatus.ACTIVE,
-                    PageRequest.of(0, 6, Sort.by("id").descending())).getContent();
+    public String home(Model model, HttpServletResponse response) {
+        model.addAttribute("uiPreviewEnabled", false);
+        try {
+            model.addAttribute("offerings", service.homeOfferings());
+        } catch (DataAccessException unavailable) {
+            response.setStatus(503);
+            model.addAttribute("offerings", List.of());
+            model.addAttribute("pageError", "Chưa thể tải danh sách dịch vụ. Vui lòng thử lại sau.");
         }
-        model.addAttribute("offerings", offerings);
         return "pages/home";
     }
 }

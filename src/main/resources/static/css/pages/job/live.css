@@ -1,0 +1,26 @@
+/* Tác giả: Trường Đạt. DAT-04: form và dữ liệu server cho bảy trang tin/duyệt tin. */
+.job-live { display: grid; gap: var(--space-5); padding-block: var(--space-6); min-width: 0; }
+.job-live-nav, .job-live-actions, .job-live-heading { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.job-live-heading { justify-content: space-between; }
+.job-live-panel { padding: var(--space-6); display: grid; gap: var(--space-4); min-width: 0; }
+.job-live-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.job-live-layout { display: grid; grid-template-columns: minmax(0, 1fr) 22rem; gap: var(--space-5); align-items: start; }
+.job-live-stack, .job-live-list { display: grid; gap: var(--space-4); min-width: 0; }
+.job-live-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.job-live .form-field { display: grid; gap: var(--space-2); min-width: 0; }
+.job-live-copy { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.7; }
+.job-live-muted, .job-live-facts dt { color: var(--color-text-secondary); }
+.job-live-facts dd { margin: var(--space-1) 0; }
+.job-live .alert { flex-direction: column; align-items: flex-start; overflow-wrap: anywhere; }
+.job-live-messages:empty { display: none; }
+.job-live-consent { display: flex; align-items: flex-start; gap: var(--space-3); line-height: 1.6; }
+.job-live-consent input { flex: 0 0 auto; margin-top: var(--space-1); }
+.job-live h1 { font-size: var(--font-size-2xl); overflow-wrap: anywhere; }
+.job-live h2 { font-size: var(--font-size-xl); overflow-wrap: anywhere; }
+.job-live .input-control { width: 100%; }
+@media (max-width: 64rem) { .job-live-layout { grid-template-columns: 1fr; } }
+@media (max-width: 40rem) {
+  .job-live-grid, .job-live-list { grid-template-columns: 1fr; }
+  .job-live-panel { padding: var(--space-4); }
+  .job-live-actions { align-items: stretch; flex-direction: column; }
+}

@@ -22,6 +22,11 @@ class PreviewDisabledTest {
 
     @ParameterizedTest @MethodSource("pages")
     void previewScriptsCanBeDisabled(PagesSmokeTest.Page page) throws Exception {
+        if (PagesSmokeTest.requiresDatabase(page.url())) {
+            mvc.perform(get(page.url())).andExpect(status().isNotFound());
+            return;
+        }
+
         var result = mvc.perform(get(page.url())).andExpect(status().isOk()).andReturn();
         var html = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
         assertTrue(PagesSmokeTest.scriptUrls(html).stream().noneMatch(url -> url.startsWith("/js/preview/")));

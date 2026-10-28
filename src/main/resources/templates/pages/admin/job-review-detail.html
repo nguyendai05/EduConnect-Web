@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: page(~{::title}, &#x27;/admin/job-review-queue&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: page(~{::title}, &#x27;/admin/job-review-queue&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Chi tiết duyệt tin tìm gia sư | Edu Connect</title>
 <th:block th:fragment="styles">
@@ -19,115 +19,34 @@
 <link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
 <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
 <link rel="stylesheet" href="/css/pages/admin/job-review-detail.css" th:href="@{/css/pages/admin/job-review-detail.css}">
+<link rel="stylesheet" th:href="@{/css/pages/job/live.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/select.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 
 </th:block>
 <th:block th:fragment="scripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('tutor-review-data')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('payout-data')}"></th:block>
 <script src="/js/core/admin-sidebar.js" defer th:src="@{/js/core/admin-sidebar.js}"></script>
 <script src="/js/core/admin-header.js" defer th:src="@{/js/core/admin-header.js}"></script>
-<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
-<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('job-review-data')}"></th:block>
 <script src="/js/pages/admin/job-review-detail.js" defer th:src="@{/js/pages/admin/job-review-detail.js}"></script>
 </th:block>
 </head>
-<body class="job-review-detail-page" th:fragment="content">
-    <a class="job-review-detail__skip-link" href="#review-main">Đến nội dung chính</a>
-    <div class="admin-shell" data-component="admin-shell" data-job-review-detail>
-        <th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
-        <th:block th:replace="~{fragments/header-admin :: header(${active}, 'v3')}"></th:block>
-        <main class="admin-shell__workspace" id="review-main" tabindex="-1">
-            <div class="admin-shell__content job-review-detail">
-                <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="/admin/job-review-queue" th:href="@{/admin/job-review-queue}">Tin tìm gia sư</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Chi tiết duyệt tin</span></li></ol></nav>
-                <header class="job-review-detail__header">
-                    <div><div class="job-review-detail__title-row"><h1>Duyệt tin tìm gia sư</h1><span class="badge badge--warning" data-detail-status>Chờ duyệt</span><span class="badge badge--warning" data-detail-flag hidden>Cần kiểm tra</span></div></div>
-                    <a class="button button--secondary" href="/admin/job-review-queue" th:href="@{/admin/job-review-queue}"><span aria-hidden="true">←</span>Quay lại hàng đợi</a>
-                </header>
-                <section class="alert alert--error" role="alert" data-store-error hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title">Không đọc được dữ liệu kiểm duyệt</h2><p class="alert__message">Chi tiết tin lấy từ <strong>EduStore</strong> (js/data/fixtures.js + js/data/store.js). Hai script chưa được nạp nên trang ẩn nội dung thay vì hiển thị dữ liệu mẫu.</p></div></section>
-                <div class="empty-state" data-detail-not-found hidden><span class="empty-state__icon" aria-hidden="true"></span><h2 class="empty-state__title">Không tìm thấy tin tìm gia sư</h2><p class="empty-state__description">Mã tin trong đường dẫn thiếu hoặc không tồn tại trong dữ liệu dùng chung. Quay lại hàng đợi để chọn tin cần xem.</p><a class="button button--outline" href="/admin/job-review-queue" th:href="@{/admin/job-review-queue}">Về hàng đợi</a></div>
-                <section class="alert alert--contextual" tabindex="-1" aria-live="polite" data-detail-decision hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title" data-decision-title></h2><p class="alert__message" data-decision-description></p><p class="alert__message" data-decision-trace hidden></p></div></section>
-                <div class="job-review-detail__layout" data-detail-content>
-                    <div class="job-review-detail__sections">
-                        <section class="card" aria-labelledby="review-poster-heading">
-                            <header class="card__header job-review-detail__section-heading"><img src="/assets/icons/profile.svg" alt="" th:src="@{/assets/icons/profile.svg}"><h2 class="card__title" id="review-poster-heading">1. Thông tin người đăng</h2></header>
-                            <div class="card__body job-review-detail__poster"><span class="avatar avatar--large" aria-hidden="true" data-detail-avatar>—</span><div><h3 data-detail-poster>—</h3><p data-detail-poster-role>—</p><p data-detail-student>—</p><p data-detail-response-rate>—</p><p class="job-review-detail__submitted">Gửi lúc <time data-detail-submitted>—</time></p></div><span class="badge badge--info" data-detail-id>—</span></div>
-                        </section>
-                        <section class="card" aria-labelledby="review-content-heading">
-                            <header class="card__header job-review-detail__section-heading"><img src="/assets/icons/receipt.svg" alt="" th:src="@{/assets/icons/receipt.svg}"><h2 class="card__title" id="review-content-heading">2. Nội dung tin tìm gia sư</h2></header>
-                            <div class="card__body job-review-detail__copy"><span class="job-review-detail__label">Tiêu đề hiển thị</span><h3 data-detail-title></h3><span class="job-review-detail__label">Mô tả mục tiêu học tập</span><p data-detail-description></p><div class="job-review-detail__schedule" data-detail-focus-wrap hidden><h3>Trọng tâm cần dạy</h3><ul data-detail-focus></ul></div></div>
-                        </section>
-                        <section class="card" aria-labelledby="review-needs-heading">
-                            <header class="card__header job-review-detail__section-heading"><img src="/assets/icons/library.svg" alt="" th:src="@{/assets/icons/library.svg}"><h2 class="card__title" id="review-needs-heading">3. Điều kiện và nhu cầu học tập</h2></header>
-                            <div class="card__body"><dl class="job-review-detail__needs-grid">
-                                <div class="info-row info-row--stacked job-review-detail__info"><dt class="info-row__label">Môn học</dt><dd class="info-row__value" data-detail-subject></dd></div>
-                                <div class="info-row info-row--stacked job-review-detail__info"><dt class="info-row__label">Khối lớp / đối tượng</dt><dd class="info-row__value" data-detail-grade></dd></div>
-                                <div class="info-row info-row--stacked job-review-detail__info"><dt class="info-row__label">Thời lượng và tần suất</dt><dd class="info-row__value" data-detail-duration></dd></div>
-                                <div class="info-row info-row--stacked job-review-detail__info"><dt class="info-row__label">Ngân sách đề xuất</dt><dd class="info-row__value job-review-detail__budget" data-detail-budget></dd></div>
-                                <div class="info-row info-row--stacked job-review-detail__info"><dt class="info-row__label">Hình thức học</dt><dd class="info-row__value" data-detail-format></dd></div>
-                                <div class="info-row info-row--stacked job-review-detail__info"><dt class="info-row__label">Khu vực</dt><dd class="info-row__value" data-detail-region></dd></div>
-                            </dl><div class="job-review-detail__schedule"><h3>Lịch học dự kiến</h3><ul data-detail-schedule></ul></div></div>
-                        </section>
-                        <section class="card" aria-labelledby="review-requirements-heading">
-                            <header class="card__header job-review-detail__section-heading"><img src="/assets/icons/certificate.svg" alt="" th:src="@{/assets/icons/certificate.svg}"><h2 class="card__title" id="review-requirements-heading">4. Yêu cầu đối với gia sư</h2></header>
-                            <div class="card__body"><dl><div class="info-row"><dt class="info-row__label">Kinh nghiệm</dt><dd class="info-row__value" data-detail-experience></dd></div><div class="info-row"><dt class="info-row__label">Trình độ</dt><dd class="info-row__value" data-detail-qualification></dd></div><div class="info-row"><dt class="info-row__label">Giới tính</dt><dd class="info-row__value" data-detail-gender></dd></div></dl><div class="job-review-detail__tutor-note"><h3>Ghi chú bổ sung từ người đăng</h3><p data-detail-tutor-note></p></div></div>
-                        </section>
-                        <section class="card" aria-labelledby="review-private-heading" data-detail-private-card hidden>
-                            <header class="card__header job-review-detail__section-heading"><img src="/assets/icons/lock.svg" alt="" th:src="@{/assets/icons/lock.svg}"><h2 class="card__title" id="review-private-heading">5. Ghi chú gửi kèm — chỉ quản trị nhìn thấy</h2></header>
-                            <div class="card__body"><div class="job-review-detail__inspection"><h3>Người đăng ghi chú riêng khi gửi tin</h3><blockquote data-detail-private-note></blockquote></div></div>
-                        </section>
-                        <section class="alert alert--contextual alert--warning job-review-detail__signal" aria-labelledby="review-signal-heading" data-detail-signal-card hidden>
-                            <span class="alert__icon alert__icon--shield-alert" aria-hidden="true"></span><div class="alert__content"><h2 class="alert__title" id="review-signal-heading">6. Nội dung cần kiểm tra</h2><p class="alert__message" data-detail-signal></p><p class="alert__message">Việc gắn cờ chưa khẳng định tin vi phạm. Hãy đối chiếu nội dung thực tế trước khi duyệt hoặc yêu cầu chỉnh sửa.</p></div>
-                        </section>
-                    </div>
-                    <aside class="card job-review-detail__actions" aria-labelledby="review-actions-heading">
-                        <header class="card__header"><h2 class="card__title" id="review-actions-heading">Kiểm duyệt và thao tác</h2></header>
-                        <div class="card__body">
-                            <dl><div class="info-row info-row--compact"><dt class="info-row__label">Mã tin</dt><dd class="info-row__value" data-summary-id></dd></div><div class="info-row info-row--compact"><dt class="info-row__label">Người đăng</dt><dd class="info-row__value" data-summary-poster></dd></div><div class="info-row info-row--compact"><dt class="info-row__label">Môn / lớp</dt><dd class="info-row__value" data-summary-subject></dd></div><div class="info-row info-row--compact"><dt class="info-row__label">Hồ sơ đã nộp</dt><dd class="info-row__value" data-detail-applications>—</dd></div><div class="info-row info-row--compact"><dt class="info-row__label">Trạng thái</dt><dd class="info-row__value"><span class="badge" data-summary-status></span></dd></div><div class="info-row info-row--compact"><dt class="info-row__label">Rà soát</dt><dd class="info-row__value" data-summary-signal></dd></div><div class="info-row info-row--compact"><dt class="info-row__label">Đăng / hết hạn</dt><dd class="info-row__value" data-detail-posted>—</dd></div></dl>
-                            <div class="job-review-detail__checklist"><h3>Gợi ý kiểm tra nhanh</h3><ul><li>Nội dung và mục tiêu học tập rõ ràng.</li><li>Lịch học, khu vực và học phí phù hợp.</li><li>Thông tin liên hệ tuân thủ quy định.</li></ul></div>
-                            <button class="button button--primary" type="button" data-review-approve><img src="/assets/icons/check-circle.svg" alt="" th:src="@{/assets/icons/check-circle.svg}">Duyệt và đăng tuyển</button>
-                            <p class="job-review-detail__action-help">Chuyển tin sang <strong>Đang tuyển</strong> để gia sư có thể ứng tuyển.</p>
-                            <button class="button button--outline" type="button" data-review-reject><img src="/assets/icons/cancel.svg" alt="" th:src="@{/assets/icons/cancel.svg}">Từ chối tin</button>
-                            <p class="job-review-detail__action-help">Nhập lý do cụ thể để người đăng có thể chỉnh sửa và gửi lại.</p>
-                            <div data-review-close-group hidden>
-                                <button class="button button--secondary" type="button" data-review-close><img src="/assets/icons/lock.svg" alt="" th:src="@{/assets/icons/lock.svg}">Đóng tin</button>
-                                <p class="job-review-detail__action-help">Ngừng nhận hồ sơ mới; tin về nhóm <strong>Đã đóng</strong> trong hàng đợi.</p>
-                            </div>
-                            <div data-review-reopen-group hidden>
-                                <button class="button button--secondary" type="button" data-review-reopen><img src="/assets/icons/check-double.svg" alt="" th:src="@{/assets/icons/check-double.svg}">Mở lại tin</button>
-                                <p class="job-review-detail__action-help">Cho phép tin đã đóng nhận hồ sơ trở lại (nhóm <strong>Đang tuyển</strong>).</p>
-                            </div>
-                        </div>
-
-                    </aside>
-                </div>
-                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải đúng nội dung tin và sử dụng chức năng kiểm duyệt.</p></noscript>
-            </div>
-        </main>
-        <dialog class="modal" id="review-approve-modal" aria-labelledby="approve-modal-title" data-component="modal">
-            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="approve-modal-title">Xác nhận duyệt tin</h2></div><button class="modal__close" type="button" aria-label="Đóng xác nhận duyệt" data-modal-close>×</button></header>
-                <div class="modal__body"><p>Tin sẽ chuyển sang Đang tuyển và hiển thị tới gia sư.</p><div class="alert alert--warning" data-approve-warning hidden><span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><h3 class="alert__title">Tin có nội dung cần kiểm tra</h3><p class="alert__message" data-approve-signal></p></div></div><dl><div class="info-row"><dt class="info-row__label">Mã tin</dt><dd class="info-row__value" data-approve-id></dd></div><div class="info-row"><dt class="info-row__label">Tiêu đề</dt><dd class="info-row__value" data-approve-title></dd></div><div class="info-row"><dt class="info-row__label">Người đăng</dt><dd class="info-row__value" data-approve-poster></dd></div></dl><p class="job-review-detail__error" role="alert" data-review-error="approve" hidden></p></div>
-                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận duyệt</button></footer>
-            </div>
-        </dialog>
-        <dialog class="modal" id="review-reject-modal" aria-labelledby="reject-modal-title" data-component="modal">
-            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--danger" aria-hidden="true"></span><div class="modal__heading"><h2 id="reject-modal-title">Từ chối tin tìm gia sư</h2></div><button class="modal__close" type="button" aria-label="Đóng lý do từ chối" data-modal-close>×</button></header>
-                <div class="modal__body"><p>Nêu rõ nội dung cần chỉnh sửa để người đăng có thể gửi lại tin.</p><dl><div class="info-row"><dt class="info-row__label">Mã tin</dt><dd class="info-row__value" data-reject-id></dd></div></dl><div class="textarea-field"><div class="textarea-field__label-row"><label class="textarea-field__label" for="review-reject-reason">Lý do từ chối <span class="textarea-field__required" aria-hidden="true">*</span></label><span class="textarea-field__counter" data-reason-count>0/1000</span></div><textarea class="textarea-control" id="review-reject-reason" rows="5" maxlength="1000" minlength="10" required aria-describedby="review-reason-help review-reason-error" placeholder="Nhập lý do từ chối và hướng dẫn người đăng chỉnh sửa…" data-reject-reason></textarea><p class="textarea-field__help" id="review-reason-help">Nhập từ 10 đến 1000 ký tự. Không đưa thông tin cá nhân nhạy cảm vào lý do.</p><p class="job-review-detail__error" role="alert" id="review-reason-error" data-reason-error hidden></p></div><div class="job-review-detail__reason-templates"><h3>Mẫu lý do thường gặp</h3><div><button class="button button--secondary button--small" type="button" data-reason-template="contact">Chứa thông tin liên hệ ngoài</button><button class="button button--secondary button--small" type="button" data-reason-template="budget">Ngân sách chưa rõ ràng</button><button class="button button--secondary button--small" type="button" data-reason-template="content">Nội dung chưa đủ chi tiết</button></div></div><p class="job-review-detail__error" role="alert" data-review-error="reject" hidden></p></div>
-                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--danger" type="button" data-modal-confirm>Xác nhận từ chối</button></footer>
-            </div>
-        </dialog>
-        <dialog class="modal" id="review-archive-modal" aria-labelledby="archive-modal-title" data-component="modal">
-            <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--confirm" aria-hidden="true"></span><div class="modal__heading"><h2 id="archive-modal-title">Xác nhận thay đổi nhóm hàng đợi</h2></div><button class="modal__close" type="button" aria-label="Đóng xác nhận thay đổi nhóm" data-modal-close>×</button></header>
-                <div class="modal__body"><p>Tin chỉ đổi nhóm kiểm duyệt; nội dung tin và hồ sơ đã nộp giữ nguyên, không tạo đơn hay bút toán nào.</p><dl><div class="info-row"><dt class="info-row__label">Mã tin</dt><dd class="info-row__value" data-archive-id></dd></div><div class="info-row"><dt class="info-row__label">Nhóm hiện tại</dt><dd class="info-row__value" data-archive-bucket></dd></div></dl><div class="textarea-field"><div class="textarea-field__label-row"><label class="textarea-field__label" for="archive-note">Ghi chú xử lý (không bắt buộc)</label><span class="textarea-field__counter" data-archive-note-count>0/500</span></div><textarea class="textarea-control" id="archive-note" rows="3" maxlength="500" placeholder="Ví dụ: người đăng đã tìm được gia sư, gỡ tin theo yêu cầu." data-archive-note></textarea><p class="textarea-field__help">Ghi chú được lưu vào vết kiểm duyệt cùng mã người xử lý.</p></div><p class="job-review-detail__error" role="alert" data-review-error="archive" hidden></p></div>
-                <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Xem lại</button><button class="modal__button modal__button--primary" type="button" data-modal-confirm>Xác nhận</button></footer>
-            </div>
-        </dialog>
-    </div>
-    <th:block th:replace="${scripts}"></th:block>
-</body>
-</html>
+<body th:fragment="content"><div class="admin-shell">
+<th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
+<th:block th:replace="~{fragments/header-admin :: header(${active}, 'v3')}"></th:block>
+<main class="admin-shell__workspace"><div class="admin-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><a class="button button--outline" th:href="@{/admin/job-review-queue}">Về hàng đợi duyệt tin</a>
+<th:block th:if="${job != null}"><div class="job-live-layout"><div class="job-live-stack">
+  <th:block th:replace="~{pages/job/fragments :: summary(${job})}"></th:block>
+  <th:block th:replace="~{pages/job/fragments :: selection(${job})}"></th:block>
+</div><aside class="card job-live-panel"><h2>Quyết định duyệt tin</h2>
+  <section class="job-live-stack" th:if="${decision != null}"><strong th:text="${decision.action == 'approve' ? 'Quyết định gần nhất: phê duyệt' : 'Quyết định gần nhất: từ chối'}"></strong><p class="job-live-copy" th:text="${decision.reason}"></p><p class="job-live-muted" th:text="|Admin #${decision.actorId} · phiên bản tin ${decision.resultingVersion}|"></p></section>
+  <form class="job-live-stack" method="post" th:if="${job.status.name() == 'PENDING' and reviewRequest != null}" th:action="@{/admin/job-review-detail(id=${job.id})}" data-job-live-form>
+    <input type="hidden" name="version" th:value="${job.version}">
+    <label class="form-field">Lý do quyết định<textarea class="textarea-control" name="reason" th:text="${reviewRequest.reason}" rows="8" maxlength="2000" required></textarea></label>
+    <button class="button button--primary" name="action" value="approve" type="submit">Phê duyệt và công khai</button><button class="button button--outline" name="action" value="reject" type="submit">Từ chối duyệt</button>
+  </form>
+  <p class="job-live-muted" th:if="${job.status.name() != 'PENDING'}">Tin không ở trạng thái chờ duyệt. Muốn xử lý tin khác, quay về hàng đợi.</p>
+</aside></div></th:block></div></main></div></body></html>

@@ -39,7 +39,8 @@
                 <div class="catalog-options">
                     <article class="card catalog-section" th:each="offering : ${offerings.content}">
                         <h2 th:text="${offering.title}"></h2>
-                        <p th:text="${offering.tutorReference.account.displayName}"></p>
+                        <p th:text="${offering.tutorName}"></p>
+                        <p th:text="|${offering.subject} · ${offering.grade} · ${offering.deliveryMode}|"></p>
                         <p th:text="|${offering.sessionCount} buổi × ${offering.durationMinutes} phút|"></p>
                         <p th:text="${#numbers.formatDecimal(offering.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫ / buổi'}"></p>
                         <a class="button button--primary" th:href="@{/catalog/detail(id=${offering.id})}">Xem chi tiết và đăng ký</a>
