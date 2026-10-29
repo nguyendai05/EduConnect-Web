@@ -194,7 +194,27 @@
           </section>
         </section>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-orders" aria-labelledby="tm-tab-orders" hidden>
-          <div class="empty-state"><h2 class="empty-state__title">Đơn đăng ký</h2><p class="empty-state__description">Chưa có dữ liệu đơn được kết nối. Mục này sẽ cập nhật sau khi hoàn tất phần giao dịch.</p></div>
+          <div class="empty-state" th:if="${registrations == null or registrations.empty}"><h2 class="empty-state__title">Chưa có học viên đăng ký</h2><p class="empty-state__description">Học viên đăng ký dịch vụ hoặc lớp của bạn sẽ hiện ở đây, kèm tiến độ buổi học.</p></div>
+          <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Học viên đã đăng ký" tabindex="0" th:if="${registrations != null and !registrations.empty}">
+            <table class="table">
+              <thead><tr><th scope="col">Dịch vụ / lớp</th><th scope="col">Học viên</th><th scope="col">Trạng thái</th><th scope="col">Tiến độ</th><th scope="col">Thao tác</th></tr></thead>
+              <tbody>
+                <tr th:each="r : ${registrations}">
+                  <td th:text="${r.title}"></td>
+                  <td th:text="${r.partnerName}"></td>
+                  <td><span class="badge" th:text="${r.statusLabel}"></span></td>
+                  <td th:text="${r.doneSessions + ' / ' + r.totalSessions + ' buổi'}"></td>
+                  <td>
+                    <a class="button button--outline button--small" th:href="@{/contract/tutor-detail(contract=${r.id})}">Xem hợp đồng</a>
+                    <form method="post" th:action="@{/contract/session/attend-next}" th:if="${r.attendSession != null}">
+                      <input type="hidden" name="contract" th:value="${r.id}"><input type="hidden" name="back" value="manage">
+                      <button class="button button--primary button--small" type="submit" th:text="${'Điểm danh buổi ' + r.attendSession}"></button>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-revenue" aria-labelledby="tm-tab-revenue" hidden>
           <section class="alert alert--contextual tutor-manage__revenue-note" aria-labelledby="tm-revenue-note-title">

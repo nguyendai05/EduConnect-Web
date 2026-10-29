@@ -9,7 +9,15 @@
             <nav class="user-header__nav" aria-label="Điều hướng chính">
                 <a class="user-header__nav-link" th:href="@{/home}">Trang chủ</a>
                 <a class="user-header__nav-link" th:href="@{/tutor/search}">Tìm gia sư</a>
+                <a class="user-header__nav-link" sec:authorize="hasRole('LEARNER')" th:href="@{/catalog/detail}">Khóa học</a>
+                <a class="user-header__nav-link" sec:authorize="hasRole('LEARNER')" th:href="@{/cart/index}">Giỏ hàng</a>
+                <a class="user-header__nav-link" sec:authorize="hasRole('LEARNER')" th:href="@{/job/my-job}">Tin của tôi</a>
+                <a class="user-header__nav-link" sec:authorize="hasRole('TUTOR')" th:href="@{/job/discover}">Tin tìm gia sư</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/manage}">Quản lý lớp</a>
+                <a class="user-header__nav-link" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/contract/my}">Hợp đồng</a>
+                <a class="user-header__nav-link" sec:authorize="hasRole('LEARNER')" th:href="@{/order/history}">Đơn đăng ký</a>
+                <a class="user-header__nav-link" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/chat/messages}">Tin nhắn</a>
+                <a class="user-header__nav-link" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/wallet/overview}">Ví</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}">Quản trị</a>
             </nav>
             <div class="user-header__actions" th:if="${currentUser != null}">
