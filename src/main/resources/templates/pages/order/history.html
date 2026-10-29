@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Đơn đăng ký — Edu Connect</title>
 <th:block th:fragment="styles">
@@ -27,24 +27,14 @@
 <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
 <link rel="stylesheet" href="/css/pages/order/history.css" th:href="@{/css/pages/order/history.css}">
 </th:block>
-<th:block th:fragment="headScripts">
-
-</th:block>
+<th:block th:fragment="headScripts"></th:block>
 <th:block th:fragment="scripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
 <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/core/tabs.js" defer th:src="@{/js/core/tabs.js}"></script>
-<script src="/js/core/modal.js" defer th:src="@{/js/core/modal.js}"></script>
-<script src="/js/core/toast.js" defer th:src="@{/js/core/toast.js}"></script>
-<script src="/js/core/pagination.js" defer th:src="@{/js/core/pagination.js}"></script>
-<script src="/js/core/search-input.js" defer th:src="@{/js/core/search-input.js}"></script>
 <script src="/js/pages/order/history.js" defer th:src="@{/js/pages/order/history.js}"></script>
 </th:block>
 </head>
 <body class="order-history-page" th:fragment="content">
-    <a class="order-history__skip-link" href="#order-main">Đến nội dung chính</a>
     <div class="user-shell" data-component="user-shell">
         <th:block th:replace="~{fragments/header-user :: header(${active}, 'v11')}"></th:block>
 
@@ -53,308 +43,125 @@
                 <header class="page-header order-history__header">
                     <div class="page-header__title-block">
                         <h1 class="page-header__title">Đơn đăng ký</h1>
-                        <p class="page-header__description">Toàn bộ đơn đăng ký học của bạn, trạng thái đơn và trạng thái thanh toán của từng đơn.</p>
+                        <p class="page-header__description">Toàn bộ đơn đăng ký học của bạn và trạng thái của từng đơn.</p>
                     </div>
-                    <span class="badge badge--info order-history__demo-badge">Bản xem trước · Giao dịch mô phỏng</span>
                 </header>
 
-                <section class="alert alert--contextual order-history__scope" aria-labelledby="oh-scope-title">
-                    <span class="alert__icon" aria-hidden="true"></span>
-                    <div class="alert__content">
-                        <h2 class="alert__title" id="oh-scope-title">Ba khái niệm riêng biệt</h2>
-                        <p class="alert__message">Trang này liệt kê ĐƠN ĐĂNG KÝ (mã OD-…) kèm trạng thái thanh toán. HỢP ĐỒNG (mã HD-…) là bản ký kết sinh ra từ đơn và xem ở trang chi tiết hợp đồng. LEDGER VÍ (ký quỹ, giải ngân, hoàn tiền) xem tại <a href="/wallet/overview#transactions" th:href="@{/wallet/overview#transactions}">Lịch sử giao dịch ví</a> — không nằm trong danh sách dưới đây.</p>
-                    </div>
-                </section>
-
-                <p class="alert alert--warning order-history__notice" id="oh-param-alert" role="alert" data-oh-param-alert hidden></p>
-                <p class="alert alert--error order-history__notice" id="oh-id-alert" role="alert" data-oh-id-alert hidden></p>
-                <p class="alert alert--warning order-history__notice" id="oh-persona-alert" role="alert" data-oh-persona-alert hidden></p>
-
-                <section class="order-history__summary" aria-label="Tóm tắt đơn đăng ký">
+                <section class="order-history__summary" aria-label="Tóm tắt đơn đăng ký" th:if="${history != null}">
                     <article class="stat-card stat-card--compact order-history__metric">
                         <div class="stat-card__header"><h2 class="order-history__metric-label">Tổng số đơn</h2></div>
-                        <p class="order-history__metric-value"><strong class="stat-card__value" data-oh-stat-count>0</strong><span class="stat-card__unit">đơn</span></p>
-                        <p class="stat-card__description">Tính từ dữ liệu đơn của store demo.</p>
+                        <p class="order-history__metric-value"><strong class="stat-card__value" th:text="${history.all}">0</strong><span class="stat-card__unit">đơn</span></p>
+                        <p class="stat-card__description">Mọi đơn bạn đã tạo qua danh mục, lời mời và tin tìm gia sư.</p>
                     </article>
                     <article class="stat-card stat-card--compact order-history__metric">
                         <div class="stat-card__header"><h2 class="order-history__metric-label">Tổng giá trị đơn</h2></div>
-                        <p class="order-history__metric-value"><strong class="stat-card__value" data-oh-stat-total>0</strong><span class="stat-card__unit">VND</span></p>
-                        <p class="stat-card__description">Tổng theo snapshot giá của từng đơn, không phải số dư ví.</p>
+                        <p class="order-history__metric-value"><strong class="stat-card__value" th:text="${#numbers.formatDecimal(history.totalValue, 0, 'POINT', 0, 'COMMA')}">0</strong><span class="stat-card__unit">₫</span></p>
+                        <p class="stat-card__description">Tổng theo giá đã chốt của từng đơn, không phải số dư ví.</p>
                     </article>
                     <article class="stat-card stat-card--compact order-history__metric">
                         <div class="stat-card__header"><h2 class="order-history__metric-label">Đang chờ xử lý</h2></div>
-                        <p class="order-history__metric-value"><strong class="stat-card__value" data-oh-stat-pending>0</strong><span class="stat-card__unit">đơn</span></p>
-                        <p class="stat-card__description">Đơn mới tạo, chờ thanh toán hoặc đang chờ hủy.</p>
+                        <p class="order-history__metric-value"><strong class="stat-card__value" th:text="${history.pending}">0</strong><span class="stat-card__unit">đơn</span></p>
+                        <p class="stat-card__description">Đơn chờ thanh toán hoặc đang chờ hủy.</p>
                     </article>
                 </section>
 
-                <section class="order-history__toolbar" aria-label="Lọc và tìm kiếm đơn đăng ký">
-                    <div class="tabs tabs--contained" data-tabs data-oh-status-tabs>
-                        <div class="tabs__list" role="tablist" aria-label="Trạng thái đơn đăng ký">
-                            <button class="tabs__tab" type="button" role="tab" id="oh-tab-all" aria-selected="true" aria-controls="oh-results" data-oh-status="all">Tất cả <span class="tabs__badge" data-oh-count="all">0</span></button>
-                            <button class="tabs__tab" type="button" role="tab" id="oh-tab-created" aria-selected="false" aria-controls="oh-results" tabindex="-1" data-oh-status="created">Mới tạo <span class="tabs__badge" data-oh-count="created">0</span></button>
-                            <button class="tabs__tab" type="button" role="tab" id="oh-tab-awaiting_payment" aria-selected="false" aria-controls="oh-results" tabindex="-1" data-oh-status="awaiting_payment">Chờ thanh toán <span class="tabs__badge" data-oh-count="awaiting_payment">0</span></button>
-                            <button class="tabs__tab" type="button" role="tab" id="oh-tab-active" aria-selected="false" aria-controls="oh-results" tabindex="-1" data-oh-status="active">Đang thực hiện <span class="tabs__badge" data-oh-count="active">0</span></button>
-                            <button class="tabs__tab" type="button" role="tab" id="oh-tab-completed" aria-selected="false" aria-controls="oh-results" tabindex="-1" data-oh-status="completed">Hoàn tất <span class="tabs__badge" data-oh-count="completed">0</span></button>
-                            <button class="tabs__tab" type="button" role="tab" id="oh-tab-cancellation_pending" aria-selected="false" aria-controls="oh-results" tabindex="-1" data-oh-status="cancellation_pending">Đang chờ hủy <span class="tabs__badge" data-oh-count="cancellation_pending">0</span></button>
-                            <button class="tabs__tab" type="button" role="tab" id="oh-tab-cancelled" aria-selected="false" aria-controls="oh-results" tabindex="-1" data-oh-status="cancelled">Đã hủy <span class="tabs__badge" data-oh-count="cancelled">0</span></button>
+                <section class="order-history__toolbar" aria-label="Lọc và tìm kiếm đơn đăng ký" th:if="${history != null}">
+                    <nav class="tabs tabs--contained" aria-label="Trạng thái đơn đăng ký">
+                        <div class="tabs__list">
+                            <a class="tabs__tab" th:classappend="${status == null} ? 'is-active'" th:href="@{/order/history(q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Tất cả <span class="tabs__badge" th:text="${history.all}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'AWAITING_PAYMENT'} ? 'is-active'" th:href="@{/order/history(status=AWAITING_PAYMENT, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Chờ thanh toán <span class="tabs__badge" th:text="${history.count('AWAITING_PAYMENT')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'PAID'} ? 'is-active'" th:href="@{/order/history(status=PAID, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Đã thanh toán <span class="tabs__badge" th:text="${history.count('PAID')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'IN_PROGRESS'} ? 'is-active'" th:href="@{/order/history(status=IN_PROGRESS, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Đang thực hiện <span class="tabs__badge" th:text="${history.count('IN_PROGRESS')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'COMPLETED'} ? 'is-active'" th:href="@{/order/history(status=COMPLETED, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Hoàn tất <span class="tabs__badge" th:text="${history.count('COMPLETED')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'CANCELLATION_PENDING'} ? 'is-active'" th:href="@{/order/history(status=CANCELLATION_PENDING, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Đang chờ hủy <span class="tabs__badge" th:text="${history.count('CANCELLATION_PENDING')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'CANCELLED'} ? 'is-active'" th:href="@{/order/history(status=CANCELLED, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Đã hủy <span class="tabs__badge" th:text="${history.count('CANCELLED')}"></span></a>
                         </div>
-                    </div>
-                    <form class="order-history__filters" role="search" data-oh-filters>
-                        <div class="search-input search-input--compact" data-search-input>
+                    </nav>
+                    <form class="order-history__filters" role="search" method="get" th:action="@{/order/history}">
+                        <input type="hidden" name="status" th:value="${status}" th:if="${status != null}">
+                        <div class="search-input search-input--compact">
                             <label class="sr-only" for="oh-search">Tìm kiếm đơn đăng ký</label>
-                            <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
-                            <input id="oh-search" type="search" name="query" placeholder="Tìm theo mã đơn, tên dịch vụ/lớp, gia sư…" autocomplete="off" maxlength="200" data-oh-search>
-                            <button class="search-input__clear" type="button" aria-label="Xóa từ khóa tìm kiếm" data-clear-search hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+                            <input id="oh-search" type="search" name="q" th:value="${q}" placeholder="Tìm theo mã đơn, tên dịch vụ/lớp, gia sư…" autocomplete="off" maxlength="200">
                         </div>
                         <div class="select-field">
-                            <label class="sr-only" for="oh-channel">Kênh tạo đơn</label>
-                            <select class="select-control select-control--native" id="oh-channel" name="channel" data-oh-channel>
-                                <option value="all">Kênh: Tất cả</option>
-                                <option value="INVITATION">Qua lời mời</option>
-                                <option value="JOB">Qua tin tìm gia sư</option>
-                                <option value="GROUP_CLASS">Qua lớp nhóm</option>
+                            <label class="sr-only" for="oh-source">Nguồn đơn</label>
+                            <select class="select-control select-control--native" id="oh-source" name="source">
+                                <option value="">Nguồn: Tất cả</option>
+                                <option value="CATALOG" th:selected="${source?.name() == 'CATALOG'}">Danh mục dịch vụ</option>
+                                <option value="INVITATION" th:selected="${source?.name() == 'INVITATION'}">Lời mời</option>
+                                <option value="JOB_APPLICATION" th:selected="${source?.name() == 'JOB_APPLICATION'}">Tin tìm gia sư</option>
                             </select>
                         </div>
                         <div class="select-field">
                             <label class="sr-only" for="oh-from">Tạo từ ngày</label>
-                            <input class="select-control select-control--native" id="oh-from" type="date" name="from" data-oh-from>
+                            <input class="select-control select-control--native" id="oh-from" type="date" name="from" th:value="${from}">
                         </div>
                         <div class="select-field">
                             <label class="sr-only" for="oh-to">Tạo đến ngày</label>
-                            <input class="select-control select-control--native" id="oh-to" type="date" name="to" data-oh-to>
+                            <input class="select-control select-control--native" id="oh-to" type="date" name="to" th:value="${to}">
                         </div>
                         <div class="select-field">
                             <label class="sr-only" for="oh-sort">Sắp xếp đơn</label>
-                            <select class="select-control select-control--native" id="oh-sort" name="sort" data-oh-sort>
-                                <option value="newest">Mới nhất</option>
-                                <option value="oldest">Cũ nhất</option>
-                                <option value="amount-desc">Tổng tiền cao trước</option>
-                                <option value="amount-asc">Tổng tiền thấp trước</option>
+                            <select class="select-control select-control--native" id="oh-sort" name="sort" onchange="this.form.submit()">
+                                <option value="newest" th:selected="${sort == 'newest'}">Mới nhất</option>
+                                <option value="oldest" th:selected="${sort == 'oldest'}">Cũ nhất</option>
                             </select>
                         </div>
+                        <button class="button button--primary" type="submit">Lọc</button>
                     </form>
-                    <div class="order-history__results-heading">
-                        <p data-oh-result-summary aria-live="polite" aria-atomic="true">Đang tải danh sách đơn…</p>
-                        <button class="button button--ghost button--small" type="button" data-oh-reset hidden>Xóa bộ lọc</button>
-                    </div>
                 </section>
 
-                <section id="oh-results" class="order-history__results" role="tabpanel" aria-labelledby="oh-tab-all" tabindex="0" data-oh-results>
-                    <div class="table-frame" data-oh-table hidden>
-                        <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách đơn đăng ký, cuộn ngang để xem đầy đủ" tabindex="0" data-component="table">
-                            <table class="table table--review order-history__table">
-                                <caption class="table__caption table__caption--sr-only">Đơn đăng ký theo trạng thái và bộ lọc. Mỗi hàng gồm snapshot giá, trạng thái đơn, trạng thái thanh toán và liên kết hợp đồng nếu có.</caption>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Đơn &amp; kênh</th>
-                                        <th scope="col">Nội dung (snapshot)</th>
-                                        <th scope="col">Tổng tiền</th>
-                                        <th scope="col">Trạng thái đơn</th>
-                                        <th scope="col">Thanh toán</th>
-                                        <th scope="col">Hợp đồng</th>
-                                        <th scope="col">Ngày tạo</th>
-                                        <th scope="col" class="table__action-heading">Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-oh-list></tbody>
-                            </table>
-                        </div>
-                        <div class="order-history__table-footer table-footer">
-                            <nav class="pagination pagination--table" aria-label="Phân trang đơn đăng ký" data-component="pagination" data-pagination data-oh-pagination data-total="0" data-page-size="5" data-current="1" data-last-page="1">
-                                <p class="pagination__summary">Hiển thị <strong data-range-start>0</strong>–<strong data-range-end>0</strong> trong <strong data-total-count>0</strong> đơn</p>
-                                <div class="pagination__controls">
-                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="previous" aria-label="Trang trước" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Trước</span></button>
-                                    <span class="pagination__controls" data-page-numbers><button class="pagination__button is-current" type="button" data-page="1" aria-current="page">1</button></span>
-                                    <button class="pagination__button pagination__button--wide" type="button" data-page-action="next" aria-label="Trang sau" disabled><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
-                                </div>
-                            </nav>
-                            <div class="table-footer__page-size">
-                                <label for="oh-page-size">Số đơn mỗi trang</label>
-                                <select class="select-control select-control--native" id="oh-page-size" data-oh-page-size>
-                                    <option value="5" selected>5</option>
-                                    <option value="10">10</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="empty-state" data-component="empty-state" data-oh-empty hidden>
-                        <span class="empty-state__icon" aria-hidden="true"></span>
-                        <h2 class="empty-state__title">Không tìm thấy đơn phù hợp</h2>
-                        <p class="empty-state__description">Thử đổi từ khóa, chọn kênh hoặc khoảng ngày khác, hay xóa bộ lọc để xem toàn bộ đơn đăng ký.</p>
-                        <button class="button button--outline" type="button" data-oh-reset>Xóa bộ lọc</button>
-                    </div>
-                </section>
+                <div class="empty-state" th:if="${history == null or history.rows.empty}">
+                    <h2 class="empty-state__title">Không có đơn đăng ký nào</h2>
+                    <p class="empty-state__description">Đơn xuất hiện ở đây sau khi bạn xác nhận hợp đồng, hoặc thử bỏ bớt bộ lọc.</p>
+                </div>
 
-                <noscript><p class="empty-state__description">Vui lòng bật JavaScript để tải danh sách đơn đăng ký từ dữ liệu mẫu.</p></noscript>
+                <section class="order-history__results" th:if="${history != null and !history.rows.empty}">
+                    <p class="order-history__results-heading"><span><strong th:text="${history.totalElements}"></strong> đơn phù hợp</span></p>
+                    <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách đơn đăng ký" tabindex="0">
+                        <table class="table table--review order-history__table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã đơn</th>
+                                    <th scope="col">Nội dung</th>
+                                    <th scope="col">Nguồn</th>
+                                    <th scope="col">Tổng tiền</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Ngày tạo</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="o : ${history.rows}">
+                                    <th scope="row" th:text="${o.orderCode}"></th>
+                                    <td><span th:text="${o.title}"></span><br><small th:text="${o.tutorName}"></small></td>
+                                    <td th:text="${o.sourceLabel}"></td>
+                                    <td class="table__amount" th:text="${#numbers.formatDecimal(o.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></td>
+                                    <td><span class="badge" th:text="${o.statusLabel}"></span></td>
+                                    <td><time th:text="${#temporals.format(o.createdAt, 'dd/MM/yyyy')}"></time></td>
+                                    <td>
+                                        <div class="order-history__row-actions">
+                                            <a class="button button--primary button--small" th:if="${o.payable}" th:href="@{/payment/checkout(contract=${o.contractId})}">Thanh toán</a>
+                                            <a class="button button--outline button--small" th:href="@{/contract/student-detail(contract=${o.contractId})}">Xem hợp đồng</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav class="pagination pagination--table" aria-label="Phân trang đơn đăng ký" th:if="${history.totalPages > 1}">
+                        <p class="pagination__summary">Trang <strong th:text="${history.page + 1}"></strong> / <strong th:text="${history.totalPages}"></strong> · <strong th:text="${history.totalElements}"></strong> đơn</p>
+                        <div class="pagination__controls">
+                            <a class="pagination__button pagination__button--wide" th:if="${history.hasPrevious()}" th:href="@{/order/history(status=${status}, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort}, page=${history.page - 1})}">Trước</a>
+                            <a class="pagination__button pagination__button--wide" th:if="${history.hasNext()}" th:href="@{/order/history(status=${status}, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort}, page=${history.page + 1})}">Sau</a>
+                        </div>
+                    </nav>
+                </section>
             </div>
         </main>
 
         <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v2')}"></th:block>
     </div>
-
-    <template id="oh-row-template">
-        <tr data-oh-row>
-            <th scope="row">
-                <div class="table__primary" data-oh-row-id></div>
-                <span class="table__reference" data-oh-row-channel></span>
-                <small data-oh-row-source></small>
-            </th>
-            <td>
-                <span data-oh-row-item></span>
-                <small data-oh-row-snapshot></small>
-            </td>
-            <td class="table__amount">
-                <strong data-oh-row-total></strong>
-                <small data-oh-row-terms></small>
-            </td>
-            <td>
-                <span class="badge" data-oh-row-status></span>
-                <small data-oh-row-status-note></small>
-            </td>
-            <td>
-                <span class="badge" data-oh-row-payment></span>
-                <small data-oh-row-payment-note></small>
-            </td>
-            <td data-oh-row-contract></td>
-            <td><time class="table__submitted" data-oh-row-date></time></td>
-            <td class="table__action"><div class="order-history__row-actions" data-oh-row-actions></div></td>
-        </tr>
-    </template>
-
-    <dialog class="modal" id="oh-detail-modal" aria-labelledby="oh-detail-title" aria-describedby="oh-detail-desc">
-        <div class="modal__surface">
-            <header class="modal__header">
-                <span class="modal__icon modal__icon--info" aria-hidden="true"></span>
-                <div class="modal__heading"><h2 id="oh-detail-title">Chi tiết đơn đăng ký</h2></div>
-                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
-            </header>
-            <div class="modal__body">
-                <p id="oh-detail-desc">Thông tin đơn, snapshot giá/điều khoản, các phiên thanh toán, trạng thái hủy/hoàn tiền và liên kết hợp đồng nếu có.</p>
-                <div class="order-history__detail" data-oh-detail></div>
-            </div>
-            <footer class="modal__footer">
-                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Đóng</button>
-                <button class="modal__button modal__button--primary" type="button" data-modal-confirm hidden>Xác nhận</button>
-            </footer>
-        </div>
-    </dialog>
-
-    <dialog class="modal" id="oh-cancel-modal" aria-labelledby="oh-cancel-title" aria-describedby="oh-cancel-desc">
-        <div class="modal__surface">
-            <header class="modal__header">
-                <span class="modal__icon modal__icon--danger" aria-hidden="true"></span>
-                <div class="modal__heading"><h2 id="oh-cancel-title">Hủy đơn đăng ký</h2></div>
-                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
-            </header>
-            <div class="modal__body">
-                <p id="oh-cancel-desc">Hủy đơn tạo YÊU CẦU HỦY và tính tiền hoàn theo chính sách demo. Trạng thái hoàn tiền là khái niệm riêng với trạng thái hủy; phần đã giải ngân cho gia sư không hoàn theo demo policy.</p>
-                <div class="order-history__form">
-                    <p class="order-history__form-target" data-oh-cancel-target></p>
-                    <div class="form-field">
-                        <label class="form-field__label" for="oh-cancel-policy">Chính sách hoàn tiền (giả định demo, chưa chốt)</label>
-                        <select class="select-control select-control--native" id="oh-cancel-policy" data-oh-cancel-policy></select>
-                        <p class="form-field__message" id="oh-cancel-policy-note" data-oh-cancel-policy-note></p>
-                    </div>
-                    <p class="order-history__preview" id="oh-cancel-preview" data-oh-cancel-preview aria-live="polite"></p>
-                    <div class="textarea-field">
-                        <div class="textarea-field__label-row">
-                            <label class="textarea-field__label" for="oh-cancel-reason">Lý do hủy <span class="textarea-field__required" aria-hidden="true">*</span></label>
-                        </div>
-                        <textarea class="textarea-control" id="oh-cancel-reason" data-oh-cancel-reason minlength="5" maxlength="400" required aria-describedby="oh-cancel-reason-help oh-cancel-error"></textarea>
-                        <p class="textarea-field__help" id="oh-cancel-reason-help">Từ 5 đến 400 ký tự. Lý do được lưu vào yêu cầu hủy mẫu.</p>
-                        <p class="form-field__message--error" id="oh-cancel-error" data-oh-cancel-error hidden></p>
-                    </div>
-                </div>
-            </div>
-            <footer class="modal__footer">
-                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
-                <button class="modal__button modal__button--danger" type="button" data-modal-confirm>Hủy đơn</button>
-            </footer>
-        </div>
-    </dialog>
-
-    <dialog class="modal" id="oh-review-modal" aria-labelledby="oh-review-title" aria-describedby="oh-review-desc">
-        <div class="modal__surface">
-            <header class="modal__header">
-                <span class="modal__icon modal__icon--confirm" aria-hidden="true"></span>
-                <div class="modal__heading"><h2 id="oh-review-title">Đánh giá sau khi hoàn tất</h2></div>
-                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
-            </header>
-            <div class="modal__body">
-                <p id="oh-review-desc">Chỉ đơn hoàn tất và chưa đánh giá mới gửi được. Đánh giá gắn với mã đơn, hợp đồng và gia sư của đơn đó.</p>
-                <div class="order-history__form">
-                    <p class="order-history__form-target" data-oh-review-target></p>
-                    <div class="form-field">
-                        <label class="form-field__label" for="oh-review-rating">Điểm đánh giá <span class="form-field__required" aria-hidden="true">*</span></label>
-                        <select class="select-control select-control--native" id="oh-review-rating" data-oh-review-rating aria-describedby="oh-review-error">
-                            <option value="5">5 — Rất hài lòng</option>
-                            <option value="4">4 — Hài lòng</option>
-                            <option value="3">3 — Bình thường</option>
-                            <option value="2">2 — Chưa tốt</option>
-                            <option value="1">1 — Rất tệ</option>
-                        </select>
-                    </div>
-                    <div class="textarea-field">
-                        <div class="textarea-field__label-row">
-                            <label class="textarea-field__label" for="oh-review-comment">Nhận xét <span class="textarea-field__required" aria-hidden="true">*</span></label>
-                        </div>
-                        <textarea class="textarea-control" id="oh-review-comment" data-oh-review-comment minlength="10" maxlength="600" required aria-describedby="oh-review-comment-help oh-review-error"></textarea>
-                        <p class="textarea-field__help" id="oh-review-comment-help">Từ 10 đến 600 ký tự.</p>
-                        <p class="form-field__message--error" id="oh-review-error" data-oh-review-error hidden></p>
-                    </div>
-                </div>
-            </div>
-            <footer class="modal__footer">
-                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
-                <button class="modal__button modal__button--primary" type="button" data-modal-confirm>Gửi đánh giá</button>
-            </footer>
-        </div>
-    </dialog>
-
-    <dialog class="modal" id="oh-report-modal" aria-labelledby="oh-report-title" aria-describedby="oh-report-desc">
-        <div class="modal__surface">
-            <header class="modal__header">
-                <span class="modal__icon modal__icon--danger" aria-hidden="true"></span>
-                <div class="modal__heading"><h2 id="oh-report-title">Báo cáo vấn đề</h2></div>
-                <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
-            </header>
-            <div class="modal__body">
-                <p id="oh-report-desc">Báo cáo được gửi tới quản trị với mã RP-…. Minh chứng chỉ là metadata mẫu; không có tệp nào được tải lên server. Báo cáo đang mở trùng đối tượng sẽ bị chặn.</p>
-                <div class="order-history__form">
-                    <p class="order-history__form-target" data-oh-report-target></p>
-                    <div class="form-field">
-                        <label class="form-field__label" for="oh-report-reason">Lý do báo cáo <span class="form-field__required" aria-hidden="true">*</span></label>
-                        <select class="select-control select-control--native" id="oh-report-reason" data-oh-report-reason aria-describedby="oh-report-error"></select>
-                    </div>
-                    <div class="form-field">
-                        <label class="form-field__label" for="oh-report-shots">Số ảnh minh chứng (mẫu, 0–5)</label>
-                        <select class="select-control select-control--native" id="oh-report-shots" data-oh-report-shots>
-                            <option value="0" selected>0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                    <div class="textarea-field">
-                        <div class="textarea-field__label-row">
-                            <label class="textarea-field__label" for="oh-report-note">Mô tả thêm</label>
-                        </div>
-                        <textarea class="textarea-control" id="oh-report-note" data-oh-report-note maxlength="800" aria-describedby="oh-report-note-help oh-report-error"></textarea>
-                        <p class="textarea-field__help" id="oh-report-note-help">Tối đa 800 ký tự, tùy chọn.</p>
-                        <p class="form-field__message--error" id="oh-report-error" data-oh-report-error hidden></p>
-                    </div>
-                </div>
-            </div>
-            <footer class="modal__footer">
-                <button class="modal__button modal__button--secondary" type="button" data-modal-close autofocus>Quay lại</button>
-                <button class="modal__button modal__button--danger" type="button" data-modal-confirm>Gửi báo cáo</button>
-            </footer>
-        </div>
-    </dialog>
-
     <th:block th:replace="${scripts}"></th:block>
 </body>
 </html>

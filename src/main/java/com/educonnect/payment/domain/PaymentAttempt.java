@@ -61,7 +61,7 @@ public class PaymentAttempt {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.payment.domain.Payment paymentReference;
+    private Payment paymentReference;
 
     protected PaymentAttempt() {}
 
@@ -105,5 +105,5 @@ public class PaymentAttempt {
     public Instant getExpiresAt() { return expiresAt; }
     public void setExpiresAt(Instant expiresAt) { this.expiresAt = expiresAt; }
 
-    public com.educonnect.payment.domain.Payment getPaymentReference() { return paymentReference; }
+    public Payment getPaymentReference() { return paymentReference; }
 }

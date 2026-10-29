@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.Instant;
+import com.educonnect.user.domain.UserAccount;
 
 /** Mapping order_status_history; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -42,11 +43,11 @@ public class OrderStatusHistory {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.order.domain.Order orderReference;
+    private Order orderReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "actor_user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.user.domain.UserAccount actorUserReference;
+    private UserAccount actorUserReference;
 
     protected OrderStatusHistory() {}
 
@@ -78,7 +79,7 @@ public class OrderStatusHistory {
     public String getActorRoleCode() { return actorRoleCode; }
     public void setActorRoleCode(String actorRoleCode) { this.actorRoleCode = actorRoleCode; }
 
-    public com.educonnect.order.domain.Order getOrderReference() { return orderReference; }
+    public Order getOrderReference() { return orderReference; }
 
-    public com.educonnect.user.domain.UserAccount getActorUserReference() { return actorUserReference; }
+    public UserAccount getActorUserReference() { return actorUserReference; }
 }

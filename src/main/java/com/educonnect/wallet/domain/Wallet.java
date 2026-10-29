@@ -1,6 +1,7 @@
 package com.educonnect.wallet.domain;
 
 import jakarta.persistence.*;
+import com.educonnect.user.domain.UserAccount;
 
 /** Mapping wallets; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -17,11 +18,11 @@ public class Wallet {
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private com.educonnect.user.domain.UserAccount account;
+    private UserAccount account;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ledger_account_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.wallet.domain.LedgerAccount ledgerAccountReference;
+    private LedgerAccount ledgerAccountReference;
 
     protected Wallet() {}
 
@@ -33,8 +34,8 @@ public class Wallet {
     public Long getLedgerAccountId() { return ledgerAccountId; }
     public void setLedgerAccountId(Long ledgerAccountId) { this.ledgerAccountId = ledgerAccountId; }
 
-    public com.educonnect.user.domain.UserAccount getAccount() { return account; }
-    public void setAccount(com.educonnect.user.domain.UserAccount account) { this.account = account; }
+    public UserAccount getAccount() { return account; }
+    public void setAccount(UserAccount account) { this.account = account; }
 
-    public com.educonnect.wallet.domain.LedgerAccount getLedgerAccountReference() { return ledgerAccountReference; }
+    public LedgerAccount getLedgerAccountReference() { return ledgerAccountReference; }
 }

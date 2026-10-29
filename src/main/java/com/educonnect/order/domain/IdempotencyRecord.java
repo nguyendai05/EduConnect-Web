@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.Instant;
+import com.educonnect.user.domain.UserAccount;
 
 /** Mapping idempotency_records; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -50,11 +51,11 @@ public class IdempotencyRecord {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "actor_user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.user.domain.UserAccount actorUserReference;
+    private UserAccount actorUserReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false)
-    private com.educonnect.order.domain.Order orderReference;
+    private Order orderReference;
 
     protected IdempotencyRecord() {}
 
@@ -89,7 +90,7 @@ public class IdempotencyRecord {
     public Instant getExpiresAt() { return expiresAt; }
     public void setExpiresAt(Instant expiresAt) { this.expiresAt = expiresAt; }
 
-    public com.educonnect.user.domain.UserAccount getActorUserReference() { return actorUserReference; }
+    public UserAccount getActorUserReference() { return actorUserReference; }
 
-    public com.educonnect.order.domain.Order getOrderReference() { return orderReference; }
+    public Order getOrderReference() { return orderReference; }
 }

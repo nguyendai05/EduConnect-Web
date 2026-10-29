@@ -45,6 +45,10 @@
   <div class="job-live-list"><article class="card job-live-panel" th:each="app : ${applications.content}">
     <div class="job-live-heading"><h2 th:text="${app.tutorName}"></h2><span class="badge badge--info" th:text="${app.statusLabel}"></span></div><p th:text="${app.headline}"></p>
     <strong th:text="${#numbers.formatDecimal(app.proposedUnitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><p class="job-live-copy" th:text="${app.message}"></p>
+    <div class="job-live-actions">
+      <a class="button button--outline" th:href="@{/chat/with(tutor=${app.tutorId})}">Nhắn tin với gia sư</a>
+      <a class="button button--primary" th:if="${app.status.name() == 'SELECTED'}" th:href="@{/contract/confirm(applicationId=${app.id})}">Xác nhận hợp đồng</a>
+    </div>
     <form method="post" class="job-live-stack" th:if="${app.canSelect}" th:action="@{/job/{id}/applications/{appId}/action(id=${job.id},appId=${app.id})}" data-job-live-form>
       <input type="hidden" name="jobVersion" th:value="${job.version}"><input type="hidden" name="applicationVersion" th:value="${app.version}">
       <label class="job-live-consent"><input type="checkbox" name="consent" value="true" required><span>Tôi đồng ý chọn gia sư với giá và toàn bộ đề xuất này, cùng nội dung tin của tôi.</span></label>

@@ -1,4 +1,8 @@
 # Profile DB development; secret phải cung cấp qua môi trường, không commit giá trị thật.
+server:
+  # Chạy sau ngrok/proxy: dùng X-Forwarded-* để chuyển hướng đúng https và đúng tên miền.
+  forward-headers-strategy: framework
+
 spring:
   mail:
     host: ${EDUCONNECT_MAIL_HOST:smtp.resend.com}
@@ -48,3 +52,10 @@ app:
     resend-cooldown: 60s
     max-attempts: 5
     max-sends-per-hour: 5
+  payos:
+    client-id: ${EDUCONNECT_PAYOS_CLIENT_ID:}
+    api-key: ${EDUCONNECT_PAYOS_API_KEY:}
+    checksum-key: ${EDUCONNECT_PAYOS_CHECKSUM_KEY:}
+    public-base-url: ${EDUCONNECT_PUBLIC_BASE_URL:http://localhost:8080}
+    return-base-url: ${EDUCONNECT_PAYOS_RETURN_BASE_URL:}
+    link-ttl: ${EDUCONNECT_PAYOS_LINK_TTL:15m}

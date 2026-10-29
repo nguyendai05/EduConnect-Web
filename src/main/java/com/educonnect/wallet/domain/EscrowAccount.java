@@ -1,6 +1,7 @@
 package com.educonnect.wallet.domain;
 
 import jakarta.persistence.*;
+import com.educonnect.contract.domain.Contract;
 
 /** Mapping escrow_accounts; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -17,11 +18,11 @@ public class EscrowAccount {
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "contract_id", referencedColumnName = "id", nullable = false)
-    private com.educonnect.contract.domain.Contract contract;
+    private Contract contract;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ledger_account_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.wallet.domain.LedgerAccount ledgerAccountReference;
+    private LedgerAccount ledgerAccountReference;
 
     protected EscrowAccount() {}
 
@@ -33,8 +34,8 @@ public class EscrowAccount {
     public Long getLedgerAccountId() { return ledgerAccountId; }
     public void setLedgerAccountId(Long ledgerAccountId) { this.ledgerAccountId = ledgerAccountId; }
 
-    public com.educonnect.contract.domain.Contract getContract() { return contract; }
-    public void setContract(com.educonnect.contract.domain.Contract contract) { this.contract = contract; }
+    public Contract getContract() { return contract; }
+    public void setContract(Contract contract) { this.contract = contract; }
 
-    public com.educonnect.wallet.domain.LedgerAccount getLedgerAccountReference() { return ledgerAccountReference; }
+    public LedgerAccount getLedgerAccountReference() { return ledgerAccountReference; }
 }

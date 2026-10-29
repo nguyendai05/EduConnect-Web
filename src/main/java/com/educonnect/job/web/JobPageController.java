@@ -4,6 +4,7 @@ import com.educonnect.job.domain.JobPostStatus;
 import com.educonnect.job.dto.JobActionRequest;
 import com.educonnect.job.dto.JobApplicationActionRequest;
 import com.educonnect.job.dto.JobApplicationRequest;
+import com.educonnect.job.dto.JobApplicationUpdateRequest;
 import com.educonnect.job.dto.JobPostRequest;
 import com.educonnect.job.dto.JobSearchRequest;
 import com.educonnect.job.service.JobProblem;
@@ -182,6 +183,20 @@ public class JobPageController {
         }
         jobs.apply(principal, id, form);
         redirect.addFlashAttribute("success", "Đã gửi đề xuất ứng tuyển. Chưa tạo đơn hoặc thanh toán.");
+        return "redirect:/job/detail?id=" + id;
+    }
+
+    /** Gia sư sửa giá và lời nhắn của đề xuất ứng tuyển đang chờ. */
+    @PostMapping("/{id}/applications/{applicationId}/update")
+    public String updateApplication(@AuthenticationPrincipal AccountPrincipal principal, @PathVariable Long id,
+            @PathVariable Long applicationId,
+            @Valid @ModelAttribute JobApplicationUpdateRequest form,
+            BindingResult errors, Model model, HttpServletResponse response, RedirectAttributes redirect) {
+        if (errors.hasErrors()) {
+            return invalidDetail(principal, id, errors, model, response);
+        }
+        jobs.updateApplication(principal, id, applicationId, form);
+        redirect.addFlashAttribute("success", "Đã cập nhật đề xuất. Học viên cần xem lại đề xuất mới trước khi chọn.");
         return "redirect:/job/detail?id=" + id;
     }
 

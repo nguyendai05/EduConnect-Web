@@ -6,6 +6,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.math.BigDecimal;
 import java.time.Instant;
+import com.educonnect.order.domain.Order;
 
 /** Mapping payments; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -52,7 +53,7 @@ public class Payment {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.order.domain.Order orderReference;
+    private Order orderReference;
 
     protected Payment() {}
 
@@ -86,5 +87,5 @@ public class Payment {
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
-    public com.educonnect.order.domain.Order getOrderReference() { return orderReference; }
+    public Order getOrderReference() { return orderReference; }
 }

@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<head>
+<title>Nội dung hợp đồng — Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}"/>
+<link rel="stylesheet" href="/css/pages/contract/document.css" th:href="@{/css/pages/contract/document.css}"/>
+</th:block>
+<th:block th:fragment="headScripts"></th:block>
+<th:block th:fragment="scripts"></th:block>
+</head>
+<body th:fragment="content">
+<th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
+<main class="doc-page">
+    <section class="empty-state" th:if="${d == null}">
+        <h2 class="empty-state__title">Chưa chọn hợp đồng</h2>
+        <p class="empty-state__description">Mở nội dung hợp đồng từ trang chi tiết hoặc danh sách hợp đồng của bạn.</p>
+        <a class="button button--primary" th:href="@{/contract/my}">Về danh sách hợp đồng</a>
+    </section>
+
+    <th:block th:if="${d != null}">
+    <div class="doc-toolbar">
+        <a class="button button--outline button--small" th:href="${d.viewerIsTutor} ? @{/contract/tutor-detail(contract=${d.id})} : @{/contract/student-detail(contract=${d.id})}">← Chi tiết hợp đồng</a>
+        <button class="button button--outline button--small" type="button" onclick="window.print()">In hợp đồng</button>
+    </div>
+
+    <article class="doc">
+        <header class="doc-head">
+            <h1>HỢP ĐỒNG DẠY – HỌC ĐIỆN TỬ</h1>
+            <p>Dành cho Gia sư và Học viên/Phụ huynh trên nền tảng Edu Connect · Phiên bản v4.1</p>
+            <dl class="doc-meta">
+                <div><dt>Mã hợp đồng</dt><dd th:text="${d.code}"></dd></div>
+                <div><dt>Ngày hình thành</dt><dd th:text="${#temporals.format(d.createdAt, 'dd/MM/yyyy HH:mm')}"></dd></div>
+                <div><dt>Trạng thái</dt><dd><span class="badge" th:text="${d.statusLabel}"></span></dd></div>
+            </dl>
+        </header>
+
+        <section>
+            <h2>Lưu ý dành cho người dùng</h2>
+            <p>Đây là bản hợp đồng đã được hình thành từ dữ liệu thực tế của hai bên. Hai bên có thể đọc lại để biết mình đã chốt điều gì, tiền được giữ và chuyển như thế nào, một buổi học được xác nhận ra sao và xử lý thế nào khi có sự cố.</p>
+        </section>
+
+        <section>
+            <h2>1. Thông tin các bên</h2>
+            <h3>1.1. Bên Học viên/Phụ huynh</h3>
+            <dl class="doc-facts">
+                <div><dt>Họ và tên</dt><dd th:text="${d.learnerName}"></dd></div>
+                <div><dt>Mã người dùng</dt><dd th:text="${d.learnerCode}"></dd></div>
+                <div><dt>Email</dt><dd th:text="${d.learnerEmail}"></dd></div>
+                <div><dt>Số điện thoại</dt><dd th:text="${d.learnerPhone}"></dd></div>
+                <div><dt>Vai trò sử dụng</dt><dd>Học viên/Phụ huynh</dd></div>
+            </dl>
+            <h3>1.2. Bên Gia sư</h3>
+            <dl class="doc-facts">
+                <div><dt>Họ và tên</dt><dd th:text="${d.tutorName}"></dd></div>
+                <div><dt>Mã người dùng</dt><dd th:text="${d.tutorCode}"></dd></div>
+                <div><dt>Email</dt><dd th:text="${d.tutorEmail}"></dd></div>
+                <div><dt>Số điện thoại</dt><dd th:text="${d.tutorPhone}"></dd></div>
+                <div><dt>Trạng thái hồ sơ gia sư</dt><dd th:text="${d.tutorVerification}"></dd></div>
+            </dl>
+            <h3>1.3. Nguồn hình thành hợp đồng</h3>
+            <p>Hợp đồng được hình thành từ một trong các luồng: lời mời dạy đã được hai bên chốt điều khoản; học viên chọn một hồ sơ ứng tuyển từ tin tìm gia sư; hoặc học viên đăng ký dịch vụ/lớp trong danh mục.</p>
+            <dl class="doc-facts">
+                <div><dt>Nguồn cụ thể</dt><dd th:text="${d.sourceLabel}"></dd></div>
+                <div><dt>Mã nguồn tham chiếu</dt><dd th:text="${d.sourceCode}"></dd></div>
+            </dl>
+        </section>
+
+        <section>
+            <h2>2. Nội dung dạy – học đã thống nhất</h2>
+            <dl class="doc-facts">
+                <div><dt>Môn học</dt><dd th:text="${d.subject}"></dd></div>
+                <div><dt>Khối/lớp hoặc trình độ</dt><dd th:text="${d.grade}"></dd></div>
+                <div><dt>Hình thức học</dt><dd th:text="${d.mode}"></dd></div>
+                <div><dt>Khu vực</dt><dd th:text="${d.place}"></dd></div>
+                <div><dt>Ngày dự kiến bắt đầu</dt><dd th:text="${d.startDate}"></dd></div>
+                <div><dt>Tổng số buổi học</dt><dd th:text="${d.sessionCount}"></dd></div>
+                <div><dt>Số buổi dự kiến mỗi tuần</dt><dd th:text="${d.perWeek}"></dd></div>
+                <div><dt>Thời lượng mỗi buổi</dt><dd th:text="${d.duration}"></dd></div>
+                <div><dt>Lịch học dự kiến</dt><dd><span th:if="${d.schedule.empty}">Theo thỏa thuận của hai bên</span><span th:each="s, st : ${d.schedule}" th:text="${s + (st.last ? '' : '; ')}"></span></dd></div>
+            </dl>
+            <h3>Ghi chú và điều khoản đã chốt</h3>
+            <p class="doc-terms" th:text="${d.terms}"></p>
+            <p>Lịch cụ thể từng "Buổi học" trong hệ thống là dữ liệu dùng để theo dõi điểm danh, xác nhận, giải ngân và hoàn tiền.</p>
+        </section>
+
+        <section>
+            <h2>3. Học phí và phí nền tảng</h2>
+            <h3>3.1. Học phí</h3>
+            <dl class="doc-facts">
+                <div><dt>Học phí mỗi buổi</dt><dd th:text="${#numbers.formatDecimal(d.unitPrice, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></dd></div>
+                <div><dt>Tổng học phí của hợp đồng</dt><dd th:text="${#numbers.formatDecimal(d.total, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></dd></div>
+            </dl>
+            <p>Hợp đồng 1–1: tổng học phí được xác định từ học phí mỗi buổi và tổng số buổi. Lớp nhóm: số tiền học viên phải ký quỹ là học phí áp dụng cho học viên đó theo thông tin lớp.</p>
+            <h3>3.2. Phí nền tảng</h3>
+            <p>Tỷ lệ phí nền tảng được chốt tại thời điểm hình thành hợp đồng: <strong th:text="${d.feePercent + '%'}"></strong> (chính sách <span th:text="${d.feePolicy}"></span>), tính trên số tiền của từng buổi khi buổi đó được giải ngân.</p>
+            <p>Với hợp đồng này, mỗi buổi trị giá <strong th:text="${#numbers.formatDecimal(d.feePerSession.add(d.tutorNetPerSession), 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></strong>: phí nền tảng <strong th:text="${#numbers.formatDecimal(d.feePerSession, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></strong> và <strong th:text="${#numbers.formatDecimal(d.tutorNetPerSession, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></strong> được cộng vào số dư khả dụng của Gia sư.</p>
+            <p>Phí chỉ phát sinh trên khoản được giải ngân. Phần ký quỹ được hoàn lại cho Học viên không bị tính phí nền tảng.</p>
+        </section>
+
+        <section>
+            <h2>4. Cơ chế ký quỹ</h2>
+            <h3>4.1. Ký quỹ là gì?</h3>
+            <p>"Ký quỹ" là số tiền của Học viên được hệ thống giữ lại để bảo đảm cho các buổi học trong hợp đồng. Tiền ký quỹ chưa được chuyển ngay cho Gia sư.</p>
+            <h3>4.2. Khi nào Học viên phải ký quỹ?</h3>
+            <p>Sau khi hợp đồng được tạo, Học viên ký quỹ đúng tổng học phí. Số dư khả dụng trong Ví được dùng trước; nếu chưa đủ, PayOS chỉ thu đúng phần còn thiếu. Học viên không được nộp tiền tùy ý vào Ví và không được nộp dư quá số tiền cần ký quỹ.</p>
+            <p>Hạn hoàn tất ký quỹ: <strong th:text="${#temporals.format(d.payDeadline, 'dd/MM/yyyy HH:mm')}"></strong> (48 giờ kể từ khi hợp đồng chuyển sang chờ thanh toán). Quá hạn mà chưa đủ tiền, hợp đồng có thể bị hủy.</p>
+            <h3>4.3. Tiền được chia theo từng buổi</h3>
+            <p>Hệ thống theo dõi riêng số tiền tương ứng với từng buổi học. Mỗi khoản của một buổi chỉ kết thúc theo đúng một trong hai cách: được giải ngân cho Gia sư, hoặc được hoàn lại cho Học viên; không được vừa giải ngân vừa hoàn tiền.</p>
+            <h3>4.4. Số dư trong ví</h3>
+            <p>Số dư khả dụng là tiền hoàn hoặc thu nhập hợp lệ, được dùng trước cho lần thanh toán học phí tiếp theo. Số dư đang giữ là tiền đang ký quỹ. Số dư chờ rút là khoản đang chờ xử lý yêu cầu rút tiền.</p>
+        </section>
+
+        <section>
+            <h2>5. Thời điểm hợp đồng có hiệu lực</h2>
+            <p>Hợp đồng được tạo ở trạng thái chờ thanh toán sau khi hai bên hoàn thành bước xác nhận cần thiết. Hợp đồng chỉ chuyển sang đang thực hiện khi việc ký quỹ hợp lệ đã hoàn tất và hệ thống tạo được các buổi học và khoản ký quỹ tương ứng.</p>
+            <p>Trước đó, hai bên cần kiểm tra kỹ môn học, số buổi, học phí, tổng tiền, lịch dự kiến, hình thức, địa điểm và các điều khoản đã chốt.</p>
+        </section>
+
+        <section>
+            <h2>6. Buổi học và điểm danh</h2>
+            <p>Mỗi buổi học là một đơn vị độc lập có thời lượng, hình thức, trạng thái và khoản ký quỹ tương ứng. Sau khi buổi học diễn ra, Gia sư điểm danh trên hệ thống; không được điểm danh cho buổi chưa xảy ra.</p>
+            <p>Tùy trường hợp, học viên được ghi nhận có mặt hoặc vắng mặt. Điểm danh là căn cứ để bắt đầu quy trình xác nhận buổi học; bản thân thao tác điểm danh chưa làm tiền tự động chuyển cho Gia sư.</p>
+            <p>Với lớp nhóm, Gia sư điểm danh cả lớp một lần; học viên vắng vẫn được tính phí buổi đó.</p>
+        </section>
+
+        <section>
+            <h2>7. Xác nhận hoàn thành buổi học</h2>
+            <p>Sau khi có điểm danh, Học viên có thể xác nhận buổi học đã hoàn thành. Khi đó khoản ký quỹ của đúng buổi đó được giải ngân: hệ thống khấu trừ phí nền tảng theo tỷ lệ đã chốt và cộng phần còn lại vào số dư khả dụng của Gia sư.</p>
+            <p>Nếu sau <strong th:text="${d.autoConfirmHours + ' giờ'}"></strong> kể từ điểm danh mà Học viên không phản hồi, hệ thống tự động xác nhận buổi học và giải ngân khoản của buổi đó.</p>
+            <p>Nếu Gia sư có mặt và buổi học được thực hiện theo lịch nhưng Học viên vắng mặt, khoản tiền của buổi học vẫn được giải ngân theo quy tắc của hệ thống.</p>
+        </section>
+
+        <section>
+            <h2>8. Buổi học không diễn ra và hoàn tiền</h2>
+            <p>Nếu buổi học không diễn ra hoặc Gia sư vắng và buổi học phải hủy theo đúng luồng của hệ thống, khoản ký quỹ của buổi đó được hoàn về số dư của Học viên. Hoàn tiền là hoàn về ví trên nền tảng, không tự động trả ngược về thẻ hoặc tài khoản ngân hàng ban đầu.</p>
+            <p>Khi hoàn tiền: khoản ký quỹ của buổi đó giảm; số dư khả dụng của Học viên tăng tương ứng; không tính phí nền tảng trên khoản được hoàn; giao dịch được ghi vào lịch sử ví. Hoàn tiền do quản trị viên xử lý.</p>
+        </section>
+
+        <section>
+            <h2>9. Đổi lịch, hủy buổi và hủy muộn</h2>
+            <p>Việc đổi lịch/hủy buổi phải thực hiện qua chức năng của hệ thống để có dữ liệu theo dõi rõ ràng. Quy tắc áp dụng cho hợp đồng này: theo quy tắc chung của nền tảng, không có quy tắc riêng được chốt thêm.</p>
+            <p>Các bên không tự thỏa thuận bên ngoài rồi yêu cầu hệ thống xử lý tiền theo kết quả không có dữ liệu. Mọi giải ngân và hoàn tiền chỉ được thực hiện một lần cho từng buổi.</p>
+        </section>
+
+        <section>
+            <h2>10. Học thử</h2>
+            <p>Hợp đồng này không có buổi học thử riêng. Nếu hai bên lựa chọn học thử, thông tin buổi học thử phải được hai bên xác nhận trên hệ thống; học thử có phí được theo dõi riêng theo cơ chế ký quỹ, giải ngân và hoàn tiền tương ứng.</p>
+        </section>
+
+        <section>
+            <h2>11. Chấm dứt hợp đồng trước thời hạn</h2>
+            <p>Hợp đồng chưa thanh toán có thể được Học viên hủy ngay trên hệ thống. Hợp đồng đã thanh toán muốn chấm dứt phải liên hệ quản trị viên. Khi chấm dứt, các buổi chưa diễn ra được hủy, các khoản ký quỹ còn đang giữ được hoàn lại theo quy tắc hệ thống, và các khoản đã giải ngân trước đó không bị đảo ngược.</p>
+        </section>
+
+        <section>
+            <h2>12. Báo cáo vấn đề và tranh chấp</h2>
+            <p>Khi có vấn đề ảnh hưởng đến xác nhận, giải ngân, hoàn tiền hoặc việc tiếp tục hợp đồng, hai bên báo cho quản trị viên. Trong thời gian xử lý tranh chấp, các thao tác tiền liên quan có thể bị tạm khóa, lịch sử buổi học, điểm danh, tin nhắn và dữ liệu liên quan được giữ lại làm căn cứ xem xét. Khoản đã giải ngân trước đó không được xử lý như khoản ký quỹ còn giữ.</p>
+        </section>
+
+        <section>
+            <h2>13. Tin nhắn và thông tin liên hệ</h2>
+            <p>Tin nhắn dùng để trao đổi hỗ trợ việc học. Các nội dung làm thay đổi học phí, số buổi, lịch, địa điểm hoặc điều kiện tài chính quan trọng phải được thực hiện qua luồng điều khoản/hợp đồng của hệ thống, không chỉ thỏa thuận bằng tin nhắn. Tin nhắn đã gửi được giữ lại trong lịch sử và có thể được dùng làm dữ liệu khi xử lý vấn đề.</p>
+        </section>
+
+        <section>
+            <h2>14. Thanh toán ký quỹ và PayOS</h2>
+            <p>Khi cần hoàn tất ký quỹ, hệ thống tự tính số tiền cần thanh toán: phần dùng từ Ví bằng số nhỏ hơn giữa số dư khả dụng và số tiền ký quỹ còn thiếu; phần PayOS là số còn thiếu sau khi đã dùng Ví. Người dùng không tự nhập số tiền. Đường dẫn thanh toán PayOS có thời hạn khoảng 15 phút.</p>
+            <p>Tiền PayOS không được cộng vào số dư khả dụng mà được cấp trực tiếp vào khoản ký quỹ của đúng hợp đồng sau khi hệ thống nhận và xác thực thông báo thanh toán hợp lệ; chỉ lần chuyển trạng thái đầu tiên được ghi tiền.</p>
+        </section>
+
+        <section>
+            <h2>15. Rút tiền từ ví</h2>
+            <p>Người dùng có số dư khả dụng hợp lệ có thể yêu cầu rút tiền theo điều kiện của hệ thống (mức rút tối thiểu 100.000 VNĐ). Tên chủ tài khoản ngân hàng phải khớp tên người dùng trên tài khoản.</p>
+        </section>
+
+        <section th:if="${d.groupClass}">
+            <h2>16. Lớp nhóm – điều khoản bổ sung</h2>
+            <dl class="doc-facts">
+                <div><dt>Tên lớp</dt><dd th:text="${d.className}"></dd></div>
+                <div><dt>Số học viên tối đa</dt><dd th:text="${d.capacity}"></dd></div>
+                <div><dt>Số chỗ của học viên này</dt><dd th:text="${d.seatCount}"></dd></div>
+                <div><dt>Học phí áp dụng cho học viên này</dt><dd th:text="${#numbers.formatDecimal(d.total, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></dd></div>
+                <div><dt>Số buổi của lớp</dt><dd th:text="${d.sessionCount}"></dd></div>
+            </dl>
+            <p>Nếu lớp bị hủy, phần học phí của các buổi chưa được giải ngân được xử lý hoàn theo quy tắc hệ thống.</p>
+        </section>
+
+        <section>
+            <h2>17. Đánh giá sau hợp đồng</h2>
+            <p>Sau khi hợp đồng hoàn thành, Học viên và Gia sư có thể đánh giá lẫn nhau. Đánh giá được hiển thị công khai khi cả hai bên đã đánh giá hoặc hết 14 ngày. Hợp đồng bị hủy không thuộc luồng đánh giá.</p>
+        </section>
+
+        <section>
+            <h2>18. Trách nhiệm của Học viên/Phụ huynh</h2>
+            <ul>
+                <li>Kiểm tra đúng môn học, lịch, học phí, số buổi và địa điểm trước khi xác nhận;</li>
+                <li>Hoàn tất đúng số tiền ký quỹ trong thời hạn quy định;</li>
+                <li>Tham gia học theo lịch đã thống nhất;</li>
+                <li>Xác nhận buổi học hoặc báo vấn đề trong thời hạn hệ thống;</li>
+                <li>Không yêu cầu hoàn tiền cho khoản đã được giải ngân hợp lệ chỉ vì sau đó thay đổi ý định;</li>
+                <li>Thực hiện thay đổi quan trọng qua chức năng hệ thống.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>19. Trách nhiệm của Gia sư</h2>
+            <ul>
+                <li>Chỉ nhận dạy khi hồ sơ đủ điều kiện theo yêu cầu xác minh của nền tảng;</li>
+                <li>Kiểm tra chính xác môn học, lịch, mức phí, số buổi và hình thức trước khi xác nhận;</li>
+                <li>Thực hiện buổi học đúng thông tin đã chốt;</li>
+                <li>Điểm danh đúng và trung thực sau buổi học, không điểm danh buổi chưa xảy ra;</li>
+                <li>Báo hủy hoặc không thể thực hiện buổi học qua hệ thống khi có sự cố;</li>
+                <li>Không yêu cầu giải ngân ngoài cơ chế ký quỹ của hệ thống.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>20. Những điều hai bên cùng xác nhận</h2>
+            <ol>
+                <li>Đã đọc toàn bộ nội dung hợp đồng hiển thị.</li>
+                <li>Thông tin môn học, số buổi, học phí, lịch và địa điểm là đúng với điều khoản đã chốt.</li>
+                <li>Hiểu rằng tiền học không chuyển ngay cho Gia sư mà được ký quỹ và xử lý theo từng buổi.</li>
+                <li>Hiểu rằng một buổi đã điểm danh có thể được tự động xác nhận và giải ngân sau <span th:text="${d.autoConfirmHours + ' giờ'}"></span> nếu Học viên không phản hồi.</li>
+                <li>Hiểu rằng phần tiền chưa học, chưa giải ngân được xử lý theo quy tắc hoàn tiền của hệ thống.</li>
+                <li>Hiểu rằng khi hợp đồng đang tranh chấp, các thao tác tiền liên quan có thể bị tạm khóa.</li>
+                <li>Đồng ý dùng các chức năng chính thức của hệ thống cho những thay đổi ảnh hưởng đến tiền và nghĩa vụ hai bên.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>21. Tóm tắt tài chính</h2>
+            <dl class="doc-facts">
+                <div><dt>Tổng số buổi</dt><dd th:text="${d.sessionCount}"></dd></div>
+                <div><dt>Học phí mỗi buổi</dt><dd th:text="${#numbers.formatDecimal(d.unitPrice, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></dd></div>
+                <div><dt>Tổng học phí</dt><dd th:text="${#numbers.formatDecimal(d.total, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></dd></div>
+                <div><dt>Tỷ lệ phí nền tảng</dt><dd th:text="${d.feePercent + '%'}"></dd></div>
+                <div><dt>Số tiền Học viên cần ký quỹ</dt><dd th:text="${#numbers.formatDecimal(d.total, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></dd></div>
+                <div><dt>Gia sư nhận mỗi buổi hoàn thành</dt><dd th:text="${#numbers.formatDecimal(d.tutorNetPerSession, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"></dd></div>
+                <div><dt>Hạn hoàn tất ký quỹ</dt><dd th:text="${#temporals.format(d.payDeadline, 'dd/MM/yyyy HH:mm')}"></dd></div>
+            </dl>
+        </section>
+
+        <section>
+            <h2>22. Xác nhận điện tử</h2>
+            <div class="doc-sign">
+                <div>
+                    <h3>Bên Gia sư</h3>
+                    <p th:text="${d.tutorName}"></p>
+                    <p>Thời điểm xác nhận: <span th:text="${d.tutorAcceptedAt != null ? #temporals.format(d.tutorAcceptedAt, 'dd/MM/yyyy HH:mm') : '—'}"></span></p>
+                    <p>Trạng thái: <span class="badge" th:text="${d.tutorAcceptedAt != null ? 'Đã xác nhận' : 'Chưa xác nhận'}"></span></p>
+                </div>
+                <div>
+                    <h3>Bên Học viên/Phụ huynh</h3>
+                    <p th:text="${d.learnerName}"></p>
+                    <p>Thời điểm xác nhận: <span th:text="${d.learnerAcceptedAt != null ? #temporals.format(d.learnerAcceptedAt, 'dd/MM/yyyy HH:mm') : '—'}"></span></p>
+                    <p>Trạng thái: <span class="badge" th:text="${d.learnerAcceptedAt != null ? 'Đã xác nhận' : 'Chưa xác nhận'}"></span></p>
+                </div>
+            </div>
+            <h3>Dấu vết hệ thống</h3>
+            <dl class="doc-facts">
+                <div><dt>Mã hợp đồng</dt><dd th:text="${d.code}"></dd></div>
+                <div><dt>Phiên bản điều khoản</dt><dd th:text="${d.termsVersion}"></dd></div>
+                <div><dt>Thời điểm chuyển sang đang thực hiện</dt><dd th:text="${d.activatedAt != null ? #temporals.format(d.activatedAt, 'dd/MM/yyyy HH:mm') : 'Chưa kích hoạt (chờ ký quỹ)'}"></dd></div>
+                <div><dt>Tỷ lệ phí nền tảng được chốt</dt><dd th:text="${d.feePercent + '%'}"></dd></div>
+                <div><dt>Nguồn hình thành</dt><dd th:text="${d.sourceLabel + ' / ' + d.sourceCode}"></dd></div>
+            </dl>
+        </section>
+    </article>
+    </th:block>
+</main>
+<th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+<th:block th:replace="${scripts}"></th:block>
+</body>
+</html>

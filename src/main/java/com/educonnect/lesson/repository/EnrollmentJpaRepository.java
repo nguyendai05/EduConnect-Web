@@ -1,5 +1,6 @@
 package com.educonnect.lesson.repository;
 
+import java.util.Optional;
 import com.educonnect.lesson.domain.Enrollment;
 import com.educonnect.lesson.domain.EnrollmentStatus;
 import org.springframework.context.annotation.Profile;
@@ -22,4 +23,6 @@ public interface EnrollmentJpaRepository extends JpaRepository<Enrollment, Long>
             """)
     long countSeats(@Param("id") Long id, @Param("occupied") List<EnrollmentStatus> occupied,
                     @Param("reserved") EnrollmentStatus reserved, @Param("now") Instant now);
+
+    Optional<Enrollment> findByContractId(Long contractId);
 }

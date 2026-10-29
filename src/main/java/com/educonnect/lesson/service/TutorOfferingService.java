@@ -3,6 +3,7 @@ package com.educonnect.lesson.service;
 import com.educonnect.common.reference.repository.AreaJpaRepository;
 import com.educonnect.common.reference.repository.DeliveryModeJpaRepository;
 import com.educonnect.common.reference.repository.GradeLevelJpaRepository;
+import com.educonnect.common.reference.domain.Subject;
 import com.educonnect.common.reference.repository.SubjectJpaRepository;
 import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.domain.OfferingStatus;
@@ -250,6 +251,7 @@ public class TutorOfferingService {
             return previous.get().getId();
         }
 
+        resolveSubject(form);
         validateReferences(form);
         Offering offering = Offering.create();
         offering.setPublicCode(code);
@@ -280,11 +282,12 @@ public class TutorOfferingService {
         requireVersion(offering, form.getVersion());
         requireEditable(offering);
         if (offering.getOfferingType() != form.getOfferingType()) {
-            throw conflict("Không thể đổi loại của dịch vụ/lớp đã tạo.");
+            throw conflict("Không thể đổi loại của khóa học đã tạo.");
         }
 
         boolean reReview = offering.getStatus() == OfferingStatus.PUBLISHED;
         boolean keepSchedule = offerings.countEnrollments(id) > 0;
+        resolveSubject(form);
         if (keepSchedule) {
             requireUnchangedTeachingPlan(offering, form);
         }
@@ -367,7 +370,7 @@ public class TutorOfferingService {
         ));
         if (!"ACTIVE".equals(account.status()) || !account.emailVerified() || !account.roles().contains("TUTOR")
             || account.authenticationVersion() != principal.getAuthenticationVersion()) {
-            throw new OfferingProblem(HttpStatus.FORBIDDEN, "Tài khoản không có quyền quản lý dịch vụ gia sư.");
+            throw new OfferingProblem(HttpStatus.FORBIDDEN, "Tài khoản không có quyền quản lý khóa học của gia sư.");
         }
         var tutor = tutors.findById(principal.getId()).orElseThrow(() -> new OfferingProblem(
             HttpStatus.FORBIDDEN,
@@ -411,6 +414,26 @@ public class TutorOfferingService {
                 }
             }
         }
+    }
+
+    /**
+     * Gia sư gõ tên môn: dùng môn đã có cùng tên, chưa có thì tạo môn mới để các trang lọc dùng được.
+     */
+    private void resolveSubject(OfferingRequest form) {
+        String name = form.getSubjectName() == null ? "" : form.getSubjectName().strip().replaceAll("\\s+", " ");
+        if (name.isEmpty()) {
+            if (form.getSubjectId() == null) {
+                throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Nhập môn học.");
+            }
+            return;
+        }
+        var subject = subjects.findFirstByName(name).orElseGet(() -> {
+            var created = Subject.create();
+            created.setCode("TUTOR-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12));
+            created.setName(name);
+            return subjects.save(created);
+        });
+        form.setSubjectId(subject.getId());
     }
 
     /**
@@ -484,6 +507,7 @@ public class TutorOfferingService {
         form.setTitle(offering.getTitle());
         form.setDescription(offering.getDescription());
         form.setSubjectId(offering.getSubjectId());
+        subjects.findById(offering.getSubjectId()).ifPresent(subject -> form.setSubjectName(subject.getName()));
         form.setGradeLevelId(offering.getGradeLevelId());
         form.setAreaId(offering.getAreaId());
         form.setDeliveryModeId(offering.getDeliveryModeId());
@@ -517,7 +541,7 @@ public class TutorOfferingService {
     private void requireEditable(Offering offering) {
         if (offering.getStatus() != OfferingStatus.DRAFT && offering.getStatus() != OfferingStatus.REJECTED
             && offering.getStatus() != OfferingStatus.PUBLISHED) {
-            throw conflict("Chỉ sửa bản nháp, bản bị từ chối hoặc dịch vụ đang công khai. Bản đang chờ duyệt hoặc đã đóng không được sửa.");
+            throw conflict("Chỉ sửa bản nháp, bản bị từ chối hoặc khóa học đang công khai. Bản đang chờ duyệt hoặc đã đóng không được sửa.");
         }
     }
 
@@ -539,7 +563,7 @@ public class TutorOfferingService {
             && Objects.equals(offering.getEndsOn(), form.getOfferingType() == OfferingType.GROUP_CLASS ? form.getEndsOn() : null)
             && hasSameSchedule(offering.getId(), form.getSlots());
         if (!unchanged) {
-            throw conflict("Dịch vụ đã có đăng ký: có thể sửa tiêu đề, mô tả, giá và điều khoản cho đăng ký mới. Việc đổi lịch, sức chứa hoặc kế hoạch học còn chờ thống nhất với luồng giao dịch.");
+            throw conflict("Khóa học đã có đăng ký: có thể sửa tiêu đề, mô tả, giá và điều khoản cho đăng ký mới. Việc đổi lịch, sức chứa hoặc kế hoạch học còn chờ thống nhất với luồng giao dịch.");
         }
     }
 
@@ -592,7 +616,7 @@ public class TutorOfferingService {
      * <p>Thuộc trang: Quản lý dịch vụ/lớp của gia sư ({@code /tutor/manage}), xử lý bản ghi không tồn tại.</p>
      */
     private OfferingProblem missing() {
-        return new OfferingProblem(HttpStatus.NOT_FOUND, "Không tìm thấy dịch vụ/lớp thuộc tài khoản của bạn.");
+        return new OfferingProblem(HttpStatus.NOT_FOUND, "Không tìm thấy khóa học thuộc tài khoản của bạn.");
     }
 
     /**

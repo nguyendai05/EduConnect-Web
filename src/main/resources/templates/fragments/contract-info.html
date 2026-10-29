@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="info(c, backUrl, backLabel, canPay)">
+    <p class="alert alert--error" role="alert" th:if="${error != null}" th:text="${error}"></p>
+    <p class="alert alert--success" role="status" th:if="${message != null}" th:text="${message}"></p>
+    <header class="page-header">
+        <div class="page-header__content"><div class="page-header__title-block">
+            <div class="page-header__title-row">
+                <h1 class="page-header__title" th:text="${c.title}"></h1>
+                <span class="page-header__status"><span class="page-header__status-dot" aria-hidden="true"></span><span th:text="${c.statusLabel}"></span></span>
+            </div>
+            <p class="page-header__description" th:text="${c.publicCode + ' · Đơn ' + c.orderCode}"></p>
+        </div></div>
+    </header>
+
+    <!-- Dải việc cần làm: hiện đúng một thông báo theo vai trò và trạng thái hiện tại. -->
+    <th:block th:with="confirm=${c.sessions.?[canConfirm]}, attend=${c.sessions.?[canAttend]}">
+    <section class="alert alert--warning alert--contextual contract-todo"
+             th:if="${c.payable and canPay or !confirm.empty or !attend.empty}" aria-labelledby="todo-title">
+        <span class="alert__icon" aria-hidden="true"></span>
+        <div class="alert__content">
+            <h2 class="alert__title" id="todo-title" th:if="${!confirm.empty}" th:text="${'Buổi ' + confirm[0].number + ' đang chờ bạn xác nhận'}"></h2>
+            <h2 class="alert__title" id="todo-title" th:if="${confirm.empty and !attend.empty}" th:text="${'Đến lượt điểm danh buổi ' + attend[0].number}"></h2>
+            <h2 class="alert__title" id="todo-title" th:if="${confirm.empty and attend.empty}">Hợp đồng đang chờ thanh toán</h2>
+            <p class="alert__message" th:if="${!confirm.empty}">Gia sư đã điểm danh. Xác nhận đã học thì tiền của buổi này mới chuyển cho gia sư; quá hạn không phản hồi, hệ thống tự xác nhận.</p>
+            <p class="alert__message" th:if="${confirm.empty and !attend.empty}">Điểm danh theo lớp ở Lớp của tôi › Điểm danh sau khi buổi học diễn ra; học viên xác nhận thì tiền của buổi được giải ngân.</p>
+            <p class="alert__message" th:if="${confirm.empty and attend.empty}">Thanh toán để tiền được ký quỹ và hợp đồng bắt đầu thực hiện.</p>
+            <div class="contract-actions">
+                <form method="post" th:action="@{/contract/session/confirm}" th:if="${!confirm.empty}">
+                    <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${confirm[0].id}">
+                    <button class="contract-button" type="submit">Xác nhận đã học</button>
+                </form>
+                <a class="contract-button" th:if="${confirm.empty and !attend.empty}" th:href="@{/tutor/manage(tab=attendance)}">Mở tab Điểm danh</a>
+                <a class="contract-button" th:if="${confirm.empty and attend.empty}" th:href="@{/payment/checkout(contract=${c.id})}">Thanh toán ngay</a>
+            </div>
+        </div>
+    </section>
+    </th:block>
+
+    <div class="contract-columns">
+        <div class="contract-main">
+            <section class="contract-panel" aria-labelledby="overview-title">
+                <h2 id="overview-title">Thông tin hợp đồng</h2>
+                <dl class="contract-facts">
+                    <div><dt>Học viên</dt><dd th:text="${c.learnerName}"></dd></div>
+                    <div><dt>Gia sư</dt><dd th:text="${c.tutorName}"></dd></div>
+                    <div><dt>Loại</dt><dd th:text="${c.typeLabel}"></dd></div>
+                    <div><dt>Số buổi</dt><dd th:text="${c.sessionCount}"></dd></div>
+                    <div><dt>Số chỗ</dt><dd th:text="${c.seatCount}"></dd></div>
+                    <div><dt>Đơn giá mỗi buổi</dt><dd th:text="${#numbers.formatDecimal(c.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div><dt>Ngày tạo</dt><dd th:text="${#temporals.format(c.createdAt, 'dd/MM/yyyy HH:mm')}"></dd></div>
+                    <div><dt>Học viên đồng ý lúc</dt><dd th:text="${#temporals.format(c.learnerAcceptedAt, 'dd/MM/yyyy HH:mm')}"></dd></div>
+                    <div><dt>Gia sư đồng ý lúc</dt><dd th:text="${#temporals.format(c.tutorAcceptedAt, 'dd/MM/yyyy HH:mm')}"></dd></div>
+                </dl>
+            </section>
+
+            <section class="contract-panel" th:if="${!c.sessions.empty}" aria-labelledby="sessions-title">
+                <h2 id="sessions-title">Danh sách buổi học</h2>
+                <p class="contract-muted">Gia sư điểm danh sau mỗi buổi, học viên xác nhận thì tiền của buổi đó mới chuyển cho gia sư. Quá hạn không phản hồi, hệ thống tự xác nhận.</p>
+                <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách buổi học" tabindex="0">
+                    <table class="table">
+                        <thead><tr><th scope="col">Buổi</th><th scope="col">Số tiền</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead>
+                        <tbody>
+                            <tr th:each="s : ${c.sessions}">
+                                <th scope="row" th:text="${'Buổi ' + s.number}"></th>
+                                <td th:text="${#numbers.formatDecimal(s.amount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></td>
+                                <td><span class="badge" th:text="${s.statusLabel}"></span></td>
+                                <td>
+                                    <form method="post" th:action="@{/contract/session/confirm}" th:if="${s.canConfirm}">
+                                        <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${s.id}">
+                                        <button class="contract-button contract-button--small" type="submit">Xác nhận đã học</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="contract-panel" aria-labelledby="activity-title">
+                <h2 id="activity-title">Hoạt động gần đây</h2>
+                <ol class="contract-timeline">
+                    <li th:each="a : ${c.activities}">
+                        <time th:text="${#temporals.format(a.at, 'dd/MM/yyyy HH:mm')}"></time>
+                        <span th:text="${a.text}"></span>
+                    </li>
+                </ol>
+            </section>
+
+            <section class="contract-panel" aria-labelledby="terms-title">
+                <h2 id="terms-title">Quản lý hợp đồng &amp; điều khoản</h2>
+                <h3 class="contract-subtitle">Điều khoản đã đồng ý</h3>
+                <p class="contract-muted" th:text="${c.terms}"></p>
+                <p class="contract-muted">Hợp đồng đầy đủ (các bên, học phí, ký quỹ, quy tắc và xác nhận điện tử) xem tại <a th:href="@{/contract/document(contract=${c.id})}">Nội dung hợp đồng</a>.</p>
+                <div th:if="${c.canCancel}">
+                    <h3 class="contract-subtitle">Hủy hợp đồng</h3>
+                    <p class="contract-muted">Hợp đồng chưa thanh toán nên được hủy ngay. Nếu đã thanh toán, hãy liên hệ quản trị để được hỗ trợ.</p>
+                    <form method="post" th:action="@{/contract/cancel}">
+                        <input type="hidden" name="contract" th:value="${c.id}">
+                        <label for="cancel-reason">Lý do hủy</label>
+                        <textarea id="cancel-reason" name="reason" rows="3" minlength="5" maxlength="400" required></textarea>
+                        <button class="contract-button contract-button--secondary" type="submit">Hủy hợp đồng</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <aside class="contract-sidebar" aria-label="Tiền của hợp đồng">
+            <section class="contract-panel" aria-labelledby="money-title">
+                <h2 id="money-title">Ký quỹ hợp đồng</h2>
+                <dl class="contract-money" th:if="${c.viewerIsTutor}">
+                    <div><dt>Tổng giá trị hợp đồng</dt><dd th:text="${#numbers.formatDecimal(c.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div><dt th:text="${'Phí nền tảng (' + c.money.feePercent + '%)'}"></dt><dd th:text="${'−' + #numbers.formatDecimal(c.money.feeTotal, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div class="is-key"><dt>Tổng nhận khi hoàn thành</dt><dd th:text="${#numbers.formatDecimal(c.money.netTotal, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div><dt th:text="${'Đã giải ngân (' + c.money.doneSessions + '/' + c.money.totalSessions + ' buổi)'}"></dt><dd th:text="${#numbers.formatDecimal(c.money.releasedNet, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div><dt>Còn lại sau khi hoàn thành</dt><dd th:text="${#numbers.formatDecimal(c.money.remainingNet, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div th:if="${c.money.refundedGross.signum() > 0}"><dt>Đã hoàn cho học viên</dt><dd th:text="${#numbers.formatDecimal(c.money.refundedGross, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                </dl>
+                <dl class="contract-money" th:unless="${c.viewerIsTutor}">
+                    <div class="is-key"><dt>Tổng giá trị hợp đồng</dt><dd th:text="${#numbers.formatDecimal(c.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div><dt th:text="${'Đã giải ngân cho gia sư (' + c.money.doneSessions + '/' + c.money.totalSessions + ' buổi)'}"></dt><dd th:text="${#numbers.formatDecimal(c.money.releasedGross, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div><dt>Đang ký quỹ</dt><dd th:text="${#numbers.formatDecimal(c.money.heldGross, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div th:if="${c.money.refundedGross.signum() > 0}"><dt>Đã hoàn cho bạn</dt><dd th:text="${#numbers.formatDecimal(c.money.refundedGross, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                </dl>
+                <progress th:max="${c.money.totalSessions}" th:value="${c.money.doneSessions}" th:text="${c.money.doneSessions + '/' + c.money.totalSessions}"></progress>
+            </section>
+            <div class="contract-actions">
+                <a class="contract-button" th:if="${c.payable and canPay}" th:href="@{/payment/checkout(contract=${c.id})}">Tiếp tục thanh toán</a>
+                <a class="contract-button contract-button--secondary" th:href="@{/contract/document(contract=${c.id})}">Xem nội dung hợp đồng</a>
+                <a class="contract-button contract-button--secondary" th:href="@{${backUrl}}" th:text="${backLabel}"></a>
+            </div>
+        </aside>
+    </div>
+</th:block>
+</body>
+</html>

@@ -372,3 +372,40 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Cột phải: tiền của hợp đồng, dính khi cuộn trên màn hình rộng. */
+.contract-sidebar { align-self: start; }
+@media (min-width: 64.0625rem) {
+    .contract-sidebar { position: sticky; top: var(--space-6); }
+}
+.contract-money { display: grid; gap: var(--space-3); margin: 0 0 var(--space-4); }
+.contract-money div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); font-size: var(--font-size-sm); }
+.contract-money dt { color: var(--color-text-secondary); }
+.contract-money dd { margin: 0; font-weight: 600; text-align: right; white-space: nowrap; }
+.contract-money .is-key { padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-primary-container); }
+.contract-money .is-key dd { color: var(--color-primary); }
+.contract-sidebar progress { width: 100%; }
+
+/* Nhóm nút thao tác trong bảng: nút chính trước, nút phụ sau, cùng một hàng. */
+.contract-row-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.contract-row-actions form { margin: 0; }
+.contract-button--small { min-height: 36px; padding: var(--space-1) var(--space-3); }
+
+.order-history__filters--simple { grid-template-columns: minmax(14rem, 1fr) auto; }
+
+/* Dải việc cần làm và hoạt động gần đây của chi tiết hợp đồng. */
+.contract-todo { margin-bottom: var(--space-4); }
+.contract-todo .contract-actions { margin-top: var(--space-3); }
+.contract-subtitle { margin: var(--space-4) 0 var(--space-2); font-size: var(--font-size-sm); font-weight: 650; }
+.contract-timeline { display: grid; gap: var(--space-3); margin: 0; padding: 0 0 0 var(--space-4); border-left: 2px solid var(--color-border); list-style: none; }
+.contract-timeline li { display: grid; gap: .125rem; font-size: var(--font-size-sm); }
+.contract-timeline time { color: var(--color-text-secondary); font-size: var(--font-size-xs); }
+
+/* Nút thao tác dạng biểu tượng trong bảng (có chú thích khi rê chuột): gọn hơn nhiều nút chữ. */
+.icon-action { display: inline-grid; width: 2.25rem; height: 2.25rem; padding: 0; place-items: center; color: var(--color-text); background: var(--color-surface-low); border: 1px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; }
+.icon-action img { width: 1.125rem; height: 1.125rem; pointer-events: none; }
+.icon-action:hover { background: var(--color-primary-container); border-color: var(--color-primary-border); }
+.icon-action--primary { background: var(--color-primary); border-color: var(--color-primary); }
+.icon-action--primary img { filter: brightness(0) invert(1); }
+.icon-action--primary:hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+.icon-action:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }

@@ -278,3 +278,6 @@
     .wallet-filters label { flex: 1 1 9rem; min-width: 0; }
     .wallet-filters input { width: 100%; }
 }
+
+/* Hai số dư cạnh nhau: khả dụng và đang ký quỹ / chờ giải ngân. */
+.wallet-balances { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-4); }

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="steps(active)">
+    <ol class="flow-steps" aria-label="Các bước đặt khóa học">
+        <li class="flow-step" th:classappend="${active > 1} ? 'is-done' : (${active == 1} ? 'is-active')" th:attr="aria-current=${active == 1} ? 'step'">
+            <span class="flow-step__dot"><span th:text="${active > 1} ? '✓' : '1'"></span></span><span class="flow-step__label">Xác nhận hợp đồng</span>
+        </li>
+        <li class="flow-step" th:classappend="${active > 2} ? 'is-done' : (${active == 2} ? 'is-active')" th:attr="aria-current=${active == 2} ? 'step'">
+            <span class="flow-step__dot"><span th:text="${active > 2} ? '✓' : '2'"></span></span><span class="flow-step__label">Thanh toán</span>
+        </li>
+        <li class="flow-step" th:classappend="${active > 3} ? 'is-done' : (${active == 3} ? 'is-active')" th:attr="aria-current=${active == 3} ? 'step'">
+            <span class="flow-step__dot"><span>3</span></span><span class="flow-step__label">Hoàn tất</span>
+        </li>
+    </ol>
+</th:block>
+</body>
+</html>
