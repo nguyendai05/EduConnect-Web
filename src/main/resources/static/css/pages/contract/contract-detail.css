@@ -392,3 +392,11 @@
 .contract-button--small { min-height: 36px; padding: var(--space-1) var(--space-3); }
 
 .order-history__filters--simple { grid-template-columns: minmax(14rem, 1fr) auto; }
+
+/* Dải việc cần làm và hoạt động gần đây của chi tiết hợp đồng. */
+.contract-todo { margin-bottom: var(--space-4); }
+.contract-todo .contract-actions { margin-top: var(--space-3); }
+.contract-subtitle { margin: var(--space-4) 0 var(--space-2); font-size: var(--font-size-sm); font-weight: 650; }
+.contract-timeline { display: grid; gap: var(--space-3); margin: 0; padding: 0 0 0 var(--space-4); border-left: 2px solid var(--color-border); list-style: none; }
+.contract-timeline li { display: grid; gap: .125rem; font-size: var(--font-size-sm); }
+.contract-timeline time { color: var(--color-text-secondary); font-size: var(--font-size-xs); }

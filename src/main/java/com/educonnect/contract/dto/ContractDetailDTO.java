@@ -16,7 +16,11 @@ import java.util.List;
 public record ContractDetailDTO(Long id, String publicCode, String orderCode, String title, String learnerName,
         String tutorName, String typeLabel, BigDecimal unitPrice, short sessionCount, int seatCount, BigDecimal total,
         String terms, String statusLabel, Instant createdAt, Instant learnerAcceptedAt, Instant tutorAcceptedAt,
-        boolean payable, boolean canCancel, List<SessionDTO> sessions, boolean viewerIsTutor, MoneyDTO money) {
+        boolean payable, boolean canCancel, List<SessionDTO> sessions, boolean viewerIsTutor, MoneyDTO money,
+        List<ActivityDTO> activities) {
+
+    /** Một mốc trong hoạt động gần đây của hợp đồng. */
+    public record ActivityDTO(Instant at, String text) {}
 
     /** Một buổi học; canAttend cho gia sư (buổi kế tiếp), canConfirm cho học viên (buổi đã điểm danh). */
     public record SessionDTO(Long id, int number, BigDecimal amount, String statusLabel, Instant attendedAt,
@@ -50,7 +54,25 @@ public record ContractDetailDTO(Long id, String publicCode, String orderCode, St
                 contract.getTutorAcceptedAt(), contract.getStatus() == ContractStatus.AWAITING_PAYMENT
                         && item.getOrderReference().getStatus() == OrderStatus.AWAITING_PAYMENT,
                 contract.getStatus() == ContractStatus.AWAITING_PAYMENT && contract.getLearnerId().equals(viewerId),
-                sessionRows(contract, viewerId, sessions), contract.getTutorId().equals(viewerId), money(item, sessions));
+                sessionRows(contract, viewerId, sessions), contract.getTutorId().equals(viewerId), money(item, sessions),
+                activities(contract, sessions));
+    }
+
+    /** Hoạt động gần đây suy ra từ mốc thời gian của hợp đồng và các buổi học, mới nhất trước, tối đa 8 mốc. */
+    private static List<ActivityDTO> activities(Contract contract, List<ContractSession> sessions) {
+        List<ActivityDTO> list = new java.util.ArrayList<>();
+        list.add(new ActivityDTO(contract.getCreatedAt(), "Hợp đồng được tạo"));
+        for (ContractSession s : sessions) {
+            if (s.getAttendedAt() != null) {
+                list.add(new ActivityDTO(s.getAttendedAt(), "Gia sư điểm danh buổi "
+                        + s.getSessionNumber() + (s.isAbsent() ? " (học viên vắng)" : "")));
+            }
+            if (s.getConfirmedAt() != null) {
+                list.add(new ActivityDTO(s.getConfirmedAt(), "Buổi " + s.getSessionNumber() + " được xác nhận, tiền đã giải ngân"));
+            }
+        }
+        if (contract.getCompletedAt() != null) list.add(new ActivityDTO(contract.getCompletedAt(), "Hợp đồng hoàn thành"));
+        return list.stream().sorted(java.util.Comparator.comparing(ActivityDTO::at).reversed()).limit(8).toList();
     }
 
     /** Tính tiền theo từng buổi; chưa thanh toán (chưa có buổi) thì chia đều theo số buổi của hợp đồng. */
