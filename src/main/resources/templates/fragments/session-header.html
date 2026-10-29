@@ -14,6 +14,7 @@
                 <a class="user-header__nav-link" sec:authorize="hasRole('LEARNER')" th:href="@{/job/my-job}">Tin của tôi</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('TUTOR')" th:href="@{/job/discover}">Tin tìm gia sư</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/manage}">Quản lý lớp</a>
+                <a class="user-header__nav-link" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/invitation/negotiation}">Lời mời</a>
                 <a class="user-header__nav-link" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/contract/my}">Hợp đồng</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('LEARNER')" th:href="@{/order/history}">Đơn đăng ký</a>
                 <a class="user-header__nav-link" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/chat/messages}">Tin nhắn</a>
