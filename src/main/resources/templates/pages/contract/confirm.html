@@ -1,90 +1,89 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, 'none', ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
-<title>Dự thảo hợp đồng — Edu Connect</title>
+<title>Xác nhận hợp đồng — Edu Connect</title>
 <th:block th:fragment="styles">
 <link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
 <link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
-<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
-<link rel="stylesheet" href="/css/components/navigation/breadcrumb.css" th:href="@{/css/components/navigation/breadcrumb.css}"/>
 <link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
-<link rel="stylesheet" href="/css/components/action/component-icon.css" th:href="@{/css/components/action/component-icon.css}"/>
 <link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/modal.css" th:href="@{/css/components/feedback/modal.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}"/>
-<link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}"/>
-<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}"/>
-<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}"/>
-<link rel="stylesheet" href="/css/components/data-display/table.css" th:href="@{/css/components/data-display/table.css}"/>
-<link rel="stylesheet" href="/css/components/form/checkbox.css" th:href="@{/css/components/form/checkbox.css}"/>
-<link rel="stylesheet" href="/css/components/form/form-field.css" th:href="@{/css/components/form/form-field.css}"/>
-<link rel="stylesheet" href="/css/components/form/select.css" th:href="@{/css/components/form/select.css}"/>
-<link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}"/>
-<link rel="stylesheet" href="/css/pages/contract/confirm.css" th:href="@{/css/pages/contract/confirm.css}"/>
+<link rel="stylesheet" href="/css/pages/payment/flow.css" th:href="@{/css/pages/payment/flow.css}"/>
 </th:block>
-<th:block th:fragment="headScripts"></th:block>
+<th:block th:fragment="headScripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+</th:block>
 <th:block th:fragment="scripts">
-<script defer th:src="@{/js/core/route.js}"></script>
-<script defer th:src="@{/js/core/user-header.js}"></script>
-<script defer th:src="@{/js/pages/contract/confirm.js}"></script>
+<script src="/js/pages/contract/confirm.js" defer th:src="@{/js/pages/contract/confirm.js}"></script>
 </th:block>
 </head>
 <body th:fragment="content">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v4')}"></th:block>
-<main class="confirm-page">
-    <nav class="breadcrumb" aria-label="Đường dẫn"><ol class="breadcrumb__list">
-        <li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/cart/index}">Giỏ đăng ký</a></li>
-        <li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Xác nhận hợp đồng</span></li>
-    </ol></nav>
-    <header class="page-header"><div class="page-header__title-block">
-        <h1 class="page-header__title">Xác nhận hợp đồng dạy – học</h1>
-        <p class="confirm-muted">Kiểm tra dịch vụ, học phí và điều khoản trước khi xác nhận. Xem dự thảo chưa tạo đơn hay giữ chỗ.</p>
-    </div></header>
-    <p class="alert alert--error" role="alert" th:if="${error != null}" th:text="${error}"></p>
-    <section class="card" th:if="${confirmation == null}"><div class="card__body confirm-stack">
-        <h2 class="card__title">Chưa có hợp đồng được chọn</h2>
-        <p class="confirm-muted">Chọn một dịch vụ hoặc lớp học trong giỏ đăng ký để xem thỏa thuận.</p>
-        <a class="button button--primary" th:href="@{/cart/index}">Về giỏ đăng ký</a>
-    </div></section>
-    <div class="confirm-layout" th:if="${confirmation != null}">
-        <div class="confirm-main">
-            <section class="card" aria-labelledby="contract-title">
-                <header class="card__header"><h2 class="card__title" id="contract-title">Thông tin thỏa thuận</h2></header>
-                <div class="card__body confirm-stack">
-                    <dl class="info-row"><dt class="info-row__label">Học viên / Phụ huynh</dt><dd class="info-row__value" th:text="${confirmation.learnerName}"></dd></dl>
-                    <dl class="info-row"><dt class="info-row__label">Gia sư</dt><dd class="info-row__value" th:text="${confirmation.tutorName}"></dd></dl>
-                    <dl class="info-row"><dt class="info-row__label">Mã đơn</dt><dd class="info-row__value" th:text="${confirmation.orderCode}"></dd></dl>
-                    <dl class="info-row"><dt class="info-row__label">Mã hợp đồng</dt><dd class="info-row__value" th:text="${confirmation.publicCode}"></dd></dl>
+<main class="flow-page">
+    <header class="flow-head">
+        <h1 th:text="${confirmation != null and !confirmation.draft} ? 'Hợp đồng đã tạo' : 'Xác nhận hợp đồng'"></h1>
+        <p th:text="${confirmation != null and !confirmation.draft} ? 'Hợp đồng đã được tạo và đang chờ bạn thanh toán để có hiệu lực.' : 'Kiểm tra khóa học, học phí và điều khoản trước khi đăng ký. Chưa có khoản tiền nào bị trừ.'"></p>
+    </header>
+    <th:block th:with="step=${confirmation != null and !confirmation.draft} ? 2 : 1"><th:block th:replace="~{fragments/payment-flow :: steps(${step})}"></th:block></th:block>
+    <p class="flow-alert flow-alert--error" role="alert" th:if="${error != null}" th:text="${error}"></p>
+
+    <section class="flow-card flow-center" th:if="${confirmation == null}">
+        <div class="flow-hero">
+            <span class="flow-hero__icon flow-hero__icon--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></span>
+            <h2>Chưa chọn hợp đồng</h2>
+            <p>Chọn một khóa học trong giỏ, hoặc mở từ lời mời hay tin đã chốt gia sư để xem thỏa thuận.</p>
+            <a class="button button--primary" th:href="@{/cart/index}">Về giỏ đăng ký</a>
+        </div>
+    </section>
+
+    <div class="flow-layout" th:if="${confirmation != null}">
+        <div class="flow-main">
+            <section class="flow-card" aria-labelledby="course-title">
+                <h2 id="course-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>Khóa học và gia sư</h2>
+                <div class="flow-course">
+                    <span class="flow-avatar" aria-hidden="true" th:text="${#strings.substring(confirmation.tutorName, 0, 1)}"></span>
+                    <div>
+                        <h3 th:text="${confirmation.title}"></h3>
+                        <div class="flow-course__meta">
+                            <span class="badge badge--info" th:text="${confirmation.typeLabel}"></span>
+                            <span th:text="${'Gia sư ' + confirmation.tutorName}"></span>
+                        </div>
+                    </div>
                 </div>
+                <dl class="flow-facts">
+                    <div><dt>Số buổi</dt><dd th:text="${confirmation.sessionCount}"></dd></div>
+                    <div><dt>Số chỗ</dt><dd th:text="${confirmation.seatCount}"></dd></div>
+                    <div><dt>Đơn giá mỗi buổi</dt><dd th:text="${#numbers.formatDecimal(confirmation.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                </dl>
             </section>
-            <section class="card" aria-labelledby="offering-title">
-                <header class="card__header"><h2 class="card__title" id="offering-title" th:text="${confirmation.title}"></h2></header>
-                <div class="card__body confirm-stack">
-                    <dl class="info-row"><dt class="info-row__label">Loại</dt><dd class="info-row__value" th:text="${confirmation.typeLabel}"></dd></dl>
-                    <dl class="info-row"><dt class="info-row__label">Số buổi</dt><dd class="info-row__value" th:text="${confirmation.sessionCount}"></dd></dl>
-                    <dl class="info-row"><dt class="info-row__label">Số chỗ</dt><dd class="info-row__value" th:text="${confirmation.seatCount}"></dd></dl>
-                    <dl class="info-row"><dt class="info-row__label">Đơn giá mỗi buổi</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(confirmation.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
-                </div>
+
+            <section class="flow-card" aria-labelledby="terms-title">
+                <h2 id="terms-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>Điều khoản giảng dạy</h2>
+                <div class="flow-terms" tabindex="0" th:text="${confirmation.terms}"></div>
             </section>
-            <section class="card" aria-labelledby="terms-title">
-                <header class="card__header"><h2 class="card__title" id="terms-title">Điều khoản giảng dạy</h2></header>
-                <div class="card__body"><p class="confirm-terms" th:text="${confirmation.terms}"></p></div>
-            </section>
-            <section class="card" th:if="${confirmation.draft}" aria-labelledby="consent-title">
-                <header class="card__header"><h2 class="card__title" id="consent-title">Xác nhận của học viên</h2></header>
-                <div class="card__body confirm-stack">
-                    <label class="confirm-consent"><input class="confirm-consent-checkbox" type="checkbox" name="acceptTerms" value="true" form="signContractForm" required><span>Tôi đã đọc và đồng ý với nội dung, số buổi và điều khoản giảng dạy trên.</span></label>
-                    <label class="confirm-consent"><input class="confirm-consent-checkbox" type="checkbox" name="acceptPayment" value="true" form="signContractForm" required><span>Tôi đã kiểm tra học phí và số chỗ đăng ký.</span></label>
-                    <label class="confirm-consent"><input class="confirm-consent-checkbox" type="checkbox" name="acceptCancellation" value="true" form="signContractForm" required><span>Tôi đã đọc các điều khoản hủy và hoàn tiền trong thỏa thuận.</span></label>
+
+            <section class="flow-card" th:if="${confirmation.draft}" aria-labelledby="consent-title">
+                <h2 id="consent-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>Cam kết của bạn</h2>
+                <div class="flow-consents">
+                    <label class="flow-consent"><input class="flow-consent-box" type="checkbox" name="acceptTerms" value="true" form="signContractForm" required><span>Tôi đã đọc và đồng ý với nội dung, số buổi và điều khoản giảng dạy ở trên.</span></label>
+                    <label class="flow-consent"><input class="flow-consent-box" type="checkbox" name="acceptPayment" value="true" form="signContractForm" required><span>Tôi đã kiểm tra học phí và số chỗ đăng ký.</span></label>
+                    <label class="flow-consent"><input class="flow-consent-box" type="checkbox" name="acceptCancellation" value="true" form="signContractForm" required><span>Tôi đã đọc các điều khoản hủy và hoàn tiền trong thỏa thuận.</span></label>
                 </div>
             </section>
         </div>
-        <aside class="confirm-sidebar" aria-label="Tóm tắt đăng ký"><section class="card confirm-panel confirm-stack">
-            <h2 class="card__title">Tóm tắt đăng ký</h2>
-            <span class="badge badge--warning" th:text="${confirmation.statusLabel}"></span>
-            <div class="confirm-price"><span>Tổng học phí</span><strong th:text="${#numbers.formatDecimal(confirmation.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></div>
-            <form th:if="${confirmation.draft}" method="post" th:action="${confirmation.invitationId != null} ? @{/contract/sign-invitation} : (${confirmation.jobId != null} ? @{/contract/sign-job} : @{/contract/sign})" id="signContractForm" class="confirm-stack">
+
+        <aside class="flow-summary" aria-label="Tóm tắt đăng ký">
+            <h2>Tóm tắt đăng ký</h2>
+            <dl class="flow-rows">
+                <div><dt>Đơn giá mỗi buổi</dt><dd th:text="${#numbers.formatDecimal(confirmation.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                <div><dt>Số buổi</dt><dd th:text="${confirmation.sessionCount}"></dd></div>
+                <div><dt>Số chỗ</dt><dd th:text="${confirmation.seatCount}"></dd></div>
+                <div th:unless="${confirmation.draft}"><dt>Mã hợp đồng</dt><dd th:text="${#strings.abbreviate(confirmation.publicCode, 16)}"></dd></div>
+                <div th:unless="${confirmation.draft}"><dt>Trạng thái</dt><dd th:text="${confirmation.statusLabel}"></dd></div>
+            </dl>
+            <div class="flow-total"><span>Tổng học phí</span><strong th:text="${#numbers.formatDecimal(confirmation.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></div>
+
+            <form th:if="${confirmation.draft}" method="post" th:action="${confirmation.invitationId != null} ? @{/contract/sign-invitation} : (${confirmation.jobId != null} ? @{/contract/sign-job} : @{/contract/sign})" id="signContractForm">
                 <input type="hidden" name="cartItemId" th:if="${confirmation.cartItemId != null}" th:value="${confirmation.cartItemId}">
                 <input type="hidden" name="invitationId" th:if="${confirmation.invitationId != null}" th:value="${confirmation.invitationId}">
                 <th:block th:if="${confirmation.jobId != null}">
@@ -94,12 +93,14 @@
                     <input type="hidden" name="applicationVersion" th:value="${confirmation.applicationVersion}">
                 </th:block>
                 <input type="hidden" name="version" th:if="${confirmation.jobId == null}" th:value="${confirmation.version}">
-                <button class="button button--primary button--large" type="submit">Xác nhận đăng ký</button>
+                <button class="button button--primary button--large flow-cta" type="submit" data-confirm-submit>Xác nhận đăng ký</button>
             </form>
-            <a class="button button--primary" th:if="${confirmation.payable}" th:href="@{/payment/checkout(contract=${confirmation.id})}">Tiếp tục thanh toán</a>
-            <p class="confirm-muted" th:if="${confirmation.payable}">Đơn đã được tạo và đang chờ thanh toán. Xác nhận đăng ký không có nghĩa là đã thanh toán.</p>
-            <a class="button button--outline" th:href="@{/cart/index}">Về giỏ đăng ký</a>
-        </section></aside>
+            <a class="button button--primary button--large flow-cta" th:if="${confirmation.payable}" th:href="@{/payment/checkout(contract=${confirmation.id})}">Tiếp tục thanh toán</a>
+            <a class="flow-link" th:if="${!confirmation.draft}" th:href="@{/contract/my}">Xem tất cả hợp đồng của tôi</a>
+            <a class="flow-link" th:if="${confirmation.draft}" th:href="@{/cart/index}">Quay lại giỏ đăng ký</a>
+
+            <div class="flow-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><div><strong>Tiền được giữ ký quỹ</strong>Học phí chỉ chuyển cho gia sư theo từng buổi sau khi bạn xác nhận đã học.</div></div>
+        </aside>
     </div>
 </main>
 <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>

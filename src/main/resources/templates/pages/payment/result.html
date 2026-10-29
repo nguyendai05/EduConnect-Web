@@ -5,14 +5,9 @@
 <th:block th:fragment="styles">
 <link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
 <link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
-<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
 <link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
 <link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
-<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}"/>
-<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}"/>
-<link rel="stylesheet" href="/css/pages/contract/confirm.css" th:href="@{/css/pages/contract/confirm.css}"/>
-<link rel="stylesheet" href="/css/pages/payment/result.css" th:href="@{/css/pages/payment/result.css}"/>
+<link rel="stylesheet" href="/css/pages/payment/flow.css" th:href="@{/css/pages/payment/flow.css}"/>
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -23,27 +18,60 @@
 </th:block>
 </head>
 <body th:fragment="content">
-<th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
-<main class="confirm-page">
-    <header class="page-header"><div class="page-header__title-block">
-        <h1 class="page-header__title">Kết quả thanh toán</h1>
-    </div></header>
-    <section class="card" th:if="${payment == null}"><div class="card__body confirm-stack">
-        <h2 class="card__title">Chưa chọn hợp đồng</h2>
-        <p class="confirm-muted">Mở thanh toán từ lịch sử đơn đăng ký.</p>
-        <a class="button button--primary" th:href="@{/order/history}">Về lịch sử đơn</a>
-    </div></section>
-    <section class="card" th:if="${payment != null}"><div class="card__body confirm-stack">
-        <span class="badge" th:classappend="${payment.paid} ? 'badge--success' : 'badge--warning'" th:text="${payment.statusLabel}"></span>
-                <dl class="info-row"><dt class="info-row__label">Hợp đồng</dt><dd class="info-row__value" th:text="${payment.contractCode + ' · ' + payment.title}"></dd></dl>
-                <dl class="info-row"><dt class="info-row__label">Tổng tiền</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(payment.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
-                <dl class="info-row"><dt class="info-row__label">Trả từ ví</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(payment.walletAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
-                <dl class="info-row"><dt class="info-row__label">Còn thiếu (thanh toán qua PayOS)</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(payment.providerAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
-        <p class="confirm-muted" th:if="${payment.paid}">Thanh toán thành công. Hợp đồng đã được kích hoạt.</p>
-        <a class="button button--primary" th:if="${payment.paid}" th:href="@{/contract/student-detail(contract=${payment.contractId})}">Xem hợp đồng</a>
-        <a class="button button--primary" th:if="${!payment.paid and payment.canPay}" th:href="@{/payment/checkout(contract=${payment.contractId})}">Thử thanh toán lại</a>
-        <a class="button button--outline" th:href="@{/order/history}">Về lịch sử đơn</a>
-    </div></section>
+<th:block th:replace="~{fragments/header-user :: header(${active}, 'v4')}"></th:block>
+<main class="flow-page">
+    <header class="flow-head">
+        <h1>Kết quả thanh toán</h1>
+    </header>
+    <th:block th:with="step=${payment != null and payment.paid} ? 4 : 2"><th:block th:replace="~{fragments/payment-flow :: steps(${step})}"></th:block></th:block>
+
+    <section class="flow-card flow-center" th:if="${payment == null}">
+        <div class="flow-hero">
+            <span class="flow-hero__icon flow-hero__icon--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <h2>Chưa chọn thanh toán</h2>
+            <p>Mở kết quả từ trang hợp đồng hoặc lịch sử đơn đăng ký.</p>
+            <a class="button button--primary" th:href="@{/contract/my}">Xem hợp đồng của tôi</a>
+        </div>
+    </section>
+
+    <div class="flow-center" th:if="${payment != null}"
+         th:attr="data-result-poll=${payment.status == 'PENDING'}, data-status-url=@{/payment/status(payment=${payment.paymentId})}">
+        <section class="flow-card flow-hero" th:if="${payment.paid}">
+            <span class="flow-hero__icon flow-hero__icon--success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+            <h2>Thanh toán thành công</h2>
+            <p>Hợp đồng đã có hiệu lực. Tiền được giữ ký quỹ và chỉ chuyển cho gia sư sau khi bạn xác nhận từng buổi học.</p>
+            <div class="flow-amount" th:text="${#numbers.formatDecimal(payment.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></div>
+        </section>
+        <section class="flow-card flow-hero" th:if="${!payment.paid and payment.status == 'PENDING'}">
+            <span class="flow-hero__icon flow-hero__icon--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <h2 th:text="${payment.statusLabel}"></h2>
+            <p>Nếu bạn vừa chuyển khoản, trang sẽ tự cập nhật trong giây lát. Chưa thanh toán thì bạn có thể thử lại.</p>
+            <span class="flow-pulse" th:if="${payment.status == 'PENDING'}">Đang kiểm tra với PayOS…</span>
+        </section>
+        <section class="flow-card flow-hero" th:if="${!payment.paid and payment.status != 'PENDING'}">
+            <span class="flow-hero__icon flow-hero__icon--error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+            <h2 th:text="${payment.statusLabel}"></h2>
+            <p>Thanh toán này không còn ở trạng thái chờ. Xem hợp đồng để biết chi tiết.</p>
+        </section>
+
+        <section class="flow-card flow-receipt" aria-labelledby="receipt-title">
+            <h2 id="receipt-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>Chi tiết</h2>
+            <dl class="flow-rows">
+                <div><dt>Khóa học</dt><dd th:text="${payment.title}"></dd></div>
+                <div><dt>Gia sư</dt><dd th:text="${payment.tutorName}"></dd></div>
+                <div><dt>Mã hợp đồng</dt><dd th:text="${#strings.abbreviate(payment.contractCode, 16)}"></dd></div>
+                <div><dt>Tổng học phí</dt><dd th:text="${#numbers.formatDecimal(payment.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                <div><dt>Trả từ ví</dt><dd th:text="${#numbers.formatDecimal(payment.walletAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                <div><dt>Qua PayOS</dt><dd th:text="${#numbers.formatDecimal(payment.providerAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+            </dl>
+        </section>
+
+        <div class="flow-actions">
+            <a class="button button--primary button--large flow-cta" th:if="${payment.paid}" th:href="@{/contract/student-detail(contract=${payment.contractId})}">Xem hợp đồng</a>
+            <a class="button button--primary button--large flow-cta" th:if="${!payment.paid and payment.canPay}" th:href="@{/payment/checkout(contract=${payment.contractId})}">Thanh toán lại</a>
+            <a class="flow-link" th:href="@{/contract/my}">Về danh sách hợp đồng</a>
+        </div>
+    </div>
 </main>
 <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
 <th:block th:replace="${scripts}"></th:block>

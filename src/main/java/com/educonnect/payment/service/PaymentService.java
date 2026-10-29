@@ -367,7 +367,8 @@ public class PaymentService {
             }
         }
         return new PaymentSummaryDTO(payment != null ? payment.getId() : null, contract.getId(), contract.getPublicCode(),
-                item.getTitleSnapshot(), total, wallet, provider, balance, state, text, payUrl, expiresAt, canPay);
+                item.getTitleSnapshot(), total, wallet, provider, balance, state, text, payUrl, expiresAt, canPay,
+                contract.getTutorReference().getAccount().getDisplayName(), item.getSessionCountSnapshot());
     }
 
     private static String label(String state) {

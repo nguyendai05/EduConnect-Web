@@ -5,14 +5,9 @@
 <th:block th:fragment="styles">
 <link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
 <link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
-<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
 <link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
 <link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
-<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
-<link rel="stylesheet" href="/css/components/data-display/card.css" th:href="@{/css/components/data-display/card.css}"/>
-<link rel="stylesheet" href="/css/components/data-display/info-row.css" th:href="@{/css/components/data-display/info-row.css}"/>
-<link rel="stylesheet" href="/css/pages/contract/confirm.css" th:href="@{/css/pages/contract/confirm.css}"/>
-<link rel="stylesheet" href="/css/pages/payment/qr.css" th:href="@{/css/pages/payment/qr.css}"/>
+<link rel="stylesheet" href="/css/pages/payment/flow.css" th:href="@{/css/pages/payment/flow.css}"/>
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -23,30 +18,54 @@
 </th:block>
 </head>
 <body th:fragment="content">
-<th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
-<main class="confirm-page">
-    <header class="page-header"><div class="page-header__title-block">
-        <h1 class="page-header__title">Thanh toán qua PayOS</h1>
-        <p class="confirm-muted">Quét mã QR trên trang PayOS để trả phần còn thiếu. Trang này tự chuyển khi thanh toán xong.</p>
-    </div></header>
-    <section class="card" th:if="${payment == null}"><div class="card__body confirm-stack">
-        <h2 class="card__title">Chưa chọn thanh toán</h2>
-        <a class="button button--primary" th:href="@{/order/history}">Về lịch sử đơn</a>
-    </div></section>
-    <section class="card" th:if="${payment != null}"
-             th:attr="data-payment-poll=${payment.payUrl != null},data-status-url=@{/payment/status(payment=${payment.paymentId})},data-result-url=@{/payment/result(payment=${payment.paymentId})}">
-        <div class="card__body confirm-stack">
-            <span class="badge badge--warning" th:text="${payment.statusLabel}"></span>
-            <dl class="info-row"><dt class="info-row__label">Hợp đồng</dt><dd class="info-row__value" th:text="${payment.contractCode + ' · ' + payment.title}"></dd></dl>
-            <dl class="info-row"><dt class="info-row__label">Số tiền cần trả qua PayOS</dt><dd class="info-row__value" th:text="${#numbers.formatDecimal(payment.providerAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></dl>
-            <dl class="info-row" th:if="${payment.expiresAt != null}"><dt class="info-row__label">Hết hạn lúc</dt><dd class="info-row__value" th:text="${#temporals.format(payment.expiresAt, 'dd/MM/yyyy HH:mm')}"></dd></dl>
-            <a class="button button--primary button--large" th:if="${payment.payUrl != null}" th:href="${payment.payUrl}" target="_blank" rel="noopener">Mở trang thanh toán PayOS</a>
-            <p class="confirm-muted" th:if="${payment.payUrl != null}">Sau khi trả tiền, hệ thống tự cập nhật trạng thái trong vài giây. Không cần tải lại trang.</p>
-            <p class="alert alert--warning" th:if="${payment.payUrl == null}">Phiên thanh toán đã hết hạn hoặc chưa tạo. Vui lòng thử lại.</p>
-            <a class="button button--outline" th:if="${payment.payUrl == null}" th:href="@{/payment/checkout(contract=${payment.contractId})}">Thử lại</a>
-            <a class="button button--outline" th:href="@{/order/history}">Về lịch sử đơn</a>
+<th:block th:replace="~{fragments/header-user :: header(${active}, 'v4')}"></th:block>
+<main class="flow-page">
+    <header class="flow-head">
+        <h1>Thanh toán qua PayOS</h1>
+        <p>Hoàn tất chuyển khoản trên trang PayOS. Trang này tự cập nhật ngay khi tiền về, bạn không cần tải lại.</p>
+    </header>
+    <th:block th:replace="~{fragments/payment-flow :: steps(2)}"></th:block>
+
+    <section class="flow-card flow-center" th:if="${payment == null}">
+        <div class="flow-hero">
+            <span class="flow-hero__icon flow-hero__icon--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <h2>Chưa chọn thanh toán</h2>
+            <a class="button button--primary" th:href="@{/contract/my}">Xem hợp đồng của tôi</a>
         </div>
     </section>
+
+    <div class="flow-center" th:if="${payment != null}"
+         th:attr="data-payment-poll=${payment.payUrl != null}, data-expires-at=${payment.expiresAt}, data-status-url=@{/payment/status(payment=${payment.paymentId})}, data-result-url=@{/payment/result(payment=${payment.paymentId})}">
+        <section class="flow-card flow-hero" th:if="${payment.payUrl != null}">
+            <span class="flow-hero__icon flow-hero__icon--wait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <p>Số tiền cần chuyển qua PayOS</p>
+            <div class="flow-amount" th:text="${#numbers.formatDecimal(payment.providerAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></div>
+            <p th:text="${payment.title}"></p>
+            <span class="flow-timer" data-countdown>Phiên còn hiệu lực</span>
+            <a class="button button--primary button--large flow-cta" th:href="${payment.payUrl}" target="_blank" rel="noopener">Mở trang thanh toán PayOS</a>
+            <span class="flow-pulse">Đang chờ thanh toán…</span>
+        </section>
+
+        <section class="flow-card flow-hero" th:if="${payment.payUrl == null}">
+            <span class="flow-hero__icon flow-hero__icon--error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+            <h2>Phiên thanh toán đã hết hạn</h2>
+            <p>Bạn chưa thanh toán hoặc phiên đã đóng. Tạo một phiên mới để tiếp tục, tiền chưa bị trừ.</p>
+            <a class="button button--primary button--large flow-cta" th:href="@{/payment/checkout(contract=${payment.contractId})}">Tạo phiên thanh toán mới</a>
+        </section>
+
+        <section class="flow-card flow-receipt" th:if="${payment.payUrl != null}" aria-labelledby="howto-title">
+            <h2 id="howto-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>Cách thanh toán</h2>
+            <ol class="flow-howto">
+                <li><span>Bấm <strong>Mở trang thanh toán PayOS</strong> (mở ở tab mới).</span></li>
+                <li><span>Quét mã QR bằng ứng dụng ngân hàng và chuyển đúng số tiền.</span></li>
+                <li><span>Quay lại tab này: hợp đồng tự chuyển sang <strong>Đang thực hiện</strong>.</span></li>
+            </ol>
+        </section>
+
+        <div class="flow-actions">
+            <a class="flow-link" th:href="@{/contract/my}">Để sau, về danh sách hợp đồng</a>
+        </div>
+    </div>
 </main>
 <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
 <th:block th:replace="${scripts}"></th:block>
