@@ -63,6 +63,11 @@ public class LedgerService {
         });
     }
 
+    /** Số dư ví của người dùng; chưa có ví thì là 0 và không tạo ví (dùng được trong giao dịch chỉ đọc). */
+    public BigDecimal walletBalance(Long userId) {
+        return wallets.findById(userId).map(w -> balance(w.getLedgerAccountId())).orElse(BigDecimal.ZERO);
+    }
+
     /** Tài khoản ký quỹ của hợp đồng; tạo mới nếu chưa có. */
     public Long escrowAccount(Long contractId) {
         return escrows.findById(contractId).map(EscrowAccount::getLedgerAccountId).orElseGet(() -> {

@@ -283,7 +283,7 @@ public class PaymentService {
     /** Tạo thanh toán và phân bổ cho hợp đồng; phần ví lấy tối đa theo số dư hiện có. */
     private Payment createPayment(Order order, Contract contract, boolean useWallet, Instant now) {
         BigDecimal total = order.getTotalAmount();
-        BigDecimal balance = useWallet ? ledger.balance(ledger.walletAccount(contract.getLearnerId())) : BigDecimal.ZERO;
+        BigDecimal balance = useWallet ? ledger.walletBalance(contract.getLearnerId()) : BigDecimal.ZERO;
         BigDecimal wallet = balance.min(total).max(BigDecimal.ZERO);
         Payment payment = Payment.create();
         payment.setPublicCode("PAY-" + UUID.randomUUID());
@@ -344,7 +344,7 @@ public class PaymentService {
 
     private PaymentSummaryDTO summary(Payment payment, Contract contract) {
         var item = contract.getOrderItemReference();
-        BigDecimal balance = ledger.balance(ledger.walletAccount(contract.getLearnerId()));
+        BigDecimal balance = ledger.walletBalance(contract.getLearnerId());
         BigDecimal total = item.getOrderReference().getTotalAmount();
         BigDecimal wallet = payment != null ? payment.getWalletAmount() : balance.min(total).max(BigDecimal.ZERO);
         BigDecimal provider = payment != null ? payment.getProviderAmount() : total.subtract(wallet);

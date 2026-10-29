@@ -1,4 +1,8 @@
 # Profile DB development; secret phải cung cấp qua môi trường, không commit giá trị thật.
+server:
+  # Chạy sau ngrok/proxy: dùng X-Forwarded-* để chuyển hướng đúng https và đúng tên miền.
+  forward-headers-strategy: framework
+
 spring:
   mail:
     host: ${EDUCONNECT_MAIL_HOST:smtp.resend.com}

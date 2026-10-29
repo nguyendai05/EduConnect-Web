@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -51,10 +52,16 @@ public class PayosClient {
         body.put("cancelUrl", cancelUrl);
         body.put("expiredAt", expiresAt.getEpochSecond());
         body.put("signature", hmac(signed));
-        JsonNode response = http.post().uri("/v2/payment-requests").contentType(MediaType.APPLICATION_JSON)
-                .body(body).retrieve().body(JsonNode.class);
+        JsonNode response;
+        try {
+            response = http.post().uri("/v2/payment-requests").contentType(MediaType.APPLICATION_JSON)
+                    .body(body).retrieve().body(JsonNode.class);
+        } catch (RestClientException error) {
+            throw new IllegalArgumentException("Không kết nối được PayOS, kiểm tra khóa PayOS và thử lại");
+        }
         if (response == null || !"00".equals(response.path("code").asText()) || response.path("data").path("paymentLinkId").isMissingNode()) {
-            throw new IllegalArgumentException("Không tạo được liên kết thanh toán PayOS");
+            throw new IllegalArgumentException("PayOS từ chối tạo liên kết thanh toán"
+                    + (response == null ? "" : ": " + response.path("desc").asText("")));
         }
         return new Link(response.path("data").path("paymentLinkId").asText());
     }
