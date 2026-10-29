@@ -1,5 +1,6 @@
 // Menu avatar của header thật và cửa sổ chat nổi (kéo được, nhớ trạng thái giữa các trang).
 document.addEventListener('DOMContentLoaded', () => {
+  initFlash()
   markActiveNav()
   initAccountMenu()
   initChatWidget()
@@ -36,6 +37,43 @@ function initBadges() {
   refresh()
   setInterval(refresh, 30000)
   window.refreshHeaderBadges = refresh
+}
+
+/**
+ * Thông báo kết quả thao tác (thành công/lỗi) hiện dạng hộp nổi ở đầu trang, tự tắt sau 5 giây (dừng khi rê chuột)
+ * hoặc bấm × để tắt. Chỉ chuyển các thông báo sau thao tác; thông báo cảnh báo, trong form/hộp thoại hoặc có liên kết/nút
+ * (cần người dùng đọc và làm tiếp) thì giữ nguyên tại chỗ.
+ */
+function initFlash() {
+  const candidates = [...document.querySelectorAll('.alert[role="status"], .alert[role="alert"], .flow-alert[role="alert"]')].filter(node =>
+    !node.classList.contains('alert--warning') && !node.classList.contains('alert--contextual') &&
+    !node.closest('form, dialog, .modal') && !node.querySelector('a, button, form, ul, ol') && node.textContent.trim())
+  if (!candidates.length) return
+  const stack = document.createElement('div')
+  stack.className = 'flash-stack'
+  document.body.append(stack)
+  for (const node of candidates) {
+    const error = node.classList.contains('alert--error') || node.classList.contains('flow-alert--error')
+    const toast = document.createElement('div')
+    toast.className = 'flash-toast ' + (error ? 'flash-toast--error' : 'flash-toast--success')
+    toast.setAttribute('role', error ? 'alert' : 'status')
+    const text = document.createElement('p')
+    text.textContent = node.textContent.trim()
+    const close = document.createElement('button')
+    close.type = 'button'
+    close.setAttribute('aria-label', 'Đóng thông báo')
+    close.textContent = '×'
+    toast.append(text, close)
+    stack.append(toast)
+    node.remove()
+    let timer = null
+    const dismiss = () => { clearTimeout(timer); toast.classList.add('is-leaving'); setTimeout(() => toast.remove(), 200) }
+    const arm = () => { clearTimeout(timer); timer = setTimeout(dismiss, 5000) }
+    close.addEventListener('click', dismiss)
+    toast.addEventListener('mouseenter', () => clearTimeout(timer))
+    toast.addEventListener('mouseleave', arm)
+    arm()
+  }
 }
 
 /** Tô đậm mục điều hướng đang xem theo đường dẫn hiện tại. */
