@@ -6,6 +6,7 @@ import com.educonnect.chat.service.ChatService;
 import com.educonnect.security.AccountPrincipal;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ChatPageController {
@@ -36,6 +38,7 @@ public class ChatPageController {
             if (current != null) {
                 model.addAttribute("current", service.conversation(user, current));
                 model.addAttribute("chatMessages", service.messages(user, current));
+                service.markRead(user, current);
             }
         }
         return "pages/chat/messages";
@@ -77,7 +80,56 @@ public class ChatPageController {
     public List<ChatMessageDTO> poll(@RequestParam("conversation") Long conversationId,
                                      @RequestParam(defaultValue = "0") Long after,
                                      @AuthenticationPrincipal AccountPrincipal user) {
-        return require().newMessages(user, conversationId, after);
+        ChatService service = require();
+        List<ChatMessageDTO> items = service.newMessages(user, conversationId, after);
+        if (!items.isEmpty()) service.markRead(user, conversationId);
+        return items;
+    }
+
+    /** Danh sách cuộc trò chuyện dạng JSON cho cửa sổ chat nổi. */
+    @GetMapping("/chat/widget/conversations")
+    @ResponseBody
+    public List<ChatConversationDTO> widgetConversations(@AuthenticationPrincipal AccountPrincipal user) {
+        return require().conversations(user);
+    }
+
+    /** Tin gần nhất của một cuộc trò chuyện dạng JSON cho cửa sổ chat nổi. */
+    @GetMapping("/chat/widget/messages")
+    @ResponseBody
+    public List<ChatMessageDTO> widgetMessages(@RequestParam("conversation") Long conversationId,
+                                               @AuthenticationPrincipal AccountPrincipal user) {
+        ChatService service = require();
+        List<ChatMessageDTO> items = service.messages(user, conversationId);
+        service.markRead(user, conversationId);
+        return items;
+    }
+
+    /** Mở hoặc tạo cuộc trò chuyện như /chat/with nhưng trả JSON để cửa sổ chat nổi mở ngay, không chuyển trang. */
+    @GetMapping("/chat/widget/open")
+    @ResponseBody
+    public ResponseEntity<?> widgetOpen(@RequestParam(value = "tutor", required = false) Long tutorId,
+                                        @RequestParam(value = "learner", required = false) Long learnerId,
+                                        @AuthenticationPrincipal AccountPrincipal user) {
+        ChatService service = require();
+        try {
+            Long id = tutorId != null ? service.open(user, tutorId) : service.openWithLearner(user, learnerId);
+            return ResponseEntity.ok(service.conversation(user, id));
+        } catch (IllegalArgumentException error) {
+            return ResponseEntity.badRequest().body(Map.of("error", error.getMessage()));
+        }
+    }
+
+    /** Gửi tin từ cửa sổ chat nổi; lỗi nội dung trả 400 kèm thông báo. */
+    @PostMapping("/chat/widget/send")
+    @ResponseBody
+    public ResponseEntity<?> widgetSend(@RequestParam("conversation") Long conversationId, @RequestParam(defaultValue = "") String body,
+                                        @AuthenticationPrincipal AccountPrincipal user) {
+        try {
+            require().send(user, conversationId, body);
+            return ResponseEntity.ok(Map.of("ok", true));
+        } catch (IllegalArgumentException error) {
+            return ResponseEntity.badRequest().body(Map.of("error", error.getMessage()));
+        }
     }
 
     private ChatService require() {

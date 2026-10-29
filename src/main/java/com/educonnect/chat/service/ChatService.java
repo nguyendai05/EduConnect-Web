@@ -103,6 +103,19 @@ public class ChatService {
                 .map(m -> ChatMessageDTO.from(m, user.getId())).toList();
     }
 
+    /** Đánh dấu người dùng đã xem cuộc trò chuyện tới thời điểm hiện tại. */
+    public void markRead(AccountPrincipal user, Long id) {
+        ChatConversation conversation = own(user, id);
+        if (conversation.getLearnerId().equals(user.getId())) conversation.setLearnerReadAt(clock.instant());
+        else conversation.setTutorReadAt(clock.instant());
+    }
+
+    /** Tổng số tin chưa xem của người dùng. */
+    @Transactional(readOnly = true)
+    public long unread(AccountPrincipal user) {
+        return messages.countUnread(user.getId());
+    }
+
     /** Gửi một tin văn bản (1 đến 1000 ký tự) vào cuộc trò chuyện của mình. */
     public void send(AccountPrincipal user, Long id, String body) {
         ChatConversation conversation = own(user, id);

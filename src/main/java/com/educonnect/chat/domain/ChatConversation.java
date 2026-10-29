@@ -28,6 +28,14 @@ public class ChatConversation {
     private Instant lastMessageAt;
 
     @JdbcTypeCode(SqlTypes.TIMESTAMP)
+    @Column(name = "learner_read_at", nullable = true, columnDefinition = "datetime(6)")
+    private Instant learnerReadAt;
+
+    @JdbcTypeCode(SqlTypes.TIMESTAMP)
+    @Column(name = "tutor_read_at", nullable = true, columnDefinition = "datetime(6)")
+    private Instant tutorReadAt;
+
+    @JdbcTypeCode(SqlTypes.TIMESTAMP)
     @Column(name = "created_at", nullable = false, columnDefinition = "datetime(6)")
     private Instant createdAt;
 
@@ -53,6 +61,12 @@ public class ChatConversation {
 
     public Instant getLastMessageAt() { return lastMessageAt; }
     public void setLastMessageAt(Instant lastMessageAt) { this.lastMessageAt = lastMessageAt; }
+
+    public Instant getLearnerReadAt() { return learnerReadAt; }
+    public void setLearnerReadAt(Instant learnerReadAt) { this.learnerReadAt = learnerReadAt; }
+
+    public Instant getTutorReadAt() { return tutorReadAt; }
+    public void setTutorReadAt(Instant tutorReadAt) { this.tutorReadAt = tutorReadAt; }
 
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
