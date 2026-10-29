@@ -63,6 +63,11 @@ public class ContractListService {
                 all.stream().filter(ContractSummaryDTO::needsAction).count(), total);
     }
 
+    /** Hợp đồng giữa người đăng nhập và một đối tác (dùng cho khung "hợp đồng liên quan" của trang tin nhắn). */
+    public List<ContractSummaryDTO> with(AccountPrincipal user, Long partnerId) {
+        return mine(user).stream().filter(c -> c.partnerId().equals(partnerId)).toList();
+    }
+
     /** Bỏ dấu và hoa thường để tìm kiếm tiếng Việt. */
     private static String fold(String text) {
         if (text == null) return "";

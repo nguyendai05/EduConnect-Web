@@ -24,7 +24,7 @@ public record ContractConfirmationDTO(Long id, Long cartItemId, Long invitationI
         Offering offering = item.getOfferingReference();
         BigDecimal total = offering.getUnitPrice().multiply(BigDecimal.valueOf(offering.getSessionCount()))
                 .multiply(BigDecimal.valueOf(item.getSeatCount()));
-        String type = offering.getOfferingType() == OfferingType.GROUP_CLASS ? "Lớp nhóm" : "Dịch vụ 1 kèm 1";
+        String type = offering.getOfferingType() == OfferingType.GROUP_CLASS ? "Lớp nhóm" : "Dạy kèm 1-1";
         return new ContractConfirmationDTO(null, item.getId(), null, null, null, null, offering.getVersion(), "Chưa tạo", "Chưa tạo",
                 null, learnerName, offering.getTutorReference().getAccount().getDisplayName(),
                 offering.getTitle(), type, offering.getUnitPrice(),
@@ -37,7 +37,7 @@ public record ContractConfirmationDTO(Long id, Long cartItemId, Long invitationI
             String learnerName, String tutorName) {
         BigDecimal total = src.unitPrice().multiply(BigDecimal.valueOf(src.sessionCount()));
         return new ContractConfirmationDTO(null, null, src.sourceId(), null, null, null, src.sourceVersion(), "Chưa tạo", "Chưa tạo",
-                null, learnerName, tutorName, "Lời mời học " + subject, "Dịch vụ 1 kèm 1", src.unitPrice(),
+                null, learnerName, tutorName, "Lời mời học " + subject, "Dạy kèm 1-1", src.unitPrice(),
                 src.sessionCount(), 1, total, src.termsText(), "Chưa xác nhận", false);
     }
 
@@ -47,7 +47,7 @@ public record ContractConfirmationDTO(Long id, Long cartItemId, Long invitationI
         BigDecimal total = src.unitPrice().multiply(BigDecimal.valueOf(src.sessionCount()));
         return new ContractConfirmationDTO(null, null, null, src.sourceId(), src.applicationId(),
                 src.applicationVersion(), src.sourceVersion(), "Chưa tạo", "Chưa tạo", null, learnerName, tutorName,
-                title, "Dịch vụ 1 kèm 1", src.unitPrice(), src.sessionCount(), 1, total, src.termsText(),
+                title, "Dạy kèm 1-1", src.unitPrice(), src.sessionCount(), 1, total, src.termsText(),
                 "Chưa xác nhận", false);
     }
 
@@ -56,7 +56,7 @@ public record ContractConfirmationDTO(Long id, Long cartItemId, Long invitationI
         return new ContractConfirmationDTO(contract.getId(), null, null, null, null, null, contract.getVersion(), contract.getPublicCode(),
                 item.getOrderReference().getPublicCode(), contract.getCreatedAt(), learnerName,
                 contract.getTutorReference().getAccount().getDisplayName(), item.getTitleSnapshot(),
-                item.getOfferingTypeSnapshot() == OrderItemType.GROUP_CLASS ? "Lớp nhóm" : "Dịch vụ 1 kèm 1",
+                item.getOfferingTypeSnapshot() == OrderItemType.GROUP_CLASS ? "Lớp nhóm" : "Dạy kèm 1-1",
                 item.getUnitPriceSnapshot(), item.getSessionCountSnapshot(), item.getSeatCount(),
                 item.getLineTotal(), contract.getAgreedTermsText(), switch (contract.getStatus()) {
                     case AWAITING_PAYMENT -> "Chờ thanh toán";

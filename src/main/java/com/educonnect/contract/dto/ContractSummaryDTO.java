@@ -16,7 +16,7 @@ import java.util.List;
 public record ContractSummaryDTO(Long id, String code, String title, String partnerName, boolean viewerIsTutor,
         String statusLabel, boolean active, BigDecimal total, int doneSessions, int totalSessions,
         Integer attendSession, Integer confirmSession, Long attendSessionId, Long confirmSessionId, Instant createdAt,
-        ContractStatus status) {
+        ContractStatus status, Long partnerId) {
 
     /** Hợp đồng đang chờ người xem làm gì đó: gia sư điểm danh, học viên xác nhận buổi hoặc thanh toán. */
     public boolean needsAction() {
@@ -38,7 +38,7 @@ public record ContractSummaryDTO(Long id, String code, String title, String part
                 label(contract.getStatus()), active, item.getLineTotal(), done, sessions.size(),
                 attend == null ? null : attend.getSessionNumber(), confirm == null ? null : confirm.getSessionNumber(),
                 attend == null ? null : attend.getId(), confirm == null ? null : confirm.getId(), contract.getCreatedAt(),
-                contract.getStatus());
+                contract.getStatus(), tutor ? contract.getLearnerId() : contract.getTutorId());
     }
 
     private static String label(ContractStatus status) {

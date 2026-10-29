@@ -48,7 +48,7 @@ public record ContractDetailDTO(Long id, String publicCode, String orderCode, St
         return new ContractDetailDTO(contract.getId(), contract.getPublicCode(), item.getOrderReference().getPublicCode(),
                 item.getTitleSnapshot(), contract.getLearnerReference().getAccount().getDisplayName(),
                 contract.getTutorReference().getAccount().getDisplayName(),
-                item.getOfferingTypeSnapshot() == OrderItemType.GROUP_CLASS ? "Lớp nhóm" : "Dịch vụ 1 kèm 1",
+                item.getOfferingTypeSnapshot() == OrderItemType.GROUP_CLASS ? "Lớp nhóm" : "Dạy kèm 1-1",
                 item.getUnitPriceSnapshot(), item.getSessionCountSnapshot(), item.getSeatCount(), item.getLineTotal(),
                 contract.getAgreedTermsText(), status, contract.getCreatedAt(), contract.getLearnerAcceptedAt(),
                 contract.getTutorAcceptedAt(), contract.getStatus() == ContractStatus.AWAITING_PAYMENT

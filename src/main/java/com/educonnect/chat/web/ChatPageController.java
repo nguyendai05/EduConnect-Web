@@ -3,6 +3,7 @@ package com.educonnect.chat.web;
 import com.educonnect.chat.dto.ChatConversationDTO;
 import com.educonnect.chat.dto.ChatMessageDTO;
 import com.educonnect.chat.service.ChatService;
+import com.educonnect.contract.service.ContractListService;
 import com.educonnect.security.AccountPrincipal;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,12 @@ import java.util.Map;
 @Controller
 public class ChatPageController {
     private ObjectProvider<ChatService> services;
+    private ObjectProvider<ContractListService> contractLists;
 
-    public ChatPageController(ObjectProvider<ChatService> services) { this.services = services; }
+    public ChatPageController(ObjectProvider<ChatService> services, ObjectProvider<ContractListService> contractLists) {
+        this.services = services;
+        this.contractLists = contractLists;
+    }
 
     /** Trang tin nhắn: danh sách cuộc trò chuyện và nội dung cuộc đang chọn (mặc định là cuộc mới nhất). */
     @GetMapping("/chat/messages")
@@ -36,7 +41,10 @@ public class ChatPageController {
             model.addAttribute("conversations", list);
             Long current = conversationId != null ? conversationId : list.isEmpty() ? null : list.get(0).id();
             if (current != null) {
-                model.addAttribute("current", service.conversation(user, current));
+                ChatConversationDTO chosen = service.conversation(user, current);
+                model.addAttribute("current", chosen);
+                ContractListService contracts = contractLists.getIfAvailable();
+                model.addAttribute("linked", contracts == null ? List.of() : contracts.with(user, chosen.otherId()));
                 model.addAttribute("chatMessages", service.messages(user, current));
                 service.markRead(user, current);
             }

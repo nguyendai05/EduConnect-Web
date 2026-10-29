@@ -1,5 +1,13 @@
-// Hỏi tin mới mỗi 4 giây và thêm vào khung chat; gửi tin dùng form thường nên không cần JS.
+// Tìm cuộc trò chuyện; hỏi tin mới mỗi 4 giây và thêm vào khung chat; gửi tin dùng form thường nên không cần JS.
 document.addEventListener('DOMContentLoaded', () => {
+  // Ô tìm cuộc trò chuyện lọc danh bạ ngay trên trang, không dấu.
+  const search = document.querySelector('[data-chat-search]')
+  const fold = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').toLowerCase()
+  search?.addEventListener('input', () => {
+    const needle = fold(search.value.trim())
+    document.querySelectorAll('.chat-list__item').forEach(item => { item.hidden = !fold(item.textContent).includes(needle) })
+  })
+
   const thread = document.querySelector('[data-chat-poll]')
   const box = document.querySelector('[data-chat-messages]')
   if (!thread || !box) return

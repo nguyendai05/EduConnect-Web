@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
 <link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
 <link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
 <link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}"/>
 <link rel="stylesheet" href="/css/pages/chat/messages.css" th:href="@{/css/pages/chat/messages.css}"/>
 </th:block>
@@ -33,6 +34,7 @@
     </section>
     <div class="chat-layout" th:if="${conversations != null and !conversations.empty}">
         <nav class="chat-list" aria-label="Cuộc trò chuyện">
+            <input class="chat-list__search" type="search" placeholder="Tìm cuộc trò chuyện…" aria-label="Tìm cuộc trò chuyện" data-chat-search>
             <a class="chat-list__item" th:each="c : ${conversations}"
                th:classappend="${current != null and current.id == c.id} ? 'is-active'"
                th:href="@{/chat/messages(conversation=${c.id})}" th:text="${c.otherName}"></a>
@@ -57,6 +59,17 @@
                 <button class="button button--primary" type="submit">Gửi</button>
             </form>
         </section>
+        <aside class="chat-context" th:if="${current != null}" aria-label="Hợp đồng liên quan">
+            <h2 class="chat-context__title">Hợp đồng liên quan</h2>
+            <p class="chat-muted" th:if="${linked == null or linked.empty}">Chưa có hợp đồng nào với <span th:text="${current.otherName}"></span>. Thống nhất giá và lịch học ở đây trước khi gửi lời mời.</p>
+            <article class="chat-context__card" th:each="c : ${linked}">
+                <strong th:text="${c.title}"></strong>
+                <span class="chat-muted" th:text="${c.code}"></span>
+                <span class="badge" th:text="${c.statusLabel}"></span>
+                <span class="chat-muted" th:text="${c.doneSessions + ' / ' + c.totalSessions + ' buổi'}"></span>
+                <a th:href="${c.viewerIsTutor} ? @{/contract/tutor-detail(contract=${c.id})} : @{/contract/student-detail(contract=${c.id})}">Xem hợp đồng</a>
+            </article>
+        </aside>
     </div>
 </main>
 <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>

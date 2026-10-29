@@ -25,6 +25,6 @@ public record CartItemDTO(Long id, Long offeringId, String title, String tutorNa
     public BigDecimal getTotalPrice() { return totalPrice(); }
 
     public String getOfferingTypeLabel() {
-        return offeringType == OfferingType.GROUP_CLASS ? "Lớp nhóm" : "1 kèm 1";
+        return offeringType == OfferingType.GROUP_CLASS ? "Lớp nhóm" : "Dạy kèm 1-1";
     }
 }
