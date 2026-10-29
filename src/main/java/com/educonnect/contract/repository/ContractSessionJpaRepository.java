@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,4 +23,7 @@ public interface ContractSessionJpaRepository extends JpaRepository<ContractSess
 
     /** Các buổi đã điểm danh quá hạn chờ học viên xác nhận. */
     List<ContractSession> findByStatusAndAttendedAtBefore(ContractSessionStatus status, Instant before);
+
+    /** Buổi học của nhiều hợp đồng cùng lúc, để hiện tiến độ trong danh sách. */
+    List<ContractSession> findByContractIdInOrderByContractIdAscSessionNumberAsc(Collection<Long> contractIds);
 }

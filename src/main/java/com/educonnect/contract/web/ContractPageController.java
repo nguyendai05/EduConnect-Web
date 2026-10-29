@@ -4,6 +4,7 @@ import com.educonnect.contract.ContractConfirmationForm;
 import com.educonnect.contract.InvitationContractForm;
 import com.educonnect.contract.JobContractForm;
 import com.educonnect.contract.service.ContractLifecycleService;
+import com.educonnect.contract.service.ContractListService;
 import com.educonnect.contract.service.ContractService;
 import com.educonnect.contract.service.ContractSessionService;
 import com.educonnect.security.AccountPrincipal;
@@ -26,10 +27,13 @@ public class ContractPageController {
     private ObjectProvider<ContractService> services;
     private ObjectProvider<ContractLifecycleService> lifecycle;
     private ObjectProvider<ContractSessionService> sessions;
+    private ObjectProvider<ContractListService> lists;
 
     public ContractPageController(ObjectProvider<ContractService> services, ObjectProvider<ContractLifecycleService> lifecycle,
-                                  ObjectProvider<ContractSessionService> sessions) {
+                                  ObjectProvider<ContractSessionService> sessions,
+                                  ObjectProvider<ContractListService> lists) {
         this.services = services;
+        this.lists = lists;
         this.lifecycle = lifecycle;
         this.sessions = sessions;
     }
@@ -121,6 +125,7 @@ public class ContractPageController {
     /** Gia sư điểm danh một buổi đã dạy. */
     @PostMapping("/contract/session/attend")
     public String attend(@RequestParam("contract") Long contractId, @RequestParam("session") Long sessionId,
+                         @RequestParam(required = false) String back,
                          @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
         ContractSessionService service = sessions.getIfAvailable();
         if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
@@ -130,12 +135,28 @@ public class ContractPageController {
         } catch (IllegalArgumentException error) {
             redirect.addFlashAttribute("error", error.getMessage());
         }
-        return "redirect:/contract/tutor-detail?contract=" + contractId;
+        return backTo(back, "redirect:/contract/tutor-detail?contract=" + contractId);
+    }
+
+    /** Gia sư điểm danh nhanh buổi kế tiếp của hợp đồng từ danh sách. */
+    @PostMapping("/contract/session/attend-next")
+    public String attendNext(@RequestParam("contract") Long contractId, @RequestParam(required = false) String back,
+                             @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
+        ContractSessionService service = sessions.getIfAvailable();
+        if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
+        try {
+            service.attendNext(user, contractId);
+            redirect.addFlashAttribute("message", "Đã điểm danh buổi học, chờ học viên xác nhận");
+        } catch (IllegalArgumentException error) {
+            redirect.addFlashAttribute("error", error.getMessage());
+        }
+        return backTo(back, "redirect:/contract/tutor-detail?contract=" + contractId);
     }
 
     /** Học viên xác nhận buổi đã học; tiền của buổi đó được giải ngân cho gia sư. */
     @PostMapping("/contract/session/confirm")
     public String confirmSession(@RequestParam("contract") Long contractId, @RequestParam("session") Long sessionId,
+                                 @RequestParam(required = false) String back,
                                  @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
         ContractSessionService service = sessions.getIfAvailable();
         if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
@@ -145,7 +166,7 @@ public class ContractPageController {
         } catch (IllegalArgumentException error) {
             redirect.addFlashAttribute("error", error.getMessage());
         }
-        return "redirect:/contract/student-detail?contract=" + contractId;
+        return backTo(back, "redirect:/contract/student-detail?contract=" + contractId);
     }
 
     /** Học viên hủy hợp đồng chưa thanh toán. */
@@ -176,6 +197,23 @@ public class ContractPageController {
             redirect.addFlashAttribute("error", error.getMessage());
         }
         return "redirect:/admin/dashboard";
+    }
+
+    /** Danh sách hợp đồng của người đăng nhập (học viên hoặc gia sư). */
+    @GetMapping("/contract/my")
+    public String my(@AuthenticationPrincipal AccountPrincipal user, Model model) {
+        ContractListService service = lists.getIfAvailable();
+        if (service != null) model.addAttribute("contracts", service.mine(user));
+        return "pages/contract/my";
+    }
+
+    /** Nơi quay lại sau thao tác từ danh sách: chỉ nhận các giá trị đã biết, tránh chuyển hướng tùy ý. */
+    private static String backTo(String back, String fallback) {
+        return switch (back == null ? "" : back) {
+            case "my" -> "redirect:/contract/my";
+            case "manage" -> "redirect:/tutor/manage";
+            default -> fallback;
+        };
     }
 
     /** Chi tiết hợp đồng của học viên. */

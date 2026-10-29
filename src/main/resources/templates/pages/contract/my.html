@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<head>
+<title>Hợp đồng của tôi — Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/table.css" th:href="@{/css/components/data-display/table.css}"/>
+<link rel="stylesheet" href="/css/pages/contract/contract-detail.css" th:href="@{/css/pages/contract/contract-detail.css}"/>
+</th:block>
+<th:block th:fragment="headScripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
+</th:block>
+<th:block th:fragment="scripts">
+<script src="/js/pages/contract/my.js" defer th:src="@{/js/pages/contract/my.js}"></script>
+</th:block>
+</head>
+<body th:fragment="content">
+<th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
+<main class="contract-page" id="contract">
+    <header class="page-header"><div class="page-header__content"><div class="page-header__title-block">
+        <h1 class="page-header__title">Hợp đồng của tôi</h1>
+        <p class="page-header__description">Toàn bộ hợp đồng, tiến độ buổi học và thao tác điểm danh hoặc xác nhận.</p>
+    </div></div></header>
+    <p class="alert alert--error" role="alert" th:if="${error != null}" th:text="${error}"></p>
+    <p class="alert" role="status" th:if="${message != null}" th:text="${message}"></p>
+    <section class="empty-state" th:if="${contracts == null or contracts.empty}">
+        <h2 class="empty-state__title">Chưa có hợp đồng nào</h2>
+        <p class="empty-state__description">Hợp đồng sẽ xuất hiện ở đây sau khi bạn xác nhận đăng ký một khóa học.</p>
+    </section>
+    <section class="contract-panel" th:if="${contracts != null and !contracts.empty}">
+        <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách hợp đồng" tabindex="0">
+            <table class="table">
+                <thead><tr>
+                    <th scope="col">Mã hợp đồng</th><th scope="col">Nội dung</th><th scope="col">Đối tác</th>
+                    <th scope="col">Trạng thái</th><th scope="col">Tiến độ</th><th scope="col">Tổng tiền</th><th scope="col">Thao tác</th>
+                </tr></thead>
+                <tbody>
+                    <tr th:each="c : ${contracts}">
+                        <th scope="row" th:text="${c.code}"></th>
+                        <td th:text="${c.title}"></td>
+                        <td><span th:text="${c.partnerName}"></span><br><small th:text="${c.viewerIsTutor ? 'Học viên' : 'Gia sư'}"></small></td>
+                        <td><span class="badge" th:text="${c.statusLabel}"></span></td>
+                        <td th:text="${c.doneSessions + ' / ' + c.totalSessions + ' buổi'}"></td>
+                        <td th:text="${#numbers.formatDecimal(c.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></td>
+                        <td>
+                            <a class="contract-button contract-button--secondary" th:href="${c.viewerIsTutor} ? @{/contract/tutor-detail(contract=${c.id})} : @{/contract/student-detail(contract=${c.id})}">Xem hợp đồng</a>
+                            <form method="post" th:action="@{/contract/session/attend-next}" th:if="${c.attendSession != null}">
+                                <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="back" value="my">
+                                <button class="contract-button" type="submit" th:text="${'Điểm danh buổi ' + c.attendSession}"></button>
+                            </form>
+                            <form method="post" th:action="@{/contract/session/confirm}" th:if="${c.confirmSession != null}">
+                                <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${c.confirmSessionId}"><input type="hidden" name="back" value="my">
+                                <button class="contract-button" type="submit" th:text="${'Xác nhận buổi ' + c.confirmSession}"></button>
+                            </form>
+                            <a class="contract-button" th:if="${!c.viewerIsTutor and c.statusLabel == 'Chờ thanh toán'}" th:href="@{/payment/checkout(contract=${c.id})}">Thanh toán</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+<th:block th:replace="${scripts}"></th:block>
+</body>
+</html>

@@ -144,7 +144,7 @@ public class PaymentService {
         int number = last == null ? 1 : last.getAttemptNumber() + 1;
         long orderCode = System.currentTimeMillis() * 100 + random.nextInt(100);
         Instant expiresAt = now.plus(properties.linkTtl());
-        String back = properties.publicBaseUrl() + "/payment/result?payment=" + payment.getId();
+        String back = properties.returnBase() + "/payment/result?payment=" + payment.getId();
         var link = payos.createLink(orderCode, payment.getProviderAmount().longValueExact(),
                 "EduConnect " + payment.getId(), back, back, expiresAt);
         PaymentAttempt attempt = PaymentAttempt.create();

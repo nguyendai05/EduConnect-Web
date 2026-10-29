@@ -1,5 +1,7 @@
 package com.educonnect.wallet.service;
 
+import com.educonnect.contract.domain.Contract;
+import com.educonnect.user.domain.UserAccount;
 import com.educonnect.wallet.domain.EntrySide;
 import com.educonnect.wallet.domain.EscrowAccount;
 import com.educonnect.wallet.domain.JournalKind;
@@ -56,9 +58,9 @@ public class LedgerService {
         return wallets.findById(userId).map(Wallet::getLedgerAccountId).orElseGet(() -> {
             Long accountId = newAccount("WALLET-" + userId, LedgerAccountKind.USER_WALLET, userId);
             Wallet wallet = Wallet.create();
-            wallet.setUserId(userId);
+            wallet.setAccount(entityManager.getReference(UserAccount.class, userId)); // khóa chính chung với tài khoản
             wallet.setLedgerAccountId(accountId);
-            wallets.save(wallet);
+            entityManager.persist(wallet); // persist, không save(): save() sẽ hiểu nhầm là bản ghi đã có
             return accountId;
         });
     }
@@ -73,9 +75,9 @@ public class LedgerService {
         return escrows.findById(contractId).map(EscrowAccount::getLedgerAccountId).orElseGet(() -> {
             Long accountId = newAccount("ESCROW-" + contractId, LedgerAccountKind.ESCROW, null);
             EscrowAccount escrow = EscrowAccount.create();
-            escrow.setContractId(contractId);
+            escrow.setContract(entityManager.getReference(Contract.class, contractId)); // khóa chính chung với hợp đồng
             escrow.setLedgerAccountId(accountId);
-            escrows.save(escrow);
+            entityManager.persist(escrow);
             return accountId;
         });
     }

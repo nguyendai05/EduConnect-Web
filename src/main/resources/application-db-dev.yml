@@ -57,4 +57,5 @@ app:
     api-key: ${EDUCONNECT_PAYOS_API_KEY:}
     checksum-key: ${EDUCONNECT_PAYOS_CHECKSUM_KEY:}
     public-base-url: ${EDUCONNECT_PUBLIC_BASE_URL:http://localhost:8080}
+    return-base-url: ${EDUCONNECT_PAYOS_RETURN_BASE_URL:}
     link-ttl: ${EDUCONNECT_PAYOS_LINK_TTL:15m}

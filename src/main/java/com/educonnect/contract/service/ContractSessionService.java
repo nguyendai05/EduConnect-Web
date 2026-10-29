@@ -110,6 +110,13 @@ public class ContractSessionService {
         }
     }
 
+    /** Gia sư điểm danh buổi kế tiếp của một hợp đồng (dùng cho nút điểm danh nhanh trong danh sách). */
+    public void attendNext(AccountPrincipal user, Long contractId) {
+        ContractSession next = sessions.findFirstByContractIdAndStatusOrderBySessionNumber(contractId, ContractSessionStatus.HELD)
+                .orElseThrow(() -> new IllegalArgumentException("Không còn buổi nào để điểm danh"));
+        attend(user, next.getId());
+    }
+
     /** Học viên xác nhận buổi đã học: giải ngân tiền buổi đó cho gia sư. */
     public void confirm(AccountPrincipal user, Long sessionId) {
         ContractSession session = find(sessionId);

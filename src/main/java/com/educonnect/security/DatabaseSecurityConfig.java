@@ -31,7 +31,7 @@ public class DatabaseSecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/tutor/manage", "/tutor/my-profile", "/contract/tutor-detail")
                             .hasRole("TUTOR")
-                        .requestMatchers("/contract/session/attend").hasRole("TUTOR")
+                        .requestMatchers("/contract/session/attend", "/contract/session/attend-next").hasRole("TUTOR")
                         .requestMatchers("/contract/refund").hasRole("ADMIN")
                         .requestMatchers("/cart/**", "/chat/with", "/order/history", "/invitation/create", "/job/create", "/job/my-job", "/job/applicants", "/payment/**",
                                 "/contract/student-detail", "/contract/confirm", "/contract/create", "/contract/sign", "/contract/sign-invitation", "/contract/sign-job", "/contract/cancel", "/contract/session/confirm").hasRole("LEARNER")
