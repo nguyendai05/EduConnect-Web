@@ -8,6 +8,7 @@ import com.educonnect.order.domain.OrderItem;
 import com.educonnect.order.domain.OrderItemType;
 import com.educonnect.order.domain.OrderStatus;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.util.List;
 
@@ -15,12 +16,20 @@ import java.util.List;
 public record ContractDetailDTO(Long id, String publicCode, String orderCode, String title, String learnerName,
         String tutorName, String typeLabel, BigDecimal unitPrice, short sessionCount, int seatCount, BigDecimal total,
         String terms, String statusLabel, Instant createdAt, Instant learnerAcceptedAt, Instant tutorAcceptedAt,
-        boolean payable, boolean canCancel, List<SessionDTO> sessions) {
+        boolean payable, boolean canCancel, List<SessionDTO> sessions, boolean viewerIsTutor, MoneyDTO money) {
 
     /** Một buổi học; canAttend cho gia sư (buổi kế tiếp), canConfirm cho học viên (buổi đã điểm danh). */
     public record SessionDTO(Long id, int number, BigDecimal amount, String statusLabel, Instant attendedAt,
             boolean canAttend, boolean canConfirm) {}
 
+
+    /**
+     * Tiền của hợp đồng. Phần của gia sư là số thực nhận (sau phí nền tảng, làm tròn từng buổi);
+     * phần của học viên là số tiền gốc: đã giải ngân cho gia sư và đang ký quỹ.
+     */
+    public record MoneyDTO(BigDecimal feePercent, BigDecimal feeTotal, BigDecimal netTotal, BigDecimal releasedNet,
+            BigDecimal remainingNet, BigDecimal releasedGross, BigDecimal heldGross, BigDecimal refundedGross,
+            int doneSessions, int totalSessions) {}
 
     /** viewerId là người đang xem: gia sư thấy nút điểm danh, học viên thấy nút xác nhận buổi và nút hủy (khi chờ thanh toán). */
     public static ContractDetailDTO from(Contract contract, Long viewerId, List<ContractSession> sessions) {
@@ -41,7 +50,40 @@ public record ContractDetailDTO(Long id, String publicCode, String orderCode, St
                 contract.getTutorAcceptedAt(), contract.getStatus() == ContractStatus.AWAITING_PAYMENT
                         && item.getOrderReference().getStatus() == OrderStatus.AWAITING_PAYMENT,
                 contract.getStatus() == ContractStatus.AWAITING_PAYMENT && contract.getLearnerId().equals(viewerId),
-                sessionRows(contract, viewerId, sessions));
+                sessionRows(contract, viewerId, sessions), contract.getTutorId().equals(viewerId), money(item, sessions));
+    }
+
+    /** Tính tiền theo từng buổi; chưa thanh toán (chưa có buổi) thì chia đều theo số buổi của hợp đồng. */
+    private static MoneyDTO money(OrderItem item, List<ContractSession> sessions) {
+        BigDecimal rate = item.getFeeRateSnapshot();
+        BigDecimal each = item.getLineTotal().divide(BigDecimal.valueOf(item.getSessionCountSnapshot()));
+        BigDecimal feeTotal = BigDecimal.ZERO, netTotal = BigDecimal.ZERO, releasedNet = BigDecimal.ZERO;
+        BigDecimal remainingNet = BigDecimal.ZERO, releasedGross = BigDecimal.ZERO, heldGross = BigDecimal.ZERO;
+        BigDecimal refundedGross = BigDecimal.ZERO;
+        int done = 0, count = sessions.isEmpty() ? item.getSessionCountSnapshot() : sessions.size();
+        for (int i = 0; i < count; i++) {
+            BigDecimal amount = sessions.isEmpty() ? each : sessions.get(i).getAmount();
+            ContractSessionStatus state = sessions.isEmpty() ? ContractSessionStatus.HELD : sessions.get(i).getStatus();
+            BigDecimal fee = amount.multiply(rate).setScale(0, RoundingMode.HALF_UP);
+            BigDecimal net = amount.subtract(fee);
+            if (state == ContractSessionStatus.REFUNDED) {
+                refundedGross = refundedGross.add(amount);
+                continue;
+            }
+            feeTotal = feeTotal.add(fee);
+            netTotal = netTotal.add(net);
+            if (state == ContractSessionStatus.RELEASED) {
+                done++;
+                releasedNet = releasedNet.add(net);
+                releasedGross = releasedGross.add(amount);
+            } else {
+                remainingNet = remainingNet.add(net);
+                heldGross = heldGross.add(amount);
+            }
+        }
+        BigDecimal percent = rate.multiply(BigDecimal.valueOf(100)).stripTrailingZeros();
+        return new MoneyDTO(percent.scale() < 0 ? percent.setScale(0) : percent, feeTotal, netTotal, releasedNet,
+                remainingNet, releasedGross, heldGross, refundedGross, done, count);
     }
 
     private static List<SessionDTO> sessionRows(Contract contract, Long viewerId, List<ContractSession> sessions) {

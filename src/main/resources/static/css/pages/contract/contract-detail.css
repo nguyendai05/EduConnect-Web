@@ -372,3 +372,16 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Cột phải: tiền của hợp đồng, dính khi cuộn trên màn hình rộng. */
+.contract-sidebar { align-self: start; }
+@media (min-width: 64.0625rem) {
+    .contract-sidebar { position: sticky; top: var(--space-6); }
+}
+.contract-money { display: grid; gap: var(--space-3); margin: 0 0 var(--space-4); }
+.contract-money div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); font-size: var(--font-size-sm); }
+.contract-money dt { color: var(--color-text-secondary); }
+.contract-money dd { margin: 0; font-weight: 600; text-align: right; white-space: nowrap; }
+.contract-money .is-key { padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-primary-container); }
+.contract-money .is-key dd { color: var(--color-primary); }
+.contract-sidebar progress { width: 100%; }

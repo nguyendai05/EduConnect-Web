@@ -32,7 +32,11 @@
         <p class="confirm-muted">Số dư và lịch sử tiền vào, tiền ra của bạn.</p>
     </div></header>
     <section class="card" th:if="${wallet != null}"><div class="card__body confirm-stack">
-        <div class="confirm-price"><span>Số dư hiện tại</span><strong th:text="${#numbers.formatDecimal(wallet.balance, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></div>
+        <div class="wallet-balances">
+            <div class="confirm-price"><span>Số dư khả dụng</span><strong th:text="${#numbers.formatDecimal(wallet.balance, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></div>
+            <div class="confirm-price" th:if="${wallet.secondLabel != null}"><span th:text="${wallet.secondLabel}"></span><strong th:text="${#numbers.formatDecimal(wallet.secondAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></div>
+        </div>
+        <p class="confirm-muted" th:if="${wallet.secondHint != null}" th:text="${wallet.secondHint}"></p>
     </div></section>
     <section class="card" th:if="${wallet != null and wallet.entries.empty}"><div class="card__body">
         <p class="confirm-muted">Chưa có giao dịch nào trong ví.</p>
