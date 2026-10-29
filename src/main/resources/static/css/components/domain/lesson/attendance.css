@@ -1,0 +1,18 @@
+/* Tab Điểm danh của gia sư: tab con Lớp nhóm / Dạy kèm 1-1 và thẻ từng lớp. */
+.att-subtabs { display: flex; gap: var(--space-2); margin-bottom: var(--space-4); }
+.att-subtabs__tab { padding: var(--space-2) var(--space-4); color: var(--color-text-secondary); background: transparent; border: 1px solid var(--color-border); border-radius: var(--radius-pill); font: inherit; font-size: var(--font-size-sm); font-weight: 600; cursor: pointer; }
+.att-subtabs__tab.is-active { color: #fff; background: var(--color-primary); border-color: var(--color-primary); }
+[data-att-panel][hidden] { display: none; }
+.att-card { display: grid; gap: var(--space-3); margin-bottom: var(--space-4); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+.att-card__head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
+.att-card__head h3 { margin: 0; font-size: var(--font-size-md); }
+.att-card__foot { display: flex; justify-content: flex-end; }
+.att-muted { margin: 0; color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.att-note { margin: 0; padding: var(--space-3); background: var(--color-surface-low); border-radius: var(--radius-md); font-size: var(--font-size-sm); }
+.att-learners { display: grid; margin: 0; padding: 0; list-style: none; }
+.att-learners li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; border-top: 1px solid var(--color-border); font-size: var(--font-size-sm); }
+.att-learners form { margin: 0; }
+.att-absent { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--color-text-secondary); cursor: pointer; }
+.att-history { font-size: var(--font-size-sm); }
+.att-history summary { cursor: pointer; color: var(--color-primary); }
+.att-history ul { margin: var(--space-2) 0 0; padding-left: var(--space-5); color: var(--color-text-secondary); }

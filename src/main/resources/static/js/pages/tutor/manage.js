@@ -5,7 +5,7 @@
 
   const params = new URLSearchParams(window.location.search)
   const tab = params.get('tab')
-  if (tab === 'orders' || tab === 'revenue') document.getElementById(`tm-tab-${tab}`)?.click()
+  if (tab === 'orders' || tab === 'attendance' || tab === 'revenue') document.getElementById(`tm-tab-${tab}`)?.click()
 
   // Form tạo/sửa nằm trong hộp thoại; tự mở khi đang sửa, khi có lỗi lưu hoặc khi vào bằng ?create=1.
   const modal = document.getElementById('tm-editor-modal')

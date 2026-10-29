@@ -121,6 +121,10 @@ public class PaymentService {
         if (order.getStatus() != OrderStatus.AWAITING_PAYMENT || contract.getStatus() != ContractStatus.AWAITING_PAYMENT) {
             throw new IllegalArgumentException("Đơn không còn chờ thanh toán");
         }
+        if (contract.getOrderItemReference().getOfferingTypeSnapshot() == com.educonnect.order.domain.OrderItemType.GROUP_CLASS
+                && sessionService.classStarted(contract.getOrderItemReference().getRegistrationSourceReference().getOfferingId())) {
+            throw new IllegalArgumentException("Lớp đã bắt đầu học, không nhận thêm học viên. Hãy hủy hợp đồng này.");
+        }
         Instant now = clock.instant();
         enrollments.findByContractId(contractId).ifPresent(e -> {
             if (e.getStatus() == EnrollmentStatus.RESERVED && !e.getReservedUntil().isAfter(now)) {

@@ -109,12 +109,6 @@
                                             <a class="icon-action icon-action--primary" th:if="${!c.viewerIsTutor and c.statusLabel == 'Chờ thanh toán'}" th:href="@{/payment/checkout(contract=${c.id})}" title="Thanh toán" aria-label="Thanh toán">
                                                 <img th:src="@{/assets/icons/wallet.svg}" alt="">
                                             </a>
-                                            <form method="post" th:action="@{/contract/session/attend-next}" th:if="${c.attendSession != null}">
-                                                <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="back" value="my">
-                                                <button class="icon-action icon-action--primary" type="submit" th:title="${'Điểm danh buổi ' + c.attendSession}" th:aria-label="${'Điểm danh buổi ' + c.attendSession}">
-                                                    <img th:src="@{/assets/icons/check-double.svg}" alt="">
-                                                </button>
-                                            </form>
                                             <form method="post" th:action="@{/contract/session/confirm}" th:if="${c.confirmSession != null}">
                                                 <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${c.confirmSessionId}"><input type="hidden" name="back" value="my">
                                                 <button class="icon-action icon-action--primary" type="submit" th:title="${'Xác nhận buổi ' + c.confirmSession + ' đã học'}" th:aria-label="${'Xác nhận buổi ' + c.confirmSession + ' đã học'}">

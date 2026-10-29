@@ -24,17 +24,14 @@
             <h2 class="alert__title" id="todo-title" th:if="${confirm.empty and !attend.empty}" th:text="${'Đến lượt điểm danh buổi ' + attend[0].number}"></h2>
             <h2 class="alert__title" id="todo-title" th:if="${confirm.empty and attend.empty}">Hợp đồng đang chờ thanh toán</h2>
             <p class="alert__message" th:if="${!confirm.empty}">Gia sư đã điểm danh. Xác nhận đã học thì tiền của buổi này mới chuyển cho gia sư; quá hạn không phản hồi, hệ thống tự xác nhận.</p>
-            <p class="alert__message" th:if="${confirm.empty and !attend.empty}">Điểm danh sau khi buổi học diễn ra, học viên sẽ xác nhận để tiền của buổi được giải ngân.</p>
+            <p class="alert__message" th:if="${confirm.empty and !attend.empty}">Điểm danh theo lớp ở Lớp của tôi › Điểm danh sau khi buổi học diễn ra; học viên xác nhận thì tiền của buổi được giải ngân.</p>
             <p class="alert__message" th:if="${confirm.empty and attend.empty}">Thanh toán để tiền được ký quỹ và hợp đồng bắt đầu thực hiện.</p>
             <div class="contract-actions">
                 <form method="post" th:action="@{/contract/session/confirm}" th:if="${!confirm.empty}">
                     <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${confirm[0].id}">
                     <button class="contract-button" type="submit">Xác nhận đã học</button>
                 </form>
-                <form method="post" th:action="@{/contract/session/attend}" th:if="${confirm.empty and !attend.empty}">
-                    <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${attend[0].id}">
-                    <button class="contract-button" type="submit">Điểm danh buổi này</button>
-                </form>
+                <a class="contract-button" th:if="${confirm.empty and !attend.empty}" th:href="@{/tutor/manage(tab=attendance)}">Mở tab Điểm danh</a>
                 <a class="contract-button" th:if="${confirm.empty and attend.empty}" th:href="@{/payment/checkout(contract=${c.id})}">Thanh toán ngay</a>
             </div>
         </div>
@@ -70,10 +67,6 @@
                                 <td th:text="${#numbers.formatDecimal(s.amount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></td>
                                 <td><span class="badge" th:text="${s.statusLabel}"></span></td>
                                 <td>
-                                    <form method="post" th:action="@{/contract/session/attend}" th:if="${s.canAttend}">
-                                        <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${s.id}">
-                                        <button class="contract-button contract-button--small" type="submit">Điểm danh</button>
-                                    </form>
                                     <form method="post" th:action="@{/contract/session/confirm}" th:if="${s.canConfirm}">
                                         <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${s.id}">
                                         <button class="contract-button contract-button--small" type="submit">Xác nhận đã học</button>

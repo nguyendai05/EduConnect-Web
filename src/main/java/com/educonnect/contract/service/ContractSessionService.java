@@ -90,6 +90,11 @@ public class ContractSessionService {
         }
     }
 
+    /** Lớp nhóm đã bắt đầu (đã có buổi được điểm danh) thì không nhận thêm học viên hay thanh toán mới. */
+    public boolean classStarted(Long offeringId) {
+        return offeringId != null && sessions.countStarted(offeringId) > 0;
+    }
+
     /** Gia sư điểm danh buổi đã dạy; phải điểm danh lần lượt từng buổi. Đơn chuyển sang IN_PROGRESS ở buổi đầu. */
     public void attend(AccountPrincipal user, Long sessionId) {
         ContractSession session = find(sessionId);

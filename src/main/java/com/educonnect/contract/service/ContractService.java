@@ -355,6 +355,9 @@ public class ContractService {
         if (learnerId.equals(offering.getTutorId())) throw new IllegalArgumentException("Không thể đăng ký dịch vụ của chính mình");
         String issue = catalog.registrationIssue(offering, item.getSeatCount());
         if (issue != null) throw new IllegalArgumentException(issue);
+        if (offering.getOfferingType() == OfferingType.GROUP_CLASS && sessionRepo.countStarted(offering.getId()) > 0) {
+            throw new IllegalArgumentException("Lớp đã bắt đầu học (gia sư đã điểm danh), không nhận thêm học viên");
+        }
         if (offering.getPublishedAt() == null || offering.getTermsText() == null || offering.getTermsText().isBlank()) {
             throw new IllegalArgumentException("Dịch vụ chưa có điều khoản công khai hợp lệ");
         }

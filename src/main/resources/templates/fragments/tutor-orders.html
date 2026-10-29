@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Tab "Đơn đăng ký" của gia sư theo ui-prototype (HUY-04). Cần model "tutorOrders". Trang quản lý lớp nhúng một dòng:
+     <th:block th:replace="~{fragments/tutor-orders :: panel}"></th:block>  (bên trong tabpanel #tm-panel-orders) -->
+<th:block th:fragment="panel">
+<p class="tutor-manage__count" aria-live="polite" th:text="${tutorOrders.size() + ' đơn đăng ký'}"></p>
+<div class="empty-state" th:if="${tutorOrders.empty}">
+    <h2 class="empty-state__title">Chưa có đơn đăng ký nào</h2>
+    <p class="empty-state__description">Khi học viên đặt dịch vụ hoặc ghi danh lớp nhóm của bạn, đơn sẽ xuất hiện tại đây.</p>
+</div>
+<div class="table-frame" th:unless="${tutorOrders.empty}">
+    <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách đơn đăng ký của gia sư, cuộn ngang để xem đầy đủ" tabindex="0">
+        <table class="table table--review tutor-manage__table">
+            <caption class="table__caption table__caption--sr-only">Đơn đăng ký có gia sư này, kèm trạng thái đơn, trạng thái thanh toán và liên kết hợp đồng.</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Đơn &amp; kênh</th>
+                    <th scope="col">Học viên</th>
+                    <th scope="col">Nội dung (đã chốt)</th>
+                    <th scope="col">Tổng tiền</th>
+                    <th scope="col">Trạng thái đơn</th>
+                    <th scope="col">Thanh toán</th>
+                    <th scope="col" class="table__action-heading">Hợp đồng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="o : ${tutorOrders}">
+                    <td><strong th:text="${#strings.abbreviate(o.orderCode, 20)}"></strong><br><small th:text="${o.sourceLabel}"></small></td>
+                    <td th:text="${o.learnerName}"></td>
+                    <td th:text="${o.title}"></td>
+                    <td class="table__amount" th:text="${#numbers.formatDecimal(o.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></td>
+                    <td><span class="badge" th:text="${o.statusLabel}"></span></td>
+                    <td><span class="badge" th:text="${o.paymentLabel}"></span></td>
+                    <td>
+                        <a class="button button--outline button--small" th:href="@{/contract/tutor-detail(contract=${o.contractId})}">Xem hợp đồng</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</th:block>
+</body>
+</html>

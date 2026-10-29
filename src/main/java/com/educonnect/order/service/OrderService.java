@@ -6,6 +6,7 @@ import com.educonnect.order.domain.OrderStatus;
 import com.educonnect.order.domain.RegistrationSourceKind;
 import com.educonnect.order.dto.OrderHistoryDTO;
 import com.educonnect.order.dto.OrderRowDTO;
+import com.educonnect.order.dto.TutorOrderRowDTO;
 import com.educonnect.security.AccountPrincipal;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,12 @@ public class OrderService {
         List<OrderRowDTO> rows = filtered.subList(current * PAGE_SIZE, Math.min(filtered.size(), (current + 1) * PAGE_SIZE));
         long pending = counts.getOrDefault(OrderStatus.AWAITING_PAYMENT, 0L) + counts.getOrDefault(OrderStatus.CANCELLATION_PENDING, 0L);
         return new OrderHistoryDTO(rows, current, pages, filtered.size(), counts, all.size(), total, pending);
+    }
+
+    /** Đơn đăng ký có gia sư này, mới nhất trước (kèm học viên, trạng thái đơn và thanh toán). */
+    public List<TutorOrderRowDTO> tutorOrders(AccountPrincipal user) {
+        return contracts.findMine(user.getId()).stream().filter(c -> c.getTutorId().equals(user.getId()))
+                .map(TutorOrderRowDTO::from).sorted(Comparator.comparing(TutorOrderRowDTO::createdAt).reversed()).toList();
     }
 
     /** Bỏ dấu và hoa thường để tìm kiếm tiếng Việt. */

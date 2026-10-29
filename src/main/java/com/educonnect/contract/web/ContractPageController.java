@@ -172,7 +172,7 @@ public class ContractPageController {
         } catch (IllegalArgumentException error) {
             redirect.addFlashAttribute("pageError", error.getMessage());
         }
-        return "redirect:/tutor/manage#tm-tab-orders";
+        return "redirect:/tutor/manage?tab=attendance";
     }
 
     /** Học viên xác nhận buổi đã học; tiền của buổi đó được giải ngân cho gia sư. */
@@ -248,6 +248,7 @@ public class ContractPageController {
         return switch (back == null ? "" : back) {
             case "my" -> "redirect:/contract/my";
             case "manage" -> "redirect:/tutor/manage";
+            case "attendance" -> "redirect:/tutor/manage?tab=attendance";
             default -> fallback;
         };
     }

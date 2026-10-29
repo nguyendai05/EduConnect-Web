@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Tab "Điểm danh" của gia sư (HUY-04), điểm danh theo lớp, không theo hợp đồng. Cần model "attendance".
+     Trang quản lý lớp thêm nút tab (id tm-tab-attendance, aria-controls tm-panel-attendance), một tabpanel #tm-panel-attendance và nhúng:
+     <th:block th:replace="~{fragments/tutor-attendance :: panel}"></th:block> -->
+<th:block th:fragment="panel">
+<link rel="stylesheet" th:href="@{/css/components/domain/lesson/attendance.css}">
+<div class="att-subtabs" role="tablist" aria-label="Loại lớp">
+    <button class="att-subtabs__tab is-active" type="button" role="tab" aria-selected="true" data-att-tab="group">Lớp nhóm <span class="tabs__badge" th:text="${attendance.classes.size()}"></span></button>
+    <button class="att-subtabs__tab" type="button" role="tab" aria-selected="false" data-att-tab="single">Dạy kèm 1-1 <span class="tabs__badge" th:text="${attendance.services.size()}"></span></button>
+</div>
+
+<div data-att-panel="group">
+    <div class="empty-state" th:if="${attendance.classes.empty}">
+        <h2 class="empty-state__title">Chưa có lớp nhóm nào có học viên</h2>
+        <p class="empty-state__description">Lớp nhóm xuất hiện ở đây khi có học viên đã thanh toán. Gia sư chưa dạy thì chưa cần điểm danh.</p>
+    </div>
+    <form class="att-card" method="post" th:action="@{/contract/session/attend-class}" th:each="g : ${attendance.classes}">
+        <input type="hidden" name="offering" th:value="${g.offeringId}">
+        <header class="att-card__head">
+            <div>
+                <h3 th:text="${g.title}"></h3>
+                <p class="att-muted" th:text="${g.enrolled + ' / ' + g.capacity + ' học viên · đã học ' + g.done + ' / ' + g.total + ' buổi'}"></p>
+            </div>
+            <span class="badge" th:text="${g.started ? 'Đang học' : 'Chưa bắt đầu'}"></span>
+        </header>
+        <p class="att-note" th:if="${!g.started}">Lớp chưa bắt đầu: bạn có thể chờ thêm học viên. Điểm danh buổi 1 là bắt đầu lớp và <strong>đóng đăng ký</strong>, không nhận thêm học viên.</p>
+        <ul class="att-learners" th:if="${g.next != null}">
+            <li th:each="l : ${g.learners}">
+                <span th:text="${l.name}"></span>
+                <label class="att-absent"><input type="checkbox" name="absent" th:value="${l.contractId}"> Vắng (vẫn tính phí)</label>
+            </li>
+        </ul>
+        <footer class="att-card__foot" th:if="${g.next != null}">
+            <button class="button button--primary" type="submit" th:text="${g.started ? 'Điểm danh buổi ' + g.next : 'Bắt đầu lớp · điểm danh buổi ' + g.next}"></button>
+        </footer>
+        <p class="att-note" th:if="${g.next == null}">Lớp đã điểm danh đủ các buổi.</p>
+        <details class="att-history" th:if="${!g.history.empty}">
+            <summary>Lịch sử điểm danh của lớp</summary>
+            <ul>
+                <li th:each="h : ${g.history}" th:text="${'Buổi ' + h.number + ' · ' + #temporals.format(h.at, 'dd/MM/yyyy HH:mm') + (h.absent > 0 ? ' · ' + h.absent + ' vắng' : '')}"></li>
+            </ul>
+        </details>
+    </form>
+</div>
+
+<div data-att-panel="single" hidden>
+    <div class="empty-state" th:if="${attendance.services.empty}">
+        <h2 class="empty-state__title">Chưa có học viên dạy kèm 1-1</h2>
+        <p class="empty-state__description">Học viên đã thanh toán dịch vụ 1-1 sẽ xuất hiện ở đây. Học buổi nào, điểm danh buổi đó.</p>
+    </div>
+    <section class="att-card" th:each="s : ${attendance.services}">
+        <header class="att-card__head"><h3 th:text="${s.title}"></h3></header>
+        <ul class="att-learners">
+            <li th:each="r : ${s.rows}">
+                <span><strong th:text="${r.learner}"></strong> <span class="att-muted" th:text="${'· đã học ' + r.done + ' / ' + r.total + ' buổi'}"></span>
+                    <span class="badge" th:if="${r.waiting}">Chờ học viên xác nhận</span></span>
+                <form method="post" th:action="@{/contract/session/attend-next}" th:if="${r.next != null}">
+                    <input type="hidden" name="contract" th:value="${r.contractId}"><input type="hidden" name="back" value="attendance">
+                    <button class="button button--primary button--small" type="submit" th:text="${'Điểm danh buổi ' + r.next}"></button>
+                </form>
+                <span class="att-muted" th:if="${r.next == null}">Đã điểm danh đủ</span>
+            </li>
+        </ul>
+    </section>
+</div>
+<script>
+document.querySelectorAll('[data-att-tab]').forEach(tab => tab.addEventListener('click', () => {
+  document.querySelectorAll('[data-att-tab]').forEach(t => { const on = t === tab; t.classList.toggle('is-active', on); t.setAttribute('aria-selected', String(on)) })
+  document.querySelectorAll('[data-att-panel]').forEach(p => { p.hidden = p.dataset.attPanel !== tab.dataset.attTab })
+}))
+</script>
+</th:block>
+</body>
+</html>

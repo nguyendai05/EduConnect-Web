@@ -65,6 +65,7 @@
         <div class="tabs__list" role="tablist" aria-label="Các mục quản lý của gia sư">
           <button class="tabs__tab" type="button" role="tab" id="tm-tab-offerings" aria-selected="true" aria-controls="tm-panel-offerings">Dịch vụ &amp; lớp nhóm</button>
           <button class="tabs__tab" type="button" role="tab" id="tm-tab-orders" aria-selected="false" aria-controls="tm-panel-orders" tabindex="-1">Đơn đăng ký</button>
+          <button class="tabs__tab" type="button" role="tab" id="tm-tab-attendance" aria-selected="false" aria-controls="tm-panel-attendance" tabindex="-1">Điểm danh</button>
           <button class="tabs__tab" type="button" role="tab" id="tm-tab-revenue" aria-selected="false" aria-controls="tm-panel-revenue" tabindex="-1">Doanh thu</button>
         </div>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-offerings" aria-labelledby="tm-tab-offerings">
@@ -135,30 +136,10 @@
           </div>
         </section>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-orders" aria-labelledby="tm-tab-orders" hidden>
-          <th:block th:replace="~{fragments/group-attendance :: panel}"></th:block>
-          <div class="empty-state" th:if="${registrations == null or registrations.empty}"><h2 class="empty-state__title">Chưa có học viên đăng ký</h2><p class="empty-state__description">Học viên đăng ký dịch vụ hoặc lớp của bạn sẽ hiện ở đây, kèm tiến độ buổi học.</p></div>
-          <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Học viên đã đăng ký" tabindex="0" th:if="${registrations != null and !registrations.empty}">
-            <table class="table">
-              <thead><tr><th scope="col">Dịch vụ / lớp</th><th scope="col">Học viên</th><th scope="col">Trạng thái</th><th scope="col">Tiến độ</th><th scope="col">Thao tác</th></tr></thead>
-              <tbody>
-                <tr th:each="r : ${registrations}">
-                  <td th:text="${r.title}"></td>
-                  <td th:text="${r.partnerName}"></td>
-                  <td><span class="badge" th:text="${r.statusLabel}"></span></td>
-                  <td th:text="${r.doneSessions + ' / ' + r.totalSessions + ' buổi'}"></td>
-                  <td>
-                    <div class="tm-row-actions">
-                      <form method="post" th:action="@{/contract/session/attend-next}" th:if="${r.attendSession != null}">
-                        <input type="hidden" name="contract" th:value="${r.id}"><input type="hidden" name="back" value="manage">
-                        <button class="button button--primary button--small" type="submit" th:text="${'Điểm danh buổi ' + r.attendSession}"></button>
-                      </form>
-                      <a class="button button--outline button--small" th:href="@{/contract/tutor-detail(contract=${r.id})}">Xem hợp đồng</a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <th:block th:replace="~{fragments/tutor-orders :: panel}"></th:block>
+        </section>
+        <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-attendance" aria-labelledby="tm-tab-attendance" hidden>
+          <th:block th:replace="~{fragments/tutor-attendance :: panel}"></th:block>
         </section>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-revenue" aria-labelledby="tm-tab-revenue" hidden>
           <section class="alert alert--contextual tutor-manage__revenue-note" aria-labelledby="tm-revenue-note-title">
