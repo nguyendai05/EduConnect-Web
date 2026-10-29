@@ -2,13 +2,13 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <body>
 <!-- Tab "Điểm danh" của gia sư (HUY-04), điểm danh theo lớp, không theo hợp đồng. Cần model "attendance".
-     Trang quản lý lớp thêm nút tab (id tm-tab-attendance, aria-controls tm-panel-attendance), một tabpanel #tm-panel-attendance và nhúng:
+     Không dùng role="tab" cho nút con (tabs.js sẽ nhầm với tab chính). Trang quản lý lớp thêm nút tab (id tm-tab-attendance, aria-controls tm-panel-attendance), một tabpanel #tm-panel-attendance và nhúng:
      <th:block th:replace="~{fragments/tutor-attendance :: panel}"></th:block> -->
 <th:block th:fragment="panel">
 <link rel="stylesheet" th:href="@{/css/components/domain/lesson/attendance.css}">
-<div class="att-subtabs" role="tablist" aria-label="Loại lớp">
-    <button class="att-subtabs__tab is-active" type="button" role="tab" aria-selected="true" data-att-tab="group">Lớp nhóm <span class="tabs__badge" th:text="${attendance.classes.size()}"></span></button>
-    <button class="att-subtabs__tab" type="button" role="tab" aria-selected="false" data-att-tab="single">Dạy kèm 1-1 <span class="tabs__badge" th:text="${attendance.services.size()}"></span></button>
+<div class="att-subtabs" role="group" aria-label="Loại lớp">
+    <button class="att-subtabs__tab is-active" type="button" aria-pressed="true" data-att-tab="group">Lớp nhóm <span class="tabs__badge" th:text="${attendance.classes.size()}"></span></button>
+    <button class="att-subtabs__tab" type="button" aria-pressed="false" data-att-tab="single">Dạy kèm 1-1 <span class="tabs__badge" th:text="${attendance.services.size()}"></span></button>
 </div>
 
 <div data-att-panel="group">
@@ -67,7 +67,7 @@
 </div>
 <script>
 document.querySelectorAll('[data-att-tab]').forEach(tab => tab.addEventListener('click', () => {
-  document.querySelectorAll('[data-att-tab]').forEach(t => { const on = t === tab; t.classList.toggle('is-active', on); t.setAttribute('aria-selected', String(on)) })
+  document.querySelectorAll('[data-att-tab]').forEach(t => { const on = t === tab; t.classList.toggle('is-active', on); t.setAttribute('aria-pressed', String(on)) })
   document.querySelectorAll('[data-att-panel]').forEach(p => { p.hidden = p.dataset.attPanel !== tab.dataset.attTab })
 }))
 </script>
