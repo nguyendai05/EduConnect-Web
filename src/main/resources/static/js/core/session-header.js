@@ -1,5 +1,6 @@
 // Menu avatar của header thật và cửa sổ chat nổi (kéo được, nhớ trạng thái giữa các trang).
 document.addEventListener('DOMContentLoaded', () => {
+  markActiveNav()
   initAccountMenu()
   initChatWidget()
   initBadges()
@@ -12,17 +13,21 @@ function initBadges() {
   const dot = root.querySelector('[data-pending-dot]')
   const text = root.querySelector('[data-pending-text]')
   const chat = document.querySelector('[data-chat-badge]')
+  const chatHeader = document.querySelector('[data-chat-badge-header]')
+  const balance = root.querySelector('[data-menu-balance]')
   const refresh = async () => {
     try {
       const res = await fetch(root.dataset.badges, { headers: { Accept: 'application/json' } })
       if (!res.ok) return
-      const { pending, chatUnread } = await res.json()
+      const { pending, chatUnread, balance: money } = await res.json()
+      if (balance && money !== null && money !== undefined) balance.textContent = money.toLocaleString('vi-VN') + ' ₫'
       dot.hidden = pending === 0
       text.hidden = pending === 0
       text.textContent = `Có ${pending} việc đang chờ bạn xử lý`
-      if (chat) {
-        chat.hidden = chatUnread === 0
-        chat.textContent = chatUnread > 9 ? '9+' : String(chatUnread)
+      for (const badge of [chat, chatHeader]) {
+        if (!badge) continue
+        badge.hidden = chatUnread === 0
+        badge.textContent = chatUnread > 9 ? '9+' : String(chatUnread)
       }
     } catch (e) {
       // lỗi mạng tạm thời: lần sau thử lại
@@ -31,6 +36,16 @@ function initBadges() {
   refresh()
   setInterval(refresh, 30000)
   window.refreshHeaderBadges = refresh
+}
+
+/** Tô đậm mục điều hướng đang xem theo đường dẫn hiện tại. */
+function markActiveNav() {
+  document.querySelectorAll('.user-header__nav-link').forEach(link => {
+    const path = new URL(link.href, location.href).pathname
+    const here = path === location.pathname || (path !== '/home' && path !== '/' && location.pathname.startsWith(path + '/'))
+    link.classList.toggle('is-active', here)
+    if (here) link.setAttribute('aria-current', 'page')
+  })
 }
 
 /** Mở/đóng menu avatar; đóng khi bấm ra ngoài hoặc nhấn Esc. */
@@ -44,10 +59,15 @@ function initAccountMenu() {
     menu.classList.toggle('is-open', open)
     button.classList.toggle('is-open', open)
     button.setAttribute('aria-expanded', String(open))
+    const chevron = button.querySelector('[data-chevron]')
+    if (chevron) chevron.src = open ? chevron.dataset.iconOpen : chevron.dataset.iconClosed
   }
   const avatar = root.querySelector('[data-avatar]')
-  const name = root.querySelector('.user-header__menu-summary strong')?.textContent.trim()
-  if (name) avatar.textContent = name.split(/\s+/).pop().charAt(0).toUpperCase()
+  const name = root.querySelector('.user-header__profile-copy strong')?.textContent.trim()
+  if (name) {
+    const words = name.split(/\s+/)
+    avatar.textContent = (words[0].charAt(0) + (words.length > 1 ? words[words.length - 1].charAt(0) : '')).toUpperCase()
+  }
   button.addEventListener('click', () => set(menu.hidden))
   document.addEventListener('click', event => { if (!root.contains(event.target)) set(false) })
   document.addEventListener('keydown', event => { if (event.key === 'Escape') set(false) })
@@ -246,6 +266,11 @@ function initChatWidget() {
   drag(handle)
 
   fab.addEventListener('click', () => { if (moved) { moved = false; return } open() })
+  // Biểu tượng tin nhắn trên header mở cửa sổ chat nổi thay vì chuyển trang.
+  document.querySelector('[data-chat-toggle]')?.addEventListener('click', event => {
+    event.preventDefault()
+    if (state.open) close(); else open()
+  })
   $('[data-chat-close]').addEventListener('click', close)
   back.addEventListener('click', showList)
   document.addEventListener('keydown', event => {

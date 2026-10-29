@@ -1,6 +1,5 @@
 /* Menu tài khoản của header thật và cửa sổ chat nổi. */
-.user-header__menu-summary { display: grid; gap: .125rem; }
-.user-header__menu-summary small { color: var(--color-text-secondary); font-size: .75rem; overflow-wrap: anywhere; }
+.user-header__menu-summary strong { overflow-wrap: anywhere; }
 .user-header__menu form { margin: 0; }
 
 .chat-widget { position: fixed; z-index: 90; right: 1.25rem; bottom: 1.25rem; }
@@ -37,8 +36,11 @@
 }
 
 .user-header__profile { position: relative; }
-.user-header__dot { position: absolute; top: .25rem; right: .25rem; width: .75rem; height: .75rem; background: var(--color-danger); border: 2px solid var(--color-paper); border-radius: var(--radius-pill); }
+.user-header__dot { position: absolute; top: .25rem; left: 2.25rem; width: .75rem; height: .75rem; background: var(--color-danger); border: 2px solid var(--color-paper); border-radius: var(--radius-pill); }
 .user-header__dot[hidden], .user-header__pending[hidden], .chat-widget__badge[hidden] { display: none; }
-.user-header__pending { color: var(--color-danger); font-weight: 600; }
+.user-header__pending { margin: .5rem 0 0; color: var(--color-danger); font-size: .75rem; font-weight: 600; }
+.user-header__icon-button { position: relative; }
+.user-header__badge { position: absolute; top: .125rem; right: .125rem; min-width: 1.125rem; padding: 0 .25rem; color: #fff; background: var(--color-danger); border-radius: var(--radius-pill); font-size: .625rem; font-weight: 700; line-height: 1.125rem; text-align: center; }
+.user-header__badge[hidden] { display: none; }
 .chat-widget__fab { position: relative; }
 .chat-widget__badge { position: absolute; top: -.25rem; right: -.25rem; min-width: 1.25rem; padding: 0 .3rem; color: #fff; background: var(--color-danger); border-radius: var(--radius-pill); font-size: .6875rem; font-weight: 700; line-height: 1.25rem; text-align: center; }

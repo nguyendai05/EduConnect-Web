@@ -135,19 +135,7 @@
           </div>
         </section>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-orders" aria-labelledby="tm-tab-orders" hidden>
-          <form class="tm-class-attend" method="post" th:action="@{/contract/session/attend-class}" th:each="g : ${groupClasses}">
-            <input type="hidden" name="offering" th:value="${g.offeringId}">
-            <div class="tm-class-attend__head">
-              <strong th:text="${g.title}"></strong>
-              <button class="button button--primary button--small" type="submit">Điểm danh cả lớp</button>
-            </div>
-            <ul class="tm-class-attend__list">
-              <li th:each="l : ${g.learners}">
-                <span th:text="${l.name + ' · buổi ' + l.nextSession}"></span>
-                <label class="tm-class-attend__absent"><input type="checkbox" name="absent" th:value="${l.contractId}"> Vắng (vẫn tính phí)</label>
-              </li>
-            </ul>
-          </form>
+          <th:block th:replace="~{fragments/group-attendance :: panel}"></th:block>
           <div class="empty-state" th:if="${registrations == null or registrations.empty}"><h2 class="empty-state__title">Chưa có học viên đăng ký</h2><p class="empty-state__description">Học viên đăng ký dịch vụ hoặc lớp của bạn sẽ hiện ở đây, kèm tiến độ buổi học.</p></div>
           <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Học viên đã đăng ký" tabindex="0" th:if="${registrations != null and !registrations.empty}">
             <table class="table">

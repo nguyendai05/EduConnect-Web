@@ -80,6 +80,11 @@ public class WalletService {
         return new WalletOverviewDTO(user.getDisplayName(), null, balance, null, null, null, null, null, null, related, history);
     }
 
+    /** Số dư khả dụng của người đăng nhập (0 nếu chưa có ví). */
+    public BigDecimal balance(AccountPrincipal user) {
+        return wallets.findById(user.getId()).map(w -> entries.balance(w.getLedgerAccountId())).orElse(BigDecimal.ZERO);
+    }
+
     /** Các loại bút toán của một tab lọc; giá trị lạ coi như tất cả. */
     private static List<JournalKind> kinds(String type) {
         return switch (type == null ? "all" : type) {

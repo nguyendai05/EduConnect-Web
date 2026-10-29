@@ -9,37 +9,83 @@
             <nav class="user-header__nav" aria-label="Điều hướng chính">
                 <a class="user-header__nav-link" th:href="@{/home}">Trang chủ</a>
                 <a class="user-header__nav-link" sec:authorize="!hasRole('TUTOR')" th:href="@{/tutor/search}">Tìm gia sư</a>
+                <a class="user-header__nav-link" th:href="@{/job/discover}">Tin tìm gia sư</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('LEARNER')" th:href="@{/catalog/detail}">Khóa học</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('LEARNER')" th:href="@{/cart/index}">Giỏ đăng ký</a>
-                <a class="user-header__nav-link" sec:authorize="hasRole('TUTOR')" th:href="@{/job/discover}">Tin tìm gia sư</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/manage}">Lớp của tôi</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}">Quản trị</a>
             </nav>
             <div class="user-header__actions" th:if="${currentUser != null}">
+                <a class="user-header__icon-button" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/chat/messages}" aria-label="Tin nhắn" title="Tin nhắn" data-chat-toggle>
+                    <img th:src="@{/assets/icons/message.svg}" alt="">
+                    <span class="user-header__badge" hidden data-chat-badge-header></span>
+                </a>
+                <span class="user-header__divider" aria-hidden="true"></span>
                 <div class="user-header__account" data-account-menu th:attr="data-badges=@{/header/badges}">
                     <button class="user-header__profile" type="button" aria-label="Mở menu tài khoản" aria-haspopup="menu" aria-expanded="false" aria-controls="account-menu">
-                        <span class="user-header__avatar" data-avatar th:text="${#strings.toUpperCase(#strings.substring(currentUser.displayName, 0, 1))}">A</span>
+                        <span class="user-header__avatar" aria-hidden="true" data-avatar th:text="${#strings.toUpperCase(#strings.substring(currentUser.displayName, 0, 1))}">A</span>
                         <span class="user-header__dot" hidden data-pending-dot></span>
+                        <span class="user-header__profile-copy">
+                            <strong th:text="${currentUser.displayName}">Tên</strong>
+                            <span sec:authorize="hasRole('TUTOR')">Gia sư</span>
+                            <span sec:authorize="!hasRole('TUTOR') and hasRole('LEARNER')">Học viên</span>
+                            <span sec:authorize="hasRole('ADMIN')">Quản trị viên</span>
+                        </span>
+                        <img class="user-header__chevron" th:src="@{/assets/icons/mui-ten-xuong.svg}" alt="" data-chevron
+                             th:attr="data-icon-closed=@{/assets/icons/mui-ten-xuong.svg},data-icon-open=@{/assets/icons/mui-ten-len.svg}">
                     </button>
                     <div class="user-header__menu" id="account-menu" role="menu" aria-label="Menu tài khoản" hidden>
                         <div class="user-header__menu-summary">
-                            <strong th:text="${currentUser.displayName}">Tên</strong>
-                            <small th:text="${currentUser.email}">email</small>
-                            <small class="user-header__pending" hidden data-pending-text></small>
+                            <div class="user-header__menu-summary-heading"><strong th:text="${currentUser.email}">email</strong></div>
+                            <div class="user-header__menu-balance" sec:authorize="hasAnyRole('LEARNER','TUTOR')">
+                                <span>Số dư ví:</span>
+                                <strong data-menu-balance>—</strong>
+                            </div>
+                            <p class="user-header__pending" hidden data-pending-text></p>
                         </div>
                         <div class="user-header__menu-section">
-                            <a class="user-header__menu-item" role="menuitem" th:href="@{/account/profile}">Hồ sơ cá nhân</a>
-                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/my-profile}">Hồ sơ giảng dạy</a>
-                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasRole('LEARNER')" th:href="@{/job/my-job}">Tin của tôi</a>
-                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/invitation/negotiation}">Lời mời</a>
-                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/contract/my}">Hợp đồng</a>
-                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasRole('LEARNER')" th:href="@{/order/history}">Đơn đăng ký</a>
-                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/manage#tm-tab-orders}">Đơn đăng ký</a>
-                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/wallet/overview}">Ví Edu Connect</a>
+                            <a class="user-header__menu-item" role="menuitem" th:href="@{/account/profile}">
+                                <img class="user-header__menu-item-leading" th:src="@{/assets/icons/profile.svg}" alt=""><span data-menu-label>Hồ sơ cá nhân</span>
+                                <img class="user-header__menu-item-chevron" th:src="@{/assets/icons/chevron-right.svg}" alt="">
+                            </a>
+                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/my-profile}">
+                                <img class="user-header__menu-item-leading" th:src="@{/assets/icons/tutor-verification.svg}" alt=""><span data-menu-label>Hồ sơ giảng dạy</span>
+                                <img class="user-header__menu-item-chevron" th:src="@{/assets/icons/chevron-right.svg}" alt="">
+                            </a>
+                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasRole('LEARNER')" th:href="@{/job/my-job}">
+                                <img class="user-header__menu-item-leading" th:src="@{/assets/icons/library.svg}" alt=""><span data-menu-label>Tin của tôi</span>
+                                <img class="user-header__menu-item-chevron" th:src="@{/assets/icons/chevron-right.svg}" alt="">
+                            </a>
+                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/invitation/negotiation}">
+                                <img class="user-header__menu-item-leading" th:src="@{/assets/icons/email.svg}" alt=""><span data-menu-label>Lời mời</span>
+                                <img class="user-header__menu-item-chevron" th:src="@{/assets/icons/chevron-right.svg}" alt="">
+                            </a>
+                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/contract/my}">
+                                <img class="user-header__menu-item-leading" th:src="@{/assets/icons/certificate.svg}" alt=""><span data-menu-label>Hợp đồng</span>
+                                <img class="user-header__menu-item-chevron" th:src="@{/assets/icons/chevron-right.svg}" alt="">
+                            </a>
+                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasRole('LEARNER')" th:href="@{/order/history}">
+                                <img class="user-header__menu-item-leading" th:src="@{/assets/icons/activity-log.svg}" alt=""><span data-menu-label>Đơn đăng ký</span>
+                                <img class="user-header__menu-item-chevron" th:src="@{/assets/icons/chevron-right.svg}" alt="">
+                            </a>
+                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/manage#tm-tab-orders}">
+                                <img class="user-header__menu-item-leading" th:src="@{/assets/icons/activity-log.svg}" alt=""><span data-menu-label>Đơn đăng ký</span>
+                                <img class="user-header__menu-item-chevron" th:src="@{/assets/icons/chevron-right.svg}" alt="">
+                            </a>
+                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/wallet/overview}">
+                                <img class="user-header__menu-item-leading" th:src="@{/assets/icons/wallet.svg}" alt=""><span data-menu-label>Ví Edu Connect</span>
+                                <img class="user-header__menu-item-chevron" th:src="@{/assets/icons/chevron-right.svg}" alt="">
+                            </a>
+                            <a class="user-header__menu-item" role="menuitem" sec:authorize="hasAnyRole('LEARNER','TUTOR')" th:href="@{/wallet/overview#transactions}">
+                                <img class="user-header__menu-item-leading" th:src="@{/assets/icons/receipt.svg}" alt=""><span data-menu-label>Lịch sử giao dịch &amp; Hóa đơn</span>
+                                <img class="user-header__menu-item-chevron" th:src="@{/assets/icons/chevron-right.svg}" alt="">
+                            </a>
                         </div>
-                        <div class="user-header__menu-section">
+                        <div class="user-header__menu-section user-header__menu-section--logout">
                             <form method="post" th:action="@{/auth/logout}">
-                                <button class="user-header__menu-item user-header__menu-item--danger" type="submit" role="menuitem">Đăng xuất</button>
+                                <button class="user-header__menu-item user-header__menu-item--danger" type="submit" role="menuitem">
+                                    <img class="user-header__menu-item-icon" th:src="@{/assets/icons/dang-xuat.svg}" alt=""><span data-menu-logout-label>Đăng xuất</span>
+                                </button>
                             </form>
                         </div>
                     </div>
