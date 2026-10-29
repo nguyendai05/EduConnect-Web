@@ -110,3 +110,10 @@
     .flow-card, .flow-summary { padding: var(--space-5); }
     .flow-pay__row { flex-direction: column; align-items: flex-start; }
 }
+
+/* Trang xác nhận hợp đồng: các mục đánh số tự động. */
+.flow-main--numbered { counter-reset: flow-step; }
+.flow-main--numbered > .flow-card > h2::before { counter-increment: flow-step; content: counter(flow-step); display: inline-grid; width: 1.75rem; height: 1.75rem; place-items: center; flex: none; color: #fff; background: var(--color-primary); border-radius: var(--radius-pill); font-size: var(--font-size-sm); }
+.flow-main--numbered > .flow-card > h2 svg { display: none; }
+.flow-muted { margin: 0; color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: 1.6; }
+.flow-list { display: grid; gap: var(--space-2); margin: 0; padding-left: var(--space-5); color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: 1.6; }

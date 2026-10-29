@@ -37,9 +37,9 @@
     </section>
 
     <div class="flow-layout" th:if="${confirmation != null}">
-        <div class="flow-main">
+        <div class="flow-main flow-main--numbered">
             <section class="flow-card" aria-labelledby="course-title">
-                <h2 id="course-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>Khóa học và gia sư</h2>
+                <h2 id="course-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>Hợp đồng &amp; các bên</h2>
                 <div class="flow-course">
                     <span class="flow-avatar" aria-hidden="true" th:text="${#strings.substring(confirmation.tutorName, 0, 1)}"></span>
                     <div>
@@ -51,10 +51,37 @@
                     </div>
                 </div>
                 <dl class="flow-facts">
+                    <div><dt>Học viên</dt><dd th:text="${confirmation.learnerName}"></dd></div>
+                    <div><dt>Gia sư</dt><dd th:text="${confirmation.tutorName}"></dd></div>
+                    <div th:unless="${confirmation.draft}"><dt>Mã hợp đồng</dt><dd th:text="${#strings.abbreviate(confirmation.publicCode, 18)}"></dd></div>
+                    <div th:unless="${confirmation.draft}"><dt>Đơn đăng ký</dt><dd th:text="${#strings.abbreviate(confirmation.orderCode, 18)}"></dd></div>
+                </dl>
+            </section>
+
+            <section class="flow-card" aria-labelledby="fee-title">
+                <h2 id="fee-title">Học phí &amp; phí nền tảng</h2>
+                <dl class="flow-facts">
+                    <div><dt>Đơn giá mỗi buổi</dt><dd th:text="${#numbers.formatDecimal(confirmation.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
                     <div><dt>Số buổi</dt><dd th:text="${confirmation.sessionCount}"></dd></div>
                     <div><dt>Số chỗ</dt><dd th:text="${confirmation.seatCount}"></dd></div>
-                    <div><dt>Đơn giá mỗi buổi</dt><dd th:text="${#numbers.formatDecimal(confirmation.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
+                    <div><dt>Tổng học phí</dt><dd th:text="${#numbers.formatDecimal(confirmation.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></dd></div>
                 </dl>
+                <p class="flow-muted">Phí nền tảng được trừ vào phần gia sư nhận ở mỗi buổi, bạn không phải trả thêm ngoài tổng học phí.</p>
+            </section>
+
+            <section class="flow-card" aria-labelledby="escrow-title">
+                <h2 id="escrow-title">Ký quỹ &amp; kích hoạt hợp đồng</h2>
+                <p class="flow-muted">Sau khi xác nhận, bạn thanh toán bằng ví hoặc PayOS. Toàn bộ học phí được giữ ký quỹ và hợp đồng bắt đầu thực hiện khi thanh toán thành công. Chưa thanh toán thì hợp đồng chưa có hiệu lực và bạn có thể hủy.</p>
+            </section>
+
+            <section class="flow-card" aria-labelledby="rules-title">
+                <h2 id="rules-title">Quy tắc học tập &amp; xử lý học phí</h2>
+                <ul class="flow-list">
+                    <li>Học phí được chia đều theo buổi. Gia sư điểm danh sau mỗi buổi, bạn xác nhận thì tiền của buổi đó mới chuyển cho gia sư.</li>
+                    <li>Quá thời hạn không phản hồi, hệ thống tự xác nhận buổi đã điểm danh.</li>
+                    <li>Lớp nhóm: vắng một buổi vẫn tính phí buổi đó. Lớp 1-1: buổi chưa học vẫn được giữ lại.</li>
+                    <li>Hoàn tiền do quản trị viên xử lý theo chính sách của nền tảng.</li>
+                </ul>
             </section>
 
             <section class="flow-card" aria-labelledby="terms-title">
