@@ -51,9 +51,9 @@
       <header class="page-header tutor-manage__header">
         <div class="page-header__title-block">
           <h1 class="page-header__title">Quản lý giảng dạy</h1>
-          <p class="page-header__description">Quản lý dịch vụ, lớp nhóm và lịch giảng dạy của bạn.</p>
+          <p class="page-header__description">Quản lý khóa học, đơn đăng ký và điểm danh của bạn.</p>
         </div>
-        <a class="button button--primary" th:if="${dbReady}" th:href="@{/tutor/manage(create=1)}" data-tm-open-editor>Thêm dịch vụ / lớp</a>
+        <a class="button button--primary" th:if="${dbReady}" th:href="@{/tutor/manage(create=1)}" data-tm-open-editor>Thêm khóa học</a>
       </header>
       <p class="alert alert--success" role="status" th:if="${success}" th:text="${success}"></p>
       <p class="alert alert--success" role="status" th:if="${message}" th:text="${message}"></p>
@@ -63,7 +63,7 @@
       </div>
       <div class="tabs tabs--contained tutor-manage__tabs" data-tabs>
         <div class="tabs__list" role="tablist" aria-label="Các mục quản lý của gia sư">
-          <button class="tabs__tab" type="button" role="tab" id="tm-tab-offerings" aria-selected="true" aria-controls="tm-panel-offerings">Dịch vụ &amp; lớp nhóm</button>
+          <button class="tabs__tab" type="button" role="tab" id="tm-tab-offerings" aria-selected="true" aria-controls="tm-panel-offerings">Khóa học</button>
           <button class="tabs__tab" type="button" role="tab" id="tm-tab-orders" aria-selected="false" aria-controls="tm-panel-orders" tabindex="-1">Đơn đăng ký</button>
           <button class="tabs__tab" type="button" role="tab" id="tm-tab-attendance" aria-selected="false" aria-controls="tm-panel-attendance" tabindex="-1">Điểm danh</button>
           <button class="tabs__tab" type="button" role="tab" id="tm-tab-revenue" aria-selected="false" aria-controls="tm-panel-revenue" tabindex="-1">Doanh thu</button>
@@ -93,12 +93,12 @@
             </label>
             <button class="button button--outline" type="submit">Lọc danh sách</button>
           </form>
-          <p class="tutor-manage__count" th:if="${dbReady}" th:text="${offerings.size() + ' dịch vụ/lớp phù hợp'}"></p>
+          <p class="tutor-manage__count" th:if="${dbReady}" th:text="${offerings.size() + ' khóa học phù hợp'}"></p>
           <div class="table-frame" th:if="${!offerings.isEmpty()}">
-            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách dịch vụ và lớp nhóm" tabindex="0">
+            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách khóa học" tabindex="0">
               <table class="table table--review tutor-manage__table">
-                <caption class="sr-only">Dịch vụ và lớp của gia sư đang đăng nhập</caption>
-                <thead><tr><th scope="col">Dịch vụ / lớp</th><th scope="col">Lịch &amp; thông tin</th><th scope="col">Giá mỗi buổi</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead>
+                <caption class="sr-only">Khóa học của gia sư đang đăng nhập</caption>
+                <thead><tr><th scope="col">Khóa học</th><th scope="col">Lịch &amp; thông tin</th><th scope="col">Giá mỗi buổi</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead>
                 <tbody>
                   <tr th:each="item : ${offerings}">
                     <td><strong th:text="${item.title}"></strong><small class="tm-muted" th:text="${item.publicCode}"></small>
@@ -131,8 +131,8 @@
             </div>
           </div>
           <div class="empty-state" th:if="${dbReady and offerings.isEmpty()}">
-            <h2 class="empty-state__title">Chưa có dịch vụ hoặc lớp phù hợp</h2>
-            <p class="empty-state__description">Tạo bản nháp mới hoặc thay đổi bộ lọc để xem các dịch vụ của bạn.</p>
+            <h2 class="empty-state__title">Chưa có khóa học phù hợp</h2>
+            <p class="empty-state__description">Tạo bản nháp mới hoặc thay đổi bộ lọc để xem các khóa học của bạn.</p>
           </div>
         </section>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-orders" aria-labelledby="tm-tab-orders" hidden>
@@ -155,12 +155,12 @@
       <dialog class="modal tm-modal" id="tm-editor-modal" th:if="${dbReady}" th:classappend="${editingId != null} ? 'is-editing'" aria-labelledby="tm-editor-title">
         <div class="modal__surface">
           <header class="modal__header">
-            <div class="modal__heading"><h2 id="tm-editor-title" th:text="${editingId == null ? 'Tạo dịch vụ / lớp nhóm' : 'Chỉnh sửa dịch vụ / lớp nhóm'}"></h2></div>
+            <div class="modal__heading"><h2 id="tm-editor-title" th:text="${editingId == null ? 'Tạo khóa học' : 'Chỉnh sửa khóa học'}"></h2></div>
             <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
           </header>
           <div class="modal__body">
-            <p class="tm-muted" th:if="${!publishedEdit}">Lưu thành bản nháp trước khi gửi duyệt. Gửi duyệt chưa làm dịch vụ xuất hiện công khai.</p>
-            <p class="alert alert--warning" role="note" th:if="${publishedEdit}">Bạn đang sửa dịch vụ đã công khai. Khi lưu, dịch vụ sẽ tạm ngừng công khai và chuyển sang chờ duyệt lại. Đơn và hợp đồng đã có vẫn giữ giá, điều khoản đã chốt.</p>
+            <p class="tm-muted" th:if="${!publishedEdit}">Lưu thành bản nháp trước khi gửi duyệt. Gửi duyệt chưa làm khóa học xuất hiện công khai.</p>
+            <p class="alert alert--warning" role="note" th:if="${publishedEdit}">Bạn đang sửa khóa học đã công khai. Khi lưu, khóa học sẽ tạm ngừng công khai và chuyển sang chờ duyệt lại. Đơn và hợp đồng đã có vẫn giữ giá, điều khoản đã chốt.</p>
                 <form class="tutor-manage__form" method="post" th:object="${offeringRequest}"
                       th:action="${editingId == null} ? @{/tutor/manage/offerings} : @{/tutor/manage/offerings/{id}(id=${editingId})}" data-tm-form data-tm-submit>
                   <input type="hidden" th:field="*{requestKey}"><input type="hidden" th:field="*{version}">
@@ -196,7 +196,7 @@
                     </div>
                   </fieldset>
                   <label class="form-field">Mô tả <textarea class="tm-control" th:field="*{description}" rows="4" required maxlength="10000"></textarea></label>
-                  <label class="form-field">Điều khoản dịch vụ <textarea class="tm-control" th:field="*{termsText}" rows="4" required maxlength="10000"></textarea></label>
+                  <label class="form-field">Điều khoản khóa học <textarea class="tm-control" th:field="*{termsText}" rows="4" required maxlength="10000"></textarea></label>
                   <fieldset class="tm-schedule">
                     <legend>Lịch học hằng tuần</legend>
                     <p class="tm-muted">Các khung giờ trong cùng ngày không được trùng nhau. Tất cả khung lịch dùng cùng múi giờ.</p>

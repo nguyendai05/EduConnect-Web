@@ -48,7 +48,7 @@
 <div data-att-panel="single" hidden>
     <div class="empty-state" th:if="${attendance.services.empty}">
         <h2 class="empty-state__title">Chưa có học viên dạy kèm 1-1</h2>
-        <p class="empty-state__description">Học viên đã thanh toán dịch vụ 1-1 sẽ xuất hiện ở đây. Học buổi nào, điểm danh buổi đó.</p>
+        <p class="empty-state__description">Học viên đã thanh toán khóa học 1-1 sẽ xuất hiện ở đây. Học buổi nào, điểm danh buổi đó.</p>
     </div>
     <section class="att-card" th:each="s : ${attendance.services}">
         <header class="att-card__head"><h3 th:text="${s.title}"></h3></header>

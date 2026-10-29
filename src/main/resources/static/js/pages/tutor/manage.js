@@ -71,7 +71,7 @@
   root.querySelectorAll('[data-tm-submit]').forEach(item => {
     item.addEventListener('submit', event => {
       if (item.dataset.submitting === 'true') { event.preventDefault(); return }
-      if (item.hasAttribute('data-tm-close') && !window.confirm('Đóng dịch vụ/lớp này? Các giao dịch đã có vẫn được giữ nguyên.')) {
+      if (item.hasAttribute('data-tm-close') && !window.confirm('Đóng khóa học này? Các giao dịch đã có vẫn được giữ nguyên.')) {
         event.preventDefault()
         return
       }

@@ -7,7 +7,7 @@
 <p class="tutor-manage__count" aria-live="polite" th:text="${tutorOrders.size() + ' đơn đăng ký'}"></p>
 <div class="empty-state" th:if="${tutorOrders.empty}">
     <h2 class="empty-state__title">Chưa có đơn đăng ký nào</h2>
-    <p class="empty-state__description">Khi học viên đặt dịch vụ hoặc ghi danh lớp nhóm của bạn, đơn sẽ xuất hiện tại đây.</p>
+    <p class="empty-state__description">Khi học viên đăng ký khóa học của bạn, đơn sẽ xuất hiện tại đây.</p>
 </div>
 <div class="table-frame" th:unless="${tutorOrders.empty}">
     <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách đơn đăng ký của gia sư, cuộn ngang để xem đầy đủ" tabindex="0">

@@ -99,9 +99,9 @@ public class TutorManagePageController {
 
             String message;
             if (id == null) {
-                message = "Đã lưu bản nháp dịch vụ/lớp.";
+                message = "Đã lưu bản nháp khóa học.";
             } else if (publishedEdit) {
-                message = "Đã lưu thay đổi và gửi duyệt lại. Dịch vụ tạm ngừng công khai cho đến khi được duyệt.";
+                message = "Đã lưu thay đổi và gửi duyệt lại. Khóa học tạm ngừng công khai cho đến khi được duyệt.";
             } else {
                 message = "Đã lưu thay đổi.";
             }
@@ -140,10 +140,10 @@ public class TutorManagePageController {
 
         if ("submit".equals(form.getAction())) {
             service.submitForReview(principal, id, form.getVersion());
-            redirect.addFlashAttribute("success", "Đã gửi duyệt. Dịch vụ chưa được công khai.");
+            redirect.addFlashAttribute("success", "Đã gửi duyệt. Khóa học chưa được công khai.");
         } else {
             service.close(principal, id, form.getVersion());
-            redirect.addFlashAttribute("success", "Đã đóng dịch vụ/lớp. Các giao dịch cũ được giữ nguyên.");
+            redirect.addFlashAttribute("success", "Đã đóng khóa học. Các giao dịch cũ được giữ nguyên.");
         }
 
         return "redirect:/tutor/manage";
