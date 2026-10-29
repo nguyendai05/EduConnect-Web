@@ -3,8 +3,24 @@
   const root = document.querySelector('[data-tutor-manage]')
   if (!root) return
 
-  const tab = new URLSearchParams(window.location.search).get('tab')
+  const params = new URLSearchParams(window.location.search)
+  const tab = params.get('tab')
   if (tab === 'orders' || tab === 'revenue') document.getElementById(`tm-tab-${tab}`)?.click()
+
+  // Form tạo/sửa nằm trong hộp thoại; tự mở khi đang sửa, khi có lỗi lưu hoặc khi vào bằng ?create=1.
+  const modal = document.getElementById('tm-editor-modal')
+  if (modal) {
+    const editing = modal.classList.contains('is-editing')
+    const open = () => { if (!modal.open) modal.showModal() }
+    root.querySelectorAll('[data-tm-open-editor]').forEach(button => {
+      button.addEventListener('click', event => {
+        if (editing) return // đang sửa một mục: để liên kết tải lại trang ở chế độ tạo mới
+        event.preventDefault()
+        open()
+      })
+    })
+    if (editing || params.has('create') || modal.querySelector('[data-tm-has-errors]')) open()
+  }
 
   const form = root.querySelector('[data-tm-form]')
   if (form) {

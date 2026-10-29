@@ -308,3 +308,8 @@
     flex: 1 1 auto;
   }
 }
+
+/* Hộp thoại tạo/sửa dịch vụ, lớp nhóm: rộng hơn hộp thoại xác nhận và cuộn phần thân khi form dài. */
+.tm-modal { width: min(60rem, calc(100% - 2rem)); }
+.tm-modal .modal__body { max-height: calc(100dvh - 9rem); overflow-y: auto; display: grid; gap: var(--space-4); }
+html:has(.tm-modal[open]) { overflow: hidden; }
