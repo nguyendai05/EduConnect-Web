@@ -47,24 +47,77 @@
                     </div>
                 </header>
 
-                <nav class="tabs tabs--contained" aria-label="Trạng thái đơn đăng ký">
-                    <div class="tabs__list">
-                        <a class="tabs__tab" th:classappend="${status == null} ? 'is-active'" th:href="@{/order/history}">Tất cả</a>
-                        <a class="tabs__tab" th:classappend="${status?.name() == 'AWAITING_PAYMENT'} ? 'is-active'" th:href="@{/order/history(status=AWAITING_PAYMENT)}">Chờ thanh toán</a>
-                        <a class="tabs__tab" th:classappend="${status?.name() == 'PAID'} ? 'is-active'" th:href="@{/order/history(status=PAID)}">Đã thanh toán</a>
-                        <a class="tabs__tab" th:classappend="${status?.name() == 'IN_PROGRESS'} ? 'is-active'" th:href="@{/order/history(status=IN_PROGRESS)}">Đang thực hiện</a>
-                        <a class="tabs__tab" th:classappend="${status?.name() == 'COMPLETED'} ? 'is-active'" th:href="@{/order/history(status=COMPLETED)}">Hoàn tất</a>
-                        <a class="tabs__tab" th:classappend="${status?.name() == 'CANCELLATION_PENDING'} ? 'is-active'" th:href="@{/order/history(status=CANCELLATION_PENDING)}">Đang chờ hủy</a>
-                        <a class="tabs__tab" th:classappend="${status?.name() == 'CANCELLED'} ? 'is-active'" th:href="@{/order/history(status=CANCELLED)}">Đã hủy</a>
-                    </div>
-                </nav>
+                <section class="order-history__summary" aria-label="Tóm tắt đơn đăng ký" th:if="${history != null}">
+                    <article class="stat-card stat-card--compact order-history__metric">
+                        <div class="stat-card__header"><h2 class="order-history__metric-label">Tổng số đơn</h2></div>
+                        <p class="order-history__metric-value"><strong class="stat-card__value" th:text="${history.all}">0</strong><span class="stat-card__unit">đơn</span></p>
+                        <p class="stat-card__description">Mọi đơn bạn đã tạo qua danh mục, lời mời và tin tìm gia sư.</p>
+                    </article>
+                    <article class="stat-card stat-card--compact order-history__metric">
+                        <div class="stat-card__header"><h2 class="order-history__metric-label">Tổng giá trị đơn</h2></div>
+                        <p class="order-history__metric-value"><strong class="stat-card__value" th:text="${#numbers.formatDecimal(history.totalValue, 0, 'POINT', 0, 'COMMA')}">0</strong><span class="stat-card__unit">₫</span></p>
+                        <p class="stat-card__description">Tổng theo giá đã chốt của từng đơn, không phải số dư ví.</p>
+                    </article>
+                    <article class="stat-card stat-card--compact order-history__metric">
+                        <div class="stat-card__header"><h2 class="order-history__metric-label">Đang chờ xử lý</h2></div>
+                        <p class="order-history__metric-value"><strong class="stat-card__value" th:text="${history.pending}">0</strong><span class="stat-card__unit">đơn</span></p>
+                        <p class="stat-card__description">Đơn chờ thanh toán hoặc đang chờ hủy.</p>
+                    </article>
+                </section>
 
-                <div class="empty-state" th:if="${orders == null or orders.empty}">
-                    <h2 class="empty-state__title">Chưa có đơn đăng ký nào</h2>
-                    <p class="empty-state__description">Đơn sẽ xuất hiện ở đây sau khi bạn xác nhận hợp đồng.</p>
+                <section class="order-history__toolbar" aria-label="Lọc và tìm kiếm đơn đăng ký" th:if="${history != null}">
+                    <nav class="tabs tabs--contained" aria-label="Trạng thái đơn đăng ký">
+                        <div class="tabs__list">
+                            <a class="tabs__tab" th:classappend="${status == null} ? 'is-active'" th:href="@{/order/history(q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Tất cả <span class="tabs__badge" th:text="${history.all}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'AWAITING_PAYMENT'} ? 'is-active'" th:href="@{/order/history(status=AWAITING_PAYMENT, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Chờ thanh toán <span class="tabs__badge" th:text="${history.count('AWAITING_PAYMENT')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'PAID'} ? 'is-active'" th:href="@{/order/history(status=PAID, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Đã thanh toán <span class="tabs__badge" th:text="${history.count('PAID')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'IN_PROGRESS'} ? 'is-active'" th:href="@{/order/history(status=IN_PROGRESS, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Đang thực hiện <span class="tabs__badge" th:text="${history.count('IN_PROGRESS')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'COMPLETED'} ? 'is-active'" th:href="@{/order/history(status=COMPLETED, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Hoàn tất <span class="tabs__badge" th:text="${history.count('COMPLETED')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'CANCELLATION_PENDING'} ? 'is-active'" th:href="@{/order/history(status=CANCELLATION_PENDING, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Đang chờ hủy <span class="tabs__badge" th:text="${history.count('CANCELLATION_PENDING')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'CANCELLED'} ? 'is-active'" th:href="@{/order/history(status=CANCELLED, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort})}">Đã hủy <span class="tabs__badge" th:text="${history.count('CANCELLED')}"></span></a>
+                        </div>
+                    </nav>
+                    <form class="order-history__filters" role="search" method="get" th:action="@{/order/history}">
+                        <input type="hidden" name="status" th:value="${status}" th:if="${status != null}">
+                        <div class="search-input search-input--compact">
+                            <label class="sr-only" for="oh-search">Tìm kiếm đơn đăng ký</label>
+                            <input id="oh-search" type="search" name="q" th:value="${q}" placeholder="Tìm theo mã đơn, tên dịch vụ/lớp, gia sư…" autocomplete="off" maxlength="200">
+                        </div>
+                        <div class="select-field">
+                            <label class="sr-only" for="oh-source">Nguồn đơn</label>
+                            <select class="select-control select-control--native" id="oh-source" name="source">
+                                <option value="">Nguồn: Tất cả</option>
+                                <option value="CATALOG" th:selected="${source?.name() == 'CATALOG'}">Danh mục dịch vụ</option>
+                                <option value="INVITATION" th:selected="${source?.name() == 'INVITATION'}">Lời mời</option>
+                                <option value="JOB_APPLICATION" th:selected="${source?.name() == 'JOB_APPLICATION'}">Tin tìm gia sư</option>
+                            </select>
+                        </div>
+                        <div class="select-field">
+                            <label class="sr-only" for="oh-from">Tạo từ ngày</label>
+                            <input class="select-control select-control--native" id="oh-from" type="date" name="from" th:value="${from}">
+                        </div>
+                        <div class="select-field">
+                            <label class="sr-only" for="oh-to">Tạo đến ngày</label>
+                            <input class="select-control select-control--native" id="oh-to" type="date" name="to" th:value="${to}">
+                        </div>
+                        <div class="select-field">
+                            <label class="sr-only" for="oh-sort">Sắp xếp đơn</label>
+                            <select class="select-control select-control--native" id="oh-sort" name="sort" onchange="this.form.submit()">
+                                <option value="newest" th:selected="${sort == 'newest'}">Mới nhất</option>
+                                <option value="oldest" th:selected="${sort == 'oldest'}">Cũ nhất</option>
+                            </select>
+                        </div>
+                        <button class="button button--primary" type="submit">Lọc</button>
+                    </form>
+                </section>
+
+                <div class="empty-state" th:if="${history == null or history.rows.empty}">
+                    <h2 class="empty-state__title">Không có đơn đăng ký nào</h2>
+                    <p class="empty-state__description">Đơn xuất hiện ở đây sau khi bạn xác nhận hợp đồng, hoặc thử bỏ bớt bộ lọc.</p>
                 </div>
 
-                <section class="order-history__results" th:if="${orders != null and !orders.empty}">
+                <section class="order-history__results" th:if="${history != null and !history.rows.empty}">
+                    <p class="order-history__results-heading"><span><strong th:text="${history.totalElements}"></strong> đơn phù hợp</span></p>
                     <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách đơn đăng ký" tabindex="0">
                         <table class="table table--review order-history__table">
                             <thead>
@@ -79,7 +132,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="o : ${orders.content}">
+                                <tr th:each="o : ${history.rows}">
                                     <th scope="row" th:text="${o.orderCode}"></th>
                                     <td><span th:text="${o.title}"></span><br><small th:text="${o.tutorName}"></small></td>
                                     <td th:text="${o.sourceLabel}"></td>
@@ -87,18 +140,20 @@
                                     <td><span class="badge" th:text="${o.statusLabel}"></span></td>
                                     <td><time th:text="${#temporals.format(o.createdAt, 'dd/MM/yyyy')}"></time></td>
                                     <td>
-                                        <a class="button button--outline button--small" th:href="@{/contract/confirm(contract=${o.contractId})}">Xem hợp đồng</a>
-                                        <a class="button button--primary button--small" th:if="${o.payable}" th:href="@{/payment/checkout(contract=${o.contractId})}">Thanh toán</a>
+                                        <div class="order-history__row-actions">
+                                            <a class="button button--primary button--small" th:if="${o.payable}" th:href="@{/payment/checkout(contract=${o.contractId})}">Thanh toán</a>
+                                            <a class="button button--outline button--small" th:href="@{/contract/student-detail(contract=${o.contractId})}">Xem hợp đồng</a>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <nav class="pagination pagination--table" aria-label="Phân trang đơn đăng ký" th:if="${orders.totalPages > 1}">
-                        <p class="pagination__summary">Trang <strong th:text="${orders.number + 1}"></strong> / <strong th:text="${orders.totalPages}"></strong> · <strong th:text="${orders.totalElements}"></strong> đơn</p>
+                    <nav class="pagination pagination--table" aria-label="Phân trang đơn đăng ký" th:if="${history.totalPages > 1}">
+                        <p class="pagination__summary">Trang <strong th:text="${history.page + 1}"></strong> / <strong th:text="${history.totalPages}"></strong> · <strong th:text="${history.totalElements}"></strong> đơn</p>
                         <div class="pagination__controls">
-                            <a class="pagination__button pagination__button--wide" th:if="${orders.hasPrevious()}" th:href="@{/order/history(status=${status}, page=${orders.number - 1})}">Trước</a>
-                            <a class="pagination__button pagination__button--wide" th:if="${orders.hasNext()}" th:href="@{/order/history(status=${status}, page=${orders.number + 1})}">Sau</a>
+                            <a class="pagination__button pagination__button--wide" th:if="${history.hasPrevious()}" th:href="@{/order/history(status=${status}, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort}, page=${history.page - 1})}">Trước</a>
+                            <a class="pagination__button pagination__button--wide" th:if="${history.hasNext()}" th:href="@{/order/history(status=${status}, q=${q}, source=${source}, from=${from}, to=${to}, sort=${sort}, page=${history.page + 1})}">Sau</a>
                         </div>
                     </nav>
                 </section>

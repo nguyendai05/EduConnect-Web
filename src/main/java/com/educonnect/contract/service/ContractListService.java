@@ -2,7 +2,11 @@ package com.educonnect.contract.service;
 
 import com.educonnect.contract.domain.Contract;
 import com.educonnect.contract.domain.ContractSession;
+import com.educonnect.contract.dto.ContractListDTO;
 import com.educonnect.contract.dto.ContractSummaryDTO;
+import com.educonnect.contract.dto.GroupClassDTO;
+import com.educonnect.contract.domain.ContractStatus;
+import com.educonnect.order.domain.OrderItemType;
 import com.educonnect.contract.repository.ContractJpaRepository;
 import com.educonnect.contract.repository.ContractSessionJpaRepository;
 import com.educonnect.security.AccountPrincipal;
@@ -35,5 +39,52 @@ public class ContractListService {
                 .findByContractIdInOrderByContractIdAscSessionNumberAsc(list.stream().map(Contract::getId).toList()).stream()
                 .collect(Collectors.groupingBy(ContractSession::getContractId));
         return list.stream().map(c -> ContractSummaryDTO.from(c, user.getId(), byContract.getOrDefault(c.getId(), List.of()))).toList();
+    }
+
+    /**
+     * Một trang hợp đồng của người đăng nhập: số liệu tính trên mọi hợp đồng, danh sách lọc theo trạng thái
+     * và từ khóa (mã, nội dung, đối tác; không phân biệt dấu); mỗi trang 10 hợp đồng.
+     */
+    public ContractListDTO page(AccountPrincipal user, ContractStatus status, String query, int page) {
+        List<ContractSummaryDTO> all = mine(user);
+        Map<ContractStatus, Long> counts = new java.util.EnumMap<>(ContractStatus.class);
+        java.math.BigDecimal total = java.math.BigDecimal.ZERO;
+        for (ContractSummaryDTO c : all) {
+            counts.merge(c.status(), 1L, Long::sum);
+            total = total.add(c.total());
+        }
+        String needle = fold(query);
+        List<ContractSummaryDTO> filtered = all.stream().filter(c -> status == null || c.status() == status)
+                .filter(c -> needle.isEmpty() || fold(c.code() + " " + c.title() + " " + c.partnerName()).contains(needle)).toList();
+        int pages = Math.max(1, (filtered.size() + 9) / 10);
+        int current = Math.min(Math.max(page, 0), pages - 1);
+        return new ContractListDTO(filtered.subList(current * 10, Math.min(filtered.size(), (current + 1) * 10)), current, pages,
+                filtered.size(), counts, all.size(), counts.getOrDefault(ContractStatus.ACTIVE, 0L),
+                all.stream().filter(ContractSummaryDTO::needsAction).count(), total);
+    }
+
+    /** Bỏ dấu và hoa thường để tìm kiếm tiếng Việt. */
+    private static String fold(String text) {
+        if (text == null) return "";
+        return java.text.Normalizer.normalize(text.trim(), java.text.Normalizer.Form.NFD).replaceAll("\\p{M}", "")
+                .replace('đ', 'd').replace('Đ', 'D').toLowerCase(java.util.Locale.ROOT);
+    }
+
+    /** Các lớp nhóm đang dạy của gia sư, mỗi lớp kèm học viên còn buổi chưa điểm danh. */
+    public List<GroupClassDTO> groupClasses(AccountPrincipal user) {
+        Map<Long, List<GroupClassDTO.Learner>> byOffering = new java.util.LinkedHashMap<>();
+        Map<Long, String> titles = new java.util.HashMap<>();
+        for (Contract c : contracts.findMine(user.getId())) {
+            if (!c.getTutorId().equals(user.getId()) || c.getStatus() != ContractStatus.ACTIVE
+                    || c.getOrderItemReference().getOfferingTypeSnapshot() != OrderItemType.GROUP_CLASS) continue;
+            Long offering = c.getOrderItemReference().getRegistrationSourceReference().getOfferingId();
+            sessions.findFirstByContractIdAndStatusOrderBySessionNumber(c.getId(), com.educonnect.contract.domain.ContractSessionStatus.HELD)
+                    .ifPresent(next -> {
+                        titles.put(offering, c.getOrderItemReference().getTitleSnapshot());
+                        byOffering.computeIfAbsent(offering, key -> new java.util.ArrayList<>()).add(new GroupClassDTO.Learner(
+                                c.getId(), c.getLearnerReference().getAccount().getDisplayName(), next.getSessionNumber()));
+                    });
+        }
+        return byOffering.entrySet().stream().map(e -> new GroupClassDTO(e.getKey(), titles.get(e.getKey()), e.getValue())).toList();
     }
 }

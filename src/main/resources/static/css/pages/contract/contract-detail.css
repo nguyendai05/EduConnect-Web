@@ -385,3 +385,10 @@
 .contract-money .is-key { padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-primary-container); }
 .contract-money .is-key dd { color: var(--color-primary); }
 .contract-sidebar progress { width: 100%; }
+
+/* Nhóm nút thao tác trong bảng: nút chính trước, nút phụ sau, cùng một hàng. */
+.contract-row-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.contract-row-actions form { margin: 0; }
+.contract-button--small { min-height: 36px; padding: var(--space-1) var(--space-3); }
+
+.order-history__filters--simple { grid-template-columns: minmax(14rem, 1fr) auto; }

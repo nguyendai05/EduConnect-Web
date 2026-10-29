@@ -46,11 +46,11 @@
                             <td>
                                 <form method="post" th:action="@{/contract/session/attend}" th:if="${s.canAttend}">
                                     <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${s.id}">
-                                    <button class="contract-button" type="submit">Điểm danh</button>
+                                    <button class="contract-button contract-button--small" type="submit">Điểm danh</button>
                                 </form>
                                 <form method="post" th:action="@{/contract/session/confirm}" th:if="${s.canConfirm}">
                                     <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${s.id}">
-                                    <button class="contract-button" type="submit">Xác nhận đã học</button>
+                                    <button class="contract-button contract-button--small" type="submit">Xác nhận đã học</button>
                                 </form>
                             </td>
                         </tr>

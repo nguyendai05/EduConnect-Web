@@ -1,6 +1,7 @@
 package com.educonnect.contract.web;
 
 import com.educonnect.contract.dto.ContractSummaryDTO;
+import com.educonnect.contract.dto.GroupClassDTO;
 import com.educonnect.contract.service.ContractListService;
 import com.educonnect.security.AccountPrincipal;
 import com.educonnect.tutor.web.TutorManagePageController;
@@ -22,5 +23,11 @@ public class TutorRegistrationsAdvice {
     public List<ContractSummaryDTO> registrations(@AuthenticationPrincipal AccountPrincipal user) {
         ContractListService service = lists.getIfAvailable();
         return service == null || user == null ? List.of() : service.mine(user);
+    }
+
+    @ModelAttribute("groupClasses")
+    public List<GroupClassDTO> groupClasses(@AuthenticationPrincipal AccountPrincipal user) {
+        ContractListService service = lists.getIfAvailable();
+        return service == null || user == null ? List.of() : service.groupClasses(user);
     }
 }

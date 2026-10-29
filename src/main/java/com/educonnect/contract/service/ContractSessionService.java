@@ -39,6 +39,7 @@ import java.math.RoundingMode;
 import java.time.Clock;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -115,6 +116,27 @@ public class ContractSessionService {
         ContractSession next = sessions.findFirstByContractIdAndStatusOrderBySessionNumber(contractId, ContractSessionStatus.HELD)
                 .orElseThrow(() -> new IllegalArgumentException("Không còn buổi nào để điểm danh"));
         attend(user, next.getId());
+    }
+
+    /**
+     * Gia sư điểm danh cả lớp nhóm một lần: buổi kế tiếp của mọi hợp đồng đang thực hiện của lớp.
+     * Hợp đồng trong absentContracts được ghi vắng (chỉ để hiển thị, buổi vẫn tính phí). Trả về số học viên được điểm danh.
+     */
+    public int attendClass(AccountPrincipal user, Long offeringId, Collection<Long> absentContracts) {
+        List<Long> ids = entityManager.createQuery("select c.id from Contract c where c.tutorId = :tutor and c.status = :active"
+                + " and c.orderItemReference.registrationSourceReference.offeringId = :offering order by c.id", Long.class)
+                .setParameter("tutor", user.getId()).setParameter("active", ContractStatus.ACTIVE)
+                .setParameter("offering", offeringId).getResultList();
+        int count = 0;
+        for (Long id : ids) {
+            ContractSession next = sessions.findFirstByContractIdAndStatusOrderBySessionNumber(id, ContractSessionStatus.HELD).orElse(null);
+            if (next == null) continue;
+            attend(user, next.getId());
+            next.setAbsent(absentContracts != null && absentContracts.contains(id));
+            count++;
+        }
+        if (count == 0) throw new IllegalArgumentException("Lớp chưa có học viên nào cần điểm danh");
+        return count;
     }
 
     /** Học viên xác nhận buổi đã học: giải ngân tiền buổi đó cho gia sư. */

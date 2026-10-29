@@ -35,6 +35,9 @@ public class ContractSession {
     @Column(name = "attended_at", nullable = true, columnDefinition = "datetime(6)")
     private Instant attendedAt;
 
+    @Column(name = "absent", nullable = false)
+    private boolean absent;
+
     @JdbcTypeCode(SqlTypes.TIMESTAMP)
     @Column(name = "confirmed_at", nullable = true, columnDefinition = "datetime(6)")
     private Instant confirmedAt;
@@ -71,6 +74,9 @@ public class ContractSession {
 
     public Instant getAttendedAt() { return attendedAt; }
     public void setAttendedAt(Instant attendedAt) { this.attendedAt = attendedAt; }
+
+    public boolean isAbsent() { return absent; }
+    public void setAbsent(boolean absent) { this.absent = absent; }
 
     public Instant getConfirmedAt() { return confirmedAt; }
     public void setConfirmedAt(Instant confirmedAt) { this.confirmedAt = confirmedAt; }

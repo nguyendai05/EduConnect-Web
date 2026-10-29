@@ -15,7 +15,13 @@ import java.util.List;
  */
 public record ContractSummaryDTO(Long id, String code, String title, String partnerName, boolean viewerIsTutor,
         String statusLabel, boolean active, BigDecimal total, int doneSessions, int totalSessions,
-        Integer attendSession, Integer confirmSession, Long attendSessionId, Long confirmSessionId, Instant createdAt) {
+        Integer attendSession, Integer confirmSession, Long attendSessionId, Long confirmSessionId, Instant createdAt,
+        ContractStatus status) {
+
+    /** Hợp đồng đang chờ người xem làm gì đó: gia sư điểm danh, học viên xác nhận buổi hoặc thanh toán. */
+    public boolean needsAction() {
+        return attendSession != null || confirmSession != null || (!viewerIsTutor && status == ContractStatus.AWAITING_PAYMENT);
+    }
 
     public static ContractSummaryDTO from(Contract contract, Long viewerId, List<ContractSession> sessions) {
         OrderItem item = contract.getOrderItemReference();
@@ -31,7 +37,8 @@ public record ContractSummaryDTO(Long id, String code, String title, String part
         return new ContractSummaryDTO(contract.getId(), contract.getPublicCode(), item.getTitleSnapshot(), partner, tutor,
                 label(contract.getStatus()), active, item.getLineTotal(), done, sessions.size(),
                 attend == null ? null : attend.getSessionNumber(), confirm == null ? null : confirm.getSessionNumber(),
-                attend == null ? null : attend.getId(), confirm == null ? null : confirm.getId(), contract.getCreatedAt());
+                attend == null ? null : attend.getId(), confirm == null ? null : confirm.getId(), contract.getCreatedAt(),
+                contract.getStatus());
     }
 
     private static String label(ContractStatus status) {

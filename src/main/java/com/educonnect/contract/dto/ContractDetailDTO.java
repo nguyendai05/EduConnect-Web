@@ -92,7 +92,7 @@ public record ContractDetailDTO(Long id, String publicCode, String orderCode, St
         boolean learner = contract.getLearnerId().equals(viewerId);
         Long nextId = sessions.stream().filter(x -> x.getStatus() == ContractSessionStatus.HELD)
                 .map(ContractSession::getId).findFirst().orElse(null);
-        return sessions.stream().map(x -> new SessionDTO(x.getId(), x.getSessionNumber(), x.getAmount(), switch (x.getStatus()) {
+        return sessions.stream().map(x -> new SessionDTO(x.getId(), x.getSessionNumber(), x.getAmount(), (x.isAbsent() ? "Vắng · " : "") + switch (x.getStatus()) {
             case HELD -> "Chưa học";
             case ATTENDED -> "Chờ học viên xác nhận";
             case RELEASED -> "Đã giải ngân";

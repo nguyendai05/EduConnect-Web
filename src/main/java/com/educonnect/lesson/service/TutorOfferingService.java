@@ -3,6 +3,7 @@ package com.educonnect.lesson.service;
 import com.educonnect.common.reference.repository.AreaJpaRepository;
 import com.educonnect.common.reference.repository.DeliveryModeJpaRepository;
 import com.educonnect.common.reference.repository.GradeLevelJpaRepository;
+import com.educonnect.common.reference.domain.Subject;
 import com.educonnect.common.reference.repository.SubjectJpaRepository;
 import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.domain.OfferingStatus;
@@ -250,6 +251,7 @@ public class TutorOfferingService {
             return previous.get().getId();
         }
 
+        resolveSubject(form);
         validateReferences(form);
         Offering offering = Offering.create();
         offering.setPublicCode(code);
@@ -285,6 +287,7 @@ public class TutorOfferingService {
 
         boolean reReview = offering.getStatus() == OfferingStatus.PUBLISHED;
         boolean keepSchedule = offerings.countEnrollments(id) > 0;
+        resolveSubject(form);
         if (keepSchedule) {
             requireUnchangedTeachingPlan(offering, form);
         }
@@ -414,6 +417,26 @@ public class TutorOfferingService {
     }
 
     /**
+     * Gia sư gõ tên môn: dùng môn đã có cùng tên, chưa có thì tạo môn mới để các trang lọc dùng được.
+     */
+    private void resolveSubject(OfferingRequest form) {
+        String name = form.getSubjectName() == null ? "" : form.getSubjectName().strip().replaceAll("\\s+", " ");
+        if (name.isEmpty()) {
+            if (form.getSubjectId() == null) {
+                throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Nhập môn học.");
+            }
+            return;
+        }
+        var subject = subjects.findFirstByName(name).orElseGet(() -> {
+            var created = Subject.create();
+            created.setCode("TUTOR-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12));
+            created.setName(name);
+            return subjects.save(created);
+        });
+        form.setSubjectId(subject.getId());
+    }
+
+    /**
      * Kiểm tra các ID danh mục trong form có tồn tại.
      */
     private void validateReferences(OfferingRequest form) {
@@ -484,6 +507,7 @@ public class TutorOfferingService {
         form.setTitle(offering.getTitle());
         form.setDescription(offering.getDescription());
         form.setSubjectId(offering.getSubjectId());
+        subjects.findById(offering.getSubjectId()).ifPresent(subject -> form.setSubjectName(subject.getName()));
         form.setGradeLevelId(offering.getGradeLevelId());
         form.setAreaId(offering.getAreaId());
         form.setDeliveryModeId(offering.getDeliveryModeId());

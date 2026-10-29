@@ -3,6 +3,7 @@ package com.educonnect.contract.web;
 import com.educonnect.contract.ContractConfirmationForm;
 import com.educonnect.contract.InvitationContractForm;
 import com.educonnect.contract.JobContractForm;
+import com.educonnect.contract.domain.ContractStatus;
 import com.educonnect.contract.service.ContractLifecycleService;
 import com.educonnect.contract.service.ContractListService;
 import com.educonnect.contract.service.ContractService;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class ContractPageController {
@@ -153,6 +156,22 @@ public class ContractPageController {
         return backTo(back, "redirect:/contract/tutor-detail?contract=" + contractId);
     }
 
+    /** Gia sư điểm danh cả lớp nhóm một lần; học viên được tick vắng thì ghi vắng (vẫn tính phí). */
+    @PostMapping("/contract/session/attend-class")
+    public String attendClass(@RequestParam("offering") Long offeringId,
+                              @RequestParam(value = "absent", required = false) List<Long> absent,
+                              @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
+        ContractSessionService service = sessions.getIfAvailable();
+        if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
+        try {
+            int count = service.attendClass(user, offeringId, absent);
+            redirect.addFlashAttribute("success", "Đã điểm danh buổi học cho " + count + " học viên, chờ học viên xác nhận");
+        } catch (IllegalArgumentException error) {
+            redirect.addFlashAttribute("pageError", error.getMessage());
+        }
+        return "redirect:/tutor/manage#tm-tab-orders";
+    }
+
     /** Học viên xác nhận buổi đã học; tiền của buổi đó được giải ngân cho gia sư. */
     @PostMapping("/contract/session/confirm")
     public String confirmSession(@RequestParam("contract") Long contractId, @RequestParam("session") Long sessionId,
@@ -201,9 +220,14 @@ public class ContractPageController {
 
     /** Danh sách hợp đồng của người đăng nhập (học viên hoặc gia sư). */
     @GetMapping("/contract/my")
-    public String my(@AuthenticationPrincipal AccountPrincipal user, Model model) {
+    public String my(@RequestParam(required = false) ContractStatus status, @RequestParam(required = false) String q,
+                     @RequestParam(defaultValue = "0") int page, @AuthenticationPrincipal AccountPrincipal user, Model model) {
         ContractListService service = lists.getIfAvailable();
-        if (service != null) model.addAttribute("contracts", service.mine(user));
+        if (service != null) {
+            model.addAttribute("list", service.page(user, status, q, page));
+            model.addAttribute("status", status);
+            model.addAttribute("q", q);
+        }
         return "pages/contract/my";
     }
 

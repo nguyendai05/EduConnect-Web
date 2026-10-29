@@ -53,10 +53,11 @@
           <h1 class="page-header__title">Quản lý giảng dạy</h1>
           <p class="page-header__description">Quản lý dịch vụ, lớp nhóm và lịch giảng dạy của bạn.</p>
         </div>
-        <a class="button button--outline" th:href="@{/invitation/negotiation}">Lời mời nhận</a>
         <a class="button button--primary" th:if="${dbReady}" th:href="@{/tutor/manage(create=1)}" data-tm-open-editor>Thêm dịch vụ / lớp</a>
       </header>
       <p class="alert alert--success" role="status" th:if="${success}" th:text="${success}"></p>
+      <p class="alert alert--success" role="status" th:if="${message}" th:text="${message}"></p>
+      <p class="alert alert--error" role="alert" th:if="${error != null and error instanceof T(java.lang.String)}" th:text="${error}"></p>
       <div class="alert alert--error" role="alert" th:if="${pageError}">
         <p th:text="${pageError}"></p><a th:href="@{/tutor/manage}">Tải lại trang quản lý</a>
       </div>
@@ -74,7 +75,7 @@
             <label class="form-field">Loại
               <select class="select-control select-control--native" th:field="*{type}">
                 <option value="">Tất cả</option>
-                <option value="SERVICE">Dịch vụ</option>
+                <option value="SERVICE">Dạy kèm 1-1</option>
                 <option value="GROUP_CLASS">Lớp nhóm</option>
               </select>
             </label>
@@ -100,7 +101,7 @@
                 <tbody>
                   <tr th:each="item : ${offerings}">
                     <td><strong th:text="${item.title}"></strong><small class="tm-muted" th:text="${item.publicCode}"></small>
-                      <span th:text="${item.offeringType.name() == 'SERVICE' ? 'Dịch vụ' : 'Lớp nhóm'}"></span>
+                      <span th:text="${item.offeringType.name() == 'SERVICE' ? 'Dạy kèm 1-1' : 'Lớp nhóm'}"></span>
                       <small class="tm-muted" th:text="${item.subject + ' · ' + item.grade}"></small>
                       <details class="tm-details"><summary>Mô tả &amp; điều khoản</summary><p class="tm-description" th:text="${item.description}"></p><p class="tm-description" th:text="${item.termsText}"></p></details>
                     </td>
@@ -134,6 +135,19 @@
           </div>
         </section>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-orders" aria-labelledby="tm-tab-orders" hidden>
+          <form class="tm-class-attend" method="post" th:action="@{/contract/session/attend-class}" th:each="g : ${groupClasses}">
+            <input type="hidden" name="offering" th:value="${g.offeringId}">
+            <div class="tm-class-attend__head">
+              <strong th:text="${g.title}"></strong>
+              <button class="button button--primary button--small" type="submit">Điểm danh cả lớp</button>
+            </div>
+            <ul class="tm-class-attend__list">
+              <li th:each="l : ${g.learners}">
+                <span th:text="${l.name + ' · buổi ' + l.nextSession}"></span>
+                <label class="tm-class-attend__absent"><input type="checkbox" name="absent" th:value="${l.contractId}"> Vắng (vẫn tính phí)</label>
+              </li>
+            </ul>
+          </form>
           <div class="empty-state" th:if="${registrations == null or registrations.empty}"><h2 class="empty-state__title">Chưa có học viên đăng ký</h2><p class="empty-state__description">Học viên đăng ký dịch vụ hoặc lớp của bạn sẽ hiện ở đây, kèm tiến độ buổi học.</p></div>
           <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Học viên đã đăng ký" tabindex="0" th:if="${registrations != null and !registrations.empty}">
             <table class="table">
@@ -145,11 +159,13 @@
                   <td><span class="badge" th:text="${r.statusLabel}"></span></td>
                   <td th:text="${r.doneSessions + ' / ' + r.totalSessions + ' buổi'}"></td>
                   <td>
-                    <a class="button button--outline button--small" th:href="@{/contract/tutor-detail(contract=${r.id})}">Xem hợp đồng</a>
-                    <form method="post" th:action="@{/contract/session/attend-next}" th:if="${r.attendSession != null}">
-                      <input type="hidden" name="contract" th:value="${r.id}"><input type="hidden" name="back" value="manage">
-                      <button class="button button--primary button--small" type="submit" th:text="${'Điểm danh buổi ' + r.attendSession}"></button>
-                    </form>
+                    <div class="tm-row-actions">
+                      <form method="post" th:action="@{/contract/session/attend-next}" th:if="${r.attendSession != null}">
+                        <input type="hidden" name="contract" th:value="${r.id}"><input type="hidden" name="back" value="manage">
+                        <button class="button button--primary button--small" type="submit" th:text="${'Điểm danh buổi ' + r.attendSession}"></button>
+                      </form>
+                      <a class="button button--outline button--small" th:href="@{/contract/tutor-detail(contract=${r.id})}">Xem hợp đồng</a>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -187,11 +203,14 @@
                     <label class="form-field">Loại
                       <input type="hidden" th:if="${editingId != null}" name="offeringType" th:value="*{offeringType}">
                       <select class="select-control select-control--native" th:field="*{offeringType}" th:disabled="${editingId != null}" data-tm-type-select>
-                        <option value="SERVICE">Dịch vụ</option><option value="GROUP_CLASS">Lớp nhóm</option>
+                        <option value="SERVICE">Dạy kèm 1-1</option><option value="GROUP_CLASS">Lớp nhóm</option>
                       </select>
                     </label>
                     <label class="form-field">Tiêu đề <input class="tm-control" th:field="*{title}" required maxlength="220" th:errorclass="tm-invalid"></label>
-                    <label class="form-field">Môn học <select class="select-control select-control--native" th:field="*{subjectId}" required><option value="">Chọn môn</option><option th:each="o : ${options.subjects}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
+                    <label class="form-field">Môn học
+                      <input class="tm-control" th:field="*{subjectName}" list="tm-subject-list" required maxlength="120" placeholder="Chọn gợi ý hoặc tự nhập môn" autocomplete="off">
+                      <datalist id="tm-subject-list"><option th:each="o : ${options.subjects}" th:value="${o.label}"></option></datalist>
+                    </label>
                     <label class="form-field">Cấp học <select class="select-control select-control--native" th:field="*{gradeLevelId}" required><option value="">Chọn cấp học</option><option th:each="o : ${options.grades}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
                     <label class="form-field">Khu vực <select class="select-control select-control--native" th:field="*{areaId}" required><option value="">Chọn khu vực</option><option th:each="o : ${options.areas}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
                     <label class="form-field">Hình thức <select class="select-control select-control--native" th:field="*{deliveryModeId}" required><option value="">Chọn hình thức</option><option th:each="o : ${options.modes}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
