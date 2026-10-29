@@ -4,6 +4,7 @@ import com.educonnect.contract.ContractConfirmationForm;
 import com.educonnect.contract.InvitationContractForm;
 import com.educonnect.contract.JobContractForm;
 import com.educonnect.contract.domain.ContractStatus;
+import com.educonnect.contract.service.ContractDocumentService;
 import com.educonnect.contract.service.ContractLifecycleService;
 import com.educonnect.contract.service.ContractListService;
 import com.educonnect.contract.service.ContractService;
@@ -31,11 +32,13 @@ public class ContractPageController {
     private ObjectProvider<ContractLifecycleService> lifecycle;
     private ObjectProvider<ContractSessionService> sessions;
     private ObjectProvider<ContractListService> lists;
+    private ObjectProvider<ContractDocumentService> documents;
 
     public ContractPageController(ObjectProvider<ContractService> services, ObjectProvider<ContractLifecycleService> lifecycle,
                                   ObjectProvider<ContractSessionService> sessions,
-                                  ObjectProvider<ContractListService> lists) {
+                                  ObjectProvider<ContractListService> lists, ObjectProvider<ContractDocumentService> documents) {
         this.services = services;
+        this.documents = documents;
         this.lists = lists;
         this.lifecycle = lifecycle;
         this.sessions = sessions;
@@ -216,6 +219,15 @@ public class ContractPageController {
             redirect.addFlashAttribute("error", error.getMessage());
         }
         return "redirect:/admin/dashboard";
+    }
+
+    /** Nội dung hợp đồng dạy – học đã ký (mẫu v4.1) với các giá trị hai bên đã xác nhận; chỉ hai bên được xem. */
+    @GetMapping("/contract/document")
+    public String document(@RequestParam(value = "contract", required = false) Long contractId,
+                           @AuthenticationPrincipal AccountPrincipal user, Model model) {
+        ContractDocumentService service = documents.getIfAvailable();
+        if (service != null && contractId != null) model.addAttribute("d", service.document(user, contractId));
+        return "pages/contract/document";
     }
 
     /** Danh sách hợp đồng của người đăng nhập (học viên hoặc gia sư). */

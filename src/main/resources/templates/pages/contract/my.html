@@ -116,6 +116,7 @@
                                                 <button class="contract-button contract-button--small" type="submit" th:text="${'Xác nhận buổi ' + c.confirmSession}"></button>
                                             </form>
                                             <a class="contract-button contract-button--secondary contract-button--small" th:href="${c.viewerIsTutor} ? @{/contract/tutor-detail(contract=${c.id})} : @{/contract/student-detail(contract=${c.id})}">Xem hợp đồng</a>
+                                            <a class="contract-button contract-button--secondary contract-button--small" th:href="@{/contract/document(contract=${c.id})}">Nội dung</a>
                                         </div>
                                     </td>
                                 </tr>

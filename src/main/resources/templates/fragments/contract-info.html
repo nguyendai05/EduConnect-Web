@@ -99,6 +99,7 @@
                 <h2 id="terms-title">Quản lý hợp đồng &amp; điều khoản</h2>
                 <h3 class="contract-subtitle">Điều khoản đã đồng ý</h3>
                 <p class="contract-muted" th:text="${c.terms}"></p>
+                <p class="contract-muted">Hợp đồng đầy đủ (các bên, học phí, ký quỹ, quy tắc và xác nhận điện tử) xem tại <a th:href="@{/contract/document(contract=${c.id})}">Nội dung hợp đồng</a>.</p>
                 <div th:if="${c.canCancel}">
                     <h3 class="contract-subtitle">Hủy hợp đồng</h3>
                     <p class="contract-muted">Hợp đồng chưa thanh toán nên được hủy ngay. Nếu đã thanh toán, hãy liên hệ quản trị để được hỗ trợ.</p>
@@ -133,6 +134,7 @@
             </section>
             <div class="contract-actions">
                 <a class="contract-button" th:if="${c.payable and canPay}" th:href="@{/payment/checkout(contract=${c.id})}">Tiếp tục thanh toán</a>
+                <a class="contract-button contract-button--secondary" th:href="@{/contract/document(contract=${c.id})}">Xem nội dung hợp đồng</a>
                 <a class="contract-button contract-button--secondary" th:href="@{${backUrl}}" th:text="${backLabel}"></a>
             </div>
         </aside>

@@ -123,6 +123,7 @@
                 <button class="button button--primary button--large flow-cta" type="submit" data-confirm-submit>Xác nhận đăng ký</button>
             </form>
             <a class="button button--primary button--large flow-cta" th:if="${confirmation.payable}" th:href="@{/payment/checkout(contract=${confirmation.id})}">Tiếp tục thanh toán</a>
+            <a class="button button--outline flow-cta" th:if="${!confirmation.draft}" th:href="@{/contract/document(contract=${confirmation.id})}">Xem nội dung hợp đồng</a>
             <a class="flow-link" th:if="${!confirmation.draft}" th:href="@{/contract/my}">Xem tất cả hợp đồng của tôi</a>
             <a class="flow-link" th:if="${confirmation.draft}" th:href="@{/cart/index}">Quay lại giỏ đăng ký</a>
 
