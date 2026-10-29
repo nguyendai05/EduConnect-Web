@@ -106,17 +106,27 @@
                                     <td class="table__amount" th:text="${#numbers.formatDecimal(c.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></td>
                                     <td>
                                         <div class="contract-row-actions">
-                                            <a class="contract-button contract-button--small" th:if="${!c.viewerIsTutor and c.statusLabel == 'Chờ thanh toán'}" th:href="@{/payment/checkout(contract=${c.id})}">Thanh toán</a>
+                                            <a class="icon-action icon-action--primary" th:if="${!c.viewerIsTutor and c.statusLabel == 'Chờ thanh toán'}" th:href="@{/payment/checkout(contract=${c.id})}" title="Thanh toán" aria-label="Thanh toán">
+                                                <img th:src="@{/assets/icons/wallet.svg}" alt="">
+                                            </a>
                                             <form method="post" th:action="@{/contract/session/attend-next}" th:if="${c.attendSession != null}">
                                                 <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="back" value="my">
-                                                <button class="contract-button contract-button--small" type="submit" th:text="${'Điểm danh buổi ' + c.attendSession}"></button>
+                                                <button class="icon-action icon-action--primary" type="submit" th:title="${'Điểm danh buổi ' + c.attendSession}" th:aria-label="${'Điểm danh buổi ' + c.attendSession}">
+                                                    <img th:src="@{/assets/icons/check-double.svg}" alt="">
+                                                </button>
                                             </form>
                                             <form method="post" th:action="@{/contract/session/confirm}" th:if="${c.confirmSession != null}">
                                                 <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${c.confirmSessionId}"><input type="hidden" name="back" value="my">
-                                                <button class="contract-button contract-button--small" type="submit" th:text="${'Xác nhận buổi ' + c.confirmSession}"></button>
+                                                <button class="icon-action icon-action--primary" type="submit" th:title="${'Xác nhận buổi ' + c.confirmSession + ' đã học'}" th:aria-label="${'Xác nhận buổi ' + c.confirmSession + ' đã học'}">
+                                                    <img th:src="@{/assets/icons/check-circle.svg}" alt="">
+                                                </button>
                                             </form>
-                                            <a class="contract-button contract-button--secondary contract-button--small" th:href="${c.viewerIsTutor} ? @{/contract/tutor-detail(contract=${c.id})} : @{/contract/student-detail(contract=${c.id})}">Xem hợp đồng</a>
-                                            <a class="contract-button contract-button--secondary contract-button--small" th:href="@{/contract/document(contract=${c.id})}">Nội dung</a>
+                                            <a class="icon-action" th:href="${c.viewerIsTutor} ? @{/contract/tutor-detail(contract=${c.id})} : @{/contract/student-detail(contract=${c.id})}" title="Xem chi tiết hợp đồng" aria-label="Xem chi tiết hợp đồng">
+                                                <img th:src="@{/assets/icons/mat.svg}" alt="">
+                                            </a>
+                                            <a class="icon-action" th:href="@{/contract/document(contract=${c.id})}" title="Xem nội dung hợp đồng" aria-label="Xem nội dung hợp đồng">
+                                                <img th:src="@{/assets/icons/receipt.svg}" alt="">
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
