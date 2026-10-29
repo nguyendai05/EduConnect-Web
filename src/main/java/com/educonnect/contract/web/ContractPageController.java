@@ -52,8 +52,8 @@ public class ContractPageController {
                     model.addAttribute("confirmation", cartItemId != null ? service.draft(user, cartItemId)
                             : invitationId != null ? service.draftInvitation(user, invitationId)
                             : service.draftJob(user, applicationId));
-                } catch (IllegalArgumentException error) {
-                    model.addAttribute("error", error.getMessage());
+                } catch (IllegalArgumentException | ResponseStatusException error) {
+                    model.addAttribute("error", error instanceof ResponseStatusException r ? r.getReason() : error.getMessage());
                 }
             }
         }

@@ -8,6 +8,7 @@ import com.educonnect.chat.repository.ChatConversationJpaRepository;
 import com.educonnect.chat.repository.ChatMessageJpaRepository;
 import com.educonnect.security.AccountPrincipal;
 import com.educonnect.tutor.domain.TutorProfile;
+import com.educonnect.user.domain.LearnerProfile;
 import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
@@ -40,19 +41,37 @@ public class ChatService {
 
     /** Người học mở cuộc trò chuyện với một gia sư, tạo mới nếu chưa có. Trả về mã cuộc trò chuyện. */
     public Long open(AccountPrincipal user, Long tutorId) {
-        if (!user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_LEARNER"))) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
+        requireRole(user, "ROLE_LEARNER");
         if (user.getId().equals(tutorId) || entityManager.find(TutorProfile.class, tutorId) == null) {
             throw new IllegalArgumentException("Không tìm thấy gia sư");
         }
-        return conversations.findByLearnerIdAndTutorId(user.getId(), tutorId).orElseGet(() -> {
+        return conversation(user.getId(), tutorId);
+    }
+
+    /** Gia sư mở cuộc trò chuyện với một học viên (ví dụ người đăng tin), tạo mới nếu chưa có. */
+    public Long openWithLearner(AccountPrincipal user, Long learnerId) {
+        requireRole(user, "ROLE_TUTOR");
+        if (user.getId().equals(learnerId) || entityManager.find(LearnerProfile.class, learnerId) == null) {
+            throw new IllegalArgumentException("Không tìm thấy học viên");
+        }
+        return conversation(learnerId, user.getId());
+    }
+
+    /** Cuộc trò chuyện của một cặp học viên - gia sư; tạo mới nếu chưa có. */
+    private Long conversation(Long learnerId, Long tutorId) {
+        return conversations.findByLearnerIdAndTutorId(learnerId, tutorId).orElseGet(() -> {
             ChatConversation c = ChatConversation.create();
-            c.setLearnerId(user.getId());
+            c.setLearnerId(learnerId);
             c.setTutorId(tutorId);
             c.setCreatedAt(clock.instant());
             return conversations.save(c);
         }).getId();
+    }
+
+    private static void requireRole(AccountPrincipal user, String role) {
+        if (!user.getAuthorities().contains(new SimpleGrantedAuthority(role))) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
     }
 
     /** Danh sách cuộc trò chuyện của người đăng nhập, mới nhất trước. */

@@ -41,13 +41,18 @@ public class ChatPageController {
         return "pages/chat/messages";
     }
 
-    /** Người học bấm "Nhắn tin" ở hồ sơ gia sư: mở hoặc tạo cuộc trò chuyện rồi vào trang tin nhắn. */
+    /**
+     * Mở hoặc tạo cuộc trò chuyện rồi vào trang tin nhắn: học viên truyền ?tutor=<mã gia sư>,
+     * gia sư truyền ?learner=<mã học viên>.
+     */
     @GetMapping("/chat/with")
-    public String with(@RequestParam("tutor") Long tutorId, @AuthenticationPrincipal AccountPrincipal user,
-                       RedirectAttributes redirect) {
+    public String with(@RequestParam(value = "tutor", required = false) Long tutorId,
+                       @RequestParam(value = "learner", required = false) Long learnerId,
+                       @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
         ChatService service = require();
         try {
-            return "redirect:/chat/messages?conversation=" + service.open(user, tutorId);
+            Long id = tutorId != null ? service.open(user, tutorId) : service.openWithLearner(user, learnerId);
+            return "redirect:/chat/messages?conversation=" + id;
         } catch (IllegalArgumentException error) {
             redirect.addFlashAttribute("error", error.getMessage());
             return "redirect:/chat/messages";

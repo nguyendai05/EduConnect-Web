@@ -55,7 +55,16 @@
     </form>
     <section class="job-live-stack" th:if="${ownApplication != null}"><h3>Ứng tuyển của bạn</h3><strong th:text="${ownApplication.statusLabel}"></strong><p th:text="${#numbers.formatDecimal(ownApplication.proposedUnitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></p><p class="job-live-copy" th:text="${ownApplication.message}"></p>
       <form method="post" th:if="${ownApplication.canWithdraw}" th:action="@{/job/{id}/applications/{app}/action(id=${job.id},app=${ownApplication.id})}" data-job-live-form><input type="hidden" name="jobVersion" th:value="${job.version}"><input type="hidden" name="applicationVersion" th:value="${ownApplication.version}"><button class="button button--outline" name="action" value="withdraw" type="submit">Rút ứng tuyển</button></form>
+      <details class="job-live-stack" th:if="${ownApplication.canEdit}"><summary>Sửa giá và lời nhắn</summary>
+        <form method="post" class="job-live-stack" th:action="@{/job/{id}/applications/{app}/update(id=${job.id},app=${ownApplication.id})}" data-job-live-form>
+          <input type="hidden" name="jobVersion" th:value="${job.version}"><input type="hidden" name="applicationVersion" th:value="${ownApplication.version}">
+          <label class="form-field">Giá đề xuất mỗi buổi (VND)<span class="input-control"><input class="input-control__input" type="number" name="proposedUnitPrice" th:value="${ownApplication.proposedUnitPrice}" min="1" step="1" required></span></label>
+          <label class="form-field">Đề xuất và điều kiện bổ sung<textarea class="textarea-control" name="message" rows="5" maxlength="5000" required th:text="${ownApplication.message}"></textarea></label>
+          <button class="button button--primary" type="submit">Lưu đề xuất mới</button>
+        </form>
+      </details>
     </section>
+    <a class="button button--outline" th:if="${!job.owner and (job.canApply or ownApplication != null)}" th:href="@{/chat/with(learner=${job.learnerId})}">Nhắn tin với người đăng tin</a>
     <p class="job-live-muted" th:if="${!job.owner and !job.canApply and ownApplication == null}">Bạn cần tài khoản gia sư đã được duyệt và tin đang nhận ứng tuyển để gửi đề xuất.</p>
     <a class="button button--outline" th:if="${currentUser == null}" th:href="@{/auth/login}">Đăng nhập</a>
   </aside></div>

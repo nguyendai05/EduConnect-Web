@@ -12,10 +12,12 @@ import com.educonnect.contract.repository.ContractJpaRepository;
 import com.educonnect.contract.repository.ContractSessionJpaRepository;
 import com.educonnect.invitation.domain.Invitation;
 import com.educonnect.invitation.dto.InvitationSourceResponse;
+import com.educonnect.invitation.service.InvitationProblem;
 import com.educonnect.invitation.service.InvitationService;
 import com.educonnect.job.domain.JobApplication;
 import com.educonnect.job.domain.JobPost;
 import com.educonnect.job.dto.JobSourceResponse;
+import com.educonnect.job.service.JobProblem;
 import com.educonnect.job.service.JobService;
 import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.domain.OfferingType;
@@ -176,7 +178,7 @@ public class ContractService {
         if (invitation == null || !invitation.getLearnerId().equals(learnerId)) {
             throw new IllegalArgumentException("Không tìm thấy lời mời");
         }
-        InvitationSourceResponse source = invitations.lockAcceptedSource(user, invitationId, invitation.getVersion());
+        InvitationSourceResponse source = lockInvitation(user, invitationId, invitation.getVersion());
         return ContractConfirmationDTO.draftInvitation(source, invitation.getSubjectReference().getName(),
                 user.getDisplayName(), invitation.getTutorReference().getAccount().getDisplayName());
     }
@@ -193,7 +195,7 @@ public class ContractService {
         if (existing.isPresent()) return existing.get().getId();
 
         // Kiểm lại và khóa nguồn tại thời điểm tạo giao dịch.
-        InvitationSourceResponse src = invitations.lockAcceptedSource(user, form.invitationId(), form.version());
+        InvitationSourceResponse src = lockInvitation(user, form.invitationId(), form.version());
         Invitation invitation = entityManager.find(Invitation.class, src.sourceId());
         Deal deal = new Deal(src.tutorId(), "VND", "Lời mời học " + invitation.getSubjectReference().getName(),
                 OrderItemType.DIRECT, src.unitPrice(), src.sessionCount(), 1, src.termsVersion(),
@@ -215,7 +217,7 @@ public class ContractService {
             throw new IllegalArgumentException("Không tìm thấy ứng tuyển");
         }
         JobPost job = application.getJobReference();
-        JobSourceResponse source = jobs.lockSelectedSource(user, job.getId(), job.getVersion(), application.getVersion());
+        JobSourceResponse source = lockJob(user, job.getId(), job.getVersion(), application.getVersion());
         return ContractConfirmationDTO.draftJob(source, job.getTitle(), user.getDisplayName(),
                 application.getTutorReference().getAccount().getDisplayName());
     }
@@ -232,7 +234,7 @@ public class ContractService {
         if (existing.isPresent()) return existing.get().getId();
 
         // Kiểm lại và khóa nguồn tại thời điểm tạo giao dịch.
-        JobSourceResponse src = jobs.lockSelectedSource(user, form.jobId(), form.jobVersion(), form.applicationVersion());
+        JobSourceResponse src = lockJob(user, form.jobId(), form.jobVersion(), form.applicationVersion());
         if (!src.applicationId().equals(form.applicationId())) {
             throw new IllegalArgumentException("Gia sư được chọn đã thay đổi, vui lòng kiểm tra lại");
         }
@@ -246,6 +248,24 @@ public class ContractService {
         Contract contract = book(learnerId, source, deal, creationKey, clock.instant());
         contracts.flush();
         return contract.getId();
+    }
+
+    /** Kiểm lại và khóa nguồn lời mời; lỗi nghiệp vụ của luồng lời mời được hiển thị như lỗi thường của trang hợp đồng. */
+    private InvitationSourceResponse lockInvitation(AccountPrincipal user, Long invitationId, Long version) {
+        try {
+            return invitations.lockAcceptedSource(user, invitationId, version);
+        } catch (InvitationProblem error) {
+            throw new IllegalArgumentException(error.getMessage());
+        }
+    }
+
+    /** Kiểm lại và khóa nguồn tin tìm gia sư; lỗi nghiệp vụ của luồng tin được hiển thị như lỗi thường của trang hợp đồng. */
+    private JobSourceResponse lockJob(AccountPrincipal user, Long jobId, Long jobVersion, Long applicationVersion) {
+        try {
+            return jobs.lockSelectedSource(user, jobId, jobVersion, applicationVersion);
+        } catch (JobProblem error) {
+            throw new IllegalArgumentException(error.getMessage());
+        }
     }
 
     /** Ghi đơn, nguồn, snapshot và hợp đồng cho một giao dịch. */

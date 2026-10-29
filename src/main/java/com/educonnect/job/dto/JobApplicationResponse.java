@@ -11,7 +11,7 @@ import java.time.Instant;
  */
 public record JobApplicationResponse(Long id, Long tutorId, String tutorName, String headline,
         BigDecimal proposedUnitPrice, String message, JobApplicationStatus status, Long version,
-        Instant createdAt, boolean canSelect, boolean canReject, boolean canWithdraw) {
+        Instant createdAt, boolean canSelect, boolean canReject, boolean canWithdraw, boolean canEdit) {
     public String getStatusLabel() {
         return switch (status) {
             case SUBMITTED -> "Đã ứng tuyển";
