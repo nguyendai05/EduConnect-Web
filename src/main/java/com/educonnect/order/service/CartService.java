@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Profile("db-dev")
@@ -72,13 +71,11 @@ public class CartService {
 
     public void update(AccountPrincipal user, Long itemId, int seats, Long version) {
         Long learnerId = lockLearner(user);
-        CartItem item = items.findByIdAndCartReferenceLearnerId(itemId, learnerId)
-                .orElseThrow(() -> new IllegalArgumentException("Lựa chọn không còn trong danh sách của bạn"));
+        CartItem item = ownItem(itemId, learnerId);
         Offering offering = checkedOffering(learnerId, item.getOfferingId(), seats, version);
         item.setSeatCount(seats);
         item.setOfferingVersionSeen(offering.getVersion());
         item.getCartReference().setUpdatedAt(Instant.now());
-        items.save(item); // Lưu cập nhật số chỗ vào DB
     }
 
     public void remove(AccountPrincipal user, Long itemId) {
@@ -91,34 +88,22 @@ public class CartService {
 
     public void clear(AccountPrincipal user) {
         Long learnerId = lockLearner(user);
-        Optional<Cart> cart = carts.findByLearnerId(learnerId);
-        if (cart.isPresent()) {
-            items.deleteByCartId(cart.get().getId());
-            cart.get().setUpdatedAt(Instant.now());
-        }
-    }
-
-    @Transactional(readOnly = true)
-    public void check(AccountPrincipal user) {
-        CartDTO cart = getCartDTO(user);
-        if (cart.isEmpty()) throw new IllegalArgumentException("Danh sách đăng ký đang trống");
-        for (CartItemDTO item : cart.items()) {
-            if (item.issue() != null) throw new IllegalArgumentException(item.title() + ": " + item.issue());
-            if (item.changed()) throw new IllegalArgumentException("Vui lòng xác nhận thông tin mới của " + item.title());
-        }
+        carts.findByLearnerId(learnerId).ifPresent(cart -> {
+            items.deleteByCartId(cart.getId());
+            cart.setUpdatedAt(Instant.now());
+        });
     }
 
     /** Kiểm tra hợp lệ riêng cho 1 khóa học được chọn để ký hợp đồng */
     @Transactional(readOnly = true)
     public void checkItem(AccountPrincipal user, Long cartItemId) {
-        CartDTO cart = getCartDTO(user);
-        if (cart.isEmpty()) throw new IllegalArgumentException("Danh sách đăng ký đang trống");
-        CartItemDTO item = cart.items().stream()
-                .filter(i -> i.id().equals(cartItemId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Khóa học không còn trong danh sách của bạn"));
-        if (item.issue() != null) throw new IllegalArgumentException(item.title() + ": " + item.issue());
-        if (item.changed()) throw new IllegalArgumentException("Vui lòng xác nhận thông tin mới của " + item.title());
+        CartItem item = ownItem(cartItemId, learnerId(user));
+        checkedOffering(user.getId(), item.getOfferingId(), item.getSeatCount(), item.getOfferingVersionSeen());
+    }
+
+    private CartItem ownItem(Long itemId, Long learnerId) {
+        return items.findByIdAndCartReferenceLearnerId(itemId, learnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Lựa chọn không còn trong danh sách của bạn"));
     }
 
     private Offering checkedOffering(Long learnerId, Long id, int seats, Long version) {

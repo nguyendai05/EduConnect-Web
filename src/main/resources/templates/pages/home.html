@@ -59,8 +59,7 @@
                 <div class="home-latest__grid" th:if="${offerings != null and !offerings.empty}">
                     <article class="card home-offer-card" th:each="item : ${offerings}">
                         <header class="home-offer-card__header">
-                            <span class="badge badge--info" th:text="${item.offeringType == T(com.educonnect.lesson.domain.OfferingType).GROUP_CLASS ? 'Lớp nhóm' : 'Dịch vụ 1 kèm 1'}">Dịch vụ 1 kèm 1</span>
-                            <span class="home-offer-card__id" th:text="|Mã: ${item.publicCode}|"></span>
+                            <span class="badge badge--info" th:text="${item.offeringType == T(com.educonnect.lesson.domain.OfferingType).GROUP_CLASS ? 'Lớp nhóm' : 'Dạy kèm 1-1'}">Dịch vụ 1 kèm 1</span>
                         </header>
                         <h3 class="home-offer-card__title" th:text="${item.title}">Toán 12 - Luyện thi THPT</h3>
                         <p class="home-offer-card__tutor">

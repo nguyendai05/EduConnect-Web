@@ -42,13 +42,16 @@ public class OfferingRequest {
     @Size(max = 10000)
     private String description;
 
-    @NotNull
-    @Positive
     private Long subjectId;
 
-    @NotNull
+    @Size(max = 120, message = "Tên môn tối đa 120 ký tự.")
+    private String subjectName;
+
     @Positive
     private Long gradeLevelId;
+
+    @Size(max = 120, message = "Tên cấp học tối đa 120 ký tự.")
+    private String gradeLevelName;
 
     @NotNull
     @Positive
@@ -148,6 +151,22 @@ public class OfferingRequest {
 
     public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public String getGradeLevelName() {
+        return gradeLevelName;
+    }
+
+    public void setGradeLevelName(String gradeLevelName) {
+        this.gradeLevelName = gradeLevelName;
     }
 
     public Long getGradeLevelId() {

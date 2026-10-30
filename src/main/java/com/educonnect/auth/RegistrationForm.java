@@ -20,7 +20,7 @@ public class RegistrationForm {
     private String phone;
 
     @NotBlank(message = "Vui lòng nhập mật khẩu.")
-    @Size(min = 8, max = 72, message = "Mật khẩu cần từ 8 đến 72 ký tự và tối đa 72 byte UTF-8.")
+    @Size(min = 8, max = 72, message = "Mật khẩu cần từ 8 đến 72 ký tự.")
     private String password;
 
     @NotBlank(message = "Vui lòng xác nhận mật khẩu.")
@@ -35,7 +35,7 @@ public class RegistrationForm {
         return password != null && password.equals(confirmPassword);
     }
 
-    @AssertTrue(message = "Mật khẩu không được vượt quá 72 byte UTF-8 hoặc chứa ký tự NUL.")
+    @AssertTrue(message = "Mật khẩu quá dài hoặc chứa ký tự không hợp lệ. Hãy rút ngắn mật khẩu hoặc bớt ký tự có dấu.")
     public boolean isPasswordWithinByteLimit() {
         return password == null || (password.getBytes(StandardCharsets.UTF_8).length <= 72 && password.indexOf('\0') < 0);
     }

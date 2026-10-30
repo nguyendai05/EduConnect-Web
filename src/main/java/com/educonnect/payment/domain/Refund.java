@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import org.hibernate.annotations.Generated;
 import org.hibernate.generator.EventType;
+import com.educonnect.user.domain.UserAccount;
 
 /** Mapping refunds; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -81,7 +82,7 @@ public class Refund {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "requested_by", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.user.domain.UserAccount requestedByReference;
+    private UserAccount requestedByReference;
 
     protected Refund() {}
 
@@ -138,5 +139,5 @@ public class Refund {
 
     public Long getVersion() { return version; }
 
-    public com.educonnect.user.domain.UserAccount getRequestedByReference() { return requestedByReference; }
+    public UserAccount getRequestedByReference() { return requestedByReference; }
 }

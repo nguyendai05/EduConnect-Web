@@ -6,4 +6,9 @@ import org.springframework.context.annotation.Profile;
 
 /** Repository JPA chuẩn; giữ riêng đường ghi JDBC auth. */
 @Profile("db-dev")
-public interface SubjectJpaRepository extends JpaRepository<Subject, Long> {}
+public interface SubjectJpaRepository extends JpaRepository<Subject, Long> {
+    /** Tìm môn theo tên, không phân biệt hoa thường và dấu (theo collation của bảng). */
+    java.util.Optional<Subject> findFirstByName(String name);
+
+    long countByCreatedBy(Long createdBy);
+}

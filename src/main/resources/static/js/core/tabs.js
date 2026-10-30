@@ -31,8 +31,11 @@
         if (next) { event.preventDefault(); activate(next) }
       })
     })
-    const selected = enabled().find(tab => tab.getAttribute('aria-selected') === 'true') || enabled()[0]
+    // Liên kết dạng /trang#id-của-tab mở thẳng tab đó, kể cả khi đang ở sẵn trang (hashchange).
+    const fromHash = () => enabled().find(tab => tab.id && location.hash === '#' + tab.id)
+    const selected = fromHash() || enabled().find(tab => tab.getAttribute('aria-selected') === 'true') || enabled()[0]
     if (selected) activate(selected, false)
+    window.addEventListener('hashchange', () => { const target = fromHash(); if (target) activate(target, false) })
   })
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true })
   else init()

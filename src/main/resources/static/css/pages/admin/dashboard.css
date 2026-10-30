@@ -25,8 +25,8 @@
   line-height: 1.4;
 }
 .dashboard__header p { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
-.dashboard__refresh { display: grid; flex: 0 0 auto; justify-items: end; gap: var(--space-2); }
-.dashboard__updated { margin: 0; color: var(--color-text-secondary); font-size: 0.6875rem; text-align: right; }
+.dashboard__refresh { display: flex; flex: 1 1 auto; flex-direction: row-reverse; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.dashboard__updated { margin: 0; color: var(--color-text-secondary); font-size: var(--font-size-sm); text-align: left; }
 .dashboard__icon { width: 1.125rem; height: 1.125rem; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .dashboard__loading { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
 .dashboard__content { display: grid; min-width: 0; gap: var(--space-8); }
@@ -205,3 +205,6 @@
 @media (prefers-reduced-motion: reduce) {
   .dashboard__skip-link { transition: none; }
 }
+
+/* Ô ghi chú/mô tả rỗng không chiếm chỗ. */
+.dashboard__metric-note:empty, .dashboard__check-description:empty { display: none; }

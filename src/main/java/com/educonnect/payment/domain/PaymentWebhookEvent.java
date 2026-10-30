@@ -50,7 +50,7 @@ public class PaymentWebhookEvent {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "payment_attempt_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false)
-    private com.educonnect.payment.domain.PaymentAttempt paymentAttemptReference;
+    private PaymentAttempt paymentAttemptReference;
 
     protected PaymentWebhookEvent() {}
 
@@ -85,5 +85,5 @@ public class PaymentWebhookEvent {
     public String getErrorCode() { return errorCode; }
     public void setErrorCode(String errorCode) { this.errorCode = errorCode; }
 
-    public com.educonnect.payment.domain.PaymentAttempt getPaymentAttemptReference() { return paymentAttemptReference; }
+    public PaymentAttempt getPaymentAttemptReference() { return paymentAttemptReference; }
 }

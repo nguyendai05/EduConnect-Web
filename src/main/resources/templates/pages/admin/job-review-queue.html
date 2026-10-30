@@ -23,10 +23,8 @@
 <link rel="stylesheet" th:href="@{/css/components/data-display/card.css}">
 <link rel="stylesheet" th:href="@{/css/pages/job/live.css}">
 <link rel="stylesheet" th:href="@{/css/components/form/input.css}">
-
+<link rel="stylesheet" th:href="@{/css/components/form/select.css}">
 <link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
-
-<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 
@@ -38,14 +36,23 @@
 <script src="/js/pages/admin/job-review-queue.js" defer th:src="@{/js/pages/admin/job-review-queue.js}"></script>
 </th:block>
 </head>
-<body class="job-review-queue-page dat-render" th:fragment="content"><div class="admin-shell">
+<body th:fragment="content"><div class="admin-shell">
 <th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
 <th:block th:replace="~{fragments/header-admin :: header(${active}, 'v3')}"></th:block>
-<main class="admin-shell__workspace"><div class="admin-shell__content job-review-queue job-live"><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><header class="admin-shell__page-header job-review-queue__header"><div><h1>Hàng đợi duyệt tin tìm gia sư</h1><p>Xem nội dung, kiểm tra nhu cầu học và quyết định công khai tin.</p></div><a class="button button--outline" th:href="@{/admin/job-review-queue}">Làm mới</a></header>
-<form method="get" class="job-review-queue__toolbar dat-filterbar" th:action="@{/admin/job-review-queue}" th:if="${search != null}"><div class="job-live-grid">
+<main class="admin-shell__workspace"><div class="admin-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1 class="sr-only">Hàng đợi duyệt tin tìm gia sư</h1>
+<form method="get" class="card job-live-panel" th:action="@{/admin/job-review-queue}" th:if="${search != null}"><div class="job-live-grid">
   <label class="form-field">Từ khóa<span class="input-control"><input class="input-control__input" name="q" th:value="${search.q}" maxlength="200"></span></label>
   <label class="form-field">Trạng thái<select class="select-control select-control--native" name="status"><option value="PENDING" th:selected="${selectedStatus != null and selectedStatus.name() == 'PENDING'}">Chờ duyệt</option><option value="OPEN" th:selected="${selectedStatus != null and selectedStatus.name() == 'OPEN'}">Đang công khai</option><option value="REJECTED" th:selected="${selectedStatus != null and selectedStatus.name() == 'REJECTED'}">Đã từ chối</option><option value="CLOSED" th:selected="${selectedStatus != null and selectedStatus.name() == 'CLOSED'}">Đã đóng</option><option value="MATCHED" th:selected="${selectedStatus != null and selectedStatus.name() == 'MATCHED'}">Đã chọn gia sư</option><option value="DRAFT" th:selected="${selectedStatus != null and selectedStatus.name() == 'DRAFT'}">Bản nháp</option></select></label></div><button class="button button--primary" type="submit">Lọc tin</button></form><p class="card job-live-panel" th:if="${jobs != null and jobs.empty}">Chưa có tin phù hợp.</p>
-<section class="card dat-table-panel" th:if="${jobs != null and !jobs.empty}" aria-labelledby="queue-result-title"><header class="dat-panel-heading"><h2 id="queue-result-title">Danh sách tin</h2><span class="dat-muted" th:text="|${jobs.totalElements} tin phù hợp|"></span></header><div class="dat-table-scroll"><table class="dat-table"><thead><tr><th scope="col">Tin tìm gia sư</th><th scope="col">Người đăng</th><th scope="col">Học phí / buổi</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead><tbody><tr th:each="item : ${jobs.content}"><td><a class="dat-table-title" th:href="@{/admin/job-review-detail(id=${item.id})}" th:text="${item.title}"></a><p class="dat-muted" th:text="|${item.subject} · ${item.grade} · ${item.deliveryMode}|"></p><small class="dat-muted" th:text="${item.publicCode}"></small></td><td><strong th:text="${item.learnerName}"></strong><p class="dat-muted" th:text="${item.createdAtLabel}"></p></td><td><strong th:text="${#numbers.formatDecimal(item.budgetPerSession, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong><p class="dat-muted" th:text="|${item.sessionCount} buổi|"></p></td><td><span class="badge badge--info" th:text="${item.statusLabel}"></span></td><td><a class="button button--outline" th:href="@{/admin/job-review-detail(id=${item.id})}">Xem và duyệt</a></td></tr></tbody></table></div></section><nav class="job-live-nav" th:if="${jobs != null}" aria-label="Phân trang">
+    <div class="job-live-list" th:if="${jobs != null}">
+      <article class="card job-live-panel" th:each="item : ${jobs.content}">
+        <div class="job-live-heading"><span class="badge badge--info" th:text="${item.statusLabel}"></span><small th:text="${item.publicCode}"></small></div>
+        <h2><a th:href="@{/admin/job-review-detail(id=${item.id})}" th:text="${item.title}"></a></h2>
+        <p th:text="|${item.subject} · ${item.grade} · ${item.area} · ${item.deliveryMode}|"></p>
+        <p><strong th:text="${#numbers.formatDecimal(item.budgetPerSession, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><span th:text="| · ${item.sessionCount} buổi|"></span></p>
+        <p class="job-live-muted" th:text="|${item.learnerName} · ${item.createdAtLabel} (UTC+7)|"></p>
+        <a class="button button--outline" th:href="@{/admin/job-review-detail(id=${item.id})}">Xem và duyệt tin</a>
+      </article>
+    </div><nav class="job-live-nav" th:if="${jobs != null}" aria-label="Phân trang">
       <a class="button button--outline" th:if="${jobs.hasPrevious()}" th:href="@{/admin/job-review-queue(page=${jobs.number - 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size},status=${selectedStatus})}">Trang trước</a>
       <span th:unless="${jobs.empty}" th:text="|Trang ${jobs.number + 1} / ${jobs.totalPages} · ${jobs.totalElements} tin|"></span>
       <a class="button button--outline" th:if="${jobs.hasNext()}" th:href="@{/admin/job-review-queue(page=${jobs.number + 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size},status=${selectedStatus})}">Trang sau</a>

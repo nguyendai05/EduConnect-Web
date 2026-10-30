@@ -6,4 +6,7 @@ import org.springframework.context.annotation.Profile;
 
 /** Repository JPA chuẩn; giữ riêng đường ghi JDBC auth. */
 @Profile("db-dev")
-public interface PaymentWebhookEventJpaRepository extends JpaRepository<PaymentWebhookEvent, Long> {}
+public interface PaymentWebhookEventJpaRepository extends JpaRepository<PaymentWebhookEvent, Long> {
+
+    boolean existsByProviderAndEventKey(String provider, String eventKey);
+}

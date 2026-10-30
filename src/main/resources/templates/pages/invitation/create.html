@@ -41,7 +41,7 @@
   <main class="user-shell__main">
     <section class="invitation-create-heading"><div class="user-shell__content">
       <nav class="breadcrumb" aria-label="Đường dẫn"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/home}">Trang chủ</a></li><li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/invitation/negotiation}">Lời mời của tôi</a></li><li class="breadcrumb__item" aria-current="page">Gửi lời mời</li></ol></nav>
-      <h1>Mời gia sư dạy</h1><p>Gửi một đề xuất rõ ràng về học phí, lịch học và điều khoản để gia sư xem xét.</p>
+      <h1>Mời gia sư dạy</h1>
     </div></section>
     <div class="user-shell__content invitation-live-content">
       <section class="alert alert--error" th:if="${pageError != null}" role="alert"><p th:text="${pageError}"></p><a class="button button--outline" th:href="@{/invitation/create}">Chọn lại</a></section>

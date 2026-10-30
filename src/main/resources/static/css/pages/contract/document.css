@@ -1,0 +1,25 @@
+/* Nội dung hợp đồng dạy – học đã ký: tài liệu một cột, dễ đọc và in được. */
+.doc-page { width: min(100% - 2rem, 56rem); margin: var(--space-6) auto; }
+.doc-toolbar { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: space-between; margin-bottom: var(--space-4); }
+.doc { padding: var(--space-8); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); line-height: 1.7; }
+.doc h1 { margin: 0 0 var(--space-2); font-size: var(--font-size-2xl); text-align: center; }
+.doc-head > p { margin: 0 0 var(--space-4); color: var(--color-text-secondary); text-align: center; }
+.doc h2 { margin: var(--space-6) 0 var(--space-3); padding-top: var(--space-4); border-top: 1px solid var(--color-border); font-size: var(--font-size-lg); color: var(--color-ink); }
+.doc h3 { margin: var(--space-4) 0 var(--space-2); font-size: var(--font-size-md); }
+.doc p { margin: 0 0 var(--space-3); }
+.doc ul, .doc ol { margin: 0 0 var(--space-3); padding-left: var(--space-6); }
+.doc-meta, .doc-facts { display: grid; gap: var(--space-2); margin: 0 0 var(--space-3); }
+.doc-meta { grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); padding: var(--space-4); background: var(--color-surface-low); border-radius: var(--radius-md); }
+.doc-meta div, .doc-facts div { display: grid; gap: .125rem; }
+.doc-facts { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.doc dt { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.doc dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.doc-terms { white-space: pre-wrap; }
+.doc-sign { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: var(--space-4); }
+.doc-sign > div { padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+@media (max-width: 40rem) { .doc { padding: var(--space-4); } }
+@media print {
+  .user-header, .user-footer, .doc-toolbar, .chat-widget { display: none !important; }
+  .doc { border: 0; padding: 0; }
+  .doc h2 { break-after: avoid; }
+}

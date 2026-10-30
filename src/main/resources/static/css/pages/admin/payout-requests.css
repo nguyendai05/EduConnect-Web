@@ -22,8 +22,8 @@
   line-height: 1.4;
 }
 .payout-requests__header p { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
-.payout-requests__refresh { display: grid; flex: 0 0 auto; justify-items: end; gap: var(--space-2); }
-.payout-requests__updated { color: var(--color-text-secondary); font-size: 0.6875rem; }
+.payout-requests__refresh { display: flex; flex: 1 1 auto; flex-direction: row-reverse; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.payout-requests__updated { margin: 0; color: var(--color-text-secondary); font-size: var(--font-size-sm); text-align: left; }
 .payout-requests__icon { width: 1.125rem; height: 1.125rem; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .payout-requests__summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
 .payout-requests__metric { min-width: 0; overflow: hidden; box-shadow: var(--shadow-sm); }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.math.BigDecimal;
 import java.time.Instant;
+import com.educonnect.user.domain.LearnerProfile;
 
 /** Mapping orders; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -61,7 +62,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "learner_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.user.domain.LearnerProfile learnerReference;
+    private LearnerProfile learnerReference;
 
     protected Order() {}
 
@@ -101,5 +102,5 @@ public class Order {
     public Instant getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }
 
-    public com.educonnect.user.domain.LearnerProfile getLearnerReference() { return learnerReference; }
+    public LearnerProfile getLearnerReference() { return learnerReference; }
 }

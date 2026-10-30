@@ -20,10 +20,8 @@
 <link rel="stylesheet" th:href="@{/css/components/data-display/card.css}">
 <link rel="stylesheet" th:href="@{/css/pages/job/live.css}">
 <link rel="stylesheet" th:href="@{/css/components/form/input.css}">
-
+<link rel="stylesheet" th:href="@{/css/components/form/select.css}">
 <link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
-
-<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -34,20 +32,20 @@
 
 </th:block>
 </head>
-<body class="my-job-page dat-render" th:fragment="content"><div class="user-shell">
+<body th:fragment="content"><div class="user-shell">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
-<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><header class="page-header dat-page-header"><div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Tin tìm gia sư của tôi</h1><p class="page-header__description">Theo dõi tin đăng, xem ứng viên và tìm gia sư phù hợp.</p></div><div class="page-header__actions"><a class="button button--outline" th:href="@{/job/discover}">Khám phá tin</a><a class="button button--primary" th:href="@{/job/create}">Đăng tin mới</a></div></div></header>
-<div class="my-job-page__grid dat-two-columns"><section class="my-job-page__primary"><form class="card dat-filterbar" method="get" th:action="@{/job/my-job}" th:if="${search != null}">
+<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation('mine')}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1>Tin tìm gia sư của tôi</h1>
+<form class="card job-live-panel" method="get" th:action="@{/job/my-job}" th:if="${search != null}">
   <div class="job-live-grid"><label class="form-field">Từ khóa<span class="input-control"><input class="input-control__input" name="q" th:value="${search.q}" maxlength="200"></span></label>
   <label class="form-field">Trạng thái<select class="select-control select-control--native" name="status"><option value="">Tất cả</option><option value="DRAFT" th:selected="${selectedStatus != null and selectedStatus.name() == 'DRAFT'}">Bản nháp</option><option value="PENDING" th:selected="${selectedStatus != null and selectedStatus.name() == 'PENDING'}">Chờ duyệt</option><option value="OPEN" th:selected="${selectedStatus != null and selectedStatus.name() == 'OPEN'}">Đang nhận ứng tuyển</option><option value="MATCHED" th:selected="${selectedStatus != null and selectedStatus.name() == 'MATCHED'}">Đã chọn gia sư</option><option value="CLOSED" th:selected="${selectedStatus != null and selectedStatus.name() == 'CLOSED'}">Đã đóng</option><option value="REJECTED" th:selected="${selectedStatus != null and selectedStatus.name() == 'REJECTED'}">Bị từ chối</option></select></label></div>
   <button class="button button--primary" type="submit">Lọc tin</button>
-</form><section class="empty-state dat-empty" th:if="${jobs != null and jobs.empty}"><h2 class="empty-state__title">Chưa có tin phù hợp</h2><p class="empty-state__description">Thử thay đổi bộ lọc hoặc đăng tin tìm gia sư mới.</p><a class="button button--outline" th:href="@{/job/create}">Đăng tin mới</a></section>
-    <div class="my-job-page__jobs" th:if="${jobs != null}">
-      <article class="job-card dat-job-card" th:each="item : ${jobs.content}">
+</form><p class="card job-live-panel" th:if="${jobs != null and jobs.empty}">Chưa có tin phù hợp.</p>
+    <div class="job-live-list" th:if="${jobs != null}">
+      <article class="card job-live-panel" th:each="item : ${jobs.content}">
         <div class="job-live-heading"><span class="badge badge--info" th:text="${item.statusLabel}"></span><small th:text="${item.publicCode}"></small></div>
         <h2><a th:href="@{/job/detail(id=${item.id})}" th:text="${item.title}"></a></h2>
         <p th:text="|${item.subject} · ${item.grade} · ${item.area} · ${item.deliveryMode}|"></p>
-        <p><strong th:text="${#numbers.formatDecimal(item.budgetPerSession, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><span th:text="| · ${item.sessionCount} buổi|"></span><span th:text="| · ${item.applicationCount} ứng viên|"></span></p>
+        <p><strong th:text="${#numbers.formatDecimal(item.budgetPerSession, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><span th:text="| · ${item.sessionCount} buổi|"></span></p>
         <p class="job-live-muted" th:text="|${item.learnerName} · ${item.createdAtLabel} (UTC+7)|"></p>
         <a class="button button--outline" th:href="@{/job/detail(id=${item.id})}">Xem chi tiết</a>
       </article>
@@ -55,6 +53,6 @@
       <a class="button button--outline" th:if="${jobs.hasPrevious()}" th:href="@{/job/my-job(page=${jobs.number - 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size},status=${selectedStatus})}">Trang trước</a>
       <span th:unless="${jobs.empty}" th:text="|Trang ${jobs.number + 1} / ${jobs.totalPages} · ${jobs.totalElements} tin|"></span>
       <a class="button button--outline" th:if="${jobs.hasNext()}" th:href="@{/job/my-job(page=${jobs.number + 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size},status=${selectedStatus})}">Trang sau</a>
-    </nav></section><aside class="my-job-page__sidebar"><section class="my-job-sidebar-card dat-panel"><h2>Quản lý tin đăng</h2><p class="dat-muted">Mở chi tiết tin để xem ứng viên, sửa bản nháp hoặc theo dõi thỏa thuận đã chọn.</p><a class="button button--primary" th:href="@{/job/create}">Đăng tin tìm gia sư</a></section><section class="my-job-sidebar-card dat-panel" th:if="${jobs != null}"><p class="dat-muted">Kết quả theo bộ lọc hiện tại</p><strong class="dat-stat" th:text="${jobs.totalElements}"></strong><span>tin tìm gia sư</span></section></aside></div></div></main>
+    </nav></div></main>
 <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
 </div></body></html>

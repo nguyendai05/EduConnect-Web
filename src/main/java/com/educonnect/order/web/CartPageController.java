@@ -65,19 +65,11 @@ public class CartPageController {
     }
 
     @PostMapping("/cart/check")
-    public String check(@RequestParam(value = "cartItemId", required = false) Long cartItemId,
-                        @AuthenticationPrincipal AccountPrincipal user,
+    public String check(@RequestParam Long cartItemId, @AuthenticationPrincipal AccountPrincipal user,
                         RedirectAttributes redirect) {
-        if (cartItemId != null) {
-            service().checkItem(user, cartItemId);
-            return "redirect:/contract/confirm?cartItemId=" + cartItemId;
-        }
-        CartDTO cart = service().getCartDTO(user);
-        if (!cart.isEmpty()) {
-            service().checkItem(user, cart.items().get(0).id());
-            return "redirect:/contract/confirm?cartItemId=" + cart.items().get(0).id();
-        }
-        throw new IllegalArgumentException("Danh sách đăng ký đang trống");
+        service().checkItem(user, cartItemId);
+        redirect.addAttribute("cartItemId", cartItemId);
+        return "redirect:/contract/confirm";
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -88,8 +80,7 @@ public class CartPageController {
 
     private void validate(BindingResult errors) {
         if (errors.hasErrors()) {
-            String defaultMessage = errors.getAllErrors().isEmpty() ? "Dữ liệu không hợp lệ" : errors.getAllErrors().get(0).getDefaultMessage();
-            throw new IllegalArgumentException(defaultMessage);
+            throw new IllegalArgumentException("Vui lòng kiểm tra số chỗ và thông tin dịch vụ");
         }
     }
 

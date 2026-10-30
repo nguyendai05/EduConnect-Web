@@ -5,6 +5,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.math.BigDecimal;
 import java.time.Instant;
+import com.educonnect.tutor.domain.TutorProfile;
 
 /** Mapping order_items; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -70,15 +71,15 @@ public class OrderItem {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.order.domain.Order orderReference;
+    private Order orderReference;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "registration_source_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.order.domain.RegistrationSource registrationSourceReference;
+    private RegistrationSource registrationSourceReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tutor_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.tutor.domain.TutorProfile tutorReference;
+    private TutorProfile tutorReference;
 
     protected OrderItem() {}
 
@@ -134,9 +135,9 @@ public class OrderItem {
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
-    public com.educonnect.order.domain.Order getOrderReference() { return orderReference; }
+    public Order getOrderReference() { return orderReference; }
 
-    public com.educonnect.order.domain.RegistrationSource getRegistrationSourceReference() { return registrationSourceReference; }
+    public RegistrationSource getRegistrationSourceReference() { return registrationSourceReference; }
 
-    public com.educonnect.tutor.domain.TutorProfile getTutorReference() { return tutorReference; }
+    public TutorProfile getTutorReference() { return tutorReference; }
 }

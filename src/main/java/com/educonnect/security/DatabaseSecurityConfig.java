@@ -22,15 +22,19 @@ public class DatabaseSecurityConfig {
         var provider = new DaoAuthenticationProvider(users);
         provider.setPasswordEncoder(encoder);
         return http.authenticationProvider(provider)
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/payment/webhook")) // webhook PayOS tự bảo vệ bằng chữ ký
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.ERROR, DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/css/**", "/js/**", "/assets/**", "/favicon.ico", "/error", "/auth/**",
                                 "/", "/home", "/tutor/search", "/tutor/profile", "/catalog/detail", "/job/discover", "/job/detail").permitAll()
+                        .requestMatchers("/payment/webhook").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/tutor/manage", "/tutor/my-profile", "/contract/tutor-detail")
                             .hasRole("TUTOR")
-                        .requestMatchers("/cart/**", "/invitation/create", "/job/create", "/job/my-job", "/job/applicants", "/payment/**",
-                                "/contract/student-detail", "/contract/confirm", "/contract/create", "/contract/sign").hasRole("LEARNER")
+                        .requestMatchers("/contract/session/attend", "/contract/session/attend-next", "/contract/session/attend-class").hasRole("TUTOR")
+                        .requestMatchers("/contract/refund").hasRole("ADMIN")
+                        .requestMatchers("/cart/**", "/order/history", "/invitation/create", "/job/create", "/job/my-job", "/job/applicants", "/payment/**",
+                                "/contract/student-detail", "/contract/confirm", "/contract/create", "/contract/sign", "/contract/sign-invitation", "/contract/sign-job", "/contract/cancel", "/contract/session/confirm").hasRole("LEARNER")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/auth/login").loginProcessingUrl("/auth/login")
                         .usernameParameter("email").failureUrl("/auth/login?error")

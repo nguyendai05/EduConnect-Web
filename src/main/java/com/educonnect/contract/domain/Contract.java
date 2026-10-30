@@ -5,6 +5,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.Instant;
+import com.educonnect.order.domain.OrderItem;
+import com.educonnect.tutor.domain.TutorProfile;
+import com.educonnect.user.domain.LearnerProfile;
 
 /** Mapping contracts; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -63,15 +66,15 @@ public class Contract {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_item_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.order.domain.OrderItem orderItemReference;
+    private OrderItem orderItemReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "learner_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.user.domain.LearnerProfile learnerReference;
+    private LearnerProfile learnerReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tutor_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.tutor.domain.TutorProfile tutorReference;
+    private TutorProfile tutorReference;
 
     protected Contract() {}
 
@@ -114,9 +117,9 @@ public class Contract {
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
-    public com.educonnect.order.domain.OrderItem getOrderItemReference() { return orderItemReference; }
+    public OrderItem getOrderItemReference() { return orderItemReference; }
 
-    public com.educonnect.user.domain.LearnerProfile getLearnerReference() { return learnerReference; }
+    public LearnerProfile getLearnerReference() { return learnerReference; }
 
-    public com.educonnect.tutor.domain.TutorProfile getTutorReference() { return tutorReference; }
+    public TutorProfile getTutorReference() { return tutorReference; }
 }

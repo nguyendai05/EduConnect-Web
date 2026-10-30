@@ -19,9 +19,8 @@
         <link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
         <link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
         <link rel="stylesheet" href="/css/pages/catalog/detail.css" th:href="@{/css/pages/catalog/detail.css}">
-
-<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
-</th:block>
+        <link rel="stylesheet" href="/css/pages/home.css" th:href="@{/css/pages/home.css}">
+    </th:block>
     <th:block th:fragment="headScripts">
         <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
         <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
@@ -30,7 +29,7 @@
     <th:block th:fragment="scripts">
     </th:block>
 </head>
-<body class="catalog-detail-page dat-render" th:fragment="content">
+<body th:fragment="content">
     <div class="user-shell">
         <th:block th:replace="~{fragments/header-user :: header(${active}, 'v2')}"></th:block>
         <main class="user-shell__main">
@@ -38,14 +37,25 @@
                 <h1>Dịch vụ và lớp học</h1>
                 <a class="button button--outline" th:href="@{/cart/index}">Danh sách đăng ký</a>
                 <p th:if="${offerings.empty}">Chưa có dịch vụ hoặc lớp học công khai</p>
-                <div class="catalog-options">
-                    <article class="card catalog-section" th:each="offering : ${offerings.content}">
-                        <h2 th:text="${offering.title}"></h2>
-                        <p th:text="${offering.tutorName}"></p>
-                        <p th:text="|${offering.subject} · ${offering.grade} · ${offering.deliveryMode}|"></p>
-                        <p th:text="|${offering.sessionCount} buổi × ${offering.durationMinutes} phút|"></p>
-                        <p th:text="${#numbers.formatDecimal(offering.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫ / buổi'}"></p>
-                        <a class="button button--primary" th:href="@{/catalog/detail(id=${offering.id})}">Xem chi tiết và đăng ký</a>
+                <div class="home-latest__grid" th:unless="${offerings.empty}">
+                    <article class="card home-offer-card" th:each="item : ${offerings.content}">
+                        <header class="home-offer-card__header">
+                            <span class="badge badge--info" th:text="${item.offeringType == T(com.educonnect.lesson.domain.OfferingType).GROUP_CLASS ? 'Lớp nhóm' : 'Dạy kèm 1-1'}">Dịch vụ 1 kèm 1</span>
+                        </header>
+                        <h2 class="home-offer-card__title" th:text="${item.title}">Toán 12 - Luyện thi THPT</h2>
+                        <p class="home-offer-card__tutor">
+                            Gia sư: <a th:href="@{/tutor/profile(id=${item.tutorId})}" th:text="${item.tutorName}">Gia sư</a>
+                        </p>
+                        <p class="home-offer-card__subject" th:text="|${item.subject} · ${item.grade}|"></p>
+                        <p class="home-offer-card__price">
+                            <strong th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}">160.005 ₫</strong>
+                            <span>/buổi</span>
+                        </p>
+                        <p class="home-offer-card__seats" th:if="${item.sessionCount != null}" th:text="'Khóa ' + ${item.sessionCount} + ' buổi · ' + ${item.durationMinutes} + ' phút/buổi'">Khóa 10 buổi · 90 phút/buổi</p>
+
+                        <div class="home-offer-card__actions">
+                            <a class="button button--primary button--medium home-offer-card__link" th:href="@{/catalog/detail(id=${item.id})}">Xem chi tiết</a>
+                        </div>
                     </article>
                 </div>
                 <nav class="catalog-pagination" aria-label="Phân trang dịch vụ">

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.Instant;
+import com.educonnect.user.domain.UserAccount;
 
 /** Mapping refund_status_history; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -36,11 +37,11 @@ public class RefundStatusHistory {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "refund_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.payment.domain.Refund refundReference;
+    private Refund refundReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "actor_user_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.user.domain.UserAccount actorUserReference;
+    private UserAccount actorUserReference;
 
     protected RefundStatusHistory() {}
 
@@ -66,7 +67,7 @@ public class RefundStatusHistory {
     public Instant getChangedAt() { return changedAt; }
     public void setChangedAt(Instant changedAt) { this.changedAt = changedAt; }
 
-    public com.educonnect.payment.domain.Refund getRefundReference() { return refundReference; }
+    public Refund getRefundReference() { return refundReference; }
 
-    public com.educonnect.user.domain.UserAccount getActorUserReference() { return actorUserReference; }
+    public UserAccount getActorUserReference() { return actorUserReference; }
 }

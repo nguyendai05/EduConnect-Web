@@ -5,6 +5,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.Instant;
+import com.educonnect.contract.domain.Contract;
+import com.educonnect.user.domain.LearnerProfile;
 
 /** Mapping enrollments; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -52,15 +54,15 @@ public class Enrollment {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "contract_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.contract.domain.Contract contractReference;
+    private Contract contractReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "offering_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.lesson.domain.Offering offeringReference;
+    private Offering offeringReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "learner_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.user.domain.LearnerProfile learnerReference;
+    private LearnerProfile learnerReference;
 
     protected Enrollment() {}
 
@@ -94,9 +96,9 @@ public class Enrollment {
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
-    public com.educonnect.contract.domain.Contract getContractReference() { return contractReference; }
+    public Contract getContractReference() { return contractReference; }
 
-    public com.educonnect.lesson.domain.Offering getOfferingReference() { return offeringReference; }
+    public Offering getOfferingReference() { return offeringReference; }
 
-    public com.educonnect.user.domain.LearnerProfile getLearnerReference() { return learnerReference; }
+    public LearnerProfile getLearnerReference() { return learnerReference; }
 }

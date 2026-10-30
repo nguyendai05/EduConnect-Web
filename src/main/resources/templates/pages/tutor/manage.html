@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, 'manage', ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Quản lý giảng dạy — Edu Connect</title>
 <th:block th:fragment="styles">
@@ -26,8 +26,6 @@
 <link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
 <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
 <link rel="stylesheet" href="/css/pages/tutor/manage.css" th:href="@{/css/pages/tutor/manage.css}">
-
-<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 
@@ -44,7 +42,7 @@
 </th:block>
 </head>
 
-<body class="tutor-manage-page dat-render" th:fragment="content">
+<body class="tutor-manage-page" th:fragment="content">
 <a class="tutor-manage__skip-link" href="#tutor-manage-main">Đến nội dung chính</a>
 <div class="user-shell" data-component="user-shell">
   <th:block th:replace="~{fragments/header-user :: header(${active}, 'v12')}"></th:block>
@@ -53,18 +51,20 @@
       <header class="page-header tutor-manage__header">
         <div class="page-header__title-block">
           <h1 class="page-header__title">Quản lý giảng dạy</h1>
-          <p class="page-header__description">Quản lý dịch vụ, lớp nhóm và lịch giảng dạy của bạn.</p>
         </div>
-        <div class="page-header__actions"><a class="button button--outline" th:href="@{/invitation/negotiation}">Lời mời nhận</a><a class="button button--primary" th:if="${dbReady}" th:href="@{/tutor/manage} + '#tm-editor'">Thêm dịch vụ / lớp</a></div>
+        <a class="button button--primary" th:if="${dbReady}" th:href="@{/tutor/manage(create=1)}" data-tm-open-editor>Thêm khóa học</a>
       </header>
       <p class="alert alert--success" role="status" th:if="${success}" th:text="${success}"></p>
+      <p class="alert alert--success" role="status" th:if="${message}" th:text="${message}"></p>
+      <p class="alert alert--error" role="alert" th:if="${error != null and error instanceof T(java.lang.String)}" th:text="${error}"></p>
       <div class="alert alert--error" role="alert" th:if="${pageError}">
         <p th:text="${pageError}"></p><a th:href="@{/tutor/manage}">Tải lại trang quản lý</a>
       </div>
       <div class="tabs tabs--contained tutor-manage__tabs" data-tabs>
         <div class="tabs__list" role="tablist" aria-label="Các mục quản lý của gia sư">
-          <button class="tabs__tab" type="button" role="tab" id="tm-tab-offerings" aria-selected="true" aria-controls="tm-panel-offerings">Dịch vụ &amp; lớp nhóm</button>
+          <button class="tabs__tab" type="button" role="tab" id="tm-tab-offerings" aria-selected="true" aria-controls="tm-panel-offerings">Khóa học</button>
           <button class="tabs__tab" type="button" role="tab" id="tm-tab-orders" aria-selected="false" aria-controls="tm-panel-orders" tabindex="-1">Đơn đăng ký</button>
+          <button class="tabs__tab" type="button" role="tab" id="tm-tab-attendance" aria-selected="false" aria-controls="tm-panel-attendance" tabindex="-1">Điểm danh</button>
           <button class="tabs__tab" type="button" role="tab" id="tm-tab-revenue" aria-selected="false" aria-controls="tm-panel-revenue" tabindex="-1">Doanh thu</button>
         </div>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-offerings" aria-labelledby="tm-tab-offerings">
@@ -75,7 +75,7 @@
             <label class="form-field">Loại
               <select class="select-control select-control--native" th:field="*{type}">
                 <option value="">Tất cả</option>
-                <option value="SERVICE">Dịch vụ</option>
+                <option value="SERVICE">Dạy kèm 1-1</option>
                 <option value="GROUP_CLASS">Lớp nhóm</option>
               </select>
             </label>
@@ -92,16 +92,16 @@
             </label>
             <button class="button button--outline" type="submit">Lọc danh sách</button>
           </form>
-          <p class="tutor-manage__count" th:if="${dbReady}" th:text="${offerings.size() + ' dịch vụ/lớp phù hợp'}"></p>
+          <p class="tutor-manage__count" th:if="${dbReady}" th:text="${offerings.size() + ' khóa học phù hợp'}"></p>
           <div class="table-frame" th:if="${!offerings.isEmpty()}">
-            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách dịch vụ và lớp nhóm" tabindex="0">
+            <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách khóa học" tabindex="0">
               <table class="table table--review tutor-manage__table">
-                <caption class="sr-only">Dịch vụ và lớp của gia sư đang đăng nhập</caption>
-                <thead><tr><th scope="col">Dịch vụ / lớp</th><th scope="col">Lịch &amp; thông tin</th><th scope="col">Giá mỗi buổi</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead>
+                <caption class="sr-only">Khóa học của gia sư đang đăng nhập</caption>
+                <thead><tr><th scope="col">Khóa học</th><th scope="col">Lịch &amp; thông tin</th><th scope="col">Giá mỗi buổi</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead>
                 <tbody>
                   <tr th:each="item : ${offerings}">
                     <td><strong th:text="${item.title}"></strong><small class="tm-muted" th:text="${item.publicCode}"></small>
-                      <span th:text="${item.offeringType.name() == 'SERVICE' ? 'Dịch vụ' : 'Lớp nhóm'}"></span>
+                      <span th:text="${item.offeringType.name() == 'SERVICE' ? 'Dạy kèm 1-1' : 'Lớp nhóm'}"></span>
                       <small class="tm-muted" th:text="${item.subject + ' · ' + item.grade}"></small>
                       <details class="tm-details"><summary>Mô tả &amp; điều khoản</summary><p class="tm-description" th:text="${item.description}"></p><p class="tm-description" th:text="${item.termsText}"></p></details>
                     </td>
@@ -130,72 +130,15 @@
             </div>
           </div>
           <div class="empty-state" th:if="${dbReady and offerings.isEmpty()}">
-            <h2 class="empty-state__title">Chưa có dịch vụ hoặc lớp phù hợp</h2>
-            <p class="empty-state__description">Tạo bản nháp mới hoặc thay đổi bộ lọc để xem các dịch vụ của bạn.</p>
+            <h2 class="empty-state__title">Chưa có khóa học phù hợp</h2>
+            <p class="empty-state__description">Tạo bản nháp mới hoặc thay đổi bộ lọc để xem các khóa học của bạn.</p>
           </div>
-          <section class="card" id="tm-editor" th:if="${dbReady}">
-            <header class="card__header">
-              <h2 class="card__title" th:text="${editingId == null ? 'Tạo dịch vụ / lớp nhóm' : 'Chỉnh sửa dịch vụ / lớp nhóm'}"></h2>
-              <p class="card__description" th:if="${!publishedEdit}">Lưu thành bản nháp trước khi gửi duyệt. Gửi duyệt chưa làm dịch vụ xuất hiện công khai.</p>
-              <p class="alert alert--warning" role="note" th:if="${publishedEdit}">Bạn đang sửa dịch vụ đã công khai. Khi lưu, dịch vụ sẽ tạm ngừng công khai và chuyển sang chờ duyệt lại. Đơn và hợp đồng đã có vẫn giữ giá, điều khoản đã chốt.</p>
-            </header>
-            <form class="card__body tutor-manage__form" method="post" th:object="${offeringRequest}"
-                  th:action="${editingId == null} ? @{/tutor/manage/offerings} : @{/tutor/manage/offerings/{id}(id=${editingId})}" data-tm-form data-tm-submit>
-              <input type="hidden" th:field="*{requestKey}"><input type="hidden" th:field="*{version}">
-              <div class="alert alert--error" role="alert" th:if="${#fields.hasAnyErrors()}">
-                <p>Chưa lưu được. Hãy kiểm tra dữ liệu:</p><ul><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul>
-              </div>
-              <div class="tutor-manage__form-grid">
-                <label class="form-field">Loại
-                  <input type="hidden" th:if="${editingId != null}" name="offeringType" th:value="*{offeringType}">
-                  <select class="select-control select-control--native" th:field="*{offeringType}" th:disabled="${editingId != null}" data-tm-type-select>
-                    <option value="SERVICE">Dịch vụ</option><option value="GROUP_CLASS">Lớp nhóm</option>
-                  </select>
-                </label>
-                <label class="form-field">Tiêu đề <input class="tm-control" th:field="*{title}" required maxlength="220" th:errorclass="tm-invalid"></label>
-                <label class="form-field">Môn học <select class="select-control select-control--native" th:field="*{subjectId}" required><option value="">Chọn môn</option><option th:each="o : ${options.subjects}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
-                <label class="form-field">Cấp học <select class="select-control select-control--native" th:field="*{gradeLevelId}" required><option value="">Chọn cấp học</option><option th:each="o : ${options.grades}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
-                <label class="form-field">Khu vực <select class="select-control select-control--native" th:field="*{areaId}" required><option value="">Chọn khu vực</option><option th:each="o : ${options.areas}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
-                <label class="form-field">Hình thức <select class="select-control select-control--native" th:field="*{deliveryModeId}" required><option value="">Chọn hình thức</option><option th:each="o : ${options.modes}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
-                <label class="form-field">Giá mỗi buổi (VND) <input class="tm-control" type="number" th:field="*{unitPrice}" min="1" step="1" required th:errorclass="tm-invalid"></label>
-                <label class="form-field">Số buổi trong gói <input class="tm-control" type="number" th:field="*{sessionCount}" min="1" max="32767" step="1" required></label>
-                <label class="form-field">Thời lượng mỗi buổi (phút) <input class="tm-control" type="number" th:field="*{durationMinutes}" min="1" max="32767" step="1" required></label>
-              </div>
-              <fieldset class="tm-group-fields" data-tm-group-fields>
-                <legend>Thông tin lớp nhóm</legend><p class="tm-muted">Chỉ bắt buộc khi chọn lớp nhóm.</p>
-                <div class="tutor-manage__form-grid">
-                  <label class="form-field">Sức chứa <input class="tm-control" type="number" th:field="*{capacity}" min="1" step="1"></label>
-                  <label class="form-field">Ngày bắt đầu <input class="tm-control" type="date" th:field="*{startsOn}"></label>
-                  <label class="form-field">Ngày kết thúc <input class="tm-control" type="date" th:field="*{endsOn}"></label>
-                </div>
-              </fieldset>
-              <label class="form-field">Mô tả <textarea class="tm-control" th:field="*{description}" rows="4" required maxlength="10000"></textarea></label>
-              <label class="form-field">Điều khoản dịch vụ <textarea class="tm-control" th:field="*{termsText}" rows="4" required maxlength="10000"></textarea></label>
-              <fieldset class="tm-schedule">
-                <legend>Lịch học hằng tuần</legend>
-                <p class="tm-muted">Các khung giờ trong cùng ngày không được trùng nhau. Tất cả khung lịch dùng cùng múi giờ.</p>
-                <div data-tm-slots>
-                  <div class="tm-slot" th:each="slot, row : *{slots}" data-tm-slot>
-                    <label class="form-field">Ngày học <select class="select-control select-control--native" th:field="*{slots[__${row.index}__].weekday}" data-slot-field="weekday" required>
-                      <option value="">Chọn ngày</option><option value="1">Thứ 2</option><option value="2">Thứ 3</option><option value="3">Thứ 4</option><option value="4">Thứ 5</option><option value="5">Thứ 6</option><option value="6">Thứ 7</option><option value="7">Chủ nhật</option>
-                    </select></label>
-                    <label class="form-field">Bắt đầu <input class="tm-control" type="time" th:field="*{slots[__${row.index}__].startTime}" data-slot-field="startTime" required></label>
-                    <label class="form-field">Kết thúc <input class="tm-control" type="time" th:field="*{slots[__${row.index}__].endTime}" data-slot-field="endTime" required></label>
-                    <label class="form-field">Múi giờ <input class="tm-control" th:field="*{slots[__${row.index}__].timeZone}" data-slot-field="timeZone" required maxlength="64"></label>
-                    <button class="button button--outline" type="button" data-tm-remove-slot>Xóa khung giờ</button>
-                  </div>
-                </div>
-                <button class="button button--outline" type="button" data-tm-add-slot>Thêm khung giờ</button>
-              </fieldset>
-              <div class="tutor-manage__row-actions">
-                <button class="button button--primary" type="submit" th:text="${publishedEdit ? 'Lưu và gửi duyệt lại' : (editingId == null ? 'Lưu bản nháp' : 'Lưu thay đổi')}"></button>
-                <a class="button button--outline" th:href="@{/tutor/manage}">Hủy / tạo mới</a>
-              </div>
-            </form>
-          </section>
         </section>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-orders" aria-labelledby="tm-tab-orders" hidden>
-          <div class="empty-state"><h2 class="empty-state__title">Đơn đăng ký</h2><p class="empty-state__description">Chưa có dữ liệu đơn được kết nối. Mục này sẽ cập nhật sau khi hoàn tất phần giao dịch.</p></div>
+          <th:block th:replace="~{fragments/tutor-orders :: panel}"></th:block>
+        </section>
+        <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-attendance" aria-labelledby="tm-tab-attendance" hidden>
+          <th:block th:replace="~{fragments/tutor-attendance :: panel}"></th:block>
         </section>
         <section class="tabs__panel tutor-manage__panel" role="tabpanel" id="tm-panel-revenue" aria-labelledby="tm-tab-revenue" hidden>
           <section class="alert alert--contextual tutor-manage__revenue-note" aria-labelledby="tm-revenue-note-title">
@@ -208,6 +151,78 @@
           <div class="empty-state"><h2 class="empty-state__title">Doanh thu</h2><p class="empty-state__description">Chưa có dữ liệu doanh thu được kết nối. Biểu đồ sẽ hiển thị khi dữ liệu thống kê sẵn sàng.</p></div>
         </section>
       </div>
+      <dialog class="modal tm-modal" id="tm-editor-modal" th:if="${dbReady}" th:classappend="${editingId != null} ? 'is-editing'" aria-labelledby="tm-editor-title">
+        <div class="modal__surface">
+          <header class="modal__header">
+            <div class="modal__heading"><h2 id="tm-editor-title" th:text="${editingId == null ? 'Tạo khóa học' : 'Chỉnh sửa khóa học'}"></h2></div>
+            <button class="modal__close" type="button" data-modal-close aria-label="Đóng hộp thoại"><span class="modal__close-icon" aria-hidden="true"></span></button>
+          </header>
+          <div class="modal__body">
+            <p class="tm-muted" th:if="${!publishedEdit}">Lưu thành bản nháp trước khi gửi duyệt. Gửi duyệt chưa làm khóa học xuất hiện công khai.</p>
+            <p class="alert alert--warning" role="note" th:if="${publishedEdit}">Bạn đang sửa khóa học đã công khai. Khi lưu, khóa học sẽ tạm ngừng công khai và chuyển sang chờ duyệt lại. Đơn và hợp đồng đã có vẫn giữ giá, điều khoản đã chốt.</p>
+                <form class="tutor-manage__form" method="post" th:object="${offeringRequest}"
+                      th:action="${editingId == null} ? @{/tutor/manage/offerings} : @{/tutor/manage/offerings/{id}(id=${editingId})}" data-tm-form data-tm-submit>
+                  <input type="hidden" th:field="*{requestKey}"><input type="hidden" th:field="*{version}">
+                  <span hidden data-tm-has-errors th:if="${#fields.hasAnyErrors()}"></span>
+                  <div class="alert alert--error" role="alert" th:if="${#fields.hasAnyErrors()}">
+                    <p>Chưa lưu được. Hãy kiểm tra dữ liệu:</p><ul><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul>
+                  </div>
+                  <div class="tutor-manage__form-grid">
+                    <label class="form-field">Loại
+                      <input type="hidden" th:if="${editingId != null}" name="offeringType" th:value="*{offeringType}">
+                      <select class="select-control select-control--native" th:field="*{offeringType}" th:disabled="${editingId != null}" data-tm-type-select>
+                        <option value="SERVICE">Dạy kèm 1-1</option><option value="GROUP_CLASS">Lớp nhóm</option>
+                      </select>
+                    </label>
+                    <label class="form-field">Tiêu đề <input class="tm-control" th:field="*{title}" required maxlength="220" th:errorclass="tm-invalid"></label>
+                    <label class="form-field">Môn học
+                      <input class="tm-control" th:field="*{subjectName}" list="tm-subject-list" required maxlength="120" placeholder="Chọn gợi ý hoặc tự nhập môn" autocomplete="off">
+                      <datalist id="tm-subject-list"><option th:each="o : ${options.subjects}" th:value="${o.label}"></option></datalist>
+                    </label>
+                    <label class="form-field">Cấp học
+                      <input class="tm-control" th:field="*{gradeLevelName}" list="tm-grade-list" required maxlength="120" placeholder="Chọn gợi ý hoặc tự nhập cấp học" autocomplete="off">
+                      <datalist id="tm-grade-list"><option th:each="o : ${options.grades}" th:value="${o.label}"></option></datalist>
+                    </label>
+                    <label class="form-field">Khu vực <select class="select-control select-control--native" th:field="*{areaId}" required><option value="">Chọn khu vực</option><option th:each="o : ${options.areas}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
+                    <label class="form-field">Hình thức <select class="select-control select-control--native" th:field="*{deliveryModeId}" required><option value="">Chọn hình thức</option><option th:each="o : ${options.modes}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
+                    <label class="form-field">Giá mỗi buổi (VND) <input class="tm-control" type="number" th:field="*{unitPrice}" min="1" step="1" required th:errorclass="tm-invalid"></label>
+                    <label class="form-field">Số buổi trong gói <input class="tm-control" type="number" th:field="*{sessionCount}" min="1" max="32767" step="1" required></label>
+                    <label class="form-field">Thời lượng mỗi buổi (phút) <input class="tm-control" type="number" th:field="*{durationMinutes}" min="1" max="32767" step="1" required></label>
+                  </div>
+                  <fieldset class="tm-group-fields" data-tm-group-fields>
+                    <legend>Thông tin lớp nhóm</legend><p class="tm-muted">Chỉ bắt buộc khi chọn lớp nhóm.</p>
+                    <div class="tutor-manage__form-grid">
+                      <label class="form-field">Sức chứa <input class="tm-control" type="number" th:field="*{capacity}" min="1" step="1"></label>
+                      <label class="form-field">Ngày bắt đầu <input class="tm-control" type="date" th:field="*{startsOn}"></label>
+                      <label class="form-field">Ngày kết thúc <input class="tm-control" type="date" th:field="*{endsOn}"></label>
+                    </div>
+                  </fieldset>
+                  <label class="form-field">Mô tả <textarea class="tm-control" th:field="*{description}" rows="4" required maxlength="10000"></textarea></label>
+                  <label class="form-field">Điều khoản khóa học <textarea class="tm-control" th:field="*{termsText}" rows="4" required maxlength="10000"></textarea></label>
+                  <fieldset class="tm-schedule">
+                    <legend>Lịch học hằng tuần</legend>
+                    <p class="tm-muted">Các khung giờ trong cùng ngày không được trùng nhau. Tất cả khung lịch dùng cùng múi giờ.</p>
+                    <div data-tm-slots>
+                      <div class="tm-slot" th:each="slot, row : *{slots}" data-tm-slot>
+                        <label class="form-field">Ngày học <select class="select-control select-control--native" th:field="*{slots[__${row.index}__].weekday}" data-slot-field="weekday" required>
+                          <option value="">Chọn ngày</option><option value="1">Thứ 2</option><option value="2">Thứ 3</option><option value="3">Thứ 4</option><option value="4">Thứ 5</option><option value="5">Thứ 6</option><option value="6">Thứ 7</option><option value="7">Chủ nhật</option>
+                        </select></label>
+                        <label class="form-field">Bắt đầu <input class="tm-control" type="time" th:field="*{slots[__${row.index}__].startTime}" data-slot-field="startTime" required></label>
+                        <label class="form-field">Kết thúc <input class="tm-control" type="time" th:field="*{slots[__${row.index}__].endTime}" data-slot-field="endTime" required></label>
+                        <label class="form-field">Múi giờ <input class="tm-control" th:field="*{slots[__${row.index}__].timeZone}" data-slot-field="timeZone" required maxlength="64"></label>
+                        <button class="button button--outline" type="button" data-tm-remove-slot>Xóa khung giờ</button>
+                      </div>
+                    </div>
+                    <button class="button button--outline" type="button" data-tm-add-slot>Thêm khung giờ</button>
+                  </fieldset>
+                  <div class="tutor-manage__row-actions">
+                    <button class="button button--primary" type="submit" th:text="${publishedEdit ? 'Lưu và gửi duyệt lại' : (editingId == null ? 'Lưu bản nháp' : 'Lưu thay đổi')}"></button>
+                    <button class="button button--outline" type="button" data-modal-close>Hủy</button>
+                  </div>
+                </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   </main>
   <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v2')}"></th:block>

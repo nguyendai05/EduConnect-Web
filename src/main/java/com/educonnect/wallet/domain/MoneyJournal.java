@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.Instant;
+import com.educonnect.contract.domain.Contract;
+import com.educonnect.payment.domain.Payment;
+import com.educonnect.payment.domain.Refund;
 
 /** Mapping money_journals; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -47,23 +50,23 @@ public class MoneyJournal {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false)
-    private com.educonnect.payment.domain.Payment paymentReference;
+    private Payment paymentReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "contract_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false)
-    private com.educonnect.contract.domain.Contract contractReference;
+    private Contract contractReference;
 
     @OneToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "release_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false)
-    private com.educonnect.wallet.domain.Release releaseReference;
+    private Release releaseReference;
 
     @OneToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "refund_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false)
-    private com.educonnect.payment.domain.Refund refundReference;
+    private Refund refundReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "wallet_user_id", referencedColumnName = "user_id", nullable = true, insertable = false, updatable = false)
-    private com.educonnect.wallet.domain.Wallet walletUserReference;
+    private Wallet walletUserReference;
 
     protected MoneyJournal() {}
 
@@ -98,13 +101,13 @@ public class MoneyJournal {
     public Instant getPostedAt() { return postedAt; }
     public void setPostedAt(Instant postedAt) { this.postedAt = postedAt; }
 
-    public com.educonnect.payment.domain.Payment getPaymentReference() { return paymentReference; }
+    public Payment getPaymentReference() { return paymentReference; }
 
-    public com.educonnect.contract.domain.Contract getContractReference() { return contractReference; }
+    public Contract getContractReference() { return contractReference; }
 
-    public com.educonnect.wallet.domain.Release getReleaseReference() { return releaseReference; }
+    public Release getReleaseReference() { return releaseReference; }
 
-    public com.educonnect.payment.domain.Refund getRefundReference() { return refundReference; }
+    public Refund getRefundReference() { return refundReference; }
 
-    public com.educonnect.wallet.domain.Wallet getWalletUserReference() { return walletUserReference; }
+    public Wallet getWalletUserReference() { return walletUserReference; }
 }

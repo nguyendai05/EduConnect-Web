@@ -20,11 +20,9 @@
 <link rel="stylesheet" href="/css/pages/job/detail.css" th:href="@{/css/pages/job/detail.css}">
 <link rel="stylesheet" th:href="@{/css/components/data-display/card.css}">
 <link rel="stylesheet" th:href="@{/css/pages/job/live.css}">
-
+<link rel="stylesheet" th:href="@{/css/components/form/input.css}">
 <link rel="stylesheet" th:href="@{/css/components/form/select.css}">
-
-
-<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
+<link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -35,14 +33,14 @@
 
 </th:block>
 </head>
-<body class="detail-page dat-render" th:fragment="content"><div class="user-shell">
+<body th:fragment="content"><div class="user-shell">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
-<main class="user-shell__main"><div class="user-shell__content job-live"><nav class="breadcrumb dat-breadcrumb" aria-label="Đường dẫn"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/job/discover}">Tin tìm gia sư</a></li><li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/job/my-job}" th:if="${canPostJob}">Tin của tôi</a></li></ol></nav><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><th:block th:if="${job != null}">
-  <header class="detail-hero"><div><div class="detail-hero__meta"><span class="badge badge--info" th:text="${job.statusLabel}"></span><span class="dat-muted" th:text="${job.publicCode}"></span></div><h1 th:text="${job.title}"></h1><p class="dat-muted" th:text="|${job.learnerName} · ${job.createdAtLabel} (UTC+7)|"></p></div></header><div class="detail-layout"><div class="detail-main">
+<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation('none')}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><th:block th:if="${job != null}">
+  <div class="job-live-layout"><div class="job-live-stack">
     <th:block th:replace="~{pages/job/fragments :: summary(${job})}"></th:block>
     <th:block th:replace="~{pages/job/fragments :: selection(${job})}"></th:block>
     <section class="card job-live-panel" th:if="${job.owner and job.reviewReason != null}"><h2>Lý do quyết định duyệt gần nhất</h2><p class="job-live-copy" th:text="${job.reviewReason}"></p></section>
-  </div><aside class="detail-sidebar"><section class="card job-live-panel">
+  </div><aside class="card job-live-panel">
     <h2>Ứng tuyển và quản lý</h2>
     <p th:text="|${job.applicationCount} lượt ứng tuyển|"></p>
     <div class="job-live-actions" th:if="${job.owner}"><a class="button button--primary" th:href="@{/job/applicants(id=${job.id})}">Xem ứng viên</a><a class="button button--outline" th:if="${job.canEdit}" th:href="@{/job/create(id=${job.id})}">Sửa tin</a></div>
@@ -57,10 +55,19 @@
     </form>
     <section class="job-live-stack" th:if="${ownApplication != null}"><h3>Ứng tuyển của bạn</h3><strong th:text="${ownApplication.statusLabel}"></strong><p th:text="${#numbers.formatDecimal(ownApplication.proposedUnitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></p><p class="job-live-copy" th:text="${ownApplication.message}"></p>
       <form method="post" th:if="${ownApplication.canWithdraw}" th:action="@{/job/{id}/applications/{app}/action(id=${job.id},app=${ownApplication.id})}" data-job-live-form><input type="hidden" name="jobVersion" th:value="${job.version}"><input type="hidden" name="applicationVersion" th:value="${ownApplication.version}"><button class="button button--outline" name="action" value="withdraw" type="submit">Rút ứng tuyển</button></form>
+      <details class="job-live-stack" th:if="${ownApplication.canEdit}"><summary>Sửa giá và lời nhắn</summary>
+        <form method="post" class="job-live-stack" th:action="@{/job/{id}/applications/{app}/update(id=${job.id},app=${ownApplication.id})}" data-job-live-form>
+          <input type="hidden" name="jobVersion" th:value="${job.version}"><input type="hidden" name="applicationVersion" th:value="${ownApplication.version}">
+          <label class="form-field">Giá đề xuất mỗi buổi (VND)<span class="input-control"><input class="input-control__input" type="number" name="proposedUnitPrice" th:value="${ownApplication.proposedUnitPrice}" min="1" step="1" required></span></label>
+          <label class="form-field">Đề xuất và điều kiện bổ sung<textarea class="textarea-control" name="message" rows="5" maxlength="5000" required th:text="${ownApplication.message}"></textarea></label>
+          <button class="button button--primary" type="submit">Lưu đề xuất mới</button>
+        </form>
+      </details>
     </section>
+    <a class="button button--outline" th:if="${!job.owner and (job.canApply or ownApplication != null)}" th:href="@{/chat/with(learner=${job.learnerId})}">Nhắn tin với người đăng tin</a>
     <p class="job-live-muted" th:if="${!job.owner and !job.canApply and ownApplication == null}">Bạn cần tài khoản gia sư đã được duyệt và tin đang nhận ứng tuyển để gửi đề xuất.</p>
     <a class="button button--outline" th:if="${currentUser == null}" th:href="@{/auth/login}">Đăng nhập</a>
-  </section></aside></div>
+  </aside></div>
 </th:block></div></main>
 <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
 </div></body></html>

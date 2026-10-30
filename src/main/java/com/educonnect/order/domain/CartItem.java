@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.Instant;
+import com.educonnect.lesson.domain.Offering;
 
 /** Mapping cart_items; maintainer: Huy. Không chứa logic nghiệp vụ. */
 @Entity
@@ -33,11 +34,11 @@ public class CartItem {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.order.domain.Cart cartReference;
+    private Cart cartReference;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "offering_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private com.educonnect.lesson.domain.Offering offeringReference;
+    private Offering offeringReference;
 
     protected CartItem() {}
 
@@ -60,7 +61,7 @@ public class CartItem {
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
-    public com.educonnect.order.domain.Cart getCartReference() { return cartReference; }
+    public Cart getCartReference() { return cartReference; }
 
-    public com.educonnect.lesson.domain.Offering getOfferingReference() { return offeringReference; }
+    public Offering getOfferingReference() { return offeringReference; }
 }

@@ -1,4 +1,8 @@
 # Profile DB development; secret phải cung cấp qua môi trường, không commit giá trị thật.
+server:
+  # Chạy sau ngrok/proxy: dùng X-Forwarded-* để chuyển hướng đúng https và đúng tên miền.
+  forward-headers-strategy: framework
+
 spring:
   mail:
     host: ${EDUCONNECT_MAIL_HOST:smtp.resend.com}
@@ -14,6 +18,11 @@ spring:
       "[mail.smtp.timeout]": 5000
       "[mail.smtp.writetimeout]": 5000
   datasource:
+    hikari:
+      # Mặc định 10 kết nối là chật khi nhiều tab cùng hỏi trạng thái; có phát hiện kết nối bị giữ quá lâu để dễ tìm nơi rò.
+      maximum-pool-size: ${EDUCONNECT_DB_POOL_SIZE:20}
+      connection-timeout: 10000
+      leak-detection-threshold: 20000
     url: ${EDUCONNECT_DB_URL:jdbc:mysql://127.0.0.1:3306/educonnect_dev?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true}
     username: ${EDUCONNECT_DB_USERNAME:root}
     password: ${EDUCONNECT_DB_PASSWORD:}
@@ -48,3 +57,10 @@ app:
     resend-cooldown: 60s
     max-attempts: 5
     max-sends-per-hour: 5
+  payos:
+    client-id: ${EDUCONNECT_PAYOS_CLIENT_ID:}
+    api-key: ${EDUCONNECT_PAYOS_API_KEY:}
+    checksum-key: ${EDUCONNECT_PAYOS_CHECKSUM_KEY:}
+    public-base-url: ${EDUCONNECT_PUBLIC_BASE_URL:http://localhost:8080}
+    return-base-url: ${EDUCONNECT_PAYOS_RETURN_BASE_URL:}
+    link-ttl: ${EDUCONNECT_PAYOS_LINK_TTL:15m}

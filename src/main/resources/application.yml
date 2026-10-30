@@ -1,6 +1,10 @@
 spring:
   application:
     name: educonnect
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
   profiles:
     default: db-dev
   thymeleaf:
@@ -22,5 +26,8 @@ server:
       force: true
 
 app:
+  storage:
+    # Minh chứng riêng tư (bằng cấp, chứng chỉ) ghi ngoài static; chỉ đọc qua /files/private/{id} sau khi kiểm quyền.
+    private-dir: ${EDUCONNECT_PRIVATE_STORAGE_DIR:storage/private}
   ui-preview:
     enabled: true

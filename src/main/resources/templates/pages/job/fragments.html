@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
-<nav th:fragment="navigation" class="job-live-nav" aria-label="Tin tìm gia sư">
-  <a class="button button--outline" th:href="@{/job/discover}">Khám phá tin</a>
-  <a class="button button--outline" th:if="${canPostJob}" th:href="@{/job/my-job}">Tin của tôi</a>
-  <a class="button button--primary" th:if="${canPostJob}" th:href="@{/job/create}">Đăng tin</a>
+<nav th:fragment="navigation(tab)" class="job-live-nav" aria-label="Tin tìm gia sư">
+  <a class="button" th:classappend="${tab == 'discover'} ? 'button--primary' : 'button--outline'" th:attr="aria-current=${tab == 'discover'} ? 'page'" th:href="@{/job/discover}">Khám phá tin</a>
+  <a class="button" th:if="${canPostJob}" th:classappend="${tab == 'mine'} ? 'button--primary' : 'button--outline'" th:attr="aria-current=${tab == 'mine'} ? 'page'" th:href="@{/job/my-job}">Tin của tôi</a>
+  <a class="button" th:if="${canPostJob}" th:classappend="${tab == 'create'} ? 'button--primary' : 'button--outline'" th:attr="aria-current=${tab == 'create'} ? 'page'" th:href="@{/job/create}">Đăng tin</a>
 </nav>
 <section th:fragment="messages" class="job-live-messages" th:if="${success != null or pageError != null}">
   <div class="alert alert--success" th:if="${success != null}" role="status"><p th:text="${success}"></p></div>

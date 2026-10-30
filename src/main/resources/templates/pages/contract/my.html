@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<head>
+<title>Hợp đồng của tôi — Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}"/>
+<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}"/>
+<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}"/>
+<link rel="stylesheet" href="/css/components/navigation/tabs.css" th:href="@{/css/components/navigation/tabs.css}"/>
+<link rel="stylesheet" href="/css/components/navigation/pagination.css" th:href="@{/css/components/navigation/pagination.css}"/>
+<link rel="stylesheet" href="/css/components/form/search-input.css" th:href="@{/css/components/form/search-input.css}"/>
+<link rel="stylesheet" href="/css/components/form/select.css" th:href="@{/css/components/form/select.css}"/>
+<link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}"/>
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/table.css" th:href="@{/css/components/data-display/table.css}"/>
+<link rel="stylesheet" href="/css/components/data-display/stat-card.css" th:href="@{/css/components/data-display/stat-card.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
+<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}"/>
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}"/>
+<link rel="stylesheet" href="/css/pages/order/history.css" th:href="@{/css/pages/order/history.css}"/>
+<link rel="stylesheet" href="/css/pages/contract/contract-detail.css" th:href="@{/css/pages/contract/contract-detail.css}"/>
+</th:block>
+<th:block th:fragment="headScripts"></th:block>
+<th:block th:fragment="scripts">
+<script src="/js/pages/contract/my.js" defer th:src="@{/js/pages/contract/my.js}"></script>
+</th:block>
+</head>
+<body class="order-history-page" th:fragment="content">
+    <div class="user-shell" data-component="user-shell">
+        <th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
+
+        <main class="user-shell__main" id="contract" tabindex="-1">
+            <div class="user-shell__content order-history">
+                <header class="page-header order-history__header">
+                    <div class="page-header__title-block">
+                        <h1 class="page-header__title">Hợp đồng của tôi</h1>
+                    </div>
+                </header>
+
+                <p class="alert alert--error order-history__notice" role="alert" th:if="${error != null}" th:text="${error}"></p>
+                <p class="alert alert--success order-history__notice" role="status" th:if="${message != null}" th:text="${message}"></p>
+
+                <section class="order-history__summary" aria-label="Tóm tắt hợp đồng" th:if="${list != null}">
+                    <article class="stat-card stat-card--compact order-history__metric">
+                        <div class="stat-card__header"><h2 class="order-history__metric-label">Tổng số hợp đồng</h2></div>
+                        <p class="order-history__metric-value"><strong class="stat-card__value" th:text="${list.all}">0</strong><span class="stat-card__unit">hợp đồng</span></p>
+                        <p class="stat-card__description">Tổng giá trị <span th:text="${#numbers.formatDecimal(list.totalValue, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></span>.</p>
+                    </article>
+                    <article class="stat-card stat-card--compact order-history__metric">
+                        <div class="stat-card__header"><h2 class="order-history__metric-label">Đang thực hiện</h2></div>
+                        <p class="order-history__metric-value"><strong class="stat-card__value" th:text="${list.active}">0</strong><span class="stat-card__unit">hợp đồng</span></p>
+                        <p class="stat-card__description">Đã thanh toán và đang trong quá trình học.</p>
+                    </article>
+                    <article class="stat-card stat-card--compact order-history__metric">
+                        <div class="stat-card__header"><h2 class="order-history__metric-label">Cần bạn xử lý</h2></div>
+                        <p class="order-history__metric-value"><strong class="stat-card__value" th:text="${list.needAction}">0</strong><span class="stat-card__unit">hợp đồng</span></p>
+                        <p class="stat-card__description">Chờ thanh toán, điểm danh hoặc xác nhận buổi học.</p>
+                    </article>
+                </section>
+
+                <section class="order-history__toolbar" aria-label="Lọc và tìm kiếm hợp đồng" th:if="${list != null}">
+                    <nav class="tabs tabs--contained" aria-label="Trạng thái hợp đồng">
+                        <div class="tabs__list">
+                            <a class="tabs__tab" th:classappend="${status == null} ? 'is-active'" th:href="@{/contract/my(q=${q})}">Tất cả <span class="tabs__badge" th:text="${list.all}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'AWAITING_PAYMENT'} ? 'is-active'" th:href="@{/contract/my(status=AWAITING_PAYMENT, q=${q})}">Chờ thanh toán <span class="tabs__badge" th:text="${list.count('AWAITING_PAYMENT')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'ACTIVE'} ? 'is-active'" th:href="@{/contract/my(status=ACTIVE, q=${q})}">Đang thực hiện <span class="tabs__badge" th:text="${list.count('ACTIVE')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'COMPLETED'} ? 'is-active'" th:href="@{/contract/my(status=COMPLETED, q=${q})}">Đã hoàn thành <span class="tabs__badge" th:text="${list.count('COMPLETED')}"></span></a>
+                            <a class="tabs__tab" th:classappend="${status?.name() == 'CANCELLED'} ? 'is-active'" th:href="@{/contract/my(status=CANCELLED, q=${q})}">Đã hủy <span class="tabs__badge" th:text="${list.count('CANCELLED')}"></span></a>
+                        </div>
+                    </nav>
+                    <form class="order-history__filters order-history__filters--simple" role="search" method="get" th:action="@{/contract/my}">
+                        <input type="hidden" name="status" th:value="${status}" th:if="${status != null}">
+                        <div class="search-input search-input--compact">
+                            <label class="sr-only" for="ct-search">Tìm kiếm hợp đồng</label>
+                            <input id="ct-search" type="search" name="q" th:value="${q}" placeholder="Tìm theo mã hợp đồng, nội dung, đối tác…" autocomplete="off" maxlength="200">
+                        </div>
+                        <button class="button button--primary" type="submit">Tìm</button>
+                    </form>
+                </section>
+
+                <div class="empty-state" th:if="${list == null or list.rows.empty}">
+                    <h2 class="empty-state__title">Không có hợp đồng nào</h2>
+                    <p class="empty-state__description">Hợp đồng xuất hiện ở đây sau khi bạn xác nhận đăng ký một khóa học, hoặc thử bỏ bớt bộ lọc.</p>
+                </div>
+
+                <section class="order-history__results" th:if="${list != null and !list.rows.empty}">
+                    <p class="order-history__results-heading"><span><strong th:text="${list.totalElements}"></strong> hợp đồng phù hợp</span></p>
+                    <div class="table-wrapper table-wrapper--flat" role="region" aria-label="Danh sách hợp đồng" tabindex="0">
+                        <table class="table table--review order-history__table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã hợp đồng</th><th scope="col">Nội dung</th><th scope="col">Đối tác</th>
+                                    <th scope="col">Trạng thái</th><th scope="col">Tiến độ</th><th scope="col">Tổng tiền</th><th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="c : ${list.rows}">
+                                    <th scope="row" th:text="${c.code}"></th>
+                                    <td th:text="${c.title}"></td>
+                                    <td><span th:text="${c.partnerName}"></span><br><small th:text="${c.viewerIsTutor ? 'Học viên' : 'Gia sư'}"></small></td>
+                                    <td><span class="badge" th:text="${c.statusLabel}"></span></td>
+                                    <td th:text="${c.doneSessions + ' / ' + c.totalSessions + ' buổi'}"></td>
+                                    <td class="table__amount" th:text="${#numbers.formatDecimal(c.total, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></td>
+                                    <td>
+                                        <div class="contract-row-actions">
+                                            <a class="icon-action icon-action--primary" th:if="${!c.viewerIsTutor and c.statusLabel == 'Chờ thanh toán'}" th:href="@{/payment/checkout(contract=${c.id})}" title="Thanh toán" aria-label="Thanh toán">
+                                                <img th:src="@{/assets/icons/wallet.svg}" alt="">
+                                            </a>
+                                            <form method="post" th:action="@{/contract/session/confirm}" th:if="${c.confirmSession != null}">
+                                                <input type="hidden" name="contract" th:value="${c.id}"><input type="hidden" name="session" th:value="${c.confirmSessionId}"><input type="hidden" name="back" value="my">
+                                                <button class="icon-action icon-action--primary" type="submit" th:title="${'Xác nhận buổi ' + c.confirmSession + ' đã học'}" th:aria-label="${'Xác nhận buổi ' + c.confirmSession + ' đã học'}">
+                                                    <img th:src="@{/assets/icons/check-circle.svg}" alt="">
+                                                </button>
+                                            </form>
+                                            <a class="icon-action" th:href="${c.viewerIsTutor} ? @{/contract/tutor-detail(contract=${c.id})} : @{/contract/student-detail(contract=${c.id})}" title="Xem chi tiết hợp đồng" aria-label="Xem chi tiết hợp đồng">
+                                                <img th:src="@{/assets/icons/mat.svg}" alt="">
+                                            </a>
+                                            <a class="icon-action" th:href="@{/contract/document(contract=${c.id})}" title="Xem nội dung hợp đồng" aria-label="Xem nội dung hợp đồng">
+                                                <img th:src="@{/assets/icons/receipt.svg}" alt="">
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav class="pagination pagination--table" aria-label="Phân trang hợp đồng" th:if="${list.totalPages > 1}">
+                        <p class="pagination__summary">Trang <strong th:text="${list.page + 1}"></strong> / <strong th:text="${list.totalPages}"></strong> · <strong th:text="${list.totalElements}"></strong> hợp đồng</p>
+                        <div class="pagination__controls">
+                            <a class="pagination__button pagination__button--wide" th:if="${list.hasPrevious()}" th:href="@{/contract/my(status=${status}, q=${q}, page=${list.page - 1})}">Trước</a>
+                            <a class="pagination__button pagination__button--wide" th:if="${list.hasNext()}" th:href="@{/contract/my(status=${status}, q=${q}, page=${list.page + 1})}">Sau</a>
+                        </div>
+                    </nav>
+                </section>
+            </div>
+        </main>
+
+        <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+    </div>
+    <th:block th:replace="${scripts}"></th:block>
+</body>
+</html>
