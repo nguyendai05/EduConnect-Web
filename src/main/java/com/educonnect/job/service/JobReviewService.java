@@ -82,6 +82,10 @@ public class JobReviewService {
     public Long review(AccountPrincipal principal, Long id, JobReviewRequest form) {
         var admin = access.require(principal, "ADMIN");
         access.validate(form);
+        String reason = form.getReason() == null || form.getReason().isBlank() ? null : form.getReason().strip();
+        if (!"approve".equals(form.getAction()) && (reason == null || reason.length() < 10)) {
+            throw JobService.invalid("Hãy nhập lý do từ chối (ít nhất 10 ký tự) để người đăng biết cần sửa gì.");
+        }
         var job = jobs.find(id, true);
         var target = "approve".equals(form.getAction()) ? JobPostStatus.OPEN : JobPostStatus.REJECTED;
         var previous = lookup.lastReviewLocked(id);
@@ -112,7 +116,7 @@ public class JobReviewService {
                 && Objects.equals(decision.previousVersion(), form.getVersion())
                 && Objects.equals(decision.resultingVersion(), job.getVersion())
                 && decision.action().equals(form.getAction())
-                && decision.reason().equals(form.getReason().strip());
+                && decision.reason().equals(form.getReason() == null ? "" : form.getReason().strip());
     }
 
     /**
@@ -124,8 +128,13 @@ public class JobReviewService {
         log.setActorUserId(adminId);
         log.setTargetUserId(job.getLearnerId());
         log.setActionCode("JOB_REVIEW");
-        log.setMetadata(Map.of("jobId", job.getId(), "previousVersion", previousVersion, "resultingVersion", job.getVersion(),
-                "decision", form.getAction(), "reason", form.getReason().strip()));
+        Map<String, Object> metadata = new java.util.LinkedHashMap<>();
+        metadata.put("jobId", job.getId());
+        metadata.put("previousVersion", previousVersion);
+        metadata.put("resultingVersion", job.getVersion());
+        metadata.put("decision", form.getAction());
+        if (form.getReason() != null && !form.getReason().isBlank()) metadata.put("reason", form.getReason().strip());
+        log.setMetadata(metadata);
         log.setCreatedAt(jobs.now());
         audits.saveAndFlush(log);
     }

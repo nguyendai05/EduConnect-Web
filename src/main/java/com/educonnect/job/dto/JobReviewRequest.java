@@ -18,7 +18,7 @@ public class JobReviewRequest {
     @NotBlank
     @Pattern(regexp = "approve|reject")
     private String action;
-    @NotBlank(message = "Nhập lý do quyết định duyệt tin.")
+    // Phê duyệt không cần lý do; từ chối bắt buộc có lý do (JobReviewService kiểm).
     @Size(max = 2000)
     private String reason;
 
