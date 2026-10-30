@@ -1,10 +1,12 @@
 package com.educonnect.tutor.web;
 
 import com.educonnect.lesson.service.OfferingProblem;
+import com.educonnect.common.exception.ServiceProblem;
 import com.educonnect.security.AccountPrincipal;
 import com.educonnect.web.PageModelAdvice;
 import com.educonnect.tutor.dto.TutorSearchRequest;
 import com.educonnect.tutor.service.TutorDiscoveryService;
+import com.educonnect.tutor.service.PublicTutorProfileService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.context.annotation.Profile;
@@ -19,13 +21,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-/** DAT-02: render cùng thiết kế prototype từ DTO công khai của Service hiện có. */
+/** DAT-02/DAI-02: tìm kiếm và hồ sơ gia sư công khai, mỗi URL có một handler khi chạy DB. */
 @Controller
 @Profile("db-dev")
 public class TutorDiscoveryPageController {
     private final TutorDiscoveryService tutors;
+    private final PublicTutorProfileService profiles;
 
-    public TutorDiscoveryPageController(TutorDiscoveryService tutors) { this.tutors = tutors; }
+    public TutorDiscoveryPageController(TutorDiscoveryService tutors, PublicTutorProfileService profiles) {
+        this.tutors = tutors;
+        this.profiles = profiles;
+    }
 
     @ModelAttribute
     void presentation(Model model, @AuthenticationPrincipal AccountPrincipal principal) {
@@ -60,9 +66,13 @@ public class TutorDiscoveryPageController {
     public String profile(@RequestParam(required = false) Long id,
                           @RequestParam(defaultValue = "0") int page,
                           Model model, HttpServletResponse response) {
+        if (id == null) {
+            response.setStatus(404);
+            return "pages/tutor/profile";
+        }
         try {
-            model.addAttribute("profile", tutors.profile(id, page, 12));
-        } catch (OfferingProblem problem) {
+            model.addAttribute("tutor", profiles.profile(id, page));
+        } catch (ServiceProblem problem) {
             response.setStatus(problem.getStatus().value());
             model.addAttribute("pageError", problem.getMessage());
         } catch (DataAccessException unavailable) {

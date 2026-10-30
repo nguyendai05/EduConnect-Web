@@ -10,7 +10,7 @@ Chủ luồng: Nguyễn Khắc Trường Đạt. Ngày 26/10/2026. Chỉ triển
 - Ràng buộc từ khóa tối đa 200 ký tự; giá nguyên VND không âm, min không lớn hơn max; ID dương; ISO weekday 1–7; giờ đầu/cuối phải đủ và tăng dần; lọc lịch cần múi giờ IANA. Trang bắt đầu từ 0, size 1–48, page tối đa 100000.
 - `tutor/repository/TutorDiscoveryRepository` dùng mapping hiện có qua EntityManager, tham số query được bind. Không tạo Entity hoặc JpaRepository trùng. Data và count dùng chung điều kiện lọc; sắp xếp và phân trang tại DB.
 - Kết quả nhóm theo gia sư, tổng đếm distinct gia sư. Giá thấp nhất/số dịch vụ được tính từ các dịch vụ khớp bộ lọc. Các điều kiện phải khớp cùng một dịch vụ, tránh ghép môn của dịch vụ này với giá của dịch vụ khác.
-- Lọc nhiều cấp học/ngày trong nhóm theo OR; các nhóm điều kiện kết hợp AND. Lọc giờ yêu cầu một khung lịch nằm trọn trong khoảng giờ chọn, cùng múi giờ và ngày tương ứng.
+- Cập nhật 30/10/2026: chọn nhiều cấp học yêu cầu gia sư có dịch vụ khớp đủ mọi cấp đã chọn (AND theo gia sư); mỗi cấp vẫn phải thỏa các bộ lọc môn, giá, khu vực, hình thức và lịch. Không chọn cấp thì không giới hạn cấp học. Nhiều ngày vẫn kết hợp OR; các nhóm điều kiện kết hợp AND. Lọc giờ yêu cầu một khung lịch nằm trọn trong khoảng giờ chọn, cùng múi giờ và ngày tương ứng.
 - Chỉ đọc dịch vụ PUBLISHED của gia sư APPROVED, tài khoản ACTIVE và email đã xác minh; không trả Entity/tài khoản/minh chứng riêng tư ra response.
 - Sắp xếp hỗ trợ `name`, `price-asc`, `price-desc`, đều có ID gia sư để giữ thứ tự ổn định. `newest`/`rating` chưa hỗ trợ, không âm thầm thay bằng tiêu chí khác.
 - `TutorDiscoveryService.search` trả `TutorSearchResponse`; `profile` chuẩn bị hồ sơ công khai tối thiểu và trang dịch vụ qua `TutorProfileResponse`. Không ghi hoặc sửa hồ sơ của Đại.

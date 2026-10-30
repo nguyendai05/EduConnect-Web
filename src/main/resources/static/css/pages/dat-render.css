@@ -114,11 +114,37 @@
 .dat-render .dat-applicant-identity { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
 .dat-render .dat-applicant-identity .avatar { flex: 0 0 auto; }
 .dat-render .invitation-section > h2 { font-size: var(--font-size-lg); }
+/* Public DAT-02 profile keeps the current public DTO and role-based actions.
+   These overrides apply only to this page, never to DAI-02 private profiles. */
+.tutor-public-profile.dat-render .pl { padding-block: 0; gap: var(--space-5); }
+.tutor-public-profile.dat-render .pl-layout { grid-template-columns: minmax(0, 2fr) minmax(19rem, 1fr); gap: var(--space-6); }
+.tutor-public-profile.dat-render .pl-stack { gap: var(--space-6); }
+.tutor-public-profile.dat-render .pl-card { border-radius: var(--radius-lg); box-shadow: none; }
+.tutor-public-profile.dat-render .pl-card > h2 { padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border); font-size: var(--font-size-lg); }
+.tutor-public-profile.dat-render .pl-card[aria-labelledby="tutor-name"] { padding: var(--space-8); background: var(--color-paper); }
+.tutor-public-profile.dat-render .pt-hero { gap: var(--space-3); }
+.tutor-public-profile.dat-render .pt-avatar { width: 6.5rem; height: 6.5rem; border-radius: var(--radius-md); background: var(--color-avatar-sage); color: var(--color-primary); font-family: var(--font-family-display); font-size: 2.25rem; }
+.tutor-public-profile.dat-render #tutor-name { font-family: var(--font-family-display); font-size: clamp(2rem, 3vw, 2.5rem); line-height: 1.2; font-weight: 500; }
+.tutor-public-profile.dat-render :is(.pt-headline, .pl-copy, .pt-facts, .pl-muted) { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.tutor-public-profile.dat-render .pt-badges { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+.tutor-public-profile.dat-render .pt-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.tutor-public-profile.dat-render .pt-facts dd { margin: var(--space-2) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.tutor-public-profile.dat-render .pt-tag { padding: var(--space-1) var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm); }
+.tutor-public-profile.dat-render .home-latest__grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+.tutor-public-profile.dat-render .home-offer-card { display: grid; grid-template-rows: none; padding: var(--space-5); box-shadow: none; }
+.tutor-public-profile.dat-render .home-offer-card__title { font-size: var(--font-size-lg); }
+.tutor-public-profile.dat-render .pl-side { position: sticky; top: var(--scroll-offset); }
+.tutor-public-profile.dat-render .pl-side .pl-card { gap: var(--space-3); }
+.tutor-public-profile.dat-render .pl-side h2 { border: 0; padding: 0; font-size: var(--font-size-base); }
+.tutor-public-profile.dat-render .pl-block { width: 100%; }
+.tutor-public-profile.dat-render .pl-hint { font-size: var(--font-size-xs); text-align: center; }
 @media (max-width: 75rem) {
   .dat-render .dat-two-columns { grid-template-columns: minmax(0, 1fr); }
   .dat-render .my-job-page__sidebar { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 64rem) {
+  .tutor-public-profile.dat-render .pl-layout { grid-template-columns: minmax(0, 1fr); }
+  .tutor-public-profile.dat-render .pl-side { position: static; }
   .dat-render :is(.create-page__workflow, .detail-layout, .negotiation-layout) { grid-template-columns: minmax(0, 1fr); }
   .dat-render :is(.create-page__sidebar, .detail-sidebar, .negotiation-sidebar) { position: static; max-height: none; overflow: visible; }
   .dat-render .catalog-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -135,6 +161,9 @@
   .dat-render :is(.job-live-panel, .dat-panel, .negotiation-panel, .invitation-section, .invitation-summary, .dat-invitation-card, .dat-job-card, .create-card__body) { padding: var(--space-4); }
 }
 @media (max-width: 40rem) {
+  .tutor-public-profile.dat-render .pl-card[aria-labelledby="tutor-name"] { padding: var(--space-4); }
+  .tutor-public-profile.dat-render .pt-hero { align-items: flex-start; flex-direction: column; }
+  .tutor-public-profile.dat-render .pt-facts { grid-template-columns: minmax(0, 1fr); }
   .dat-render .catalog-options { grid-template-columns: 1fr; }
   .dat-render .job-live-facts { grid-template-columns: 1fr; }
   .dat-render .job-live-actions { align-items: stretch; }

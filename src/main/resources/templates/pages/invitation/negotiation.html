@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="/css/components/form/input.css"  th:href="@{/css/components/form/input.css}"/>
 <link rel="stylesheet" href="/css/components/form/textarea.css"  th:href="@{/css/components/form/textarea.css}"/>
 <link rel="stylesheet" href="/css/pages/invitation/negotiation.css"  th:href="@{/css/pages/invitation/negotiation.css}"/>
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -33,18 +34,18 @@
 
 </th:block>
 </head>
-<body th:fragment="content">
+<body class="invitation-negotiation-page dat-render" th:fragment="content">
 <div class="user-shell">
   <th:block th:replace="~{fragments/header-user :: header(${active}, 'v7')}"></th:block>
-  <main class="negotiation-page">
-    <header class="page-header"><div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Lời mời của tôi</h1></div></div></header>
+  <main class="user-shell__main"><div class="user-shell__content negotiation-page" id="invitation">
+    <header class="page-header"><div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Lời mời của tôi</h1><p class="page-header__description">Xem đề xuất và phản hồi đúng bộ điều khoản đã được gửi.</p></div></div></header>
     <nav class="invitation-live-nav"><a class="button button--outline" th:href="@{/invitation/negotiation}">Danh sách lời mời</a><a class="button button--primary" th:if="${canCreateInvitation}" th:href="@{/invitation/create}">Gửi lời mời mới</a></nav>
     <section class="alert alert--success" th:if="${success != null}" role="status"><p th:text="${success}"></p></section>
     <section class="alert alert--error" th:if="${pageError != null}" role="alert"><p th:text="${pageError}"></p><p><a th:href="@{/invitation/negotiation}">Tải lại danh sách lời mời</a></p></section>
     <th:block th:if="${invitations != null}">
       <section class="empty-state" th:if="${invitations.empty}"><h2 class="empty-state__title">Chưa có lời mời</h2><p class="empty-state__description">Các lời mời bạn gửi hoặc nhận sẽ xuất hiện ở đây.</p></section>
-      <div class="invitation-live-list" th:unless="${invitations.empty}">
-        <article class="card negotiation-panel" th:each="item : ${invitations.content}">
+      <div class="invitation-live-list dat-invitation-list" th:unless="${invitations.empty}">
+        <article class="card negotiation-panel dat-invitation-card" th:each="item : ${invitations.content}">
           <div class="negotiation-section-heading"><h2><a th:href="@{/invitation/negotiation(id=${item.id})}" th:text="${item.publicCode}"></a></h2><span class="badge badge--info" th:text="${item.statusLabel}"></span></div>
           <p th:text="|${item.learnerName} → ${item.tutorName}|"></p><p th:text="|${item.subject} · ${item.grade} · ${item.deliveryMode}|"></p>
           <p><strong th:text="${#numbers.formatDecimal(item.proposedUnitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><span th:text="| · ${item.sessionCount} buổi|"></span></p>
@@ -80,7 +81,7 @@
         <p class="negotiation-muted" th:if="${invitation.status.name() == 'PENDING' and !invitation.canAccept}">Đang chờ gia sư xem xét đề xuất của bạn.</p>
       </section></aside>
     </div>
-  </main>
+  </div></main>
   <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
 </div>
 </body>

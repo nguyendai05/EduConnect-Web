@@ -60,6 +60,13 @@ public class TutorDiscoveryRepository {
         String selection = "select new com.educonnect.tutor.dto.TutorCardResponse("
                 + "t.userId, a.displayName, t.headline, t.experienceYears, min(o.unitPrice), count(o.id))";
         String grouping = " group by t.userId, a.displayName, t.headline, t.experienceYears ";
+        String having = "";
+        long requiredGrades = request.getGradeLevelIds().stream().distinct().count();
+        if (requiredGrades > 1) {
+            // Một Offering chỉ có một cấp; gom theo gia sư để yêu cầu đủ mọi cấp đã chọn.
+            having = " having count(distinct o.gradeLevelId) = :requiredGrades ";
+            parameters.put("requiredGrades", requiredGrades);
+        }
         String order = switch (request.getSort()) {
             case "price-asc" -> "min(o.unitPrice) asc, t.userId asc";
             case "price-desc" -> "min(o.unitPrice) desc, t.userId asc";
@@ -67,9 +74,14 @@ public class TutorDiscoveryRepository {
             default -> throw new IllegalArgumentException("Tiêu chí sắp xếp chưa được hỗ trợ.");
         };
         TypedQuery<TutorCardResponse> data = entityManager.createQuery(
-                selection + FROM + where + grouping + " order by " + order, TutorCardResponse.class);
+                selection + FROM + where + grouping + having + " order by " + order, TutorCardResponse.class);
+        // Đếm các nhóm thỏa cùng HAVING trước khi phân trang, không đếm gia sư chỉ khớp một cấp.
+        String countQuery = requiredGrades > 1
+                ? "select count(*) from (select t.userId as tutorId" + FROM + where
+                    + " group by t.userId" + having + ") matchedTutors"
+                : "select count(distinct t.userId)" + FROM + where;
         TypedQuery<Long> count = entityManager.createQuery(
-                "select count(distinct t.userId)" + FROM + where, Long.class);
+                countQuery, Long.class);
         bind(data, parameters);
         bind(count, parameters);
         long total = count.getSingleResult();

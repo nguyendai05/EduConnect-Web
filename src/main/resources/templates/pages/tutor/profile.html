@@ -12,8 +12,10 @@
 <link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
 <link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
 <link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
+<link rel="stylesheet" th:href="@{/css/components/navigation/breadcrumb.css}">
 <link rel="stylesheet" href="/css/pages/home.css" th:href="@{/css/pages/home.css}">
 <link rel="stylesheet" href="/css/pages/profile/live.css" th:href="@{/css/pages/profile/live.css}">
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -22,16 +24,22 @@
 <th:block th:fragment="scripts">
 </th:block>
 </head>
-<body class="tutor-public-profile" th:fragment="content">
+<body class="tutor-public-profile dat-render" th:fragment="content">
 <div class="user-shell">
     <th:block th:replace="~{fragments/header-user :: header(${active}, 'v2')}"></th:block>
     <main class="user-shell__main">
         <div class="user-shell__content pl">
+            <nav class="breadcrumb" aria-label="Đường dẫn">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/tutor/search}">Tìm gia sư</a></li>
+                    <li class="breadcrumb__item" aria-current="page" th:text="${tutor != null ? tutor.displayName : 'Hồ sơ gia sư'}"></li>
+                </ol>
+            </nav>
 
             <section class="pl-card" th:if="${tutor == null}">
                 <div class="empty-state">
-                    <h1 class="empty-state__title">Không tìm thấy gia sư</h1>
-                    <p class="empty-state__description">Hồ sơ không tồn tại, chưa được duyệt hoặc đã bị gỡ. Hãy chọn một gia sư khác.</p>
+                    <h1 class="empty-state__title" th:text="${pageError != null ? 'Chưa thể hiển thị hồ sơ' : 'Không tìm thấy gia sư'}">Không tìm thấy gia sư</h1>
+                    <p class="empty-state__description" th:text="${pageError ?: 'Hồ sơ không tồn tại, chưa được duyệt hoặc đã bị gỡ. Hãy chọn một gia sư khác.'}">Hồ sơ không tồn tại, chưa được duyệt hoặc đã bị gỡ. Hãy chọn một gia sư khác.</p>
                     <a class="button button--primary" th:href="@{/tutor/search}">Quay lại tìm gia sư</a>
                 </div>
             </section>
