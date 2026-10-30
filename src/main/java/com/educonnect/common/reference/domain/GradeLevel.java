@@ -18,6 +18,10 @@ public class GradeLevel {
     @Column(name = "name", nullable = false, length = 120)
     private String name;
 
+    /** Người tạo mục tùy chỉnh; null là danh mục hệ thống. */
+    @Column(name = "created_by", nullable = true)
+    private Long createdBy;
+
     protected GradeLevel() {}
 
     public static GradeLevel create() { return new GradeLevel(); }
@@ -29,4 +33,7 @@ public class GradeLevel {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public Long getCreatedBy() { return createdBy; }
+    public void setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
 }

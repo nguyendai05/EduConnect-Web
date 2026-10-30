@@ -18,6 +18,10 @@ public class Subject {
     @Column(name = "name", nullable = false, length = 120)
     private String name;
 
+    /** Người tạo mục tùy chỉnh; null là danh mục hệ thống. */
+    @Column(name = "created_by", nullable = true)
+    private Long createdBy;
+
     protected Subject() {}
 
     public static Subject create() { return new Subject(); }
@@ -29,4 +33,7 @@ public class Subject {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public Long getCreatedBy() { return createdBy; }
+    public void setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
 }

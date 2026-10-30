@@ -9,4 +9,6 @@ import org.springframework.context.annotation.Profile;
 public interface SubjectJpaRepository extends JpaRepository<Subject, Long> {
     /** Tìm môn theo tên, không phân biệt hoa thường và dấu (theo collation của bảng). */
     java.util.Optional<Subject> findFirstByName(String name);
+
+    long countByCreatedBy(Long createdBy);
 }
