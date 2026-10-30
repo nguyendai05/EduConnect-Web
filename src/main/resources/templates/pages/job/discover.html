@@ -39,7 +39,7 @@
 </head>
 <body th:fragment="content"><div class="user-shell">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
-<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1>Tin tìm gia sư</h1>
+<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation('discover')}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1>Tin tìm gia sư</h1>
 <form class="card job-live-panel" method="get" th:action="@{/job/discover}" th:if="${options != null and search != null}">
   <label class="form-field">Từ khóa<span class="input-control"><input class="input-control__input" name="q" th:value="${search.q}" maxlength="200" placeholder="Tìm theo tiêu đề hoặc nhu cầu học"></span></label>
   <div class="job-live-grid"><label class="form-field">Môn học<select class="select-control select-control--native" name="subjectId" >

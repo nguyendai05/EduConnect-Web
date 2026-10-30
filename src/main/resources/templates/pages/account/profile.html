@@ -1,93 +1,111 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Hồ sơ cá nhân · Edu Connect</title>
 <th:block th:fragment="styles">
 <link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}">
 <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
 <link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
+<link rel="stylesheet" href="/css/components/form/select.css" th:href="@{/css/components/form/select.css}">
+<link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
 <link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
 <link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
 <link rel="stylesheet" href="/css/components/layout/account-footer.css" th:href="@{/css/components/layout/account-footer.css}">
-<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}">
-<link rel="stylesheet" href="/css/pages/account/profile.css" th:href="@{/css/pages/account/profile.css}">
+<link rel="stylesheet" href="/css/pages/profile/live.css" th:href="@{/css/pages/profile/live.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 
 </th:block>
 <th:block th:fragment="scripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
 <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
 <script src="/js/pages/account/profile.js" defer th:src="@{/js/pages/account/profile.js}"></script>
 </th:block>
 </head>
 <body class="profile-page" th:fragment="content">
-    <!-- UserHeader component instance · variant A: phụ huynh Mai Lan. -->
     <th:block th:replace="~{fragments/header-user :: header(${active}, 'v1')}"></th:block>
-    <main class="user-shell__main profile-page__main">
-        <div class="user-shell__content profile-page__content">
+    <main class="user-shell__main">
+        <div class="user-shell__content pl">
+            <h1 class="sr-only">Hồ sơ cá nhân</h1>
 
-            <header class="page-header account-page-heading"><div class="page-header__title-block"><h1 class="page-header__title">Hồ sơ cá nhân</h1></div></header>
-            <div class="profile-page__layout">
-                <aside class="profile-nav" aria-label="Điều hướng tài khoản">
-                    <a class="profile-nav__item is-active" href="#ho-so" aria-current="page">Hồ sơ cá nhân</a>
-                </aside>
+            <section class="pl-messages" aria-live="polite">
+                <div class="alert alert--success" role="status" th:if="${success != null}"><p th:text="${success}"></p></div>
+                <div class="alert alert--error" role="alert" th:if="${pageError != null}"><p th:text="${pageError}"></p></div>
+            </section>
 
-                <!-- Tạm thời: Card và InfoRow chưa có implementation; profile card dùng style page cho đến khi hai component này sẵn sàng. -->
-                <section class="profile-card" id="ho-so" aria-labelledby="profile-card-title">
-                    <div class="profile-card__top">
+            <section class="pl-card" aria-labelledby="profile-card-title" th:if="${profile != null}">
+                <div class="pl-head">
+                    <div class="pl-identity">
+                        <span class="pl-avatar" aria-hidden="true" th:text="${profile.initials()}">ML</span>
                         <div>
-                            <h2 id="profile-card-title">Thông tin cơ bản</h2>
-
-                        </div>
-                        <!-- Tạm thời: Button component chưa có implementation; dùng action cấp trang cho Edit/Save/Cancel. -->
-                        <div class="profile-card__actions">
-                            <button class="profile-action profile-action--secondary" type="button" data-profile-edit>Chỉnh sửa</button>
-                            <button class="profile-action profile-action--secondary" type="button" data-profile-cancel hidden>Hủy</button>
-                            <button class="profile-action profile-action--primary" type="button" data-profile-save hidden>Lưu thay đổi</button>
+                            <h2 id="profile-card-title" th:text="${profile.displayName}">Họ và tên</h2>
+                            <span class="pl-muted" th:text="${#strings.listJoin(profile.roleLabels, ' · ')}">Vai trò</span>
                         </div>
                     </div>
+                    <a class="button button--outline" th:href="@{/tutor/my-profile}" th:if="${profile.tutor}">Hồ sơ giảng dạy</a>
+                </div>
 
-                    <section class="alert alert--success profile-status" role="status" aria-live="polite" hidden>
-                        <span class="alert__icon" aria-hidden="true"></span><div class="alert__content"><p class="alert__message" data-profile-status></p></div>
-                    </section>
+                <form class="pl-stack" method="post" th:action="@{/account/profile}" th:object="${form}" novalidate data-profile-form>
+                    <input type="hidden" th:field="*{version}">
 
-                    <div class="profile-card__identity">
-                        <!-- Tạm thời: Avatar component chưa có implementation; dùng avatar initials cấp trang. -->
-                        <span class="profile-avatar" aria-hidden="true" data-profile-avatar>ML</span>
-                        <div><strong data-profile-display-name>Mai Lan</strong><span data-profile-display-role>Học viên / Phụ huynh</span></div>
-                    </div>
-
-                    <form class="profile-form" novalidate data-profile-form>
-                        <div class="profile-form__field">
+                    <div class="pl-grid">
+                        <div class="pl-field">
                             <label for="profile-name">Họ và tên</label>
-                            <div class="profile-value" data-profile-display="name">Mai Lan</div>
-                            <div class="input-control" data-profile-control="name" hidden><input class="input-control__input" id="profile-name" name="name" type="text" autocomplete="name" value="Mai Lan" aria-describedby="profile-name-error"></div>
-                            <p class="profile-form__error" id="profile-name-error" hidden></p>
+                            <span class="input-control"><input class="input-control__input" id="profile-name" type="text" th:field="*{displayName}" autocomplete="name" maxlength="120" required></span>
+                            <p class="pl-error" th:if="${#fields.hasErrors('displayName')}" th:errors="*{displayName}"></p>
                         </div>
-                        <div class="profile-form__field">
-                            <label for="profile-email">Email</label>
-                            <div class="profile-value profile-value--locked" data-profile-display="email"><span data-profile-display-email>mai.lan@example.com</span><span>Email được dùng để đăng nhập.</span></div>
-                            <div class="input-control" data-profile-control="email" hidden><input class="input-control__input" id="profile-email" name="email" type="email" inputmode="email" autocomplete="email" value="mai.lan@example.com" aria-describedby="profile-email-error"></div>
-                            <p class="profile-form__error" id="profile-email-error" hidden></p>
-                        </div>
-                        <div class="profile-form__field">
+                        <div class="pl-field">
                             <label for="profile-phone">Số điện thoại</label>
-                            <div class="profile-value" data-profile-display="phone">0912 345 678</div>
-                            <div class="input-control" data-profile-control="phone" hidden><input class="input-control__input" id="profile-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" value="0912 345 678" aria-describedby="profile-phone-error"></div>
-                            <p class="profile-form__error" id="profile-phone-error" hidden></p>
+                            <span class="input-control"><input class="input-control__input" id="profile-phone" type="tel" inputmode="tel" th:field="*{phone}" autocomplete="tel" maxlength="24" placeholder="0912 345 678"></span>
+                            <p class="pl-error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
                         </div>
-                        <div class="profile-form__field">
-                            <label for="profile-bio">Giới thiệu</label>
-                            <div class="profile-value profile-value--empty" data-profile-display="bio">Chưa có giới thiệu. Hãy thêm vài dòng để mọi người hiểu hơn về bạn.</div>
-                            <textarea class="profile-form__textarea" id="profile-bio" name="bio" maxlength="300" placeholder="Viết vài dòng giới thiệu về bạn..." hidden></textarea>
-                            <p class="profile-form__hint" data-profile-bio-count hidden>0/300</p>
+                    </div>
+
+                    <div class="pl-field">
+                        <label for="profile-email">Email</label>
+                        <span class="input-control"><input class="input-control__input" id="profile-email" type="email" th:value="${profile.email}" disabled aria-describedby="profile-email-help"></span>
+                        <p class="pl-hint" id="profile-email-help">Email dùng để đăng nhập và không thể thay đổi tại đây.</p>
+                    </div>
+
+                    <div class="pl-grid" th:if="${profile.learner}">
+                        <div class="pl-field">
+                            <label for="profile-kind">Bạn là</label>
+                            <select class="select-control select-control--native" id="profile-kind" th:field="*{learnerKind}">
+                                <option value="SELF">Người học</option>
+                                <option value="PARENT">Phụ huynh</option>
+                            </select>
                         </div>
-                    </form>
-                </section>
-            </div>
+                        <div class="pl-field">
+                            <label for="profile-grade">Cấp học mặc định</label>
+                            <select class="select-control select-control--native" id="profile-grade" th:field="*{gradeLevelId}">
+                                <option value="">Chưa chọn</option>
+                                <option th:each="g : ${profile.gradeLevels}" th:value="${g.id}" th:text="${g.name}"></option>
+                            </select>
+                        </div>
+                        <div class="pl-field">
+                            <label for="profile-area">Khu vực mặc định</label>
+                            <select class="select-control select-control--native" id="profile-area" th:field="*{areaId}">
+                                <option value="">Chưa chọn</option>
+                                <option th:each="a : ${profile.areas}" th:value="${a.id}" th:text="${a.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="pl-field">
+                        <label for="profile-bio">Giới thiệu</label>
+                        <textarea class="textarea-control" id="profile-bio" th:field="*{bio}" maxlength="1000" rows="5" placeholder="Viết vài dòng giới thiệu về bạn..."></textarea>
+                        <p class="pl-hint" data-bio-count>0/1000</p>
+                        <p class="pl-error" th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}"></p>
+                    </div>
+
+                    <div class="pl-actions">
+                        <button class="button button--primary" type="submit">Lưu thay đổi</button>
+                        <a class="button button--outline" th:href="@{/account/profile}">Hủy</a>
+                    </div>
+                </form>
+            </section>
         </div>
     </main>
     <th:block th:replace="~{fragments/footer-account :: footer(${active}, 'v1')}"></th:block>

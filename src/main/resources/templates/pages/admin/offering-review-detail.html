@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/admin :: page(~{::title}, &#x27;/admin/manage&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<head>
+<title>Duyệt khóa học | Edu Connect</title>
+<th:block th:fragment="styles">
+<link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}">
+<link rel="stylesheet" href="/css/components/layout/admin-sidebar.css" th:href="@{/css/components/layout/admin-sidebar.css}">
+<link rel="stylesheet" href="/css/components/layout/admin-header.css" th:href="@{/css/components/layout/admin-header.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
+<link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
+<link rel="stylesheet" href="/css/pages/profile/live.css" th:href="@{/css/pages/profile/live.css}">
+</th:block>
+<th:block th:fragment="headScripts">
+
+</th:block>
+<th:block th:fragment="scripts">
+<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
+<script src="/js/pages/admin/offering-review-detail.js" defer th:src="@{/js/pages/admin/offering-review-detail.js}"></script>
+</th:block>
+</head>
+<body class="offering-review-detail-page" th:fragment="content"><div class="admin-shell">
+<th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
+<th:block th:replace="~{fragments/header-admin :: header(${active}, 'v4')}"></th:block>
+<main class="admin-shell__workspace"><div class="admin-shell__content pl">
+    <a class="button button--outline" th:href="@{/admin/manage(tab='offerings')}">Về danh sách khóa học</a>
+
+    <section class="pl-messages" aria-live="polite">
+        <div class="alert alert--success" role="status" th:if="${success != null}"><p th:text="${success}"></p></div>
+        <div class="alert alert--error" role="alert" th:if="${pageError != null}"><p th:text="${pageError}"></p></div>
+    </section>
+
+    <div class="pl-layout" th:if="${offering != null}">
+        <div class="pl-stack">
+            <article class="pl-card">
+                <div class="pl-head">
+                    <div>
+                        <h1 th:text="${offering.title}">Tiêu đề</h1>
+                        <span class="pl-muted" th:text="${offering.publicCode + ' · ' + offering.typeLabel()}"></span>
+                    </div>
+                    <span class="badge" th:classappend="${offering.badge()}" th:text="${offering.statusLabel()}">Chờ duyệt</span>
+                </div>
+                <dl class="pl-facts">
+                    <div><dt>Gia sư</dt><dd th:text="${offering.tutorName}"></dd></div>
+                    <div><dt>Hồ sơ gia sư</dt><dd th:text="${offering.tutorProfileStatus == 'APPROVED' ? 'Đã duyệt' : (offering.tutorProfileStatus == 'PENDING' ? 'Chờ duyệt' : (offering.tutorProfileStatus == 'REJECTED' ? 'Cần bổ sung' : 'Bản nháp'))}"></dd></div>
+                    <div><dt>Môn học</dt><dd th:text="${offering.subject}"></dd></div>
+                    <div><dt>Cấp học</dt><dd th:text="${offering.grade}"></dd></div>
+                    <div><dt>Khu vực</dt><dd th:text="${offering.area}"></dd></div>
+                    <div><dt>Hình thức</dt><dd th:text="${offering.mode}"></dd></div>
+                    <div><dt>Học phí</dt><dd><strong th:text="${offering.priceLabel()}"></strong> · <span th:text="${offering.sessionCount + ' buổi, tổng ' + offering.totalLabel()}"></span></dd></div>
+                    <div><dt>Thời lượng</dt><dd th:text="${offering.durationMinutes + ' phút / buổi'}"></dd></div>
+                    <div th:if="${offering.groupClass()}"><dt>Sức chứa</dt><dd th:text="${offering.capacity + ' học viên'}"></dd></div>
+                    <div th:if="${offering.groupClass()}"><dt>Thời gian học</dt><dd th:text="${offering.startsOn + ' → ' + offering.endsOn}"></dd></div>
+                </dl>
+                <h2>Lịch học hằng tuần</h2>
+                <p class="pl-muted" th:if="${offering.slots.isEmpty()}">Chưa có khung giờ.</p>
+                <ul class="pl-list" th:unless="${offering.slots.isEmpty()}">
+                    <li class="pl-file" th:each="slot : ${offering.slots}">
+                        <strong th:text="${slot.dayLabel()}">Thứ 2</strong>
+                        <span th:text="${slot.start + ' – ' + slot.end}"></span>
+                        <span class="pl-muted" th:text="${slot.timeZone}"></span>
+                    </li>
+                </ul>
+                <h2>Mô tả</h2>
+                <p class="pl-copy" th:text="${offering.description}"></p>
+                <h2>Điều khoản</h2>
+                <p class="pl-copy" th:text="${offering.termsText != null ? offering.termsText : '(Chưa có)'}"></p>
+            </article>
+        </div>
+
+        <aside class="pl-card">
+            <h2>Quyết định duyệt</h2>
+            <div th:if="${offering.status == 'PUBLISHED' or offering.status == 'REJECTED'}">
+                <p><strong th:text="${offering.status == 'PUBLISHED' ? 'Đã duyệt' : 'Đã từ chối'}"></strong>
+                   <span class="pl-muted" th:if="${offering.reviewerName != null}" th:text="${' bởi ' + offering.reviewerName}"></span></p>
+                <p class="pl-muted" th:if="${offering.reviewedAt != null}" th:text="${offering.reviewedLabel() + ' (UTC+7)'}"></p>
+                <p class="pl-copy" th:if="${offering.reviewNote != null}" th:text="${offering.reviewNote}"></p>
+            </div>
+            <p class="pl-muted" th:if="${offering.status == 'DRAFT'}">Khóa học còn là bản nháp, gia sư chưa gửi duyệt.</p>
+            <p class="pl-muted" th:if="${offering.status == 'CLOSED' or offering.status == 'UNPUBLISHED'}">Khóa học không ở trạng thái chờ duyệt.</p>
+
+            <div class="alert alert--warning" role="status" th:if="${offering.status == 'IN_REVIEW' and offering.tutorProfileStatus != 'APPROVED'}">
+                <p>Hồ sơ gia sư chưa được duyệt nên chưa thể công khai khóa học. Duyệt hồ sơ gia sư trước, hoặc từ chối khóa học kèm lý do.</p>
+            </div>
+
+            <form class="pl-stack" method="post" th:action="@{/admin/offering-review-detail(id=${offering.id})}" th:if="${offering.status == 'IN_REVIEW'}" data-review-form>
+                <input type="hidden" name="version" th:value="${offering.version}">
+                <div class="pl-field">
+                    <label for="review-reason">Lý do / ghi chú</label>
+                    <textarea class="textarea-control" id="review-reason" name="reason" rows="7" maxlength="2000" th:text="${form.reason}" aria-describedby="review-reason-help"></textarea>
+                    <p class="pl-hint" id="review-reason-help">Bắt buộc khi từ chối (ít nhất 10 ký tự) để gia sư biết cần sửa gì. Khi duyệt có thể để trống.</p>
+                </div>
+                <div class="pl-actions">
+                    <button class="button button--primary" name="action" value="approve" type="submit">Duyệt và công khai</button>
+                    <button class="button button--danger" name="action" value="reject" type="submit">Từ chối khóa học</button>
+                </div>
+            </form>
+            <a class="button button--outline" th:href="@{/admin/tutor-review-detail(id=${offering.tutorId})}">Xem hồ sơ gia sư</a>
+        </aside>
+    </div>
+</div></main></div>
+<th:block th:replace="${scripts}"></th:block>
+</body>
+</html>

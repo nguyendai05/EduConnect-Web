@@ -251,7 +251,7 @@ public class TutorOfferingService {
             return previous.get().getId();
         }
 
-        resolveSubject(form);
+        resolveCatalog(form, tutor.getUserId());
         validateReferences(form);
         Offering offering = Offering.create();
         offering.setPublicCode(code);
@@ -287,7 +287,7 @@ public class TutorOfferingService {
 
         boolean reReview = offering.getStatus() == OfferingStatus.PUBLISHED;
         boolean keepSchedule = offerings.countEnrollments(id) > 0;
-        resolveSubject(form);
+        resolveCatalog(form, offering.getTutorId());
         if (keepSchedule) {
             requireUnchangedTeachingPlan(offering, form);
         }
@@ -417,23 +417,60 @@ public class TutorOfferingService {
     }
 
     /**
-     * Gia sư gõ tên môn: dùng môn đã có cùng tên, chưa có thì tạo môn mới để các trang lọc dùng được.
+     * Gia sư gõ tên môn/cấp học: dùng mục đã có cùng tên (không phân biệt hoa thường và dấu), chưa có thì tạo mới
+     * kèm người tạo để các trang lọc dùng được. Mỗi người chỉ được thêm một số lượng mục mới nhất định.
      */
-    private void resolveSubject(OfferingRequest form) {
-        String name = form.getSubjectName() == null ? "" : form.getSubjectName().strip().replaceAll("\\s+", " ");
-        if (name.isEmpty()) {
-            if (form.getSubjectId() == null) {
-                throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Nhập môn học.");
+    private void resolveCatalog(OfferingRequest form, Long tutorId) {
+        try {
+            String subjectName = form.getSubjectName() == null ? "" : form.getSubjectName().strip();
+            if (subjectName.isEmpty()) {
+                if (form.getSubjectId() == null) {
+                    throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Nhập môn học.");
+                }
+            } else {
+                form.setSubjectId(newSubject(tutorId, subjectName).getId());
             }
-            return;
+            String gradeName = form.getGradeLevelName() == null ? "" : form.getGradeLevelName().strip();
+            if (gradeName.isEmpty()) {
+                if (form.getGradeLevelId() == null) {
+                    throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Nhập cấp học.");
+                }
+            } else {
+                form.setGradeLevelId(newGrade(tutorId, gradeName).getId());
+            }
+        } catch (com.educonnect.common.exception.ServiceProblem problem) {
+            throw new OfferingProblem(problem.getStatus(), problem.getMessage());
         }
-        var subject = subjects.findFirstByName(name).orElseGet(() -> {
+    }
+
+    private Subject newSubject(Long tutorId, String raw) {
+        String name = com.educonnect.common.reference.service.CustomCatalogService.clean(raw, "Tên môn học");
+        return subjects.findFirstByName(name).orElseGet(() -> {
+            if (subjects.countByCreatedBy(tutorId) >= com.educonnect.common.reference.service.CustomCatalogService.MAX_SUBJECTS_PER_USER) {
+                throw com.educonnect.common.exception.ServiceProblem.conflict("Bạn đã thêm tối đa "
+                        + com.educonnect.common.reference.service.CustomCatalogService.MAX_SUBJECTS_PER_USER + " môn mới. Hãy chọn môn có sẵn.");
+            }
             var created = Subject.create();
             created.setCode("TUTOR-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12));
             created.setName(name);
+            created.setCreatedBy(tutorId);
             return subjects.save(created);
         });
-        form.setSubjectId(subject.getId());
+    }
+
+    private com.educonnect.common.reference.domain.GradeLevel newGrade(Long tutorId, String raw) {
+        String name = com.educonnect.common.reference.service.CustomCatalogService.clean(raw, "Tên cấp học");
+        return grades.findFirstByName(name).orElseGet(() -> {
+            if (grades.countByCreatedBy(tutorId) >= com.educonnect.common.reference.service.CustomCatalogService.MAX_GRADES_PER_USER) {
+                throw com.educonnect.common.exception.ServiceProblem.conflict("Bạn đã thêm tối đa "
+                        + com.educonnect.common.reference.service.CustomCatalogService.MAX_GRADES_PER_USER + " cấp học mới. Hãy chọn cấp học có sẵn.");
+            }
+            var created = com.educonnect.common.reference.domain.GradeLevel.create();
+            created.setCode("TUTOR-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12));
+            created.setName(name);
+            created.setCreatedBy(tutorId);
+            return grades.save(created);
+        });
     }
 
     /**
@@ -509,6 +546,7 @@ public class TutorOfferingService {
         form.setSubjectId(offering.getSubjectId());
         subjects.findById(offering.getSubjectId()).ifPresent(subject -> form.setSubjectName(subject.getName()));
         form.setGradeLevelId(offering.getGradeLevelId());
+        grades.findById(offering.getGradeLevelId()).ifPresent(grade -> form.setGradeLevelName(grade.getName()));
         form.setAreaId(offering.getAreaId());
         form.setDeliveryModeId(offering.getDeliveryModeId());
         form.setUnitPrice(offering.getUnitPrice());

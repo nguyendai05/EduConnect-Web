@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Ví Edu Connect — Edu Connect</title>
 <th:block th:fragment="styles">
@@ -31,7 +31,6 @@
     <header class="page-header">
         <div class="page-header__title-block">
             <h1 class="page-header__title">Ví &amp; Lịch sử giao dịch</h1>
-            <p class="page-header__description">Số dư, tiền đang ký quỹ và sao kê giao dịch của tài khoản bạn.</p>
         </div>
     </header>
 
@@ -131,7 +130,8 @@
                         <p th:text="${wallet.ownerRole}"></p>
                     </div>
                 </div>
-                <a class="wallet-button wallet-button--secondary" th:href="@{/order/history}">Đơn đăng ký của tôi</a>
+                <a class="wallet-button wallet-button--secondary" sec:authorize="hasRole('LEARNER')" th:href="@{/order/history}">Đơn đăng ký của tôi</a>
+                <a class="wallet-button wallet-button--secondary" sec:authorize="!hasRole('LEARNER') and hasRole('TUTOR')" th:href="@{/tutor/manage#tm-tab-orders}">Đơn đăng ký khóa học của tôi</a>
                 <a class="wallet-button wallet-button--secondary" th:href="@{/contract/my}">Hợp đồng của tôi</a>
                 <p class="wallet-note">Tiền học phí được giữ ký quỹ và chỉ chuyển cho gia sư theo từng buổi sau khi học viên xác nhận.</p>
             </section>

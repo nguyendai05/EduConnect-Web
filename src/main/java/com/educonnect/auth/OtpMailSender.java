@@ -29,7 +29,7 @@ public class OtpMailSender {
             helper.setFrom(from);
             helper.setTo(email);
             helper.setSubject("EduConnect - Mã xác minh đăng ký " + challenge.substring(0, 8));
-            helper.setText("Mã OTP của bạn: " + otp + "\n\n"
+            helper.setText("Mã xác minh của bạn: " + otp + "\n\n"
                     + "Mã có hiệu lực trong " + ttl.toMinutes() + " phút và chỉ dùng một lần.\n"
                     + "Mã yêu cầu: " + challenge.substring(0, 8) + "\n"
                     + "Chỉ nhập mã vào lượt đăng ký có mã yêu cầu tương ứng trên trình duyệt của bạn.\n"

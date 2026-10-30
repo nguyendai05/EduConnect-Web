@@ -19,6 +19,12 @@ public class SessionAccountFilter extends OncePerRequestFilter {
 
     public SessionAccountFilter(UserAccountRepository accounts) { this.accounts = accounts; }
 
+    /** Tệp tĩnh không cần kiểm lại tài khoản; mỗi trang tải hàng chục tệp, truy vấn DB cho từng tệp làm cạn kết nối. */
+    @Override protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI().substring(request.getContextPath().length());
+        return path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/assets/") || path.equals("/favicon.ico");
+    }
+
     @Override protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         var authentication = SecurityContextHolder.getContext().getAuthentication();

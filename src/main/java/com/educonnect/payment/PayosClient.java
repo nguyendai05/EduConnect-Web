@@ -29,7 +29,11 @@ public class PayosClient {
 
     public PayosClient(PayosProperties properties) {
         this.properties = properties;
-        this.http = RestClient.builder().baseUrl(properties.baseUrl())
+        // Có timeout: PayOS chậm hoặc không phản hồi không được giữ luồng (và kết nối DB của transaction gọi nó) quá vài giây.
+        var factory = new org.springframework.http.client.JdkClientHttpRequestFactory(
+                java.net.http.HttpClient.newBuilder().connectTimeout(java.time.Duration.ofSeconds(3)).build());
+        factory.setReadTimeout(java.time.Duration.ofSeconds(8));
+        this.http = RestClient.builder().requestFactory(factory).baseUrl(properties.baseUrl())
                 .defaultHeader("x-client-id", properties.clientId())
                 .defaultHeader("x-api-key", properties.apiKey()).build();
     }

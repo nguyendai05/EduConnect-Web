@@ -7,4 +7,8 @@ import org.springframework.context.annotation.Profile;
 
 /** Repository JPA chuẩn; giữ riêng đường ghi JDBC auth. */
 @Profile("db-dev")
-public interface TutorProfileEvidenceJpaRepository extends JpaRepository<TutorProfileEvidence, TutorProfileEvidenceId> {}
+public interface TutorProfileEvidenceJpaRepository extends JpaRepository<TutorProfileEvidence, TutorProfileEvidenceId> {
+    java.util.List<TutorProfileEvidence> findByIdTutorId(Long tutorId);
+    long countByIdTutorId(Long tutorId);
+    java.util.Optional<TutorProfileEvidence> findByIdFileId(Long fileId);
+}

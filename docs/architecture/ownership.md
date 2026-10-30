@@ -15,7 +15,7 @@ Dùng 51 Entity/51 JpaRepository đã có trên main (PR #24); không tạo mapp
 
 Nguyễn Xuân Đại giữ: pom/wrapper/cấu hình, SecurityConfig, PageModelAdvice, layouts/, fragments/, CSS nền và component dùng chung, js/core/route.js, js/preview/, db/migration/, test contracts/checks và CI. Người khác gửi PR/yêu cầu; chủ nền chung phải duyệt. Migration mới chỉ Đại tạo theo timestamp; không sửa V1–V4.
 
-HomePageController thuộc Đạt; PageModelAdvice cùng package web là file chung thuộc Đại. Các controller hiện có giữ URL/template. DAI-02 cần tách handler /tutor/my-profile khỏi TutorPageController sang TutorProfilePageController trước khi Đạt sửa hai trang công khai; lớp mới này chưa được tạo trong DAI-01.
+HomePageController thuộc Đạt; PageModelAdvice cùng package web là file chung thuộc Đại. Các controller hiện có giữ URL/template. Handler /tutor/my-profile đã tách khỏi TutorPageController sang TutorProfilePageController (DAI-02); Đạt giữ TutorPageController cho /tutor/profile và /tutor/search. Xem [DAI-02](../handoff/DAI-02-profile-tutor-review.md).
 
 ## Bảng theo trang
 

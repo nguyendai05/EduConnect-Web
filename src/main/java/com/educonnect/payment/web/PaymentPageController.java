@@ -38,7 +38,10 @@ public class PaymentPageController {
         if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
         try {
             Long id = service.start(user, contract, useWallet);
-            return "redirect:/payment/" + (service.summary(user, id).isPaid() ? "result" : "qr") + "?payment=" + id;
+            var summary = service.summary(user, id);
+            // Còn phần phải trả qua PayOS thì đi thẳng tới trang thanh toán của PayOS; ví đủ tiền thì tới kết quả.
+            if (!summary.isPaid() && summary.payUrl() != null) return "redirect:" + summary.payUrl();
+            return "redirect:/payment/" + (summary.isPaid() ? "result" : "qr") + "?payment=" + id;
         } catch (IllegalArgumentException error) {
             redirect.addFlashAttribute("error", error.getMessage());
             return "redirect:/payment/checkout?contract=" + contract;
@@ -68,7 +71,10 @@ public class PaymentPageController {
     public String result(@RequestParam(value = "payment", required = false) Long paymentId,
                          @AuthenticationPrincipal AccountPrincipal user, Model model) {
         PaymentService service = services.getIfAvailable();
-        if (service != null && paymentId != null) model.addAttribute("payment", service.summary(user, paymentId));
+        if (service != null && paymentId != null) {
+            service.poll(user, paymentId); // vừa quay về từ PayOS: đồng bộ ngay, không chờ webhook
+            model.addAttribute("payment", service.summary(user, paymentId));
+        }
         return "pages/payment/result";
     }
 }

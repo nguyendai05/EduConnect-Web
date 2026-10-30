@@ -87,8 +87,12 @@ class PagesSmokeTest {
                 .map(t -> t.attributes().get("src")).toList();
     }
 
+    /** Trang đã nối dữ liệu thật: controller chỉ đăng ký trong db-dev nên preview trả 404. */
+    private static final Set<String> DATABASE_PAGES = Set.of("/tutor/manage", "/account/profile", "/tutor/my-profile",
+            "/admin/tutor-review-queue", "/admin/tutor-review-detail", "/admin/manage", "/tutor/profile");
+
     static boolean requiresDatabase(String url) {
-        return url.split("\\?", 2)[0].equals("/tutor/manage");
+        return DATABASE_PAGES.contains(url.split("\\?", 2)[0]);
     }
 
     @ParameterizedTest(name = "{0}")

@@ -29,8 +29,8 @@ public class EmailVerificationController {
                 return "redirect:/auth/login?verified";
             }
             model.addAttribute("otpError", switch (result) {
-                case INVALID -> "Mã OTP không đúng. Vui lòng kiểm tra lại email.";
-                case EXPIRED -> "Mã OTP đã hết hạn. Vui lòng yêu cầu mã mới.";
+                case INVALID -> "Mã xác minh không đúng. Vui lòng kiểm tra lại email.";
+                case EXPIRED -> "Mã xác minh đã hết hạn. Vui lòng yêu cầu mã mới.";
                 case LOCKED -> "Bạn đã nhập sai quá số lần cho phép. Vui lòng yêu cầu mã mới.";
                 case MISSING -> "Lượt đăng ký này đã được thay thế. Vui lòng đăng ký lại để nhận mã mới.";
                 default -> "Không thể xác nhận lượt đăng ký này. Vui lòng đăng nhập hoặc đăng ký lại.";

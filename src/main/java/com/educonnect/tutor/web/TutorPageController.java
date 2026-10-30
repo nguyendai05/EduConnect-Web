@@ -7,16 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TutorPageController {
 
-    @GetMapping("/tutor/my-profile")
-    public String myProfile() {
-        return "pages/tutor/my-profile";
-    }
-
-    @GetMapping("/tutor/profile")
-    public String profile() {
-        return "pages/tutor/profile";
-    }
-
     @GetMapping("/tutor/search")
     public String search() {
         return "pages/tutor/search";

@@ -37,7 +37,7 @@
 <div class="user-shell">
   <th:block th:replace="~{fragments/header-user :: header(${active}, 'v7')}"></th:block>
   <main class="negotiation-page">
-    <header class="page-header"><div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Lời mời của tôi</h1><p class="page-header__description">Xem đề xuất và phản hồi đúng bộ điều khoản đã được gửi.</p></div></div></header>
+    <header class="page-header"><div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Lời mời của tôi</h1></div></div></header>
     <nav class="invitation-live-nav"><a class="button button--outline" th:href="@{/invitation/negotiation}">Danh sách lời mời</a><a class="button button--primary" th:if="${canCreateInvitation}" th:href="@{/invitation/create}">Gửi lời mời mới</a></nav>
     <section class="alert alert--success" th:if="${success != null}" role="status"><p th:text="${success}"></p></section>
     <section class="alert alert--error" th:if="${pageError != null}" role="alert"><p th:text="${pageError}"></p><p><a th:href="@{/invitation/negotiation}">Tải lại danh sách lời mời</a></p></section>

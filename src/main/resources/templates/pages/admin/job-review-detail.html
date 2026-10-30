@@ -42,10 +42,10 @@
   <th:block th:replace="~{pages/job/fragments :: summary(${job})}"></th:block>
   <th:block th:replace="~{pages/job/fragments :: selection(${job})}"></th:block>
 </div><aside class="card job-live-panel"><h2>Quyết định duyệt tin</h2>
-  <section class="job-live-stack" th:if="${decision != null}"><strong th:text="${decision.action == 'approve' ? 'Quyết định gần nhất: phê duyệt' : 'Quyết định gần nhất: từ chối'}"></strong><p class="job-live-copy" th:text="${decision.reason}"></p><p class="job-live-muted" th:text="|Admin #${decision.actorId} · phiên bản tin ${decision.resultingVersion}|"></p></section>
+  <section class="job-live-stack" th:if="${decision != null}"><strong th:text="${decision.action == 'approve' ? 'Quyết định gần nhất: phê duyệt' : 'Quyết định gần nhất: từ chối'}"></strong><p class="job-live-copy" th:if="${decision.reason != null and !decision.reason.isEmpty()}" th:text="${decision.reason}"></p><p class="job-live-muted" th:text="|Admin #${decision.actorId} · phiên bản tin ${decision.resultingVersion}|"></p></section>
   <form class="job-live-stack" method="post" th:if="${job.status.name() == 'PENDING' and reviewRequest != null}" th:action="@{/admin/job-review-detail(id=${job.id})}" data-job-live-form>
     <input type="hidden" name="version" th:value="${job.version}">
-    <label class="form-field">Lý do quyết định<textarea class="textarea-control" name="reason" th:text="${reviewRequest.reason}" rows="8" maxlength="2000" required></textarea></label>
+    <label class="form-field">Lý do (bắt buộc khi từ chối)<textarea class="textarea-control" name="reason" th:text="${reviewRequest.reason}" rows="8" maxlength="2000" aria-describedby="job-review-help"></textarea><small id="job-review-help" class="job-live-muted">Phê duyệt có thể để trống. Từ chối cần ít nhất 10 ký tự để người đăng biết cần sửa gì.</small></label>
     <button class="button button--primary" name="action" value="approve" type="submit">Phê duyệt và công khai</button><button class="button button--outline" name="action" value="reject" type="submit">Từ chối duyệt</button>
   </form>
   <p class="job-live-muted" th:if="${job.status.name() != 'PENDING'}">Tin không ở trạng thái chờ duyệt. Muốn xử lý tin khác, quay về hàng đợi.</p>

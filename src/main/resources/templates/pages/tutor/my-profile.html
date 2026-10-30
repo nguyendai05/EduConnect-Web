@@ -1,339 +1,215 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, true)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Hồ sơ gia sư của tôi · Edu Connect</title>
 <th:block th:fragment="styles">
 <link rel="stylesheet" href="/css/utilities.css" th:href="@{/css/utilities.css}">
 <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
 <link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
-<link rel="stylesheet" href="/css/components/form/file-upload.css" th:href="@{/css/components/form/file-upload.css}">
-<link rel="stylesheet" href="/css/components/form/switch.css" th:href="@{/css/components/form/switch.css}">
+<link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}">
+<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
 <link rel="stylesheet" href="/css/components/feedback/alert.css" th:href="@{/css/components/feedback/alert.css}">
+<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
 <link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
 <link rel="stylesheet" href="/css/components/layout/account-footer.css" th:href="@{/css/components/layout/account-footer.css}">
-<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}">
-<link rel="stylesheet" href="/css/pages/tutor/my-profile.css" th:href="@{/css/pages/tutor/my-profile.css}">
+<link rel="stylesheet" href="/css/pages/profile/live.css" th:href="@{/css/pages/profile/live.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 
 </th:block>
 <th:block th:fragment="scripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
-<th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
 <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/core/switch.js" defer th:src="@{/js/core/switch.js}"></script>
-<script src="/js/core/file-upload.js" defer th:src="@{/js/core/file-upload.js}"></script>
 <script src="/js/pages/tutor/my-profile.js" defer th:src="@{/js/pages/tutor/my-profile.js}"></script>
 </th:block>
 </head>
-<body class="tutor-profile-page" data-tutor-state="verified" th:fragment="content">
-    <!-- UserHeader component instance · tutor variant. -->
+<body class="tutor-profile-page" th:fragment="content">
     <th:block th:replace="~{fragments/header-user :: header(${active}, 'v10')}"></th:block>
+    <main class="user-shell__main">
+        <div class="user-shell__content pl">
+            <h1 class="sr-only">Hồ sơ giảng dạy</h1>
 
-    <main class="user-shell__main tutor-profile-page__main">
-        <div class="user-shell__content tutor-profile-page__content">
-
-            <header class="page-header account-page-heading"><div class="page-header__title-block"><h1 class="page-header__title">Hồ sơ giảng dạy</h1></div></header>
-            <section class="alert alert--warning tutor-profile-state-message" role="status" aria-live="polite">
-                <span class="alert__icon" aria-hidden="true"></span>
-                <div class="alert__content">
-                    <p class="alert__message" data-tutor-state-message>Hồ sơ đang là bản nháp và chưa đủ điều kiện nhận lớp. Hoàn thiện thông tin rồi gửi duyệt.</p>
-                </div>
+            <section class="pl-messages" aria-live="polite">
+                <div class="alert alert--success" role="status" th:if="${success != null}"><p th:text="${success}"></p></div>
+                <div class="alert alert--error" role="alert" th:if="${pageError != null}"><p th:text="${pageError}"></p></div>
             </section>
 
-            <section class="alert alert--error tutor-profile-rejection" role="alert" hidden>
-                <span class="alert__icon" aria-hidden="true"></span>
-                <div class="alert__content">
-                    <p class="alert__title">Hồ sơ cần bổ sung</p>
-                    <p class="alert__message" data-tutor-rejection-reason>Lý do từ chối sẽ được hiển thị tại đây.</p>
-                </div>
+            <th:block th:if="${profile != null}">
+            <section class="alert alert--warning" role="status" th:if="${profile.status.name() == 'REJECTED'}">
+                <p><strong>Hồ sơ cần bổ sung</strong></p>
+                <p class="pl-copy" th:text="${profile.reviewNote}">Lý do</p>
+                <p class="pl-muted" th:if="${profile.reviewedAt != null}" th:text="${T(com.educonnect.common.util.DateLabels).vietnam(profile.reviewedAt) + ' (UTC+7)'}"></p>
             </section>
 
-            <!-- Tạm thời: Card, Avatar, Tag, ScheduleSelector và Button chưa có implementation; phần tutor profile dùng style page. -->
-            <section class="tutor-profile-card" aria-labelledby="tutor-profile-card-title">
-                <div class="tutor-profile-card__top">
-                    <div class="tutor-profile-card__identity">
-                        <span class="tutor-profile-avatar" aria-hidden="true">LY</span>
-                        <div>
-                            <h2 id="tutor-profile-card-title">Lê Hoàng Yến</h2>
-                            <p>Gia sư Chuyên Toán · Hà Nội</p>
-                        </div>
-                    </div>
+            <div class="pl-layout pl-layout--profile">
+                <div class="pl-stack">
+                    <form id="tutor-profile-form" class="pl-stack" method="post" th:action="@{/tutor/my-profile}" th:object="${form}" novalidate data-tutor-form>
+                        <input type="hidden" th:field="*{userVersion}">
+                        <input type="hidden" th:field="*{tutorVersion}">
+                        <fieldset class="pl-stack pl-fieldset" th:disabled="${!profile.editable}">
 
-                    <!-- Tạm thời: Badge component chưa có implementation; status badge dùng style page. -->
-                    <div class="tutor-profile-card__actions">
-                        <span class="tutor-profile-status" data-tutor-status>
-                            <span aria-hidden="true"></span>
-                            <span data-tutor-status-label>Bản nháp</span>
-                        </span>
-                        <button class="tutor-profile-action tutor-profile-action--secondary" type="button" data-tutor-edit hidden>Chỉnh sửa hồ sơ</button>
-                        <button class="tutor-profile-action tutor-profile-action--secondary" type="button" data-tutor-cancel hidden>Hủy</button>
-                        <button class="tutor-profile-action tutor-profile-action--primary" type="button" data-tutor-submit>Gửi duyệt hồ sơ</button>
-                    </div>
-                </div>
-
-                <form class="tutor-profile-form" novalidate data-tutor-form>
-                    <section class="tutor-profile-section">
-                        <h3>Giới thiệu</h3>
-
-                        <textarea
-                            id="tutor-bio"
-                            name="bio"
-                            maxlength="600"
-                            data-tutor-field
-                            aria-describedby="tutor-bio-error"
-                        >Gia sư Toán với 5 năm kinh nghiệm luyện thi THPT Quốc gia.
-                        Tôi xây dựng lộ trình cá nhân hóa, giúp học viên nắm chắc nền tảng
-                        và tự tin đạt mục tiêu.</textarea>
-                        <p class="tutor-profile-error" id="tutor-bio-error" hidden></p>
-                        <p class="tutor-profile-counter" data-tutor-bio-count>0/600</p>
-                    </section>
-
-                    <section class="tutor-profile-section">
-                        <h3>Học vấn &amp; chứng chỉ</h3>
-
-                        <div class="tutor-profile-grid tutor-profile-grid--education">
-                            <div class="tutor-profile-field">
-                                <label for="tutor-education">Trình độ cao nhất</label>
-                                <div class="input-control">
-                                    <input
-                                        class="input-control__input"
-                                        id="tutor-education"
-                                        name="education"
-                                        data-tutor-field
-                                        type="text"
-                                        value="Đại học Sư phạm chính quy"
-                                        aria-describedby="tutor-education-error"
-                                    >
+                            <section class="pl-card" aria-labelledby="sec-general">
+                                <header class="pl-section-head"><span class="pl-step" aria-hidden="true">1</span>
+                                    <div><h2 id="sec-general">Thông tin chung</h2><p class="pl-hint">Phần học viên thấy đầu tiên khi xem hồ sơ của bạn.</p></div></header>
+                                <div class="pl-grid">
+                                    <div class="pl-field">
+                                        <label for="tutor-headline">Tiêu đề hồ sơ</label>
+                                        <span class="input-control"><input class="input-control__input" id="tutor-headline" type="text" th:field="*{headline}" maxlength="180" placeholder="Ví dụ: Gia sư Toán THPT, 5 năm luyện thi"></span>
+                                        <p class="pl-error" th:if="${#fields.hasErrors('headline')}" th:errors="*{headline}"></p>
+                                    </div>
+                                    <div class="pl-field">
+                                        <label for="tutor-experience">Kinh nghiệm giảng dạy</label>
+                                        <span class="input-control"><input class="input-control__input" id="tutor-experience" type="number" min="0" max="80" inputmode="numeric" th:field="*{experienceYears}"><span class="input-control__suffix" aria-hidden="true">năm</span></span>
+                                        <p class="pl-error" th:if="${#fields.hasErrors('experienceYears')}" th:errors="*{experienceYears}"></p>
+                                    </div>
                                 </div>
-                                <p class="tutor-profile-error" id="tutor-education-error" hidden></p>
-                            </div>
-                            <div class="tutor-profile-field">
-                                <label for="tutor-school">Trường đào tạo</label>
-                                <div class="input-control">
-                                    <input class="input-control__input" id="tutor-school" name="school" data-tutor-field type="text" value="Đại học Sư phạm Hà Nội">
+                                <div class="pl-field">
+                                    <label for="tutor-bio">Giới thiệu bản thân</label>
+                                    <textarea class="textarea-control" id="tutor-bio" th:field="*{bio}" maxlength="1000" rows="6" placeholder="Phương pháp dạy, thành tích, đối tượng học viên phù hợp..."></textarea>
+                                    <p class="pl-hint pl-counter" data-bio-count>0/1000</p>
+                                    <p class="pl-error" th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}"></p>
+                                </div>
+                            </section>
+
+                            <section class="pl-card" aria-labelledby="sec-expertise">
+                                <header class="pl-section-head"><span class="pl-step" aria-hidden="true">2</span>
+                                    <div><h2 id="sec-expertise">Chuyên môn</h2><p class="pl-hint">Chọn hoặc tự thêm các môn và cấp học bạn nhận dạy. Có thể chọn nhiều mục.</p></div></header>
+                                <fieldset class="pl-fieldset" id="group-subjects">
+                                    <legend>Môn dạy</legend>
+                                    <div class="pl-chips" data-custom-chips="customSubjects">
+                                        <label class="pl-chip" th:each="c : ${profile.subjects}"><input type="checkbox" name="subjectIds" th:value="${c.id}" th:checked="${form.subjectIds.contains(c.id)}"><span th:text="${c.name}"></span></label>
+                                        <label class="pl-chip" th:each="n : ${form.customSubjects}"><input type="checkbox" name="customSubjects" th:value="${n}" checked><span th:text="${n}"></span></label>
+                                    </div>
+                                    <div class="pl-add" th:if="${profile.editable}">
+                                        <span class="input-control"><input type="text" maxlength="60" list="dl-subjects" placeholder="Thêm môn khác, ví dụ: Lập trình Python" autocomplete="off" aria-label="Thêm môn dạy khác" data-add-input="customSubjects"></span>
+                                        <button class="button button--outline" type="button" data-add-button="customSubjects">Thêm</button>
+                                    </div>
+                                    <datalist id="dl-subjects"><option th:each="n : ${profile.subjectSuggestions}" th:value="${n}"></option></datalist>
+                                    <p class="pl-hint" th:if="${profile.editable}">Không thấy mục của bạn? Gõ tên rồi bấm Thêm (Enter). Mục mới được lưu khi bạn bấm Lưu thay đổi.</p>
+                                </fieldset>
+                                <fieldset class="pl-fieldset" id="group-grades">
+                                    <legend>Cấp học</legend>
+                                    <div class="pl-chips" data-custom-chips="customGradeLevels">
+                                        <label class="pl-chip" th:each="c : ${profile.gradeLevels}"><input type="checkbox" name="gradeLevelIds" th:value="${c.id}" th:checked="${form.gradeLevelIds.contains(c.id)}"><span th:text="${c.name}"></span></label>
+                                        <label class="pl-chip" th:each="n : ${form.customGradeLevels}"><input type="checkbox" name="customGradeLevels" th:value="${n}" checked><span th:text="${n}"></span></label>
+                                    </div>
+                                    <div class="pl-add" th:if="${profile.editable}">
+                                        <span class="input-control"><input type="text" maxlength="60" list="dl-grades" placeholder="Thêm cấp học khác, ví dụ: Lớp 7" autocomplete="off" aria-label="Thêm cấp học khác" data-add-input="customGradeLevels"></span>
+                                        <button class="button button--outline" type="button" data-add-button="customGradeLevels">Thêm</button>
+                                    </div>
+                                    <datalist id="dl-grades"><option th:each="n : ${profile.gradeSuggestions}" th:value="${n}"></option></datalist>
+                                    <p class="pl-hint" th:if="${profile.editable}">Không thấy mục của bạn? Gõ tên rồi bấm Thêm (Enter). Mục mới được lưu khi bạn bấm Lưu thay đổi.</p>
+                                </fieldset>
+                            </section>
+
+                            <section class="pl-card" aria-labelledby="sec-area">
+                                <header class="pl-section-head"><span class="pl-step" aria-hidden="true">3</span>
+                                    <div><h2 id="sec-area">Khu vực &amp; hình thức dạy</h2><p class="pl-hint">Nơi bạn có thể dạy và cách thức tổ chức buổi học.</p></div></header>
+                                <fieldset class="pl-fieldset" id="group-areas">
+                                    <legend>Khu vực nhận dạy</legend>
+                                    <div class="pl-chips">
+                                        <label class="pl-chip" th:each="c : ${profile.areas}"><input type="checkbox" name="areaIds" th:value="${c.id}" th:checked="${form.areaIds.contains(c.id)}"><span th:text="${c.name}"></span></label>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="pl-fieldset" id="group-modes">
+                                    <legend>Hình thức dạy</legend>
+                                    <div class="pl-chips">
+                                        <label class="pl-chip" th:each="c : ${profile.deliveryModes}"><input type="checkbox" name="deliveryModeIds" th:value="${c.id}" th:checked="${form.deliveryModeIds.contains(c.id)}"><span th:text="${c.name}"></span></label>
+                                    </div>
+                                </fieldset>
+                            </section>
+
+                            <div class="pl-savebar" th:if="${profile.editable}">
+                                <span class="pl-hint">Thay đổi chỉ có hiệu lực sau khi bạn lưu.</span>
+                                <div class="pl-actions">
+                                    <a class="button button--outline" th:href="@{/tutor/my-profile}">Hủy</a>
+                                    <button class="button button--primary" type="submit">Lưu thay đổi</button>
                                 </div>
                             </div>
-                            <div class="tutor-profile-field">
-                                <label for="tutor-major">Chuyên ngành</label>
-                                <div class="input-control">
-                                    <input class="input-control__input" id="tutor-major" name="major" data-tutor-field type="text" value="Sư phạm Toán học">
-                                </div>
-                            </div>
-                            <div class="tutor-profile-field">
-                                <label for="tutor-experience">Số năm kinh nghiệm</label>
-                                <div class="input-control">
-                                    <input
-                                        class="input-control__input input-control__input--money"
-                                        id="tutor-experience"
-                                        name="experience"
-                                        data-tutor-field
-                                        type="text"
-                                        inputmode="numeric"
-                                        value="5"
-                                    >
-                                    <span class="input-control__suffix" aria-hidden="true">năm</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tutor-profile-system-stats" aria-label="Dữ liệu hệ thống">
-                            <div class="tutor-profile-system-stats__heading">
-                                Dữ liệu hệ thống · không thể chỉnh sửa thủ công
-                                <span>Tự động đồng bộ</span>
-                            </div>
-                            <div>
-                                <span>Đánh giá trung bình<strong>4,9 ★ <small>(126 lượt đánh giá)</small></strong></span>
-                                <span>Hợp đồng đã hoàn thành<strong>84 <small>lớp học</small></strong></span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="tutor-profile-section">
-                        <div class="tutor-profile-section__heading">
-                            <div>
-                                <h3>Môn dạy &amp; học phí</h3>
-                                <p>Mỗi môn có một mức học phí riêng cho một buổi 90 phút.</p>
-                            </div>
-                            <button class="tutor-profile-inline-action" type="button" data-tutor-add-subject>+ Thêm môn dạy</button>
-                        </div>
-
-                        <div class="tutor-profile-grid">
-                            <div class="tutor-profile-field">
-                                <label for="tutor-subjects">Môn dạy chính</label>
-                                <div class="input-control">
-                                    <input
-                                        class="input-control__input"
-                                        id="tutor-subjects"
-                                        name="subjects"
-                                        data-tutor-field
-                                        type="text"
-                                        value="Toán 10, Toán 11, Toán 12"
-                                        placeholder="Ví dụ: Toán 10, Toán 11"
-                                        aria-describedby="tutor-subjects-error"
-                                    >
-                                </div>
-                                <p class="tutor-profile-error" id="tutor-subjects-error" hidden></p>
-                            </div>
-                            <div class="tutor-profile-field">
-                                <label for="tutor-rate">Học phí tham khảo</label>
-                                <div class="input-control">
-                                    <input
-                                        class="input-control__input input-control__input--money"
-                                        id="tutor-rate"
-                                        name="rate"
-                                        data-tutor-field
-                                        type="text"
-                                        inputmode="numeric"
-                                        value="250.000"
-                                        placeholder="Ví dụ: 250.000"
-                                        aria-describedby="tutor-rate-error"
-                                    >
-                                    <span class="input-control__suffix" aria-hidden="true">đ / buổi</span>
-                                </div>
-                                <p class="tutor-profile-error" id="tutor-rate-error" hidden></p>
-                            </div>
-                        </div>
-
-                        <!-- Tạm thời: SubjectRow chưa có component chung; các dòng môn dạy dùng style page. -->
-                        <div class="tutor-profile-subject-list">
-                            <article>
-                                <span class="tutor-profile-subject-list__icon">Σ</span>
-                                <div><strong>Môn Toán <small>THPT</small></strong><p>Toán 10, 11, 12 &amp; luyện thi THPT Quốc gia</p></div>
-                                <div><strong>200.000 đ</strong><span>/ buổi 90 phút</span></div>
-                            </article>
-                            <article>
-                                <span class="tutor-profile-subject-list__icon">Σ</span>
-                                <div><strong>Môn Toán <small>THCS</small></strong><p>Toán 6, 7, 8, 9 &amp; ôn thi vào lớp 10</p></div>
-                                <div><strong>180.000 đ</strong><span>/ buổi 90 phút</span></div>
-                            </article>
-                            <article>
-                                <span class="tutor-profile-subject-list__icon">ϟ</span>
-                                <div><strong>Môn Vật lý <small>THPT</small></strong><p>Vật lý 10, 11, 12 chuyên đề nâng cao</p></div>
-                                <div><strong>220.000 đ</strong><span>/ buổi 90 phút</span></div>
-                            </article>
-                        </div>
-                    </section>
-
-                    <section class="tutor-profile-section">
-                        <h3>Khu vực &amp; hình thức dạy</h3>
-
-                        <div class="tutor-profile-field">
-                            <label for="tutor-location">Khu vực nhận dạy</label>
-                            <div class="input-control">
-                                <input
-                                    class="input-control__input"
-                                    id="tutor-location"
-                                    name="location"
-                                    data-tutor-field
-                                    type="text"
-                                    value="TP. Thủ Đức, TP.HCM"
-                                    placeholder="Ví dụ: Quận 1, TP.HCM"
-                                >
-                            </div>
-                        </div>
-
-                        <!-- Tạm thời: TeachingModeSelector chưa có component chung; dùng radio card cấp trang. -->
-                        <fieldset class="tutor-profile-mode">
-                            <legend>Hình thức dạy</legend>
-                            <label>
-                                <input type="radio" name="teaching-mode" value="home" data-tutor-editable>
-                                <span><strong>Tại nhà</strong><small>Học trực tiếp</small></span>
-                            </label>
-                            <label>
-                                <input type="radio" name="teaching-mode" value="online" data-tutor-editable>
-                                <span><strong>Trực tuyến</strong><small>Google Meet / Zoom</small></span>
-                            </label>
-                            <label>
-                                <input type="radio" name="teaching-mode" value="both" checked data-tutor-editable>
-                                <span><strong>Cả hai</strong><small>Linh hoạt hình thức</small></span>
-                            </label>
                         </fieldset>
+                    </form>
 
-                        <label class="switch-row tutor-profile-accepting">
-                            <span class="switch-row__copy">
-                                <span class="switch-row__title" data-tutor-accepting-title>Chưa đủ điều kiện nhận lớp</span>
-                                <span class="switch-row__help" data-tutor-accepting-help>Hồ sơ cần được xác minh trước khi xuất hiện trong kết quả tìm kiếm.</span>
-                            </span>
-                            <span class="switch-control">
-                                <input type="checkbox" data-tutor-accepting data-tutor-editable>
-                                <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
-                            </span>
-                        </label>
-                    </section>
-
-                    <section class="tutor-profile-section" id="lich-ranh">
-                        <div class="tutor-profile-section__heading">
-                            <div>
-                                <h3>Lịch rảnh</h3>
-
-                            </div>
-                            <button class="tutor-profile-inline-action" type="button" data-tutor-add-slot>+ Thêm khung giờ</button>
-                        </div>
-
-                        <!-- Tạm thời: ScheduleSelector chưa có component chung; dùng các schedule slot cấp trang. -->
-                        <div class="tutor-profile-schedule" data-tutor-schedule>
-                            <button type="button" data-tutor-slot aria-pressed="true"><strong>T2 · Thứ Hai hằng tuần</strong><span>18:00 – 21:00 (3 tiếng)</span></button>
-                            <button type="button" data-tutor-slot aria-pressed="true"><strong>T4 · Thứ Tư hằng tuần</strong><span>18:00 – 21:00 (3 tiếng)</span></button>
-                            <button type="button" data-tutor-slot aria-pressed="true"><strong>T6 · Thứ Sáu hằng tuần</strong><span>18:00 – 21:00 (3 tiếng)</span></button>
-                            <button type="button" data-tutor-slot aria-pressed="false"><strong>T7 · Thứ Bảy hằng tuần</strong><span>08:30 – 11:30 (3 tiếng)</span></button>
-                        </div>
-                        <p class="tutor-profile-error" data-tutor-schedule-error hidden></p>
-                    </section>
-
-                    <section class="tutor-profile-section">
-                        <h3>Chứng chỉ &amp; bằng cấp</h3>
-                        <p>Các tệp được dùng trong quá trình xác minh hồ sơ. Hỗ trợ PDF, PNG, JPG tối đa 5 MB mỗi tệp.</p>
-
-                        <!-- Tạm thời: CertificateRow và file status chip chưa có component chung; file list dùng style page. -->
-                        <div class="tutor-profile-certificates">
-                            <article>
-                                <span class="tutor-profile-certificate__icon">PDF</span>
-                                <div><strong>Bang_DaiHoc_SuPham.pdf</strong><p>1.8 MB · Bằng Cử nhân Sư phạm Toán</p></div>
-                                <span class="tutor-profile-certificate__status">Đã duyệt</span>
-                                <button type="button">Xem</button>
-                                <button type="button">Xóa</button>
-                            </article>
-                            <article>
-                                <span class="tutor-profile-certificate__icon">IMG</span>
-                                <div><strong>ChungChi_NghiepVuSuPham.jpg</strong><p>2.3 MB · Chứng chỉ nghiệp vụ giảng dạy tích cực</p></div>
-                                <span class="tutor-profile-certificate__status">Đã duyệt</span>
-                                <button type="button">Xem</button>
-                                <button type="button">Xóa</button>
-                            </article>
-                            <article>
-                                <span class="tutor-profile-certificate__icon tutor-profile-certificate__icon--pending">PDF</span>
-                                <div><strong>ChungChi_BoiDuong_2026.pdf</strong><p>1.1 MB · Chứng nhận bồi dưỡng phương pháp mới 2026</p></div>
-                                <span class="tutor-profile-certificate__status tutor-profile-certificate__status--pending">Chờ duyệt</span>
-                                <button type="button">Xem</button>
-                                <button type="button">Xóa</button>
-                            </article>
-                        </div>
-
-                        <section class="tutor-profile-upload" data-file-upload data-variant="dropzone">
-                            <label class="file-dropzone" data-dropzone>
-                                <input class="file-upload__input" type="file" accept=".pdf,.png,.jpg,.jpeg" data-tutor-editable>
-                                <span class="file-upload__cloud" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none">
-                                        <path d="M7.5 18.5h9a4 4 0 0 0 .8-7.92A5.5 5.5 0 0 0 6.8 9.2 4.7 4.7 0 0 0 7.5 18.5Z"/>
-                                        <path d="M12 9.5v7M9.5 12l2.5-2.5 2.5 2.5"/>
-                                    </svg>
-                                </span>
-                                <strong>Kéo thả hoặc bấm để tải chứng chỉ lên</strong>
-                                <span>Đã tải 3/5 tệp cho phép</span>
-                                <small data-dropzone-help>Hỗ trợ PDF, PNG, JPG dưới 5 MB</small>
+                    <section class="pl-card" aria-labelledby="evidence-title">
+                        <header class="pl-section-head"><span class="pl-step" aria-hidden="true">4</span>
+                            <div><h2 id="evidence-title">Minh chứng &amp; chứng chỉ</h2>
+                                <p class="pl-hint">PDF, PNG hoặc JPG, tối đa 5 MB mỗi tệp, tối đa 5 tệp. Chỉ bạn và quản trị viên xem được.</p></div></header>
+                        <ul class="pl-list" th:unless="${profile.evidence.isEmpty()}">
+                            <li class="pl-file" th:each="file : ${profile.evidence}">
+                                <span class="pl-kind" th:text="${file.kind()}">PDF</span>
+                                <div class="pl-file__info">
+                                    <strong th:text="${file.name}">tệp.pdf</strong>
+                                    <span class="pl-muted" th:text="${file.sizeLabel() + ' · ' + T(com.educonnect.common.util.DateLabels).vietnam(file.uploadedAt)}"></span>
+                                </div>
+                                <div class="pl-actions">
+                                    <a class="button button--outline button--small" th:href="@{/files/private/{id}(id=${file.fileId})}" target="_blank" rel="noopener">Xem</a>
+                                    <form method="post" th:action="@{/tutor/my-profile/evidence/{id}/delete(id=${file.fileId})}" th:if="${profile.editable}" data-confirm="Xóa tệp minh chứng này?">
+                                        <button class="button button--outline button--small" type="submit">Xóa</button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- multipart: CSRFFilter chạy trước khi tách phần thân form nên token đi theo query. -->
+                        <form method="post" enctype="multipart/form-data" data-upload-form
+                              th:action="@{/tutor/my-profile/evidence(_csrf=${_csrf.token})}"
+                              th:if="${profile.editable and profile.evidence.size() < 5}">
+                            <label class="pl-drop" for="tutor-evidence">
+                                <strong>Bấm để chọn tệp tải lên</strong>
+                                <span class="pl-muted" th:text="${'Đã tải ' + profile.evidence.size() + '/5 tệp'}">Đã tải 0/5 tệp</span>
+                                <input id="tutor-evidence" type="file" name="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" required>
                             </label>
-                            <p class="file-upload__status" data-status aria-live="polite"></p>
-                        </section>
+                            <noscript><div class="pl-actions"><button class="button button--secondary" type="submit">Tải lên</button></div></noscript>
+                        </form>
                     </section>
-                </form>
-            </section>
+                </div>
+
+                <aside class="pl-side" aria-label="Trạng thái hồ sơ">
+                    <section class="pl-card">
+                        <div class="pl-identity">
+                            <span class="pl-avatar" aria-hidden="true" th:text="${profile.initials()}">GS</span>
+                            <div>
+                                <strong th:text="${profile.displayName}">Họ và tên</strong>
+                                <span class="pl-muted" th:text="${profile.email}">email</span>
+                            </div>
+                        </div>
+                        <div class="pl-status">
+                            <span class="badge"
+                                  th:classappend="${profile.status.name() == 'APPROVED' ? 'badge--success' : (profile.status.name() == 'REJECTED' ? 'badge--danger' : (profile.status.name() == 'PENDING' ? 'badge--warning' : 'badge--neutral'))}"
+                                  th:text="${profile.statusLabel()}">Bản nháp</span>
+                        </div>
+                        <p class="pl-hint" th:if="${profile.status.name() == 'DRAFT'}">Hồ sơ chưa hiển thị công khai. Hoàn thiện rồi gửi duyệt.</p>
+                        <p class="pl-hint" th:if="${profile.status.name() == 'PENDING'}">Đã gửi và đang chờ duyệt. Bạn sẽ nhận thông báo khi có kết quả, trong lúc chờ chưa thể chỉnh sửa.</p>
+                        <p class="pl-hint" th:if="${profile.status.name() == 'APPROVED'}">Đang hiển thị trong kết quả tìm gia sư. Sửa tiêu đề, kinh nghiệm, môn, cấp học hoặc minh chứng sẽ cần duyệt lại.</p>
+                        <p class="pl-hint" th:if="${profile.status.name() == 'REJECTED'}">Bổ sung theo góp ý rồi gửi duyệt lại.</p>
+                    </section>
+
+                    <section class="pl-card" th:if="${profile.status.name() == 'DRAFT' or profile.status.name() == 'REJECTED'}" aria-labelledby="progress-title">
+                        <div class="pl-progress-head">
+                            <h2 id="progress-title">Hoàn thiện hồ sơ</h2>
+                            <strong th:text="${profile.doneCount() + '/' + profile.checklist().size()}">0/7</strong>
+                        </div>
+                        <div class="pl-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${profile.percent()}" aria-labelledby="progress-title">
+                            <span th:style="${'width:' + profile.percent() + '%'}"></span>
+                        </div>
+                        <ul class="pl-checklist">
+                            <li th:each="item : ${profile.checklist()}" th:classappend="${item.done} ? 'is-done'">
+                                <span class="pl-check" aria-hidden="true"></span>
+                                <a th:href="${'#' + item.anchor}" th:text="${item.label}">Mục</a>
+                                <span class="sr-only" th:text="${item.done ? '(đã xong)' : '(chưa xong)'}"></span>
+                            </li>
+                        </ul>
+                        <p class="pl-hint">Tiến độ tính theo dữ liệu đã lưu. Hãy bấm Lưu thay đổi trước khi gửi duyệt.</p>
+                        <form method="post" th:action="@{/tutor/my-profile/submit}">
+                            <input type="hidden" name="tutorVersion" th:value="${profile.tutorVersion}">
+                            <button class="button button--primary button--large pl-block" type="submit" th:disabled="${!profile.canSubmit}"
+                                    th:text="${profile.status.name() == 'REJECTED' ? 'Gửi duyệt lại' : 'Gửi duyệt hồ sơ'}">Gửi duyệt hồ sơ</button>
+                        </form>
+                    </section>
+                </aside>
+            </div>
+            </th:block>
         </div>
     </main>
-
     <th:block th:replace="~{fragments/footer-account :: footer(${active}, 'v1')}"></th:block>
-
     <th:block th:replace="${scripts}"></th:block>
 </body>
 </html>

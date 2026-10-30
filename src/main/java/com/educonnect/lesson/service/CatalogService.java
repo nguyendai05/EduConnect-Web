@@ -132,7 +132,7 @@ public class CatalogService {
             return "Số chỗ phải lớn hơn 0";
         }
         if (offering.getOfferingType() == OfferingType.SERVICE && seats != 1) {
-            return "Dịch vụ 1 kèm 1 chỉ đăng ký một chỗ";
+            return "Dạy kèm 1-1 chỉ đăng ký một chỗ";
         }
         if (seats > availableSeats(offering)) {
             return "Lớp không còn đủ chỗ theo lựa chọn";
