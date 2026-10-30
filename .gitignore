@@ -37,3 +37,6 @@ replay_pid*
 # Local environment configuration
 .evn.local
 .env.local
+
+# Minh chứng riêng tư tải lên khi chạy local
+storage/
