@@ -8,13 +8,13 @@ public class ResetPasswordForm {
     @Pattern(regexp = "[A-Za-z0-9_-]{43}", message = "Liên kết đặt lại mật khẩu không hợp lệ.")
     private String token;
     @NotBlank(message = "Vui lòng nhập mật khẩu mới.")
-    @Size(min = 8, max = 72, message = "Mật khẩu cần từ 8 đến 72 ký tự, tối đa 72 byte UTF-8.")
+    @Size(min = 8, max = 72, message = "Mật khẩu cần từ 8 đến 72 ký tự.")
     private String password;
     @NotBlank(message = "Vui lòng xác nhận mật khẩu.")
     private String confirmPassword;
     @AssertTrue(message = "Mật khẩu xác nhận chưa khớp.")
     public boolean isPasswordConfirmed() { return password != null && password.equals(confirmPassword); }
-    @AssertTrue(message = "Mật khẩu không được vượt quá 72 byte UTF-8 hoặc chứa ký tự NUL.")
+    @AssertTrue(message = "Mật khẩu quá dài hoặc chứa ký tự không hợp lệ. Hãy rút ngắn mật khẩu hoặc bớt ký tự có dấu.")
     public boolean isPasswordWithinByteLimit() {
         return password == null || (password.getBytes(StandardCharsets.UTF_8).length <= 72 && password.indexOf('\0') < 0);
     }
