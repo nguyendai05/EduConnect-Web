@@ -60,7 +60,7 @@
                     <!-- Khối thông tin nổi bật (Hero) -->
                     <section class="card catalog-hero" aria-labelledby="offering-title">
                         <div class="catalog-hero__badges">
-                            <span class="badge badge--info" th:text="${offering.offeringType == T(com.educonnect.lesson.domain.OfferingType).GROUP_CLASS ? 'Lớp nhóm' : 'Dịch vụ 1 kèm 1'}">Dịch vụ 1 kèm 1</span>
+                            <span class="badge badge--info" th:text="${offering.offeringType == T(com.educonnect.lesson.domain.OfferingType).GROUP_CLASS ? 'Lớp nhóm' : 'Dạy kèm 1-1'}">Dịch vụ 1 kèm 1</span>
                             <span class="badge badge--info" th:text="${issue == null ? 'Đang nhận đăng ký' : issue}"></span>
                         </div>
                         <h1 class="catalog-hero__title" id="offering-title" th:text="${offering.title}">Tên dịch vụ</h1>

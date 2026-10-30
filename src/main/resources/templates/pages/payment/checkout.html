@@ -22,7 +22,6 @@
 <main class="flow-page">
     <header class="flow-head">
         <h1>Thanh toán</h1>
-        <p>Chọn cách trả học phí. Tiền được giữ ký quỹ và chỉ chuyển cho gia sư theo từng buổi bạn xác nhận.</p>
     </header>
     <th:block th:replace="~{fragments/payment-flow :: steps(2)}"></th:block>
     <p class="flow-alert flow-alert--error" role="alert" th:if="${error != null}" th:text="${error}"></p>

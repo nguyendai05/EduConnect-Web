@@ -25,7 +25,6 @@
 <main class="chat-page">
     <header class="page-header"><div class="page-header__title-block">
         <h1 class="page-header__title">Tin nhắn</h1>
-        <p class="chat-muted">Trao đổi giá, lịch học với gia sư trước khi gửi lời mời và chốt hợp đồng.</p>
     </div></header>
     <p class="alert alert--error" role="alert" th:if="${error != null}" th:text="${error}"></p>
     <section class="empty-state" th:if="${conversations == null or conversations.empty}">
