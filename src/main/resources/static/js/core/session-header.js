@@ -57,13 +57,15 @@ function initFlash() {
     const toast = document.createElement('div')
     toast.className = 'flash-toast ' + (error ? 'flash-toast--error' : 'flash-toast--success')
     toast.setAttribute('role', error ? 'alert' : 'status')
+    const icon = document.createElement('span')
+    icon.className = 'flash-toast__icon'
+    icon.setAttribute('aria-hidden', 'true')
     const text = document.createElement('p')
     text.textContent = node.textContent.trim()
     const close = document.createElement('button')
     close.type = 'button'
     close.setAttribute('aria-label', 'Đóng thông báo')
-    close.textContent = '×'
-    toast.append(text, close)
+    toast.append(icon, text, close)
     stack.append(toast)
     node.remove()
     let timer = null
