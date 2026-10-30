@@ -22,7 +22,6 @@
 <main class="flow-page">
     <header class="flow-head">
         <h1>Thanh toán qua PayOS</h1>
-        <p>Hoàn tất chuyển khoản trên trang PayOS. Trang này tự cập nhật ngay khi tiền về, bạn không cần tải lại.</p>
     </header>
     <th:block th:replace="~{fragments/payment-flow :: steps(2)}"></th:block>
 
@@ -42,7 +41,7 @@
             <div class="flow-amount" th:text="${#numbers.formatDecimal(payment.providerAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></div>
             <p th:text="${payment.title}"></p>
             <span class="flow-timer" data-countdown>Phiên còn hiệu lực</span>
-            <a class="button button--primary button--large flow-cta" th:href="${payment.payUrl}" target="_blank" rel="noopener">Mở trang thanh toán PayOS</a>
+            <a class="button button--primary button--large flow-cta" th:href="${payment.payUrl}" rel="noopener">Mở trang thanh toán PayOS</a>
             <span class="flow-pulse">Đang chờ thanh toán…</span>
         </section>
 
@@ -56,9 +55,9 @@
         <section class="flow-card flow-receipt" th:if="${payment.payUrl != null}" aria-labelledby="howto-title">
             <h2 id="howto-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>Cách thanh toán</h2>
             <ol class="flow-howto">
-                <li><span>Bấm <strong>Mở trang thanh toán PayOS</strong> (mở ở tab mới).</span></li>
+                <li><span>Bấm <strong>Mở trang thanh toán PayOS</strong>.</span></li>
                 <li><span>Quét mã QR bằng ứng dụng ngân hàng và chuyển đúng số tiền.</span></li>
-                <li><span>Quay lại tab này: hợp đồng tự chuyển sang <strong>Đang thực hiện</strong>.</span></li>
+                <li><span>Sau khi trả tiền, PayOS đưa bạn quay lại EduConnect: hợp đồng tự chuyển sang <strong>Đang thực hiện</strong>.</span></li>
             </ol>
         </section>
 

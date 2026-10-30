@@ -39,7 +39,10 @@ import jakarta.persistence.LockModeType;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
@@ -73,12 +76,14 @@ public class PaymentService {
     private ContractSessionService sessionService;
     private EntityManager entityManager;
     private Clock clock;
+    private final TransactionTemplate tx;
 
     public PaymentService(PaymentJpaRepository payments, PaymentAllocationJpaRepository allocations,
                           PaymentAttemptJpaRepository attempts, PaymentWebhookEventJpaRepository webhooks,
                           PayosClient payos, PayosProperties properties, ObjectMapper json,
                           ContractJpaRepository contracts, EnrollmentJpaRepository enrollments, LedgerService ledger,
-                          StatusRecorder status, ContractSessionService sessionService, EntityManager entityManager, Clock clock) {
+                          StatusRecorder status, ContractSessionService sessionService, EntityManager entityManager, Clock clock,
+                          PlatformTransactionManager transactions) {
         this.payments = payments;
         this.allocations = allocations;
         this.attempts = attempts;
@@ -93,6 +98,7 @@ public class PaymentService {
         this.sessionService = sessionService;
         this.entityManager = entityManager;
         this.clock = clock;
+        this.tx = new TransactionTemplate(transactions);
     }
 
     /** Dữ liệu trang checkout: hợp đồng, số dư ví và cách chia tiền gợi ý (hoặc thanh toán đang có). */
@@ -144,13 +150,18 @@ public class PaymentService {
     /** Mở một lần thử PayOS mới, trừ khi lần thử gần nhất còn chờ và chưa hết hạn. */
     private void startAttempt(Payment payment, Instant now) {
         PaymentAttempt last = attempts.findTopByPaymentIdOrderByAttemptNumberDesc(payment.getId()).orElse(null);
-        if (last != null && last.getStatus() == PaymentAttemptStatus.PENDING && last.getExpiresAt().isAfter(now)) return;
+        if (last != null && last.getStatus() == PaymentAttemptStatus.PENDING && last.getExpiresAt().isAfter(now)) {
+            refreshFromPayos(last); // người dùng có thể đã hủy ở PayOS: không dùng lại link đã hủy
+            if (last.getStatus() == PaymentAttemptStatus.PENDING) return;
+        }
         int number = last == null ? 1 : last.getAttemptNumber() + 1;
         long orderCode = System.currentTimeMillis() * 100 + random.nextInt(100);
         Instant expiresAt = now.plus(properties.linkTtl());
         String back = properties.returnBase() + "/payment/result?payment=" + payment.getId();
+        // Hủy trên PayOS thì quay về trang thanh toán của hợp đồng để chọn lại.
+        String cancel = properties.returnBase() + "/payment/checkout?contract=" + contractOf(payment).getId();
         var link = payos.createLink(orderCode, payment.getProviderAmount().longValueExact(),
-                "EduConnect " + payment.getId(), back, back, expiresAt);
+                "EduConnect " + payment.getId(), back, cancel, expiresAt);
         PaymentAttempt attempt = PaymentAttempt.create();
         attempt.setPaymentId(payment.getId());
         attempt.setAttemptNumber(number);
@@ -168,27 +179,45 @@ public class PaymentService {
     /**
      * Trạng thái để trang QR hỏi định kỳ. Nếu lần thử còn chờ thì hỏi lại PayOS (dự phòng khi webhook
      * chưa tới) và áp dụng kết quả bằng cùng logic với webhook.
+     * Không chạy trong transaction: cuộc gọi HTTP tới PayOS có thể chậm, không được giữ kết nối DB trong lúc chờ;
+     * chỉ bước ghi kết quả mới mở một transaction ngắn.
      */
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Map<String, String> poll(AccountPrincipal user, Long paymentId) {
         Payment payment = ownPayment(user, paymentId);
         PaymentAttempt last = attempts.findTopByPaymentIdOrderByAttemptNumberDesc(paymentId).orElse(null);
-        if (payment.getStatus() == PaymentStatus.PENDING && last != null && last.getStatus() == PaymentAttemptStatus.PENDING) {
-            refreshFromPayos(last);
+        if (payment.getStatus() == PaymentStatus.PENDING && last != null && last.getStatus() == PaymentAttemptStatus.PENDING
+                && payos.configured()) {
+            String state = queryPayos(last.getProviderOrderCode());
+            if (state != null) {
+                Long attemptId = last.getId();
+                tx.executeWithoutResult(status -> attempts.findById(attemptId)
+                        .filter(attempt -> attempt.getStatus() == PaymentAttemptStatus.PENDING)
+                        .ifPresent(attempt -> applyState(attempt, state)));
+            }
             payment = ownPayment(user, paymentId);
             last = attempts.findTopByPaymentIdOrderByAttemptNumberDesc(paymentId).orElse(null);
         }
         return Map.of("status", payment.getStatus().name(), "attempt", last == null ? "NONE" : last.getStatus().name());
     }
 
-    /** Hỏi PayOS về một lần thử đang chờ và cập nhật nếu đã trả, hủy hoặc hết hạn. */
+    /** Hỏi PayOS về một lần thử đang chờ và cập nhật nếu đã trả, hủy hoặc hết hạn (dùng khi đã ở trong transaction). */
     private void refreshFromPayos(PaymentAttempt attempt) {
         if (!payos.configured()) return;
-        String state;
+        String state = queryPayos(attempt.getProviderOrderCode());
+        if (state != null) applyState(attempt, state);
+    }
+
+    /** Trạng thái do PayOS trả về, hoặc null nếu PayOS tạm lỗi/chậm (lần hỏi sau sẽ thử lại). */
+    private String queryPayos(long orderCode) {
         try {
-            state = payos.status(attempt.getProviderOrderCode());
+            return payos.status(orderCode);
         } catch (RuntimeException error) {
-            return; // PayOS tạm lỗi: lần hỏi sau sẽ thử lại
+            return null;
         }
+    }
+
+    private void applyState(PaymentAttempt attempt, String state) {
         Instant now = clock.instant();
         switch (state) {
             case "PAID" -> applyPaid(attempt, now);
