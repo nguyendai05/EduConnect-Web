@@ -6,7 +6,8 @@
 .user-header__nav { display: flex; align-self: stretch; align-items: stretch; justify-content: center; flex: 1 1 auto; gap: clamp(1rem, 2vw, 2rem); min-width: 0; }
 .user-header__nav-link { position: relative; display: inline-flex; align-items: center; color: var(--color-text-secondary); font-size: .8125rem; font-weight: 500; white-space: nowrap; }
 .user-header__nav-link:hover, .user-header__nav-link.is-active { color: var(--color-primary); }
-.user-header__nav-link.is-active { font-weight: 650; }
+.user-header__nav-link.is-active { font-weight: 500; }
+.user-header__nav-link.is-active::after { position: absolute; right: 0; bottom: 0; left: 0; height: 2px; background: var(--color-primary); content: ""; }
 .user-header__actions { display: flex; flex: 0 0 auto; align-items: center; gap: .625rem; margin-left: auto; }
 .user-header__icon-button, .user-header__profile { color: var(--color-text); background: transparent; border: 0; cursor: pointer; }
 .user-header__icon-button { display: grid; width: 2.5rem; height: 2.5rem; padding: 0; place-items: center; border-radius: var(--radius-md); }

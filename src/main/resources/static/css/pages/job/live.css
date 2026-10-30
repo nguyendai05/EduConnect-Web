@@ -1,5 +1,8 @@
 /* Tác giả: Trường Đạt. DAT-04: form và dữ liệu server cho bảy trang tin/duyệt tin. */
 .job-live { display: grid; gap: var(--space-5); padding-block: var(--space-6); min-width: 0; }
+.job-breadcrumb .breadcrumb__list { flex-wrap: wrap; row-gap: var(--space-2); }
+.job-breadcrumb .breadcrumb__item { max-width: 100%; }
+.job-breadcrumb .breadcrumb__link { overflow-wrap: anywhere; }
 .job-live-nav, .job-live-actions, .job-live-heading { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
 .job-live-heading { justify-content: space-between; }
 .job-live-panel { padding: var(--space-6); display: grid; gap: var(--space-4); min-width: 0; }

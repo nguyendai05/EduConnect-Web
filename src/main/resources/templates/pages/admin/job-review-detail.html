@@ -23,6 +23,7 @@
 <link rel="stylesheet" th:href="@{/css/components/form/input.css}">
 <link rel="stylesheet" th:href="@{/css/components/form/select.css}">
 <link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 
@@ -34,14 +35,14 @@
 <script src="/js/pages/admin/job-review-detail.js" defer th:src="@{/js/pages/admin/job-review-detail.js}"></script>
 </th:block>
 </head>
-<body th:fragment="content"><div class="admin-shell">
+<body class="job-review-detail-page dat-render" th:fragment="content"><div class="admin-shell">
 <th:block th:replace="~{fragments/sidebar-admin :: sidebar(${active}, 'v1')}"></th:block>
 <th:block th:replace="~{fragments/header-admin :: header(${active}, 'v3')}"></th:block>
-<main class="admin-shell__workspace"><div class="admin-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><a class="button button--outline" th:href="@{/admin/job-review-queue}">Về hàng đợi duyệt tin</a>
-<th:block th:if="${job != null}"><div class="job-live-layout"><div class="job-live-stack">
+<main class="admin-shell__workspace"><div class="admin-shell__content job-review-detail job-live"><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><header class="job-review-detail__header"><div><h1>Duyệt tin tìm gia sư</h1><p>Kiểm tra nội dung tin và thông tin người đăng trước khi quyết định.</p></div><a class="button button--outline" th:href="@{/admin/job-review-queue}">Về hàng đợi</a></header>
+<th:block th:if="${job != null}"><div class="job-review-detail__layout"><div class="job-review-detail__sections">
   <th:block th:replace="~{pages/job/fragments :: summary(${job})}"></th:block>
   <th:block th:replace="~{pages/job/fragments :: selection(${job})}"></th:block>
-</div><aside class="card job-live-panel"><h2>Quyết định duyệt tin</h2>
+</div><aside class="card job-live-panel job-review-detail__actions"><h2>Quyết định duyệt tin</h2>
   <section class="job-live-stack" th:if="${decision != null}"><strong th:text="${decision.action == 'approve' ? 'Quyết định gần nhất: phê duyệt' : 'Quyết định gần nhất: từ chối'}"></strong><p class="job-live-copy" th:if="${decision.reason != null and !decision.reason.isEmpty()}" th:text="${decision.reason}"></p><p class="job-live-muted" th:text="|Admin #${decision.actorId} · phiên bản tin ${decision.resultingVersion}|"></p></section>
   <form class="job-live-stack" method="post" th:if="${job.status.name() == 'PENDING' and reviewRequest != null}" th:action="@{/admin/job-review-detail(id=${job.id})}" data-job-live-form>
     <input type="hidden" name="version" th:value="${job.version}">
