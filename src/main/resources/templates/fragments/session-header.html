@@ -129,7 +129,14 @@
 </th:block>
 <th:block th:fragment="admin">
     <header class="admin-header">
-        <a class="admin-header__profile-trigger" th:href="@{/admin/dashboard}">Edu Connect · Quản trị</a>
+        <nav class="admin-header__crumbs" aria-label="Đường dẫn trang" th:if="${adminCrumbs != null and !adminCrumbs.isEmpty()}">
+            <ol>
+                <li th:each="crumb, state : ${adminCrumbs}">
+                    <a th:if="${crumb.url != null}" th:href="@{${crumb.url}}" th:text="${crumb.label}"></a>
+                    <span th:if="${crumb.url == null}" aria-current="page" th:text="${crumb.label}"></span>
+                </li>
+            </ol>
+        </nav>
         <div class="admin-header__utilities" th:if="${currentUser != null}">
             <span class="admin-header__profile-copy"><strong th:text="${currentUser.displayName}"></strong><small th:text="${currentUser.email}"></small></span>
             <form method="post" th:action="@{/auth/logout}"><button class="admin-header__profile-trigger" type="submit">Đăng xuất</button></form>

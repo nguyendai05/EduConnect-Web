@@ -49,7 +49,6 @@
         <th:block th:replace="~{fragments/header-admin :: header(${active}, 'v7')}"></th:block>
         <main class="admin-shell__workspace" id="report-main" tabindex="-1">
             <div class="admin-shell__content report-detail">
-                <nav class="breadcrumb" aria-label="Đường dẫn trang"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="/admin/reports" th:href="@{/admin/reports}">Báo cáo &amp; tranh chấp</a></li><li class="breadcrumb__item"><span class="breadcrumb__current" aria-current="page">Xử lý báo cáo</span></li></ol></nav>
                 <header class="report-detail__header">
                     <div>
                         <div class="report-detail__title-row">
@@ -206,7 +205,7 @@
         </dialog>
         <dialog class="modal" id="report-evidence-modal" aria-labelledby="evidence-modal-title" data-component="modal">
             <div class="modal__surface"><header class="modal__header"><span class="modal__icon modal__icon--info" aria-hidden="true"></span><div class="modal__heading"><h2 id="evidence-modal-title">Minh chứng đính kèm</h2></div><button class="modal__close" type="button" aria-label="Đóng cửa sổ minh chứng" data-modal-close>×</button></header>
-                <div class="modal__body"><p>Khung xem trước chỉ là phần tử giữ chỗ; bản mẫu không chứa tệp đính kèm thật.</p><div class="report-detail__preview" data-evidence-preview aria-hidden="true"><span class="component-icon component-icon--image" aria-hidden="true"></span></div><dl><div class="info-row"><dt class="info-row__label">Tên tệp</dt><dd class="info-row__value" data-evidence-name></dd></div><div class="info-row"><dt class="info-row__label">Loại minh chứng</dt><dd class="info-row__value" data-evidence-kind></dd></div><div class="info-row"><dt class="info-row__label">Thông tin</dt><dd class="info-row__value" data-evidence-meta></dd></div></dl></div>
+                <div class="modal__body"><div class="report-detail__preview" data-evidence-preview aria-hidden="true"><span class="component-icon component-icon--image" aria-hidden="true"></span></div><dl><div class="info-row"><dt class="info-row__label">Tên tệp</dt><dd class="info-row__value" data-evidence-name></dd></div><div class="info-row"><dt class="info-row__label">Loại minh chứng</dt><dd class="info-row__value" data-evidence-kind></dd></div><div class="info-row"><dt class="info-row__label">Thông tin</dt><dd class="info-row__value" data-evidence-meta></dd></div></dl></div>
                 <footer class="modal__footer"><button class="modal__button modal__button--secondary" type="button" data-modal-close>Đóng cửa sổ</button></footer>
             </div>
         </dialog>
