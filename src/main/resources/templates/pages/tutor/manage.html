@@ -51,7 +51,6 @@
       <header class="page-header tutor-manage__header">
         <div class="page-header__title-block">
           <h1 class="page-header__title">Quản lý giảng dạy</h1>
-          <p class="page-header__description">Quản lý khóa học, đơn đăng ký và điểm danh của bạn.</p>
         </div>
         <a class="button button--primary" th:if="${dbReady}" th:href="@{/tutor/manage(create=1)}" data-tm-open-editor>Thêm khóa học</a>
       </header>
@@ -180,7 +179,10 @@
                       <input class="tm-control" th:field="*{subjectName}" list="tm-subject-list" required maxlength="120" placeholder="Chọn gợi ý hoặc tự nhập môn" autocomplete="off">
                       <datalist id="tm-subject-list"><option th:each="o : ${options.subjects}" th:value="${o.label}"></option></datalist>
                     </label>
-                    <label class="form-field">Cấp học <select class="select-control select-control--native" th:field="*{gradeLevelId}" required><option value="">Chọn cấp học</option><option th:each="o : ${options.grades}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
+                    <label class="form-field">Cấp học
+                      <input class="tm-control" th:field="*{gradeLevelName}" list="tm-grade-list" required maxlength="120" placeholder="Chọn gợi ý hoặc tự nhập cấp học" autocomplete="off">
+                      <datalist id="tm-grade-list"><option th:each="o : ${options.grades}" th:value="${o.label}"></option></datalist>
+                    </label>
                     <label class="form-field">Khu vực <select class="select-control select-control--native" th:field="*{areaId}" required><option value="">Chọn khu vực</option><option th:each="o : ${options.areas}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
                     <label class="form-field">Hình thức <select class="select-control select-control--native" th:field="*{deliveryModeId}" required><option value="">Chọn hình thức</option><option th:each="o : ${options.modes}" th:value="${o.id}" th:text="${o.label}"></option></select></label>
                     <label class="form-field">Giá mỗi buổi (VND) <input class="tm-control" type="number" th:field="*{unitPrice}" min="1" step="1" required th:errorclass="tm-invalid"></label>
