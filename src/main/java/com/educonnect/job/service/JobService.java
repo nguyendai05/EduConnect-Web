@@ -52,15 +52,18 @@ public class JobService {
     private final JobLookupRepository lookup;
     private final JobAccess access;
     private final Clock clock;
+    private final com.educonnect.common.reference.service.CustomCatalogService catalog;
 
     public JobService(JobPostJpaRepository posts, JobApplicationJpaRepository applications,
-                      JobSelectionJpaRepository selections, JobLookupRepository lookup, JobAccess access, Clock clock) {
+                      JobSelectionJpaRepository selections, JobLookupRepository lookup, JobAccess access, Clock clock,
+                      com.educonnect.common.reference.service.CustomCatalogService catalog) {
         this.posts = posts;
         this.applications = applications;
         this.selections = selections;
         this.lookup = lookup;
         this.access = access;
         this.clock = clock;
+        this.catalog = catalog;
     }
 
     /**
@@ -83,7 +86,9 @@ public class JobService {
         form.setTitle(job.getTitle());
         form.setDescription(job.getDescription());
         form.setSubjectId(job.getSubjectId());
+        form.setSubjectName(job.getSubjectReference().getName());
         form.setGradeLevelId(job.getGradeLevelId());
+        form.setGradeLevelName(job.getGradeLevelReference().getName());
         form.setAreaId(job.getAreaId());
         form.setDeliveryModeId(job.getDeliveryModeId());
         form.setBudgetPerSession(job.getBudgetPerSession());
@@ -107,12 +112,35 @@ public class JobService {
     @Transactional
     public Long save(AccountPrincipal principal, Long id, JobPostRequest form) {
         UserAccount actor = access.require(principal, "LEARNER");
+        resolveCatalog(actor.id(), form);
         access.validate(form);
         if (!lookup.referencesExist(form)) {
             throw invalid("Môn, cấp học, khu vực hoặc hình thức không tồn tại.");
         }
         JobPostStatus target = "submit".equals(form.getAction()) ? JobPostStatus.PENDING : JobPostStatus.DRAFT;
         return id == null ? createPost(actor.id(), form, target) : updatePost(actor.id(), id, form, target);
+    }
+
+    /**
+     * Học viên chọn hoặc tự nhập môn/cấp học: tên đã có thì dùng lại, chưa có thì thêm mới vào danh mục (có giới hạn mỗi người).
+     */
+    private void resolveCatalog(Long userId, JobPostRequest form) {
+        try {
+            String subject = form.getSubjectName() == null ? "" : form.getSubjectName().strip();
+            if (!subject.isEmpty()) {
+                form.setSubjectId(catalog.subject(userId, subject).getId());
+            } else if (form.getSubjectId() == null) {
+                throw invalid("Chọn hoặc nhập môn học.");
+            }
+            String grade = form.getGradeLevelName() == null ? "" : form.getGradeLevelName().strip();
+            if (!grade.isEmpty()) {
+                form.setGradeLevelId(catalog.gradeLevel(userId, grade).getId());
+            } else if (form.getGradeLevelId() == null) {
+                throw invalid("Chọn hoặc nhập cấp học.");
+            }
+        } catch (com.educonnect.common.exception.ServiceProblem problem) {
+            throw JobAccess.problem(problem.getStatus(), problem.getMessage());
+        }
     }
 
     /**

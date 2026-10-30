@@ -35,7 +35,7 @@
 </head>
 <body th:fragment="content"><div class="user-shell">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
-<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><th:block th:if="${job != null}">
+<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation('none')}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><th:block th:if="${job != null}">
   <div class="job-live-layout"><div class="job-live-stack">
     <th:block th:replace="~{pages/job/fragments :: summary(${job})}"></th:block>
     <th:block th:replace="~{pages/job/fragments :: selection(${job})}"></th:block>

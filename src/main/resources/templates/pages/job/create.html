@@ -37,18 +37,14 @@
 </head>
 <body th:fragment="content"><div class="user-shell">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
-<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1 th:text="${editingId == null ? 'Đăng tin tìm gia sư' : 'Sửa tin tìm gia sư'}"></h1>
+<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation('create')}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1 th:text="${editingId == null ? 'Đăng tin tìm gia sư' : 'Sửa tin tìm gia sư'}"></h1>
 <p class="alert">Tin chỉ được công khai sau khi admin duyệt. Ghi đủ nhu cầu và điều kiện để gia sư đề xuất đúng.</p>
 <form th:if="${jobRequest != null and options != null}" class="card job-live-panel" method="post" th:action="@{/job/create(id=${editingId})}" th:object="${jobRequest}" data-job-live-form>
   <input type="hidden" th:field="*{requestKey}"><input type="hidden" th:field="*{version}">
   <section class="alert alert--error" th:if="${#fields.hasErrors('*')}" role="alert"><ul><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul></section>
   <label class="form-field">Tiêu đề<span class="input-control"><input class="input-control__input" th:field="*{title}" maxlength="220" required></span></label>
-  <div class="job-live-grid"><label class="form-field">Môn học<select class="select-control select-control--native" th:field="*{subjectId}" required>
-      <option value="">Chọn</option><option th:each="o : ${options.subjects}" th:value="${o.id}" th:text="${o.label}" ></option>
-    </select></label>
-<label class="form-field">Cấp học<select class="select-control select-control--native" th:field="*{gradeLevelId}" required>
-      <option value="">Chọn</option><option th:each="o : ${options.grades}" th:value="${o.id}" th:text="${o.label}" ></option>
-    </select></label>
+  <div class="job-live-grid"><label class="form-field">Môn học<span class="input-control"><input class="input-control__input" th:field="*{subjectName}" list="job-subject-list" required maxlength="60" placeholder="Chọn gợi ý hoặc tự nhập môn" autocomplete="off"></span><datalist id="job-subject-list"><option th:each="o : ${options.subjects}" th:value="${o.label}"></option></datalist></label>
+<label class="form-field">Cấp học<span class="input-control"><input class="input-control__input" th:field="*{gradeLevelName}" list="job-grade-list" required maxlength="60" placeholder="Chọn gợi ý hoặc tự nhập cấp học" autocomplete="off"></span><datalist id="job-grade-list"><option th:each="o : ${options.grades}" th:value="${o.label}"></option></datalist></label>
 <label class="form-field">Khu vực<select class="select-control select-control--native" th:field="*{areaId}" required>
       <option value="">Chọn</option><option th:each="o : ${options.areas}" th:value="${o.id}" th:text="${o.label}" ></option>
     </select></label>

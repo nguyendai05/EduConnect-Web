@@ -30,12 +30,14 @@ public class JobPostRequest {
     @NotBlank
     @Size(max = 8000)
     private String description;
-    @NotNull
     @Positive
     private Long subjectId;
-    @NotNull
+    @Size(max = 120)
+    private String subjectName;
     @Positive
     private Long gradeLevelId;
+    @Size(max = 120)
+    private String gradeLevelName;
     @NotNull
     @Positive
     private Long areaId;
@@ -99,6 +101,22 @@ public class JobPostRequest {
 
     public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public String getGradeLevelName() {
+        return gradeLevelName;
+    }
+
+    public void setGradeLevelName(String gradeLevelName) {
+        this.gradeLevelName = gradeLevelName;
     }
 
     public Long getGradeLevelId() {

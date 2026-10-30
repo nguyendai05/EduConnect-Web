@@ -38,7 +38,7 @@
 </head>
 <body th:fragment="content"><div class="user-shell">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
-<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><th:block th:if="${job != null and applications != null}">
+<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation('mine')}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><th:block th:if="${job != null and applications != null}">
   <h1 th:text="|Ứng viên: ${job.title}|"></h1><a th:href="@{/job/detail(id=${job.id})}">Xem nội dung tin và thỏa thuận đã chọn</a>
   <p class="alert">Chọn một gia sư đồng nghĩa đồng ý toàn bộ nội dung tin và đề xuất ứng tuyển hiển thị bên dưới. Khi chọn xong, tin ngừng nhận ứng tuyển; chưa phát sinh đơn hoặc thanh toán.</p>
   <p class="card job-live-panel" th:if="${applications.empty}">Chưa có ứng viên.</p>
