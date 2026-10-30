@@ -1,5 +1,8 @@
 package com.educonnect.tutor.repository;
 
+import com.educonnect.lesson.dto.OfferingOptionResponse;
+import com.educonnect.lesson.dto.OfferingOptionsResponse;
+
 import com.educonnect.lesson.domain.EnrollmentStatus;
 import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.domain.OfferingStatus;
@@ -28,6 +31,15 @@ import java.util.Optional;
 @Repository
 @Profile("db-dev")
 public class TutorDiscoveryRepository {
+    /** Danh sách danh mục chỉ đọc; tên Entity là hằng nội bộ, không nhận từ request. */
+    public OfferingOptionsResponse options() {
+        return new OfferingOptionsResponse(options("Subject"), options("GradeLevel"), options("Area"), options("DeliveryMode"));
+    }
+
+    private List<OfferingOptionResponse> options(String entityName) {
+        return entityManager.createQuery("select new com.educonnect.lesson.dto.OfferingOptionResponse(r.id, r.name) from "
+                + entityName + " r order by r.name", OfferingOptionResponse.class).getResultList();
+    }
     private static final String FROM = " from Offering o join o.tutorReference t join t.account a"
             + " join o.subjectReference subject ";
     private static final String PUBLIC = " where o.status = :published and t.reviewStatus = :approved"

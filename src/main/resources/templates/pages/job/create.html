@@ -22,9 +22,11 @@
 <link rel="stylesheet" href="/css/pages/job/create.css" th:href="@{/css/pages/job/create.css}">
 <link rel="stylesheet" th:href="@{/css/components/data-display/card.css}">
 <link rel="stylesheet" th:href="@{/css/pages/job/live.css}">
-<link rel="stylesheet" th:href="@{/css/components/form/input.css}">
-<link rel="stylesheet" th:href="@{/css/components/form/select.css}">
-<link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
+
+
+
+
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -35,14 +37,14 @@
 
 </th:block>
 </head>
-<body th:fragment="content"><div class="user-shell">
+<body class="create-page dat-render" th:fragment="content"><div class="user-shell">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
-<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1 th:text="${editingId == null ? 'Đăng tin tìm gia sư' : 'Sửa tin tìm gia sư'}"></h1>
-<p class="alert">Tin chỉ được công khai sau khi admin duyệt. Ghi đủ nhu cầu và điều kiện để gia sư đề xuất đúng.</p>
-<form th:if="${jobRequest != null and options != null}" class="card job-live-panel" method="post" th:action="@{/job/create(id=${editingId})}" th:object="${jobRequest}" data-job-live-form>
+<main class="user-shell__main"><div class="user-shell__content job-live"><nav class="breadcrumb dat-breadcrumb" aria-label="Đường dẫn"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/job/discover}">Tin tìm gia sư</a></li><li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/job/my-job}" th:if="${canPostJob}">Tin của tôi</a></li></ol></nav><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><header class="page-header dat-page-header"><div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title" th:text="${editingId == null ? 'Đăng tin tìm gia sư' : 'Sửa tin tìm gia sư'}"></h1><p class="page-header__description">Chia sẻ nhu cầu học để tìm được gia sư phù hợp.</p></div><div class="page-header__actions"></div></div></header>
+<p class="alert create-page__moderation">Tin chỉ được công khai sau khi admin duyệt. Ghi đủ nhu cầu và điều kiện để gia sư đề xuất đúng.</p>
+<div class="create-page__workflow" th:if="${jobRequest != null and options != null}"><form class="create-form" method="post" th:action="@{/job/create(id=${editingId})}" th:object="${jobRequest}" data-job-live-form>
   <input type="hidden" th:field="*{requestKey}"><input type="hidden" th:field="*{version}">
   <section class="alert alert--error" th:if="${#fields.hasErrors('*')}" role="alert"><ul><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul></section>
-  <label class="form-field">Tiêu đề<span class="input-control"><input class="input-control__input" th:field="*{title}" maxlength="220" required></span></label>
+  <section class="create-card"><header class="create-card__header"><span>01</span><h2>Nhu cầu học tập</h2></header><div class="create-card__body dat-form-fields"><label class="form-field">Tiêu đề<span class="input-control"><input class="input-control__input" th:field="*{title}" maxlength="220" required></span></label>
   <div class="job-live-grid"><label class="form-field">Môn học<select class="select-control select-control--native" th:field="*{subjectId}" required>
       <option value="">Chọn</option><option th:each="o : ${options.subjects}" th:value="${o.id}" th:text="${o.label}" ></option>
     </select></label>
@@ -55,13 +57,13 @@
 <label class="form-field">Hình thức<select class="select-control select-control--native" th:field="*{deliveryModeId}" required>
       <option value="">Chọn</option><option th:each="o : ${options.modes}" th:value="${o.id}" th:text="${o.label}" ></option>
     </select></label></div>
-  <div class="job-live-grid">
+  </div></section><section class="create-card"><header class="create-card__header"><span>02</span><h2>Học phí và nội dung tin</h2></header><div class="create-card__body dat-form-fields"><div class="job-live-grid">
     <label class="form-field">Ngân sách mỗi buổi (VND)<span class="input-control"><input class="input-control__input" type="number" th:field="*{budgetPerSession}" min="1" step="1" required></span></label>
     <label class="form-field">Số buổi<span class="input-control"><input class="input-control__input" type="number" th:field="*{sessionCount}" min="1" max="32767" step="1" required></span></label>
   </div>
   <label class="form-field">Nhu cầu, lịch học và điều kiện<textarea class="textarea-control" th:field="*{description}" rows="10" maxlength="8000" required></textarea></label>
   <p class="job-live-muted">Ghi mục tiêu, thời lượng mỗi buổi, ngày/giờ và múi giờ, địa điểm, các yêu cầu cần gia sư đồng ý. Sau khi công khai, nội dung không sửa để giữ đúng đề xuất đã ứng tuyển.</p>
-  <div class="job-live-actions"><button class="button button--outline" name="action" value="draft" type="submit">Lưu bản nháp</button><button class="button button--primary" name="action" value="submit" type="submit">Gửi admin duyệt</button></div>
-</form></div></main>
+  </div></section><div class="create-actions job-live-actions"><button class="button button--outline" name="action" value="draft" type="submit">Lưu bản nháp</button><button class="button button--primary" name="action" value="submit" type="submit">Gửi admin duyệt</button></div>
+</form><aside class="create-page__sidebar"><section class="create-sidebar-card dat-panel"><h2>Tin đăng rõ ràng, dễ kết nối</h2><ol class="dat-guide"><li><strong>Thông tin học tập</strong><span>Chọn đúng môn học, cấp lớp, khu vực và hình thức học.</span></li><li><strong>Học phí và lịch học</strong><span>Ghi ngân sách mỗi buổi, số buổi dự kiến và thời gian học mong muốn.</span></li><li><strong>Kiểm tra trước khi gửi</strong><span>Bạn có thể lưu nháp hoặc gửi quản trị viên xét duyệt.</span></li></ol></section><section class="create-sidebar-card dat-panel"><h2>Sau khi gửi tin</h2><p class="dat-muted">Tin được công khai khi được phê duyệt. Gia sư sẽ gửi đề xuất để bạn xem xét và lựa chọn.</p></section></aside></div></div></main>
 <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
 </div></body></html>

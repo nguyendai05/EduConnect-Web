@@ -1,0 +1,142 @@
+/* DAT-01..04. Server views retain prototype layouts and the shared design tokens. */
+.dat-render .user-shell__main { padding-block: var(--space-6) var(--space-10); }
+.dat-render .user-shell__content { width: min(100% - 4rem, var(--container-max-width)); }
+.dat-render .job-live { gap: var(--space-6); padding-block: 0; }
+.dat-render .dat-page-header { margin: 0; }
+.dat-render .dat-page-header .page-header__content { width: 100%; align-items: center; }
+.dat-render .dat-page-header .page-header__title { font-size: clamp(2rem, 3vw, 2.5rem); line-height: 1.2; }
+.dat-render .page-header__title-block { min-width: 0; }
+.dat-render .page-header__actions { margin-left: auto; }
+.dat-render .dat-breadcrumb { margin: 0; font-size: var(--font-size-sm); }
+.dat-render .dat-muted { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.dat-render .dat-eyebrow { color: var(--color-text-secondary); font-size: var(--font-size-xs); font-weight: 600; }
+.dat-render .dat-stat { display: block; color: var(--color-text); font-size: 2rem; line-height: 1.2; }
+.dat-render :is(.job-live h2, .dat-panel h2, .dat-invitation-card h2) { font-size: var(--font-size-lg); }
+.dat-render .job-live > h1 { font-size: clamp(2rem, 3vw, 2.5rem); }
+.dat-render :is(.job-live-panel, .dat-panel) { display: grid; align-content: start; gap: var(--space-4); padding: var(--space-6); min-width: 0; }
+.dat-render :is(.job-live-panel, .dat-panel, .dat-job-card, .negotiation-panel, .invitation-section) { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: none; }
+.dat-render :is(.form-field, .dat-form-fields) { display: grid; gap: var(--space-2); min-width: 0; }
+.dat-render .dat-form-fields { gap: var(--space-5); }
+.dat-render .form-field { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.dat-render :is(.input-control, .select-control, .textarea-control, .tm-control) { background-color: var(--color-surface); border-color: var(--color-border); border-radius: var(--control-radius); }
+.dat-render .form-field :is(input, select, textarea) { color: var(--color-text); }
+.dat-render :is(.job-live-actions, .invitation-form-actions) { align-items: center; gap: var(--space-3); }
+.dat-render :is(.job-live-actions, .negotiation-actions) form { min-width: 0; }
+.dat-render .job-live-nav { gap: var(--space-3); }
+.dat-render .job-live-messages { display: grid; gap: var(--space-3); }
+.dat-render .job-live-messages:empty { display: none; }
+.dat-render .job-live-copy { font-size: var(--font-size-sm); line-height: 1.8; }
+.dat-render .dat-panel-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.dat-render .dat-section-heading { display: flex; align-items: center; gap: var(--space-3); }
+.dat-render .dat-section-heading > span { display: grid; width: 1.75rem; height: 1.75rem; place-items: center; border-radius: var(--radius-md); background: var(--color-secondary-container); color: var(--color-secondary-text); font-size: var(--font-size-xs); font-weight: 600; }
+.dat-render .dat-guide { display: grid; gap: var(--space-5); padding-left: var(--space-5); color: var(--color-primary); }
+.dat-render .dat-guide li > :is(strong, span) { display: block; }
+.dat-render .dat-guide strong { color: var(--color-text); font-size: var(--font-size-sm); }
+.dat-render .dat-guide span { margin-top: var(--space-1); color: var(--color-text-secondary); font-size: var(--font-size-sm); line-height: 1.7; }
+.dat-render .dat-two-columns { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: var(--space-6); align-items: start; }
+.dat-render .dat-filterbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-4); align-items: end; padding: var(--space-5); }
+.dat-render .dat-filterbar .job-live-grid { grid-template-columns: minmax(0, 1fr) minmax(11rem, 15rem); }
+.dat-render .dat-job-card { padding: var(--space-6); }
+.dat-render .dat-job-card h2 a { color: var(--color-text); }
+.dat-render .dat-job-card h2 a:hover { color: var(--color-primary); }
+.dat-render .dat-job-card > .button { justify-self: end; }
+.dat-render .dat-empty { display: grid; gap: var(--space-3); padding: var(--space-8); border: 1px dashed var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); text-align: center; }
+.dat-render .dat-empty > .button { justify-self: center; }
+.dat-render .create-card__body { padding: var(--space-6); }
+.dat-render .create-actions { display: flex; justify-content: flex-end; padding: var(--space-5) var(--space-6); }
+.dat-render .create-page__moderation { margin-bottom: 0; font-size: var(--font-size-sm); }
+.dat-render .create-form > .alert { grid-column: 1 / -1; }
+.dat-render .create-page__sidebar { position: sticky; top: var(--scroll-offset); }
+.dat-render .detail-hero { margin: 0; }
+.dat-render .detail-hero h1 { font-size: clamp(2rem, 3vw, 2.5rem); }
+.dat-render .job-live-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); margin: 0; padding-block: var(--space-4); border-block: 1px solid var(--color-border); }
+.dat-render .job-live-facts :is(dt, dd) { font-size: var(--font-size-sm); }
+.dat-render .job-live-facts dd { color: var(--color-text); font-weight: 600; overflow-wrap: anywhere; }
+.dat-render .detail-sidebar .job-live-actions { display: grid; grid-template-columns: 1fr; }
+.dat-render .detail-sidebar form > .button { width: 100%; }
+.dat-render .dat-applicants-list { display: grid; gap: var(--space-4); }
+.dat-render .applicants-job { align-items: center; }
+.dat-render .applicants-job h2 { font-size: var(--font-size-lg); }
+.dat-render .applicant-card { min-width: 0; }
+.dat-render .applicant-card > strong { color: var(--color-text); font-size: var(--font-size-xl); }
+.dat-render .dat-table-panel { overflow: hidden; }
+.dat-render .dat-table-panel > header { padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-border); }
+.dat-render .dat-table-scroll { width: 100%; min-width: 0; overflow-x: auto; }
+.dat-render .dat-table { width: 100%; border-collapse: collapse; font-size: var(--font-size-sm); }
+.dat-render .dat-table th { padding: var(--space-4) var(--space-5); background: var(--color-surface-low); color: var(--color-text-secondary); text-align: left; font-size: var(--font-size-xs); font-weight: 600; white-space: nowrap; }
+.dat-render .dat-table td { padding: var(--space-5); vertical-align: top; border-top: 1px solid var(--color-border); }
+.dat-render .dat-table td:first-child { width: 36%; min-width: 16rem; }
+.dat-render .dat-table td:not(:first-child) { min-width: 9rem; }
+.dat-render .dat-table td:last-child { white-space: nowrap; }
+.dat-render .dat-table p { margin-top: var(--space-1); font-size: var(--font-size-xs); }
+.dat-render .dat-table-title { color: var(--color-text); font-weight: 600; }
+.dat-render .dat-table-title:hover { color: var(--color-primary); }
+.dat-render .job-review-queue__toolbar { box-shadow: none; }
+.dat-render .job-review-detail__header h1 { font-family: var(--font-family-base); font-size: var(--font-size-2xl); font-weight: 600; }
+.dat-render .job-review-detail__actions { top: var(--admin-scroll-offset); }
+.dat-render .negotiation-page { max-width: var(--container-max-width); padding: 0; display: grid; gap: var(--space-6); }
+.dat-render .negotiation-page > .page-header { margin: 0; }
+.dat-render .negotiation-page > .invitation-live-nav { margin: 0; }
+.dat-render .dat-invitation-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+.dat-render .dat-invitation-card { display: grid; align-content: start; gap: var(--space-3); padding: var(--space-6); }
+.dat-render .dat-invitation-card > .button { justify-self: start; }
+.dat-render .negotiation-layout { gap: var(--space-6); }
+.dat-render .negotiation-panel { display: grid; align-content: start; gap: var(--space-4); padding: var(--space-6); }
+.dat-render .negotiation-terms { margin: 0; }
+.dat-render .negotiation-terms dd { color: var(--color-text); font-size: var(--font-size-sm); font-weight: 600; }
+.dat-render .negotiation-sidebar { position: sticky; top: var(--scroll-offset); }
+.dat-render .invitation-live-content { gap: var(--space-6); }
+.dat-render .invitation-create-heading { margin-top: calc(-1 * var(--space-6)); background: transparent; border: 0; box-shadow: none; padding-top: var(--space-6); }
+.dat-render .invitation-create-heading h1 { font-size: clamp(2rem, 3vw, 2.5rem); }
+.dat-render .invitation-section { padding: var(--space-6); }
+.dat-render .invitation-tutor__body { padding: var(--space-5) var(--space-6); }
+.dat-render .invitation-tutor__body h2 { font-size: var(--font-size-xl); }
+.dat-render .invitation-tutor__body > :is(p, a) { font-size: var(--font-size-sm); }
+.dat-render .invitation-summary { display: grid; gap: var(--space-4); padding: var(--space-6); }
+.dat-render .invitation-summary > h2 { color: var(--color-text); font-size: var(--font-size-lg); }
+.dat-render .tutor-manage__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; }
+.dat-render .tutor-manage__header .page-header__title { font-size: clamp(2rem, 3vw, 2.5rem); }
+.dat-render .home-offer-card__actions { margin-top: auto; }
+.dat-render .home-offer-card { grid-template-rows: auto auto auto auto auto auto 1fr; }
+.dat-render .catalog-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
+.dat-render .catalog-options > .card { display: grid; align-content: start; gap: var(--space-3); }
+.dat-render .catalog-options h2 { font-size: var(--font-size-lg); }
+.dat-render .dat-days { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-1); }
+.dat-render .dat-days label { position: relative; }
+.dat-render .dat-days input { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); }
+.dat-render .dat-days span { display: grid; min-height: 2.375rem; place-items: center; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: var(--font-size-xs); }
+.dat-render .dat-days input:checked + span { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-primary); }
+.dat-render .dat-days input:focus-visible + span { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.dat-render .dat-profile-offerings { display: grid; gap: var(--space-4); }
+.dat-render .dat-profile-offering { display: grid; gap: var(--space-3); padding: var(--space-5); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.dat-render .dat-profile-offering h3 { font-size: var(--font-size-lg); }
+.dat-render .dat-profile-offering > .button { justify-self: start; }
+.dat-render .dat-applicant-identity { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.dat-render .dat-applicant-identity .avatar { flex: 0 0 auto; }
+.dat-render .invitation-section > h2 { font-size: var(--font-size-lg); }
+@media (max-width: 75rem) {
+  .dat-render .dat-two-columns { grid-template-columns: minmax(0, 1fr); }
+  .dat-render .my-job-page__sidebar { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 64rem) {
+  .dat-render :is(.create-page__workflow, .detail-layout, .negotiation-layout) { grid-template-columns: minmax(0, 1fr); }
+  .dat-render :is(.create-page__sidebar, .detail-sidebar, .negotiation-sidebar) { position: static; max-height: none; overflow: visible; }
+  .dat-render .catalog-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 48rem) {
+  .dat-render .user-shell__content { width: calc(100% - 2rem); }
+  .dat-render :is(.dat-page-header .page-header__content, .tutor-manage__header) { align-items: flex-start; flex-direction: column; }
+  .dat-render .page-header__actions { margin-left: 0; }
+  .dat-render :is(.dat-filterbar, .dat-invitation-list, .my-job-page__sidebar) { grid-template-columns: 1fr; }
+  .dat-render .dat-filterbar .job-live-grid { grid-template-columns: 1fr; }
+  .dat-render .job-live-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dat-render .create-actions { justify-content: stretch; }
+  .dat-render .create-actions .button { flex: 1 1 auto; }
+  .dat-render :is(.job-live-panel, .dat-panel, .negotiation-panel, .invitation-section, .invitation-summary, .dat-invitation-card, .dat-job-card, .create-card__body) { padding: var(--space-4); }
+}
+@media (max-width: 40rem) {
+  .dat-render .catalog-options { grid-template-columns: 1fr; }
+  .dat-render .job-live-facts { grid-template-columns: 1fr; }
+  .dat-render .job-live-actions { align-items: stretch; }
+  .dat-render .job-live-actions .button { width: 100%; }
+}

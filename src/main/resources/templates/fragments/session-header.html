@@ -7,9 +7,10 @@
                 <img class="user-header__logo" th:src="@{/assets/brand/logo-horizontal.svg}" alt="Edu Connect" width="4562" height="1000">
             </a>
             <nav class="user-header__nav" aria-label="Điều hướng chính">
-                <a class="user-header__nav-link" th:href="@{/home}">Trang chủ</a>
-                <a class="user-header__nav-link" th:href="@{/tutor/search}">Tìm gia sư</a>
-                <a class="user-header__nav-link" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/manage}">Quản lý lớp</a>
+                <a class="user-header__nav-link" th:href="@{/home}" th:classappend="${active == 'home' ? 'is-active' : ''}" th:attr="aria-current=${active == 'home' ? 'page' : null}">Trang chủ</a>
+                <a class="user-header__nav-link" th:href="@{/tutor/search}" th:classappend="${active == 'tutors' ? 'is-active' : ''}" th:attr="aria-current=${active == 'tutors' ? 'page' : null}">Tìm gia sư</a>
+                <a class="user-header__nav-link" th:href="@{/job/discover}" th:classappend="${active == 'requests' ? 'is-active' : ''}" th:attr="aria-current=${active == 'requests' ? 'page' : null}">Tin tìm gia sư</a>
+                <a class="user-header__nav-link" sec:authorize="hasRole('TUTOR')" th:href="@{/tutor/manage}" th:classappend="${active == 'manage' ? 'is-active' : ''}" th:attr="aria-current=${active == 'manage' ? 'page' : null}">Quản lý lớp</a>
                 <a class="user-header__nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}">Quản trị</a>
             </nav>
             <div class="user-header__actions" th:if="${currentUser != null}">

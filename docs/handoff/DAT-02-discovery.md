@@ -1,5 +1,7 @@
 # DAT-02 — Phần triển khai độc lập
 
+> Cập nhật 29/10/2026: hai route công khai đã được tách sang `TutorDiscoveryPageController` và render DTO thật theo prototype. `/tutor/my-profile` được giữ trong controller hồ sơ riêng hiện có. Chi tiết view, kiểm thử và các phần A02/A08 vẫn còn chờ nằm ở [DAT-01-04-render-view.md](DAT-01-04-render-view.md). Nội dung bên dưới ghi lại trạng thái bàn giao ngày 26/10.
+
 Chủ luồng: Nguyễn Khắc Trường Đạt. Ngày 26/10/2026. Chỉ triển khai phần độc lập trong lúc chờ đầu vào liên nhóm.
 
 ## Đã triển khai

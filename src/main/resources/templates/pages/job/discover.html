@@ -1,79 +1,179 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;requests&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, 'requests', ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
-<title>Tin tìm gia sư | Edu Connect</title>
-<th:block th:fragment="styles">
-<link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
-<link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}">
-<link rel="stylesheet" href="/css/components/layout/user-header.css" th:href="@{/css/components/layout/user-header.css}">
-<link rel="stylesheet" href="/css/components/layout/page-header.css" th:href="@{/css/components/layout/page-header.css}">
-<link rel="stylesheet" href="/css/components/layout/user-footer.css" th:href="@{/css/components/layout/user-footer.css}">
-<link rel="stylesheet" href="/css/components/navigation/filter-panel.css" th:href="@{/css/components/navigation/filter-panel.css}">
-<link rel="stylesheet" href="/css/components/navigation/filter-chip.css" th:href="@{/css/components/navigation/filter-chip.css}">
-<link rel="stylesheet" href="/css/components/navigation/pagination.css" th:href="@{/css/components/navigation/pagination.css}">
-<link rel="stylesheet" href="/css/components/form/search-input.css" th:href="@{/css/components/form/search-input.css}">
-<link rel="stylesheet" href="/css/components/form/select.css" th:href="@{/css/components/form/select.css}">
-<link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
-<link rel="stylesheet" href="/css/components/domain/job/job-card.css" th:href="@{/css/components/domain/job/job-card.css}">
-<link rel="stylesheet" href="/css/components/data-display/avatar.css" th:href="@{/css/components/data-display/avatar.css}">
-<link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}">
-<link rel="stylesheet" href="/css/components/feedback/empty-state.css" th:href="@{/css/components/feedback/empty-state.css}">
-<link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
-<link rel="stylesheet" href="/css/pages/job/discover.css" th:href="@{/css/pages/job/discover.css}">
-<link rel="stylesheet" href="/css/components/layout/brand-masthead.css" th:href="@{/css/components/layout/brand-masthead.css}">
-<link rel="stylesheet" th:href="@{/css/components/data-display/card.css}">
-<link rel="stylesheet" th:href="@{/css/components/feedback/alert.css}">
-<link rel="stylesheet" th:href="@{/css/pages/job/live.css}">
-<link rel="stylesheet" th:href="@{/css/components/form/input.css}">
-<link rel="stylesheet" th:href="@{/css/components/form/select.css}">
-<link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
-</th:block>
-<th:block th:fragment="headScripts">
-<script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
-<script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
-<script src="/js/pages/job/discover.js" defer th:src="@{/js/pages/job/discover.js}"></script>
-</th:block>
-<th:block th:fragment="scripts">
+    <title>Tin tìm gia sư | Edu Connect</title>
+    <th:block th:fragment="styles">
+        <link rel="stylesheet" th:href="@{/css/layouts.css}">
+        <link rel="stylesheet" th:href="@{/css/components/action/button.css}">
+        <link rel="stylesheet" th:href="@{/css/components/layout/user-header.css}">
+        <link rel="stylesheet" th:href="@{/css/components/layout/page-header.css}">
+        <link rel="stylesheet" th:href="@{/css/components/layout/user-footer.css}">
+        <link rel="stylesheet" th:href="@{/css/components/navigation/filter-panel.css}">
+        <link rel="stylesheet" th:href="@{/css/components/navigation/pagination.css}">
+        <link rel="stylesheet" th:href="@{/css/components/form/search-input.css}">
+        <link rel="stylesheet" th:href="@{/css/components/form/select.css}">
+        <link rel="stylesheet" th:href="@{/css/components/form/input.css}">
+        <link rel="stylesheet" th:href="@{/css/components/domain/job/job-card.css}">
+        <link rel="stylesheet" th:href="@{/css/components/feedback/empty-state.css}">
+        <link rel="stylesheet" th:href="@{/css/components/feedback/alert.css}">
+        <link rel="stylesheet" th:href="@{/css/pages/job/discover.css}">
+        <link rel="stylesheet" th:href="@{/css/components/layout/brand-masthead.css}">
 
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
+    <th:block th:fragment="headScripts">
+        <script defer th:src="@{/js/core/route.js}"></script>
+        <script defer th:src="@{/js/core/user-header.js}"></script>
+        <script defer th:src="@{/js/core/search-filters.js}"></script>
+        <script defer th:src="@{/js/pages/job/discover.js}"></script>
+    </th:block>
+    <th:block th:fragment="scripts"></th:block>
 </head>
-<body th:fragment="content"><div class="user-shell">
-<th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
-<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><h1>Tin tìm gia sư</h1>
-<form class="card job-live-panel" method="get" th:action="@{/job/discover}" th:if="${options != null and search != null}">
-  <label class="form-field">Từ khóa<span class="input-control"><input class="input-control__input" name="q" th:value="${search.q}" maxlength="200" placeholder="Tìm theo tiêu đề hoặc nhu cầu học"></span></label>
-  <div class="job-live-grid"><label class="form-field">Môn học<select class="select-control select-control--native" name="subjectId" >
-      <option value="">Tất cả</option><option th:each="o : ${options.subjects}" th:value="${o.id}" th:text="${o.label}" th:selected="${o.id == search.subjectId}"></option>
-    </select></label>
-<label class="form-field">Cấp học<select class="select-control select-control--native" name="gradeLevelId" >
-      <option value="">Tất cả</option><option th:each="o : ${options.grades}" th:value="${o.id}" th:text="${o.label}" th:selected="${o.id == search.gradeLevelId}"></option>
-    </select></label>
-<label class="form-field">Khu vực<select class="select-control select-control--native" name="areaId" >
-      <option value="">Tất cả</option><option th:each="o : ${options.areas}" th:value="${o.id}" th:text="${o.label}" th:selected="${o.id == search.areaId}"></option>
-    </select></label>
-<label class="form-field">Hình thức<select class="select-control select-control--native" name="deliveryModeId" >
-      <option value="">Tất cả</option><option th:each="o : ${options.modes}" th:value="${o.id}" th:text="${o.label}" th:selected="${o.id == search.deliveryModeId}"></option>
-    </select></label></div>
-  <div class="job-live-grid">
-    <label class="form-field">Ngân sách từ (VND)<span class="input-control"><input class="input-control__input" name="minPrice" type="number" min="0" th:value="${search.minPrice}"></span></label>
-    <label class="form-field">Ngân sách đến (VND)<span class="input-control"><input class="input-control__input" name="maxPrice" type="number" min="0" th:value="${search.maxPrice}"></span></label>
-    <label class="form-field">Sắp xếp<select class="select-control select-control--native" name="sort"><option value="newest" th:selected="${search.sort == 'newest'}">Ngày tạo giảm dần</option><option value="budget-asc" th:selected="${search.sort == 'budget-asc'}">Ngân sách tăng dần</option><option value="budget-desc" th:selected="${search.sort == 'budget-desc'}">Ngân sách giảm dần</option></select></label>
-  </div>
-  <div class="job-live-actions"><button class="button button--primary" type="submit">Tìm tin</button><a class="button button--outline" th:href="@{/job/discover}">Xóa bộ lọc</a></div>
-</form><p class="card job-live-panel" th:if="${jobs != null and jobs.empty}">Chưa có tin phù hợp.</p>
-    <div class="job-live-list" th:if="${jobs != null}">
-      <article class="card job-live-panel" th:each="item : ${jobs.content}">
-        <div class="job-live-heading"><span class="badge badge--info" th:text="${item.statusLabel}"></span><small th:text="${item.publicCode}"></small></div>
-        <h2><a th:href="@{/job/detail(id=${item.id})}" th:text="${item.title}"></a></h2>
-        <p th:text="|${item.subject} · ${item.grade} · ${item.area} · ${item.deliveryMode}|"></p>
-        <p><strong th:text="${#numbers.formatDecimal(item.budgetPerSession, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><span th:text="| · ${item.sessionCount} buổi|"></span></p>
-        <p class="job-live-muted" th:text="|${item.learnerName} · ${item.createdAtLabel} (UTC+7)|"></p>
-        <a class="button button--outline" th:href="@{/job/detail(id=${item.id})}">Xem chi tiết</a>
-      </article>
-    </div><nav class="job-live-nav" th:if="${jobs != null}" aria-label="Phân trang">
-      <a class="button button--outline" th:if="${jobs.hasPrevious()}" th:href="@{/job/discover(page=${jobs.number - 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size})}">Trang trước</a>
-      <span th:unless="${jobs.empty}" th:text="|Trang ${jobs.number + 1} / ${jobs.totalPages} · ${jobs.totalElements} tin|"></span>
-      <a class="button button--outline" th:if="${jobs.hasNext()}" th:href="@{/job/discover(page=${jobs.number + 1},q=${search.q},subjectId=${search.subjectId},gradeLevelId=${search.gradeLevelId},areaId=${search.areaId},deliveryModeId=${search.deliveryModeId},minPrice=${search.minPrice},maxPrice=${search.maxPrice},sort=${search.sort},size=${search.size})}">Trang sau</a>
-    </nav></div></main>
-<th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
-</div></body></html>
+<body class="discover-page discover-page--live dat-render" th:fragment="content">
+<div class="user-shell">
+    <th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
+    <main class="user-shell__main">
+        <div class="user-shell__content discover-page__content">
+            <header class="page-header discover-page__header brand-masthead">
+                <div class="brand-masthead__content">
+                    <h1 class="page-header__title">Tin tìm gia sư</h1>
+                    <div class="page-header__actions" th:if="${canPostJob}">
+                        <a class="button button--outline button--medium" th:href="@{/job/my-job}">Tin của tôi</a>
+                        <a class="button button--primary button--medium" th:href="@{/job/create}">Đăng tin tìm gia sư</a>
+                    </div>
+                </div>
+            </header>
+
+            <section class="discover-messages" th:if="${success != null or pageError != null}">
+                <div class="alert alert--success" th:if="${success != null}" role="status"><p th:text="${success}"></p></div>
+                <div class="alert alert--error" th:if="${pageError != null}" role="alert"><p th:text="${pageError}"></p></div>
+            </section>
+
+            <th:block th:if="${options != null and search != null}">
+                <!-- Sidebar, sort and pagination controls all belong to this GET form. -->
+                <form id="discover-search-form" class="discover-search" method="get" th:action="@{/job/discover}" role="search" data-job-live-form>
+                    <input type="hidden" name="size" th:value="${search.size}">
+                    <div class="search-input search-input--compact">
+                        <svg class="search-input__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+                        <input type="search" name="q" th:value="${search.q}" maxlength="200" placeholder="Tìm theo tiêu đề hoặc nhu cầu học..." aria-label="Tìm tin gia sư">
+                    </div>
+                    <button class="button button--primary button--medium discover-search__button" type="submit">Tìm kiếm</button>
+                </form>
+
+                <div class="discover-layout">
+                    <details class="discover-sidebar search-filters" data-search-filters open>
+                        <summary class="search-filters__toggle">Bộ lọc tìm lớp <span aria-hidden="true">+</span></summary>
+                        <div class="filter-panel discover-filter">
+                            <div class="filter-panel__header">
+                                <h2><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M8 4v4M16 10v4M10 16v4"></path></svg>Bộ lọc</h2>
+                                <a class="filter-panel__reset" th:href="@{/job/discover}">Xóa bộ lọc</a>
+                            </div>
+                            <div class="filter-panel__group">
+                                <label for="discover-subject">Môn học</label>
+                                <div class="filter-panel__select-wrap">
+                                    <select id="discover-subject" name="subjectId" form="discover-search-form">
+                                        <option value="">Tất cả môn học</option>
+                                        <option th:each="o : ${options.subjects}" th:value="${o.id}" th:text="${o.label}" th:selected="${o.id == search.subjectId}"></option>
+                                    </select>
+                                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                                </div>
+                            </div>
+                            <div class="filter-panel__group">
+                                <label for="discover-grade">Cấp lớp</label>
+                                <div class="filter-panel__select-wrap">
+                                    <select id="discover-grade" name="gradeLevelId" form="discover-search-form">
+                                        <option value="">Tất cả cấp lớp</option>
+                                        <option th:each="o : ${options.grades}" th:value="${o.id}" th:text="${o.label}" th:selected="${o.id == search.gradeLevelId}"></option>
+                                    </select>
+                                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                                </div>
+                            </div>
+                            <div class="filter-panel__group">
+                                <label for="discover-area">Khu vực</label>
+                                <div class="filter-panel__select-wrap">
+                                    <select id="discover-area" name="areaId" form="discover-search-form">
+                                        <option value="">Tất cả khu vực</option>
+                                        <option th:each="o : ${options.areas}" th:value="${o.id}" th:text="${o.label}" th:selected="${o.id == search.areaId}"></option>
+                                    </select>
+                                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                                </div>
+                            </div>
+                            <fieldset class="filter-panel__group discover-filter__choices">
+                                <legend>Hình thức học</legend>
+                                <label><input type="radio" name="deliveryModeId" value="" form="discover-search-form" th:checked="${search.deliveryModeId == null}"><span aria-hidden="true"></span>Tất cả hình thức</label>
+                                <label th:each="o : ${options.modes}"><input type="radio" name="deliveryModeId" form="discover-search-form" th:value="${o.id}" th:checked="${o.id == search.deliveryModeId}"><span aria-hidden="true"></span><th:block th:text="${o.label}"></th:block></label>
+                            </fieldset>
+                            <fieldset class="filter-panel__group discover-filter__budget">
+                                <legend>Học phí / buổi</legend>
+                                <label for="discover-min-price">Từ (₫)</label>
+                                <div class="input-control"><input id="discover-min-price" class="input-control__input" name="minPrice" type="number" min="0" step="1" form="discover-search-form" th:value="${search.minPrice}" placeholder="Không giới hạn"></div>
+                                <label for="discover-max-price">Đến (₫)</label>
+                                <div class="input-control"><input id="discover-max-price" class="input-control__input" name="maxPrice" type="number" min="0" step="1" form="discover-search-form" th:value="${search.maxPrice}" placeholder="Không giới hạn"></div>
+                            </fieldset>
+                            <button class="button button--primary button--medium discover-filter__submit" type="submit" form="discover-search-form">Áp dụng bộ lọc</button>
+                        </div>
+                    </details>
+
+                    <section class="discover-results" aria-labelledby="discover-results-title">
+                        <div class="discover-results__toolbar">
+                            <div class="discover-results__heading">
+                                <h2 id="discover-results-title" th:text="${jobs != null ? jobs.totalElements + ' tin tìm gia sư' : 'Tin tìm gia sư'}">Tin tìm gia sư</h2>
+                                <p th:text="${search.areaId == null ? 'trên toàn quốc' : 'theo khu vực đã chọn'}">trên toàn quốc</p>
+                            </div>
+                            <div class="select-field discover-results__sort">
+                                <label class="select-field__label" for="discover-sort">Sắp xếp:</label>
+                                <select id="discover-sort" class="select-control select-control--native" name="sort" form="discover-search-form" data-discover-live-sort>
+                                    <option value="newest" th:selected="${search.sort == 'newest'}">Mới nhất</option>
+                                    <option value="budget-asc" th:selected="${search.sort == 'budget-asc'}">Học phí thấp đến cao</option>
+                                    <option value="budget-desc" th:selected="${search.sort == 'budget-desc'}">Học phí cao đến thấp</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="discover-job-list" th:if="${jobs != null}">
+                            <article class="job-card discover-job" th:each="item : ${jobs.content}">
+                                <div class="job-card__top">
+                                    <div class="job-card__heading">
+                                        <div class="job-card__meta"><span class="job-card__badge job-card__badge--info" th:text="${item.statusLabel}"></span><span class="job-card__code" th:text="${item.publicCode}"></span></div>
+                                        <h2><a th:href="@{/job/detail(id=${item.id})}" th:text="${item.title}"></a></h2>
+                                    </div>
+                                    <p class="job-card__price"><strong th:text="${#numbers.formatDecimal(item.budgetPerSession, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong><span>/ buổi</span></p>
+                                </div>
+                                <div class="job-card__tags"><span th:text="${item.subject}"></span><span th:text="${item.grade}"></span><span th:text="${item.deliveryMode}"></span></div>
+                                <div class="discover-job__parameters">
+                                    <p><small>Số buổi dự kiến</small><strong th:text="|${item.sessionCount} buổi|"></strong></p>
+                                    <p><small>Địa điểm</small><strong th:text="${item.area}"></strong></p>
+                                    <p><small>Người đăng</small><strong th:text="${item.learnerName}"></strong></p>
+                                </div>
+                                <p class="discover-job__description" th:text="${item.description}"></p>
+                                <footer class="job-card__footer">
+                                    <div class="job-card__stats"><span><strong th:text="${item.applicationCount}"></strong> đã ứng tuyển</span><time th:datetime="${item.createdAt}" th:text="${item.createdAtLabel + ' (UTC+7)'}"></time></div>
+                                    <a class="button button--outline button--medium" th:href="@{/job/detail(id=${item.id})}" th:text="${item.canApply ? 'Xem chi tiết để ứng tuyển' : 'Xem chi tiết'}">Xem chi tiết</a>
+                                </footer>
+                            </article>
+                        </div>
+
+                        <section class="empty-state discover-empty" th:if="${jobs != null and jobs.empty}" aria-labelledby="discover-empty-title">
+                            <span class="empty-state__icon" aria-hidden="true"></span>
+                            <h2 class="empty-state__title" id="discover-empty-title">Không tìm thấy tin phù hợp</h2>
+                            <p class="empty-state__description">Hãy thử thay đổi từ khóa hoặc nới lỏng bộ lọc tìm kiếm.</p>
+                            <a class="button button--outline button--medium" th:href="@{/job/discover}">Xóa bộ lọc</a>
+                        </section>
+
+                        <nav class="pagination" th:if="${jobs != null and !jobs.empty}" aria-label="Phân trang tin tìm gia sư">
+                            <p class="pagination__summary">Hiển thị <strong th:text="${jobs.number * jobs.size + 1}"></strong> – <strong th:text="${jobs.number * jobs.size + jobs.numberOfElements}"></strong> trên tổng số <strong th:text="${jobs.totalElements}"></strong> tin</p>
+                            <div class="pagination__controls" th:with="firstPage=${jobs.number > 2 ? jobs.number - 2 : 0}, lastPage=${jobs.number + 2 < jobs.totalPages ? jobs.number + 2 : jobs.totalPages - 1}">
+                                <button class="pagination__button pagination__button--wide" type="submit" form="discover-search-form" name="page" th:value="${jobs.number - 1}" th:disabled="${!jobs.hasPrevious()}" aria-label="Trang trước"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg><span>Trước</span></button>
+                                <button class="pagination__button" type="submit" form="discover-search-form" name="page" th:each="p : ${#numbers.sequence(firstPage, lastPage)}" th:value="${p}" th:text="${p + 1}" th:classappend="${p == jobs.number ? 'is-current' : ''}" th:attr="aria-current=${p == jobs.number ? 'page' : null},aria-label=|Trang ${p + 1}|"></button>
+                                <button class="pagination__button pagination__button--wide" type="submit" form="discover-search-form" name="page" th:value="${jobs.number + 1}" th:disabled="${!jobs.hasNext()}" aria-label="Trang sau"><span>Sau</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+                            </div>
+                        </nav>
+                    </section>
+                </div>
+            </th:block>
+        </div>
+    </main>
+    <th:block th:replace="~{fragments/footer-user :: footer(${active}, 'v1')}"></th:block>
+</div>
+</body>
+</html>

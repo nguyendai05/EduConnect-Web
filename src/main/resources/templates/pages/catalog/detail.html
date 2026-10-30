@@ -19,7 +19,9 @@
         <link rel="stylesheet" href="/css/components/form/input.css" th:href="@{/css/components/form/input.css}">
         <link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
         <link rel="stylesheet" href="/css/pages/catalog/detail.css" th:href="@{/css/pages/catalog/detail.css}">
-    </th:block>
+
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
+</th:block>
     <th:block th:fragment="headScripts">
         <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
         <script src="/js/core/user-header.js" defer th:src="@{/js/core/user-header.js}"></script>
@@ -28,7 +30,7 @@
     <th:block th:fragment="scripts">
     </th:block>
 </head>
-<body class="catalog-detail-page" th:fragment="content">
+<body class="catalog-detail-page dat-render" th:fragment="content">
 <div class="user-shell" data-component="user-shell">
     <th:block th:replace="~{fragments/header-user :: header(${active}, 'v2')}"></th:block>
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, &#x27;none&#x27;, ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/user :: page(~{::title}, 'manage', ~{::styles}, ~{::content}, ~{::scripts}, ~{::headScripts}, false)}">
 <head>
 <title>Quản lý giảng dạy — Edu Connect</title>
 <th:block th:fragment="styles">
@@ -26,6 +26,8 @@
 <link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
 <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
 <link rel="stylesheet" href="/css/pages/tutor/manage.css" th:href="@{/css/pages/tutor/manage.css}">
+
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 
@@ -42,7 +44,7 @@
 </th:block>
 </head>
 
-<body class="tutor-manage-page" th:fragment="content">
+<body class="tutor-manage-page dat-render" th:fragment="content">
 <a class="tutor-manage__skip-link" href="#tutor-manage-main">Đến nội dung chính</a>
 <div class="user-shell" data-component="user-shell">
   <th:block th:replace="~{fragments/header-user :: header(${active}, 'v12')}"></th:block>
@@ -53,8 +55,7 @@
           <h1 class="page-header__title">Quản lý giảng dạy</h1>
           <p class="page-header__description">Quản lý dịch vụ, lớp nhóm và lịch giảng dạy của bạn.</p>
         </div>
-        <a class="button button--outline" th:href="@{/invitation/negotiation}">Lời mời nhận</a>
-        <a class="button button--primary" th:if="${dbReady}" th:href="@{/tutor/manage} + '#tm-editor'">Thêm dịch vụ / lớp</a>
+        <div class="page-header__actions"><a class="button button--outline" th:href="@{/invitation/negotiation}">Lời mời nhận</a><a class="button button--primary" th:if="${dbReady}" th:href="@{/tutor/manage} + '#tm-editor'">Thêm dịch vụ / lớp</a></div>
       </header>
       <p class="alert alert--success" role="status" th:if="${success}" th:text="${success}"></p>
       <div class="alert alert--error" role="alert" th:if="${pageError}">

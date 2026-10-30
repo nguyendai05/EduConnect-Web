@@ -27,8 +27,11 @@
 <link rel="stylesheet" href="/css/components/domain/tutor/tutor-card.css" th:href="@{/css/components/domain/tutor/tutor-card.css}">
 <link rel="stylesheet" href="/css/pages/tutor/search.css" th:href="@{/css/pages/tutor/search.css}">
 <link rel="stylesheet" href="/css/components/layout/brand-masthead.css" th:href="@{/css/components/layout/brand-masthead.css}">
+
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
+<script defer th:src="@{/js/pages/dat-render.js}"></script>
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
 <th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
 <th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
@@ -45,14 +48,14 @@
 
 </th:block>
 </head>
-<body class="tutor-search-page" th:fragment="content">
+<body class="tutor-search-page dat-render" th:fragment="content">
 <!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
 <div class="user-shell" data-component="user-shell" data-tutor-search-page>
     <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
     <th:block th:replace="~{fragments/header-user :: header(${active}, 'v6')}"></th:block>
 
-    <main class="user-shell__main">
-        <div class="user-shell__content tutor-search-page__content">
+    <main class="user-shell__main"><th:block th:if="${authenticationEnabled}"><th:block th:replace="~{pages/tutor/fragments-live :: search}"></th:block></th:block>
+        <div class="user-shell__content tutor-search-page__content" th:if="${!authenticationEnabled}">
             <!-- Component: PageHeader | Nguồn: components/layout/page-header.html -->
             <!-- Component: BrandMasthead | Nguồn: components/layout/brand-masthead.html -->
             <header class="page-header tutor-search-page__header brand-masthead" data-component="brand-masthead">

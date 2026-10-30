@@ -5,12 +5,12 @@
   <a class="button button--outline" th:if="${canPostJob}" th:href="@{/job/my-job}">Tin của tôi</a>
   <a class="button button--primary" th:if="${canPostJob}" th:href="@{/job/create}">Đăng tin</a>
 </nav>
-<section th:fragment="messages" class="job-live-messages">
+<section th:fragment="messages" class="job-live-messages" th:if="${success != null or pageError != null}">
   <div class="alert alert--success" th:if="${success != null}" role="status"><p th:text="${success}"></p></div>
   <div class="alert alert--error" th:if="${pageError != null}" role="alert"><p th:text="${pageError}"></p><p>Hãy tải lại trang hoặc quay về danh sách để kiểm tra trạng thái mới nhất.</p></div>
 </section>
 <article th:fragment="summary(job)" class="card job-live-panel">
-  <div class="job-live-heading"><h1 th:text="${job.title}"></h1><span class="badge badge--info" th:text="${job.statusLabel}"></span></div>
+  <div class="job-live-heading"><h2 th:text="${job.title}"></h2><span class="badge badge--info" th:text="${job.statusLabel}"></span></div>
   <p class="job-live-muted" th:text="|${job.publicCode} · ${job.learnerName} · ${job.createdAtLabel} (UTC+7)|"></p>
   <dl class="job-live-grid job-live-facts">
     <div><dt>Môn học</dt><dd th:text="${job.subject}"></dd></div>

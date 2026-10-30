@@ -26,8 +26,11 @@
 <link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}">
 <link rel="stylesheet" href="/css/components/domain/tutor/tutor-card.css" th:href="@{/css/components/domain/tutor/tutor-card.css}">
 <link rel="stylesheet" href="/css/pages/tutor/profile.css" th:href="@{/css/pages/tutor/profile.css}">
+
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
+<script defer th:src="@{/js/pages/dat-render.js}"></script>
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
 <th:block th:replace="~{fragments/preview-scripts :: scripts('fixtures')}"></th:block>
 <th:block th:replace="~{fragments/preview-scripts :: scripts('store')}"></th:block>
@@ -40,14 +43,14 @@
 
 </th:block>
 </head>
-<body class="tutor-profile-page" th:fragment="content">
+<body class="tutor-profile-page dat-render" th:fragment="content">
 <!-- Component: UserShell | Nguồn: components/layout/user-shell.html -->
 <div class="user-shell" data-component="user-shell" data-tutor-profile-page>
     <!-- Component: UserHeader | Nguồn: components/layout/user-header.html; JS: js/core/user-header.js -->
     <th:block th:replace="~{fragments/header-user :: header(${active}, 'v6')}"></th:block>
 
-    <main class="user-shell__main">
-        <div class="user-shell__content tutor-profile-page__content">
+    <main class="user-shell__main"><th:block th:if="${authenticationEnabled}"><th:block th:replace="~{pages/tutor/fragments-live :: profile}"></th:block></th:block>
+        <div class="user-shell__content tutor-profile-page__content" th:if="${!authenticationEnabled}">
             <!-- Component: Breadcrumb | Nguồn: components/navigation/breadcrumb.html -->
             <nav class="breadcrumb" aria-label="Breadcrumb"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" href="/tutor/search" th:href="@{/tutor/search}">Tìm gia sư</a></li><li class="breadcrumb__item" aria-current="page"><span class="breadcrumb__current" data-tutor-crumb>Hồ sơ gia sư</span></li></ol></nav>
 
