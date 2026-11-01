@@ -2,6 +2,7 @@ package com.educonnect.tutor.service;
 
 import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.dto.OfferingCardResponse;
+import com.educonnect.lesson.dto.OfferingOptionsResponse;
 import com.educonnect.lesson.service.OfferingProblem;
 import com.educonnect.tutor.dto.TutorCardResponse;
 import com.educonnect.tutor.dto.TutorProfileResponse;
@@ -32,6 +33,9 @@ public class TutorDiscoveryService {
         this.validator = validator;
     }
 
+    /** Danh mục thật dùng để render bộ lọc công khai. */
+    public OfferingOptionsResponse options() { return repository.options(); }
+
     /** Tác giả: Trường Đạt. /tutor/search: các điều kiện phải khớp trên cùng dịch vụ của gia sư. */
     public TutorSearchResponse search(TutorSearchRequest request) {
         if (request == null) {
@@ -48,10 +52,10 @@ public class TutorDiscoveryService {
 
     /** Tác giả: Trường Đạt. /home: tối đa 6 dịch vụ còn nhận đăng ký; chưa đổi mốc công khai Q10. */
     public List<OfferingCardResponse> homeOfferings() {
-        return cards(repository.publicOfferings(null, 0, 6, true)).getContent();
+        return cards(repository.publicOfferings(null, 0, 8, true)).getContent();
     }
 
-    /** Tác giả: Trường Đạt. /tutor/profile: dữ liệu sẵn, chờ tách controller của Đại trước khi nối route. */
+    /** Tác giả: Trường Đạt. /tutor/profile: DTO hồ sơ và dịch vụ công khai để render view. */
     public TutorProfileResponse profile(Long id, int page, int size) {
         if (id == null || id < 1 || page < 0 || page > 100000 || size < 1 || size > 48) {
             throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Mã gia sư hoặc số trang không hợp lệ.");

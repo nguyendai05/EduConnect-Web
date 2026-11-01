@@ -156,9 +156,17 @@
   border-radius: 0.375rem;
   cursor: pointer;
   font-size: var(--font-size-xs);
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.filter-panel__grade-grid label.is-selected {
+.filter-panel__grade-grid label:hover {
+  color: var(--filter-panel-primary);
+  background: var(--color-primary-container);
+  border-color: var(--filter-panel-primary);
+}
+
+.filter-panel__grade-grid label.is-selected,
+.filter-panel__grade-grid label:has(input:checked) {
   color: var(--color-on-primary);
   background: var(--filter-panel-primary);
   border-color: var(--filter-panel-primary);

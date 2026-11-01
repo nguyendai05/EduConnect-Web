@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="/css/components/feedback/toast.css" th:href="@{/css/components/feedback/toast.css}">
 <link rel="stylesheet" href="/css/layouts.css" th:href="@{/css/layouts.css}">
 <link rel="stylesheet" href="/css/pages/tutor/manage.css" th:href="@{/css/pages/tutor/manage.css}">
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 
@@ -42,7 +43,7 @@
 </th:block>
 </head>
 
-<body class="tutor-manage-page" th:fragment="content">
+<body class="tutor-manage-page dat-render" th:fragment="content">
 <a class="tutor-manage__skip-link" href="#tutor-manage-main">Đến nội dung chính</a>
 <div class="user-shell" data-component="user-shell">
   <th:block th:replace="~{fragments/header-user :: header(${active}, 'v12')}"></th:block>

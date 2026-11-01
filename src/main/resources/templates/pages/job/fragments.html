@@ -1,16 +1,31 @@
 <!doctype html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
+<nav th:fragment="breadcrumb(page)" class="breadcrumb dat-breadcrumb job-breadcrumb" aria-label="Đường dẫn">
+  <ol class="breadcrumb__list">
+    <li class="breadcrumb__item" th:if="${page == 'discover'}"><a class="breadcrumb__link" th:href="@{/home}">Trang chủ</a></li>
+    <li class="breadcrumb__item" th:if="${page != 'discover'}"><a class="breadcrumb__link" th:href="@{/job/discover}">Tin tìm gia sư</a></li>
+    <li class="breadcrumb__item" th:if="${page == 'create' or page == 'applicants' or (page == 'detail' and job != null and job.owner)}"><a class="breadcrumb__link" th:href="@{/job/my-job}">Tin của tôi</a></li>
+    <li class="breadcrumb__item" th:if="${page == 'applicants' and job != null}"><a class="breadcrumb__link" th:href="@{/job/detail(id=${job.id})}" th:text="${job.title}"></a></li>
+    <li class="breadcrumb__item" aria-current="page">
+      <span class="breadcrumb__current" th:if="${page == 'discover'}">Tin tìm gia sư</span>
+      <span class="breadcrumb__current" th:if="${page == 'mine'}">Tin của tôi</span>
+      <span class="breadcrumb__current" th:if="${page == 'create'}" th:text="${editingId == null ? 'Đăng tin tìm gia sư' : 'Sửa tin tìm gia sư'}"></span>
+      <span class="breadcrumb__current" th:if="${page == 'detail'}" th:text="${job != null ? job.title : 'Chi tiết tin'}"></span>
+      <span class="breadcrumb__current" th:if="${page == 'applicants'}">Gia sư ứng tuyển</span>
+    </li>
+  </ol>
+</nav>
 <nav th:fragment="navigation(tab)" class="job-live-nav" aria-label="Tin tìm gia sư">
   <a class="button" th:classappend="${tab == 'discover'} ? 'button--primary' : 'button--outline'" th:attr="aria-current=${tab == 'discover'} ? 'page'" th:href="@{/job/discover}">Khám phá tin</a>
   <a class="button" th:if="${canPostJob}" th:classappend="${tab == 'mine'} ? 'button--primary' : 'button--outline'" th:attr="aria-current=${tab == 'mine'} ? 'page'" th:href="@{/job/my-job}">Tin của tôi</a>
   <a class="button" th:if="${canPostJob}" th:classappend="${tab == 'create'} ? 'button--primary' : 'button--outline'" th:attr="aria-current=${tab == 'create'} ? 'page'" th:href="@{/job/create}">Đăng tin</a>
 </nav>
-<section th:fragment="messages" class="job-live-messages">
+<section th:fragment="messages" class="job-live-messages" th:if="${success != null or pageError != null}">
   <div class="alert alert--success" th:if="${success != null}" role="status"><p th:text="${success}"></p></div>
   <div class="alert alert--error" th:if="${pageError != null}" role="alert"><p th:text="${pageError}"></p><p>Hãy tải lại trang hoặc quay về danh sách để kiểm tra trạng thái mới nhất.</p></div>
 </section>
 <article th:fragment="summary(job)" class="card job-live-panel">
-  <div class="job-live-heading"><h1 th:text="${job.title}"></h1><span class="badge badge--info" th:text="${job.statusLabel}"></span></div>
+  <div class="job-live-heading"><h2 th:text="${job.title}"></h2><span class="badge badge--info" th:text="${job.statusLabel}"></span></div>
   <p class="job-live-muted" th:text="|${job.publicCode} · ${job.learnerName} · ${job.createdAtLabel} (UTC+7)|"></p>
   <dl class="job-live-grid job-live-facts">
     <div><dt>Môn học</dt><dd th:text="${job.subject}"></dd></div>

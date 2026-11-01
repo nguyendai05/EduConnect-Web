@@ -149,33 +149,24 @@
       "/css/components/feedback/toast.css",
       "/css/components/feedback/empty-state.css",
       "/css/layouts.css",
-      "/css/pages/admin/job-review-detail.css"
+      "/css/pages/admin/job-review-detail.css",
+      "/css/pages/job/live.css",
+      "/css/components/form/input.css",
+      "/css/components/form/select.css",
+      "/css/components/form/form-field.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
-      "/js/pages/admin/tutor-review-data.js",
-      "/js/pages/admin/payout-data.js",
       "/js/core/admin-sidebar.js",
       "/js/core/admin-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
-      "/js/pages/admin/job-review-data.js",
       "/js/pages/admin/job-review-detail.js"
     ],
     "headJs": [],
     "bodyJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
-      "/js/pages/admin/tutor-review-data.js",
-      "/js/pages/admin/payout-data.js",
       "/js/core/admin-sidebar.js",
       "/js/core/admin-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
-      "/js/pages/admin/job-review-data.js",
       "/js/pages/admin/job-review-detail.js"
     ]
   },
@@ -200,35 +191,24 @@
       "/css/components/feedback/loading.css",
       "/css/components/feedback/empty-state.css",
       "/css/layouts.css",
-      "/css/pages/admin/job-review-queue.css"
+      "/css/pages/admin/job-review-queue.css",
+      "/css/components/data-display/card.css",
+      "/css/pages/job/live.css",
+      "/css/components/form/input.css",
+      "/css/components/form/form-field.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
-      "/js/pages/admin/tutor-review-data.js",
-      "/js/pages/admin/payout-data.js",
       "/js/core/admin-sidebar.js",
       "/js/core/admin-header.js",
-      "/js/core/search-input.js",
-      "/js/core/tabs.js",
-      "/js/core/pagination.js",
-      "/js/pages/admin/job-review-data.js",
       "/js/pages/admin/job-review-queue.js"
     ],
     "headJs": [],
     "bodyJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
-      "/js/pages/admin/tutor-review-data.js",
-      "/js/pages/admin/payout-data.js",
       "/js/core/admin-sidebar.js",
       "/js/core/admin-header.js",
-      "/js/core/search-input.js",
-      "/js/core/tabs.js",
-      "/js/core/pagination.js",
-      "/js/pages/admin/job-review-data.js",
       "/js/pages/admin/job-review-queue.js"
     ]
   },
@@ -771,7 +751,8 @@
       "/css/components/feedback/toast.css",
       "/css/components/form/input.css",
       "/css/components/form/radio.css",
-      "/css/pages/catalog/detail.css"
+      "/css/pages/catalog/detail.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
@@ -985,28 +966,20 @@
       "/css/components/feedback/toast.css",
       "/css/components/form/form-field.css",
       "/css/components/form/input.css",
+      "/css/components/form/select.css",
       "/css/components/form/radio.css",
       "/css/components/form/textarea.css",
-      "/css/pages/invitation/create.css"
+      "/css/pages/invitation/create.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/radio.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/invitation/create.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/radio.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/invitation/create.js"
     ],
     "bodyJs": []
@@ -1035,24 +1008,17 @@
       "/css/components/form/form-field.css",
       "/css/components/form/input.css",
       "/css/components/form/textarea.css",
-      "/css/pages/invitation/negotiation.css"
+      "/css/pages/invitation/negotiation.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/invitation/negotiation.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/invitation/negotiation.js"
     ],
     "bodyJs": []
@@ -1078,30 +1044,24 @@
       "/css/components/feedback/empty-state.css",
       "/css/components/feedback/modal.css",
       "/css/components/feedback/toast.css",
-      "/css/pages/job/applicants.css"
+      "/css/pages/job/applicants.css",
+      "/css/components/data-display/card.css",
+      "/css/components/feedback/alert.css",
+      "/css/pages/job/live.css",
+      "/css/components/form/input.css",
+      "/css/components/form/form-field.css",
+      "/css/pages/dat-render.css",
+      "/css/components/data-display/avatar.css",
+      "/css/components/feedback/badge.css"
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/search-input.js",
-      "/js/core/filter-chip.js",
-      "/js/core/select.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/job/applicants.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/search-input.js",
-      "/js/core/filter-chip.js",
-      "/js/core/select.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/job/applicants.js"
     ],
     "bodyJs": []
@@ -1127,28 +1087,19 @@
       "/css/components/feedback/alert.css",
       "/css/components/feedback/modal.css",
       "/css/components/feedback/toast.css",
-      "/css/pages/job/create.css"
+      "/css/pages/job/create.css",
+      "/css/components/data-display/card.css",
+      "/css/pages/job/live.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/select.js",
-      "/js/core/radio.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/job/create.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/select.js",
-      "/js/core/radio.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/job/create.js"
     ],
     "bodyJs": []
@@ -1172,24 +1123,20 @@
       "/css/components/feedback/alert.css",
       "/css/components/feedback/modal.css",
       "/css/components/feedback/toast.css",
-      "/css/pages/job/detail.css"
+      "/css/pages/job/detail.css",
+      "/css/components/data-display/card.css",
+      "/css/pages/job/live.css",
+      "/css/components/form/select.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/job/detail.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/job/detail.js"
     ],
     "bodyJs": []
@@ -1205,46 +1152,28 @@
       "/css/components/layout/page-header.css",
       "/css/components/layout/user-footer.css",
       "/css/components/navigation/filter-panel.css",
-      "/css/components/navigation/filter-chip.css",
       "/css/components/navigation/pagination.css",
       "/css/components/form/search-input.css",
       "/css/components/form/select.css",
-      "/css/components/form/radio.css",
+      "/css/components/form/input.css",
       "/css/components/domain/job/job-card.css",
-      "/css/components/data-display/avatar.css",
-      "/css/components/feedback/badge.css",
       "/css/components/feedback/empty-state.css",
-      "/css/components/feedback/toast.css",
+      "/css/components/feedback/alert.css",
       "/css/pages/job/discover.css",
-      "/css/components/layout/brand-masthead.css"
+      "/css/components/layout/brand-masthead.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/search-input.js",
-      "/js/core/filter-panel.js",
-      "/js/core/filter-chip.js",
-      "/js/core/select.js",
-      "/js/core/pagination.js",
-      "/js/core/toast.js",
-      "/js/pages/job/discover.js",
-      "/js/core/search-filters.js"
+      "/js/core/search-filters.js",
+      "/js/pages/job/discover.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/search-input.js",
-      "/js/core/filter-panel.js",
-      "/js/core/filter-chip.js",
-      "/js/core/select.js",
-      "/js/core/pagination.js",
-      "/js/core/toast.js",
-      "/js/pages/job/discover.js",
-      "/js/core/search-filters.js"
+      "/js/core/search-filters.js",
+      "/js/pages/job/discover.js"
     ],
     "bodyJs": []
   },
@@ -1266,30 +1195,21 @@
       "/css/components/feedback/alert.css",
       "/css/components/feedback/modal.css",
       "/css/components/feedback/empty-state.css",
-      "/css/pages/job/my-job.css"
+      "/css/pages/job/my-job.css",
+      "/css/components/data-display/card.css",
+      "/css/pages/job/live.css",
+      "/css/components/form/input.css",
+      "/css/components/form/form-field.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/tabs.js",
-      "/js/core/search-input.js",
-      "/js/core/select.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/job/my-job.js"
     ],
     "headJs": [
       "/js/core/route.js",
-      "/js/data/fixtures.js",
-      "/js/data/store.js",
       "/js/core/user-header.js",
-      "/js/core/tabs.js",
-      "/js/core/search-input.js",
-      "/js/core/select.js",
-      "/js/core/modal.js",
-      "/js/core/toast.js",
       "/js/pages/job/my-job.js"
     ],
     "bodyJs": []
@@ -1468,7 +1388,8 @@
       "/css/components/feedback/modal.css",
       "/css/components/feedback/toast.css",
       "/css/layouts.css",
-      "/css/pages/tutor/manage.css"
+      "/css/pages/tutor/manage.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",
@@ -1555,9 +1476,11 @@
       "/css/components/form/select.css",
       "/css/components/form/textarea.css",
       "/css/components/domain/tutor/tutor-card.css",
-      "/css/pages/tutor/profile.css"
+      "/css/pages/tutor/profile.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
+      "/js/pages/dat-render.js",
       "/js/core/route.js",
       "/js/data/fixtures.js",
       "/js/data/store.js",
@@ -1567,6 +1490,7 @@
       "/js/pages/tutor/profile.js"
     ],
     "headJs": [
+      "/js/pages/dat-render.js",
       "/js/core/route.js",
       "/js/data/fixtures.js",
       "/js/data/store.js",
@@ -1605,9 +1529,11 @@
       "/css/components/feedback/toast.css",
       "/css/components/domain/tutor/tutor-card.css",
       "/css/pages/tutor/search.css",
-      "/css/components/layout/brand-masthead.css"
+      "/css/components/layout/brand-masthead.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
+      "/js/pages/dat-render.js",
       "/js/core/route.js",
       "/js/data/fixtures.js",
       "/js/data/store.js",
@@ -1621,6 +1547,7 @@
       "/js/core/search-filters.js"
     ],
     "headJs": [
+      "/js/pages/dat-render.js",
       "/js/core/route.js",
       "/js/data/fixtures.js",
       "/js/data/store.js",
@@ -1688,7 +1615,8 @@
       "/css/components/feedback/empty-state.css",
       "/css/components/feedback/toast.css",
       "/css/components/form/input.css",
-      "/css/pages/home.css"
+      "/css/pages/home.css",
+      "/css/pages/dat-render.css"
     ],
     "js": [
       "/js/core/route.js",

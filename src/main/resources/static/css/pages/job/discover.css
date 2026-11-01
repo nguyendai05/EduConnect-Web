@@ -2,6 +2,103 @@
   background: var(--color-background);
 }
 
+/* Server-rendered discovery keeps the prototype layout and real catalog filters. */
+.discover-page--live .page-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.discover-page--live .discover-results__toolbar > div:first-child {
+  min-width: 0;
+}
+
+.discover-page--live .discover-results__sort {
+  flex: 0 0 auto;
+}
+
+.discover-page--live .discover-filter__choices {
+  gap: var(--space-3);
+}
+
+.discover-page--live .discover-filter__choices label:has(input:focus-visible) > span {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.discover-page--live .discover-filter__budget > label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.discover-page--live .discover-filter__budget .input-control,
+.discover-page--live .discover-filter__budget input {
+  width: 100%;
+  min-width: 0;
+}
+
+.discover-page--live .job-card__code {
+  overflow-wrap: anywhere;
+  font-size: var(--font-size-xs);
+}
+
+.discover-page--live .job-card__price {
+  display: grid;
+  gap: var(--space-1);
+  justify-items: end;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.discover-page--live .job-card__price strong {
+  font-size: inherit;
+}
+
+.discover-page--live .discover-job h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.discover-page--live .discover-job h2 a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.discover-page--live .discover-job__description {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.discover-page--live .discover-job__parameters strong {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 48rem) {
+  .discover-page--live .job-card__price {
+    justify-items: start;
+  }
+
+  .discover-page--live .pagination {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .discover-page--live .pagination__summary {
+    white-space: normal;
+  }
+
+  .discover-page--live .discover-job .job-card__footer > .button {
+    width: 100%;
+    min-height: var(--touch-target);
+    text-align: center;
+  }
+}
+
 .discover-page__content {
   display: grid;
   gap: var(--space-5);
@@ -177,12 +274,12 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.discover-results__toolbar > div:first-child {
+.discover-results__heading {
   display: grid;
   gap: var(--space-1);
 }
 
-.discover-results__toolbar > div:first-child span {
+.discover-results__heading p {
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
 }
@@ -194,7 +291,7 @@
 .discover-results__sort .select-control {
   min-height: var(--control-height);
   border: 1px solid var(--color-border);
-  background: var(--color-surface-low);
+  background-color: var(--color-surface);
 }
 
 .discover-results__chips {
@@ -213,12 +310,25 @@
   position: relative;
   gap: var(--space-4);
   min-height: 0;
-  padding: var(--space-5);
+  padding: var(--space-6);
   overflow: hidden;
 }
 
 .discover-job .job-card__heading {
   max-width: none;
+}
+
+.discover-page--live .job-card__tags {
+  gap: var(--space-1);
+}
+
+.discover-page--live .job-card__tags span {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
 }
 
 .discover-job h2 {

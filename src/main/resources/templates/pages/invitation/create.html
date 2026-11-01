@@ -23,6 +23,8 @@
 <link rel="stylesheet" href="/css/components/form/radio.css" th:href="@{/css/components/form/radio.css}">
 <link rel="stylesheet" href="/css/components/form/textarea.css" th:href="@{/css/components/form/textarea.css}">
 <link rel="stylesheet" href="/css/pages/invitation/create.css" th:href="@{/css/pages/invitation/create.css}">
+
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -33,7 +35,7 @@
 
 </th:block>
 </head>
-<body class="invitation-create-page" th:fragment="content">
+<body class="invitation-create-page dat-render" th:fragment="content">
 <div class="user-shell" data-component="user-shell">
   <th:block th:replace="~{fragments/header-user :: header(${active}, 'v6')}"></th:block>
   <main class="user-shell__main">
@@ -58,18 +60,18 @@
         <div class="invitation-create-layout" th:if="${invitationRequest.tutorId != null}">
           <form class="invitation-create-form" method="post" th:action="@{/invitation/create}" th:object="${invitationRequest}" data-invitation-create-form>
             <input type="hidden" th:field="*{requestKey}"><input type="hidden" th:field="*{tutorId}"><input type="hidden" th:field="*{offeringId}"><input type="hidden" th:field="*{offeringVersion}">
-            <section class="card invitation-tutor"><div class="invitation-tutor__body"><h2 th:each="t : ${options.tutors}" th:if="${t.id == invitationRequest.tutorId}" th:text="${t.displayName}"></h2><p th:each="t : ${options.tutors}" th:if="${t.id == invitationRequest.tutorId}" th:text="${t.headline}"></p><a th:href="@{/tutor/profile(id=*{tutorId})}">Xem hồ sơ công khai</a></div></section>
-            <section class="card invitation-section"><h2>Nội dung học</h2><div class="invitation-live-grid">
+            <section class="card invitation-tutor"><div class="invitation-tutor__body"><p class="dat-eyebrow">Gia sư nhận lời mời</p><h2 th:each="t : ${options.tutors}" th:if="${t.id == invitationRequest.tutorId}" th:text="${t.displayName}"></h2><p th:each="t : ${options.tutors}" th:if="${t.id == invitationRequest.tutorId}" th:text="${t.headline}"></p><a th:href="@{/tutor/profile(id=*{tutorId})}">Xem hồ sơ công khai</a></div></section>
+            <section class="card invitation-section"><header class="dat-section-heading"><span>01</span><h2>Nội dung học</h2></header><div class="invitation-live-grid">
               <label class="form-field">Môn học<select class="select-control select-control--native" th:field="*{subjectId}" required th:disabled="${invitationRequest.offeringId != null}"><option value="">Chọn môn</option><option th:each="o : ${options.references.subjects}" th:value="${o.id}" th:text="${o.label}"></option></select><input th:if="${invitationRequest.offeringId != null}" type="hidden" name="subjectId" th:value="*{subjectId}"></label>
               <label class="form-field">Cấp học<select class="select-control select-control--native" th:field="*{gradeLevelId}" required th:disabled="${invitationRequest.offeringId != null}"><option value="">Chọn cấp</option><option th:each="o : ${options.references.grades}" th:value="${o.id}" th:text="${o.label}"></option></select><input th:if="${invitationRequest.offeringId != null}" type="hidden" name="gradeLevelId" th:value="*{gradeLevelId}"></label>
               <label class="form-field">Khu vực<select class="select-control select-control--native" th:field="*{areaId}" required th:disabled="${invitationRequest.offeringId != null}"><option value="">Chọn khu vực</option><option th:each="o : ${options.references.areas}" th:value="${o.id}" th:text="${o.label}"></option></select><input th:if="${invitationRequest.offeringId != null}" type="hidden" name="areaId" th:value="*{areaId}"></label>
               <label class="form-field">Hình thức<select class="select-control select-control--native" th:field="*{deliveryModeId}" required th:disabled="${invitationRequest.offeringId != null}"><option value="">Chọn hình thức</option><option th:each="o : ${options.references.modes}" th:value="${o.id}" th:text="${o.label}"></option></select><input th:if="${invitationRequest.offeringId != null}" type="hidden" name="deliveryModeId" th:value="*{deliveryModeId}"></label>
             </div></section>
-            <section class="card invitation-section"><h2>Học phí và số buổi đề xuất</h2><div class="invitation-live-grid">
+            <section class="card invitation-section"><header class="dat-section-heading"><span>02</span><h2>Học phí và số buổi đề xuất</h2></header><div class="invitation-live-grid">
               <label class="form-field">Giá mỗi buổi (VND)<span class="input-control"><input class="input-control__input" type="number" th:field="*{proposedUnitPrice}" min="1" step="1" required data-invitation-price></span></label>
               <label class="form-field">Số buổi<span class="input-control"><input class="input-control__input" type="number" th:field="*{sessionCount}" min="1" max="32767" step="1" required data-invitation-sessions></span></label>
             </div></section>
-            <section class="card invitation-section"><h2>Điều khoản, thời lượng và lịch học</h2>
+            <section class="card invitation-section"><header class="dat-section-heading"><span>03</span><h2>Điều khoản, thời lượng và lịch học</h2></header>
               <p class="invitation-live-muted">Ghi rõ thời lượng mỗi buổi, ngày/giờ học và múi giờ, địa điểm hoặc hình thức học, cùng các điều kiện hai bên cần thống nhất.</p>
               <label class="form-field" for="invitation-terms">Toàn bộ đề xuất<textarea class="textarea-control" id="invitation-terms" th:field="*{termsText}" rows="10" maxlength="10000" required></textarea></label>
               <label class="form-field">Hạn nhận phản hồi (giờ Việt Nam, UTC+7)<span class="input-control"><input class="input-control__input" type="datetime-local" th:field="*{expiresAt}" step="60" required></span></label>

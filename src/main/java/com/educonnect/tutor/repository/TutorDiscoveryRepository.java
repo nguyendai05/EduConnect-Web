@@ -1,5 +1,8 @@
 package com.educonnect.tutor.repository;
 
+import com.educonnect.lesson.dto.OfferingOptionResponse;
+import com.educonnect.lesson.dto.OfferingOptionsResponse;
+
 import com.educonnect.lesson.domain.EnrollmentStatus;
 import com.educonnect.lesson.domain.Offering;
 import com.educonnect.lesson.domain.OfferingStatus;
@@ -28,6 +31,15 @@ import java.util.Optional;
 @Repository
 @Profile("db-dev")
 public class TutorDiscoveryRepository {
+    /** Danh sách danh mục chỉ đọc; tên Entity là hằng nội bộ, không nhận từ request. */
+    public OfferingOptionsResponse options() {
+        return new OfferingOptionsResponse(options("Subject"), options("GradeLevel"), options("Area"), options("DeliveryMode"));
+    }
+
+    private List<OfferingOptionResponse> options(String entityName) {
+        return entityManager.createQuery("select new com.educonnect.lesson.dto.OfferingOptionResponse(r.id, r.name) from "
+                + entityName + " r order by r.name", OfferingOptionResponse.class).getResultList();
+    }
     private static final String FROM = " from Offering o join o.tutorReference t join t.account a"
             + " join o.subjectReference subject ";
     private static final String PUBLIC = " where o.status = :published and t.reviewStatus = :approved"
@@ -48,6 +60,13 @@ public class TutorDiscoveryRepository {
         String selection = "select new com.educonnect.tutor.dto.TutorCardResponse("
                 + "t.userId, a.displayName, t.headline, t.experienceYears, min(o.unitPrice), count(o.id))";
         String grouping = " group by t.userId, a.displayName, t.headline, t.experienceYears ";
+        String having = "";
+        long requiredGrades = request.getGradeLevelIds().stream().distinct().count();
+        if (requiredGrades > 1) {
+            // Một Offering chỉ có một cấp; gom theo gia sư để yêu cầu đủ mọi cấp đã chọn.
+            having = " having count(distinct o.gradeLevelId) = :requiredGrades ";
+            parameters.put("requiredGrades", requiredGrades);
+        }
         String order = switch (request.getSort()) {
             case "price-asc" -> "min(o.unitPrice) asc, t.userId asc";
             case "price-desc" -> "min(o.unitPrice) desc, t.userId asc";
@@ -55,9 +74,14 @@ public class TutorDiscoveryRepository {
             default -> throw new IllegalArgumentException("Tiêu chí sắp xếp chưa được hỗ trợ.");
         };
         TypedQuery<TutorCardResponse> data = entityManager.createQuery(
-                selection + FROM + where + grouping + " order by " + order, TutorCardResponse.class);
+                selection + FROM + where + grouping + having + " order by " + order, TutorCardResponse.class);
+        // Đếm các nhóm thỏa cùng HAVING trước khi phân trang, không đếm gia sư chỉ khớp một cấp.
+        String countQuery = requiredGrades > 1
+                ? "select count(*) from (select t.userId as tutorId" + FROM + where
+                    + " group by t.userId" + having + ") matchedTutors"
+                : "select count(distinct t.userId)" + FROM + where;
         TypedQuery<Long> count = entityManager.createQuery(
-                "select count(distinct t.userId)" + FROM + where, Long.class);
+                countQuery, Long.class);
         bind(data, parameters);
         bind(count, parameters);
         long total = count.getSingleResult();

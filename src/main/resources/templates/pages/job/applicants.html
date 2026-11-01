@@ -26,6 +26,9 @@
 <link rel="stylesheet" th:href="@{/css/components/form/input.css}">
 <link rel="stylesheet" th:href="@{/css/components/form/select.css}">
 <link rel="stylesheet" th:href="@{/css/components/form/form-field.css}">
+<link rel="stylesheet" th:href="@{/css/components/data-display/avatar.css}">
+<link rel="stylesheet" th:href="@{/css/components/feedback/badge.css}">
+<link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -36,14 +39,14 @@
 
 </th:block>
 </head>
-<body th:fragment="content"><div class="user-shell">
+<body class="applicants-page dat-render" th:fragment="content"><div class="user-shell">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v9')}"></th:block>
-<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: navigation('mine')}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><th:block th:if="${job != null and applications != null}">
-  <h1 th:text="|Ứng viên: ${job.title}|"></h1><a th:href="@{/job/detail(id=${job.id})}">Xem nội dung tin và thỏa thuận đã chọn</a>
+<main class="user-shell__main"><div class="user-shell__content job-live"><th:block th:replace="~{pages/job/fragments :: breadcrumb('applicants')}"></th:block><th:block th:replace="~{pages/job/fragments :: messages}"></th:block><th:block th:if="${job != null and applications != null}">
+  <header class="page-header dat-page-header"><div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Gia sư ứng tuyển</h1><p class="page-header__description">Xem kinh nghiệm và đề xuất của từng gia sư trước khi lựa chọn.</p></div><div class="page-header__actions"><a class="button button--outline" th:href="@{/job/detail(id=${job.id})}">Xem tin đăng</a></div></div></header><section class="applicants-job"><div class="applicants-job__main"><h2 th:text="${job.title}"></h2><p class="dat-muted" th:text="|${job.subject} · ${job.grade} · ${job.area} · ${job.deliveryMode}|"></p></div><div><strong class="dat-stat" th:text="${applications.totalElements}"></strong><p class="dat-muted">lượt ứng tuyển</p></div></section>
   <p class="alert">Chọn một gia sư đồng nghĩa đồng ý toàn bộ nội dung tin và đề xuất ứng tuyển hiển thị bên dưới. Khi chọn xong, tin ngừng nhận ứng tuyển; chưa phát sinh đơn hoặc thanh toán.</p>
-  <p class="card job-live-panel" th:if="${applications.empty}">Chưa có ứng viên.</p>
-  <div class="job-live-list"><article class="card job-live-panel" th:each="app : ${applications.content}">
-    <div class="job-live-heading"><h2 th:text="${app.tutorName}"></h2><span class="badge badge--info" th:text="${app.statusLabel}"></span></div><p th:text="${app.headline}"></p>
+  <section class="empty-state dat-empty" th:if="${applications.empty}"><h2 class="empty-state__title">Chưa có gia sư ứng tuyển</h2><p class="empty-state__description">Các đề xuất của gia sư sẽ xuất hiện tại đây khi tin đang nhận ứng tuyển.</p></section>
+  <div class="dat-applicants-list"><article class="applicant-card card job-live-panel" th:each="app : ${applications.content}">
+    <div class="job-live-heading"><div class="dat-applicant-identity"><span class="avatar avatar--large" aria-hidden="true" th:text="${#strings.substring(app.tutorName,0,1)}"></span><div><h2 th:text="${app.tutorName}"></h2><p class="dat-muted" th:text="${app.headline}"></p></div></div><span class="badge badge--info" th:text="${app.statusLabel}"></span></div>
     <strong th:text="${#numbers.formatDecimal(app.proposedUnitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><p class="job-live-copy" th:text="${app.message}"></p>
     <div class="job-live-actions">
       <a class="button button--outline" th:href="@{/chat/with(tutor=${app.tutorId})}">Nhắn tin với gia sư</a>
