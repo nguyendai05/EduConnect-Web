@@ -15,29 +15,29 @@ import java.util.List;
  */
 public class TutorProfileForm {
     @Size(max = 1000, message = "Giới thiệu tối đa 1000 ký tự.")
-    private String bio;
+    private String bio; // Nội dung giới thiệu bản thân.
 
     @NotBlank(message = "Vui lòng nhập tiêu đề hồ sơ.")
     @Size(min = 5, max = 180, message = "Tiêu đề hồ sơ cần từ 5 đến 180 ký tự.")
-    private String headline;
+    private String headline; // Tiêu đề giới thiệu ngắn của hồ sơ gia sư.
 
     @NotNull(message = "Vui lòng nhập số năm kinh nghiệm.")
     @Min(value = 0, message = "Số năm kinh nghiệm từ 0 đến 80.")
     @Max(value = 80, message = "Số năm kinh nghiệm từ 0 đến 80.")
-    private Integer experienceYears;
+    private Integer experienceYears; // Số năm kinh nghiệm giảng dạy của gia sư.
 
-    private List<Long> subjectIds = new ArrayList<>();
-    private List<Long> gradeLevelIds = new ArrayList<>();
+    private List<Long> subjectIds = new ArrayList<>(); // Danh sách ID môn gia sư có thể dạy.
+    private List<Long> gradeLevelIds = new ArrayList<>(); // Danh sách ID cấp học.
     /** Môn/cấp học tự nhập (ngoài danh mục); mỗi tên đã chuẩn hóa ở CustomCatalogService. */
-    private List<String> customSubjects = new ArrayList<>();
-    private List<String> customGradeLevels = new ArrayList<>();
-    private List<Long> areaIds = new ArrayList<>();
-    private List<Long> deliveryModeIds = new ArrayList<>();
+    private List<String> customSubjects = new ArrayList<>(); // Tên các môn học gia sư tự nhập ngoài danh mục.
+    private List<String> customGradeLevels = new ArrayList<>(); // Tên các cấp học gia sư tự nhập ngoài danh mục.
+    private List<Long> areaIds = new ArrayList<>(); // Danh sách ID khu vực gia sư có thể dạy.
+    private List<Long> deliveryModeIds = new ArrayList<>(); // Danh sách ID hình thức gia sư có thể dạy.
 
     @NotNull(message = "Thiếu phiên bản hồ sơ, hãy tải lại trang.")
-    private Long userVersion;
+    private Long userVersion; // Phiên bản tài khoản để phát hiện cập nhật đồng thời.
     @NotNull(message = "Thiếu phiên bản hồ sơ, hãy tải lại trang.")
-    private Long tutorVersion;
+    private Long tutorVersion; // Phiên bản hồ sơ gia sư để phát hiện cập nhật đồng thời.
 
     public String getBio() { return bio; }
     public void setBio(String bio) { this.bio = bio; }

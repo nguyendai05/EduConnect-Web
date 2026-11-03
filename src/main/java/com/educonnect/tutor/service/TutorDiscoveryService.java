@@ -36,7 +36,7 @@ public class TutorDiscoveryService {
     /** Danh mục thật dùng để render bộ lọc công khai. */
     public OfferingOptionsResponse options() { return repository.options(); }
 
-    /** Tác giả: Trường Đạt. /tutor/search: các điều kiện phải khớp trên cùng dịch vụ của gia sư. */
+    /** Trường Đạt. /tutor/search: các điều kiện phải khớp trên cùng dịch vụ của gia sư. */
     public TutorSearchResponse search(TutorSearchRequest request) {
         if (request == null) {
             throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Thiếu điều kiện tìm kiếm.");

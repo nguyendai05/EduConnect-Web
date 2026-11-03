@@ -3,7 +3,10 @@ package com.educonnect.order.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record CartDTO(Long learnerId, List<CartItemDTO> items) {
+public record CartDTO(
+        Long learnerId, // ID tài khoản học viên.
+        List<CartItemDTO> items // Danh sách mục dịch vụ hoặc lớp trong giỏ hàng.
+) {
     public CartDTO() { this(null, List.of()); }
 
     public boolean isEmpty() { return items.isEmpty(); }

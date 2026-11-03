@@ -95,7 +95,9 @@ public class TutorDiscoveryRepository {
             where.append(" and (lower(a.displayName) like :q escape '!' or lower(t.headline) like :q escape '!'"
                     + " or lower(o.title) like :q escape '!' or lower(subject.name) like :q escape '!') ");
             String text = request.getQ().toLowerCase(java.util.Locale.ROOT)
-                    .replace("!", "!!").replace("%", "!%").replace("_", "!_");
+                    .replace("!", "!!")
+                    .replace("%", "!%")
+                    .replace("_", "!_");
             parameters.put("q", "%" + text + "%");
         }
         addFilter(where, parameters, "o.subjectId = :subjectId", "subjectId", request.getSubjectId());

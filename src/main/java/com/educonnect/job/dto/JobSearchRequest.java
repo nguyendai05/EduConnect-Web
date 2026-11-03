@@ -18,30 +18,30 @@ import java.math.BigDecimal;
  */
 public class JobSearchRequest {
     @Size(max = 200)
-    private String q;
+    private String q; // Từ khóa tìm kiếm.
     @Positive
-    private Long subjectId;
+    private Long subjectId; // ID môn học.
     @Positive
-    private Long gradeLevelId;
+    private Long gradeLevelId; // ID cấp học.
     @Positive
-    private Long areaId;
+    private Long areaId; // ID khu vực học.
     @Positive
-    private Long deliveryModeId;
+    private Long deliveryModeId; // ID hình thức học.
     @DecimalMin("0")
     @Digits(integer = 19, fraction = 0)
-    private BigDecimal minPrice;
+    private BigDecimal minPrice; // Mức giá tối thiểu dùng để lọc kết quả.
     @DecimalMin("0")
     @Digits(integer = 19, fraction = 0)
-    private BigDecimal maxPrice;
+    private BigDecimal maxPrice; // Mức giá tối đa dùng để lọc kết quả.
     @NotNull
     @Pattern(regexp = "newest|budget-asc|budget-desc")
-    private String sort = "newest";
+    private String sort = "newest"; // Tiêu chí sắp xếp kết quả tìm kiếm.
     @Min(0)
     @Max(100000)
-    private int page;
+    private int page; // Chỉ số trang hiện tại, bắt đầu từ 0.
     @Min(1)
     @Max(48)
-    private int size = 12;
+    private int size = 12; // Số kết quả tối đa trên mỗi trang.
 
     @AssertTrue(message = "Giá tối thiểu không được lớn hơn giá tối đa.")
     public boolean isPriceRangeValid() {

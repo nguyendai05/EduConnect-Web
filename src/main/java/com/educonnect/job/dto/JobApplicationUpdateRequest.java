@@ -12,20 +12,20 @@ import java.math.BigDecimal;
 public class JobApplicationUpdateRequest {
     @NotNull
     @PositiveOrZero
-    private Long jobVersion;
+    private Long jobVersion; // Phiên bản tin tìm gia sư để phát hiện cập nhật đồng thời.
 
     @NotNull
     @PositiveOrZero
-    private Long applicationVersion;
+    private Long applicationVersion; // Phiên bản đơn ứng tuyển để phát hiện cập nhật đồng thời.
 
     @NotNull
     @DecimalMin("1")
     @Digits(integer = 19, fraction = 0)
-    private BigDecimal proposedUnitPrice;
+    private BigDecimal proposedUnitPrice; // Học phí mỗi buổi được đề xuất khi thương lượng.
 
     @NotBlank
     @Size(max = 5000)
-    private String message;
+    private String message; // Lời nhắn gia sư gửi khi ứng tuyển.
 
     public Long getJobVersion() { return jobVersion; }
     public void setJobVersion(Long jobVersion) { this.jobVersion = jobVersion; }

@@ -10,11 +10,11 @@ public class OfferingStatusRequest {
 
     @NotNull(message = "Thiếu phiên bản dữ liệu. Hãy tải lại trang.")
     @PositiveOrZero(message = "Phiên bản dữ liệu không hợp lệ.")
-    private Long version;
+    private Long version; // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
 
     @NotBlank(message = "Chọn thao tác cần thực hiện.")
     @Pattern(regexp = "submit|close", message = "Thao tác không được hỗ trợ.")
-    private String action;
+    private String action; // Thao tác người dùng yêu cầu thực hiện.
 
     public Long getVersion() {
         return version;

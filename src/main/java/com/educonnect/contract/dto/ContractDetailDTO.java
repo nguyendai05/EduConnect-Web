@@ -13,27 +13,65 @@ import java.time.Instant;
 import java.util.List;
 
 /** Chi tiết hợp đồng cho học viên và gia sư của hợp đồng đó. */
-public record ContractDetailDTO(Long id, String publicCode, String orderCode, String title, String learnerName,
-        String tutorName, String typeLabel, BigDecimal unitPrice, short sessionCount, int seatCount, BigDecimal total,
-        String terms, String statusLabel, Instant createdAt, Instant learnerAcceptedAt, Instant tutorAcceptedAt,
-        boolean payable, boolean canCancel, List<SessionDTO> sessions, boolean viewerIsTutor, MoneyDTO money,
-        List<ActivityDTO> activities) {
+public record ContractDetailDTO(
+        Long id, // ID hợp đồng.
+        String publicCode, // Mã công khai dùng để hiển thị và tra cứu.
+        String orderCode, // Mã đơn hàng hiển thị cho người dùng.
+        String title, // Tiêu đề hiển thị.
+        String learnerName, // Tên hiển thị của học viên.
+        String tutorName, // Tên hiển thị của gia sư.
+        String typeLabel, // Tên loại hình học để hiển thị.
+        BigDecimal unitPrice, // Học phí mỗi buổi cho một chỗ học.
+        short sessionCount, // Tổng số buổi học.
+        int seatCount, // Số chỗ học đăng ký trong hợp đồng hoặc giỏ hàng.
+        BigDecimal total, // Tổng số tiền.
+        String terms, // Nội dung điều khoản đã thống nhất trong hợp đồng.
+        String statusLabel, // Tên trạng thái để hiển thị trên giao diện.
+        Instant createdAt, // Thời điểm tạo bản ghi.
+        Instant learnerAcceptedAt, // Thời điểm học viên đồng ý điều khoản.
+        Instant tutorAcceptedAt, // Thời điểm gia sư đồng ý điều khoản.
+        boolean payable, // Cho biết có thể thanh toán hợp đồng hay không.
+        boolean canCancel, // Cho biết người xem có thể hủy hay không.
+        List<SessionDTO> sessions, // Danh sách buổi học của hợp đồng.
+        boolean viewerIsTutor, // Cho biết người đang xem là gia sư trong hợp đồng hay không.
+        MoneyDTO money, // Thông tin phí, tiền ký quỹ và giải ngân của hợp đồng.
+        List<ActivityDTO> activities // Các mốc hoạt động gần đây của hợp đồng.
+) {
 
     /** Một mốc trong hoạt động gần đây của hợp đồng. */
-    public record ActivityDTO(Instant at, String text) {}
+    public record ActivityDTO(
+            Instant at, // Thời điểm diễn ra hoạt động.
+            String text // Nội dung mô tả hoạt động.
+    ) {}
 
     /** Một buổi học; canAttend cho gia sư (buổi kế tiếp), canConfirm cho học viên (buổi đã điểm danh). */
-    public record SessionDTO(Long id, int number, BigDecimal amount, String statusLabel, Instant attendedAt,
-            boolean canAttend, boolean canConfirm) {}
+    public record SessionDTO(
+            Long id, // ID buổi học trong hợp đồng.
+            int number, // Số thứ tự buổi học.
+            BigDecimal amount, // Số tiền phân bổ cho buổi học.
+            String statusLabel, // Tên trạng thái để hiển thị trên giao diện.
+            Instant attendedAt, // Thời điểm gia sư điểm danh buổi học.
+            boolean canAttend, // Cho biết gia sư có thể điểm danh buổi học hay không.
+            boolean canConfirm // Cho biết học viên có thể xác nhận buổi học hay không.
+    ) {}
 
 
     /**
      * Tiền của hợp đồng. Phần của gia sư là số thực nhận (sau phí nền tảng, làm tròn từng buổi);
      * phần của học viên là số tiền gốc: đã giải ngân cho gia sư và đang ký quỹ.
      */
-    public record MoneyDTO(BigDecimal feePercent, BigDecimal feeTotal, BigDecimal netTotal, BigDecimal releasedNet,
-            BigDecimal remainingNet, BigDecimal releasedGross, BigDecimal heldGross, BigDecimal refundedGross,
-            int doneSessions, int totalSessions) {}
+    public record MoneyDTO(
+            BigDecimal feePercent, // Tỷ lệ phí nền tảng, tính theo phần trăm.
+            BigDecimal feeTotal, // Tổng phí nền tảng của hợp đồng.
+            BigDecimal netTotal, // Tổng tiền gia sư thực nhận sau phí nền tảng.
+            BigDecimal releasedNet, // Số tiền gia sư đã nhận sau phí nền tảng.
+            BigDecimal remainingNet, // Số tiền gia sư còn chờ nhận sau phí nền tảng.
+            BigDecimal releasedGross, // Số tiền gốc đã giải ngân, trước khi trừ phí nền tảng.
+            BigDecimal heldGross, // Số tiền gốc của học viên đang được giữ ký quỹ.
+            BigDecimal refundedGross, // Số tiền gốc đã hoàn lại cho học viên.
+            int doneSessions, // Số buổi học đã hoàn thành.
+            int totalSessions // Tổng số buổi học của hợp đồng.
+    ) {}
 
     /** viewerId là người đang xem: gia sư thấy nút điểm danh, học viên thấy nút xác nhận buổi và nút hủy (khi chờ thanh toán). */
     public static ContractDetailDTO from(Contract contract, Long viewerId, List<ContractSession> sessions) {

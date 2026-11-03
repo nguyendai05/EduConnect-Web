@@ -8,10 +8,25 @@ import java.util.List;
 import java.util.Map;
 
 /** DAI-02: một trang của hàng đợi duyệt gia sư cùng số lượng theo từng trạng thái (cho các tab). */
-public record TutorReviewQueueDTO(List<Row> rows, int page, int size, long total, Map<TutorReviewStatus, Long> counts) {
+public record TutorReviewQueueDTO(
+        List<Row> rows, // Danh sách các dòng dữ liệu để hiển thị.
+        int page, // Chỉ số trang hiện tại, bắt đầu từ 0.
+        int size, // Số kết quả tối đa trên mỗi trang.
+        long total, // Tổng số bản ghi khớp điều kiện lọc.
+        Map<TutorReviewStatus, Long> counts // Số bản ghi theo từng trạng thái.
+) {
 
-    public record Row(Long userId, String name, String email, String headline, int experienceYears,
-                      TutorReviewStatus status, Instant updatedAt, int evidenceCount, String subjects) {
+    public record Row(
+            Long userId, // ID tài khoản người dùng.
+            String name, // Tên hiển thị của người dùng.
+            String email, // Địa chỉ email của tài khoản.
+            String headline, // Tiêu đề giới thiệu ngắn của hồ sơ gia sư.
+            int experienceYears, // Số năm kinh nghiệm giảng dạy của gia sư.
+            TutorReviewStatus status, // Trạng thái hiện tại.
+            Instant updatedAt, // Thời điểm cập nhật gần nhất.
+            int evidenceCount, // Số tệp minh chứng trong hồ sơ gia sư.
+            String subjects // Tên các môn gia sư có thể dạy, gộp để hiển thị.
+    ) {
         public String updatedLabel() { return DateLabels.vietnam(updatedAt); }
         public String initials() {
             String[] parts = name == null ? new String[0] : name.strip().split("\s+");

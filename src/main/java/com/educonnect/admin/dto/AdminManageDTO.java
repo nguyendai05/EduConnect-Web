@@ -14,15 +14,30 @@ public final class AdminManageDTO {
     private AdminManageDTO() {}
 
     /** Một trang kết quả. */
-    public record PageResult<T>(List<T> rows, int page, int size, long total) {
+    public record PageResult<T>(
+            List<T> rows, // Danh sách các dòng dữ liệu để hiển thị.
+            int page, // Chỉ số trang hiện tại, bắt đầu từ 0.
+            int size, // Số kết quả tối đa trên mỗi trang.
+            long total // Tổng số bản ghi khớp điều kiện lọc.
+    ) {
         public int totalPages() { return (int) Math.max(1, (total + size - 1) / size); }
         public boolean hasPrevious() { return page > 0; }
         public boolean hasNext() { return page + 1 < totalPages(); }
         public boolean isEmpty() { return rows.isEmpty(); }
     }
 
-    public record UserRow(Long id, String publicCode, String name, String email, Set<String> roles, String status,
-                          boolean emailVerified, String tutorStatus, Long version, Instant createdAt) {
+    public record UserRow(
+            Long id, // ID tài khoản người dùng.
+            String publicCode, // Mã công khai dùng để hiển thị và tra cứu.
+            String name, // Tên hiển thị của người dùng.
+            String email, // Địa chỉ email của tài khoản.
+            Set<String> roles, // Tập hợp vai trò của tài khoản.
+            String status, // Trạng thái hiện tại.
+            boolean emailVerified, // Cho biết tài khoản đã xác minh email hay chưa.
+            String tutorStatus, // Trạng thái xét duyệt hồ sơ gia sư.
+            Long version, // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
+            Instant createdAt // Thời điểm tạo bản ghi.
+    ) {
         public String statusLabel() {
             return switch (status) { case "ACTIVE" -> "Đang hoạt động"; case "LOCKED" -> "Đang khóa"; default -> "Vô hiệu hóa"; };
         }
@@ -49,8 +64,19 @@ public final class AdminManageDTO {
         public String createdLabel() { return DateLabels.vietnam(createdAt); }
     }
 
-    public record OfferingRow(Long id, String publicCode, String title, String tutorName, Long tutorId, String type,
-                              String subject, BigDecimal unitPrice, int sessionCount, String status, Instant updatedAt) {
+    public record OfferingRow(
+            Long id, // ID dịch vụ hoặc lớp học.
+            String publicCode, // Mã công khai dùng để hiển thị và tra cứu.
+            String title, // Tiêu đề hiển thị.
+            String tutorName, // Tên hiển thị của gia sư.
+            Long tutorId, // ID tài khoản gia sư.
+            String type, // Loại dịch vụ: dạy kèm 1-1 hoặc lớp nhóm.
+            String subject, // Tên môn học.
+            BigDecimal unitPrice, // Học phí mỗi buổi cho một chỗ học.
+            int sessionCount, // Tổng số buổi học.
+            String status, // Trạng thái hiện tại.
+            Instant updatedAt // Thời điểm cập nhật gần nhất.
+    ) {
         public String typeLabel() { return "GROUP_CLASS".equals(type) ? "Lớp nhóm" : "Dạy kèm 1-1"; }
         public String statusLabel() {
             return switch (status) {
@@ -66,8 +92,16 @@ public final class AdminManageDTO {
         public String updatedLabel() { return DateLabels.vietnam(updatedAt); }
     }
 
-    public record OrderRow(Long id, String publicCode, String learnerName, BigDecimal total, String status,
-                           String titles, String paymentStatus, Instant createdAt) {
+    public record OrderRow(
+            Long id, // ID đơn hàng.
+            String publicCode, // Mã công khai dùng để hiển thị và tra cứu.
+            String learnerName, // Tên hiển thị của học viên.
+            BigDecimal total, // Tổng số tiền.
+            String status, // Trạng thái hiện tại.
+            String titles, // Các tiêu đề dịch vụ hoặc lớp trong đơn hàng.
+            String paymentStatus, // Trạng thái thanh toán của đơn hàng.
+            Instant createdAt // Thời điểm tạo bản ghi.
+    ) {
         public String statusLabel() {
             return switch (status) {
                 case "AWAITING_PAYMENT" -> "Chờ thanh toán"; case "PAID" -> "Đã thanh toán"; case "IN_PROGRESS" -> "Đang thực hiện";

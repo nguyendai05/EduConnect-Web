@@ -23,42 +23,42 @@ import java.time.LocalDateTime;
 public class InvitationRequest {
     @NotBlank
     @Pattern(regexp = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
-    private String requestKey;
+    private String requestKey; // Khóa nhận diện yêu cầu để tránh tạo trùng khi gửi lại.
     @NotNull
     @Positive
-    private Long tutorId;
+    private Long tutorId; // ID tài khoản gia sư.
     @Positive
-    private Long offeringId;
+    private Long offeringId; // ID dịch vụ hoặc lớp học.
     @PositiveOrZero
-    private Long offeringVersion;
+    private Long offeringVersion; // Phiên bản dịch vụ hoặc lớp được chọn để phát hiện thay đổi.
     @NotNull
     @Positive
-    private Long subjectId;
+    private Long subjectId; // ID môn học.
     @NotNull
     @Positive
-    private Long gradeLevelId;
+    private Long gradeLevelId; // ID cấp học.
     @NotNull
     @Positive
-    private Long areaId;
+    private Long areaId; // ID khu vực học.
     @NotNull
     @Positive
-    private Long deliveryModeId;
+    private Long deliveryModeId; // ID hình thức học.
     @NotNull
     @DecimalMin("1")
     @Digits(integer = 19, fraction = 0)
-    private BigDecimal proposedUnitPrice;
+    private BigDecimal proposedUnitPrice; // Học phí mỗi buổi được đề xuất khi thương lượng.
     @NotNull
     @Min(1)
     @Max(32767)
-    private Short sessionCount;
+    private Short sessionCount; // Tổng số buổi học.
     @NotBlank(message = "Nhập điều khoản, thời lượng và lịch học đề xuất.")
     @Size(max = 10000)
-    private String termsText;
+    private String termsText; // Nội dung điều khoản học.
     @NotNull(message = "Chọn hạn nhận phản hồi.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime expiresAt;
+    private LocalDateTime expiresAt; // Thời điểm hết hạn.
     @AssertTrue(message = "Bạn cần xác nhận đồng ý với đề xuất trước khi gửi.")
-    private boolean consent;
+    private boolean consent; // Cho biết người dùng đã đồng ý với điều khoản hay chưa.
 
     @AssertTrue(message = "Thiếu phiên bản dịch vụ. Hãy chọn lại dịch vụ.")
     public boolean isOfferingVersionValid() {

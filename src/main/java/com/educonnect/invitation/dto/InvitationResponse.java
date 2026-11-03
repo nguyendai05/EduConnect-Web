@@ -12,30 +12,30 @@ import java.time.format.DateTimeFormatter;
  * Thuộc trang: /invitation/negotiation.
  */
 public record InvitationResponse(
-        Long id,
-        String publicCode,
-        Long learnerId,
-        String learnerName,
-        Long tutorId,
-        String tutorName,
-        Long offeringId,
-        String subject,
-        String grade,
-        String area,
-        String deliveryMode,
-        BigDecimal proposedUnitPrice,
-        Short sessionCount,
-        String termsText,
-        Integer termsVersion,
-        Long version,
-        InvitationStatus status,
-        Instant createdAt,
-        Instant expiresAt,
-        Instant acceptedAt,
-        boolean canAccept,
-        boolean canDecline,
-        boolean canCancel,
-        boolean sourceUsed
+        Long id, // ID lời mời học.
+        String publicCode, // Mã công khai dùng để hiển thị và tra cứu.
+        Long learnerId, // ID tài khoản học viên.
+        String learnerName, // Tên hiển thị của học viên.
+        Long tutorId, // ID tài khoản gia sư.
+        String tutorName, // Tên hiển thị của gia sư.
+        Long offeringId, // ID dịch vụ hoặc lớp học.
+        String subject, // Tên môn học.
+        String grade, // Tên cấp học.
+        String area, // Tên khu vực học.
+        String deliveryMode, // Tên hình thức học, chẳng hạn trực tuyến hoặc trực tiếp.
+        BigDecimal proposedUnitPrice, // Học phí mỗi buổi được đề xuất khi thương lượng.
+        Short sessionCount, // Tổng số buổi học.
+        String termsText, // Nội dung điều khoản học.
+        Integer termsVersion, // Số phiên bản điều khoản để xác định nội dung người dùng đồng ý.
+        Long version, // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
+        InvitationStatus status, // Trạng thái hiện tại.
+        Instant createdAt, // Thời điểm tạo bản ghi.
+        Instant expiresAt, // Thời điểm hết hạn.
+        Instant acceptedAt, // Thời điểm lời mời được chấp nhận.
+        boolean canAccept, // Cho biết người xem có thể chấp nhận lời mời hay không.
+        boolean canDecline, // Cho biết người xem có thể từ chối lời mời hay không.
+        boolean canCancel, // Cho biết người xem có thể hủy hay không.
+        boolean sourceUsed // Cho biết nguồn đã được dùng để tạo hợp đồng hay chưa.
 ) {
     public String getStatusLabel() {
         return switch (status) {

@@ -14,10 +14,29 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 /** Safe confirmation view; no managed entities or account credentials leave the service. */
-public record ContractConfirmationDTO(Long id, Long cartItemId, Long invitationId, Long jobId, Long applicationId, Long applicationVersion, Long version, String publicCode,
-        String orderCode, Instant createdAt, String learnerName, String tutorName, String title,
-        String typeLabel, BigDecimal unitPrice, short sessionCount, int seatCount,
-        BigDecimal total, String terms, String statusLabel, boolean payable) {
+public record ContractConfirmationDTO(
+        Long id, // ID hợp đồng; null khi mới là bản dự thảo.
+        Long cartItemId, // ID mục trong giỏ hàng dùng để tạo hợp đồng.
+        Long invitationId, // ID lời mời học làm nguồn tạo hợp đồng.
+        Long jobId, // ID tin tìm gia sư làm nguồn tạo hợp đồng.
+        Long applicationId, // ID đơn ứng tuyển của gia sư.
+        Long applicationVersion, // Phiên bản đơn ứng tuyển để phát hiện cập nhật đồng thời.
+        Long version, // Phiên bản hợp đồng hoặc nguồn dự thảo để phát hiện thay đổi khi xác nhận.
+        String publicCode, // Mã công khai dùng để hiển thị và tra cứu.
+        String orderCode, // Mã đơn hàng hiển thị cho người dùng.
+        Instant createdAt, // Thời điểm tạo bản ghi.
+        String learnerName, // Tên hiển thị của học viên.
+        String tutorName, // Tên hiển thị của gia sư.
+        String title, // Tiêu đề hiển thị.
+        String typeLabel, // Tên loại hình học để hiển thị.
+        BigDecimal unitPrice, // Học phí mỗi buổi cho một chỗ học.
+        short sessionCount, // Tổng số buổi học.
+        int seatCount, // Số chỗ học đăng ký trong hợp đồng hoặc giỏ hàng.
+        BigDecimal total, // Tổng số tiền.
+        String terms, // Nội dung điều khoản đã thống nhất trong hợp đồng.
+        String statusLabel, // Tên trạng thái để hiển thị trên giao diện.
+        boolean payable // Cho biết có thể thanh toán hợp đồng hay không.
+) {
     public boolean isDraft() { return id == null; }
 
     public static ContractConfirmationDTO draft(CartItem item, String learnerName) {

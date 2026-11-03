@@ -14,13 +14,13 @@ import jakarta.validation.constraints.Size;
 public class JobReviewRequest {
     @NotNull
     @PositiveOrZero
-    private Long version;
+    private Long version; // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
     @NotBlank
     @Pattern(regexp = "approve|reject")
-    private String action;
+    private String action; // Thao tác người dùng yêu cầu thực hiện.
     // Phê duyệt không cần lý do; từ chối bắt buộc có lý do (JobReviewService kiểm).
     @Size(max = 2000)
-    private String reason;
+    private String reason; // Lý do thực hiện thao tác quản trị.
 
     public Long getVersion() {
         return version;

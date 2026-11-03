@@ -7,8 +7,17 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 /** Một dòng trong danh sách đơn đăng ký của gia sư: đơn, học viên, nội dung đã chốt, trạng thái đơn và thanh toán. */
-public record TutorOrderRowDTO(String orderCode, String sourceLabel, String learnerName, String title, BigDecimal total,
-        String statusLabel, String paymentLabel, Long contractId, Instant createdAt) {
+public record TutorOrderRowDTO(
+        String orderCode, // Mã đơn hàng hiển thị cho người dùng.
+        String sourceLabel, // Tên loại nguồn hình thành đơn hàng hoặc hợp đồng.
+        String learnerName, // Tên hiển thị của học viên.
+        String title, // Tiêu đề hiển thị.
+        BigDecimal total, // Tổng số tiền.
+        String statusLabel, // Tên trạng thái để hiển thị trên giao diện.
+        String paymentLabel, // Tên trạng thái thanh toán để hiển thị.
+        Long contractId, // ID hợp đồng học.
+        Instant createdAt // Thời điểm tạo bản ghi.
+) {
 
     public static TutorOrderRowDTO from(Contract contract) {
         OrderRowDTO row = OrderRowDTO.from(contract);

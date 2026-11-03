@@ -26,73 +26,73 @@ public class OfferingRequest {
 
     @NotBlank
     @Pattern(regexp = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
-    private String requestKey;
+    private String requestKey; // Khóa nhận diện yêu cầu để tránh tạo trùng khi gửi lại.
 
     @PositiveOrZero
-    private Long version;
+    private Long version; // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
 
     @NotNull
-    private OfferingType offeringType = OfferingType.SERVICE;
+    private OfferingType offeringType = OfferingType.SERVICE; // Loại dịch vụ: dạy kèm 1-1 hoặc lớp nhóm.
 
     @NotBlank(message = "Nhập tiêu đề.")
     @Size(max = 220)
-    private String title;
+    private String title; // Tiêu đề hiển thị.
 
     @NotBlank(message = "Nhập mô tả.")
     @Size(max = 10000)
-    private String description;
+    private String description; // Nội dung mô tả chi tiết.
 
-    private Long subjectId;
+    private Long subjectId; // ID môn học.
 
     @Size(max = 120, message = "Tên môn tối đa 120 ký tự.")
-    private String subjectName;
+    private String subjectName; // Tên môn học tự nhập.
 
     @Positive
-    private Long gradeLevelId;
+    private Long gradeLevelId; // ID cấp học.
 
     @Size(max = 120, message = "Tên cấp học tối đa 120 ký tự.")
-    private String gradeLevelName;
+    private String gradeLevelName; // Tên cấp học tự nhập.
 
     @NotNull
     @Positive
-    private Long areaId;
+    private Long areaId; // ID khu vực học.
 
     @NotNull
     @Positive
-    private Long deliveryModeId;
+    private Long deliveryModeId; // ID hình thức học.
 
     @NotNull
     @DecimalMin(value = "1", message = "Giá phải lớn hơn 0.")
     @Digits(integer = 19, fraction = 0)
-    private BigDecimal unitPrice;
+    private BigDecimal unitPrice; // Học phí mỗi buổi cho một chỗ học.
 
     @NotNull
     @Min(1)
     @Max(32767)
-    private Short sessionCount;
+    private Short sessionCount; // Tổng số buổi học.
 
     @NotNull
     @Min(1)
     @Max(32767)
-    private Short durationMinutes;
+    private Short durationMinutes; // Thời lượng mỗi buổi học, tính bằng phút.
 
     @Positive
-    private Integer capacity;
+    private Integer capacity; // Sĩ số tối đa của lớp nhóm.
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate startsOn;
+    private LocalDate startsOn; // Ngày bắt đầu lớp học.
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate endsOn;
+    private LocalDate endsOn; // Ngày kết thúc lớp học.
 
     @NotBlank(message = "Nhập điều khoản dịch vụ.")
     @Size(max = 10000)
-    private String termsText;
+    private String termsText; // Nội dung điều khoản học.
 
     @NotEmpty(message = "Thêm ít nhất một khung lịch.")
     @Size(max = 14, message = "Chỉ được nhập tối đa 14 khung lịch.")
     @Valid
-    private List<@NotNull OfferingTimeSlotRequest> slots = new ArrayList<>();
+    private List<@NotNull OfferingTimeSlotRequest> slots = new ArrayList<>(); // Danh sách khung lịch học gồm thứ, giờ và múi giờ.
 
     @AssertTrue(message = "Lớp nhóm cần sức chứa, ngày bắt đầu và ngày kết thúc không trước ngày bắt đầu.")
     public boolean isGroupDatesValid() {

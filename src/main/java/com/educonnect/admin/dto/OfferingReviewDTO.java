@@ -10,15 +10,42 @@ import java.util.List;
 import java.util.Locale;
 
 /** DAI-03: một khóa học (dịch vụ/lớp) cho admin xem và duyệt. */
-public record OfferingReviewDTO(Long id, String publicCode, String title, String description, String termsText,
-                                Long tutorId, String tutorName, String tutorProfileStatus, boolean tutorActive,
-                                String type, String subject, String grade, String area, String mode,
-                                BigDecimal unitPrice, int sessionCount, int durationMinutes, Integer capacity,
-                                LocalDate startsOn, LocalDate endsOn, String status, Long version,
-                                String reviewNote, Instant reviewedAt, String reviewerName, Instant updatedAt,
-                                List<Slot> slots) {
+public record OfferingReviewDTO(
+        Long id, // ID dịch vụ hoặc lớp học.
+        String publicCode, // Mã công khai dùng để hiển thị và tra cứu.
+        String title, // Tiêu đề hiển thị.
+        String description, // Nội dung mô tả chi tiết.
+        String termsText, // Nội dung điều khoản học.
+        Long tutorId, // ID tài khoản gia sư.
+        String tutorName, // Tên hiển thị của gia sư.
+        String tutorProfileStatus, // Trạng thái xét duyệt hồ sơ của gia sư.
+        boolean tutorActive, // Cho biết tài khoản gia sư đang hoạt động hay không.
+        String type, // Loại dịch vụ: dạy kèm 1-1 hoặc lớp nhóm.
+        String subject, // Tên môn học.
+        String grade, // Tên cấp học.
+        String area, // Tên khu vực học.
+        String mode, // Tên hình thức học.
+        BigDecimal unitPrice, // Học phí mỗi buổi cho một chỗ học.
+        int sessionCount, // Tổng số buổi học.
+        int durationMinutes, // Thời lượng mỗi buổi học, tính bằng phút.
+        Integer capacity, // Sĩ số tối đa của lớp nhóm.
+        LocalDate startsOn, // Ngày bắt đầu lớp học.
+        LocalDate endsOn, // Ngày kết thúc lớp học.
+        String status, // Trạng thái hiện tại.
+        Long version, // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
+        String reviewNote, // Ghi chú hoặc lý do của người xét duyệt.
+        Instant reviewedAt, // Thời điểm xét duyệt.
+        String reviewerName, // Tên người xét duyệt.
+        Instant updatedAt, // Thời điểm cập nhật gần nhất.
+        List<Slot> slots // Danh sách khung lịch học gồm thứ, giờ và múi giờ.
+) {
 
-    public record Slot(int weekday, String start, String end, String timeZone) {
+    public record Slot(
+            int weekday, // Thứ trong tuần: 1 là thứ Hai, 7 là Chủ nhật.
+            String start, // Giờ bắt đầu buổi học dưới dạng hiển thị.
+            String end, // Giờ kết thúc buổi học dưới dạng hiển thị.
+            String timeZone // Múi giờ IANA áp dụng cho lịch học, chẳng hạn Asia/Ho_Chi_Minh.
+    ) {
         public String dayLabel() { return weekday == 7 ? "Chủ nhật" : "Thứ " + (weekday + 1); }
     }
 

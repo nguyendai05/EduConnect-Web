@@ -9,9 +9,18 @@ import java.util.List;
  * DAI-02 / A02 cho trang công khai /tutor/profile: chỉ gồm thông tin được phép công khai của gia sư đã được duyệt.
  * Không có email, số điện thoại, minh chứng hay lý do duyệt.
  */
-public record PublicTutorProfileDTO(Long id, String displayName, String headline, int experienceYears, String bio,
-                                    List<String> subjects, List<String> gradeLevels, List<String> areas,
-                                    List<String> deliveryModes, Page<OfferingCardResponse> offerings) {
+public record PublicTutorProfileDTO(
+        Long id, // ID tài khoản gia sư.
+        String displayName, // Tên người dùng hiển thị trên giao diện.
+        String headline, // Tiêu đề giới thiệu ngắn của hồ sơ gia sư.
+        int experienceYears, // Số năm kinh nghiệm giảng dạy của gia sư.
+        String bio, // Nội dung giới thiệu bản thân.
+        List<String> subjects, // Danh sách môn gia sư có thể dạy.
+        List<String> gradeLevels, // Danh sách cấp học.
+        List<String> areas, // Danh sách khu vực học.
+        List<String> deliveryModes, // Danh sách hình thức gia sư có thể dạy.
+        Page<OfferingCardResponse> offerings // Các dịch vụ hoặc lớp học của gia sư.
+) {
 
     public String initials() {
         String[] parts = displayName == null ? new String[0] : displayName.strip().split("\\s+");

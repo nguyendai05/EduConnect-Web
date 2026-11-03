@@ -14,14 +14,14 @@ import jakarta.validation.constraints.PositiveOrZero;
 public class JobApplicationActionRequest {
     @NotNull
     @PositiveOrZero
-    private Long jobVersion;
+    private Long jobVersion; // Phiên bản tin tìm gia sư để phát hiện cập nhật đồng thời.
     @NotNull
     @PositiveOrZero
-    private Long applicationVersion;
+    private Long applicationVersion; // Phiên bản đơn ứng tuyển để phát hiện cập nhật đồng thời.
     @NotBlank
     @Pattern(regexp = "select|reject|withdraw")
-    private String action;
-    private boolean consent;
+    private String action; // Thao tác người dùng yêu cầu thực hiện.
+    private boolean consent; // Cho biết người dùng đã đồng ý với điều khoản hay chưa.
 
     @AssertTrue(message = "Bạn cần đồng ý toàn bộ nội dung và giá của ứng viên trước khi chọn.")
     public boolean isConsentValid() {
