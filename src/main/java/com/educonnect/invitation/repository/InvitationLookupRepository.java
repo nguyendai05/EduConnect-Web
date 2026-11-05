@@ -79,6 +79,7 @@ public class InvitationLookupRepository {
                 join fetch o.areaReference join fetch o.deliveryModeReference
                 where o.status = :published and t.reviewStatus = :approved
                   and a.status = :active and a.emailVerifiedAt is not null
+                  and o.offeringType = com.educonnect.lesson.domain.OfferingType.SERVICE
                   and (:tutorId is null or o.tutorId = :tutorId) order by o.id desc
                 """, Offering.class).setParameter("published", OfferingStatus.PUBLISHED)
                 .setParameter("approved", TutorReviewStatus.APPROVED)

@@ -138,13 +138,13 @@ public class ContractService {
         entityManager.refresh(offering, LockModeType.PESSIMISTIC_WRITE);
         validateOffering(learnerId, item, offering, form.version());
         Instant now = clock.instant();
-        if (offering.getOfferingType() == OfferingType.GROUP_CLASS) {
+        {
             // Locking query is a current read under MySQL REPEATABLE READ, including a waiter after another checkout.
             long occupied = enrollments.findLockedByOfferingId(offering.getId()).stream()
                     .filter(e -> e.getStatus() == EnrollmentStatus.CONFIRMED || e.getStatus() == EnrollmentStatus.COMPLETED
                             || (e.getStatus() == EnrollmentStatus.RESERVED && e.getReservedUntil().isAfter(now)))
                     .mapToLong(Enrollment::getSeatCount).sum();
-            if (item.getSeatCount() > offering.getCapacity() - occupied) {
+            if (item.getSeatCount() > (offering.getOfferingType() == OfferingType.SERVICE ? 1 : offering.getCapacity()) - occupied) {
                 throw new IllegalArgumentException("Lớp không còn đủ chỗ theo lựa chọn");
             }
         }

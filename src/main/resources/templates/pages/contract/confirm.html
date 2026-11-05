@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/css/components/action/button.css" th:href="@{/css/components/action/button.css}"/>
 <link rel="stylesheet" href="/css/components/feedback/badge.css" th:href="@{/css/components/feedback/badge.css}"/>
 <link rel="stylesheet" href="/css/pages/payment/flow.css" th:href="@{/css/pages/payment/flow.css}"/>
+<link rel="stylesheet" th:href="@{/css/pages/contract/confirm-compact.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -19,7 +20,7 @@
 </head>
 <body th:fragment="content">
 <th:block th:replace="~{fragments/header-user :: header(${active}, 'v4')}"></th:block>
-<main class="flow-page">
+<main class="flow-page contract-confirm-page">
     <header class="flow-head">
         <h1 th:text="${confirmation != null and !confirmation.draft} ? 'Hợp đồng đã tạo' : 'Xác nhận hợp đồng'"></h1>
         <p th:text="${confirmation != null and !confirmation.draft} ? 'Hợp đồng đã được tạo và đang chờ bạn thanh toán để có hiệu lực.' : 'Kiểm tra khóa học, học phí và điều khoản trước khi đăng ký. Chưa có khoản tiền nào bị trừ.'"></p>

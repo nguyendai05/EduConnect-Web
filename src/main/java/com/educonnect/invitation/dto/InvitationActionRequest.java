@@ -1,5 +1,8 @@
 package com.educonnect.invitation.dto;
 
+import java.math.BigDecimal;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -20,9 +23,16 @@ public class InvitationActionRequest {
     @Min(1)
     private Integer termsVersion;
     @NotBlank
-    @Pattern(regexp = "accept|decline|cancel")
+    @Pattern(regexp = "accept|decline|cancel|counter")
     private String action;
     private boolean consent;
+    @DecimalMin("1")
+    @Digits(integer = 19, fraction = 0)
+    private BigDecimal proposedPrice;
+
+    public BigDecimal getProposedPrice() { return proposedPrice; }
+    public void setProposedPrice(BigDecimal price) { this.proposedPrice = price; }
+
 
     @AssertTrue(message = "Cần đồng ý điều khoản hiện hành để chấp nhận lời mời.")
     public boolean isAcceptanceValid() {
