@@ -65,12 +65,7 @@
         </ul>
     </section>
 </div>
-<script>
-document.querySelectorAll('[data-att-tab]').forEach(tab => tab.addEventListener('click', () => {
-  document.querySelectorAll('[data-att-tab]').forEach(t => { const on = t === tab; t.classList.toggle('is-active', on); t.setAttribute('aria-pressed', String(on)) })
-  document.querySelectorAll('[data-att-panel]').forEach(p => { p.hidden = p.dataset.attPanel !== tab.dataset.attTab })
-}))
-</script>
+
 </th:block>
 </body>
 </html>
