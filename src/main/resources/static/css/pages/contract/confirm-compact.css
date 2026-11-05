@@ -1,0 +1,33 @@
+.contract-confirm-page {
+    max-width: 64rem;
+    width: 100%;
+}
+.contract-confirm-page .flow-layout {
+    grid-template-columns: minmax(0, 1fr) 19rem;
+    align-items: start;
+    gap: var(--space-5);
+}
+.contract-confirm-page .flow-card {
+    padding: var(--space-5);
+}
+.contract-confirm-page .flow-course h3 {
+    font-size: var(--font-size-lg);
+    overflow-wrap: anywhere;
+}
+.contract-confirm-page .flow-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.contract-confirm-page .flow-summary {
+    padding: var(--space-5);
+}
+.contract-confirm-page .flow-total strong {
+    font-size: var(--font-size-2xl);
+}
+@media (max-width: 52rem) {
+    .contract-confirm-page .flow-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .contract-confirm-page .flow-summary {
+        position: static;
+    }
+}
