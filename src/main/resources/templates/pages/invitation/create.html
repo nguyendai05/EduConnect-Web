@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="/css/pages/invitation/create.css" th:href="@{/css/pages/invitation/create.css}">
 
 <link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
+<link rel="stylesheet" th:href="@{/css/pages/invitation/polish.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -38,7 +39,7 @@
 <body class="invitation-create-page dat-render" th:fragment="content">
 <div class="user-shell" data-component="user-shell">
   <th:block th:replace="~{fragments/header-user :: header(${active}, 'v6')}"></th:block>
-  <main class="user-shell__main">
+  <main class="user-shell__main invitation-workspace">
     <section class="invitation-create-heading"><div class="user-shell__content">
       <nav class="breadcrumb" aria-label="Đường dẫn"><ol class="breadcrumb__list"><li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/home}">Trang chủ</a></li><li class="breadcrumb__item"><a class="breadcrumb__link" th:href="@{/invitation/negotiation}">Lời mời của tôi</a></li><li class="breadcrumb__item" aria-current="page">Gửi lời mời</li></ol></nav>
       <h1>Mời gia sư dạy</h1>

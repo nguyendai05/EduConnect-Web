@@ -44,6 +44,9 @@ public class Invitation {
     @Column(name = "proposed_unit_price", nullable = false, precision = 19, scale = 0)
     private BigDecimal proposedUnitPrice;
 
+    @Column(name = "tutor_proposed_price", precision = 19, scale = 0)
+    private BigDecimal tutorProposedPrice;
+
     @Column(name = "session_count", nullable = false)
     private Short sessionCount;
 
@@ -130,6 +133,9 @@ public class Invitation {
     public void setDeliveryModeId(Long deliveryModeId) { this.deliveryModeId = deliveryModeId; }
 
     public BigDecimal getProposedUnitPrice() { return proposedUnitPrice; }
+    public BigDecimal getTutorProposedPrice() { return tutorProposedPrice; }
+    public void setTutorProposedPrice(BigDecimal price) { this.tutorProposedPrice = price; }
+
     public void setProposedUnitPrice(BigDecimal proposedUnitPrice) { this.proposedUnitPrice = proposedUnitPrice; }
 
     public Short getSessionCount() { return sessionCount; }

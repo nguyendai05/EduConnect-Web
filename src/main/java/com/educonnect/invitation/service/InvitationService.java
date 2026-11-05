@@ -262,6 +262,18 @@ public class InvitationService {
         UserAccount actor = requireParticipant(principal);
         validate(form);
         Invitation invitation = lockOwned(id, actor.id());
+        if ("counter".equals(form.getAction())) {
+            if (!actor.id().equals(invitation.getTutorId()) || !actor.roles().contains("TUTOR")) throw forbidden("Chỉ gia sư được đề xuất lại giá");
+            requirePendingResponse(invitation, form.getVersion(), now());
+            if (!Objects.equals(invitation.getTermsVersion(), form.getTermsVersion())) throw conflict("Đề xuất đã thay đổi, hãy tải lại trang");
+            if (invitation.getTutorProposedPrice() != null) throw conflict("Đang chờ học viên phản hồi giá mới");
+            if (form.getProposedPrice() == null || form.getProposedPrice().compareTo(invitation.getProposedUnitPrice()) == 0) throw invalid("Vui lòng nhập giá đề xuất mới khác giá hiện tại");
+            requirePublicTutor(invitation.getTutorId(), invitation.getLearnerId());
+            invitation.setTutorProposedPrice(form.getProposedPrice());
+            invitation.setTermsVersion(invitation.getTermsVersion() + 1);
+            invitations.saveAndFlush(invitation);
+            return invitation.getId();
+        }
         InvitationStatus target = requireAllowedResponse(invitation, actor, form);
         if (isRepeatedResponse(invitation, target, form.getVersion())) {
             return invitation.getId();
@@ -271,6 +283,10 @@ public class InvitationService {
         requirePendingResponse(invitation, form.getVersion(), respondedAt);
         if (target == InvitationStatus.ACCEPTED) {
             acceptProposal(invitation, respondedAt);
+            if (invitation.getTutorProposedPrice() != null) {
+                invitation.setTermsText(invitation.getTermsText() + "\n\nHọc phí hai bên chốt: " + invitation.getTutorProposedPrice().toPlainString() + " VND/buổi (đề xuất ban đầu: " + invitation.getProposedUnitPrice().toPlainString() + " VND/buổi)");
+                invitation.setProposedUnitPrice(invitation.getTutorProposedPrice());
+            }
         }
         invitation.setStatus(target);
         invitations.saveAndFlush(invitation);
@@ -290,7 +306,7 @@ public class InvitationService {
             case "cancel" -> InvitationStatus.CANCELLED;
             default -> throw invalid("Thao tác không hợp lệ.");
         };
-        if (target == InvitationStatus.CANCELLED ? !learner : !tutor) {
+        if (target == InvitationStatus.CANCELLED ? !learner : (invitation.getTutorProposedPrice() != null ? !learner : !tutor)) {
             throw forbidden("Bạn không có quyền thực hiện thao tác này.");
         }
         if (!Objects.equals(invitation.getTermsVersion(), form.getTermsVersion())) {
@@ -390,8 +406,8 @@ public class InvitationService {
                 invitation.getAreaReference().getName(), invitation.getDeliveryModeReference().getName(),
                 invitation.getProposedUnitPrice(), invitation.getSessionCount(), invitation.getTermsText(),
                 invitation.getTermsVersion(), invitation.getVersion(), status, invitation.getCreatedAt(),
-                invitation.getExpiresAt(), invitation.getAcceptedAt(), pending && tutor, pending && tutor,
-                pending && learner, invitations.countSources(invitation.getId()) > 0);
+                invitation.getExpiresAt(), invitation.getAcceptedAt(), pending && (invitation.getTutorProposedPrice() != null ? learner : tutor), pending && (invitation.getTutorProposedPrice() != null ? learner : tutor),
+                pending && learner, invitations.countSources(invitation.getId()) > 0, invitation.getTutorProposedPrice(), pending && tutor && invitation.getTutorProposedPrice() == null);
     }
 
     /**

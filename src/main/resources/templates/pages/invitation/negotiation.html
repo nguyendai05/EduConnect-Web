@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="/css/components/form/textarea.css"  th:href="@{/css/components/form/textarea.css}"/>
 <link rel="stylesheet" href="/css/pages/invitation/negotiation.css"  th:href="@{/css/pages/invitation/negotiation.css}"/>
 <link rel="stylesheet" th:href="@{/css/pages/dat-render.css}">
+<link rel="stylesheet" th:href="@{/css/pages/invitation/polish.css}">
 </th:block>
 <th:block th:fragment="headScripts">
 <script src="/js/core/route.js" defer th:src="@{/js/core/route.js}"></script>
@@ -37,7 +38,7 @@
 <body class="invitation-negotiation-page dat-render" th:fragment="content">
 <div class="user-shell">
   <th:block th:replace="~{fragments/header-user :: header(${active}, 'v7')}"></th:block>
-  <main class="user-shell__main"><div class="user-shell__content negotiation-page" id="invitation">
+  <main class="user-shell__main invitation-workspace"><div class="user-shell__content negotiation-page" id="invitation">
     <header class="page-header"><div class="page-header__content"><div class="page-header__title-block"><h1 class="page-header__title">Lời mời của tôi</h1><p class="page-header__description">Xem đề xuất và phản hồi đúng bộ điều khoản đã được gửi.</p></div></div></header>
     <nav class="invitation-live-nav"><a class="button button--outline" th:href="@{/invitation/negotiation}">Danh sách lời mời</a><a class="button button--primary" th:if="${canCreateInvitation}" th:href="@{/invitation/create}">Gửi lời mời mới</a></nav>
     <section class="alert alert--success" th:if="${success != null}" role="status"><p th:text="${success}"></p></section>
@@ -46,9 +47,9 @@
       <section class="empty-state" th:if="${invitations.empty}"><h2 class="empty-state__title">Chưa có lời mời</h2><p class="empty-state__description">Các lời mời bạn gửi hoặc nhận sẽ xuất hiện ở đây.</p></section>
       <div class="invitation-live-list dat-invitation-list" th:unless="${invitations.empty}">
         <article class="card negotiation-panel dat-invitation-card" th:each="item : ${invitations.content}">
-          <div class="negotiation-section-heading"><h2><a th:href="@{/invitation/negotiation(id=${item.id})}" th:text="${item.publicCode}"></a></h2><span class="badge badge--info" th:text="${item.statusLabel}"></span></div>
+          <div class="negotiation-section-heading"><h2><a th:href="@{/invitation/negotiation(id=${item.id})}" th:text="${currentUser.id == item.learnerId ? item.tutorName : item.learnerName}"></a></h2><span class="badge badge--info" th:text="${item.statusLabel}"></span></div>
           <p th:text="|${item.learnerName} → ${item.tutorName}|"></p><p th:text="|${item.subject} · ${item.grade} · ${item.deliveryMode}|"></p>
-          <p><strong th:text="${#numbers.formatDecimal(item.proposedUnitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><span th:text="| · ${item.sessionCount} buổi|"></span></p>
+          <p th:if="${item.tutorProposedPrice != null}">Giá gia sư đề xuất: <strong th:text="${#numbers.formatDecimal(item.tutorProposedPrice,0,'POINT',0,'COMMA') + ' ₫/buổi'}"></strong></p><p><strong th:text="${#numbers.formatDecimal(item.proposedUnitPrice, 0, 'POINT', 0, 'COMMA') + ' ₫/buổi'}"></strong><span th:text="| · ${item.sessionCount} buổi|"></span></p>
           <p class="negotiation-muted" th:text="|Gửi lúc ${item.createdAtLabel} · Hạn phản hồi ${item.expiresAtLabel} (UTC+7)|"></p>
           <a class="button button--outline" th:href="@{/invitation/negotiation(id=${item.id})}">Xem nội dung và phản hồi</a>
         </article>
@@ -68,17 +69,30 @@
         <section class="card negotiation-panel"><h2 th:text="|Điều khoản đã gửi – phiên bản ${invitation.termsVersion}|"></h2><p class="invitation-live-terms" th:text="${invitation.termsText}"></p><p class="negotiation-muted">Giá và điều khoản trên đây là nội dung của lời mời này. Thay đổi dịch vụ tham khảo không sửa lại đề xuất đã gửi.</p></section>
       </div>
       <aside class="negotiation-sidebar"><section class="card negotiation-panel"><h2>Tổng học phí đề xuất</h2><p class="negotiation-price"><strong th:text="${#numbers.formatDecimal(invitation.totalPrice, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></strong></p>
+        <p class="invitation-counter-note" th:if="${invitation.tutorProposedPrice != null}">
+            Gia sư đề xuất <strong th:text="${#numbers.formatDecimal(invitation.tutorProposedPrice,0,'POINT',0,'COMMA') + ' ₫/buổi'}"></strong>
+            <span th:if="${invitation.status.name() == 'PENDING'}"> — chờ học viên xác nhận</span>
+        </p>
         <div class="negotiation-actions">
+          <form method="post" th:action="@{/invitation/{id}/respond(id=${invitation.id})}" th:if="${invitation.canCounter}" data-invitation-action class="invitation-counter-form">
+            <input type="hidden" name="version" th:value="${invitation.version}">
+            <input type="hidden" name="termsVersion" th:value="${invitation.termsVersion}">
+            <input type="hidden" name="action" value="counter">
+            <label for="counter-price">Đề xuất học phí khác (VND/buổi)</label>
+            <input class="input-control" id="counter-price" type="number" name="proposedPrice" min="1" step="1" required th:value="${invitation.proposedUnitPrice}">
+            <button class="button button--outline" type="submit">Gửi giá đề xuất mới</button>
+            <p class="negotiation-muted">Học viên cần đồng ý giá mới trước khi tạo hợp đồng</p>
+          </form>
           <form method="post" th:action="@{/invitation/{id}/respond(id=${invitation.id})}" th:if="${invitation.canAccept}" data-invitation-action>
             <input type="hidden" name="version" th:value="${invitation.version}"><input type="hidden" name="termsVersion" th:value="${invitation.termsVersion}"><input type="hidden" name="action" value="accept">
-            <label class="invitation-live-consent"><input type="checkbox" name="consent" value="true" required><span>Tôi đồng ý toàn bộ giá, số buổi và điều khoản hiển thị ở trang này.</span></label><button class="button button--primary" type="submit">Chấp nhận lời mời</button>
+            <label class="invitation-live-consent"><input type="checkbox" name="consent" value="true" required><span>Tôi đồng ý toàn bộ giá, số buổi và điều khoản hiển thị ở trang này.</span></label><button class="button button--primary" type="submit" th:text="${invitation.tutorProposedPrice != null ? 'Đồng ý giá mới' : 'Chấp nhận lời mời'}">Chấp nhận lời mời</button>
           </form>
           <form method="post" th:action="@{/invitation/{id}/respond(id=${invitation.id})}" th:if="${invitation.canDecline}" data-invitation-action><input type="hidden" name="version" th:value="${invitation.version}"><input type="hidden" name="termsVersion" th:value="${invitation.termsVersion}"><input type="hidden" name="action" value="decline"><button class="button button--outline" type="submit">Từ chối lời mời</button></form>
           <form method="post" th:action="@{/invitation/{id}/respond(id=${invitation.id})}" th:if="${invitation.canCancel}" data-invitation-action><input type="hidden" name="version" th:value="${invitation.version}"><input type="hidden" name="termsVersion" th:value="${invitation.termsVersion}"><input type="hidden" name="action" value="cancel"><button class="button button--outline" type="submit">Hủy lời mời đã gửi</button></form>
         </div>
         <section class="alert" th:if="${invitation.status.name() == 'ACCEPTED'}"><p th:text="|Đã chấp thuận lúc ${invitation.acceptedAtLabel} (UTC+7).|"></p><p th:if="${!invitation.sourceUsed}">Hai bên đã chốt điều khoản. Việc chấp nhận lời mời chưa tạo đơn, giữ chỗ hoặc phát sinh thanh toán.</p><p th:if="${invitation.sourceUsed}">Lời mời đã được sử dụng làm nguồn giao dịch.</p><p th:if="${!invitation.sourceUsed and currentUser != null and currentUser.id == invitation.learnerId}"><a class="button button--primary" th:href="@{/contract/confirm(invitationId=${invitation.id})}">Xác nhận hợp đồng và thanh toán</a></p><p th:if="${invitation.sourceUsed}"><a class="button button--outline" th:href="@{/contract/my}">Xem hợp đồng của tôi</a></p></section>
         <p class="negotiation-muted" th:if="${invitation.status.name() == 'EXPIRED'}">Đã hết hạn phản hồi. Người học có thể gửi một lời mời mới.</p>
-        <p class="negotiation-muted" th:if="${invitation.status.name() == 'PENDING' and !invitation.canAccept}">Đang chờ gia sư xem xét đề xuất của bạn.</p>
+        <p class="negotiation-muted" th:if="${invitation.status.name() == 'PENDING' and !invitation.canAccept and invitation.tutorProposedPrice == null}">Đang chờ gia sư xem xét đề xuất của bạn.</p>
       </section></aside>
     </div>
   </div></main>

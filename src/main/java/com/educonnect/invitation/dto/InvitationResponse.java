@@ -35,11 +35,13 @@ public record InvitationResponse(
         boolean canAccept,
         boolean canDecline,
         boolean canCancel,
-        boolean sourceUsed
+        boolean sourceUsed,
+        BigDecimal tutorProposedPrice,
+        boolean canCounter
 ) {
     public String getStatusLabel() {
         return switch (status) {
-            case PENDING -> "Chờ gia sư phản hồi";
+            case PENDING -> tutorProposedPrice == null ? "Chờ gia sư phản hồi" : "Chờ học viên xác nhận giá mới";
             case ACCEPTED -> "Đã chấp nhận";
             case DECLINED -> "Đã từ chối";
             case CANCELLED -> "Đã hủy";
@@ -48,7 +50,7 @@ public record InvitationResponse(
     }
 
     public BigDecimal getTotalPrice() {
-        return proposedUnitPrice.multiply(BigDecimal.valueOf(sessionCount));
+        return (tutorProposedPrice != null && status == InvitationStatus.PENDING ? tutorProposedPrice : proposedUnitPrice).multiply(BigDecimal.valueOf(sessionCount));
     }
 
     public String getCreatedAtLabel() {
