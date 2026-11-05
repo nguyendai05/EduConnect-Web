@@ -54,24 +54,25 @@
             <section class="flow-card" aria-labelledby="method-title">
                 <h2 id="method-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h16a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M3 7l12-3v3M17 14h2"/></svg>Cách thanh toán</h2>
                 <div class="flow-pay" data-pay th:attr="data-total=${payment.total}, data-balance=${payment.walletBalance}, data-locked=${payment.paymentId != null}">
-                    <div class="flow-pay__row" data-wallet-row>
+                    <label class="flow-pay__row flow-method">
+                        <input type="radio" name="useWallet" value="true" form="payForm" data-wallet-choice
+                               th:checked="${payment.paymentId == null or payment.walletAmount.signum() > 0}"
+                               th:disabled="${payment.paymentId != null}">
                         <div>
-                            <strong>Ví Edu Connect</strong>
+                            <strong>Dùng số dư ví</strong>
                             <span class="flow-muted" th:text="${'Số dư khả dụng ' + #numbers.formatDecimal(payment.walletBalance, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></span>
+                            <span class="flow-muted">Ưu tiên tiền trong ví, phần còn thiếu thanh toán qua PayOS</span>
                         </div>
-                        <label class="flow-switch" th:if="${payment.paymentId == null and payment.walletBalance.signum() > 0}">
-                            <input type="checkbox" name="useWallet" value="true" form="payForm" checked data-wallet-toggle>
-                            <span>Dùng số dư ví</span>
-                        </label>
-                        <span class="flow-pay__amount" th:if="${payment.paymentId != null or payment.walletBalance.signum() == 0}" th:text="${#numbers.formatDecimal(payment.walletAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></span>
-                    </div>
-                    <div class="flow-pay__row">
+                    </label>
+                    <label class="flow-pay__row flow-method">
+                        <input type="radio" name="useWallet" value="false" form="payForm" data-provider-choice
+                               th:checked="${payment.paymentId != null and payment.walletAmount.signum() == 0}"
+                               th:disabled="${payment.paymentId != null}">
                         <div>
-                            <strong>Chuyển khoản qua PayOS</strong>
-                            <span class="flow-muted">Quét mã QR bằng ứng dụng ngân hàng. Dùng cho phần còn thiếu.</span>
+                            <strong>Thanh toán toàn bộ qua PayOS</strong>
+                            <span class="flow-muted">Quét mã QR bằng ứng dụng ngân hàng, không sử dụng số dư ví</span>
                         </div>
-                        <span class="flow-pay__amount" data-provider-amount th:text="${#numbers.formatDecimal(payment.providerAmount, 0, 'POINT', 0, 'COMMA') + ' ₫'}"></span>
-                    </div>
+                    </label>
                 </div>
             </section>
         </div>
