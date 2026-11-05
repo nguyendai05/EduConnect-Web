@@ -10,6 +10,7 @@ import com.educonnect.invitation.dto.InvitationSourceResponse;
 import com.educonnect.invitation.repository.InvitationJpaRepository;
 import com.educonnect.invitation.repository.InvitationLookupRepository;
 import com.educonnect.lesson.domain.Offering;
+import com.educonnect.lesson.domain.OfferingType;
 import com.educonnect.lesson.dto.OfferingCardResponse;
 import com.educonnect.lesson.service.CatalogService;
 import com.educonnect.security.AccountPrincipal;
@@ -450,6 +451,9 @@ public class InvitationService {
         requireId(id);
         try {
             Offering offering = catalog.getPublicOffering(id);
+            if (offering.getOfferingType() == OfferingType.GROUP_CLASS) {
+                throw invalid("Lớp nhóm đăng ký trực tiếp, không gửi lời mời gia sư");
+            }
             String issue = catalog.registrationIssue(offering, 1);
             if (issue != null) {
                 throw conflict(issue);
