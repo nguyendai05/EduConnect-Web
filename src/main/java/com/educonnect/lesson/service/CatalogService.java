@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
+import com.educonnect.contract.repository.ContractSessionJpaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.PageImpl;
@@ -33,9 +34,11 @@ public class CatalogService {
     private final OfferingJpaRepository offerings;
     private final OfferingTimeSlotJpaRepository slots;
     private final EnrollmentJpaRepository enrollments;
+    private ContractSessionJpaRepository sessions;
 
     public CatalogService(OfferingJpaRepository offerings, OfferingTimeSlotJpaRepository slots,
-                          EnrollmentJpaRepository enrollments) {
+                          EnrollmentJpaRepository enrollments, ContractSessionJpaRepository sessions) {
+        this.sessions = sessions;
         this.offerings = offerings;
         this.slots = slots;
         this.enrollments = enrollments;
@@ -88,7 +91,7 @@ public class CatalogService {
                     slot.getEndTime(), slot.getTimeZone()));
         }
         long remaining = availableSeats(offering);
-        String issue = null;
+        String issue = registrationIssue(offering, 1);
         if (offering.getStatus() != OfferingStatus.PUBLISHED) {
             issue = "Dịch vụ/lớp đã đóng và không nhận đăng ký mới.";
         } else if (remaining == 0) {
@@ -114,13 +117,10 @@ public class CatalogService {
 
     /** Tác giả: Trường Đạt. Số chỗ tham khảo; không giữ/trả chỗ hoặc ghi Enrollment. */
     public long availableSeats(Offering offering) {
-        if (offering.getOfferingType() == OfferingType.SERVICE) {
-            return 1;
-        }
         long occupied = enrollments.countSeats(offering.getId(),
                 List.of(EnrollmentStatus.CONFIRMED, EnrollmentStatus.COMPLETED),
                 EnrollmentStatus.RESERVED, Instant.now());
-        return Math.max(0, offering.getCapacity() - occupied);
+        return Math.max(0, (offering.getOfferingType() == OfferingType.SERVICE ? 1 : offering.getCapacity()) - occupied);
     }
 
     /** Tác giả: Trường Đạt. Kiểm điều kiện đăng ký; Huy kiểm lại trong transaction giao dịch. */
@@ -128,6 +128,7 @@ public class CatalogService {
         if (!isPublic(offering) || offering.getStatus() != OfferingStatus.PUBLISHED) {
             return "Dịch vụ hoặc lớp học hiện không nhận đăng ký";
         }
+        if (sessions.countStarted(offering.getId()) > 0) return "Lớp đã bắt đầu học, không nhận đăng ký mới";
         if (seats < 1) {
             return "Số chỗ phải lớn hơn 0";
         }
