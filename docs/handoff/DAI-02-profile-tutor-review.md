@@ -31,7 +31,10 @@ Hồ sơ **đã duyệt** quay về Chờ duyệt và tạm ẩn khỏi tìm ki�
 
 ## A02 cho Đạt/Huy
 
-`TutorProfileService.load(tutorId)` trả `TutorProfileDTO` (không kiểm quyền; người gọi phải tự kiểm). Dùng `status() == APPROVED` làm điều kiện công khai. `reviewNote` chỉ hiển thị cho chủ hồ sơ hoặc admin. Đạt đọc hồ sơ qua DTO này, không sửa hồ sơ ở luồng khác.
+- `TutorProfileService.load(tutorId)` trả `TutorProfileDTO` (không kiểm quyền; người gọi phải tự kiểm).
+- Điều kiện hồ sơ công khai chuẩn (`PublicTutorProfileService` đang dùng cho `/tutor/profile?id=`): `TutorProfile.status == APPROVED`, `UserAccount.status == ACTIVE`, `UserAccount.emailVerifiedAt != null`.
+- Các trường hồ sơ công khai đã sẵn sàng cho `DAT-02` (`/tutor/search`): `displayName`, `bio` (`user_accounts`), `headline`, `experienceYears` (`tutor_profiles`), cùng 4 bảng liên kết chuyên môn (`tutor_subjects`, `tutor_grade_levels`, `tutor_areas`, `tutor_delivery_modes`). Không lộ `email`, `phone`, `evidence`, `reviewNote`.
+- Lưu ý danh mục tự thêm (`subjects.created_by`, `grade_levels.created_by` khác `null` do `CustomCatalogService` tạo): bộ lọc công khai trên `/tutor/search` chỉ nên nạp các mục hệ thống (`created_by IS NULL`) hoặc mục tùy chỉnh đang gắn với gia sư đã `APPROVED` / khóa học `PUBLISHED` hợp lệ để tránh lộ nháp chưa duyệt.
 
 ## Dữ liệu và lệch so với giao diện mẫu
 

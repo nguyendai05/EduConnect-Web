@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.hamcrest.Matchers.*;
 
 @WebMvcTest({AuthPageController.class, RegistrationController.class, EmailVerificationController.class,
-        HomePageController.class, JobPageController.class})
+        HomePageController.class, JobPageController.class, com.educonnect.admin.web.AuditLogsPageController.class})
 @ActiveProfiles("db-dev")
 @Import({DatabaseSecurityConfig.class, AccountUserDetailsService.class, RegistrationService.class})
 class AuthFlowTest {
@@ -44,6 +44,9 @@ class AuthFlowTest {
     @Autowired PasswordEncoder encoder;
     @MockitoBean UserAccountRepository accounts;
     @MockitoBean EmailVerificationService verification;
+    @MockitoBean com.educonnect.job.service.JobService jobService;
+    @MockitoBean com.educonnect.tutor.service.TutorDiscoveryService tutorDiscoveryService;
+    @MockitoBean com.educonnect.admin.service.AuditLogService auditLogService;
     UserAccount learner;
 
     @BeforeEach void account() {
@@ -86,9 +89,27 @@ class AuthFlowTest {
     @Test void privatePagesRequireAuthenticationAndRoles() throws Exception {
         mvc.perform(get("/account/profile")).andExpect(redirectedUrl("http://localhost/auth/login"));
         mvc.perform(get("/admin/dashboard").with(user("learner").roles("LEARNER"))).andExpect(status().isForbidden());
+        mvc.perform(get("/admin/manage").with(user("learner").roles("LEARNER"))).andExpect(status().isForbidden());
+        mvc.perform(get("/admin/audit-logs").with(user("learner").roles("LEARNER"))).andExpect(status().isForbidden());
         mvc.perform(get("/tutor/manage").with(user("learner").roles("LEARNER"))).andExpect(status().isForbidden());
-        mvc.perform(get("/job/applicants").with(user("learner").roles("LEARNER"))).andExpect(status().isOk());
-        mvc.perform(get("/job/applicants").with(user("tutor").roles("TUTOR"))).andExpect(status().isForbidden());
+        mvc.perform(get("/job/applicants?id=1").with(user("learner").roles("LEARNER"))).andExpect(status().isOk());
+        mvc.perform(get("/job/applicants?id=1").with(user("tutor").roles("TUTOR"))).andExpect(status().isForbidden());
+
+        var sampleRow = new com.educonnect.admin.dto.AuditLogDTO.Row(
+                42L, 99L, "USR-ADMIN-01", "Quản trị viên", "admin@example.test", "ADMIN",
+                "USER_STATUS_CHANGE", "account", null, null, null, null,
+                1L, "USR-LEARN-01", "Nguyễn Văn An", "Tài khoản: Nguyễn Văn An", "USR-LEARN-01",
+                "/admin/manage?tab=users&q=USR-LEARN-01", "Hoạt động → Tạm khóa · Lý do: Kiểm tra định kỳ",
+                "{\n  \"password_hash\" : \"[ĐÃ CHE]\"\n}", java.time.Instant.parse("2026-10-20T03:00:00Z"));
+        when(auditLogService.load(any(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyInt()))
+                .thenReturn(new com.educonnect.admin.dto.AuditLogDTO(
+                        "all", "", "all", "all", "", "", "newest",
+                        java.util.List.of(sampleRow), 0, 10, 1L, java.util.Map.of("all", 1L, "account", 1L)));
+        mvc.perform(get("/admin/audit-logs").with(user("admin").roles("ADMIN")))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("AUD-0042")))
+                .andExpect(content().string(containsString("[ĐÃ CHE]")))
+                .andExpect(content().string(not(containsString("/js/preview/"))));
     }
 
     @Test void a01ExposesOnlyTheFourAgreedCurrentUserFieldsAndNullForGuest() throws Exception {

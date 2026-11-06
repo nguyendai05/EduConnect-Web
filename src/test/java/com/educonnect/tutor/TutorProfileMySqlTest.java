@@ -388,4 +388,59 @@ class TutorProfileMySqlTest {
         }
         assertThrows(ServiceProblem.class, () -> catalog.gradeLevel(other.getId(), "Cấp thử vượt giới hạn"));
     }
+
+    @Autowired com.educonnect.admin.service.AuditLogService auditLogs;
+
+    @Test void adminViewsAndFiltersAuditLogsWithRedaction() {
+        var admin = user("ADMIN");
+        var learner = user("LEARNER");
+        assertThrows(ServiceProblem.class,
+                () -> auditLogs.load(learner, "all", null, "all", "all", null, null, "newest", 0),
+                "chỉ ADMIN được xem nhật ký hệ thống");
+
+        long version = em.find(com.educonnect.user.domain.UserAccount.class, learner.getId()).getVersion();
+        var statusForm = new AccountStatusForm();
+        statusForm.setStatus("LOCKED");
+        statusForm.setReason("Khóa tài khoản để kiểm thử nhật ký");
+        statusForm.setVersion(version);
+        manage.changeStatus(admin, learner.getId(), statusForm);
+
+        var rawLog = com.educonnect.admin.domain.AuditLog.create();
+        rawLog.setActorUserId(admin.getId());
+        rawLog.setTargetUserId(learner.getId());
+        rawLog.setActionCode("USER_STATUS_CHANGE");
+        rawLog.setMetadata(java.util.Map.of(
+                "previousStatus", "LOCKED",
+                "newStatus", "ACTIVE",
+                "reason", "Mở khóa sau đối soát",
+                "password_hash", "{bcrypt}secret-hash-should-not-leak",
+                "resetToken", "tok-secret-123",
+                "nested", java.util.Map.of("otpCode", "999888", "safeField", "ok")));
+        rawLog.setCreatedAt(Instant.now());
+        em.persist(rawLog);
+        em.flush();
+        em.clear();
+
+        var page = auditLogs.load(admin, "account", "Mở khóa sau đối soát", "admin", "today", null, null, "newest", 0);
+        assertTrue(page.total() >= 1);
+        assertTrue(page.count("account") >= 2);
+        var matched = page.rows().stream().filter(r -> r.id().equals(rawLog.getId())).findFirst().orElseThrow();
+        assertEquals("AUD-" + String.format("%04d", rawLog.getId()), matched.refCode());
+        assertTrue(matched.summary().contains("Tạm khóa → Hoạt động"));
+        assertTrue(matched.sanitizedJson().contains(com.educonnect.admin.service.AuditLogService.REDACTED_VALUE));
+        assertFalse(matched.sanitizedJson().contains("secret-hash-should-not-leak"));
+        assertFalse(matched.sanitizedJson().contains("tok-secret-123"));
+        assertFalse(matched.sanitizedJson().contains("999888"));
+        assertTrue(matched.sanitizedJson().contains("ok"));
+
+        var byRef = auditLogs.load(admin, "all", matched.refCode(), "all", "all", null, null, "newest", 0);
+        assertTrue(byRef.rows().stream().anyMatch(r -> r.id().equals(rawLog.getId())));
+
+        assertThrows(ServiceProblem.class,
+                () -> auditLogs.load(admin, "all", null, "all", "custom", "2026-10-20", "2026-10-10", "newest", 0),
+                "Từ ngày lớn hơn Đến ngày phải báo lỗi 400");
+        assertThrows(ServiceProblem.class,
+                () -> auditLogs.load(admin, "all", "x".repeat(101), "all", "all", null, null, "newest", 0),
+                "Từ khóa quá 100 ký tự phải báo lỗi 400");
+    }
 }
