@@ -54,32 +54,24 @@ public class TutorDiscoveryRepository {
     /** Cùng một bộ điều kiện cho count và data; lọc/sắp xếp tại DB trước khi phân trang. */
     public Page<TutorCardResponse> search(TutorSearchRequest request) {
         Map<String, Object> parameters = publicParameters();
-        StringBuilder where = new StringBuilder(PUBLIC);
+        StringBuilder where = new StringBuilder(" where t.reviewStatus = :approved"
+                + " and a.status = :active and a.emailVerifiedAt is not null ");
+        String from = " from TutorProfile t join t.account a left join Offering o"
+                + " on o.tutorId = t.userId and o.status = :published ";
         appendFilters(request, where, parameters);
 
         String selection = "select new com.educonnect.tutor.dto.TutorCardResponse("
                 + "t.userId, a.displayName, t.headline, t.experienceYears, min(o.unitPrice), count(o.id))";
         String grouping = " group by t.userId, a.displayName, t.headline, t.experienceYears ";
-        String having = "";
-        long requiredGrades = request.getGradeLevelIds().stream().distinct().count();
-        if (requiredGrades > 1) {
-            // Một Offering chỉ có một cấp; gom theo gia sư để yêu cầu đủ mọi cấp đã chọn.
-            having = " having count(distinct o.gradeLevelId) = :requiredGrades ";
-            parameters.put("requiredGrades", requiredGrades);
-        }
         String order = switch (request.getSort()) {
-            case "price-asc" -> "min(o.unitPrice) asc, t.userId asc";
-            case "price-desc" -> "min(o.unitPrice) desc, t.userId asc";
+            case "price-asc" -> "case when min(o.unitPrice) is null then 1 else 0 end, min(o.unitPrice) asc, t.userId asc";
+            case "price-desc" -> "case when min(o.unitPrice) is null then 1 else 0 end, min(o.unitPrice) desc, t.userId asc";
             case "name" -> "lower(a.displayName) asc, t.userId asc";
             default -> throw new IllegalArgumentException("Tiêu chí sắp xếp chưa được hỗ trợ.");
         };
         TypedQuery<TutorCardResponse> data = entityManager.createQuery(
-                selection + FROM + where + grouping + having + " order by " + order, TutorCardResponse.class);
-        // Đếm các nhóm thỏa cùng HAVING trước khi phân trang, không đếm gia sư chỉ khớp một cấp.
-        String countQuery = requiredGrades > 1
-                ? "select count(*) from (select t.userId as tutorId" + FROM + where
-                    + " group by t.userId" + having + ") matchedTutors"
-                : "select count(distinct t.userId)" + FROM + where;
+                selection + from + where + grouping + " order by " + order, TutorCardResponse.class);
+        String countQuery = "select count(distinct t.userId)" + from + where;
         TypedQuery<Long> count = entityManager.createQuery(
                 countQuery, Long.class);
         bind(data, parameters);
@@ -93,19 +85,20 @@ public class TutorDiscoveryRepository {
     private void appendFilters(TutorSearchRequest request, StringBuilder where, Map<String, Object> parameters) {
         if (!request.getQ().isBlank()) {
             where.append(" and (lower(a.displayName) like :q escape '!' or lower(t.headline) like :q escape '!'"
-                    + " or lower(o.title) like :q escape '!' or lower(subject.name) like :q escape '!') ");
+                    + " or lower(o.title) like :q escape '!' or exists (select ts.id from TutorSubject ts where ts.id.tutorId = t.userId and lower(ts.subjectReference.name) like :q escape '!')) ");
             String text = request.getQ().toLowerCase(java.util.Locale.ROOT)
                     .replace("!", "!!")
                     .replace("%", "!%")
                     .replace("_", "!_");
             parameters.put("q", "%" + text + "%");
         }
-        addFilter(where, parameters, "o.subjectId = :subjectId", "subjectId", request.getSubjectId());
+        addFilter(where, parameters, "exists (select ts.id from TutorSubject ts where ts.id.tutorId = t.userId and ts.id.subjectId = :subjectId)", "subjectId", request.getSubjectId());
         if (!request.getGradeLevelIds().isEmpty()) {
-            addFilter(where, parameters, "o.gradeLevelId in :grades", "grades", request.getGradeLevelIds());
+            addFilter(where, parameters, "(select count(distinct tg.id.gradeLevelId) from TutorGradeLevel tg where tg.id.tutorId = t.userId and tg.id.gradeLevelId in :grades) = :gradeCount", "grades", request.getGradeLevelIds());
         }
-        addFilter(where, parameters, "o.areaId = :areaId", "areaId", request.getAreaId());
-        addFilter(where, parameters, "o.deliveryModeId = :modeId", "modeId", request.getDeliveryModeId());
+        if (!request.getGradeLevelIds().isEmpty()) parameters.put("gradeCount", (long) request.getGradeLevelIds().stream().distinct().count());
+        addFilter(where, parameters, "exists (select ta.id from TutorArea ta where ta.id.tutorId = t.userId and ta.id.areaId = :areaId)", "areaId", request.getAreaId());
+        addFilter(where, parameters, "exists (select tm.id from TutorDeliveryMode tm where tm.id.tutorId = t.userId and tm.id.deliveryModeId = :modeId)", "modeId", request.getDeliveryModeId());
         addFilter(where, parameters, "o.offeringType = :type", "type", request.getOfferingType());
         addFilter(where, parameters, "o.unitPrice >= :minPrice", "minPrice", request.getMinPrice());
         addFilter(where, parameters, "o.unitPrice <= :maxPrice", "maxPrice", request.getMaxPrice());
@@ -146,9 +139,11 @@ public class TutorDiscoveryRepository {
         StringBuilder where = new StringBuilder(PUBLIC);
         addFilter(where, parameters, "o.tutorId = :tutorId", "tutorId", tutorId);
         if (availableOnly) {
-            where.append(" and (o.offeringType = :service or o.capacity >"
+            where.append(" and not exists (select s.id from ContractSession s, Contract c where s.contractId = c.id"
+                    + " and c.orderItemReference.registrationSourceReference.offeringId = o.id and s.attendedAt is not null)"
+                    + " and (case when o.offeringType = :service then 1 else o.capacity end) >"
                     + " (select coalesce(sum(e.seatCount), 0) from Enrollment e where e.offeringId = o.id"
-                    + " and (e.status in :occupied or (e.status = :reserved and e.reservedUntil > :now)))) ");
+                    + " and (e.status in :occupied or (e.status = :reserved and e.reservedUntil > :now))) ");
             parameters.put("service", OfferingType.SERVICE);
             parameters.put("occupied", List.of(EnrollmentStatus.CONFIRMED, EnrollmentStatus.COMPLETED));
             parameters.put("reserved", EnrollmentStatus.RESERVED);

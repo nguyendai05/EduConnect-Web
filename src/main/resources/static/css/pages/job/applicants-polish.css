@@ -1,0 +1,60 @@
+.applicants-workspace {
+    max-width: 64rem;
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+}
+.applicants-workspace .dat-applicants-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+    align-items: start;
+}
+.applicants-workspace .applicant-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-height: 0;
+    padding: var(--space-5);
+    border-radius: var(--radius-xl);
+}
+.applicants-workspace .dat-applicant-identity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 0;
+}
+.applicants-workspace .dat-applicant-identity h2 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+}
+.applicants-workspace .applicants-price {
+    color: var(--color-primary);
+    font-size: var(--font-size-lg);
+}
+.applicants-workspace .job-live-copy {
+    margin: 0;
+    padding: var(--space-4);
+    background: var(--color-surface-low);
+    border-radius: var(--radius-md);
+}
+.applicants-workspace .job-live-stack {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-4);
+}
+.applicants-workspace .job-live-stack .button {
+    justify-self: start;
+}
+.applicants-workspace .job-live-actions .button {
+    width: auto;
+}
+.applicants-workspace .applicants-job {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: var(--space-5);
+}
+@media (max-width: 48rem) {
+    .applicants-workspace .dat-applicants-list {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

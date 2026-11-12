@@ -18,7 +18,7 @@ public interface ContractSessionJpaRepository extends JpaRepository<ContractSess
     /** Số buổi đã điểm danh (không còn HELD) của mọi hợp đồng thuộc một lớp; lớn hơn 0 nghĩa là lớp đã bắt đầu. */
     @org.springframework.data.jpa.repository.Query("select count(s) from ContractSession s, Contract c where s.contractId = c.id"
             + " and c.orderItemReference.registrationSourceReference.offeringId = :offering"
-            + " and s.status <> com.educonnect.contract.domain.ContractSessionStatus.HELD")
+            + " and s.attendedAt is not null")
     long countStarted(@org.springframework.data.repository.query.Param("offering") Long offeringId);
 
     List<ContractSession> findByContractIdAndStatusIn(Long contractId, List<ContractSessionStatus> statuses);

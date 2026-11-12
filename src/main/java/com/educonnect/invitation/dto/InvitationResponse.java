@@ -35,11 +35,13 @@ public record InvitationResponse(
         boolean canAccept, // Cho biết người xem có thể chấp nhận lời mời hay không.
         boolean canDecline, // Cho biết người xem có thể từ chối lời mời hay không.
         boolean canCancel, // Cho biết người xem có thể hủy hay không.
-        boolean sourceUsed // Cho biết nguồn đã được dùng để tạo hợp đồng hay chưa.
+        boolean sourceUsed, // Cho biết nguồn đã được dùng để tạo hợp đồng hay chưa.
+        BigDecimal tutorProposedPrice,
+        boolean canCounter
 ) {
     public String getStatusLabel() {
         return switch (status) {
-            case PENDING -> "Chờ gia sư phản hồi";
+            case PENDING -> tutorProposedPrice == null ? "Chờ gia sư phản hồi" : "Chờ học viên xác nhận giá mới";
             case ACCEPTED -> "Đã chấp nhận";
             case DECLINED -> "Đã từ chối";
             case CANCELLED -> "Đã hủy";
@@ -48,7 +50,7 @@ public record InvitationResponse(
     }
 
     public BigDecimal getTotalPrice() {
-        return proposedUnitPrice.multiply(BigDecimal.valueOf(sessionCount));
+        return (tutorProposedPrice != null && status == InvitationStatus.PENDING ? tutorProposedPrice : proposedUnitPrice).multiply(BigDecimal.valueOf(sessionCount));
     }
 
     public String getCreatedAtLabel() {
