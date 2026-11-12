@@ -68,7 +68,7 @@ public class InvitationPageController {
                        @ModelAttribute("invitationRequest") InvitationRequest form,
                        BindingResult errors, Model model, HttpServletResponse response,
                        RedirectAttributes redirect) {
-        context(model, principal);
+        context(model, principal);  //xác nhận đăng nhập là hv
         if (!errors.hasErrors()) {
             try {
                 Long id = service.create(principal, form);

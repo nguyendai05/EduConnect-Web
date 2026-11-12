@@ -126,7 +126,7 @@ public class TutorDiscoveryRepository {
         }
     }
 
-    /** Chỉ trả hồ sơ có trạng thái được phép công khai; không lấy email/điện thoại/minh chứng ra DTO. */
+    /** Chỉ trả hồ sơ có trạng thái được phép công khai; dùng list optional để tránh bắt ngoại lệ */
     public Optional<TutorProfile> publicProfile(Long id) {
         List<TutorProfile> result = entityManager.createQuery("""
                 select t from TutorProfile t join fetch t.account a
@@ -162,10 +162,10 @@ public class TutorDiscoveryRepository {
         TypedQuery<Long> count = entityManager.createQuery("select count(o.id)" + FROM + where, Long.class);
         bind(data, parameters);
         bind(count, parameters);
-        long total = count.getSingleResult();
+        long total = count.getSingleResult(); //thực thi truy vấn và trả về long
         data.setFirstResult(page * size);
         data.setMaxResults(size);
-        return new PageImpl<>(data.getResultList(), PageRequest.of(page, size), total);
+        return new PageImpl<>(data.getResultList(), PageRequest.of(page, size), total); //quan trọng thực hiện trả về trang, tổng page, max dịch vụ 1 trang là bn
     }
 
     private Map<String, Object> publicParameters() {

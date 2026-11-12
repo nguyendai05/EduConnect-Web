@@ -72,6 +72,6 @@ public class TutorDiscoveryService {
         for (Offering offering : offerings.getContent()) {
             cards.add(OfferingCardResponse.from(offering));
         }
-        return new PageImpl<>(cards, offerings.getPageable(), offerings.getTotalElements());
+        return new PageImpl<>(cards, offerings.getPageable(), offerings.getTotalElements()); //getPageable trả về thông tin trang hiện tại và max size bn như cũ
     }
 }
