@@ -9,14 +9,14 @@ import jakarta.validation.constraints.Size;
 public class AccountStatusForm {
     @NotNull(message = "Thiếu trạng thái mới.")
     @Pattern(regexp = "ACTIVE|LOCKED|DISABLED", message = "Trạng thái không hợp lệ.")
-    private String status;
+    private String status; // Trạng thái hiện tại.
 
     @NotBlank(message = "Hãy nhập lý do để lưu vào nhật ký.")
     @Size(min = 10, max = 500, message = "Lý do cần từ 10 đến 500 ký tự.")
-    private String reason;
+    private String reason; // Lý do thực hiện thao tác quản trị.
 
     @NotNull(message = "Thiếu phiên bản tài khoản, hãy tải lại trang.")
-    private Long version;
+    private Long version; // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }

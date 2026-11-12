@@ -67,6 +67,18 @@ class TutorDiscoveryMvcTest {
         verify(service, never()).search(any());
     }
 
+    @Test void tutorWithoutPublishedOfferingsShowsNegotiablePriceAndPrivateInvitationLabel() throws Exception {
+        when(service.search(any())).thenReturn(new TutorSearchResponse(
+                List.of(new TutorCardResponse(321L, "Gia sư mới", "Dạy Toán", (short) 2,
+                        null, 0L)), 0, 12, 1, 1, false, false));
+        mvc.perform(get("/tutor/search").param("timeZone", "Asia/Ho_Chi_Minh"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Theo thỏa thuận")))
+                .andExpect(content().string(containsString("Nhận lời mời dạy riêng")))
+                .andExpect(content().string(not(containsString("null ₫"))))
+                .andExpect(content().string(containsString("/tutor/profile?id=321")));
+    }
+
     @Test void numericProfileFromHomeRendersPublicDtoAndInvitationLink() throws Exception {
         when(profiles.profile(320L, 0)).thenReturn(new PublicTutorProfileDTO(
                 320L, "Phạm Bảo Ngọc", "Gia sư IELTS", 8, "Giới thiệu <script>",

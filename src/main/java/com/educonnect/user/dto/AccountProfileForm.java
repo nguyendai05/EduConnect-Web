@@ -12,22 +12,22 @@ import jakarta.validation.constraints.Size;
 public class AccountProfileForm {
     @NotBlank(message = "Vui lòng nhập họ và tên.")
     @Size(min = 2, max = 120, message = "Họ và tên cần từ 2 đến 120 ký tự.")
-    private String displayName;
+    private String displayName; // Tên người dùng hiển thị trên giao diện.
 
     @Pattern(regexp = "^$|^(\\+84|0)[0-9 .-]{8,13}$", message = "Số điện thoại chưa đúng định dạng, ví dụ 0912 345 678.")
     @Size(max = 24, message = "Số điện thoại tối đa 24 ký tự.")
-    private String phone;
+    private String phone; // Số điện thoại liên hệ.
 
     @Size(max = 1000, message = "Giới thiệu tối đa 1000 ký tự.")
-    private String bio;
+    private String bio; // Nội dung giới thiệu bản thân.
 
     /** SELF hoặc PARENT; chỉ áp dụng cho tài khoản có hồ sơ người học. */
-    private String learnerKind;
-    private Long gradeLevelId;
-    private Long areaId;
+    private String learnerKind; // Loại người học, chẳng hạn học sinh hoặc phụ huynh.
+    private Long gradeLevelId; // ID cấp học.
+    private Long areaId; // ID khu vực học.
 
     @NotNull(message = "Thiếu phiên bản hồ sơ, hãy tải lại trang.")
-    private Long version;
+    private Long version; // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
 
     public String getDisplayName() { return displayName; }
     public void setDisplayName(String displayName) { this.displayName = displayName; }

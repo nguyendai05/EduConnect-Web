@@ -21,40 +21,40 @@ import java.math.BigDecimal;
 public class JobPostRequest {
     @NotBlank
     @Pattern(regexp = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
-    private String requestKey;
+    private String requestKey; // Khóa nhận diện yêu cầu để tránh tạo trùng khi gửi lại.
     @PositiveOrZero
-    private Long version;
+    private Long version; // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
     @NotBlank
     @Size(max = 220)
-    private String title;
+    private String title; // Tiêu đề hiển thị.
     @NotBlank
     @Size(max = 8000)
-    private String description;
+    private String description; // Nội dung mô tả chi tiết.
     @Positive
-    private Long subjectId;
+    private Long subjectId; // ID môn học.
     @Size(max = 120)
-    private String subjectName;
+    private String subjectName; // Tên môn học tự nhập.
     @Positive
-    private Long gradeLevelId;
+    private Long gradeLevelId; // ID cấp học.
     @Size(max = 120)
-    private String gradeLevelName;
+    private String gradeLevelName; // Tên cấp học tự nhập.
     @NotNull
     @Positive
-    private Long areaId;
+    private Long areaId; // ID khu vực học.
     @NotNull
     @Positive
-    private Long deliveryModeId;
+    private Long deliveryModeId; // ID hình thức học.
     @NotNull
     @DecimalMin("1")
     @Digits(integer = 19, fraction = 0)
-    private BigDecimal budgetPerSession;
+    private BigDecimal budgetPerSession; // Ngân sách dự kiến cho mỗi buổi học.
     @NotNull
     @Min(1)
     @Max(32767)
-    private Short sessionCount;
+    private Short sessionCount; // Tổng số buổi học.
     @NotBlank
     @Pattern(regexp = "draft|submit")
-    private String action;
+    private String action; // Thao tác người dùng yêu cầu thực hiện.
 
     @AssertTrue(message = "Tổng ngân sách vượt giới hạn 19 chữ số.")
     public boolean isTotalValid() {

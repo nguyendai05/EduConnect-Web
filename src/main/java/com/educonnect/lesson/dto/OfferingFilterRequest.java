@@ -6,9 +6,9 @@ import com.educonnect.lesson.domain.OfferingType;
 /** DTO nhận các bộ lọc từ form GET. */
 public class OfferingFilterRequest {
 
-    private OfferingType type;
-    private OfferingStatus status;
-    private String q = "";
+    private OfferingType type; // Loại dịch vụ: dạy kèm 1-1 hoặc lớp nhóm.
+    private OfferingStatus status; // Trạng thái hiện tại.
+    private String q = ""; // Từ khóa tìm kiếm.
 
     public OfferingType getType() {
         return type;

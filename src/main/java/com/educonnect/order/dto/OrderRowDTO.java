@@ -8,8 +8,17 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 /** Một dòng trong lịch sử đơn của người học. */
-public record OrderRowDTO(String orderCode, Long contractId, String title, String tutorName, String sourceLabel,
-        BigDecimal total, String statusLabel, boolean payable, Instant createdAt) {
+public record OrderRowDTO(
+        String orderCode, // Mã đơn hàng hiển thị cho người dùng.
+        Long contractId, // ID hợp đồng học.
+        String title, // Tiêu đề hiển thị.
+        String tutorName, // Tên hiển thị của gia sư.
+        String sourceLabel, // Tên loại nguồn hình thành đơn hàng hoặc hợp đồng.
+        BigDecimal total, // Tổng số tiền.
+        String statusLabel, // Tên trạng thái để hiển thị trên giao diện.
+        boolean payable, // Cho biết có thể thanh toán hợp đồng hay không.
+        Instant createdAt // Thời điểm tạo bản ghi.
+) {
 
     public static OrderRowDTO from(Contract contract) {
         OrderItem item = contract.getOrderItemReference();

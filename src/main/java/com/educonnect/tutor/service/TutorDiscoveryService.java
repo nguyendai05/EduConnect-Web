@@ -36,7 +36,7 @@ public class TutorDiscoveryService {
     /** Danh mục thật dùng để render bộ lọc công khai. */
     public OfferingOptionsResponse options() { return repository.options(); }
 
-    /** Tác giả: Trường Đạt. /tutor/search: các điều kiện phải khớp trên cùng dịch vụ của gia sư. */
+    /** /tutor/search: chuyên môn khớp hồ sơ hoặc gói; giá, loại gói và lịch khớp cùng gói công khai. */
     public TutorSearchResponse search(TutorSearchRequest request) {
         if (request == null) {
             throw new OfferingProblem(HttpStatus.BAD_REQUEST, "Thiếu điều kiện tìm kiếm.");
@@ -72,6 +72,6 @@ public class TutorDiscoveryService {
         for (Offering offering : offerings.getContent()) {
             cards.add(OfferingCardResponse.from(offering));
         }
-        return new PageImpl<>(cards, offerings.getPageable(), offerings.getTotalElements());
+        return new PageImpl<>(cards, offerings.getPageable(), offerings.getTotalElements()); //getPageable trả về thông tin trang hiện tại và max size bn như cũ
     }
 }

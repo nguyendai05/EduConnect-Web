@@ -8,13 +8,13 @@ import jakarta.validation.constraints.Size;
 public class TutorReviewForm {
     @NotNull(message = "Thiếu quyết định.")
     @Pattern(regexp = "approve|reject", message = "Quyết định không hợp lệ.")
-    private String action;
+    private String action; // Thao tác người dùng yêu cầu thực hiện.
 
     @Size(max = 2000, message = "Lý do tối đa 2000 ký tự.")
-    private String reason;
+    private String reason; // Lý do thực hiện thao tác quản trị.
 
     @NotNull(message = "Thiếu phiên bản hồ sơ, hãy tải lại trang.")
-    private Long version;
+    private Long version; // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
 
     public String getAction() { return action; }
     public void setAction(String action) { this.action = action; }

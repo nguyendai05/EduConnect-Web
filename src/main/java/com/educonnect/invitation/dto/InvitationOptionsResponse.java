@@ -10,7 +10,7 @@ import java.util.List;
  * Thuộc trang: /invitation/create.
  */
 public record InvitationOptionsResponse(
-        List<InvitationTutorResponse> tutors,
-        OfferingOptionsResponse references,
-        List<OfferingCardResponse> offerings
+        List<InvitationTutorResponse> tutors, // Danh sách gia sư có thể chọn để gửi lời mời.
+        OfferingOptionsResponse references, // Các danh mục môn, cấp học, khu vực và hình thức học để tạo lời mời.
+        List<OfferingCardResponse> offerings // Danh sách dịch vụ hoặc lớp có thể chọn khi tạo lời mời.
 ) {}

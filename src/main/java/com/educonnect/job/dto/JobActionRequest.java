@@ -13,10 +13,10 @@ import jakarta.validation.constraints.PositiveOrZero;
 public class JobActionRequest {
     @NotNull
     @PositiveOrZero
-    private Long version;
+    private Long version; // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
     @NotBlank
     @Pattern(regexp = "submit|close")
-    private String action;
+    private String action; // Thao tác người dùng yêu cầu thực hiện.
 
     public Long getVersion() {
         return version;

@@ -18,14 +18,14 @@ import jakarta.validation.constraints.PositiveOrZero;
 public class InvitationActionRequest {
     @NotNull
     @PositiveOrZero
-    private Long version;
+    private Long version; // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
     @NotNull
     @Min(1)
-    private Integer termsVersion;
+    private Integer termsVersion; // Số phiên bản điều khoản để xác định nội dung người dùng đồng ý.
     @NotBlank
     @Pattern(regexp = "accept|decline|cancel|counter")
-    private String action;
-    private boolean consent;
+    private String action; // Thao tác người dùng yêu cầu thực hiện.
+    private boolean consent;// Cho biết người dùng đã đồng ý với điều khoản hay chưa.
     @DecimalMin("1")
     @Digits(integer = 19, fraction = 0)
     private BigDecimal proposedPrice;

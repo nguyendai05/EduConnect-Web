@@ -17,19 +17,19 @@ public class OfferingTimeSlotRequest {
     @NotNull
     @Min(1)
     @Max(7)
-    private Byte weekday;
+    private Byte weekday; // Thứ trong tuần: 1 là thứ Hai, 7 là Chủ nhật.
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime startTime;
+    private LocalTime startTime; // Giờ bắt đầu khung học.
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime endTime;
+    private LocalTime endTime; // Giờ kết thúc khung học.
 
     @NotBlank
     @Size(max = 64)
-    private String timeZone = "Asia/Ho_Chi_Minh";
+    private String timeZone = "Asia/Ho_Chi_Minh"; // Múi giờ IANA áp dụng cho lịch học, chẳng hạn Asia/Ho_Chi_Minh.
 
     @AssertTrue(message = "Giờ kết thúc phải sau giờ bắt đầu, trong cùng ngày.")
     public boolean isTimeRangeValid() {

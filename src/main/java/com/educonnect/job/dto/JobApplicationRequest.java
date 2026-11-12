@@ -17,16 +17,16 @@ import java.math.BigDecimal;
 public class JobApplicationRequest {
     @NotNull
     @PositiveOrZero
-    private Long jobVersion;
+    private Long jobVersion; // Phiên bản tin tìm gia sư để phát hiện cập nhật đồng thời.
     @NotNull
     @DecimalMin("1")
     @Digits(integer = 19, fraction = 0)
-    private BigDecimal proposedUnitPrice;
+    private BigDecimal proposedUnitPrice; // Học phí mỗi buổi được đề xuất khi thương lượng.
     @NotBlank
     @Size(max = 5000)
-    private String message;
+    private String message; // Lời nhắn gia sư gửi khi ứng tuyển.
     @AssertTrue(message = "Bạn cần đồng ý nội dung tin và đề xuất ứng tuyển.")
-    private boolean consent;
+    private boolean consent; // Cho biết người dùng đã đồng ý với điều khoản hay chưa.
 
     public Long getJobVersion() {
         return jobVersion;

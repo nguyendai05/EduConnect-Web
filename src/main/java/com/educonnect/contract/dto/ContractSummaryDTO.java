@@ -13,10 +13,25 @@ import java.util.List;
  * Một dòng trong danh sách hợp đồng của người dùng. attendSession là buổi gia sư điểm danh tiếp,
  * confirmSession là buổi học viên cần xác nhận (null nếu không có).
  */
-public record ContractSummaryDTO(Long id, String code, String title, String partnerName, boolean viewerIsTutor,
-        String statusLabel, boolean active, BigDecimal total, int doneSessions, int totalSessions,
-        Integer attendSession, Integer confirmSession, Long attendSessionId, Long confirmSessionId, Instant createdAt,
-        ContractStatus status, Long partnerId) {
+public record ContractSummaryDTO(
+        Long id, // ID hợp đồng.
+        String code, // Mã hợp đồng hiển thị cho người dùng.
+        String title, // Tiêu đề hiển thị.
+        String partnerName, // Tên của bên còn lại trong hợp đồng đối với người đang xem.
+        boolean viewerIsTutor, // Cho biết người đang xem là gia sư trong hợp đồng hay không.
+        String statusLabel, // Tên trạng thái để hiển thị trên giao diện.
+        boolean active, // Cho biết hợp đồng đang được thực hiện hay không.
+        BigDecimal total, // Tổng số tiền.
+        int doneSessions, // Số buổi học đã hoàn thành.
+        int totalSessions, // Tổng số buổi học của hợp đồng.
+        Integer attendSession, // Số thứ tự buổi học gia sư có thể điểm danh.
+        Integer confirmSession, // Số thứ tự buổi học đang chờ học viên xác nhận.
+        Long attendSessionId, // ID buổi học gia sư có thể điểm danh.
+        Long confirmSessionId, // ID buổi học đang chờ học viên xác nhận.
+        Instant createdAt, // Thời điểm tạo bản ghi.
+        ContractStatus status, // Trạng thái hiện tại.
+        Long partnerId // ID tài khoản của bên còn lại trong hợp đồng.
+) {
 
     /** Hợp đồng đang chờ người xem làm gì đó: gia sư điểm danh, học viên xác nhận buổi hoặc thanh toán. */
     public boolean needsAction() {

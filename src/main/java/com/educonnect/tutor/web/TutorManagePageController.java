@@ -56,7 +56,6 @@ public class TutorManagePageController {
         @ModelAttribute("filterRequest") OfferingFilterRequest filter
     ) {
         var form = edit != null ? service.edit(principal, edit) : freshForm();
-
         model.addAttribute("offeringRequest", form);
         model.addAttribute("editingId", edit);
         model.addAttribute("publishedEdit", edit != null && service.isPublished(principal, edit));
@@ -89,7 +88,6 @@ public class TutorManagePageController {
             populate(principal, model, new OfferingFilterRequest());
             return VIEW;
         }
-
         try {
             if (id == null) {
                 service.createDraft(principal, form);

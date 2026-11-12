@@ -23,56 +23,56 @@ import java.util.List;
 public class TutorSearchRequest {
     @NotNull
     @Size(max = 200, message = "Từ khóa tối đa 200 ký tự.")
-    private String q = "";
+    private String q = ""; // Từ khóa tìm kiếm.
 
     @Positive
-    private Long subjectId;
+    private Long subjectId; //id môn học
 
     @NotNull
     @Size(max = 30)
-    private List<@NotNull @Positive Long> gradeLevelIds = new ArrayList<>();
+    private List<@NotNull @Positive Long> gradeLevelIds = new ArrayList<>(); // Danh sách ID cấp học.
 
     @Positive
-    private Long areaId;
+    private Long areaId; // ID khu vực học.
 
     @Positive
-    private Long deliveryModeId;
+    private Long deliveryModeId; // ID hình thức học.
 
-    private OfferingType offeringType;
+    private OfferingType offeringType; // Loại dịch vụ: dạy kèm 1-1 hoặc lớp nhóm.
 
     @DecimalMin("0")
     @Digits(integer = 19, fraction = 0)
-    private BigDecimal minPrice;
+    private BigDecimal minPrice; // Mức giá tối thiểu dùng để lọc kết quả.
 
     @DecimalMin("0")
     @Digits(integer = 19, fraction = 0)
-    private BigDecimal maxPrice;
+    private BigDecimal maxPrice; // Mức giá tối đa dùng để lọc kết quả.
 
     @NotNull
     @Size(max = 7)
-    private List<@NotNull @Min(1) @Max(7) Integer> weekdays = new ArrayList<>();
+    private List<@NotNull @Min(1) @Max(7) Integer> weekdays = new ArrayList<>(); // Danh sách thứ trong tuần dùng để lọc lịch học; 1 là thứ Hai, 7 là Chủ nhật.
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime startTime;
+    private LocalTime startTime; // Giờ bắt đầu khung học.
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime endTime;
+    private LocalTime endTime; // Giờ kết thúc khung học.
 
     @Size(max = 64)
-    private String timeZone;
+    private String timeZone; // Múi giờ IANA áp dụng cho lịch học, chẳng hạn Asia/Ho_Chi_Minh.
 
     // newest chờ Q10; rating chờ A08. Không tự thay bằng một cách sắp xếp khác.
     @NotBlank
     @Pattern(regexp = "name|price-asc|price-desc", message = "Tiêu chí sắp xếp chưa được hỗ trợ.")
-    private String sort = "name";
+    private String sort = "name"; // Tiêu chí sắp xếp kết quả tìm kiếm.
 
     @Min(0)
     @Max(100000)
-    private int page;
+    private int page; // Chỉ số trang hiện tại, bắt đầu từ 0.
 
     @Min(1)
     @Max(48)
-    private int size = 12;
+    private int size = 12; // Số kết quả tối đa trên mỗi trang.
 
     @AssertTrue(message = "Giá tối thiểu không được lớn hơn giá tối đa.")
     public boolean isPriceRangeValid() {

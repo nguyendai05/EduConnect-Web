@@ -12,31 +12,31 @@ import java.util.List;
 
 /** DTO hiển thị danh sách; không dùng để nhận dữ liệu từ form. */
 public record OfferingResponse(
-        Long id,
-        String publicCode,
-        String title,
-        OfferingType offeringType,
-        String subject,
-        String grade,
-        String area,
-        String deliveryMode,
-        BigDecimal unitPrice,
-        Short sessionCount,
-        Short durationMinutes,
-        Integer capacity,
-        LocalDate startsOn,
-        LocalDate endsOn,
-        OfferingStatus status,
-        String statusLabel,
-        int termsVersion,
-        Long version,
-        String reviewNote,
-        boolean editable,
-        boolean submittable,
-        boolean closable,
-        List<OfferingTimeSlotResponse> slots,
-        String description,
-        String termsText
+        Long id, // ID dịch vụ hoặc lớp học.
+        String publicCode, // Mã công khai dùng để hiển thị và tra cứu.
+        String title, // Tiêu đề hiển thị.
+        OfferingType offeringType, // Loại dịch vụ: dạy kèm 1-1 hoặc lớp nhóm.
+        String subject, // Tên môn học.
+        String grade, // Tên cấp học.
+        String area, // Tên khu vực học.
+        String deliveryMode, // Tên hình thức học, chẳng hạn trực tuyến hoặc trực tiếp.
+        BigDecimal unitPrice, // Học phí mỗi buổi cho một chỗ học.
+        Short sessionCount, // Tổng số buổi học.
+        Short durationMinutes, // Thời lượng mỗi buổi học, tính bằng phút.
+        Integer capacity, // Sĩ số tối đa của lớp nhóm.
+        LocalDate startsOn, // Ngày bắt đầu lớp học.
+        LocalDate endsOn, // Ngày kết thúc lớp học.
+        OfferingStatus status, // Trạng thái hiện tại.
+        String statusLabel, // Tên trạng thái để hiển thị trên giao diện.
+        int termsVersion, // Số phiên bản điều khoản để xác định nội dung người dùng đồng ý.
+        Long version, // Phiên bản dữ liệu để phát hiện cập nhật đồng thời.
+        String reviewNote, // Ghi chú hoặc lý do của người xét duyệt.
+        boolean editable, // Cho biết dữ liệu hiện có thể chỉnh sửa hay không.
+        boolean submittable, // Cho biết dịch vụ hoặc lớp có thể gửi duyệt hay không.
+        boolean closable, // Cho biết dịch vụ hoặc lớp có thể đóng hay không.
+        List<OfferingTimeSlotResponse> slots, // Danh sách khung lịch học gồm thứ, giờ và múi giờ.
+        String description, // Nội dung mô tả chi tiết.
+        String termsText // Nội dung điều khoản học.
 ) {
 
     public static OfferingResponse from(Offering offering, List<OfferingTimeSlot> slots) {
