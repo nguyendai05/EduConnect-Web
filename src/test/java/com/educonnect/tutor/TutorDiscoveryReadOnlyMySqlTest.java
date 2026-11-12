@@ -72,30 +72,41 @@ class TutorDiscoveryReadOnlyMySqlTest {
 
     private List<Expected> expected(TutorSearchRequest request) {
         var params = new MapSqlParameterSource();
-        String where = PUBLIC;
+        String where = " from tutor_profiles t join user_accounts a on a.id=t.user_id"
+                + " left join offerings o on o.tutor_id=t.user_id and o.status='PUBLISHED'"
+                + " where t.review_status='APPROVED' and a.status='ACTIVE' and a.email_verified_at is not null";
         var grades = request.getGradeLevelIds().stream().distinct().toList();
         if (!grades.isEmpty()) {
-            where += " and o.grade_level_id in (:grades)";
+            where += " and (o.grade_level_id in (:grades) or exists (select 1 from tutor_grade_levels tg"
+                    + " where tg.tutor_id=t.user_id and tg.grade_level_id in (:grades)))";
             params.addValue("grades", grades);
         }
         if (request.getSubjectId() != null) {
-            where += " and o.subject_id=:subject";
+            where += " and (o.subject_id=:subject or exists (select 1 from tutor_subjects ts"
+                    + " where ts.tutor_id=t.user_id and ts.subject_id=:subject))";
             params.addValue("subject", request.getSubjectId());
         }
         if (request.getMinPrice() != null) {
             where += " and o.unit_price>=:price";
             params.addValue("price", request.getMinPrice());
         }
-        String having = grades.isEmpty() ? "" : " having count(distinct o.grade_level_id)=:required";
-        if (!grades.isEmpty()) params.addValue("required", grades.size());
+        String coverage = " where 1=1";
+        for (int i = 0; i < grades.size(); i++) {
+            coverage += " and (exists (select 1 from tutor_grade_levels tg where tg.tutor_id=m.tutor_id"
+                    + " and tg.grade_level_id=:grade" + i + ") or exists (select 1 from matched m2"
+                    + " where m2.tutor_id=m.tutor_id and m2.grade_level_id=:grade" + i + "))";
+            params.addValue("grade" + i, grades.get(i));
+        }
         String order = switch (request.getSort()) {
-            case "price-asc" -> "min(o.unit_price) asc, o.tutor_id asc";
-            case "price-desc" -> "min(o.unit_price) desc, o.tutor_id asc";
-            default -> "lower(a.display_name) asc, o.tutor_id asc";
+            case "price-asc" -> "case when min(m.unit_price) is null then 1 else 0 end, min(m.unit_price) asc, m.tutor_id asc";
+            case "price-desc" -> "case when min(m.unit_price) is null then 1 else 0 end, min(m.unit_price) desc, m.tutor_id asc";
+            default -> "lower(m.display_name) asc, m.tutor_id asc";
         };
         return new NamedParameterJdbcTemplate(dataSource).query(
-                "select o.tutor_id, min(o.unit_price) price, count(*) offerings" + where
-                        + " group by o.tutor_id, a.display_name" + having + " order by " + order,
+                "with matched as (select t.user_id tutor_id, a.display_name, o.id offering_id,"
+                        + " o.unit_price, o.grade_level_id" + where + ")"
+                        + " select m.tutor_id, min(m.unit_price) price, count(m.offering_id) offerings from matched m"
+                        + coverage + " group by m.tutor_id, m.display_name order by " + order,
                 params, (rs, row) -> new Expected(rs.getLong("tutor_id"), rs.getBigDecimal("price"), rs.getLong("offerings")));
     }
 

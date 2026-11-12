@@ -37,13 +37,31 @@ public class TutorDiscoveryRepository {
     }
 
     private List<OfferingOptionResponse> options(String entityName) {
-        return entityManager.createQuery("select new com.educonnect.lesson.dto.OfferingOptionResponse(r.id, r.name) from "
-                + entityName + " r order by r.name", OfferingOptionResponse.class).getResultList();
+        String linkedEntity = switch (entityName) {
+            case "Subject" -> "TutorSubject";
+            case "GradeLevel" -> "TutorGradeLevel";
+            default -> null;
+        };
+        String query = "select new com.educonnect.lesson.dto.OfferingOptionResponse(r.id, r.name) from "
+                + entityName + " r";
+        if (linkedEntity == null) {
+            return entityManager.createQuery(query + " order by r.name", OfferingOptionResponse.class).getResultList();
+        }
+        String field = entityName.equals("Subject") ? "subjectId" : "gradeLevelId";
+        query += " where r.createdBy is null"
+                + " or exists (select x.id from " + linkedEntity + " x join x.tutorReference t join t.account a"
+                + " where x.id." + field + " = r.id and " + PUBLIC_TUTOR + ")"
+                + " or exists (select o.id from Offering o join o.tutorReference t join t.account a"
+                + PUBLIC + " and o." + field + " = r.id) order by r.name";
+        TypedQuery<OfferingOptionResponse> options = entityManager.createQuery(query, OfferingOptionResponse.class);
+        bind(options, publicParameters());
+        return options.getResultList();
     }
     private static final String FROM = " from Offering o join o.tutorReference t join t.account a"
             + " join o.subjectReference subject ";
-    private static final String PUBLIC = " where o.status = :published and t.reviewStatus = :approved"
-            + " and a.status = :active and a.emailVerifiedAt is not null ";
+    private static final String PUBLIC_TUTOR = "t.reviewStatus = :approved"
+            + " and a.status = :active and a.emailVerifiedAt is not null";
+    private static final String PUBLIC = " where o.status = :published and " + PUBLIC_TUTOR + " ";
 
     private final EntityManager entityManager;
 
@@ -54,11 +72,11 @@ public class TutorDiscoveryRepository {
     /** Cùng một bộ điều kiện cho count và data; lọc/sắp xếp tại DB trước khi phân trang. */
     public Page<TutorCardResponse> search(TutorSearchRequest request) {
         Map<String, Object> parameters = publicParameters();
-        StringBuilder where = new StringBuilder(" where t.reviewStatus = :approved"
-                + " and a.status = :active and a.emailVerifiedAt is not null ");
+        StringBuilder where = new StringBuilder(" where " + PUBLIC_TUTOR + " ");
         String from = " from TutorProfile t join t.account a left join Offering o"
                 + " on o.tutorId = t.userId and o.status = :published ";
-        appendFilters(request, where, parameters);
+        appendFilters(request, "o", where, parameters);
+        appendGradeFilters(request, where, parameters);
 
         String selection = "select new com.educonnect.tutor.dto.TutorCardResponse("
                 + "t.userId, a.displayName, t.headline, t.experienceYears, min(o.unitPrice), count(o.id))";
@@ -82,29 +100,36 @@ public class TutorDiscoveryRepository {
         return new PageImpl<>(data.getResultList(), PageRequest.of(request.getPage(), request.getSize()), total);
     }
 
-    private void appendFilters(TutorSearchRequest request, StringBuilder where, Map<String, Object> parameters) {
+    /** Các điều kiện liên quan đến gói luôn dùng cùng một Offering PUBLISHED. */
+    private void appendFilters(TutorSearchRequest request, String offering,
+                               StringBuilder where, Map<String, Object> parameters) {
         if (!request.getQ().isBlank()) {
             where.append(" and (lower(a.displayName) like :q escape '!' or lower(t.headline) like :q escape '!'"
-                    + " or lower(o.title) like :q escape '!' or exists (select ts.id from TutorSubject ts where ts.id.tutorId = t.userId and lower(ts.subjectReference.name) like :q escape '!')) ");
+                    + " or lower(a.bio) like :q escape '!'"
+                    + " or exists (select ts.id from TutorSubject ts where ts.id.tutorId = t.userId and lower(ts.subjectReference.name) like :q escape '!')"
+                    + " or exists (select tg.id from TutorGradeLevel tg where tg.id.tutorId = t.userId and lower(tg.gradeLevelReference.name) like :q escape '!')"
+                    + " or exists (select ta.id from TutorArea ta where ta.id.tutorId = t.userId and lower(ta.areaReference.name) like :q escape '!')"
+                    + " or exists (select tm.id from TutorDeliveryMode tm where tm.id.tutorId = t.userId and lower(tm.deliveryModeReference.name) like :q escape '!')"
+                    + " or exists (select oq.id from Offering oq where oq.id = " + offering + ".id and ("
+                    + "lower(oq.title) like :q escape '!' or lower(oq.subjectReference.name) like :q escape '!'"
+                    + " or lower(oq.gradeLevelReference.name) like :q escape '!' or lower(oq.areaReference.name) like :q escape '!'"
+                    + " or lower(oq.deliveryModeReference.name) like :q escape '!'))) ");
             String text = request.getQ().toLowerCase(java.util.Locale.ROOT)
                     .replace("!", "!!")
                     .replace("%", "!%")
                     .replace("_", "!_");
             parameters.put("q", "%" + text + "%");
         }
-        addFilter(where, parameters, "exists (select ts.id from TutorSubject ts where ts.id.tutorId = t.userId and ts.id.subjectId = :subjectId)", "subjectId", request.getSubjectId());
-        if (!request.getGradeLevelIds().isEmpty()) {
-            addFilter(where, parameters, "(select count(distinct tg.id.gradeLevelId) from TutorGradeLevel tg where tg.id.tutorId = t.userId and tg.id.gradeLevelId in :grades) = :gradeCount", "grades", request.getGradeLevelIds());
-        }
-        if (!request.getGradeLevelIds().isEmpty()) parameters.put("gradeCount", (long) request.getGradeLevelIds().stream().distinct().count());
-        addFilter(where, parameters, "exists (select ta.id from TutorArea ta where ta.id.tutorId = t.userId and ta.id.areaId = :areaId)", "areaId", request.getAreaId());
-        addFilter(where, parameters, "exists (select tm.id from TutorDeliveryMode tm where tm.id.tutorId = t.userId and tm.id.deliveryModeId = :modeId)", "modeId", request.getDeliveryModeId());
-        addFilter(where, parameters, "o.offeringType = :type", "type", request.getOfferingType());
-        addFilter(where, parameters, "o.unitPrice >= :minPrice", "minPrice", request.getMinPrice());
-        addFilter(where, parameters, "o.unitPrice <= :maxPrice", "maxPrice", request.getMaxPrice());
+        addFilter(where, parameters, "(" + offering + ".subjectId = :subjectId or exists (select ts.id from TutorSubject ts where ts.id.tutorId = t.userId and ts.id.subjectId = :subjectId))", "subjectId", request.getSubjectId());
+        addFilter(where, parameters, "(" + offering + ".areaId = :areaId or exists (select ta.id from TutorArea ta where ta.id.tutorId = t.userId and ta.id.areaId = :areaId))", "areaId", request.getAreaId());
+        addFilter(where, parameters, "(" + offering + ".deliveryModeId = :modeId or exists (select tm.id from TutorDeliveryMode tm where tm.id.tutorId = t.userId and tm.id.deliveryModeId = :modeId))", "modeId", request.getDeliveryModeId());
+        addFilter(where, parameters, offering + ".offeringType = :type", "type", request.getOfferingType());
+        addFilter(where, parameters, offering + ".unitPrice >= :minPrice", "minPrice", request.getMinPrice());
+        addFilter(where, parameters, offering + ".unitPrice <= :maxPrice", "maxPrice", request.getMaxPrice());
 
-        if (!request.getWeekdays().isEmpty() || request.getStartTime() != null || request.getTimeZone() != null) {
-            where.append(" and exists (select s.id from OfferingTimeSlot s where s.offeringId = o.id ");
+        // Múi giờ mặc định trên form không tự kích hoạt bộ lọc lịch học.
+        if (!request.getWeekdays().isEmpty() || request.getStartTime() != null || request.getEndTime() != null) {
+            where.append(" and exists (select s.id from OfferingTimeSlot s where s.offeringId = " + offering + ".id ");
             if (!request.getWeekdays().isEmpty()) {
                 List<Byte> days = new ArrayList<>();
                 for (Integer day : request.getWeekdays()) {
@@ -116,6 +141,25 @@ public class TutorDiscoveryRepository {
             addFilter(where, parameters, "s.endTime <= :endTime", "endTime", request.getEndTime());
             addFilter(where, parameters, "s.timeZone = :timeZone", "timeZone", request.getTimeZone());
             where.append(") ");
+        }
+    }
+
+    /** Giữ ngữ nghĩa đủ mọi cấp đã chọn, có thể kết hợp cấp từ hồ sơ và các gói phù hợp. */
+    private void appendGradeFilters(TutorSearchRequest request, StringBuilder where, Map<String, Object> parameters) {
+        List<Long> grades = request.getGradeLevelIds().stream().distinct().toList();
+        if (grades.isEmpty()) return;
+        addFilter(where, parameters, "(o.gradeLevelId in :grades or exists (select tg.id from TutorGradeLevel tg"
+                + " where tg.id.tutorId = t.userId and tg.id.gradeLevelId in :grades))", "grades", grades);
+        if (grades.size() == 1) return;
+        for (int i = 0; i < grades.size(); i++) {
+            String parameter = "grade" + i;
+            where.append(" and (exists (select tg.id from TutorGradeLevel tg where tg.id.tutorId = t.userId"
+                    + " and tg.id.gradeLevelId = :" + parameter + ")"
+                    + " or exists (select go.id from Offering go where go.tutorId = t.userId"
+                    + " and go.status = :published and go.gradeLevelId = :" + parameter);
+            appendFilters(request, "go", where, parameters);
+            where.append(")) ");
+            parameters.put(parameter, grades.get(i));
         }
     }
 
