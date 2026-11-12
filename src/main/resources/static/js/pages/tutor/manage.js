@@ -85,4 +85,60 @@
       item.querySelectorAll('button[type="submit"]').forEach(button => { button.disabled = false })
     })
   })
+  const attendance = document.getElementById('tm-panel-attendance')
+  if (attendance) {
+    const selectAttendanceTab = key => {
+      attendance.querySelectorAll('[data-att-tab]').forEach(button => {
+        const active = button.dataset.attTab === key
+        button.classList.toggle('is-active', active)
+        button.setAttribute('aria-pressed', String(active))
+      })
+      attendance.querySelectorAll('[data-att-panel]').forEach(panel => {
+        panel.hidden = panel.dataset.attPanel !== key
+      })
+    }
+    attendance.addEventListener('click', event => {
+      const button = event.target.closest('[data-att-tab]')
+      if (button) selectAttendanceTab(button.dataset.attTab)
+    })
+    let saving = false
+    attendance.addEventListener('submit', async event => {
+      const form = event.target
+      if (!(form instanceof HTMLFormElement)) return
+      event.preventDefault()
+      if (saving) return
+      saving = true
+      const selected = attendance.querySelector('[data-att-tab].is-active')?.dataset.attTab || 'group'
+      const buttons = [...attendance.querySelectorAll('button[type="submit"]')]
+      buttons.forEach(button => { button.disabled = true })
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new URLSearchParams(new FormData(form)),
+          credentials: 'same-origin'
+        })
+        const page = new DOMParser().parseFromString(await response.text(), 'text/html')
+        const updated = page.getElementById('tm-panel-attendance')
+        if (!response.ok || !updated) throw new Error('Chưa cập nhật được điểm danh. Vui lòng kiểm tra lại hoặc tải lại trang')
+        const error = page.querySelector('.alert--error')
+        attendance.replaceChildren(...updated.childNodes)
+        selectAttendanceTab(selected)
+        const notice = document.createElement('p')
+        notice.className = error ? 'alert alert--error' : 'alert alert--success'
+        notice.setAttribute('role', error ? 'alert' : 'status')
+        notice.textContent = error?.textContent.trim() || page.querySelector('.alert--success')?.textContent.trim() || 'Đã cập nhật điểm danh'
+        attendance.prepend(notice)
+        window.EduToast?.show({ type: error ? 'error' : 'success', title: notice.textContent })
+      } catch (error) {
+        const notice = document.createElement('p')
+        notice.className = 'alert alert--error'
+        notice.setAttribute('role', 'alert')
+        notice.textContent = error.message
+        attendance.prepend(notice)
+      } finally {
+        saving = false
+        buttons.forEach(button => { button.disabled = false })
+      }
+    })
+  }
 })()

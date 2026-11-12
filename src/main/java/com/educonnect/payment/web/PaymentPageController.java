@@ -32,7 +32,7 @@ public class PaymentPageController {
 
     /** Bắt đầu thanh toán rồi chuyển tới trang kết quả. */
     @PostMapping("/payment/start")
-    public String start(@RequestParam Long contract, @RequestParam(defaultValue = "false") boolean useWallet,
+    public String start(@RequestParam Long contract, @RequestParam(defaultValue = "true") boolean useWallet,
                         @AuthenticationPrincipal AccountPrincipal user, RedirectAttributes redirect) {
         PaymentService service = services.getIfAvailable();
         if (service == null) throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);

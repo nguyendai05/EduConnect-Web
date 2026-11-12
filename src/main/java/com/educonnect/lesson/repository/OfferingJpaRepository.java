@@ -58,6 +58,12 @@ public interface OfferingJpaRepository extends JpaRepository<Offering, Long> {
             select o from Offering o join o.tutorReference t join t.account a
             where o.status = :status and t.reviewStatus = :reviewStatus
               and a.status = :accountStatus and a.emailVerifiedAt is not null
+              and not exists (select s.id from ContractSession s, Contract c where s.contractId = c.id
+                and c.orderItemReference.registrationSourceReference.offeringId = o.id and s.attendedAt is not null)
+              and (select coalesce(sum(e.seatCount), 0) from Enrollment e where e.offeringId = o.id
+                and (e.status in (com.educonnect.lesson.domain.EnrollmentStatus.CONFIRMED, com.educonnect.lesson.domain.EnrollmentStatus.COMPLETED)
+                or (e.status = com.educonnect.lesson.domain.EnrollmentStatus.RESERVED and e.reservedUntil > CURRENT_TIMESTAMP)))
+                < case when o.offeringType = com.educonnect.lesson.domain.OfferingType.SERVICE then 1 else o.capacity end
             """)
     Page<Offering> findPublicPage(@Param("status") OfferingStatus status,
                                   @Param("reviewStatus") TutorReviewStatus reviewStatus,

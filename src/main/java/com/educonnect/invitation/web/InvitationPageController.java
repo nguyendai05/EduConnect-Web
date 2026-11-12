@@ -126,6 +126,7 @@ public class InvitationPageController {
             service.respond(principal, id, form);
             String message = switch (form.getAction()) {
                 case "accept" -> "Đã chấp nhận đúng bộ điều khoản hiện hành. Chưa phát sinh thanh toán.";
+                case "counter" -> "Đã gửi giá mới, chờ học viên xác nhận";
                 case "decline" -> "Đã từ chối lời mời.";
                 default -> "Đã hủy lời mời.";
             };

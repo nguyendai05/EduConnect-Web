@@ -1,0 +1,104 @@
+.invitation-workspace .user-shell__content {
+    max-width: 68rem;
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: var(--space-5);
+}
+.invitation-workspace .invitation-live-content {
+    padding-block: var(--space-6);
+    display: grid;
+    gap: var(--space-5);
+}
+.invitation-workspace .invitation-live-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+    align-items: start;
+}
+.invitation-workspace .dat-invitation-card {
+    padding: var(--space-5);
+    display: grid;
+    gap: var(--space-3);
+    border-radius: var(--radius-xl);
+    min-width: 0;
+}
+.invitation-workspace .dat-invitation-card p {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+.invitation-workspace .dat-invitation-card h2 {
+    font-size: var(--font-size-lg);
+    margin: 0;
+}
+.invitation-workspace .dat-invitation-card h2 a {
+    text-decoration: none;
+}
+.invitation-workspace .dat-invitation-card > .button {
+    justify-self: start;
+    margin-top: var(--space-2);
+}
+.invitation-workspace .invitation-create-layout,
+.invitation-workspace .negotiation-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 21rem;
+    align-items: start;
+    gap: var(--space-5);
+}
+.invitation-workspace .invitation-create-form,
+.invitation-workspace .negotiation-main {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0;
+}
+.invitation-workspace .invitation-section,
+.invitation-workspace .negotiation-panel,
+.invitation-workspace .invitation-tutor {
+    padding: var(--space-5);
+    border-radius: var(--radius-xl);
+}
+.invitation-workspace .invitation-live-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+.invitation-workspace .form-field {
+    display: grid;
+    gap: var(--space-2);
+    min-width: 0;
+}
+.invitation-workspace .select-control,
+.invitation-workspace textarea {
+    width: 100%;
+}
+.invitation-workspace .negotiation-sidebar {
+    min-width: 0;
+}
+.invitation-counter-form {
+    display: grid;
+    gap: var(--space-3);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+}
+.invitation-counter-note {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-container);
+    line-height: 1.6;
+}
+.invitation-workspace .invitation-live-terms {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.7;
+}
+@media (max-width: 52rem) {
+    .invitation-workspace .invitation-create-layout,
+    .invitation-workspace .negotiation-layout,
+    .invitation-workspace .invitation-live-list {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+@media (max-width: 36rem) {
+    .invitation-workspace .invitation-live-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

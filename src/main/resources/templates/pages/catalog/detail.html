@@ -144,7 +144,7 @@
                         <div class="catalog-booking__actions" th:if="${currentUser == null and issue == null}"><a class="button button--primary" th:href="@{/auth/login}">Đăng nhập để đăng ký</a></div>
                         <p class="catalog-booking__note" th:if="${currentUser != null and !canRegister and issue == null}">Đăng ký học dành cho tài khoản học viên/phụ huynh.</p>
                         <p class="catalog-booking__note" th:if="${offering.groupClass}" th:text="|Số chỗ còn lại: ${availableSeats} / ${detail.capacity}|"></p>
-                        <a class="button button--outline" th:if="${issue == null and (canRegister or currentUser == null)}" th:href="@{/invitation/create(tutorId=${offering.tutorId},offeringId=${offering.id})}">Gửi lời mời gia sư</a>
+                        <a class="button button--outline" th:if="${!offering.groupClass and issue == null and (canRegister or currentUser == null)}" th:href="@{/invitation/create(tutorId=${offering.tutorId},offeringId=${offering.id})}">Gửi lời mời gia sư</a>
                         <p class="catalog-booking__note">Thêm vào danh sách chưa giữ chỗ hoặc thu tiền</p>
                     </section>
                 </aside>
